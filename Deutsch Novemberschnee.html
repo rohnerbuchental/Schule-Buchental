@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novemberschnee · Trainingshub (Jürgen Banscherus)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-cyan-700 selection:text-white">
+
+  <!-- ============================================================== -->
+  <!-- HEADER -->
+  <!-- ============================================================== -->
+  <header class="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white shadow-lg sticky top-0 z-40 border-b border-sky-900/50">
+    <div class="max-w-5xl mx-auto px-4 py-3 sm:py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl sm:text-3xl p-1.5 sm:p-2 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10">❄️</span>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-200 border border-cyan-400/30">Lektüre Novemberschnee</span>
+            <span class="text-[10px] font-medium bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Speichert alle Antworten automatisch">
+              💾 Auto-Save
+            </span>
+            <span class="text-[10px] font-medium bg-sky-500/20 text-sky-200 border border-sky-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Zufällige Mischung">
+              🔀 Zufall
+            </span>
+          </div>
+          <h1 class="text-base sm:text-lg font-bold leading-tight mt-0.5">Novemberschnee · Interaktiver Trainingshub</h1>
+        </div>
+      </div>
+
+      <!-- Quick Stats & Stopwatch -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl border border-white/20 text-xs shadow-inner">
+          <span class="text-amber-300 font-semibold">⏱️ Lernzeit:</span>
+          <span id="timer-display" class="font-mono-code font-bold text-white bg-black/40 px-2 py-0.5 rounded-lg tracking-wider text-xs">00:00</span>
+          <button onclick="toggleTimer()" id="timer-toggle-btn" class="px-2 py-0.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-bold transition">
+            ▶️ Start
+          </button>
+          <button onclick="resetTimer()" class="px-1.5 py-0.5 rounded-lg bg-white/15 hover:bg-rose-500/40 text-white transition text-xs">
+            ↺
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Bar (4 FOKUSSIERTE ÜBUNGS-TABS) -->
+    <nav class="max-w-5xl mx-auto px-4 flex gap-1.5 overflow-x-auto border-t border-white/10 py-2 text-xs sm:text-sm font-medium">
+      <button onclick="switchTab('chrono')" id="tab-btn-chrono" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm">
+        <span>⏱️</span> 1. Handlung & Chronologie
+      </button>
+      <button onclick="switchTab('figures')" id="tab-btn-figures" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
+        <span>👥</span> 2. Figuren & Gedanken
+      </button>
+      <button onclick="switchTab('genre')" id="tab-btn-genre" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
+        <span>🔍</span> 3. Aufbau & Thriller
+      </button>
+      <button onclick="switchTab('opinion')" id="tab-btn-opinion" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
+        <span>⚖️</span> 4. Urteil, Nothilfe & Epilog
+      </button>
+    </nav>
+  </header>
+
+  <!-- ============================================================== -->
+  <!-- MAIN CONTAINER -->
+  <!-- ============================================================== -->
+  <main class="max-w-5xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-6">
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: CHRONOLOGIE & HANDLUNG (ZUFÄLLIG GEMISCHT) -->
+    <!-- ============================================================== -->
+    <section id="view-chrono" class="tab-view space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-800">⏱️ Stationen der Flucht & Handlungslogik</h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+            Die Reihenfolge wird bei jedem Laden <strong>zufällig gewürfelt</strong>. Lies genau und bestimme die Position (1–5).
+          </p>
+        </div>
+        <button onclick="reshuffleChronoTasks()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5 border border-slate-300 self-start sm:self-auto shrink-0">
+          <span>🔀</span> Reihenfolge neu mischen
+        </button>
+      </div>
+
+      <!-- Aufgabe 1: Die 5 Fluchtstationen -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-sky-800 uppercase tracking-wider">Aufgabe 1</span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Chronologie der Flucht (Stationen 1 bis 5)</h3>
+          </div>
+          <span class="text-[11px] font-semibold text-slate-400">Zufalls-Mix</span>
+        </div>
+
+        <div class="bg-sky-50 border-l-4 border-sky-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+          👉 <strong>Was du tun musst:</strong> Wähle rechts die Zahl <strong>1</strong> für das erste Ereignis bis zur <strong>5</strong> für das späteste.
+        </div>
+
+        <div class="space-y-2.5 pt-1" id="chrono-escape-list"></div>
+
+        <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button onclick="checkChronoEscape()" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs sm:text-sm font-bold shadow-sm transition">
+              ✓ Überprüfen
+            </button>
+            <button onclick="toggleChronoEscapeSol()" id="btn-sol-chrono" class="px-3.5 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs sm:text-sm font-semibold transition">
+              💡 Lösung anzeigen
+            </button>
+          </div>
+          <div id="chrono-escape-feedback" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+
+      <!-- Aufgabe 2: Chronologie in zwei übersichtlichen Teilen -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-5">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-indigo-800 uppercase tracking-wider">Aufgabe 2</span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Handlung vor und nach der Tat ordnen</h3>
+          </div>
+          <span class="text-[11px] font-semibold text-slate-400">Zufalls-Mix</span>
+        </div>
+
+        <!-- Teil A -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+            <h4 class="font-bold text-xs sm:text-sm text-slate-800 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center text-xs">A</span>
+              Teil A: Vor und während der Tat (Reihenfolge 1 bis 5)
+            </h4>
+          </div>
+          <div class="space-y-2" id="chrono-partA-list"></div>
+          <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200/60">
+            <div class="flex items-center gap-2">
+              <button onclick="checkChronoPartA()" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition">
+                ✓ Teil A prüfen
+              </button>
+              <button onclick="toggleChronoPartASol()" id="btn-sol-partA" class="px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold transition">
+                💡 Lösung
+              </button>
+            </div>
+            <div id="fb-chrono-partA" class="text-xs font-semibold"></div>
+          </div>
+        </div>
+
+        <!-- Teil B -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+            <h4 class="font-bold text-xs sm:text-sm text-slate-800 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center text-xs">B</span>
+              Teil B: Flucht & Versteck (Reihenfolge 1 bis 5)
+            </h4>
+          </div>
+          <div class="space-y-2" id="chrono-partB-list"></div>
+          <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200/60">
+            <div class="flex items-center gap-2">
+              <button onclick="checkChronoPartB()" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition">
+                ✓ Teil B prüfen
+              </button>
+              <button onclick="toggleChronoPartBSol()" id="btn-sol-partB" class="px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold transition">
+                💡 Lösung
+              </button>
+            </div>
+            <div id="fb-chrono-partB" class="text-xs font-semibold"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: FIGUREN & GEDANKEN -->
+    <!-- ============================================================== -->
+    <section id="view-figures" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">👥 Die Figuren: Lina, Tom & Jurij</h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+          Wer denkt was? Und welche familiären Traumata stecken hinter den Jugendlichen?
+        </p>
+      </div>
+
+      <!-- Gedankenblasen-Zuordnung -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-indigo-800 uppercase tracking-wider">Aufgabe 1</span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Gedankenblasen zuordnen («Wer denkt was?»)</h3>
+          </div>
+          <span class="text-[11px] font-semibold text-slate-400">Zufalls-Mix</span>
+        </div>
+
+        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+          👉 <strong>Was du tun musst:</strong> Lies das Zitat und wähle die passende Figur aus: <strong>Lina</strong>, <strong>Tom</strong> oder <strong>Jurij</strong>.
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1" id="thought-bubbles-grid"></div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3 flex-wrap">
+          <div class="flex items-center gap-2">
+            <button onclick="checkThoughts()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-sm transition">
+              ✓ Zuordnung überprüfen
+            </button>
+            <button onclick="toggleThoughtsSol()" id="btn-sol-thoughts" class="px-3.5 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs sm:text-sm font-semibold transition">
+              💡 Lösung anzeigen
+            </button>
+          </div>
+          <div id="thoughts-feedback" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+
+      <!-- Familiäre Verhältnisse -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
+        <div class="border-b border-slate-100 pb-2">
+          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Fakten-Check</span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Die familiären Verhältnisse zu Hause</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs sm:text-sm">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-slate-900 block mb-1">Linas Familie:</span>
+            <p class="text-slate-600 leading-relaxed">
+              Ihr Vater ist <strong>arbeitslos und Alkoholiker</strong>. Zu Hause herrscht eine traurige, bedrückende Atmosphäre; Lina fühlt sich innerlich einsam und alleingelassen.
+            </p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-slate-900 block mb-1">Jurijs Familie:</span>
+            <p class="text-slate-600 leading-relaxed">
+              Kommt ursprünglich aus <strong>Kasachstan</strong>. Sein Vater schlug ihn regelmässig brutal. Jurij hasst seine Eltern und sucht den gefährlichen Kick beim Autoklauen.
+            </p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-slate-900 block mb-1">Toms Familie:</span>
+            <p class="text-slate-600 leading-relaxed">
+              Wurde von seinem Vater früher jahrelang <strong>mit dem Ledergürtel verprügelt</strong>, bis er körperlich stärker als der Vater wurde. Tom hasst seine Eltern zutiefst.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: BUCHAUFBAU, THRILLER & DAS 2-PUNKTE-SCHREIBTRAINING -->
+    <!-- ============================================================== -->
+    <section id="view-genre" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">🔍 Buchaufbau & Merkmale eines Thrillers</h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+          Warum ist Novemberschnee kein klassischer Detektivkrimi? Und wie schreibt man eine vollständige 2-Punkte-Antwort?
+        </p>
+      </div>
+
+      <!-- DAS INTERAKTIVE 2-PUNKTE-SCHREIBTRAINING -->
+      <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">💡</span>
+          <div>
+            <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-200 text-amber-900">
+              Schreib-Tipp gegen halbe Punkte
+            </span>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 mt-0.5">Die «2-Punkte-Formel» für vollständige Antworten</h3>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-700 leading-relaxed">
+          Am Test schreiben Schüler oft nur 3 Wörter hin (z. B. <em>«Wegen Autos klauen»</em>) und bekommen dafür <strong>nur 0.5 von 2 Punkten</strong>. Schau dir an, wie aus einer halben Antwort die vollen 2 Punkte werden:
+        </p>
+
+        <!-- Vorher-Nachher Klick-Box -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-xs">
+          <div class="p-3 rounded-xl bg-white border border-rose-200 space-y-1">
+            <div class="font-bold text-rose-700 flex items-center justify-between">
+              <span>❌ Typische Schülerantwort (0.5 P.):</span>
+              <span class="text-[10px] bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded">Unvollständig</span>
+            </div>
+            <p class="italic text-slate-600">«Weil Jurij mit geklauten Autos herumgefahren ist.»</p>
+            <div class="text-[11px] text-slate-500 pt-1 border-t border-slate-100">
+              ⚠️ <strong>Warum fehlt hier der Punkt?</strong> Es fehlt die Begründung, warum Lina das überhaupt gestört hat!
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-white border border-emerald-300 space-y-1">
+            <div class="font-bold text-emerald-800 flex items-center justify-between">
+              <span>✅ Volle 2-Punkte-Antwort (2.0 P.):</span>
+              <span class="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">2 / 2 Punkte</span>
+            </div>
+            <p class="text-slate-800 font-medium">
+              «Jurij klaute Autos <span class="text-blue-700 font-bold">(1 P. Fakt)</span>, <strong>weil</strong> er ständig den Kick suchte und Lina nicht mit jemandem zusammen sein wollte, der leichtsinnig sein Leben aufs Spiel setzt <span class="text-emerald-700 font-bold">(1 P. Begründung)</span>.»
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warum ist das Buch ein Thriller? -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2">
+          <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider">Schreibaufgabe Thriller</span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Warum gehört «Novemberschnee» zur Gattung Thriller?</h3>
+        </div>
+
+        <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+          👉 <strong>Was du tun musst:</strong> Beantworte beide Fragen in je 1–2 Sätzen.
+        </div>
+
+        <div class="space-y-4 pt-1">
+          <!-- Schritt 1: Täter -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <label class="text-xs sm:text-sm font-bold text-slate-900 block">
+              1. Wann erfahren wir im Buch, wer die Bank überfällt?
+            </label>
+            <textarea id="input-open-thriller-taeter" rows="2" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500" placeholder="Schreibe z.B.: Wir wissen schon am Anfang, wer..." oninput="checkKeywords('thriller_taeter')"></textarea>
+            <div id="kw-box-thriller_taeter" class="hidden mt-1">
+              <div id="kw-thriller_taeter" class="flex flex-wrap gap-1 text-[11px]"></div>
+            </div>
+          </div>
+
+          <!-- Schritt 2: Ermittler -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <label class="text-xs sm:text-sm font-bold text-slate-900 block">
+              2. Gibt es im Buch einen Detektiv, der den Fall aufklärt?
+            </label>
+            <textarea id="input-open-thriller-detektiv" rows="2" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500" placeholder="Schreibe z.B.: Es gibt keinen Detektiv, sondern..." oninput="checkKeywords('thriller_detektiv')"></textarea>
+            <div id="kw-box-thriller_detektiv" class="hidden mt-1">
+              <div id="kw-thriller_detektiv" class="flex flex-wrap gap-1 text-[11px]"></div>
+            </div>
+          </div>
+
+          <button onclick="toggleModelSol('thriller_gesamt')" class="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1">
+            <span>💡</span> Musterlösung für beide Punkte anzeigen
+          </button>
+          <div id="sol-thriller_gesamt" class="hidden text-xs bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-slate-800 leading-relaxed space-y-1">
+            <p>• <strong>Zu Punkt 1:</strong> Die Täter (Lina, Tom, Jurij) und die Tat sind dem Leser <strong>von Anfang an bekannt</strong>.</p>
+            <p>• <strong>Zu Punkt 2:</strong> Es gibt <strong>keinen Detektiv oder Polizisten</strong>, der den Fall aufdeckt. Stattdessen erzählt Lina als Täterin die Geschichte selbst aus ihrer Sicht.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: URTEIL, NOTHILFE & DAS GEHEIMNIS DES EPILOGS -->
+    <!-- ============================================================== -->
+    <section id="view-opinion" class="tab-view hidden space-y-6 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-800">⚖️ Urteilsbildung, Schweizer Nothilfe & der Epilog</h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+            Linas Mitschuld beurteilen, Schweizer Hilfsstellen kennen und das dunkle Geheimnis des Endes lüften.
+          </p>
+        </div>
+        <button onclick="reshuffleOpinionTasks()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5 border border-slate-300 self-start sm:self-auto shrink-0">
+          <span>🔀</span> Reihenfolge neu mischen
+        </button>
+      </div>
+
+      <!-- DAS GEHEIMNIS DES EPILOGS: ZWEI THEORIEN ZUM BUCHENDE -->
+      <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-4 sm:p-5 shadow-md space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🕵️‍♀️</span>
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-200 border border-cyan-400/30">
+              Hintergrundwissen Epilog
+            </span>
+            <h3 class="text-base sm:text-lg font-bold mt-1">Das Geheimnis um den Epilog: Ist Lina wirklich unschuldig?</h3>
+          </div>
+        </div>
+
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          Am Ende des Buches (S. 124/125) sagt die Polizei, dass an Jurijs Leiche <strong>keinerlei Kampfspuren</strong> gefunden wurden und er aus nächster Nähe erschossen wurde. Den Roman kann man auf zwei völlig verschiedene Arten deuten:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1 text-xs">
+          <!-- Theorie A -->
+          <div class="p-3.5 rounded-xl bg-white/10 border border-white/15 space-y-1.5">
+            <span class="text-sky-300 font-bold block text-sm">Theorie A: Lina als verängstigtes Opfer</span>
+            <p class="text-slate-300 leading-relaxed">
+              Tom war ein gewalttätiger Psychopath, der durch die Prügel seines Vaters geprägt war. Er hat die Situation an sich gerissen, Lina mit der Waffe bedroht und Jurij eiskalt ermordet. Lina war in Panik und konnte nicht mehr fliehen.
+            </p>
+          </div>
+
+          <!-- Theorie B -->
+          <div class="p-3.5 rounded-xl bg-white/10 border border-white/15 space-y-1.5">
+            <span class="text-rose-300 font-bold block text-sm">Theorie B: Lina als eiskalte Mörderin</span>
+            <p class="text-slate-300 leading-relaxed">
+              Lina ist gar nicht unschuldig! Sie hat beide Jungs gegeneinander ausgespielt. Ihr Bericht an den Anwalt ist eine einzige Lüge: Sie wartete stundenlang mit dem Arzt, bis Tom verblutet war – so sind beide Zeugen tot und sie kann die ganze Schuld auf sie schieben!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUFGABE 1: SORTIER-TRAINING LINAS MITSCHULD -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-purple-800 uppercase tracking-wider">Aufgabe 1 · Urteilsbildung</span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Linas Verhalten: Entlastend oder Belastend?</h3>
+          </div>
+          <span class="text-[11px] font-semibold text-slate-400">Zufalls-Mix</span>
+        </div>
+
+        <div class="bg-purple-50 border-l-4 border-purple-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+          👉 <strong>Was du tun musst:</strong> Bestimme für alle 6 Situationen, ob sie Lina <strong>🛡️ entlasten</strong> (wenig Schuld) oder <strong>⚠️ belasten</strong> (klare Mitschuld).
+        </div>
+
+        <div class="space-y-2.5 pt-1" id="mitschuld-sorting-list"></div>
+
+        <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button onclick="checkMitschuldSorting()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs sm:text-sm font-bold shadow-sm transition">
+              ✓ Zuordnung überprüfen
+            </button>
+            <button onclick="toggleMitschuldSol()" id="btn-sol-mitschuld" class="px-3.5 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs sm:text-sm font-semibold transition">
+              💡 Lösung anzeigen
+            </button>
+          </div>
+          <div id="mitschuld-feedback" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+
+      <!-- AUFGABE 2: SCHWEIZER NOTFALLSTELLEN -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-blue-800 uppercase tracking-wider">Aufgabe 2 · Schweizer Hilfsangebote</span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Welche Stelle hilft in welcher Situation? (Schweiz)</h3>
+          </div>
+          <span class="text-[11px] font-semibold text-slate-400">Zufalls-Mix</span>
+        </div>
+
+        <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+          👉 <strong>Was du tun musst:</strong> Ordne den 4 Situationen die richtige offizielle Schweizer Stelle zu!
+        </div>
+
+        <div class="space-y-2.5 pt-1" id="scenario-matching-list"></div>
+
+        <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button onclick="checkScenarioMatching()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-sm transition">
+              ✓ Zuordnung überprüfen
+            </button>
+            <button onclick="toggleScenarioSol()" id="btn-sol-scenario" class="px-3.5 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs sm:text-sm font-semibold transition">
+              💡 Lösung anzeigen
+            </button>
+          </div>
+          <div id="scenario-feedback" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+
+      <!-- AUFGABE 3: TEST-SIMULATION: 3 STELLEN FREI NENNEN -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
+        <div class="border-b border-slate-100 pb-2">
+          <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider">Aufgabe 3 · Testabruf</span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Nenne 3 offizielle Schweizer Hilfsangebote ausserhalb der Schule</h3>
+        </div>
+
+        <p class="text-xs text-slate-600">
+          Tippe drei Stellen ein (z. B. <em>Notruf 147, KESB, Schlupfhuus, Polizei 117</em>):
+        </p>
+
+        <input type="text" id="input-active-swiss-help" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-emerald-500" placeholder="Tippe hier z.B.: Notruf 147, KESB, Polizei..." oninput="checkActiveSwissHelpInput()">
+        
+        <div class="text-[11px] text-slate-500 flex items-center justify-between pt-1">
+          <span>Erkannte Stellen:</span>
+          <span id="swiss-help-count" class="font-bold text-emerald-700 font-mono-code">0 / 3 genannt</span>
+        </div>
+        <div id="swiss-help-badges" class="flex flex-wrap gap-1.5 min-h-[26px]"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-700 pointer-events-none text-xs sm:text-sm">
+    <span id="toast-icon">✨</span>
+    <div>
+      <div id="toast-title" class="font-bold">Mitteilung</div>
+      <div id="toast-msg" class="text-slate-300 text-xs">Details</div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <!-- ============================================================== -->
+  <script>
+    // 1. DATA: AUFGABE 1 FLUCHTSTATIONEN (1-5)
+    const ESCAPE_STATIONS_A = [
+      { id: "es_1", text: "Der Bankangestellte missversteht Toms Verhalten; die drei flüchten Hals über Kopf auf ihren Fahrrädern.", correct: 1 },
+      { id: "es_2", text: "Jurij verletzt sich bei einem Sturz schwer am Knie; die Gruppe stiehlt einen alten Opel Kadett.", correct: 2 },
+      { id: "es_3", text: "Das Fluchtauto wird in einem Weiher versenkt, um Spuren zu verwischen.", correct: 3 },
+      { id: "es_4", text: "Die Gruppe erreicht das verlassene Ausflugslokal im Wald, wo die Situation psychisch eskaliert.", correct: 4 },
+      { id: "es_5", text: "Lina trennt sich kurz von den Jungs, um an einer Raststätte Essen zu kaufen und zu telefonieren.", correct: 5 }
+    ];
+
+    // 2. DATA: AUFGABE 2 IN 2 ÜBERSICHTLICHEN TEILEN
+    const CHRONO_PART_A = [
+      { id: "ca_1", text: "Wegen schlechten Wetters und Langeweile treffen sich die drei im Steinbruch.", correct: 1 },
+      { id: "ca_2", text: "Sie planen als reines «Spiel» im Kopf einen Banküberfall auf die Sparkasse.", correct: 2 },
+      { id: "ca_3", text: "Sie kaufen Spielzeugpistolen und Skimasken, um den Überfall zu üben.", correct: 3 },
+      { id: "ca_4", text: "Tom geht allein in die Sparkasse, während Lina und Jurij draussen warten.", correct: 4 },
+      { id: "ca_5", text: "Durch ein Niesen rutscht Toms Maske herunter; der Angestellte schiebt ihm geschockt Geld zu.", correct: 5 }
+    ];
+
+    const CHRONO_PART_B = [
+      { id: "cb_1", text: "Die drei rasen auf Fahrrädern davon und beschliessen, gemeinsam weiterzufliehen.", correct: 1 },
+      { id: "cb_2", text: "Weil Jurij mit dem Velo stürzt, klaut er ein Auto für die weitere Flucht.", correct: 2 },
+      { id: "cb_3", text: "Sie versenken den Wagen im See und fliehen zu Fuss in den verlassenen Waldgasthof.", correct: 3 },
+      { id: "cb_4", text: "Tom bedroht Lina mit der echten Pistole und zwischen Tom und Jurij kommt es zum tödlichen Schuss.", correct: 4 },
+      { id: "cb_5", text: "Lina holt endlich einen Arzt ins Versteck, doch Tom stirbt auf dem Weg ins Spital.", correct: 5 }
+    ];
+
+    // 3. DATA: 9 THOUGHT BUBBLES
+    const THOUGHT_BUBBLES = [
+      { id: "tb_1", text: "«Du bist ein Arschloch, Tom!»", person: "Lina" },
+      { id: "tb_2", text: "«Ich habe solche Schmerzen. Das war alles ein großer Fehler.»", person: "Jurij" },
+      { id: "tb_3", text: "«Er hat ihn umgebracht. Das war kein Unfall.»", person: "Lina" },
+      { id: "tb_4", text: "«Diese Idioten! Ich nehme mir das Geld und haue mit Lina ab.»", person: "Tom" },
+      { id: "tb_5", text: "«Ich muss meine Eltern anrufen. Ich wollte das alles nicht.»", person: "Lina" },
+      { id: "tb_6", text: "«Ich will das Geld nicht.»", person: "Lina" },
+      { id: "tb_7", text: "«Warum habe ich vorher nicht gemerkt, wie sie sind?»", person: "Lina" },
+      { id: "tb_8", text: "«Es war ein Unfall. Ich habe ihn nicht umbringen wollen.»", person: "Tom" },
+      { id: "tb_9", text: "«Du hasst mich!»", person: "Tom" }
+    ];
+
+    // 4. DATA TAB 4: MITSCHULD SORTING
+    const MITSCHULD_ITEMS = [
+      { id: "ms_1", text: "Lina war während des Raubs draussen und hat die Bank nicht betreten.", correct: "entlastend" },
+      { id: "ms_2", text: "Als Tom mit der Beute herausrennt, steigt Lina aufs Velo und flieht mit ihm.", correct: "belastend" },
+      { id: "ms_3", text: "Im Waldgasthof wird Lina von Tom mit der Waffe bedroht und darf nicht gehen.", correct: "entlastend" },
+      { id: "ms_4", text: "An der Autobahn-Raststätte ist Lina ganz allein an einer Telefonzelle, ruft aber nicht die Polizei.", correct: "belastend" },
+      { id: "ms_5", text: "Lina wollte den Überfall im Steinbruch von Anfang an nur als harmloses Gedankenspiel.", correct: "entlastend" },
+      { id: "ms_6", text: "Lina wartet viele Stunden, bis sie für den schwer verletzten Tom endlich einen Arzt holt.", correct: "belastend" }
+    ];
+
+    // 5. DATA TAB 4: SCHWEIZER NOTFALL-SZENARIEN
+    const SWISS_SCENARIOS = [
+      { id: "sc_1", text: "Ein Jugendlicher fühlt sich einsam, hat grosse Sorgen und möchte anonym per SMS oder Chat reden.", correct: "147" },
+      { id: "sc_2", text: "Ein Kind wird zu Hause vom Vater regelmässig mit dem Gürtel geschlagen und braucht behördlichen Schutz.", correct: "KESB" },
+      { id: "sc_3", text: "Ein Jugendlicher wird mitten in der Nacht aus dem Haus geworfen und braucht sofort ein sicheres Bett zum Schlafen.", correct: "Schlupfhuus" },
+      { id: "sc_4", text: "Jemand bedroht dich und andere Personen mit einer echten Schusswaffe.", correct: "117" }
+    ];
+
+    // 6. KEYWORD CHECK CONFIGURATION
+    const KEYWORD_CONFIG = {
+      thriller_taeter: [
+        { word: "Von Anfang an bekannt", patterns: ["anfang", "beginn", "schon am anfang", "sofort", "weiß man", "bekannt", "weiß", "nicht geheim"] },
+        { word: "Täter genannt (Lina / Tom / Jurij)", patterns: ["lina", "tom", "jurij", "täter", "sie selbst", "die drei"] }
+      ],
+      thriller_detektiv: [
+        { word: "Kein Detektiv / Ermittler", patterns: ["kein detektiv", "kein polizist", "keine polizei", "nicht ermittelt", "kein ermittler", "niemand"] },
+        { word: "Sicht der Täterin (Lina erzählt)", patterns: ["lina erzählt", "aus sicht", "tätersicht", "ich-form", "ich-perspektive", "selbst"] }
+      ]
+    };
+
+    // 7. SHUFFLE HELPER (FISHER-YATES)
+    function shuffleArray(arr) {
+      const array = [...arr];
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    let displayEscapeA = [];
+    let displayPartA = [];
+    let displayPartB = [];
+    let displayThoughts = [];
+    let displayMitschuld = [];
+    let displayScenarios = [];
+
+    function initShuffledData() {
+      do {
+        displayEscapeA = shuffleArray(ESCAPE_STATIONS_A);
+      } while (displayEscapeA.every((item, idx) => item.correct === idx + 1) && ESCAPE_STATIONS_A.length > 2);
+
+      do {
+        displayPartA = shuffleArray(CHRONO_PART_A);
+      } while (displayPartA.every((item, idx) => item.correct === idx + 1) && CHRONO_PART_A.length > 2);
+
+      do {
+        displayPartB = shuffleArray(CHRONO_PART_B);
+      } while (displayPartB.every((item, idx) => item.correct === idx + 1) && CHRONO_PART_B.length > 2);
+
+      displayThoughts = shuffleArray(THOUGHT_BUBBLES);
+      displayMitschuld = shuffleArray(MITSCHULD_ITEMS);
+      displayScenarios = shuffleArray(SWISS_SCENARIOS);
+    }
+
+    function reshuffleChronoTasks() {
+      initShuffledData();
+      renderChronoTab();
+      renderFiguresTab();
+      showToast("🔀 Neu gemischt", "Die Sätze wurden zufällig neu angeordnet!");
+    }
+
+    function reshuffleOpinionTasks() {
+      displayMitschuld = shuffleArray(MITSCHULD_ITEMS);
+      displayScenarios = shuffleArray(SWISS_SCENARIOS);
+      renderOpinionTab();
+      showToast("🔀 Neu gemischt", "Die Situationen wurden zufällig neu angeordnet!");
+    }
+
+    // 8. APPLICATION STATE
+    const STATE = {
+      activeTab: 'chrono',
+      userChrono: {},
+      userChronoPartA: {},
+      userChronoPartB: {},
+      userThoughts: {},
+      userMitschuld: {},
+      userScenarios: {}
+    };
+
+    function loadSavedState() {
+      try {
+        const sc = localStorage.getItem('ns_chrono');
+        if (sc) STATE.userChrono = JSON.parse(sc);
+
+        const scA = localStorage.getItem('ns_chrono_pa');
+        if (scA) STATE.userChronoPartA = JSON.parse(scA);
+
+        const scB = localStorage.getItem('ns_chrono_pb');
+        if (scB) STATE.userChronoPartB = JSON.parse(scB);
+
+        const st = localStorage.getItem('ns_thoughts');
+        if (st) STATE.userThoughts = JSON.parse(st);
+
+        const sms = localStorage.getItem('ns_mitschuld');
+        if (sms) STATE.userMitschuld = JSON.parse(sms);
+
+        const ssc = localStorage.getItem('ns_scenarios');
+        if (ssc) STATE.userScenarios = JSON.parse(ssc);
+
+        const tm = localStorage.getItem('ns_timer_seconds');
+        if (tm) {
+          timerSeconds = parseInt(tm, 10) || 0;
+          updateTimerDisplay();
+        }
+      } catch (e) {}
+    }
+
+    // ==============================================================
+    // NAVIGATION
+    // ==============================================================
+    function switchTab(tabId) {
+      STATE.activeTab = tabId;
+
+      document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.className = "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10";
+      });
+
+      const activeView = document.getElementById(`view-${tabId}`);
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      if (activeView && activeBtn) {
+        activeView.classList.remove('hidden');
+        activeBtn.className = "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm";
+      }
+    }
+
+    // ==============================================================
+    // TAB 1: CHRONOLOGIE (RENDERING SHUFFLED ARRAYS)
+    // ==============================================================
+    function renderChronoTab() {
+      const escapeContainer = document.getElementById('chrono-escape-list');
+      if (escapeContainer) {
+        escapeContainer.innerHTML = displayEscapeA.map(item => {
+          const saved = STATE.userChrono[item.id] || "";
+          return `
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition" id="esc-item-${item.id}">
+              <div class="flex items-center gap-2.5 flex-1 text-xs sm:text-sm text-slate-800">
+                <span>${item.text}</span>
+              </div>
+              <div class="sm:w-28 shrink-0 flex items-center gap-2">
+                <span class="text-xs text-slate-400">Position:</span>
+                <select id="sel-esc-${item.id}" onchange="saveChrono('${item.id}', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-sky-500">
+                  <option value="">--</option>
+                  <option value="1" ${saved === '1' ? 'selected' : ''}>1</option>
+                  <option value="2" ${saved === '2' ? 'selected' : ''}>2</option>
+                  <option value="3" ${saved === '3' ? 'selected' : ''}>3</option>
+                  <option value="4" ${saved === '4' ? 'selected' : ''}>4</option>
+                  <option value="5" ${saved === '5' ? 'selected' : ''}>5</option>
+                </select>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Part A
+      const partAContainer = document.getElementById('chrono-partA-list');
+      if (partAContainer) {
+        partAContainer.innerHTML = displayPartA.map(item => {
+          const saved = STATE.userChronoPartA[item.id] || "";
+          return `
+            <div class="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between gap-2 transition" id="ca-item-${item.id}">
+              <span class="text-xs text-slate-800 flex-1 leading-snug">${item.text}</span>
+              <select id="sel-ca-${item.id}" onchange="saveChronoPartA('${item.id}', this.value)" class="bg-slate-50 border border-slate-300 rounded-md px-2 py-1 text-xs font-bold">
+                <option value="">--</option>
+                <option value="1" ${saved === '1' ? 'selected' : ''}>1</option>
+                <option value="2" ${saved === '2' ? 'selected' : ''}>2</option>
+                <option value="3" ${saved === '3' ? 'selected' : ''}>3</option>
+                <option value="4" ${saved === '4' ? 'selected' : ''}>4</option>
+                <option value="5" ${saved === '5' ? 'selected' : ''}>5</option>
+              </select>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Part B
+      const partBContainer = document.getElementById('chrono-partB-list');
+      if (partBContainer) {
+        partBContainer.innerHTML = displayPartB.map(item => {
+          const saved = STATE.userChronoPartB[item.id] || "";
+          return `
+            <div class="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between gap-2 transition" id="cb-item-${item.id}">
+              <span class="text-xs text-slate-800 flex-1 leading-snug">${item.text}</span>
+              <select id="sel-cb-${item.id}" onchange="saveChronoPartB('${item.id}', this.value)" class="bg-slate-50 border border-slate-300 rounded-md px-2 py-1 text-xs font-bold">
+                <option value="">--</option>
+                <option value="1" ${saved === '1' ? 'selected' : ''}>1</option>
+                <option value="2" ${saved === '2' ? 'selected' : ''}>2</option>
+                <option value="3" ${saved === '3' ? 'selected' : ''}>3</option>
+                <option value="4" ${saved === '4' ? 'selected' : ''}>4</option>
+                <option value="5" ${saved === '5' ? 'selected' : ''}>5</option>
+              </select>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function saveChrono(id, val) {
+      STATE.userChrono[id] = val;
+      try { localStorage.setItem('ns_chrono', JSON.stringify(STATE.userChrono)); } catch (e) {}
+    }
+
+    function checkChronoEscape() {
+      let correct = 0;
+      ESCAPE_STATIONS_A.forEach(item => {
+        const card = document.getElementById(`esc-item-${item.id}`);
+        const userVal = parseInt(STATE.userChrono[item.id], 10);
+        if (userVal === item.correct) {
+          correct++;
+          if (card) card.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition";
+        } else {
+          if (card) card.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition";
+        }
+      });
+
+      const fb = document.getElementById('chrono-escape-feedback');
+      if (fb) {
+        fb.innerHTML = correct === 5 ? "🌟 Perfekt! Alle 5 Stationen stimmen!" : `${correct} von 5 Stationen richtig.`;
+        fb.className = correct === 5 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-rose-700";
+      }
+      showToast("Flucht-Check", `${correct} von 5 Stationen korrekt.`);
+    }
+
+    function toggleChronoEscapeSol() {
+      const btn = document.getElementById('btn-sol-chrono');
+      const isSol = btn && btn.innerText.includes("ausblenden");
+      ESCAPE_STATIONS_A.forEach(item => {
+        const sel = document.getElementById(`sel-esc-${item.id}`);
+        if (sel) {
+          sel.value = !isSol ? item.correct : (STATE.userChrono[item.id] || "");
+        }
+      });
+      if (btn) btn.innerText = isSol ? "💡 Lösung anzeigen" : "🙈 Lösung ausblenden";
+    }
+
+    function saveChronoPartA(id, val) {
+      STATE.userChronoPartA[id] = val;
+      try { localStorage.setItem('ns_chrono_pa', JSON.stringify(STATE.userChronoPartA)); } catch (e) {}
+    }
+
+    function checkChronoPartA() {
+      let correct = 0;
+      CHRONO_PART_A.forEach(item => {
+        const row = document.getElementById(`ca-item-${item.id}`);
+        const userVal = parseInt(STATE.userChronoPartA[item.id], 10);
+        if (userVal === item.correct) {
+          correct++;
+          if (row) row.className = "p-2.5 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-between gap-2 transition";
+        } else {
+          if (row) row.className = "p-2.5 rounded-lg bg-rose-50 border border-rose-300 flex items-center justify-between gap-2 transition";
+        }
+      });
+
+      const fb = document.getElementById('fb-chrono-partA');
+      if (fb) {
+        fb.innerHTML = correct === 5 ? "🌟 Perfekt! Alle 5 richtig!" : `${correct} von 5 richtig.`;
+        fb.className = correct === 5 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-rose-700";
+      }
+      showToast("Teil A ausgewertet", `${correct} von 5 Schritten richtig.`);
+    }
+
+    function toggleChronoPartASol() {
+      const btn = document.getElementById('btn-sol-partA');
+      const isSol = btn && btn.innerText.includes("ausblenden");
+      CHRONO_PART_A.forEach(item => {
+        const sel = document.getElementById(`sel-ca-${item.id}`);
+        if (sel) {
+          sel.value = !isSol ? item.correct : (STATE.userChronoPartA[item.id] || "");
+        }
+      });
+      if (btn) btn.innerText = isSol ? "💡 Lösung" : "🙈 Verbergen";
+    }
+
+    function saveChronoPartB(id, val) {
+      STATE.userChronoPartB[id] = val;
+      try { localStorage.setItem('ns_chrono_pb', JSON.stringify(STATE.userChronoPartB)); } catch (e) {}
+    }
+
+    function checkChronoPartB() {
+      let correct = 0;
+      CHRONO_PART_B.forEach(item => {
+        const row = document.getElementById(`cb-item-${item.id}`);
+        const userVal = parseInt(STATE.userChronoPartB[item.id], 10);
+        if (userVal === item.correct) {
+          correct++;
+          if (row) row.className = "p-2.5 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-between gap-2 transition";
+        } else {
+          if (row) row.className = "p-2.5 rounded-lg bg-rose-50 border border-rose-300 flex items-center justify-between gap-2 transition";
+        }
+      });
+
+      const fb = document.getElementById('fb-chrono-partB');
+      if (fb) {
+        fb.innerHTML = correct === 5 ? "🌟 Perfekt! Alle 5 richtig!" : `${correct} von 5 richtig.`;
+        fb.className = correct === 5 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-rose-700";
+      }
+      showToast("Teil B ausgewertet", `${correct} von 5 Schritten richtig.`);
+    }
+
+    function toggleChronoPartBSol() {
+      const btn = document.getElementById('btn-sol-partB');
+      const isSol = btn && btn.innerText.includes("ausblenden");
+      CHRONO_PART_B.forEach(item => {
+        const sel = document.getElementById(`sel-cb-${item.id}`);
+        if (sel) {
+          sel.value = !isSol ? item.correct : (STATE.userChronoPartB[item.id] || "");
+        }
+      });
+      if (btn) btn.innerText = isSol ? "💡 Lösung" : "🙈 Verbergen";
+    }
+
+    // ==============================================================
+    // KEYWORD DETECTOR
+    // ==============================================================
+    function checkKeywords(key) {
+      const inputEl = document.getElementById(`input-open-${key}`);
+      const kwContainer = document.getElementById(`kw-${key}`);
+      const boxContainer = document.getElementById(`kw-box-${key}`);
+      if (!inputEl || !kwContainer) return;
+
+      const userText = inputEl.value.toLowerCase().trim();
+      const config = KEYWORD_CONFIG[key] || [];
+
+      if (userText.length === 0) {
+        kwContainer.innerHTML = '';
+        if (boxContainer) boxContainer.classList.add('hidden');
+        return;
+      }
+
+      if (boxContainer) boxContainer.classList.remove('hidden');
+
+      const badges = config.map(item => {
+        const hit = item.patterns.some(p => userText.includes(p));
+        if (hit) {
+          return `<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-300 flex items-center gap-1">✓ ${item.word}</span>`;
+        } else {
+          return `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-400 border border-slate-200">○ Noch offen</span>`;
+        }
+      });
+
+      kwContainer.innerHTML = badges.join('');
+    }
+
+    function toggleModelSol(key) {
+      const sol = document.getElementById(`sol-${key}`);
+      if (sol) sol.classList.toggle('hidden');
+    }
+
+    // ==============================================================
+    // TAB 2: GEDANKENBLASEN (SHUFFLED)
+    // ==============================================================
+    function renderFiguresTab() {
+      const grid = document.getElementById('thought-bubbles-grid');
+      if (!grid) return;
+
+      grid.innerHTML = displayThoughts.map(b => {
+        const saved = STATE.userThoughts[b.id] || "";
+        return `
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between gap-3 transition" id="tb-card-${b.id}">
+            <div class="text-xs sm:text-sm font-semibold text-slate-800 italic leading-relaxed">
+              ${b.text}
+            </div>
+            <div class="pt-2 border-t border-slate-200/80 flex items-center justify-between">
+              <span class="text-[11px] text-slate-500 font-bold">Wer denkt das?</span>
+              <select id="sel-tb-${b.id}" onchange="saveThought('${b.id}', this.value)" class="bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-indigo-500">
+                <option value="">-- wählen --</option>
+                <option value="Lina" ${saved === 'Lina' ? 'selected' : ''}>Lina</option>
+                <option value="Tom" ${saved === 'Tom' ? 'selected' : ''}>Tom</option>
+                <option value="Jurij" ${saved === 'Jurij' ? 'selected' : ''}>Jurij</option>
+              </select>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function saveThought(id, val) {
+      STATE.userThoughts[id] = val;
+      try { localStorage.setItem('ns_thoughts', JSON.stringify(STATE.userThoughts)); } catch (e) {}
+    }
+
+    function checkThoughts() {
+      let correct = 0;
+      THOUGHT_BUBBLES.forEach(b => {
+        const card = document.getElementById(`tb-card-${b.id}`);
+        const userVal = STATE.userThoughts[b.id];
+        if (userVal === b.person) {
+          correct++;
+          if (card) card.className = "p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col justify-between gap-3";
+        } else {
+          if (card) card.className = "p-3.5 rounded-xl bg-rose-50 border border-rose-300 flex flex-col justify-between gap-3";
+        }
+      });
+
+      const fb = document.getElementById('thoughts-feedback');
+      if (fb) {
+        fb.innerHTML = correct === 9 ? "🌟 Bravo! Alle 9 Gedanken richtig zugeordnet!" : `${correct} von 9 Gedanken richtig.`;
+        fb.className = correct === 9 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-rose-700";
+      }
+      showToast("Gedanken-Check", `${correct} von 9 Gedanken richtig.`);
+    }
+
+    function toggleThoughtsSol() {
+      const btn = document.getElementById('btn-sol-thoughts');
+      const isSol = btn && btn.innerText.includes("ausblenden");
+      THOUGHT_BUBBLES.forEach(b => {
+        const sel = document.getElementById(`sel-tb-${b.id}`);
+        if (sel) {
+          sel.value = !isSol ? b.person : (STATE.userThoughts[b.id] || "");
+        }
+      });
+      if (btn) btn.innerText = isSol ? "💡 Lösung anzeigen" : "🙈 Lösung ausblenden";
+    }
+
+    // ==============================================================
+    // TAB 4: URTEIL, EPILOG & SCHWEIZER NOTFALLSTELLEN
+    // ==============================================================
+    function renderOpinionTab() {
+      // 1. Linas Mitschuld (Zufällige Anordnung aus displayMitschuld)
+      const mitschuldContainer = document.getElementById('mitschuld-sorting-list');
+      if (mitschuldContainer) {
+        mitschuldContainer.innerHTML = displayMitschuld.map((item, idx) => {
+          const saved = STATE.userMitschuld[item.id] || "";
+          return `
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition" id="ms-item-${item.id}">
+              <div class="flex items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
+                <span class="w-5 h-5 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
+                <span class="leading-snug">${item.text}</span>
+              </div>
+              <div class="sm:w-44 shrink-0">
+                <select id="sel-ms-${item.id}" onchange="saveMitschuld('${item.id}', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-purple-500">
+                  <option value="">-- Beurteilen --</option>
+                  <option value="entlastend" ${saved === 'entlastend' ? 'selected' : ''}>🛡️ Entlastend</option>
+                  <option value="belastend" ${saved === 'belastend' ? 'selected' : ''}>⚠️ Belastend</option>
+                </select>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 2. Schweizer Notfall-Szenarien (Zufällige Anordnung aus displayScenarios)
+      const scenarioContainer = document.getElementById('scenario-matching-list');
+      if (scenarioContainer) {
+        scenarioContainer.innerHTML = displayScenarios.map((item, idx) => {
+          const saved = STATE.userScenarios[item.id] || "";
+          return `
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition" id="sc-item-${item.id}">
+              <div class="flex items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
+                <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
+                <span class="leading-snug">${item.text}</span>
+              </div>
+              <div class="sm:w-56 shrink-0">
+                <select id="sel-sc-${item.id}" onchange="saveScenario('${item.id}', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-blue-500">
+                  <option value="">-- Stelle wählen --</option>
+                  <option value="147" ${saved === '147' ? 'selected' : ''}>Notruf 147 (Pro Juventute)</option>
+                  <option value="KESB" ${saved === 'KESB' ? 'selected' : ''}>KESB (Schutzbehörde)</option>
+                  <option value="Schlupfhuus" ${saved === 'Schlupfhuus' ? 'selected' : ''}>Schlupfhuus / Notunterkunft</option>
+                  <option value="117" ${saved === '117' ? 'selected' : ''}>Polizei (Notruf 117)</option>
+                </select>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function saveMitschuld(id, val) {
+      STATE.userMitschuld[id] = val;
+      try { localStorage.setItem('ns_mitschuld', JSON.stringify(STATE.userMitschuld)); } catch (e) {}
+    }
+
+    function checkMitschuldSorting() {
+      let correct = 0;
+      MITSCHULD_ITEMS.forEach(item => {
+        const row = document.getElementById(`ms-item-${item.id}`);
+        const userVal = STATE.userMitschuld[item.id];
+        if (userVal === item.correct) {
+          correct++;
+          if (row) row.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition";
+        } else {
+          if (row) row.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition";
+        }
+      });
+
+      const fb = document.getElementById('mitschuld-feedback');
+      if (fb) {
+        fb.innerHTML = correct === 6 ? "🌟 Perfekt! Alle 6 Situationen richtig beurteilt!" : `${correct} von 6 Situationen richtig zugeordnet.`;
+        fb.className = correct === 6 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-rose-700";
+      }
+      showToast("Urteilsbildung", `${correct} von 6 Punkten richtig beurteilt.`);
+    }
+
+    function toggleMitschuldSol() {
+      const btn = document.getElementById('btn-sol-mitschuld');
+      const isSol = btn && btn.innerText.includes("ausblenden");
+      MITSCHULD_ITEMS.forEach(item => {
+        const sel = document.getElementById(`sel-ms-${item.id}`);
+        if (sel) {
+          sel.value = !isSol ? item.correct : (STATE.userMitschuld[item.id] || "");
+        }
+      });
+      if (btn) btn.innerText = isSol ? "💡 Lösung anzeigen" : "🙈 Lösung ausblenden";
+    }
+
+    function saveScenario(id, val) {
+      STATE.userScenarios[id] = val;
+      try { localStorage.setItem('ns_scenarios', JSON.stringify(STATE.userScenarios)); } catch (e) {}
+    }
+
+    function checkScenarioMatching() {
+      let correct = 0;
+      SWISS_SCENARIOS.forEach(item => {
+        const row = document.getElementById(`sc-item-${item.id}`);
+        const userVal = STATE.userScenarios[item.id];
+        if (userVal === item.correct) {
+          correct++;
+          if (row) row.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition";
+        } else {
+          if (row) row.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition";
+        }
+      });
+
+      const fb = document.getElementById('scenario-feedback');
+      if (fb) {
+        fb.innerHTML = correct === 4 ? "🌟 Perfekt! Alle 4 Situationen richtig zugeordnet!" : `${correct} von 4 Stellen richtig.`;
+        fb.className = correct === 4 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-rose-700";
+      }
+      showToast("Nothilfe-Check", `${correct} von 4 Szenarien korrekt.`);
+    }
+
+    function toggleScenarioSol() {
+      const btn = document.getElementById('btn-sol-scenario');
+      const isSol = btn && btn.innerText.includes("ausblenden");
+      SWISS_SCENARIOS.forEach(item => {
+        const sel = document.getElementById(`sel-sc-${item.id}`);
+        if (sel) {
+          sel.value = !isSol ? item.correct : (STATE.userScenarios[item.id] || "");
+        }
+      });
+      if (btn) btn.innerText = isSol ? "💡 Lösung anzeigen" : "🙈 Lösung ausblenden";
+    }
+
+    function checkActiveSwissHelpInput() {
+      const input = document.getElementById('input-active-swiss-help');
+      const badgesBox = document.getElementById('swiss-help-badges');
+      const countEl = document.getElementById('swiss-help-count');
+      if (!input || !badgesBox) return;
+
+      const txt = input.value.toLowerCase();
+      const detected = [];
+
+      if (txt.includes('147') || txt.includes('pro juventute')) detected.push('Notruf 147 (Pro Juventute)');
+      if (txt.includes('kesb') || txt.includes('kindesschutz')) detected.push('KESB');
+      if (txt.includes('polizei') || txt.includes('117')) detected.push('Polizei (117)');
+      if (txt.includes('schlupfhuus') || txt.includes('notunterkunft') || txt.includes('krisenintervention')) detected.push('Schlupfhuus');
+      if (txt.includes('opferhilfe')) detected.push('Opferhilfe Schweiz');
+      if (txt.includes('143') || txt.includes('dargebotene')) detected.push('Dargebotene Hand (143)');
+      if (txt.includes('jugendberatung') || txt.includes('jugenddienst')) detected.push('Jugendberatungsstelle');
+
+      if (countEl) countEl.innerText = `${detected.length} / 3 genannt`;
+
+      if (detected.length === 0) {
+        badgesBox.innerHTML = '<span class="text-xs text-slate-400 italic">Noch keine offizielle Schweizer Stelle erkannt...</span>';
+      } else {
+        badgesBox.innerHTML = detected.map(d => `<span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-900 font-bold border border-emerald-300 text-xs flex items-center gap-1">✓ ${d}</span>`).join('');
+      }
+    }
+
+    // ==============================================================
+    // STOPWATCH TIMER
+    // ==============================================================
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let timerRunning = false;
+
+    function formatTime(totalSec) {
+      const mins = Math.floor(totalSec / 60);
+      const secs = totalSec % 60;
+      const pad = (n) => String(n).padStart(2, '0');
+      if (mins >= 60) {
+        const hrs = Math.floor(mins / 60);
+        const remMins = mins % 60;
+        return `${pad(hrs)}:${pad(remMins)}:${pad(secs)}`;
+      }
+      return `${pad(mins)}:${pad(secs)}`;
+    }
+
+    function updateTimerDisplay() {
+      const el = document.getElementById('timer-display');
+      if (el) el.innerText = formatTime(timerSeconds);
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('timer-toggle-btn');
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        if (btn) btn.innerHTML = '▶️ Start';
+        try { localStorage.setItem('ns_timer_seconds', timerSeconds); } catch (e) {}
+        showToast("⏱️ Pausiert", `Lernzeit: ${formatTime(timerSeconds)}`);
+      } else {
+        timerRunning = true;
+        if (btn) btn.innerHTML = '⏸️ Pause';
+        timerInterval = setInterval(() => {
+          timerSeconds++;
+          updateTimerDisplay();
+          if (timerSeconds % 5 === 0) {
+            try { localStorage.setItem('ns_timer_seconds', timerSeconds); } catch (e) {}
+          }
+        }, 1000);
+        showToast("⏱️ Gestartet", "Lernzeit wird gezählt.");
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = 0;
+      updateTimerDisplay();
+      try { localStorage.removeItem('ns_timer_seconds'); } catch (e) {}
+      const btn = document.getElementById('timer-toggle-btn');
+      if (btn) btn.innerHTML = '▶️ Start';
+      showToast("⏱️ Zurückgesetzt", "Uhr steht auf 00:00.");
+    }
+
+    function showToast(title, msg) {
+      const toast = document.getElementById('toast');
+      const toastTitle = document.getElementById('toast-title');
+      const toastMsg = document.getElementById('toast-msg');
+      if (!toast || !toastTitle || !toastMsg) return;
+
+      toastTitle.innerText = title;
+      toastMsg.innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    // EXPOSE TO GLOBAL SCOPE
+    window.switchTab = switchTab;
+    window.reshuffleChronoTasks = reshuffleChronoTasks;
+    window.reshuffleOpinionTasks = reshuffleOpinionTasks;
+    window.saveChrono = saveChrono;
+    window.checkChronoEscape = checkChronoEscape;
+    window.toggleChronoEscapeSol = toggleChronoEscapeSol;
+    window.saveChronoPartA = saveChronoPartA;
+    window.checkChronoPartA = checkChronoPartA;
+    window.toggleChronoPartASol = toggleChronoPartASol;
+    window.saveChronoPartB = saveChronoPartB;
+    window.checkChronoPartB = checkChronoPartB;
+    window.toggleChronoPartBSol = toggleChronoPartBSol;
+    window.checkKeywords = checkKeywords;
+    window.toggleModelSol = toggleModelSol;
+    window.saveThought = saveThought;
+    window.checkThoughts = checkThoughts;
+    window.toggleThoughtsSol = toggleThoughtsSol;
+    window.saveMitschuld = saveMitschuld;
+    window.checkMitschuldSorting = checkMitschuldSorting;
+    window.toggleMitschuldSol = toggleMitschuldSol;
+    window.saveScenario = saveScenario;
+    window.checkScenarioMatching = checkScenarioMatching;
+    window.toggleScenarioSol = toggleScenarioSol;
+    window.checkActiveSwissHelpInput = checkActiveSwissHelpInput;
+    window.toggleTimer = toggleTimer;
+    window.resetTimer = resetTimer;
+
+    window.onload = function() {
+      loadSavedState();
+      initShuffledData();
+      renderChronoTab();
+      renderFiguresTab();
+      renderOpinionTab();
+    };
+  </script>
+</body>
+</html>

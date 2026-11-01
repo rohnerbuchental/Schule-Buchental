@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connected 3 · Abheben mit Algorithmen (Scratch Trainingshub)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+
+    /* Scratch Block Simulation */
+    .scratch-block {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      color: white;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      user-select: none;
+    }
+    .scratch-motion { background-color: #4C97FF; }
+    .scratch-control { background-color: #FFAB19; color: #4D3800; }
+    .scratch-events { background-color: #FFBF00; color: #4D3800; }
+    .scratch-custom { background-color: #FF6680; }
+    .scratch-operators { background-color: #59C059; }
+    .scratch-sensing { background-color: #5CB1D6; }
+    
+    .scratch-input {
+      background: white;
+      color: #333;
+      padding: 0.1rem 0.4rem;
+      border-radius: 0.35rem;
+      font-weight: 700;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
+    .scratch-cond {
+      background: rgba(0,0,0,0.12);
+      padding: 0.1rem 0.4rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.35);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-sky-600 selection:text-white">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-sky-900 via-indigo-950 to-slate-900 text-white shadow-lg sticky top-0 z-40 border-b border-sky-800/50">
+    <div class="max-w-5xl mx-auto px-4 py-3 sm:py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl sm:text-3xl p-1.5 sm:p-2 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10 shadow-inner">🚁</span>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-sky-400/20 text-sky-200 border border-sky-400/30">Connected 3 · Kapitel 3</span>
+            <span class="text-[10px] font-medium bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Speichert alle Antworten automatisch">
+              💾 Auto-Save
+            </span>
+            <span class="text-[10px] font-medium bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Zufällige Mischung">
+              🔀 Zufall
+            </span>
+          </div>
+          <h1 class="text-base sm:text-lg font-bold leading-tight mt-0.5">Abheben mit Algorithmen · Scratch Trainingshub</h1>
+        </div>
+      </div>
+
+      <!-- Quick Stats & Stopwatch -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl border border-white/20 text-xs shadow-inner">
+          <span class="text-amber-300 font-semibold">⏱️ Zeit:</span>
+          <span id="timer-display" class="font-mono-code font-bold text-white bg-black/40 px-2 py-0.5 rounded-lg tracking-wider text-xs">00:00</span>
+          <button onclick="toggleTimer()" id="timer-toggle-btn" class="px-2 py-0.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-bold transition">
+            ▶️ Start
+          </button>
+          <button onclick="resetTimer()" class="px-1.5 py-0.5 rounded-lg bg-white/15 hover:bg-rose-500/40 text-white transition text-xs">
+            ↺
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Bar (5 strukturierte Tabs) -->
+    <nav class="max-w-5xl mx-auto px-4 flex gap-1.5 overflow-x-auto border-t border-white/10 py-2 text-xs sm:text-sm font-medium">
+      <button onclick="switchTab('basics')" id="tab-btn-basics" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm">
+        <span>📜</span> 1. Algorithmus & Diagramm
+      </button>
+      <button onclick="switchTab('loops')" id="tab-btn-loops" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
+        <span>🔄</span> 2. Schleifen & Quadrat
+      </button>
+      <button onclick="switchTab('custom')" id="tab-btn-custom" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
+        <span>🧩</span> 3. Eigene Blöcke & Bugfix
+      </button>
+      <button onclick="switchTab('logic')" id="tab-btn-logic" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
+        <span>💡</span> 4. Smarthome & UND/ODER
+      </button>
+      <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/30">
+        <span>📝</span> 5. Test-Simulation (22 P.)
+      </button>
+    </nav>
+  </header>
+
+  <!-- ============================================================== -->
+  <!-- MAIN CONTAINER -->
+  <!-- ============================================================== -->
+  <main class="max-w-5xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-6">
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: ALGORITHMUS & ABLAUFDIAGRAMM (LZ 1 & 2) -->
+    <!-- ============================================================== -->
+    <section id="view-basics" class="tab-view space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <span class="text-xs font-bold text-sky-700 uppercase tracking-wider">Lernziele 1 & 2 · MI.2.2.g</span>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-800">📜 Was ist ein Algorithmus? & Ablaufdiagramme lesen</h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+            Lerne den Unterschied zwischen genauen Anleitungen und losen Listen und verstehe Entscheidungs-Rauten.
+          </p>
+        </div>
+        <button onclick="reshuffleBasics()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1 border border-slate-300 self-start sm:self-auto shrink-0">
+          <span>🔀</span> Optionen neu mischen
+        </button>
+      </div>
+
+      <!-- Aufgabe 1: Definition & Alltag -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 1: Der Begriff «Algorithmus» (2 Punkte)</h3>
+          <span class="text-xs font-semibold text-slate-400">Multiple Choice</span>
+        </div>
+
+        <div class="space-y-4 pt-1">
+          <!-- 1a -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a1a">
+            <span class="text-xs sm:text-sm font-bold text-slate-900 block">
+              a) Was beschreibt am besten, was ein Algorithmus ist? (1 P.)
+            </span>
+            <div class="space-y-1.5" id="opts-a1a"></div>
+          </div>
+
+          <!-- 1b -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a1b">
+            <span class="text-xs sm:text-sm font-bold text-slate-900 block">
+              b) Welches Beispiel aus dem Alltag ist ein echter Algorithmus? (1 P.)
+            </span>
+            <div class="space-y-1.5" id="opts-a1b"></div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button onclick="checkBasicsA1()" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Aufgabe 1 prüfen
+          </button>
+          <div id="fb-basics-a1" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+
+      <!-- Aufgabe 2: Ablaufdiagramm für die Drohne -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 2: Ablaufdiagramm der Drohne lesen (3 Punkte)</h3>
+        </div>
+
+        <div class="bg-sky-50 border-l-4 border-sky-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+          👉 <strong>Situation:</strong> Eine Postdrohne soll ein Paket ausliefern. Schau dir das Diagramm genau an:
+        </div>
+
+        <!-- Diagramm-Box -->
+        <div class="p-4 bg-slate-900 text-white rounded-xl font-mono-code text-xs sm:text-sm leading-relaxed overflow-x-auto shadow-inner">
+<pre class="text-center font-bold text-sky-300">
+           ┌───────────┐
+           │   START   │
+           └─────┬─────┘
+                 │
+                 ▼
+       ┌───────────────────┐
+       │ Steige auf 20m    │  (1. Schritt)
+       └─────────┬─────────┘
+                 │
+                 ▼
+               /   \
+              / Ist \       NEIN
+             &lt;  Ziel &gt; ─────────────► ┌──────────────────────┐
+              \  da? /                │ Fliege 10m vorwärts  │
+               \   /                  └──────────┬───────────┘
+                 │                               │
+                 │ JA                            │ (wieder zurück zur Frage)
+                 ▼                               │
+       ┌───────────────────┐                     │
+       │ Lande und öffne   │ ◄───────────────────┘
+       │ den Paket-Haken   │
+       └─────────┬─────────┘
+                 │
+                 ▼
+           ┌───────────┐
+           │   STOPP   │
+           └───────────┘
+</pre>
+        </div>
+
+        <!-- 3 Fragen zum Diagramm -->
+        <div class="space-y-3 pt-1 text-xs sm:text-sm">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="card-a2-1">
+            <span class="font-medium text-slate-800">1. Was macht die Drohne als <strong>allerersten Schritt</strong> direkt nach dem Start?</span>
+            <select id="sel-a2-1" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold sm:w-60">
+              <option value="">-- wählen --</option>
+              <option value="right">Steigt auf 20 Meter auf</option>
+              <option value="wrong1">Fliegt 10m vorwärts</option>
+              <option value="wrong2">Öffnet den Pakethaken</option>
+            </select>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="card-a2-2">
+            <span class="font-medium text-slate-800">2. Was macht die Drohne, solange die Antwort auf «Ist Ziel da?» <strong>NEIN</strong> ist?</span>
+            <select id="sel-a2-2" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold sm:w-60">
+              <option value="">-- wählen --</option>
+              <option value="wrong1">Sie stoppt sofort</option>
+              <option value="right">Sie fliegt 10m vorwärts und prüft wieder</option>
+              <option value="wrong2">Sie sinkt zum Boden ab</option>
+            </select>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="card-a2-3">
+            <span class="font-medium text-slate-800">3. Warum ist in der Mitte eine <strong>Raute ◇</strong> gezeichnet und kein Rechteck?</span>
+            <select id="sel-a2-3" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold sm:w-60">
+              <option value="">-- wählen --</option>
+              <option value="right">Weil dort eine Ja/Nein-Entscheidung getroffen wird</option>
+              <option value="wrong1">Weil die Drohne dort schneller fliegen soll</option>
+              <option value="wrong2">Weil dort der Akku geladen wird</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button onclick="checkBasicsA2()" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Aufgabe 2 prüfen
+          </button>
+          <div id="fb-basics-a2" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: SCHLEIFEN & QUADRAT FLIEGEN (LZ 3 & 4) -->
+    <!-- ============================================================== -->
+    <section id="view-loops" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
+        <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Lernziele 3 & 4 · MI.2.2.g</span>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">🔄 Schleifen (Loops) & Schrittweiten steuern</h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+          Wie oft wiederholt Scratch einen Befehl? Und wie baut man ein Quadrat mit 4 Ecken?
+        </p>
+      </div>
+
+      <!-- Aufgabe 3: Schleifen & Schrittweiten -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 3: Schleifen und Schritte berechnen (2 Punkte)</h3>
+        </div>
+
+        <p class="text-xs sm:text-sm text-slate-700">Die Drohne führt folgenden Scratch-Code aus:</p>
+
+        <!-- Scratch Block Darstellung -->
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1 inline-block">
+          <div><span class="scratch-block scratch-control">wiederhole <span class="scratch-input">4</span> mal</span></div>
+          <div class="pl-4">
+            <span class="scratch-block scratch-motion">gehe <span class="scratch-input">10</span>er-Schritt</span>
+          </div>
+          <div class="pl-4">
+            <span class="scratch-block scratch-control">warte <span class="scratch-input">1</span> Sekunde</span>
+          </div>
+          <div><span class="scratch-block scratch-control">Ende</span></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs sm:text-sm">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a3-1">
+            <span class="font-bold text-slate-800 block">1. Wie oft wird der blaue Befehl wiederholt?</span>
+            <select id="sel-a3-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
+              <option value="">-- wählen --</option>
+              <option value="1">1 mal</option>
+              <option value="4">4 mal</option>
+              <option value="10">10 mal</option>
+              <option value="40">40 mal</option>
+            </select>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a3-2">
+            <span class="font-bold text-slate-800 block">2. Wie viele Schritte ist die Drohne am Ende insgesamt geflogen?</span>
+            <select id="sel-a3-2" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
+              <option value="">-- wählen --</option>
+              <option value="10">10 Schritte</option>
+              <option value="14">14 Schritte (4 + 10)</option>
+              <option value="40">40 Schritte (4 × 10)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button onclick="checkLoopsA3()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Aufgabe 3 prüfen
+          </button>
+          <div id="fb-loops-a3" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+
+      <!-- Aufgabe 4: Drohne landen -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 4: Die richtige Schleife zum Landen wählen (2 Punkte)</h3>
+        </div>
+
+        <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+          👉 <strong>Aufgabe:</strong> Die Drohne ist in der Luft. Sie soll so lange langsam nach unten sinken, <strong>bis sie den Boden berührt</strong>.
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs sm:text-sm">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a4-1">
+            <span class="font-bold text-slate-800 block">a) Welcher Schleifen-Block ist dafür perfekt?</span>
+            <select id="sel-a4-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
+              <option value="">-- wählen --</option>
+              <option value="fortlaufend">wiederhole fortlaufend</option>
+              <option value="bis">wiederhole bis &lt;wird Boden berührt?&gt;</option>
+              <option value="falls">falls &lt;wird Boden berührt?&gt;, dann</option>
+            </select>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a4-2">
+            <span class="font-bold text-slate-800 block">b) Welcher y-Wert lässt die Drohne nach UNTEN sinken?</span>
+            <select id="sel-a4-2" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
+              <option value="">-- wählen --</option>
+              <option value="y10">ändere y um ( 10 )</option>
+              <option value="yminus1">ändere y um ( -1 )</option>
+              <option value="x10">ändere x um ( 10 )</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button onclick="checkLoopsA4()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Aufgabe 4 prüfen
+          </button>
+          <div id="fb-loops-a4" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+
+      <!-- Aufgabe 6: Quadrat fliegen (1, 2, 3 Sortieren) -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 6: Ein Quadrat fliegen (3 Punkte)</h3>
+          <span class="text-xs font-semibold text-slate-400">Reihenfolge 1–3</span>
+        </div>
+
+        <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+          👉 <strong>Plan:</strong> Die Drohne soll ein Quadrat abfliegen: 50 Schritte vorwärts, um 90 Grad drehen, das Ganze 4-mal.  
+          Bringe die 3 Bausteine in die richtige Reihenfolge (Zahlen 1, 2, 3):
+        </div>
+
+        <div class="space-y-2.5 pt-1" id="square-sort-list"></div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button onclick="checkSquareSort()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Quadrat-Reihenfolge prüfen
+          </button>
+          <div id="fb-square-sort" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: UNTERPROGRAMME & FEHLERSUCHE (LZ 5 & 6) -->
+    <!-- ============================================================== -->
+    <section id="view-custom" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
+        <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">Lernziele 5 & 6 · MI.2.2.h</span>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">🧩 Eigene Blöcke (Unterprogramme) & Bugfixing</h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+          Eigene pinke Blöcke machen den Code sauber und übersichtlich. Finde ausserdem Logikfehler!
+        </p>
+      </div>
+
+      <!-- Aufgabe 5: Unterprogramm benennen & verstehen -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 5: Unterprogramme verstehen (3 Punkte)</h3>
+        </div>
+
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1 inline-block">
+          <div><span class="scratch-block scratch-custom">Definiere <span class="scratch-input">???</span></span></div>
+          <div class="pl-4">
+            <span class="scratch-block scratch-control">wiederhole bis <span class="scratch-cond">&lt; y-Position = 200 &gt;</span></span>
+          </div>
+          <div class="pl-8">
+            <span class="scratch-block scratch-motion">ändere y um <span class="scratch-input">1</span></span>
+          </div>
+          <div class="pl-4"><span class="scratch-block scratch-control">Ende</span></div>
+        </div>
+
+        <div class="space-y-4 pt-1 text-xs sm:text-sm">
+          <!-- 5a -->
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a5-1">
+            <span class="font-bold text-slate-800 block">a) Welcher Name passt am besten für diesen Block? (Was macht die Drohne hier?) (1 P.)</span>
+            <select id="sel-a5-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
+              <option value="">-- wählen --</option>
+              <option value="abheben">abheben</option>
+              <option value="drehen">im Kreis drehen</option>
+              <option value="abwerfen">Paket abwerfen</option>
+            </select>
+          </div>
+
+          <!-- 5b -->
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a5-2">
+            <span class="font-bold text-slate-800 block">b) Warum nutzt man eigene Blöcke (Unterprogramme)? (Wähle die ZWEI richtigen Gründe!) (2 P.)</span>
+            <div class="space-y-1.5" id="opts-a5-reasons"></div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button onclick="checkCustomA5()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Aufgabe 5 prüfen
+          </button>
+          <div id="fb-custom-a5" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+
+      <!-- Aufgabe 8: Bugfixing (Fehlersuche) -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 8: Bugfixing – Finde den Programmierfehler! (2 Punkte)</h3>
+        </div>
+
+        <div class="bg-rose-50 border-l-4 border-rose-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+          👉 <strong>Der Fehler:</strong> Ein Schüler will, dass seine Drohne sanft zum Boden landet.  
+          Aber sein Skript spinnt: <strong>Die Drohne schiesst immer höher in den Himmel, statt nach unten zu sinken!</strong>
+        </div>
+
+        <!-- Fehlerhafter Code -->
+        <div class="p-3.5 bg-slate-900 rounded-xl space-y-1 inline-block border border-slate-700">
+          <div><span class="scratch-block scratch-custom">Definiere <span class="scratch-input">Landen</span></span></div>
+          <div class="pl-4">
+            <span class="scratch-block scratch-control">wiederhole bis <span class="scratch-cond">&lt; wird Boden berührt? &gt;</span></span>
+          </div>
+          <div class="pl-8">
+            <span class="scratch-block scratch-motion bg-rose-700 border-2 border-yellow-300">ändere y um <span class="scratch-input text-rose-700 font-black">5</span> ◄ FEHLER!</span>
+          </div>
+          <div class="pl-4"><span class="scratch-block scratch-control">Ende</span></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs sm:text-sm">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a8-1">
+            <span class="font-bold text-slate-800 block">1. Warum fliegt die Drohne nach oben statt zum Boden?</span>
+            <select id="sel-a8-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
+              <option value="">-- wählen --</option>
+              <option value="right">Weil dort eine positive Zahl (+5) steht statt einer Minuszahl</option>
+              <option value="wrong1">Weil das Wort «Landen» falsch geschrieben ist</option>
+              <option value="wrong2">Weil man statt «y» die Taste Leertaste drücken muss</option>
+            </select>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a8-2">
+            <span class="font-bold text-slate-800 block">2. Was muss man eintragen, damit sie nach unten sinkt?</span>
+            <select id="sel-a8-2" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
+              <option value="">-- Zahl wählen --</option>
+              <option value="10">ändere y um ( 10 )</option>
+              <option value="0">ändere y um ( 0 )</option>
+              <option value="-1">ändere y um ( -1 )</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button onclick="checkCustomA8()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Bugfix überprüfen
+          </button>
+          <div id="fb-custom-a8" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: SMARTHOME & UND/ODER/NICHT (LZ 7 & 8) -->
+    <!-- ============================================================== -->
+    <section id="view-logic" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Lernziele 7 & 8 · MI.2.1.i</span>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-800">💡 Logik mit UND, ODER und NICHT</h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+            Bedingungen verbinden: Wie steuert man ein Smarthome-Licht oder eine Sicherheitsabfrage?
+          </p>
+        </div>
+        <button onclick="reshuffleLogic()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1 border border-slate-300 self-start sm:self-auto shrink-0">
+          <span>🔀</span> Tabelle neu mischen
+        </button>
+      </div>
+
+      <!-- Aufgabe 7: Die Smarte Lichtsteuerung -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7: Smarthome Lichtsteuerung (4 Punkte)</h3>
+        </div>
+
+        <!-- Regeln -->
+        <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm space-y-1">
+          <div class="font-bold text-emerald-950">📋 Die 3 Regeln für die automatische Zimmerlampe:</div>
+          <p>1. <strong>Licht AN:</strong> Wenn es <strong>dunkel</strong> ist <strong>UND</strong> eine <strong>Bewegung</strong> erkannt wird.</p>
+          <p>2. <strong>Licht GEDIMMT:</strong> Wenn es tagsüber hell ist, aber wegen Regen/Gewitter düster wird <strong>UND</strong> eine Bewegung da ist.</p>
+          <p>3. <strong>Licht AUS:</strong> Sobald <strong>KEINE Bewegung</strong> da ist!</p>
+        </div>
+
+        <!-- Entscheidungstabelle (Zufällig gemischt) -->
+        <div class="space-y-2 pt-1" id="smarthome-table-list"></div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button onclick="checkLogicA7()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Lichtsteuerung prüfen
+          </button>
+          <div id="fb-logic-a7" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+
+      <!-- Zusatzfrage: NICHT Block -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
+        <div class="border-b border-slate-100 pb-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Zusatzfrage: Die Negation «NICHT» (1 Punkt)</h3>
+        </div>
+
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1 inline-block">
+          <span class="scratch-block scratch-operators">&lt; nicht <span class="scratch-cond">&lt; wird Hindernis berührt? &gt;</span> &gt;</span>
+        </div>
+
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a7-nicht">
+          <span class="text-xs sm:text-sm font-bold text-slate-800 block">Was bedeutet dieser Block in normaler menschlicher Sprache?</span>
+          <select id="sel-a7-nicht" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs sm:text-sm font-bold">
+            <option value="">-- wählen --</option>
+            <option value="wrong1">Die Drohne steckt mitten im Hindernis fest</option>
+            <option value="right">Solange der Weg frei ist (kein Hindernis berührt wird)</option>
+            <option value="wrong2">Die Drohne schaltet die Scheinwerfer aus</option>
+          </select>
+        </div>
+
+        <div class="pt-2 flex items-center justify-between gap-3">
+          <button onclick="checkLogicNicht()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ NICHT-Block prüfen
+          </button>
+          <div id="fb-logic-nicht" class="text-xs font-semibold"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 5: TEST-SIMULATION (22 PUNKTE) -->
+    <!-- ============================================================== -->
+    <section id="view-exam" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-gradient-to-br from-white to-amber-50/50 rounded-2xl p-5 shadow-sm border border-amber-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-100">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
+              Prüfungsmodus · 22 Punkte · Real-Niveau
+            </span>
+            <h2 class="text-lg sm:text-xl font-black text-slate-800 mt-1">📝 Vollständige Test-Simulation</h2>
+            <p class="text-xs text-slate-600 mt-0.5">
+              Simuliert exakt den bevorstehenden Papiertest. Schweizer Bestehensgrenze: 60 % (13.5 Punkte = Note 4.0).
+            </p>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="text-xs text-slate-500 block">Bestehen ab:</span>
+            <span class="text-sm font-extrabold text-amber-700">13.5 / 22 P. (60%)</span>
+          </div>
+        </div>
+
+        <!-- Exam Result Banner -->
+        <div id="exam-result-banner" class="hidden mt-4 p-4 rounded-xl border"></div>
+      </div>
+
+      <div class="p-4 bg-white rounded-2xl border border-slate-200 text-center space-y-3">
+        <p class="text-xs sm:text-sm text-slate-600">
+          Klicke auf den Button, um alle bisher in den Reitern 1 bis 4 gelösten Aufgaben zusammenzurechnen und deine Testnote zu sehen!
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <button onclick="evaluateFullExam()" class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow transition flex items-center gap-2">
+            <span>🚀</span> Test jetzt auswerten & Note berechnen
+          </button>
+          <button onclick="resetAllHubData()" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 font-semibold text-xs transition">
+            Alles zurücksetzen
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-700 pointer-events-none text-xs sm:text-sm">
+    <span id="toast-icon">✨</span>
+    <div>
+      <div id="toast-title" class="font-bold">Mitteilung</div>
+      <div id="toast-msg" class="text-slate-300 text-xs">Details</div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- JAVASCRIPT LOGIC -->
+  <!-- ============================================================== -->
+  <script>
+    // 1. DATA: BASICS A1
+    const BASICS_A1A = [
+      { id: "opt_chip", text: "Ein Speicherchip in der Drohne.", correct: false },
+      { id: "opt_rule", text: "Eine genaue Schritt-für-Schritt-Anleitung zur Lösung eines Problems.", correct: true },
+      { id: "opt_rand", text: "Ein zufälliges Durcheinander von Zahlen.", correct: false }
+    ];
+
+    const BASICS_A1B = [
+      { id: "opt_recipe", text: "Ein Backrezept mit genauen Mengenangaben und Schritten («Zuerst..., danach...»).", correct: true },
+      { id: "opt_diary", text: "Ein Tagebucheintrag über das Wochenende.", correct: false },
+      { id: "opt_list", text: "Eine Einkaufsliste mit 5 Früchten.", correct: false }
+    ];
+
+    // 2. DATA: SQUARE SORT (1, 2, 3)
+    const SQUARE_BLOCKS = [
+      { id: "sq_loop", text: "wiederhole (4) mal", type: "control", correct: 1 },
+      { id: "sq_move", text: "gehe (50)er-Schritt", type: "motion", correct: 2 },
+      { id: "sq_turn", text: "drehe dich um (90) Grad", type: "motion", correct: 3 }
+    ];
+
+    // 3. DATA: CUSTOM BLOCKS REASONS
+    const CUSTOM_REASONS = [
+      { id: "r1", text: "Der Code wird übersichtlicher und man muss lange Befehle nicht mehrfach bauen.", correct: true },
+      { id: "r2", text: "Die Drohne fliegt mit eigenen Blöcken doppelt so schnell.", correct: false },
+      { id: "r3", text: "Wenn man etwas verbessern will, korrigiert man den Fehler nur an einer Stelle im Unterprogramm.", correct: true },
+      { id: "r4", text: "Scratch braucht mit eigenen Blöcken kein Internet mehr.", correct: false }
+    ];
+
+    // 4. DATA: SMARTHOME TABLE
+    const SMARTHOME_ROWS = [
+      { id: "sh_1", light: "Raum ist dunkel", sensor: "Bewegung erkannt", time: "23:00 Uhr (Nacht)", correct: "AN" },
+      { id: "sh_2", light: "Raum ist dunkel", sensor: "Keine Bewegung", time: "02:00 Uhr (Nacht)", correct: "AUS" },
+      { id: "sh_3", light: "Raum ist hell", sensor: "Keine Bewegung", time: "14:00 Uhr (Tag)", correct: "AUS" },
+      { id: "sh_4", light: "Raum ist dunkel (Gewitter)", sensor: "Bewegung erkannt", time: "11:00 Uhr (Tag)", correct: "GEDIMMT" }
+    ];
+
+    // Fisher-Yates Shuffle
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    let dispA1a = [];
+    let dispA1b = [];
+    let dispSquare = [];
+    let dispReasons = [];
+    let dispSmart = [];
+
+    function initShuffledData() {
+      dispA1a = shuffleArray(BASICS_A1A);
+      dispA1b = shuffleArray(BASICS_A1B);
+      dispSquare = shuffleArray(SQUARE_BLOCKS);
+      dispReasons = shuffleArray(CUSTOM_REASONS);
+      dispSmart = shuffleArray(SMARTHOME_ROWS);
+    }
+
+    // STATE
+    const STATE = {
+      activeTab: 'basics',
+      answers: {}
+    };
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem('scratch_hub_answers');
+        if (saved) STATE.answers = JSON.parse(saved);
+
+        const tm = localStorage.getItem('scratch_hub_timer');
+        if (tm) {
+          timerSeconds = parseInt(tm, 10) || 0;
+          updateTimerDisplay();
+        }
+      } catch (e) {}
+    }
+
+    function saveAnswer(key, val) {
+      STATE.answers[key] = val;
+      try { localStorage.setItem('scratch_hub_answers', JSON.stringify(STATE.answers)); } catch (e) {}
+    }
+
+    // TABS
+    function switchTab(tabId) {
+      STATE.activeTab = tabId;
+      document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.className = "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10";
+      });
+
+      const activeView = document.getElementById(`view-${tabId}`);
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      if (activeView && activeBtn) {
+        activeView.classList.remove('hidden');
+        if (tabId === 'exam') {
+          activeBtn.className = "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-amber-900 font-bold shadow-sm";
+        } else {
+          activeBtn.className = "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm";
+        }
+      }
+    }
+
+    // ==============================================================
+    // RENDERING
+    // ==============================================================
+    function renderBasicsTab() {
+      // 1a
+      const boxA = document.getElementById('opts-a1a');
+      if (boxA) {
+        boxA.innerHTML = dispA1a.map(opt => `
+          <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-sky-50 transition text-xs sm:text-sm">
+            <input type="radio" name="rad_a1a" value="${opt.id}" ${STATE.answers['a1a'] === opt.id ? 'checked' : ''} onchange="saveAnswer('a1a', this.value)" class="w-4 h-4 text-sky-600 focus:ring-sky-500">
+            <span>${opt.text}</span>
+          </label>
+        `).join('');
+      }
+
+      // 1b
+      const boxB = document.getElementById('opts-a1b');
+      if (boxB) {
+        boxB.innerHTML = dispA1b.map(opt => `
+          <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-sky-50 transition text-xs sm:text-sm">
+            <input type="radio" name="rad_a1b" value="${opt.id}" ${STATE.answers['a1b'] === opt.id ? 'checked' : ''} onchange="saveAnswer('a1b', this.value)" class="w-4 h-4 text-sky-600 focus:ring-sky-500">
+            <span>${opt.text}</span>
+          </label>
+        `).join('');
+      }
+
+      // Restore A2
+      ['sel-a2-1', 'sel-a2-2', 'sel-a2-3'].forEach(k => {
+        const el = document.getElementById(k);
+        if (el && STATE.answers[k]) el.value = STATE.answers[k];
+        if (el) el.onchange = (e) => saveAnswer(k, e.target.value);
+      });
+    }
+
+    function reshuffleBasics() {
+      dispA1a = shuffleArray(BASICS_A1A);
+      dispA1b = shuffleArray(BASICS_A1B);
+      renderBasicsTab();
+      showToast("🔀 Neu gemischt", "Die Optionen für Aufgabe 1 wurden zufällig neu sortiert!");
+    }
+
+    function renderLoopsTab() {
+      // A3 restore
+      ['sel-a3-1', 'sel-a3-2'].forEach(k => {
+        const el = document.getElementById(k);
+        if (el && STATE.answers[k]) el.value = STATE.answers[k];
+        if (el) el.onchange = (e) => saveAnswer(k, e.target.value);
+      });
+
+      // A4 restore
+      ['sel-a4-1', 'sel-a4-2'].forEach(k => {
+        const el = document.getElementById(k);
+        if (el && STATE.answers[k]) el.value = STATE.answers[k];
+        if (el) el.onchange = (e) => saveAnswer(k, e.target.value);
+      });
+
+      // A6 Square Sort
+      const sqContainer = document.getElementById('square-sort-list');
+      if (sqContainer) {
+        sqContainer.innerHTML = dispSquare.map(b => {
+          const saved = STATE.answers[`sq_${b.id}`] || "";
+          const colorClass = b.type === 'control' ? 'scratch-control' : 'scratch-motion';
+          return `
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3" id="card-${b.id}">
+              <div class="flex items-center gap-2">
+                <span class="scratch-block ${colorClass}">${b.text}</span>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="text-xs font-semibold text-slate-500">Reihenfolge:</span>
+                <select id="sel-sq-${b.id}" onchange="saveAnswer('sq_${b.id}', this.value)" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold w-20">
+                  <option value="">--</option>
+                  <option value="1" ${saved === '1' ? 'selected' : ''}>1. (Start)</option>
+                  <option value="2" ${saved === '2' ? 'selected' : ''}>2. (Innen)</option>
+                  <option value="3" ${saved === '3' ? 'selected' : ''}>3. (Innen)</option>
+                </select>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function renderCustomTab() {
+      // 5a
+      const sel5a = document.getElementById('sel-a5-1');
+      if (sel5a && STATE.answers['a5_1']) sel5a.value = STATE.answers['a5_1'];
+      if (sel5a) sel5a.onchange = (e) => saveAnswer('a5_1', e.target.value);
+
+      // 5b Reasons
+      const rBox = document.getElementById('opts-a5-reasons');
+      if (rBox) {
+        rBox.innerHTML = dispReasons.map(r => {
+          const checked = STATE.answers[`r_${r.id}`] === true;
+          return `
+            <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-rose-50 transition text-xs sm:text-sm">
+              <input type="checkbox" id="chk-${r.id}" ${checked ? 'checked' : ''} onchange="saveAnswer('r_${r.id}', this.checked)" class="w-4 h-4 text-rose-600 rounded">
+              <span>${r.text}</span>
+            </label>
+          `;
+        }).join('');
+      }
+
+      // A8 restore
+      ['sel-a8-1', 'sel-a8-2'].forEach(k => {
+        const el = document.getElementById(k);
+        if (el && STATE.answers[k]) el.value = STATE.answers[k];
+        if (el) el.onchange = (e) => saveAnswer(k, e.target.value);
+      });
+    }
+
+    function renderLogicTab() {
+      // Smarthome Table
+      const container = document.getElementById('smarthome-table-list');
+      if (container) {
+        container.innerHTML = dispSmart.map((row, idx) => {
+          const saved = STATE.answers[row.id] || "";
+          return `
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5" id="card-${row.id}">
+              <div class="flex items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
+                <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
+                <span>${row.light} · <strong>${row.sensor}</strong> · (${row.time})</span>
+              </div>
+              <div class="sm:w-44 shrink-0 flex items-center gap-2">
+                <span class="text-xs text-slate-400">Lampe:</span>
+                <select id="sel-${row.id}" onchange="saveAnswer('${row.id}', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500">
+                  <option value="">-- wählen --</option>
+                  <option value="AN" ${saved === 'AN' ? 'selected' : ''}>💡 AN (Voll)</option>
+                  <option value="GEDIMMT" ${saved === 'GEDIMMT' ? 'selected' : ''}>🌙 GEDIMMT</option>
+                  <option value="AUS" ${saved === 'AUS' ? 'selected' : ''}>❌ AUS</option>
+                </select>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // NICHT restore
+      const selNicht = document.getElementById('sel-a7-nicht');
+      if (selNicht && STATE.answers['nicht']) selNicht.value = STATE.answers['nicht'];
+      if (selNicht) selNicht.onchange = (e) => saveAnswer('nicht', e.target.value);
+    }
+
+    function reshuffleLogic() {
+      dispSmart = shuffleArray(SMARTHOME_ROWS);
+      renderLogicTab();
+      showToast("🔀 Neu gemischt", "Die Zeilen der Lichtsteuerung wurden zufällig neu angeordnet!");
+    }
+
+    // ==============================================================
+    // CHECK FUNCTIONS
+    // ==============================================================
+    function checkBasicsA1() {
+      let pts = 0;
+      const cA = document.getElementById('card-a1a');
+      const cB = document.getElementById('card-a1b');
+
+      if (STATE.answers['a1a'] === 'opt_rule') {
+        pts++;
+        cA.className = "p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 space-y-2";
+      } else {
+        cA.className = "p-3.5 rounded-xl bg-rose-50 border border-rose-300 space-y-2";
+      }
+
+      if (STATE.answers['a1b'] === 'opt_recipe') {
+        pts++;
+        cB.className = "p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 space-y-2";
+      } else {
+        cB.className = "p-3.5 rounded-xl bg-rose-50 border border-rose-300 space-y-2";
+      }
+
+      const fb = document.getElementById('fb-basics-a1');
+      fb.innerHTML = pts === 2 ? "🌟 2/2 Punkte: Alles richtig!" : `${pts}/2 Punkte.`;
+      fb.className = pts === 2 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
+      showToast("Aufgabe 1", `${pts} von 2 Punkten erreicht.`);
+    }
+
+    function checkBasicsA2() {
+      let pts = 0;
+      const pairs = [
+        { k: 'sel-a2-1', ok: 'right', card: 'card-a2-1' },
+        { k: 'sel-a2-2', ok: 'right', card: 'card-a2-2' },
+        { k: 'sel-a2-3', ok: 'right', card: 'card-a2-3' }
+      ];
+
+      pairs.forEach(p => {
+        const val = STATE.answers[p.k];
+        const card = document.getElementById(p.card);
+        if (val === p.ok) {
+          pts++;
+          if (card) card.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2";
+        } else {
+          if (card) card.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2";
+        }
+      });
+
+      const fb = document.getElementById('fb-basics-a2');
+      fb.innerHTML = pts === 3 ? "🌟 3/3 Punkte: Diagramm perfekt verstanden!" : `${pts}/3 Punkte.`;
+      fb.className = pts === 3 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
+      showToast("Aufgabe 2", `${pts} von 3 Punkten erreicht.`);
+    }
+
+    function checkLoopsA3() {
+      let pts = 0;
+      const c1 = document.getElementById('card-a3-1');
+      const c2 = document.getElementById('card-a3-2');
+
+      if (STATE.answers['sel-a3-1'] === '4') {
+        pts++;
+        c1.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
+      } else {
+        c1.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
+      }
+
+      if (STATE.answers['sel-a3-2'] === '40') {
+        pts++;
+        c2.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
+      } else {
+        c2.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
+      }
+
+      const fb = document.getElementById('fb-loops-a3');
+      fb.innerHTML = pts === 2 ? "🌟 2/2 Punkte: Perfekt gerechnet!" : `${pts}/2 Punkte.`;
+      fb.className = pts === 2 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
+      showToast("Aufgabe 3", `${pts} von 2 Punkten erreicht.`);
+    }
+
+    function checkLoopsA4() {
+      let pts = 0;
+      const c1 = document.getElementById('card-a4-1');
+      const c2 = document.getElementById('card-a4-2');
+
+      if (STATE.answers['sel-a4-1'] === 'bis') {
+        pts++;
+        c1.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
+      } else {
+        c1.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
+      }
+
+      if (STATE.answers['sel-a4-2'] === 'yminus1') {
+        pts++;
+        c2.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
+      } else {
+        c2.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
+      }
+
+      const fb = document.getElementById('fb-loops-a4');
+      fb.innerHTML = pts === 2 ? "🌟 2/2 Punkte: Drohne landet sicher!" : `${pts}/2 Punkte.`;
+      fb.className = pts === 2 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
+      showToast("Aufgabe 4", `${pts} von 2 Punkten erreicht.`);
+    }
+
+    function checkSquareSort() {
+      let pts = 0;
+      SQUARE_BLOCKS.forEach(b => {
+        const row = document.getElementById(`card-${b.id}`);
+        const userVal = parseInt(STATE.answers[`sq_${b.id}`], 10);
+        if (userVal === b.correct) {
+          pts++;
+          if (row) row.className = "p-2.5 rounded-xl bg-emerald-50 border border-emerald-300 flex items-center justify-between gap-3";
+        } else {
+          if (row) row.className = "p-2.5 rounded-xl bg-rose-50 border border-rose-300 flex items-center justify-between gap-3";
+        }
+      });
+
+      const fb = document.getElementById('fb-square-sort');
+      fb.innerHTML = pts === 3 ? "🌟 3/3 Punkte: Perfektes Quadrat!" : `${pts}/3 Punkte richtig.`;
+      fb.className = pts === 3 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
+      showToast("Quadrat", `${pts} von 3 Bausteinen richtig.`);
+    }
+
+    function checkCustomA5() {
+      let pts = 0;
+      const c1 = document.getElementById('card-a5-1');
+      if (STATE.answers['a5_1'] === 'abheben') {
+        pts++;
+        c1.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
+      } else {
+        c1.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
+      }
+
+      // Check the 2 reasons
+      const c2 = document.getElementById('card-a5-2');
+      const r1 = STATE.answers['r_r1'] === true;
+      const r2 = STATE.answers['r_r2'] === true;
+      const r3 = STATE.answers['r_r3'] === true;
+      const r4 = STATE.answers['r_r4'] === true;
+
+      let reasonPts = 0;
+      if (r1) reasonPts++;
+      if (r3) reasonPts++;
+      if (r2 || r4) reasonPts = Math.max(0, reasonPts - 1);
+
+      pts += reasonPts;
+      if (reasonPts === 2) {
+        c2.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-2";
+      } else {
+        c2.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-2";
+      }
+
+      const fb = document.getElementById('fb-custom-a5');
+      fb.innerHTML = pts === 3 ? "🌟 3/3 Punkte: Unterprogramme verstanden!" : `${pts}/3 Punkte.`;
+      fb.className = pts === 3 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
+      showToast("Aufgabe 5", `${pts} von 3 Punkten erreicht.`);
+    }
+
+    function checkCustomA8() {
+      let pts = 0;
+      const c1 = document.getElementById('card-a8-1');
+      const c2 = document.getElementById('card-a8-2');
+
+      if (STATE.answers['sel-a8-1'] === 'right') {
+        pts++;
+        c1.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
+      } else {
+        c1.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
+      }
+
+      if (STATE.answers['sel-a8-2'] === '-1') {
+        pts++;
+        c2.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
+      } else {
+        c2.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
+      }
+
+      const fb = document.getElementById('fb-custom-a8');
+      fb.innerHTML = pts === 2 ? "🌟 2/2 Punkte: Bug erfolgreich behoben!" : `${pts}/2 Punkte.`;
+      fb.className = pts === 2 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
+      showToast("Bugfix", `${pts} von 2 Punkten erreicht.`);
+    }
+
+    function checkLogicA7() {
+      let pts = 0;
+      SMARTHOME_ROWS.forEach(row => {
+        const card = document.getElementById(`card-${row.id}`);
+        const userVal = STATE.answers[row.id];
+        if (userVal === row.correct) {
+          pts++;
+          if (card) card.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5";
+        } else {
+          if (card) card.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5";
+        }
+      });
+
+      const fb = document.getElementById('fb-logic-a7');
+      fb.innerHTML = pts === 4 ? "🌟 4/4 Punkte: Smarthome schaltet perfekt!" : `${pts}/4 Punkte.`;
+      fb.className = pts === 4 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
+      showToast("Lichtsteuerung", `${pts} von 4 Zeilen richtig.`);
+    }
+
+    function checkLogicNicht() {
+      let pts = 0;
+      const card = document.getElementById('card-a7-nicht');
+      if (STATE.answers['nicht'] === 'right') {
+        pts = 1;
+        card.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
+      } else {
+        card.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
+      }
+
+      const fb = document.getElementById('fb-logic-nicht');
+      fb.innerHTML = pts === 1 ? "🌟 1/1 Punkt: Logische Negation verstanden!" : "0/1 Punkt.";
+      fb.className = pts === 1 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-rose-700";
+      showToast("NICHT-Block", `${pts}/1 Punkt.`);
+    }
+
+    // ==============================================================
+    // FULL EXAM EVALUATION (22 POINTS · SWISS SCALE)
+    // ==============================================================
+    function evaluateFullExam() {
+      let score = 0;
+
+      // A1 (2 P.)
+      if (STATE.answers['a1a'] === 'opt_rule') score += 1;
+      if (STATE.answers['a1b'] === 'opt_recipe') score += 1;
+
+      // A2 (3 P.)
+      if (STATE.answers['sel-a2-1'] === 'right') score += 1;
+      if (STATE.answers['sel-a2-2'] === 'right') score += 1;
+      if (STATE.answers['sel-a2-3'] === 'right') score += 1;
+
+      // A3 (2 P.)
+      if (STATE.answers['sel-a3-1'] === '4') score += 1;
+      if (STATE.answers['sel-a3-2'] === '40') score += 1;
+
+      // A4 (2 P.)
+      if (STATE.answers['sel-a4-1'] === 'bis') score += 1;
+      if (STATE.answers['sel-a4-2'] === 'yminus1') score += 1;
+
+      // A6 (3 P.)
+      SQUARE_BLOCKS.forEach(b => {
+        if (parseInt(STATE.answers[`sq_${b.id}`], 10) === b.correct) score += 1;
+      });
+
+      // A5 (3 P.)
+      if (STATE.answers['a5_1'] === 'abheben') score += 1;
+      let reasonPts = 0;
+      if (STATE.answers['r_r1'] === true) reasonPts++;
+      if (STATE.answers['r_r3'] === true) reasonPts++;
+      if (STATE.answers['r_r2'] === true || STATE.answers['r_r4'] === true) reasonPts = Math.max(0, reasonPts - 1);
+      score += reasonPts;
+
+      // A8 (2 P.)
+      if (STATE.answers['sel-a8-1'] === 'right') score += 1;
+      if (STATE.answers['sel-a8-2'] === '-1') score += 1;
+
+      // A7 (4 P.)
+      SMARTHOME_ROWS.forEach(r => {
+        if (STATE.answers[r.id] === r.correct) score += 1;
+      });
+
+      // A7-Zusatz (1 P.)
+      if (STATE.answers['nicht'] === 'right') score += 1;
+
+      // Total: 22 Points
+      const pct = Math.round((score / 22) * 100);
+      let grade = (score / 22) * 5 + 1;
+      grade = Math.round(grade * 10) / 10;
+
+      let ratingTitle = "";
+      let ratingClass = "";
+      let badgeColor = "";
+
+      if (pct >= 90) {
+        ratingTitle = "Sehr gut ⭐ (Kompetenzen vollumfänglich erreicht)";
+        ratingClass = "bg-sky-50 border-sky-300 text-sky-950";
+        badgeColor = "bg-sky-600 text-white";
+      } else if (pct >= 75) {
+        ratingTitle = "Gut 👏 (Kompetenzen solide erreicht)";
+        ratingClass = "bg-emerald-50 border-emerald-300 text-emerald-950";
+        badgeColor = "bg-emerald-600 text-white";
+      } else if (pct >= 60) {
+        ratingTitle = "Erreicht / Bestanden 👍 (Grundkompetenzen erfüllt)";
+        ratingClass = "bg-amber-50 border-amber-300 text-amber-950";
+        badgeColor = "bg-amber-600 text-white";
+      } else {
+        ratingTitle = "Nicht erreicht ⚠️ (Nochmals vertiefen & üben)";
+        ratingClass = "bg-rose-50 border-rose-300 text-rose-950";
+        badgeColor = "bg-rose-600 text-white";
+      }
+
+      const banner = document.getElementById('exam-result-banner');
+      if (banner) {
+        banner.className = `p-5 rounded-2xl border shadow-sm ${ratingClass} block animate-fade-in`;
+        banner.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10">
+            <div>
+              <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full ${badgeColor}">
+                ${pct >= 60 ? 'Bestanden' : 'Nicht bestanden'}
+              </span>
+              <h3 class="text-xl sm:text-2xl font-black mt-2">${ratingTitle}</h3>
+              <p class="text-xs sm:text-sm mt-1 opacity-90">Bestehensgrenze: 60 % (ab 13.5 P. = Note 4.0).</p>
+            </div>
+            <div class="flex items-center gap-4 bg-white/80 p-3 rounded-xl border border-black/10 self-start sm:self-auto">
+              <div class="text-center px-2">
+                <div class="text-[10px] font-bold text-slate-500 uppercase">Punkte</div>
+                <div class="text-2xl font-black">${score} <span class="text-xs text-slate-500 font-normal">/ 22</span></div>
+              </div>
+              <div class="h-8 w-px bg-slate-300"></div>
+              <div class="text-center px-2">
+                <div class="text-[10px] font-bold text-slate-500 uppercase">Prozent</div>
+                <div class="text-2xl font-black">${pct}%</div>
+              </div>
+              <div class="h-8 w-px bg-slate-300"></div>
+              <div class="text-center px-2">
+                <div class="text-[10px] font-bold text-slate-500 uppercase">Note</div>
+                <div class="text-2xl font-black text-blue-700">${grade}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3 text-xs sm:text-sm text-slate-700">
+            <strong>Hinweis für den Papiertest:</strong> Genau diese Aufgabentypen kommen im Test auf Papier dran. Wenn du hier mehr als 14 Punkte hast, bist du bestens vorbereitet!
+          </div>
+        `;
+        banner.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      showToast("Auswertung fertig!", `${score} von 22 Punkten (${pct}%, Note ${grade}).`);
+    }
+
+    function resetAllHubData() {
+      STATE.answers = {};
+      try { localStorage.removeItem('scratch_hub_answers'); } catch (e) {}
+      
+      const banner = document.getElementById('exam-result-banner');
+      if (banner) banner.classList.add('hidden');
+
+      renderBasicsTab();
+      renderLoopsTab();
+      renderCustomTab();
+      renderLogicTab();
+      showToast("Zurückgesetzt", "Alle Antworten wurden geleert.");
+    }
+
+    // ==============================================================
+    // STOPWATCH
+    // ==============================================================
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let timerRunning = false;
+
+    function formatTime(totalSec) {
+      const mins = Math.floor(totalSec / 60);
+      const secs = totalSec % 60;
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${pad(mins)}:${pad(secs)}`;
+    }
+
+    function updateTimerDisplay() {
+      const el = document.getElementById('timer-display');
+      if (el) el.innerText = formatTime(timerSeconds);
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('timer-toggle-btn');
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        if (btn) btn.innerHTML = '▶️ Start';
+        try { localStorage.setItem('scratch_hub_timer', timerSeconds); } catch (e) {}
+        showToast("⏱️ Pausiert", `Lernzeit: ${formatTime(timerSeconds)}`);
+      } else {
+        timerRunning = true;
+        if (btn) btn.innerHTML = '⏸️ Pause';
+        timerInterval = setInterval(() => {
+          timerSeconds++;
+          updateTimerDisplay();
+          if (timerSeconds % 5 === 0) {
+            try { localStorage.setItem('scratch_hub_timer', timerSeconds); } catch (e) {}
+          }
+        }, 1000);
+        showToast("⏱️ Gestartet", "Lernzeit wird gezählt.");
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = 0;
+      updateTimerDisplay();
+      try { localStorage.removeItem('scratch_hub_timer'); } catch (e) {}
+      const btn = document.getElementById('timer-toggle-btn');
+      if (btn) btn.innerHTML = '▶️ Start';
+      showToast("⏱️ Zurückgesetzt", "Uhr steht auf 00:00.");
+    }
+
+    function showToast(title, msg) {
+      const toast = document.getElementById('toast');
+      const toastTitle = document.getElementById('toast-title');
+      const toastMsg = document.getElementById('toast-msg');
+      if (!toast || !toastTitle || !toastMsg) return;
+
+      toastTitle.innerText = title;
+      toastMsg.innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    // EXPOSE TO GLOBAL
+    window.switchTab = switchTab;
+    window.saveAnswer = saveAnswer;
+    window.reshuffleBasics = reshuffleBasics;
+    window.reshuffleLogic = reshuffleLogic;
+    window.checkBasicsA1 = checkBasicsA1;
+    window.checkBasicsA2 = checkBasicsA2;
+    window.checkLoopsA3 = checkLoopsA3;
+    window.checkLoopsA4 = checkLoopsA4;
+    window.checkSquareSort = checkSquareSort;
+    window.checkCustomA5 = checkCustomA5;
+    window.checkCustomA8 = checkCustomA8;
+    window.checkLogicA7 = checkLogicA7;
+    window.checkLogicNicht = checkLogicNicht;
+    window.evaluateFullExam = evaluateFullExam;
+    window.resetAllHubData = resetAllHubData;
+    window.toggleTimer = toggleTimer;
+    window.resetTimer = resetTimer;
+
+    window.onload = function() {
+      initShuffledData();
+      loadState();
+      renderBasicsTab();
+      renderLoopsTab();
+      renderCustomTab();
+      renderLogicTab();
+    };
+  </script>
+</body>
+</html>

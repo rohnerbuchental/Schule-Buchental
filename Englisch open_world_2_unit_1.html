@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open World 2 · Unit 1: Airport & Flying · Grammar & Exam Hub</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeIn 0.25s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-sky-800 text-white shadow-lg sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="text-3xl p-2 bg-white/10 rounded-2xl backdrop-blur-sm shadow-inner">✈️</span>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-sky-400/20 text-sky-200 border border-sky-400/30">Open World 2 · Unit 1</span>
+            <span class="text-[11px] font-semibold text-sky-200 hidden md:inline">LP21: FS1E.5.D.1 / D.2</span>
+          </div>
+          <h1 class="text-lg sm:text-xl font-bold leading-tight">Airport & Flying · Training & Exam Hub</h1>
+        </div>
+      </div>
+
+      <!-- Quick Stats & Stopwatch -->
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Stoppuhr Widget -->
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl border border-white/20 text-xs shadow-inner">
+          <span class="text-amber-300 flex items-center gap-1 font-semibold">⏱️ <span class="hidden sm:inline">Zeit:</span></span>
+          <span id="timer-display" class="font-mono-code font-bold text-white bg-black/30 px-2 py-0.5 rounded-lg tracking-wider text-xs sm:text-sm">00:00</span>
+          <button onclick="toggleTimer()" id="timer-toggle-btn" class="px-2 py-0.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-bold transition flex items-center gap-1" title="Starten / Pausieren">
+            ▶️ Start
+          </button>
+          <button onclick="resetTimer()" class="px-1.5 py-0.5 rounded-lg bg-white/15 hover:bg-rose-500/40 text-white transition text-xs" title="Auf 0 zurücksetzen">
+            ↺ 0
+          </button>
+        </div>
+
+        <!-- Übungsfortschritt -->
+        <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl border border-white/15 text-xs font-medium">
+          <span class="text-sky-300">Fortschritt:</span>
+          <span id="header-stat" class="font-bold text-white font-mono-code bg-white/20 px-2 py-0.5 rounded-lg">0 / 210</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="max-w-6xl mx-auto px-4 flex gap-1.5 sm:gap-2 overflow-x-auto border-t border-white/10 py-2 text-xs sm:text-sm font-medium">
+      <button onclick="switchTab('tags')" id="tab-btn-tags" class="tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-blue-900 font-bold shadow-sm">
+        <span>🏷️</span> 1. Question Tags
+      </button>
+      <button onclick="switchTab('will')" id="tab-btn-will" class="tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-sky-100 hover:bg-white/10">
+        <span>🔮</span> 2. Future with «will»
+      </button>
+      <button onclick="switchTab('conjunctions')" id="tab-btn-conjunctions" class="tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-sky-100 hover:bg-white/10">
+        <span>🔗</span> 3. Konjunktionen
+      </button>
+      <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/40">
+        <span>📝</span> Probeprüfung (30 P.)
+      </button>
+      <button onclick="switchTab('voci')" id="tab-btn-voci" class="tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-sky-100 hover:bg-white/10">
+        <span>📖</span> Voci-Spickzettel
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-6xl w-full mx-auto p-4 sm:p-6 flex-1">
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: QUESTION TAGS -->
+    <!-- ============================================================== -->
+    <section id="view-tags" class="tab-view space-y-6 animate-fade-in">
+      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200 mb-1">
+              LZ 1 · Lehrplan 21: FS1E.5.D.1
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">🏷️ Question Tags (Bestätigungsfragen)</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Regel: Satz positiv (+) ➔ Tag negativ (–) | Satz negativ (–) ➔ Tag positiv (+). Immer Personalpronomen verwenden!
+            </p>
+          </div>
+
+          <!-- Level Switcher -->
+          <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
+            <span class="text-slate-500 pl-2">Niveau:</span>
+            <button onclick="selectLevel('tags', 1)" id="lvl-btn-tags-1" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white shadow-sm transition">
+              Niveau 1 (Auswahl)
+            </button>
+            <button onclick="selectLevel('tags', 2)" id="lvl-btn-tags-2" class="px-3 py-1.5 rounded-lg text-slate-600 hover:bg-white transition">
+              Niveau 2 (Testformat: Freie Eingabe)
+            </button>
+          </div>
+        </div>
+
+        <!-- Pagination Bar (Blocks 1-6) -->
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm">
+          <div class="flex items-center gap-1.5 font-medium text-slate-600">
+            <span>Aufgabenblöcke:</span>
+            <div id="block-pills-tags" class="flex gap-1"></div>
+          </div>
+          <div class="text-xs text-slate-500 font-medium">Lösungen können pro 5er-Block eingesehen werden.</div>
+        </div>
+      </div>
+
+      <!-- Exercise Container -->
+      <div id="container-tags" class="space-y-4"></div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: FUTURE WITH WILL -->
+    <!-- ============================================================== -->
+    <section id="view-will" class="tab-view hidden space-y-6 animate-fade-in">
+      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 border border-indigo-200 mb-1">
+              LZ 2 & LZ 3 · Lehrplan 21: FS1E.5.D.1 / D.2
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">🔮 Future with «will» (+ / – / ?)</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Positiv: <code class="font-mono-code text-indigo-600 font-bold">will + Infinitiv</code> · Negativ: <code class="font-mono-code text-rose-600 font-bold">won't + Infinitiv</code> · Frage: <code class="font-mono-code text-blue-600 font-bold">Will + Subjekt + Infinitiv?</code>
+            </p>
+          </div>
+
+          <!-- Level Switcher -->
+          <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
+            <span class="text-slate-500 pl-2">Niveau:</span>
+            <button onclick="selectLevel('will', 1)" id="lvl-btn-will-1" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-sm transition">
+              Niveau 1 (Auswahl)
+            </button>
+            <button onclick="selectLevel('will', 2)" id="lvl-btn-will-2" class="px-3 py-1.5 rounded-lg text-slate-600 hover:bg-white transition">
+              Niveau 2 (Testformat: Lückentext)
+            </button>
+          </div>
+        </div>
+
+        <!-- Pagination Bar -->
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm">
+          <div class="flex items-center gap-1.5 font-medium text-slate-600">
+            <span>Aufgabenblöcke:</span>
+            <div id="block-pills-will" class="flex gap-1"></div>
+          </div>
+          <div class="text-xs text-slate-500 font-medium">Lösungen können pro 5er-Block eingesehen werden.</div>
+        </div>
+      </div>
+
+      <div id="container-will" class="space-y-4"></div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: CONJUNCTIONS -->
+    <!-- ============================================================== -->
+    <section id="view-conjunctions" class="tab-view hidden space-y-6 animate-fade-in">
+      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 mb-1">
+              LZ 4 · Lehrplan 21: FS1E.5.D.1
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">🔗 Conjunctions (5 Bindewörter)</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              <span class="font-bold text-emerald-700">so</span> (deshalb) · <span class="font-bold text-emerald-700">so ... that</span> (so ... dass) · <span class="font-bold text-emerald-700">in order to</span> (um zu + Infinitiv) · <span class="font-bold text-emerald-700">because</span> (weil) · <span class="font-bold text-emerald-700">(either) ... or</span> (entweder ... oder / oder)
+            </p>
+          </div>
+
+          <!-- Level Switcher -->
+          <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
+            <span class="text-slate-500 pl-2">Niveau:</span>
+            <button onclick="selectLevel('conj', 1)" id="lvl-btn-conj-1" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white shadow-sm transition">
+              Niv. 1 (Auswahl)
+            </button>
+            <button onclick="selectLevel('conj', 2)" id="lvl-btn-conj-2" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-white transition">
+              Niv. 2 (Lückentext)
+            </button>
+            <button onclick="selectLevel('conj', 3)" id="lvl-btn-conj-3" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-white transition">
+              Niv. 3 (Satzbau)
+            </button>
+          </div>
+        </div>
+
+        <!-- Pagination Bar -->
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm">
+          <div class="flex items-center gap-1.5 font-medium text-slate-600">
+            <span>Aufgabenblöcke:</span>
+            <div id="block-pills-conj" class="flex gap-1"></div>
+          </div>
+          <div class="text-xs text-slate-500 font-medium">Lösungen können pro 5er-Block eingesehen werden.</div>
+        </div>
+      </div>
+
+      <div id="container-conj" class="space-y-4"></div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: PROBEPRÜFUNG (30 FRAGEN) -->
+    <!-- ============================================================== -->
+    <section id="view-exam" class="tab-view hidden space-y-6 animate-fade-in">
+      <div class="bg-gradient-to-br from-white to-amber-50/50 rounded-2xl p-5 sm:p-6 shadow-sm border border-amber-200">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-amber-100">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300 mb-1">
+              Testmodus · 30 Aufgaben · 30 Punkte · Schweizer Notenskala
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📝 Probeprüfung: Unit 1 Grammatik</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              10 Question Tags + 10 Future with «will» + 10 Konjunktionen. Richtig = 1 Punkt, Falsch = 0 Punkte.
+            </p>
+          </div>
+          <div class="text-right">
+            <div class="text-xs text-slate-600 font-medium">Bestehensgrenze: <strong>60%</strong> (18 P.)</div>
+            <div class="text-xs font-semibold text-emerald-700">75% = Gut (23 P.) · 90% = Sehr gut (27 P.)</div>
+          </div>
+        </div>
+
+        <!-- Evaluation Results Banner -->
+        <div id="exam-results-banner" class="hidden mt-6 p-5 rounded-2xl border transition-all"></div>
+      </div>
+
+      <!-- Exam Questions Form -->
+      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-8" id="exam-content">
+        <!-- Part 1: Tags -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <h3 class="font-bold text-slate-800 flex items-center gap-2 text-base sm:text-lg">
+              <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-xs font-bold">A</span>
+              Teil 1: Question Tags (10 Aufgaben · 10 Punkte)
+            </h3>
+            <span class="text-xs text-slate-500">Freie Eingabe (z.B. <code class="font-mono-code text-blue-700">aren't you</code>)</span>
+          </div>
+          <div id="exam-list-tags" class="space-y-3"></div>
+        </div>
+
+        <!-- Part 2: Future with will -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <h3 class="font-bold text-slate-800 flex items-center gap-2 text-base sm:text-lg">
+              <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center text-xs font-bold">B</span>
+              Teil 2: Future with «will» (10 Aufgaben · 10 Punkte)
+            </h3>
+            <span class="text-xs text-slate-500">Formen bilden (+ / – / ?) im Testformat</span>
+          </div>
+          <div id="exam-list-will" class="space-y-3"></div>
+        </div>
+
+        <!-- Part 3: Conjunctions -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <h3 class="font-bold text-slate-800 flex items-center gap-2 text-base sm:text-lg">
+              <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold">C</span>
+              Teil 3: Konjunktionen (10 Aufgaben · 10 Punkte)
+            </h3>
+            <span class="text-xs text-slate-500">so, so ... that, in order to, because, (either) ... or</span>
+          </div>
+          <div id="exam-list-conj" class="space-y-3"></div>
+        </div>
+
+        <!-- Submit Bar -->
+        <div class="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-xs text-slate-500">
+            Klicke auf «Prüfung abgeben», um die Note und detaillierte Fehler-Tipps zu erhalten.
+          </div>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <button onclick="resetExam()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 text-sm font-semibold transition w-full sm:w-auto">
+              Test zurücksetzen
+            </button>
+            <button onclick="submitExam()" id="exam-submit-btn" class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold shadow-md transition w-full sm:w-auto flex items-center justify-center gap-2">
+              <span>🚀</span> Prüfung abgeben & auswerten
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 5: VOCABULARY GLOSSARY -->
+    <!-- ============================================================== -->
+    <section id="view-voci" class="tab-view hidden space-y-6 animate-fade-in">
+      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-100 text-purple-800 border border-purple-200 mb-1">
+              LZ 5 · Open World 2 · Unit 1
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📖 Voci-Spickzettel (40 Wörter)</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Wortschatz aus den beiden Vokabeltests rund um Flughafen, Fliegen, Wettbewerb und Pioniere.
+            </p>
+          </div>
+
+          <!-- Search & Filter -->
+          <div class="flex flex-wrap items-center gap-2">
+            <input type="text" id="voci-search" placeholder="Wort suchen (DE/EN)..." class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs sm:text-sm focus:ring-2 focus:ring-purple-500 w-48 sm:w-56" oninput="renderVocabulary()">
+            <div class="flex rounded-xl bg-slate-100 p-1 border border-slate-200 text-xs font-semibold">
+              <button onclick="filterVoci('all')" id="voci-btn-all" class="px-2.5 py-1 rounded-lg bg-purple-600 text-white shadow-sm">Alle</button>
+              <button onclick="filterVoci('part1')" id="voci-btn-part1" class="px-2.5 py-1 rounded-lg text-slate-600 hover:bg-white">Part 1</button>
+              <button onclick="filterVoci('part2')" id="voci-btn-part2" class="px-2.5 py-1 rounded-lg text-slate-600 hover:bg-white">Part 2</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="voci-grid" class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-700 pointer-events-none text-xs sm:text-sm">
+    <span id="toast-icon">✨</span>
+    <div>
+      <div id="toast-title" class="font-bold">Mitteilung</div>
+      <div id="toast-msg" class="text-slate-300 text-xs">Details</div>
+    </div>
+  </div>
+
+  <!-- JavaScript Application Logic -->
+  <script>
+    // ==========================================================
+    // DATA STORE: 40 VOCABULARY ITEMS (OPEN WORLD 2 UNIT 1)
+    // ==========================================================
+    const VOCABULARY = [
+      // Part 1
+      { en: "airport", de: "Flughafen", part: 1 },
+      { en: "airplane", de: "Flugzeug", part: 1 },
+      { en: "so-called", de: "sogenannt", part: 1 },
+      { en: "passion", de: "Leidenschaft", part: 1 },
+      { en: "challenge", de: "Herausforderung", part: 1 },
+      { en: "prediction", de: "Vorhersage, Prognose", part: 1 },
+      { en: "announcement", de: "Durchsage, Ankündigung", part: 1 },
+      { en: "passionate", de: "leidenschaftlich", part: 1 },
+      { en: "passenger", de: "Passagier/-in, Fluggast", part: 1 },
+      { en: "wax", de: "Wachs", part: 1 },
+      { en: "soft", de: "weich, sanft", part: 1 },
+      { en: "competition", de: "Wettbewerb, Wettkampf", part: 1 },
+      { en: "spontaneous", de: "spontan", part: 1 },
+      { en: "all-rounder", de: "vielseitiges Talent, Alleskönner/-in", part: 1 },
+      { en: "crash", de: "verunglücken, abstürzen", part: 1 },
+      { en: "feather", de: "Feder", part: 1 },
+      { en: "melt", de: "schmelzen", part: 1 },
+      { en: "pioneer", de: "Pionier/-in", part: 1 },
+      { en: "aircraft", de: "Luftfahrzeug, Flugzeug", part: 1 },
+      { en: "engine", de: "Motor, Triebwerk", part: 1 },
+      { en: "flight", de: "Flug", part: 1 },
+      { en: "wing", de: "Flügel, Gebäudeflügel", part: 1 },
+      { en: "pilot", de: "Pilot/-in", part: 1 },
+      { en: "engineer", de: "Ingenieur/-in", part: 1 },
+      { en: "successful", de: "erfolgreich", part: 1 },
+      { en: "get excited", de: "ganz aufgeregt werden, sich begeistern", part: 1 },
+
+      // Part 2
+      { en: "search engine", de: "Suchmaschine", part: 2 },
+      { en: "calculate", de: "berechnen", part: 2 },
+      { en: "boarding time", de: "Einsteigezeit, Boarding-Zeit", part: 2 },
+      { en: "result", de: "Ergebnis, Resultat", part: 2 },
+      { en: "be late", de: "zu spät sein, sich verspäten", part: 2 },
+      { en: "during", de: "während", part: 2 },
+      { en: "on behalf of", de: "im Namen von, im Auftrag von", part: 2 },
+      { en: "miss", de: "verpassen", part: 2 },
+      { en: "pleasant", de: "angenehm", part: 2 },
+      { en: "update", de: "Aktualisierung, Neuestes", part: 2 },
+      { en: "gate", de: "Flugsteig, Gate", part: 2 },
+      { en: "check-in desk", de: "Check-in-Schalter", part: 2 },
+      { en: "latest", de: "späteste(r, s), neuste(r, s)", part: 2 },
+      { en: "throw", de: "werfen", part: 2 },
+      { en: "proceed", de: "hier: (weiter)gehen", part: 2 },
+      { en: "luggage", de: "Gepäck", part: 2 },
+      { en: "search term", de: "Suchbegriff", part: 2 },
+      { en: "takeoff", de: "Abflug, Abheben des Flugzeugs", part: 2 },
+      { en: "economy class", de: "Touristenklasse, Economy", part: 2 },
+      { en: "departure", de: "Abflug, Abfahrt", part: 2 },
+      { en: "boarding pass", de: "Bordkarte", part: 2 },
+      { en: "cancel", de: "absagen, annullieren", part: 2 },
+      { en: "score", de: "Punktestand, Spielstand", part: 2 },
+      { en: "referee", de: "Schiedsrichter/-in", part: 2 },
+      { en: "throw (n.)", de: "Wurf", part: 2 },
+      { en: "measure", de: "(ab)messen", part: 2 }
+    ];
+
+    // ==========================================================
+    // EXERCISE DATABASE: 210 ITEMS (ORGANIZED IN 5-QUESTION BLOCKS)
+    // ==========================================================
+    const DB = {
+      // --------------------------------------------------------
+      // 1. QUESTION TAGS - NIVEAU 1 (30 AUSWAHL-AUFGABEN)
+      // --------------------------------------------------------
+      tags_1: [
+        // Block 1 (Einfache Alltagssätze)
+        { id: "t1_1", type: "dropdown", sentence: "You are tired,", options: ["aren't you", "are you", "isn't it"], correct: "aren't you", rule: "«are» positiv ➔ «aren't you»" },
+        { id: "t1_2", type: "dropdown", sentence: "He is friendly,", options: ["isn't he", "is he", "doesn't he"], correct: "isn't he", rule: "«is» positiv ➔ «isn't he»" },
+        { id: "t1_3", type: "dropdown", sentence: "She isn't at home,", options: ["is she", "isn't she", "does she"], correct: "is she", rule: "«isn't» negativ ➔ «is she»" },
+        { id: "t1_4", type: "dropdown", sentence: "They can swim very well,", options: ["can't they", "can they", "don't they"], correct: "can't they", rule: "«can» positiv ➔ «can't they»" },
+        { id: "t1_5", type: "dropdown", sentence: "We aren't too late,", options: ["are we", "aren't we", "do we"], correct: "are we", rule: "«aren't» negativ ➔ «are we»" },
+        // Block 2 (Alltag Vollverben / Hilfsverben)
+        { id: "t1_6", type: "dropdown", sentence: "You play football every week,", options: ["don't you", "aren't you", "do you"], correct: "don't you", rule: "Vollverb «play» ➔ «don't you»" },
+        { id: "t1_7", type: "dropdown", sentence: "She likes chocolate ice cream,", options: ["doesn't she", "isn't she", "does she"], correct: "doesn't she", rule: "3. Person «likes» ➔ «doesn't she»" },
+        { id: "t1_8", type: "dropdown", sentence: "They don't live in Zurich,", options: ["do they", "don't they", "are they"], correct: "do they", rule: "«don't live» negativ ➔ «do they»" },
+        { id: "t1_9", type: "dropdown", sentence: "He didn't come yesterday,", options: ["did he", "didn't he", "was he"], correct: "did he", rule: "Past «didn't» ➔ «did he»" },
+        { id: "t1_10", type: "dropdown", sentence: "You will help your sister,", options: ["won't you", "will you", "don't you"], correct: "won't you", rule: "«will» positiv ➔ «won't you»" },
+        // Block 3 (Voci Unit 1: Flughafen & Flugzeug)
+        { id: "t1_11", type: "dropdown", sentence: "The airport in Zurich is very big,", options: ["isn't it", "is it", "doesn't it"], correct: "isn't it", rule: "«The airport is» ➔ «isn't it»" },
+        { id: "t1_12", type: "dropdown", sentence: "The airplane isn't ready for takeoff,", options: ["is it", "isn't it", "does it"], correct: "is it", rule: "«airplane isn't» ➔ «is it»" },
+        { id: "t1_13", type: "dropdown", sentence: "Passengers can check in online,", options: ["can't they", "can they", "don't they"], correct: "can't they", rule: "«passengers can» ➔ «can't they»" },
+        { id: "t1_14", type: "dropdown", sentence: "You have got your boarding pass,", options: ["haven't you", "don't you", "have you"], correct: "haven't you", rule: "«have got» ➔ «haven't you»" },
+        { id: "t1_15", type: "dropdown", sentence: "The pilot was very calm,", options: ["wasn't he", "was he", "didn't he"], correct: "wasn't he", rule: "«was» positiv ➔ «wasn't he»" },
+        // Block 4 (Voci Unit 1: Technik & Wettbewerb)
+        { id: "t1_16", type: "dropdown", sentence: "The engines aren't too loud,", options: ["are they", "aren't they", "do they"], correct: "are they", rule: "Mehrzahl «engines aren't» ➔ «are they»" },
+        { id: "t1_17", type: "dropdown", sentence: "She booked economy class,", options: ["didn't she", "doesn't she", "wasn't she"], correct: "didn't she", rule: "Past Simple «booked» ➔ «didn't she»" },
+        { id: "t1_18", type: "dropdown", sentence: "Flights to London are expensive,", options: ["aren't they", "are they", "don't they"], correct: "aren't they", rule: "«flights are» ➔ «aren't they»" },
+        { id: "t1_19", type: "dropdown", sentence: "The referee watches the competition,", options: ["doesn't he", "isn't he", "does he"], correct: "doesn't he", rule: "Vollverb «watches» ➔ «doesn't he»" },
+        { id: "t1_20", type: "dropdown", sentence: "The wax wings melted in the sun,", options: ["didn't they", "did they", "weren't they"], correct: "didn't they", rule: "Past «melted» ➔ «didn't they»" },
+        // Block 5 (Voci Unit 1: Pioniere & Abläufe)
+        { id: "t1_21", type: "dropdown", sentence: "You won't miss the departure,", options: ["will you", "won't you", "do you"], correct: "will you", rule: "«won't» negativ ➔ «will you»" },
+        { id: "t1_22", type: "dropdown", sentence: "The check-in desk is open now,", options: ["isn't it", "is it", "doesn't it"], correct: "isn't it", rule: "«desk is» ➔ «isn't it»" },
+        { id: "t1_23", type: "dropdown", sentence: "The young pilot isn't nervous,", options: ["is he", "isn't he", "does he"], correct: "is he", rule: "«pilot isn't» ➔ «is he»" },
+        { id: "t1_24", type: "dropdown", sentence: "We must proceed to the gate now,", options: ["mustn't we", "must we", "don't we"], correct: "mustn't we", rule: "«must» positiv ➔ «mustn't we»" },
+        { id: "t1_25", type: "dropdown", sentence: "They calculated the flight distance,", options: ["didn't they", "did they", "don't they"], correct: "didn't they", rule: "Past «calculated» ➔ «didn't they»" },
+        // Block 6 (Voci Unit 1: Vertiefung)
+        { id: "t1_26", type: "dropdown", sentence: "The flight announcement was loud,", options: ["wasn't it", "was it", "didn't it"], correct: "wasn't it", rule: "«announcement was» ➔ «wasn't it»" },
+        { id: "t1_27", type: "dropdown", sentence: "You don't have too much luggage,", options: ["do you", "don't you", "have you"], correct: "do you", rule: "«don't have» negativ ➔ «do you»" },
+        { id: "t1_28", type: "dropdown", sentence: "This search engine works fast,", options: ["doesn't it", "isn't it", "does it"], correct: "doesn't it", rule: "3. Person «works» ➔ «doesn't it»" },
+        { id: "t1_29", type: "dropdown", sentence: "The aviation pioneers were passionate,", options: ["weren't they", "were they", "didn't they"], correct: "weren't they", rule: "«pioneers were» ➔ «weren't they»" },
+        { id: "t1_30", type: "dropdown", sentence: "Our journey will be pleasant,", options: ["won't it", "will it", "isn't it"], correct: "won't it", rule: "«will be» ➔ «won't it»" }
+      ],
+
+      // --------------------------------------------------------
+      // 1. QUESTION TAGS - NIVEAU 2 (30 TEST-AUFGABEN: FREIE EINGABE)
+      // --------------------------------------------------------
+      tags_2: [
+        // Block 1 (Einfache Alltagssätze)
+        { id: "t2_1", type: "input", sentence: "You are happy today,", answers: ["aren't you"], rule: "«are» positiv ➔ «aren't you»" },
+        { id: "t2_2", type: "input", sentence: "He isn't at school,", answers: ["is he"], rule: "«isn't» negativ ➔ «is he»" },
+        { id: "t2_3", type: "input", sentence: "They can dance well,", answers: ["can't they"], rule: "«can» positiv ➔ «can't they»" },
+        { id: "t2_4", type: "input", sentence: "She lives in Zurich,", answers: ["doesn't she"], rule: "Vollverb «lives» ➔ «doesn't she»" },
+        { id: "t2_5", type: "input", sentence: "We don't have homework,", answers: ["do we"], rule: "«don't have» negativ ➔ «do we»" },
+        // Block 2 (Alltag gemischt)
+        { id: "t2_6", type: "input", sentence: "You went to the cinema yesterday,", answers: ["didn't you"], rule: "Past «went» ➔ «didn't you»" },
+        { id: "t2_7", type: "input", sentence: "It isn't cold outside,", answers: ["is it"], rule: "«isn't» negativ ➔ «is it»" },
+        { id: "t2_8", type: "input", sentence: "Your sister will call you,", answers: ["won't she"], rule: "«will call» ➔ «won't she»" },
+        { id: "t2_9", type: "input", sentence: "They aren't ready yet,", answers: ["are they"], rule: "«aren't» negativ ➔ «are they»" },
+        { id: "t2_10", type: "input", sentence: "He speaks English and French,", answers: ["doesn't he"], rule: "3. Person «speaks» ➔ «doesn't he»" },
+        // Block 3 (Voci Unit 1: Flughafen & Flugzeug)
+        { id: "t2_11", type: "input", sentence: "The airplane is on the runway,", answers: ["isn't it"], rule: "«airplane is» ➔ «isn't it»" },
+        { id: "t2_12", type: "input", sentence: "The passengers aren't waiting anymore,", answers: ["are they"], rule: "«passengers aren't» ➔ «are they»" },
+        { id: "t2_13", type: "input", sentence: "The pilot will announce the boarding time,", answers: ["won't he", "won't she"], rule: "«will announce» ➔ «won't he/she»" },
+        { id: "t2_14", type: "input", sentence: "We didn't miss our flight,", answers: ["did we"], rule: "«didn't miss» ➔ «did we»" },
+        { id: "t2_15", type: "input", sentence: "The check-in desk closes at noon,", answers: ["doesn't it"], rule: "Vollverb «closes» ➔ «doesn't it»" },
+        // Block 4 (Voci Unit 1: Technik & Wettbewerb)
+        { id: "t2_16", type: "input", sentence: "The new aircraft has two powerful engines,", answers: ["doesn't it"], rule: "Vollverb «has» ➔ «doesn't it»" },
+        { id: "t2_17", type: "input", sentence: "You haven't printed your boarding pass,", answers: ["have you"], rule: "«haven't» negativ ➔ «have you»" },
+        { id: "t2_18", type: "input", sentence: "The referee cancelled the match,", answers: ["didn't he", "didn't she"], rule: "Past «cancelled» ➔ «didn't he/she»" },
+        { id: "t2_19", type: "input", sentence: "The wax wings weren't strong enough,", answers: ["were they"], rule: "«weren't» negativ ➔ «were they»" },
+        { id: "t2_20", type: "input", sentence: "He is passionate about aviation,", answers: ["isn't he"], rule: "«is» positiv ➔ «isn't he»" },
+        // Block 5 (Voci Unit 1: Pioniere & Abläufe)
+        { id: "t2_21", type: "input", sentence: "The passengers are flying economy class,", answers: ["aren't they"], rule: "«are flying» ➔ «aren't they»" },
+        { id: "t2_22", type: "input", sentence: "The departure won't be delayed,", answers: ["will it"], rule: "«won't be» negativ ➔ «will it»" },
+        { id: "t2_23", type: "input", sentence: "She threw the paper airplane far,", answers: ["didn't she"], rule: "Past «threw» ➔ «didn't she»" },
+        { id: "t2_24", type: "input", sentence: "The airport security was very strict,", answers: ["wasn't it"], rule: "«security was» ➔ «wasn't it»" },
+        { id: "t2_25", type: "input", sentence: "They calculate the final score,", answers: ["don't they"], rule: "Vollverb «calculate» ➔ «don't they»" },
+        // Block 6 (Voci Unit 1: Vertiefung)
+        { id: "t2_26", type: "input", sentence: "You will meet us at the gate,", answers: ["won't you"], rule: "«will meet» ➔ «won't you»" },
+        { id: "t2_27", type: "input", sentence: "The weather during the flight was pleasant,", answers: ["wasn't it"], rule: "«weather was» ➔ «wasn't it»" },
+        { id: "t2_28", type: "input", sentence: "His brother didn't measure the wings,", answers: ["did he"], rule: "«didn't measure» ➔ «did he»" },
+        { id: "t2_29", type: "input", sentence: "The aviation pioneer became famous,", answers: ["didn't he", "didn't she"], rule: "Past «became» ➔ «didn't he/she»" },
+        { id: "t2_30", type: "input", sentence: "You love travelling by plane,", answers: ["don't you"], rule: "Vollverb «love» ➔ «don't you»" }
+      ],
+
+      // --------------------------------------------------------
+      // 2. FUTURE WITH WILL - NIVEAU 1 (30 AUSWAHL-AUFGABEN)
+      // --------------------------------------------------------
+      will_1: [
+        // Block 1 (Einfache Alltagssätze)
+        { id: "w1_1", type: "dropdown", sentence: "Tomorrow I (visit / +) my grandmother.", options: ["will visit", "visit", "will visits"], correct: "will visit", rule: "will + Infinitiv = «will visit»" },
+        { id: "w1_2", type: "dropdown", sentence: "He (not come / –) to the party tonight.", options: ["won't come", "not will come", "doesn't will come"], correct: "won't come", rule: "Verneinung = «won't come»" },
+        { id: "w1_3", type: "dropdown", sentence: "(you / help / ?) me with this heavy bag?", options: ["Will you help", "You will help", "Do you will help"], correct: "Will you help", rule: "Frage = «Will you help...?»" },
+        { id: "w1_4", type: "dropdown", sentence: "The sun (shine / +) all afternoon.", options: ["will shine", "will shines", "shines"], correct: "will shine", rule: "will + reiner Infinitiv: «will shine»" },
+        { id: "w1_5", type: "dropdown", sentence: "We (not forget / –) your birthday.", options: ["won't forget", "will not to forget", "don't forget"], correct: "won't forget", rule: "Verneinung = «won't forget»" },
+        // Block 2 (Alltag & Schule)
+        { id: "w1_6", type: "dropdown", sentence: "(they / play / ?) tennis on Saturday?", options: ["Will they play", "They will play", "Do they will play"], correct: "Will they play", rule: "Frage = «Will they play...?»" },
+        { id: "w1_7", type: "dropdown", sentence: "It (be / +) warm and sunny tomorrow.", options: ["will be", "will is", "is"], correct: "will be", rule: "will + be = «will be»" },
+        { id: "w1_8", type: "dropdown", sentence: "She (not buy / –) that expensive jacket.", options: ["won't buy", "won't buys", "will not bought"], correct: "won't buy", rule: "won't + Infinitiv: «won't buy»" },
+        { id: "w1_9", type: "dropdown", sentence: "(he / call / ?) you later this evening?", options: ["Will he call", "He will call", "Does he will call"], correct: "Will he call", rule: "Frage = «Will he call...?»" },
+        { id: "w1_10", type: "dropdown", sentence: "I am sure you (pass / +) the English test.", options: ["will pass", "will passed", "pass"], correct: "will pass", rule: "Vorhersage = «will pass»" },
+        // Block 3 (Voci Unit 1: Flughafen)
+        { id: "w1_11", type: "dropdown", sentence: "The flight (arrive / +) in London on time.", options: ["will arrive", "arrives", "will arrives"], correct: "will arrive", rule: "will + Infinitiv: «will arrive»" },
+        { id: "w1_12", type: "dropdown", sentence: "The airline (not cancel / –) our afternoon flight.", options: ["won't cancel", "doesn't will cancel", "not cancel"], correct: "won't cancel", rule: "Verneinung: «won't cancel»" },
+        { id: "w1_13", type: "dropdown", sentence: "(the pilot / announce / ?) our arrival time?", options: ["Will the pilot announce", "The pilot will announce", "Does the pilot announce"], correct: "Will the pilot announce", rule: "Frage: «Will the pilot announce...?»" },
+        { id: "w1_14", type: "dropdown", sentence: "Passengers (board / +) the aircraft at gate 7.", options: ["will board", "will boards", "boards"], correct: "will board", rule: "will + Infinitiv: «will board»" },
+        { id: "w1_15", type: "dropdown", sentence: "We (not miss / –) the boarding time.", options: ["won't miss", "will not missing", "don't miss"], correct: "won't miss", rule: "Verneinung: «won't miss»" },
+        // Block 4 (Voci Unit 1: Wettbewerb & Pioniere)
+        { id: "w1_16", type: "dropdown", sentence: "(the referee / measure / ?) the throw?", options: ["Will the referee measure", "The referee will measure", "Does measure"], correct: "Will the referee measure", rule: "Frage: «Will the referee measure...?»" },
+        { id: "w1_17", type: "dropdown", sentence: "The hot sun (melt / +) the delicate wax wings.", options: ["will melt", "will melts", "melts"], correct: "will melt", rule: "will + Infinitiv: «will melt»" },
+        { id: "w1_18", type: "dropdown", sentence: "I think they (travel / +) in economy class.", options: ["will travel", "will travels", "travel"], correct: "will travel", rule: "will + Infinitiv: «will travel»" },
+        { id: "w1_19", type: "dropdown", sentence: "The aircraft engineer (not make / –) any mistake.", options: ["won't make", "will not makes", "doesn't will make"], correct: "won't make", rule: "Verneinung: «won't make»" },
+        { id: "w1_20", type: "dropdown", sentence: "(you / check in / ?) your heavy luggage?", options: ["Will you check in", "You will check in", "Do you check in"], correct: "Will you check in", rule: "Frage: «Will you check in...?»" },
+        // Block 5 (Voci Unit 1: Abläufe)
+        { id: "w1_21", type: "dropdown", sentence: "The flight attendant (serve / +) cold drinks soon.", options: ["will serve", "will serves", "serves"], correct: "will serve", rule: "will + Infinitiv: «will serve»" },
+        { id: "w1_22", type: "dropdown", sentence: "The pilot (not take off / –) in this heavy storm.", options: ["won't take off", "will not took off", "doesn't take off"], correct: "won't take off", rule: "Verneinung: «won't take off»" },
+        { id: "w1_23", type: "dropdown", sentence: "(the search engine / find / ?) the latest update?", options: ["Will the search engine find", "The search engine will find", "Does will find"], correct: "Will the search engine find", rule: "Frage: «Will the search engine find...?»" },
+        { id: "w1_24", type: "dropdown", sentence: "On behalf of the airline, we (welcome / +) you on board.", options: ["will welcome", "welcome", "will welcomes"], correct: "will welcome", rule: "will + Infinitiv: «will welcome»" },
+        { id: "w1_25", type: "dropdown", sentence: "The passenger (not be / –) late for departure.", options: ["won't be", "will not is", "isn't"], correct: "won't be", rule: "Verneinung: «won't be»" },
+        // Block 6 (Voci Unit 1: Vertiefung)
+        { id: "w1_26", type: "dropdown", sentence: "(engineers / build / ?) quieter aircraft engines?", options: ["Will engineers build", "Engineers will build", "Do will build"], correct: "Will engineers build", rule: "Frage: «Will engineers build...?»" },
+        { id: "w1_27", type: "dropdown", sentence: "The weather during our flight (be / +) very pleasant.", options: ["will be", "will is", "is"], correct: "will be", rule: "will + Infinitiv: «will be»" },
+        { id: "w1_28", type: "dropdown", sentence: "The airline (update / +) the flight status at noon.", options: ["will update", "will updates", "updates"], correct: "will update", rule: "will + Infinitiv: «will update»" },
+        { id: "w1_29", type: "dropdown", sentence: "We (not lose / –) our boarding passes.", options: ["won't lose", "will not loses", "don't will lose"], correct: "won't lose", rule: "Verneinung: «won't lose»" },
+        { id: "w1_30", type: "dropdown", sentence: "(she / win / ?) the paper airplane competition?", options: ["Will she win", "She will win", "Does she will win"], correct: "Will she win", rule: "Frage: «Will she win...?»" }
+      ],
+
+      // --------------------------------------------------------
+      // 2. FUTURE WITH WILL - NIVEAU 2 (30 TEST-AUFGABEN: LÜCKENTEXT)
+      // --------------------------------------------------------
+      will_2: [
+        // Block 1 (Einfache Alltagssätze)
+        { id: "w2_1", type: "input", sentence: "Tomorrow it (rain / +) in Zurich.", answers: ["will rain", "'ll rain"], rule: "will + rain = «will rain»" },
+        { id: "w2_2", type: "input", sentence: "Don't worry, I (not tell / –) anyone your secret.", answers: ["won't tell", "will not tell"], rule: "Verneinung = «won't tell»" },
+        { id: "w2_3", type: "input", sentence: "(you / come / ?) to my birthday party next Friday?", answers: ["will you come"], rule: "Frage = «Will you come...?»" },
+        { id: "w2_4", type: "input", sentence: "We (eat / +) delicious pizza for dinner tonight.", answers: ["will eat", "'ll eat"], rule: "will + eat = «will eat»" },
+        { id: "w2_5", type: "input", sentence: "He (not lose / –) the tennis match tomorrow.", answers: ["won't lose", "will not lose"], rule: "Verneinung = «won't lose»" },
+        // Block 2 (Alltag & Schule)
+        { id: "w2_6", type: "input", sentence: "(she / send / ?) us an email tomorrow morning?", answers: ["will she send"], rule: "Frage = «Will she send...?»" },
+        { id: "w2_7", type: "input", sentence: "I promise I (help / +) you with your heavy bag.", answers: ["will help", "'ll help"], rule: "will + help = «will help»" },
+        { id: "w2_8", type: "input", sentence: "They (not be / –) late for the train.", answers: ["won't be", "will not be"], rule: "Verneinung = «won't be»" },
+        { id: "w2_9", type: "input", sentence: "(we / meet / ?) in front of the school at 2 o'clock?", answers: ["will we meet"], rule: "Frage = «Will we meet...?»" },
+        { id: "w2_10", type: "input", sentence: "The teacher (explain / +) the grammar rules again.", answers: ["will explain", "'ll explain"], rule: "will + explain = «will explain»" },
+        // Block 3 (Voci Unit 1: Flughafen)
+        { id: "w2_11", type: "input", sentence: "The pilot (calculate / +) the exact flight duration.", answers: ["will calculate", "'ll calculate"], rule: "will + calculate = «will calculate»" },
+        { id: "w2_12", type: "input", sentence: "The airline (not cancel / –) the morning departure.", answers: ["won't cancel", "will not cancel"], rule: "Verneinung: «won't cancel»" },
+        { id: "w2_13", type: "input", sentence: "(passengers / receive / ?) their boarding pass on their phone?", answers: ["will passengers receive"], rule: "Frage: «Will passengers receive...?»" },
+        { id: "w2_14", type: "input", sentence: "In the hot sunshine, the wax (melt / +) quickly.", answers: ["will melt", "'ll melt"], rule: "will + melt = «will melt»" },
+        { id: "w2_15", type: "input", sentence: "We (not miss / –) our flight at Frankfurt airport.", answers: ["won't miss", "will not miss"], rule: "Verneinung: «won't miss»" },
+        // Block 4 (Voci Unit 1: Wettbewerb & Pioniere)
+        { id: "w2_16", type: "input", sentence: "(the referee / calculate / ?) the final score now?", answers: ["will the referee calculate"], rule: "Frage: «Will the referee calculate...?»" },
+        { id: "w2_17", type: "input", sentence: "The new aircraft (have / +) two eco-friendly engines.", answers: ["will have", "'ll have"], rule: "will + have = «will have»" },
+        { id: "w2_18", type: "input", sentence: "The airline (not allow / –) excess luggage without payment.", answers: ["won't allow", "will not allow"], rule: "Verneinung: «won't allow»" },
+        { id: "w2_19", type: "input", sentence: "(you / fly / ?) in economy class to London?", answers: ["will you fly"], rule: "Frage: «Will you fly...?»" },
+        { id: "w2_20", type: "input", sentence: "The aviation pioneer (test / +) his glider tomorrow.", answers: ["will test", "'ll test"], rule: "will + test = «will test»" },
+        // Block 5 (Voci Unit 1: Abläufe)
+        { id: "w2_21", type: "input", sentence: "The pilot (proceed / +) to gate B24 immediately.", answers: ["will proceed", "'ll proceed"], rule: "will + proceed = «will proceed»" },
+        { id: "w2_22", type: "input", sentence: "The flight attendant (not forget / –) our drinks.", answers: ["won't forget", "will not forget"], rule: "Verneinung: «won't forget»" },
+        { id: "w2_23", type: "input", sentence: "(the search engine / show / ?) the latest airport update?", answers: ["will the search engine show"], rule: "Frage: «Will the search engine show...?»" },
+        { id: "w2_24", type: "input", sentence: "I believe the journey (be / +) very pleasant.", answers: ["will be", "'ll be"], rule: "will + be = «will be»" },
+        { id: "w2_25", type: "input", sentence: "They (not delay / –) the departure if the weather clears up.", answers: ["won't delay", "will not delay"], rule: "Verneinung: «won't delay»" },
+        // Block 6 (Voci Unit 1: Vertiefung)
+        { id: "w2_26", type: "input", sentence: "(the engineer / inspect / ?) the airplane wing before takeoff?", answers: ["will the engineer inspect"], rule: "Frage: «Will the engineer inspect...?»" },
+        { id: "w2_27", type: "input", sentence: "On behalf of the crew, the captain (speak / +) to us.", answers: ["will speak", "'ll speak"], rule: "will + speak = «will speak»" },
+        { id: "w2_28", type: "input", sentence: "You (not find / –) a cheaper flight on that website.", answers: ["won't find", "will not find"], rule: "Verneinung: «won't find»" },
+        { id: "w2_29", type: "input", sentence: "(we / land / ?) on time in Dublin?", answers: ["will we land"], rule: "Frage: «Will we land...?»" },
+        { id: "w2_30", type: "input", sentence: "The pilot (perform / +) a safe and smooth landing.", answers: ["will perform", "'ll perform"], rule: "will + perform = «will perform»" }
+      ],
+
+      // --------------------------------------------------------
+      // 3. CONJUNCTIONS - NIVEAU 1 (30 AUSWAHL-AUFGABEN)
+      // --------------------------------------------------------
+      conj_1: [
+        // Block 1 (Einfache Alltagssätze)
+        { id: "c1_1", type: "dropdown", sentence: "I went to bed early ... I was exhausted.", options: ["because", "in order to", "so"], correct: "because", rule: "Grund = «because» (weil)" },
+        { id: "c1_2", type: "dropdown", sentence: "It was raining, ... we took an umbrella.", options: ["so", "because", "or"], correct: "so", rule: "Folge = «so» (deshalb)" },
+        { id: "c1_3", type: "dropdown", sentence: "She ran to the bus stop ... catch the bus.", options: ["in order to", "because", "so"], correct: "in order to", rule: "Vor Infinitiv «catch» = «in order to» (um zu)" },
+        { id: "c1_4", type: "dropdown", sentence: "The movie was ... exciting that I watched it twice.", options: ["so", "because", "either"], correct: "so", rule: "«so + exciting + that»" },
+        { id: "c1_5", type: "dropdown", sentence: "You can choose ... tea or coffee.", options: ["either", "because", "in order to"], correct: "either", rule: "Paar = «either ... or»" },
+        // Block 2 (Alltag & Freizeit)
+        { id: "c1_6", type: "dropdown", sentence: "He practised every day ... win the game.", options: ["in order to", "because", "so that"], correct: "in order to", rule: "Vor Infinitiv «win» = «in order to»" },
+        { id: "c1_7", type: "dropdown", sentence: "We stayed inside ... the storm was dangerous.", options: ["because", "so", "either"], correct: "because", rule: "Grund = «because»" },
+        { id: "c1_8", type: "dropdown", sentence: "The car broke down, ... we walked home.", options: ["so", "because", "in order to"], correct: "so", rule: "Konsequenz = «so»" },
+        { id: "c1_9", type: "dropdown", sentence: "The test was ... difficult that nobody finished.", options: ["so", "because", "either"], correct: "so", rule: "«so + difficult + that»" },
+        { id: "c1_10", type: "dropdown", sentence: "We will go ... on Saturday or on Sunday.", options: ["either", "so", "because"], correct: "either", rule: "«either ... or»" },
+        // Block 3 (Voci Unit 1: Flughafen)
+        { id: "c1_11", type: "dropdown", sentence: "The flight was cancelled ... the engine had a failure.", options: ["because", "in order to", "so"], correct: "because", rule: "Grund = «because»" },
+        { id: "c1_12", type: "dropdown", sentence: "The passenger ran fast ... reach the gate in time.", options: ["in order to", "because", "so"], correct: "in order to", rule: "Vor Infinitiv «reach» = «in order to»" },
+        { id: "c1_13", type: "dropdown", sentence: "There was a long queue, ... we waited patiently.", options: ["so", "because", "either"], correct: "so", rule: "Folge = «so»" },
+        { id: "c1_14", type: "dropdown", sentence: "The sun was ... hot that the wax wings melted.", options: ["so", "because", "in order to"], correct: "so", rule: "«so + hot + that»" },
+        { id: "c1_15", type: "dropdown", sentence: "You can travel in ... economy class or business class.", options: ["either", "because", "so"], correct: "either", rule: "«either ... or»" },
+        // Block 4 (Voci Unit 1: Wettbewerb & Pioniere)
+        { id: "c1_16", type: "dropdown", sentence: "The pioneer built a glider ... test human flight.", options: ["in order to", "because", "so"], correct: "in order to", rule: "Vor Infinitiv «test» = «in order to»" },
+        { id: "c1_17", type: "dropdown", sentence: "The flight was delayed ... of bad weather conditions.", options: ["because", "so", "either"], correct: "because", rule: "Grund = «because»" },
+        { id: "c1_18", type: "dropdown", sentence: "The aircraft was ... heavy that it couldn't take off.", options: ["so", "because", "either"], correct: "so", rule: "«so + heavy + that»" },
+        { id: "c1_19", type: "dropdown", sentence: "The referee was strict, ... everyone followed the rules.", options: ["so", "because", "in order to"], correct: "so", rule: "Folge = «so»" },
+        { id: "c1_20", type: "dropdown", sentence: "Show ... your passport or your ID card at the desk.", options: ["either", "so", "because"], correct: "either", rule: "«either ... or»" },
+        // Block 5 (Voci Unit 1: Abläufe)
+        { id: "c1_21", type: "dropdown", sentence: "He used a search engine ... find the departure time.", options: ["in order to", "because", "so"], correct: "in order to", rule: "Vor Infinitiv «find» = «in order to»" },
+        { id: "c1_22", type: "dropdown", sentence: "The announcement was ... quiet that we couldn't hear it.", options: ["so", "because", "either"], correct: "so", rule: "«so + quiet + that»" },
+        { id: "c1_23", type: "dropdown", sentence: "The pilot checked the engine ... be completely sure.", options: ["in order to", "because", "so"], correct: "in order to", rule: "Vor Infinitiv «be» = «in order to»" },
+        { id: "c1_24", type: "dropdown", sentence: "Our luggage was lost, ... we went to the service desk.", options: ["so", "because", "either"], correct: "so", rule: "Konsequenz = «so»" },
+        { id: "c1_25", type: "dropdown", sentence: "You may choose ... chicken or pasta on the flight.", options: ["either", "because", "so"], correct: "either", rule: "«either ... or»" },
+        // Block 6 (Voci Unit 1: Vertiefung)
+        { id: "c1_26", type: "dropdown", sentence: "The flight attendant smiled ... welcome the passengers.", options: ["in order to", "because", "so"], correct: "in order to", rule: "Vor Infinitiv «welcome» = «in order to»" },
+        { id: "c1_27", type: "dropdown", sentence: "We arrived very early ... avoid any stress at check-in.", options: ["in order to", "because", "so"], correct: "in order to", rule: "Vor Infinitiv «avoid» = «in order to»" },
+        { id: "c1_28", type: "dropdown", sentence: "The pilot was experienced, ... the landing was smooth.", options: ["so", "because", "or"], correct: "so", rule: "Folge = «so»" },
+        { id: "c1_29", type: "dropdown", sentence: "The challenge was ... hard that few pilots succeeded.", options: ["so", "because", "either"], correct: "so", rule: "«so + hard + that»" },
+        { id: "c1_30", type: "dropdown", sentence: "The flight was pleasant ... the staff were friendly.", options: ["because", "so", "in order to"], correct: "because", rule: "Grund = «because»" }
+      ],
+
+      // --------------------------------------------------------
+      // 3. CONJUNCTIONS - NIVEAU 2 (30 TEST-AUFGABEN: LÜCKENTEXT)
+      // --------------------------------------------------------
+      conj_2: [
+        // Block 1
+        { id: "c2_1", type: "input", sentence: "I went to sleep early [because / so / in order to] ... I was exhausted.", answers: ["because"], rule: "Begründung = «because»" },
+        { id: "c2_2", type: "input", sentence: "It was heavily raining, [so / because / or] ... we stayed at home.", answers: ["so"], rule: "Folge = «so»" },
+        { id: "c2_3", type: "input", sentence: "The passenger ran fast [in order to / because / so] ... catch the plane.", answers: ["in order to"], rule: "Vor Infinitiv «catch» = «in order to»" },
+        { id: "c2_4", type: "input", sentence: "The sun was [so / because / either] ... hot that the wax melted.", answers: ["so"], rule: "«so + hot + that»" },
+        { id: "c2_5", type: "input", sentence: "You can book [either / because / so] ... economy class or business class.", answers: ["either"], rule: "«either ... or»" },
+        // Block 2
+        { id: "c2_6", type: "input", sentence: "He practised every afternoon [in order to / because / so] ... win the trophy.", answers: ["in order to"], rule: "Vor Infinitiv «win» = «in order to»" },
+        { id: "c2_7", type: "input", sentence: "The flight was delayed [because / so / either] ... the engine was checked.", answers: ["because"], rule: "Grund = «because»" },
+        { id: "c2_8", type: "input", sentence: "The check-in desk was crowded, [so / because / in order to] ... we checked in online.", answers: ["so"], rule: "Folge = «so»" },
+        { id: "c2_9", type: "input", sentence: "The flight announcement was [so / because / either] ... quiet that nobody heard it.", answers: ["so"], rule: "«so + quiet + that»" },
+        { id: "c2_10", type: "input", sentence: "Please show [either / so / because] ... your passport or your ID card.", answers: ["either"], rule: "«either ... or»" },
+        // Block 3
+        { id: "c2_11", type: "input", sentence: "He used a search engine [in order to / because / so] ... find the departure time.", answers: ["in order to"], rule: "Vor Infinitiv «find» = «in order to»" },
+        { id: "c2_12", type: "input", sentence: "The pioneer studied birds [in order to / because / so] ... understand how to fly.", answers: ["in order to"], rule: "Vor Infinitiv «understand» = «in order to»" },
+        { id: "c2_13", type: "input", sentence: "The pilot was tired, [so / because / either] ... the co-pilot took control.", answers: ["so"], rule: "Folge = «so»" },
+        { id: "c2_14", type: "input", sentence: "The airplane is [so / because / in order to] ... modern that it uses less fuel.", answers: ["so"], rule: "«so + modern + that»" },
+        { id: "c2_15", type: "input", sentence: "You can carry [either / so / because] ... a small backpack or a handbag on board.", answers: ["either"], rule: "«either ... or»" },
+        // Block 4
+        { id: "c2_16", type: "input", sentence: "The referee measured the distance [in order to / because / so] ... calculate the score.", answers: ["in order to"], rule: "Vor Infinitiv «calculate» = «in order to»" },
+        { id: "c2_17", type: "input", sentence: "We missed the bus [because / so / in order to] ... our luggage was very heavy.", answers: ["because"], rule: "Grund = «because»" },
+        { id: "c2_18", type: "input", sentence: "The weather was stormy, [so / because / either] ... the captain postponed takeoff.", answers: ["so"], rule: "Folge = «so»" },
+        { id: "c2_19", type: "input", sentence: "The paper aircraft was [so / because / either] ... light that it flew 30 metres.", answers: ["so"], rule: "«so + light + that»" },
+        { id: "c2_20", type: "input", sentence: "We will spend our holidays [either / because / so] ... in London or in Dublin.", answers: ["either"], rule: "«either ... or»" },
+        // Block 5
+        { id: "c2_21", type: "input", sentence: "The pilot checked the flight instruments [in order to / because / so] ... ensure safety.", answers: ["in order to"], rule: "Vor Infinitiv «ensure» = «in order to»" },
+        { id: "c2_22", type: "input", sentence: "The passenger felt excited [because / so / in order to] ... it was his first flight.", answers: ["because"], rule: "Grund = «because»" },
+        { id: "c2_23", type: "input", sentence: "The flight was overbooked, [so / because / either] ... they offered hotel vouchers.", answers: ["so"], rule: "Folge = «so»" },
+        { id: "c2_24", type: "input", sentence: "The runway was [so / because / either] ... icy that planes couldn't land.", answers: ["so"], rule: "«so + icy + that»" },
+        { id: "c2_25", type: "input", sentence: "You must pay [either / so / because] ... with credit card or with cash.", answers: ["either"], rule: "«either ... or»" },
+        // Block 6
+        { id: "c2_26", type: "input", sentence: "The engineer tested the wing [in order to / because / so] ... prevent cracks.", answers: ["in order to"], rule: "Vor Infinitiv «prevent» = «in order to»" },
+        { id: "c2_27", type: "input", sentence: "The flight was pleasant [because / so / in order to] ... the seats were comfortable.", answers: ["because"], rule: "Grund = «because»" },
+        { id: "c2_28", type: "input", sentence: "I forgot my boarding pass, [so / because / in order to] ... I printed it at the airport.", answers: ["so"], rule: "Folge = «so»" },
+        { id: "c2_29", type: "input", sentence: "The challenge was [so / because / either] ... tough that only two teams finished.", answers: ["so"], rule: "«so + tough + that»" },
+        { id: "c2_30", type: "input", sentence: "You can choose [either / so / because] ... a window seat or an aisle seat.", answers: ["either"], rule: "«either ... or»" }
+      ],
+
+      // --------------------------------------------------------
+      // 3. CONJUNCTIONS - NIVEAU 3 (30 SATZBAU / VERBINDEN)
+      // --------------------------------------------------------
+      conj_3: [
+        // Block 1
+        { id: "c3_1", type: "input", sentence: "He woke up early. He wanted to catch his flight. (in order to) ➔ He woke up early ... catch his flight.", answers: ["in order to"], rule: "in order to + Infinitiv" },
+        { id: "c3_2", type: "input", sentence: "The airport was closed. There was thick fog. (because) ➔ The airport was closed ... there was thick fog.", answers: ["because"], rule: "because + Nebensatz" },
+        { id: "c3_3", type: "input", sentence: "The gate was far away. We took the airport shuttle. (so) ➔ The gate was far away, ... we took the airport shuttle.", answers: ["so"], rule: "so = deshalb" },
+        { id: "c3_4", type: "input", sentence: "The noise of the aircraft was deafening. Nobody could sleep. (so... that) ➔ The noise was ... loud that nobody could sleep.", answers: ["so"], rule: "so + loud + that" },
+        { id: "c3_5", type: "input", sentence: "We can fly on Friday. Or we can fly on Saturday. (either... or) ➔ We can fly ... on Friday or on Saturday.", answers: ["either"], rule: "either ... or" },
+        // Block 2
+        { id: "c3_6", type: "input", sentence: "She looked at the departure board. She wanted to find her gate. ➔ She looked at the board ... find her gate.", answers: ["in order to"], rule: "in order to + Infinitiv" },
+        { id: "c3_7", type: "input", sentence: "The flight was delayed. One engine needed repairs. ➔ The flight was delayed ... one engine needed repairs.", answers: ["because"], rule: "because + Grund" },
+        { id: "c3_8", type: "input", sentence: "The pilot was very experienced. The landing was completely smooth. ➔ The pilot was experienced, ... the landing was smooth.", answers: ["so"], rule: "so = Konsequenz" },
+        { id: "c3_9", type: "input", sentence: "The wax feathers got warm. They melted quickly. ➔ The feathers got ... warm that they melted.", answers: ["so"], rule: "so + warm + that" },
+        { id: "c3_10", type: "input", sentence: "Take your boarding pass. Or download it on your smartphone. ➔ Have ... your printed boarding pass or the app ready.", answers: ["either"], rule: "either ... or" },
+        // Block 3
+        { id: "c3_11", type: "input", sentence: "He used a search engine. He wanted to calculate the ticket price. ➔ He used a search engine ... calculate the price.", answers: ["in order to"], rule: "in order to + calculate" },
+        { id: "c3_12", type: "input", sentence: "The competition was stopped. The storm was too strong. ➔ The competition was stopped ... the storm was too strong.", answers: ["because"], rule: "because + Grund" },
+        { id: "c3_13", type: "input", sentence: "The passenger had excess luggage. He paid an extra fee. ➔ The passenger had excess luggage, ... he paid a fee.", answers: ["so"], rule: "so = Folge" },
+        { id: "c3_14", type: "input", sentence: "The pilot's announcement was very quiet. Nobody understood it. ➔ The announcement was ... quiet that nobody understood it.", answers: ["so"], rule: "so + quiet + that" },
+        { id: "c3_15", type: "input", sentence: "Sit in the front. Or sit at the back of the aircraft. ➔ You may sit ... in the front or in the back.", answers: ["either"], rule: "either ... or" },
+        // Block 4
+        { id: "c3_16", type: "input", sentence: "The referee used a laser. He wanted to measure the throw. ➔ The referee used a laser ... measure the throw.", answers: ["in order to"], rule: "in order to + measure" },
+        { id: "c3_17", type: "input", sentence: "The pioneer crashed. The wings broke in the air. ➔ The pioneer crashed ... the wings broke in the air.", answers: ["because"], rule: "because + Ursache" },
+        { id: "c3_18", type: "input", sentence: "The boarding time had arrived. All passengers proceeded to the gate. ➔ Boarding time had arrived, ... passengers proceeded to the gate.", answers: ["so"], rule: "so = deshalb" },
+        { id: "c3_19", type: "input", sentence: "The challenge was difficult. Only two pilots succeeded. ➔ The challenge was ... difficult that only two pilots succeeded.", answers: ["so"], rule: "so + difficult + that" },
+        { id: "c3_20", type: "input", sentence: "Drink water. Or drink apple juice during the flight. ➔ You can drink ... water or juice.", answers: ["either"], rule: "either ... or" },
+        // Block 5
+        { id: "c3_21", type: "input", sentence: "The engineer inspected the aircraft. He wanted to prevent technical faults. ➔ He inspected the aircraft ... prevent faults.", answers: ["in order to"], rule: "in order to + prevent" },
+        { id: "c3_22", type: "input", sentence: "The flight was pleasant. The crew were very attentive. ➔ The flight was pleasant ... the crew were attentive.", answers: ["because"], rule: "because + Grund" },
+        { id: "c3_23", type: "input", sentence: "The passenger lost his passport. He couldn't board the airplane. ➔ He lost his passport, ... he couldn't board.", answers: ["so"], rule: "so = Folge" },
+        { id: "c3_24", type: "input", sentence: "The aircraft was fast. It arrived 20 minutes early. ➔ The aircraft was ... fast that it arrived early.", answers: ["so"], rule: "so + fast + that" },
+        { id: "c3_25", type: "input", sentence: "Check in online. Or check in at the airport desk. ➔ You can check in ... online or at the desk.", answers: ["either"], rule: "either ... or" },
+        // Block 6
+        { id: "c3_26", type: "input", sentence: "The airline sent an SMS. They wanted to inform the passengers. ➔ The airline sent an SMS ... inform passengers.", answers: ["in order to"], rule: "in order to + inform" },
+        { id: "c3_27", type: "input", sentence: "We loved our trip. Flying was very exciting. ➔ We loved our trip ... flying was exciting.", answers: ["because"], rule: "because + Grund" },
+        { id: "c3_28", type: "input", sentence: "The flight was fully booked. We took a later connection. ➔ The flight was fully booked, ... we took a later one.", answers: ["so"], rule: "so = Folge" },
+        { id: "c3_29", type: "input", sentence: "The turbulence was strong. Drinks spilled on the floor. ➔ The turbulence was ... strong that drinks spilled.", answers: ["so"], rule: "so + strong + that" },
+        { id: "c3_30", type: "input", sentence: "Take the train to the airport. Or take a taxi. ➔ Take ... the train or a taxi.", answers: ["either"], rule: "either ... or" }
+      ]
+    };
+
+    // ==========================================================
+    // PROBEPRÜFUNG DATA: EXACTLY 30 ITEMS (10 + 10 + 10)
+    // ==========================================================
+    const EXAM_DATA = {
+      tags: [
+        { id: "et_1", s: "You are ready for the test,", c: "aren't you", r: "«are» positiv ➔ «aren't you»" },
+        { id: "et_2", s: "The flight attendant isn't nervous,", c: "is she", alt: ["is he", "is she"], r: "«isn't» negativ ➔ «is she/he»" },
+        { id: "et_3", s: "Your brother doesn't like cold coffee,", c: "does he", r: "«doesn't like» negativ ➔ «does he»" },
+        { id: "et_4", s: "They can speak English very fluently,", c: "can't they", r: "«can» positiv ➔ «can't they»" },
+        { id: "et_5", s: "Tom arrived late yesterday,", c: "didn't he", r: "Past Simple «arrived» ➔ «didn't he»" },
+        { id: "et_6", s: "The new airplane has two large wings,", c: "doesn't it", r: "Present Simple «has» (Vollverb) ➔ «doesn't it»" },
+        { id: "et_7", s: "The pilot won't cancel the flight,", c: "will he", alt: ["will he", "will she"], r: "«won't» negativ ➔ «will he/she»" },
+        { id: "et_8", s: "The passengers weren't happy about the delay,", c: "were they", r: "«weren't» negativ ➔ «were they»" },
+        { id: "et_9", s: "We will meet at the check-in desk,", c: "won't we", r: "«will meet» positiv ➔ «won't we»" },
+        { id: "et_10", s: "The referee didn't measure the distance,", c: "did he", alt: ["did he", "did she"], r: "«didn't measure» ➔ «did he/she»" }
+      ],
+      will: [
+        { id: "ew_1", s: "Tomorrow the morning weather (be / +) pleasant.", c: "will be", alt: ["'ll be"], r: "will + be = «will be»" },
+        { id: "ew_2", s: "Don't worry, I (not be / –) late for boarding time.", c: "won't be", alt: ["will not be"], r: "Verneinung: «won't be»" },
+        { id: "ew_3", s: "(you / help / ?) me with my heavy luggage?", c: "will you help", r: "Frage: «Will you help...?»" },
+        { id: "ew_4", s: "The pilot (announce / +) the departure time soon.", c: "will announce", alt: ["'ll announce"], r: "will + Infinitiv: «will announce»" },
+        { id: "ew_5", s: "The airline (not cancel / –) the flight to London.", c: "won't cancel", alt: ["will not cancel"], r: "Verneinung: «won't cancel»" },
+        { id: "ew_6", s: "(passengers / wait / ?) at gate B14?", c: "will passengers wait", r: "Frage: «Will passengers wait...?»" },
+        { id: "ew_7", s: "In the hot sunshine, the wax feathers (melt / +).", c: "will melt", alt: ["'ll melt"], r: "will + Infinitiv: «will melt»" },
+        { id: "ew_8", s: "We (not miss / –) our airplane today.", c: "won't miss", alt: ["will not miss"], r: "Verneinung: «won't miss»" },
+        { id: "ew_9", s: "The Swiss engineer (calculate / +) the engine power.", c: "will calculate", alt: ["'ll calculate"], r: "will + Infinitiv: «will calculate»" },
+        { id: "ew_10", s: "(the referee / accept / ?) your paper plane throw?", c: "will the referee accept", r: "Frage: «Will the referee accept...?»" }
+      ],
+      conj: [
+        { id: "ec_1", s: "I went to bed early [because / so / in order to] ... I was very tired.", c: "because", r: "Grund: «because» (weil)" },
+        { id: "ec_2", s: "It was raining heavily, [so / because / or] ... we stayed at home.", c: "so", r: "Folge: «so» (deshalb)" },
+        { id: "ec_3", s: "The passenger ran fast [in order to / because / so] ... catch the flight.", c: "in order to", r: "Vor Infinitiv «catch»: «in order to» (um zu)" },
+        { id: "ec_4", s: "The sun was [so / because / either] ... hot that the wax melted.", c: "so", r: "«so + hot + that»" },
+        { id: "ec_5", s: "You can book [either / because / so] ... economy class or business class.", c: "either", r: "Paar: «either ... or»" },
+        { id: "ec_6", s: "The flight was delayed [because / so / either] ... the engine had technical problems.", c: "because", r: "Grund: «because»" },
+        { id: "ec_7", s: "The check-in desk was crowded, [so / because / in order to] ... we checked in online.", c: "so", r: "Folge: «so»" },
+        { id: "ec_8", s: "He used a search engine [in order to / because / so] ... find flight updates.", c: "in order to", r: "Vor Infinitiv «find»: «in order to»" },
+        { id: "ec_9", s: "The announcement was [so / because / either] ... quiet that nobody heard it.", c: "so", r: "«so + quiet + that»" },
+        { id: "ec_10", s: "Please show [either / so / because] ... your passport or your ID card.", c: "either", r: "«either ... or»" }
+      ]
+    };
+
+    // ==========================================================
+    // APPLICATION STATE
+    // ==========================================================
+    const STATE = {
+      activeTab: 'tags',
+      levels: { tags: 1, will: 1, conj: 1 },
+      currentBlock: {
+        tags_1: 0, tags_2: 0,
+        will_1: 0, will_2: 0,
+        conj_1: 0, conj_2: 0, conj_3: 0
+      },
+      userAnswers: {},
+      examAnswers: {},
+      examSubmitted: false,
+      vociFilter: 'all'
+    };
+
+    // Helper: Normalize string for comparison
+    function normalize(str) {
+      if (!str) return "";
+      return str
+        .trim()
+        .toLowerCase()
+        .replace(/[’´`]/g, "'")
+        .replace(/[.,!?;:]+$/, '')
+        .replace(/\s+/g, ' ');
+    }
+
+    // ==========================================================
+    // DIAGNOSTIC FEEDBACK ENGINE (EINFACH & SCHÜLERGERECHT)
+    // ==========================================================
+    function getDiagnosticFeedback(category, sentenceText, userRaw, correctRaw) {
+      const u = normalize(userRaw);
+      const c = normalize(correctRaw);
+      const fullSentence = sentenceText.toLowerCase();
+
+      if (!u) {
+        return "⚠️ Du hast noch nichts eingetippt.";
+      }
+
+      // 1. QUESTION TAGS
+      if (category === 'tags') {
+        // Nomen statt Pronomen verwendet
+        if (/\b(the|pilot|engineer|aircraft|referee|tom|sarah|plane|passenger|passengers|desk)\b/.test(u)) {
+          return "💡 <strong>Tipp:</strong> Verwende keine Namen wie <em>pilot</em> oder <em>Tom</em>. Nimm immer nur <strong>he, she, it, they, we</strong> oder <strong>you</strong>!";
+        }
+
+        const isNegativeSentence = /\b(isn't|aren't|wasn't|weren't|won't|can't|don't|doesn't|didn't|haven't|hasn't|nobody|never)\b/.test(fullSentence);
+        const userProvidedNegative = /\b(n't|not)\b/.test(u);
+
+        // Positiv / Negativ verwechselt
+        if (!isNegativeSentence && !userProvidedNegative) {
+          return "💡 <strong>Tipp:</strong> Der Satz ist positiv (+) ➔ Dein Anhängsel muss ein <strong>n't</strong> haben (z.B. <em>isn't he?</em> oder <em>don't you?</em>).";
+        }
+        if (isNegativeSentence && userProvidedNegative) {
+          return "💡 <strong>Tipp:</strong> Im Satz steht schon ein <em>not / n't</em> (–) ➔ Dein Anhängsel darf <strong>kein n't</strong> haben (z.B. <em>is he?</em> oder <em>do you?</em>).";
+        }
+
+        // Falsches Hilfsverb: is/are statt do/does/did bei normalen Verben
+        if (/\b(is|isn't|are|aren't)\b/.test(u) && /\b(do|don't|does|doesn't|did|didn't)\b/.test(c)) {
+          return "💡 <strong>Tipp:</strong> Bei normalen Verben (wie <em>play, live, arrive</em>) brauchst du <strong>don't, doesn't</strong> oder <strong>didn't</strong> (nicht <em>isn't/aren't</em>)!";
+        }
+        // Falsches Hilfsverb: do/does statt dem echten Hilfsverb
+        if (/\b(do|don't|does|doesn't)\b/.test(u) && /\b(is|isn't|are|aren't|was|weren't|can|won't)\b/.test(c)) {
+          return "💡 <strong>Tipp:</strong> Schaue in den Satz: Nimm genau das Hilfsverb, das schon da steht (z.B. <em>is, are, can, will</em>).";
+        }
+
+        return "💡 <strong>Tipp:</strong> Überprüfe das Hilfsverb und überlege, ob ein <strong>n't</strong> fehlt oder weg muss.";
+      }
+
+      // 2. FUTURE WITH WILL
+      if (category === 'will') {
+        // Verb verändert (-ing, -s, -ed)
+        if (/will\s+[a-z]+(ing|ed|s)\b/.test(u) || /won't\s+[a-z]+(ing|ed|s)\b/.test(u)) {
+          return "💡 <strong>Tipp:</strong> Nach <em>will</em> oder <em>won't</em> schreibst du das Verb ganz normal (kein <em>-s</em> und kein <em>-ing</em> anhängen)!";
+        }
+
+        // Verneinung vergessen
+        if (sentenceText.includes('–') || sentenceText.includes('not')) {
+          if (!u.includes("won't") && !u.includes("will not")) {
+            return "💡 <strong>Tipp:</strong> Das Zeichen (–) heisst verneinen. Verwende: <strong>won't + Verb</strong>.";
+          }
+        }
+
+        // Frage falsch begonnen
+        if (sentenceText.includes('?')) {
+          if (!u.startsWith('will')) {
+            return "💡 <strong>Tipp:</strong> Eine Zukunfts-Frage beginnt immer mit <strong>Will</strong> (z.B. <em>Will you help?</em>).";
+          }
+        }
+
+        // "to" fälschlicherweise eingebaut
+        if (u.includes('to ')) {
+          return "💡 <strong>Tipp:</strong> Kein <em>to</em> dazwischen schreiben (z.B. einfach <em>will go</em>, nicht <em>will to go</em>).";
+        }
+
+        return "💡 <strong>Tipp:</strong> Merke: (+) = <em>will + Verb</em> · (–) = <em>won't + Verb</em> · (?) = <em>Will you / he ...?</em>";
+      }
+
+      // 3. CONJUNCTIONS
+      if (category === 'conj') {
+        if (c.includes('in order to') && u.includes('because')) {
+          return "💡 <strong>Tipp:</strong> <strong>in order to</strong> = um ... zu (steht direkt vor einem Verb, z.B. <em>in order to catch</em>).";
+        }
+        if (c.includes('because') && u.includes('in order to')) {
+          return "💡 <strong>Tipp:</strong> <strong>because</strong> = weil (erklärt den Grund, warum etwas passiert).";
+        }
+        if (c.includes('so') && u.includes('because')) {
+          return "💡 <strong>Tipp:</strong> <strong>so</strong> = deshalb / also (zeigt die Folge: Es regnete, <em>deshalb</em> blieben wir daheim).";
+        }
+        if (c.includes('so') && (sentenceText.includes('that') || u.includes('that'))) {
+          return "💡 <strong>Tipp:</strong> Wenn hinten <em>that</em> steht, gehört vorne <strong>so</strong> hin (<em>so hot that</em> = so heiss, dass).";
+        }
+        if (c.includes('either') && !u.includes('either')) {
+          return "💡 <strong>Tipp:</strong> Wenn im Satz <em>or</em> (oder) vorkommt, gehört davor meistens <strong>either</strong> (<em>either ... or</em> = entweder ... oder).";
+        }
+
+        return "💡 <strong>Tipp:</strong> Übersetze: <em>because</em> (weil), <em>so</em> (deshalb), <em>in order to</em> (um zu), <em>either ... or</em> (entweder ... oder).";
+      }
+
+      return "💡 Schau dir das Wort und die Schreibweise nochmals an.";
+    }
+
+    // ==========================================================
+    // TAB SWITCHING (ATTACHED TO WINDOW)
+    // ==========================================================
+    function switchTab(tabId) {
+      STATE.activeTab = tabId;
+
+      document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('bg-white', 'text-blue-900', 'font-bold', 'shadow-sm', 'bg-amber-400', 'text-amber-950');
+        b.classList.add('text-sky-100', 'hover:bg-white/10');
+      });
+
+      const activeView = document.getElementById(`view-${tabId}`);
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      if (activeView && activeBtn) {
+        activeView.classList.remove('hidden');
+        activeBtn.classList.remove('text-sky-100', 'hover:bg-white/10');
+        if (tabId === 'exam') {
+          activeBtn.classList.add('bg-white', 'text-amber-900', 'font-bold', 'shadow-sm');
+        } else {
+          activeBtn.classList.add('bg-white', 'text-blue-900', 'font-bold', 'shadow-sm');
+        }
+      }
+
+      if (tabId === 'tags') renderSection(`tags_${STATE.levels.tags}`);
+      if (tabId === 'will') renderSection(`will_${STATE.levels.will}`);
+      if (tabId === 'conjunctions') renderSection(`conj_${STATE.levels.conj}`);
+      if (tabId === 'exam') renderExam();
+      if (tabId === 'voci') renderVocabulary();
+    }
+
+    // Level selector
+    function selectLevel(cat, lvl) {
+      STATE.levels[cat] = lvl;
+
+      const prefix = cat === 'tags' ? 'tags' : (cat === 'will' ? 'will' : 'conj');
+      const maxLvl = cat === 'conj' ? 3 : 2;
+      const activeColor = cat === 'tags' ? 'bg-blue-600' : (cat === 'will' ? 'bg-indigo-600' : 'bg-emerald-600');
+
+      for (let i = 1; i <= maxLvl; i++) {
+        const btn = document.getElementById(`lvl-btn-${prefix}-${i}`);
+        if (btn) {
+          if (i === lvl) {
+            btn.className = `px-3 py-1.5 rounded-lg ${activeColor} text-white shadow-sm transition`;
+          } else {
+            btn.className = "px-3 py-1.5 rounded-lg text-slate-600 hover:bg-white transition";
+          }
+        }
+      }
+
+      renderSection(`${prefix}_${lvl}`);
+    }
+
+    // Go to block
+    function goToBlock(sectionKey, blockIdx) {
+      STATE.currentBlock[sectionKey] = blockIdx;
+      renderSection(sectionKey);
+    }
+
+    // Render regular exercise section
+    function renderSection(sectionKey) {
+      const items = DB[sectionKey];
+      if (!items) return;
+
+      const cat = sectionKey.split('_')[0];
+      const currentBlockIndex = STATE.currentBlock[sectionKey] || 0;
+      const totalBlocks = Math.ceil(items.length / 5);
+
+      // Render Block Pills
+      const pillsContainer = document.getElementById(`block-pills-${cat}`);
+      if (pillsContainer) {
+        let pillsHtml = '';
+        for (let b = 0; b < totalBlocks; b++) {
+          const isActive = b === currentBlockIndex;
+          const bg = isActive ? 'bg-slate-800 text-white font-bold' : 'bg-white text-slate-600 hover:bg-slate-200';
+          pillsHtml += `
+            <button onclick="goToBlock('${sectionKey}', ${b})" class="w-7 h-7 rounded-lg text-xs flex items-center justify-center border border-slate-200 transition ${bg}">
+              ${b + 1}
+            </button>
+          `;
+        }
+        pillsContainer.innerHTML = pillsHtml;
+      }
+
+      // Slice current 5 items
+      const startIdx = currentBlockIndex * 5;
+      const currentItems = items.slice(startIdx, startIdx + 5);
+
+      const container = document.getElementById(`container-${cat}`);
+      if (!container) return;
+
+      let html = `
+        <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <span class="text-xs sm:text-sm font-bold text-slate-700 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+              Aufgaben ${startIdx + 1} bis ${startIdx + currentItems.length} (Block ${currentBlockIndex + 1} von ${totalBlocks})
+            </span>
+            <span class="text-xs text-slate-400 font-mono-code">${currentItems.length} Sätze</span>
+          </div>
+          <div class="space-y-3.5">
+      `;
+
+      currentItems.forEach((item, idx) => {
+        const itemNumber = startIdx + idx + 1;
+        const savedVal = STATE.userAnswers[item.id] || "";
+
+        html += `
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition" id="item-${item.id}">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div class="flex items-center gap-2.5 flex-1">
+                <span class="text-xs font-bold text-slate-500 w-5">${itemNumber}.</span>
+                <span class="text-sm font-medium text-slate-800">${item.sentence}</span>
+              </div>
+              <div class="sm:w-56 shrink-0">
+        `;
+
+        if (item.type === 'dropdown') {
+          html += `
+            <select id="input-${item.id}" onchange="saveAns('${item.id}', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500">
+              <option value="">-- wählen --</option>
+              ${item.options.map(opt => `<option value="${opt}" ${savedVal === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+            </select>
+          `;
+        } else {
+          html += `
+            <input type="text" id="input-${item.id}" value="${savedVal}" oninput="saveAns('${item.id}', this.value)" placeholder="Deine Antwort..." class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500" />
+          `;
+        }
+
+        html += `
+              </div>
+            </div>
+            <div id="feedback-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
+          </div>
+        `;
+      });
+
+      // Actions Toolbar
+      html += `
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <button onclick="checkBlock('${sectionKey}')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-sm transition flex items-center gap-1.5">
+                <span>✓</span> Überprüfen (5 Aufgaben)
+              </button>
+              <button onclick="toggleSolution('${sectionKey}')" id="btn-sol-${sectionKey}" class="px-3.5 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs sm:text-sm font-semibold transition">
+                💡 Lösungen anzeigen
+              </button>
+              <button onclick="resetBlock('${sectionKey}')" class="px-3 py-2 rounded-xl text-slate-500 hover:text-slate-800 text-xs font-semibold transition">
+                Zurücksetzen
+              </button>
+            </div>
+            <div class="flex items-center gap-2">
+              ${currentBlockIndex > 0 ? `<button onclick="goToBlock('${sectionKey}', ${currentBlockIndex - 1})" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-100">← Vorherige 5</button>` : ''}
+              ${currentBlockIndex < totalBlocks - 1 ? `<button onclick="goToBlock('${sectionKey}', ${currentBlockIndex + 1})" class="px-3 py-1.5 rounded-lg bg-slate-800 text-white text-xs font-semibold hover:bg-slate-900">Nächste 5 →</button>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function saveAns(id, val) {
+      STATE.userAnswers[id] = val;
+    }
+
+    // Check 5 items in a block with diagnostic engine
+    function checkBlock(sectionKey) {
+      const items = DB[sectionKey];
+      const currentBlockIndex = STATE.currentBlock[sectionKey] || 0;
+      const startIdx = currentBlockIndex * 5;
+      const currentItems = items.slice(startIdx, startIdx + 5);
+
+      let correct = 0;
+      const category = sectionKey.split('_')[0];
+
+      currentItems.forEach(item => {
+        const itemEl = document.getElementById(`item-${item.id}`);
+        const fbEl = document.getElementById(`feedback-${item.id}`);
+        const userRaw = STATE.userAnswers[item.id] || "";
+        const userNorm = normalize(userRaw);
+
+        let isRight = false;
+        if (item.type === 'dropdown') {
+          isRight = normalize(item.correct) === userNorm;
+        } else {
+          isRight = item.answers.some(ans => normalize(ans) === userNorm);
+        }
+
+        if (isRight) {
+          correct++;
+          if (itemEl) {
+            itemEl.className = "p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-300 transition";
+          }
+          if (fbEl) {
+            fbEl.className = "text-xs font-semibold text-emerald-800 block mt-2 pt-2 border-t border-emerald-200";
+            fbEl.innerHTML = `✅ <strong>Richtig!</strong> ${item.rule}`;
+          }
+        } else {
+          if (itemEl) {
+            itemEl.className = "p-3.5 rounded-xl bg-rose-50/70 border border-rose-300 transition";
+          }
+          const diagHint = getDiagnosticFeedback(category, item.sentence, userRaw, item.type === 'dropdown' ? item.correct : item.answers[0]);
+          if (fbEl) {
+            fbEl.className = "text-xs text-rose-800 block mt-2 pt-2 border-t border-rose-200 space-y-1.5";
+            fbEl.innerHTML = `
+              <div class="font-bold text-rose-700">❌ Leider noch nicht richtig.</div>
+              <div class="text-slate-800 bg-amber-50/90 p-2.5 rounded-lg border border-amber-200/80 font-medium">${diagHint}</div>
+            `;
+          }
+        }
+      });
+
+      updateOverallStats();
+      showToast(
+        correct === 5 ? "🌟 Perfekt!" : (correct >= 3 ? "👍 Gut gemacht!" : "💪 Weiter üben!"),
+        `Du hast ${correct} von 5 Aufgaben in diesem Block richtig.`
+      );
+    }
+
+    // Toggle solutions in block
+    function toggleSolution(sectionKey) {
+      const items = DB[sectionKey];
+      const currentBlockIndex = STATE.currentBlock[sectionKey] || 0;
+      const startIdx = currentBlockIndex * 5;
+      const currentItems = items.slice(startIdx, startIdx + 5);
+
+      const btn = document.getElementById(`btn-sol-${sectionKey}`);
+      const isShowing = btn && btn.innerText.includes("ausblenden");
+
+      currentItems.forEach(item => {
+        const fbEl = document.getElementById(`feedback-${item.id}`);
+        if (!fbEl) return;
+
+        if (isShowing) {
+          fbEl.classList.add('hidden');
+        } else {
+          fbEl.className = "text-xs font-medium text-slate-700 block mt-2 pt-2 border-t border-slate-200 bg-amber-50/60 p-2 rounded";
+          const sol = item.type === 'dropdown' ? item.correct : item.answers.join(' / ');
+          fbEl.innerHTML = `💡 <strong>Musterlösung:</strong> <span class="font-mono-code font-bold text-blue-700">${sol}</span> · ${item.rule}`;
+        }
+      });
+
+      if (btn) {
+        btn.innerText = isShowing ? "💡 Lösungen anzeigen" : "🙈 Lösungen ausblenden";
+      }
+    }
+
+    // Reset block
+    function resetBlock(sectionKey) {
+      const items = DB[sectionKey];
+      const currentBlockIndex = STATE.currentBlock[sectionKey] || 0;
+      const startIdx = currentBlockIndex * 5;
+      const currentItems = items.slice(startIdx, startIdx + 5);
+
+      currentItems.forEach(item => {
+        delete STATE.userAnswers[item.id];
+        const inputEl = document.getElementById(`input-${item.id}`);
+        if (inputEl) inputEl.value = "";
+
+        const itemEl = document.getElementById(`item-${item.id}`);
+        if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition";
+
+        const fbEl = document.getElementById(`feedback-${item.id}`);
+        if (fbEl) {
+          fbEl.className = "hidden text-xs mt-2 pt-2 border-t border-slate-200";
+          fbEl.innerHTML = "";
+        }
+      });
+
+      updateOverallStats();
+      showToast("Block zurückgesetzt", "Die Eingaben dieses 5er-Blocks wurden geleert.");
+    }
+
+    // ==========================================================
+    // PROBEPRÜFUNG: RENDER & EVALUATE
+    // ==========================================================
+    function renderExam() {
+      // Tags
+      const tagsContainer = document.getElementById('exam-list-tags');
+      if (tagsContainer) {
+        tagsContainer.innerHTML = EXAM_DATA.tags.map((item, i) => `
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition" id="exam-item-${item.id}">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <span class="text-xs font-bold text-slate-500 w-6">A${i+1}.</span>
+              <span class="flex-1 text-sm font-medium text-slate-800">${item.s}</span>
+              <input type="text" id="input-${item.id}" value="${STATE.examAnswers[item.id] || ''}" placeholder="Question Tag (z.B. aren't you)" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
+            </div>
+            <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
+          </div>
+        `).join('');
+      }
+
+      // Will
+      const willContainer = document.getElementById('exam-list-will');
+      if (willContainer) {
+        willContainer.innerHTML = EXAM_DATA.will.map((item, i) => `
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition" id="exam-item-${item.id}">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <span class="text-xs font-bold text-slate-500 w-6">B${i+1}.</span>
+              <span class="flex-1 text-sm font-medium text-slate-800">${item.s}</span>
+              <input type="text" id="input-${item.id}" value="${STATE.examAnswers[item.id] || ''}" placeholder="will / won't Form" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-48 focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
+            </div>
+            <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
+          </div>
+        `).join('');
+      }
+
+      // Conjunctions
+      const conjContainer = document.getElementById('exam-list-conj');
+      if (conjContainer) {
+        conjContainer.innerHTML = EXAM_DATA.conj.map((item, i) => `
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition" id="exam-item-${item.id}">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <span class="text-xs font-bold text-slate-500 w-6">C${i+1}.</span>
+              <span class="flex-1 text-sm font-medium text-slate-800">${item.s}</span>
+              <input type="text" id="input-${item.id}" value="${STATE.examAnswers[item.id] || ''}" placeholder="Bindewort" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-36 focus:ring-2 focus:ring-emerald-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
+            </div>
+            <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function saveExamAns(id, val) {
+      STATE.examAnswers[id] = val;
+    }
+
+    // Submit and Evaluate Exam
+    function submitExam() {
+      STATE.examSubmitted = true;
+      let scoreTags = 0;
+      let scoreWill = 0;
+      let scoreConj = 0;
+
+      const evaluateCategory = (category, list) => {
+        let catScore = 0;
+        list.forEach(item => {
+          const userRaw = STATE.examAnswers[item.id] || "";
+          const userNorm = normalize(userRaw);
+          const accepted = [item.c, ...(item.alt || [])].map(a => normalize(a));
+          const isCorrect = accepted.includes(userNorm);
+
+          const itemEl = document.getElementById(`exam-item-${item.id}`);
+          const fbEl = document.getElementById(`exam-fb-${item.id}`);
+
+          if (isCorrect) {
+            catScore++;
+            if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-300 transition";
+            if (fbEl) {
+              fbEl.className = "text-xs font-semibold text-emerald-800 block mt-2 pt-2 border-t border-emerald-200";
+              fbEl.innerHTML = `✅ <strong>1/1 Punkt:</strong> Richtig gelöst!`;
+            }
+          } else {
+            if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-rose-50/70 border border-rose-300 transition";
+            const diagHint = getDiagnosticFeedback(category, item.s, userRaw, item.c);
+            if (fbEl) {
+              fbEl.className = "text-xs text-rose-800 block mt-2 pt-2 border-t border-rose-200 space-y-1.5";
+              fbEl.innerHTML = `
+                <div>❌ <strong>0/1 Punkt</strong> · Richtige Lösung: <span class="font-mono-code font-bold text-slate-900 bg-white px-1.5 py-0.5 rounded border border-rose-200">${item.c}</span></div>
+                <div class="text-slate-800 bg-amber-50/90 p-2.5 rounded-lg border border-amber-200/80 font-medium">${diagHint}</div>
+              `;
+            }
+          }
+        });
+        return catScore;
+      };
+
+      scoreTags = evaluateCategory('tags', EXAM_DATA.tags);
+      scoreWill = evaluateCategory('will', EXAM_DATA.will);
+      scoreConj = evaluateCategory('conj', EXAM_DATA.conj);
+
+      const totalScore = scoreTags + scoreWill + scoreConj;
+      const pct = Math.round((totalScore / 30) * 100);
+
+      // Swiss Grade Calculation: Score/30 * 5 + 1
+      let swissGrade = (totalScore / 30) * 5 + 1;
+      swissGrade = Math.round(swissGrade * 10) / 10;
+
+      let ratingTitle = "";
+      let ratingClass = "";
+      let badgeColor = "";
+
+      if (pct >= 90) {
+        ratingTitle = "Sehr gut ⭐ (Kompetenz vollumfänglich und sicher erreicht)";
+        ratingClass = "bg-sky-50 border-sky-300 text-sky-950";
+        badgeColor = "bg-sky-600 text-white";
+      } else if (pct >= 75) {
+        ratingTitle = "Gut 👏 (Kompetenz gut und solide erreicht)";
+        ratingClass = "bg-emerald-50 border-emerald-300 text-emerald-950";
+        badgeColor = "bg-emerald-600 text-white";
+      } else if (pct >= 60) {
+        ratingTitle = "Erreicht / Bestanden 👍 (Grundkompetenzen erfüllt)";
+        ratingClass = "bg-amber-50 border-amber-300 text-amber-950";
+        badgeColor = "bg-amber-600 text-white";
+      } else {
+        ratingTitle = "Nicht erreicht ⚠️ (Nochmals vertiefen & gezielt üben)";
+        ratingClass = "bg-rose-50 border-rose-300 text-rose-950";
+        badgeColor = "bg-rose-600 text-white";
+      }
+
+      const timerInfo = timerSeconds > 0 ? `· ⏱️ Gestoppte Zeit: <strong>${formatTime(timerSeconds)}</strong>` : '';
+
+      const banner = document.getElementById('exam-results-banner');
+      if (banner) {
+        banner.className = `p-5 sm:p-6 rounded-2xl border shadow-sm ${ratingClass} block animate-fade-in`;
+        banner.innerHTML = `
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-black/10">
+            <div>
+              <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full ${badgeColor}">
+                ${pct >= 60 ? 'Bestanden' : 'Nicht bestanden'}
+              </span>
+              <h3 class="text-xl sm:text-2xl font-black mt-2">${ratingTitle}</h3>
+              <p class="text-xs sm:text-sm mt-1 opacity-90">Detaillierte Testauswertung nach Schweizer Lehrplan 21 ${timerInfo}.</p>
+            </div>
+            <div class="flex items-center gap-4 bg-white/80 p-3 rounded-xl border border-black/10 self-start md:self-auto">
+              <div class="text-center px-2">
+                <div class="text-[11px] font-bold text-slate-500 uppercase">Punkte</div>
+                <div class="text-2xl font-black">${totalScore} <span class="text-xs text-slate-500 font-normal">/ 30</span></div>
+              </div>
+              <div class="h-8 w-px bg-slate-300"></div>
+              <div class="text-center px-2">
+                <div class="text-[11px] font-bold text-slate-500 uppercase">Prozent</div>
+                <div class="text-2xl font-black">${pct}%</div>
+              </div>
+              <div class="h-8 w-px bg-slate-300"></div>
+              <div class="text-center px-2">
+                <div class="text-[11px] font-bold text-slate-500 uppercase">Richtnote</div>
+                <div class="text-2xl font-black text-blue-700">${swissGrade}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category Breakdown -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-4 text-xs sm:text-sm">
+            <div class="bg-white/80 p-3 rounded-xl border border-black/5">
+              <div class="font-bold flex items-center justify-between">
+                <span>🏷️ Question Tags</span>
+                <span class="font-mono-code ${scoreTags >= 6 ? 'text-emerald-700 font-extrabold' : 'text-rose-700'}">${scoreTags} / 10 Pkt.</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2 rounded-full mt-2 overflow-hidden">
+                <div class="bg-blue-600 h-full rounded-full" style="width: ${(scoreTags/10)*100}%"></div>
+              </div>
+            </div>
+
+            <div class="bg-white/80 p-3 rounded-xl border border-black/5">
+              <div class="font-bold flex items-center justify-between">
+                <span>🔮 Future with «will»</span>
+                <span class="font-mono-code ${scoreWill >= 6 ? 'text-emerald-700 font-extrabold' : 'text-rose-700'}">${scoreWill} / 10 Pkt.</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2 rounded-full mt-2 overflow-hidden">
+                <div class="bg-indigo-600 h-full rounded-full" style="width: ${(scoreWill/10)*100}%"></div>
+              </div>
+            </div>
+
+            <div class="bg-white/80 p-3 rounded-xl border border-black/5">
+              <div class="font-bold flex items-center justify-between">
+                <span>🔗 Konjunktionen</span>
+                <span class="font-mono-code ${scoreConj >= 6 ? 'text-emerald-700 font-extrabold' : 'text-rose-700'}">${scoreConj} / 10 Pkt.</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2 rounded-full mt-2 overflow-hidden">
+                <div class="bg-emerald-600 h-full rounded-full" style="width: ${(scoreConj/10)*100}%"></div>
+              </div>
+            </div>
+          </div>
+        `;
+        banner.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      showToast("Prüfung ausgewertet!", `Ergebnis: ${totalScore} von 30 Punkten (${pct}%, Note ${swissGrade}).`);
+    }
+
+    function resetExam() {
+      STATE.examAnswers = {};
+      STATE.examSubmitted = false;
+      const banner = document.getElementById('exam-results-banner');
+      if (banner) {
+        banner.classList.add('hidden');
+        banner.innerHTML = '';
+      }
+      renderExam();
+      showToast("Test zurückgesetzt", "Alle Eingaben der Probeprüfung wurden geleert.");
+    }
+
+    // ==========================================================
+    // VOCABULARY GLOSSARY (40 WORDS)
+    // ==========================================================
+    function filterVoci(type) {
+      STATE.vociFilter = type;
+      ['all', 'part1', 'part2'].forEach(t => {
+        const btn = document.getElementById(`voci-btn-${t}`);
+        if (btn) {
+          if (t === type) {
+            btn.className = "px-2.5 py-1 rounded-lg bg-purple-600 text-white shadow-sm";
+          } else {
+            btn.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:bg-white";
+          }
+        }
+      });
+      renderVocabulary();
+    }
+
+    function renderVocabulary() {
+      const grid = document.getElementById('voci-grid');
+      if (!grid) return;
+
+      const searchInput = document.getElementById('voci-search');
+      const searchVal = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+      let filtered = VOCABULARY;
+      if (STATE.vociFilter === 'part1') filtered = filtered.filter(v => v.part === 1);
+      if (STATE.vociFilter === 'part2') filtered = filtered.filter(v => v.part === 2);
+
+      if (searchVal) {
+        filtered = filtered.filter(v => v.en.toLowerCase().includes(searchVal) || v.de.toLowerCase().includes(searchVal));
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-xs sm:text-sm">Keine Vokabeln gefunden.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(v => `
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3 text-xs sm:text-sm">
+          <div>
+            <div class="font-bold text-slate-800">${v.en}</div>
+            <div class="text-slate-500">${v.de}</div>
+          </div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${v.part === 1 ? 'bg-sky-100 text-sky-800' : 'bg-indigo-100 text-indigo-800'}">
+            Part ${v.part}
+          </span>
+        </div>
+      `).join('');
+    }
+
+    // Overall stats helper
+    function updateOverallStats() {
+      const answeredCount = Object.keys(STATE.userAnswers).filter(k => STATE.userAnswers[k] && STATE.userAnswers[k].trim() !== '').length;
+      const el = document.getElementById('header-stat');
+      if (el) el.innerText = `${answeredCount} / 210`;
+    }
+
+    // ==========================================================
+    // STOPWATCH TIMER (START / PAUSE / RESET)
+    // ==========================================================
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let timerRunning = false;
+
+    function formatTime(totalSec) {
+      const mins = Math.floor(totalSec / 60);
+      const secs = totalSec % 60;
+      const pad = (n) => String(n).padStart(2, '0');
+      if (mins >= 60) {
+        const hrs = Math.floor(mins / 60);
+        const remMins = mins % 60;
+        return `${pad(hrs)}:${pad(remMins)}:${pad(secs)}`;
+      }
+      return `${pad(mins)}:${pad(secs)}`;
+    }
+
+    function updateTimerDisplay() {
+      const el = document.getElementById('timer-display');
+      if (el) el.innerText = formatTime(timerSeconds);
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('timer-toggle-btn');
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        if (btn) btn.innerHTML = '▶️ Start';
+        showToast("⏱️ Stoppuhr pausiert", `Bisherige Lernzeit: ${formatTime(timerSeconds)}`);
+      } else {
+        timerRunning = true;
+        if (btn) btn.innerHTML = '⏸️ Pause';
+        timerInterval = setInterval(() => {
+          timerSeconds++;
+          updateTimerDisplay();
+        }, 1000);
+        showToast("⏱️ Stoppuhr gestartet", "Lernzeit wird gezählt.");
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = 0;
+      updateTimerDisplay();
+      const btn = document.getElementById('timer-toggle-btn');
+      if (btn) btn.innerHTML = '▶️ Start';
+      showToast("⏱️ Stoppuhr zurückgesetzt", "Zeit wieder auf 00:00 gestellt.");
+    }
+
+    // Toast Notification Helper
+    function showToast(title, msg) {
+      const toast = document.getElementById('toast');
+      const toastTitle = document.getElementById('toast-title');
+      const toastMsg = document.getElementById('toast-msg');
+
+      if (!toast || !toastTitle || !toastMsg) return;
+
+      toastTitle.innerText = title;
+      toastMsg.innerText = msg;
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    // ==========================================================
+    // EXPOSE ALL FUNCTIONS EXPLICITLY TO WINDOW FOR INLINE ONCLICK
+    // ==========================================================
+    window.switchTab = switchTab;
+    window.selectLevel = selectLevel;
+    window.goToBlock = goToBlock;
+    window.checkBlock = checkBlock;
+    window.toggleSolution = toggleSolution;
+    window.resetBlock = resetBlock;
+    window.saveAns = saveAns;
+    window.filterVoci = filterVoci;
+    window.renderVocabulary = renderVocabulary;
+    window.saveExamAns = saveExamAns;
+    window.submitExam = submitExam;
+    window.resetExam = resetExam;
+    window.showToast = showToast;
+    window.toggleTimer = toggleTimer;
+    window.resetTimer = resetTimer;
+
+    // Initialization on load
+    window.onload = function() {
+      renderSection('tags_1');
+      renderSection('will_1');
+      renderSection('conj_1');
+      renderExam();
+      renderVocabulary();
+      updateOverallStats();
+    };
+  </script>
+</body>
+</html>
