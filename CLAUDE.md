@@ -31,6 +31,8 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 
 ## RZG-Hub: Besonderheiten
 - Grundlage: Dossier «Dynamik der Erde» (Real) mit Lösungen der Lehrperson.
+- Zweite Grundlage: Blatt «Lernziele Dynamik der Erde Teil 2» (Ich-kann-Checkliste für die Schüler). Jeder Punkt dieser Checkliste muss auf der Seite geübt werden (auch Erdbeben-Verhalten, Seismogramm/Erdbebenherd, Tsunami-Warnzeichen am Strand). Aufgaben zu inaktiven Vulkanen bleiben drin, bis der echte Test da ist.
+- Die Lehrperson schickt noch den echten Test 2. Dann Aufgaben und Punkte daran anpassen.
 - Die Seite deckt nur Test 2 ab: LZ7 bis LZ15 (Vulkan-Entstehung, Schild-/Schichtvulkan, Ausbruch, inaktiv, Erdbeben, Richterskala, Energie rechnen ×10 Ausschlag / ×32 Energie, Tsunamis). Teil 1 (Aufbau der Erde, Plattentektonik) war schon Test 1, nicht einbauen.
 - Aufgaben sind Daten in `DEFS` (Blocktypen gaps, rows, mc, checks, dnd, num). `TASKS` wird daraus berechnet.
 
