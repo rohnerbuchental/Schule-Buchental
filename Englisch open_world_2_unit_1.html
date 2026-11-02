@@ -1000,7 +1000,7 @@
           `;
         } else {
           html += `
-            <input type="text" id="input-${item.id}" value="${savedVal}" oninput="saveAns('${item.id}', this.value)" placeholder="Deine Antwort..." class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500" />
+            <input type="text" id="input-${item.id}" value="${escAttr(savedVal)}" oninput="saveAns('${item.id}', this.value)" placeholder="Deine Antwort..." class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500" />
           `;
         }
 
@@ -1038,8 +1038,30 @@
       container.innerHTML = html;
     }
 
+    // AUTO-SAVE: Antworten bleiben im Browser gespeichert
+    const SAVE_KEY = 'openworld2_unit1_answers';
+    function persist() {
+      try {
+        localStorage.setItem(SAVE_KEY, JSON.stringify({ userAnswers: STATE.userAnswers, examAnswers: STATE.examAnswers }));
+      } catch (e) {}
+    }
+    function loadSaved() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
+        if (saved) {
+          STATE.userAnswers = saved.userAnswers || {};
+          STATE.examAnswers = saved.examAnswers || {};
+        }
+      } catch (e) {}
+    }
+    // Gespeicherten Text sicher in ein value="..." schreiben
+    function escAttr(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    }
+
     function saveAns(id, val) {
       STATE.userAnswers[id] = val;
+      persist();
     }
 
     // Check 5 items in a block with diagnostic engine
@@ -1133,6 +1155,7 @@
 
       currentItems.forEach(item => {
         delete STATE.userAnswers[item.id];
+        persist();
         const inputEl = document.getElementById(`input-${item.id}`);
         if (inputEl) inputEl.value = "";
 
@@ -1162,7 +1185,7 @@
             <div class="flex items-center justify-between gap-2 flex-wrap">
               <span class="text-xs font-bold text-slate-500 w-6">A${i+1}.</span>
               <span class="flex-1 text-sm font-medium text-slate-800">${item.s}</span>
-              <input type="text" id="input-${item.id}" value="${STATE.examAnswers[item.id] || ''}" placeholder="Question Tag (z.B. aren't you)" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
+              <input type="text" id="input-${item.id}" value="${escAttr(STATE.examAnswers[item.id] || '')}" placeholder="Question Tag (z.B. aren't you)" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
             </div>
             <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
           </div>
@@ -1177,7 +1200,7 @@
             <div class="flex items-center justify-between gap-2 flex-wrap">
               <span class="text-xs font-bold text-slate-500 w-6">B${i+1}.</span>
               <span class="flex-1 text-sm font-medium text-slate-800">${item.s}</span>
-              <input type="text" id="input-${item.id}" value="${STATE.examAnswers[item.id] || ''}" placeholder="will / won't Form" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-48 focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
+              <input type="text" id="input-${item.id}" value="${escAttr(STATE.examAnswers[item.id] || '')}" placeholder="will / won't Form" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-48 focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
             </div>
             <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
           </div>
@@ -1192,7 +1215,7 @@
             <div class="flex items-center justify-between gap-2 flex-wrap">
               <span class="text-xs font-bold text-slate-500 w-6">C${i+1}.</span>
               <span class="flex-1 text-sm font-medium text-slate-800">${item.s}</span>
-              <input type="text" id="input-${item.id}" value="${STATE.examAnswers[item.id] || ''}" placeholder="Bindewort" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-36 focus:ring-2 focus:ring-emerald-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
+              <input type="text" id="input-${item.id}" value="${escAttr(STATE.examAnswers[item.id] || '')}" placeholder="Bindewort" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-36 focus:ring-2 focus:ring-emerald-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
             </div>
             <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
           </div>
@@ -1202,6 +1225,7 @@
 
     function saveExamAns(id, val) {
       STATE.examAnswers[id] = val;
+      persist();
     }
 
     // Submit and Evaluate Exam
@@ -1351,6 +1375,7 @@
     function resetExam() {
       STATE.examAnswers = {};
       STATE.examSubmitted = false;
+      persist();
       const banner = document.getElementById('exam-results-banner');
       if (banner) {
         banner.classList.add('hidden');
@@ -1512,6 +1537,7 @@
     // Initialization on load
     // Start sobald das HTML da ist (wartet nicht auf Tailwind/Schriften)
     document.addEventListener('DOMContentLoaded', function() {
+      loadSaved();
       renderSection('tags_1');
       renderSection('will_1');
       renderSection('conj_1');
