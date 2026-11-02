@@ -920,6 +920,20 @@
     }
 
     // Render regular exercise section
+    // Antworten in Auswahlmenüs zufällig mischen (bei jedem Laden neu, beim Blättern gleich)
+    const OPTION_ORDER = {};
+    function shuffledOptions(item) {
+      if (!OPTION_ORDER[item.id]) {
+        const copy = [...item.options];
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        OPTION_ORDER[item.id] = copy;
+      }
+      return OPTION_ORDER[item.id];
+    }
+
     function renderSection(sectionKey) {
       const items = DB[sectionKey];
       if (!items) return;
@@ -981,7 +995,7 @@
           html += `
             <select id="input-${item.id}" onchange="saveAns('${item.id}', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500">
               <option value="">-- wählen --</option>
-              ${item.options.map(opt => `<option value="${opt}" ${savedVal === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+              ${shuffledOptions(item).map(opt => `<option value="${opt}" ${savedVal === opt ? 'selected' : ''}>${opt}</option>`).join('')}
             </select>
           `;
         } else {
@@ -1496,14 +1510,15 @@
     window.resetTimer = resetTimer;
 
     // Initialization on load
-    window.onload = function() {
+    // Start sobald das HTML da ist (wartet nicht auf Tailwind/Schriften)
+    document.addEventListener('DOMContentLoaded', function() {
       renderSection('tags_1');
       renderSection('will_1');
       renderSection('conj_1');
       renderExam();
       renderVocabulary();
       updateOverallStats();
-    };
+    });
   </script>
 </body>
 </html>
