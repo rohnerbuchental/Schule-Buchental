@@ -30,12 +30,17 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Test-Simulation: 30 Punkte, bestanden ab 18.
 
 ## RZG-Hub: Besonderheiten
-- Grundlage: Dossier «Dynamik der Erde» (Real) mit Lösungen der Lehrperson.
-- Zweite Grundlage: Blatt «Lernziele Dynamik der Erde Teil 2» (Ich-kann-Checkliste für die Schüler). Jeder Punkt dieser Checkliste muss auf der Seite geübt werden (auch Erdbeben-Verhalten, Seismogramm/Erdbebenherd, Tsunami-Warnzeichen am Strand). Aufgaben zu inaktiven Vulkanen bleiben drin, bis der echte Test da ist.
+- Grundlagen: Dossier «Dynamik der Erde» (Real) mit Lösungen der Lehrperson und Blatt «Lernziele Dynamik der Erde Teil 2» (Ich-kann-Checkliste, LZ1 bis LZ5) mit Musterlösungen, die sich aufs Dossier stützen.
+- Die Seite deckt nur Teil 2 ab: Vulkan-Entstehung, Schild-/Schichtvulkan, Ausbruch, Erdbeben, Richterskala, Energie rechnen (×10 Ausschlag / ×32 Energie), Tsunamis. Teil 1 (Aufbau der Erde, Plattentektonik) war schon Test 1, nicht einbauen.
+- Lernziel-Nummern auf der Seite wie auf dem Blatt (LZ1 bis LZ5). Jeder Punkt der Checkliste muss geübt werden.
+- «Inaktive Vulkane» (Aufgabe 6) ist ein Zusatz aus dem Dossier. Steht nicht auf dem Lernziel-Blatt und kommt im Test nicht vor.
 - Die Schüler füllen das Lernziel-Blatt auf Papier aus. Das Lernportal dient danach zum nochmaligen Üben für den Test. Reiter «Lernziel-Blatt» (`BLATT`): alle Ich-kann-Punkte mit Textfeld, Musterlösung zum Aufklappen und Häkchen «Das kann ich». Zählt nicht zu `TASKS`.
-- Die Lehrperson schickt noch den echten Test 2. Dann Aufgaben und Punkte daran anpassen.
-- Die Seite deckt nur Test 2 ab: LZ7 bis LZ15 (Vulkan-Entstehung, Schild-/Schichtvulkan, Ausbruch, inaktiv, Erdbeben, Richterskala, Energie rechnen ×10 Ausschlag / ×32 Energie, Tsunamis). Teil 1 (Aufbau der Erde, Plattentektonik) war schon Test 1, nicht einbauen.
 - Aufgaben sind Daten in `DEFS` (Blocktypen gaps, rows, mc, checks, dnd, num). `TASKS` wird daraus berechnet.
+
+## Tests (Prüfungen)
+- Echte Tests nie ins Repository und nie aufs Lernportal: Das Repo ist öffentlich, die Schüler könnten sie finden.
+- Tests als Word-Datei (.docx) direkt an die Lehrperson geben, immer mit separater Lösung inkl. Punkteverteilung und Notenskala.
+- Test-Aufgaben dürfen den Übungen ähnlich sein, aber nicht gleich (andere Bilder, Beispiele, Zahlen).
 
 ## Lehrplan (`lehrplan/`)
 - Kompetenzen Zyklus 3 (Lehrplan Volksschule SG) als Markdown: Deutsch, Englisch, Medien und Informatik, RZG, Bildnerisches Gestalten. Übersicht in `lehrplan/README.md`.
