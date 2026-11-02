@@ -334,18 +334,20 @@
     ];
 
     const DEFS = {
-      a1: { title: 'Drei Arten der Vulkan-Entstehung', intro: 'Wähle in jeder Lücke das richtige Wort.', blocks: [
+      a1: { title: 'Drei Arten der Vulkan-Entstehung', intro: 'Wähle in jeder Lücke das richtige Wort.',
+        tip: 'Frag dich bei jedem Abschnitt: Was machen die Platten? Gehen sie auseinander, stossen sie zusammen, oder passiert etwas mitten auf einer Platte? Und: Was passiert mit Gestein, wenn es sehr heiss wird?', blocks: [
         { type: 'gaps', paras: [
-          ['<b>1. Auseinander:</b> Zwei Platten bewegen sich ', { key: 'a1_1', opts: ['voneinander weg', 'aufeinander zu', 'seitlich aneinander vorbei'], c: 'voneinander weg' },
+          ['<b>Auseinander:</b> Zwei Platten bewegen sich ', { key: 'a1_1', opts: ['voneinander weg', 'aufeinander zu', 'seitlich aneinander vorbei'], c: 'voneinander weg' },
            '. Es entsteht ein Riss. Heisses ', { key: 'a1_2', opts: ['Magma', 'Meerwasser', 'Eis'], c: 'Magma' }, ' steigt nach oben und kühlt als neue Kruste ab.'],
-          ['<b>2. Zusammen:</b> Die ', { key: 'a1_3', opts: ['schwerere', 'leichtere'], c: 'schwerere' },
+          ['<b>Zusammen:</b> Die ', { key: 'a1_3', opts: ['schwerere', 'leichtere'], c: 'schwerere' },
            ' Platte schiebt sich unter die andere. In der Tiefe ', { key: 'a1_4', opts: ['schmilzt', 'gefriert', 'verdunstet'], c: 'schmilzt' }, ' das Gestein. Das Magma steigt auf.'],
-          ['<b>3. Ohne Plattengrenze:</b> Bei einem ', { key: 'a1_5', opts: ['Hotspot', 'Tiefseegraben', 'Gletscher'], c: 'Hotspot' },
+          ['<b>Ohne Plattengrenze:</b> Bei einem ', { key: 'a1_5', opts: ['Hotspot', 'Tiefseegraben', 'Gletscher'], c: 'Hotspot' },
            ' brennt sich heisses Magma wie ein Schweissbrenner durch die Platte. Ein bekanntes Beispiel ist ', { key: 'a1_6', opts: ['Hawaii', 'die Alpen', 'der Mount St. Helens'], c: 'Hawaii' }, '.']
         ] }
       ] },
-      a2: { title: 'Beispiele und «Ring of Fire»', intro: 'Wie ist dieser Vulkan entstanden?', blocks: [
-        { type: 'rows', rows: [
+      a2: { title: 'Beispiele und «Ring of Fire»', intro: '',
+        tip: 'Schau genau, wo der Vulkan liegt: An einer Grenze, wo Platten auseinandergehen? Dort, wo eine Platte unter eine andere taucht? Oder mitten auf einer Platte? Der «Ring of Fire» liegt rund um den grössten Ozean der Welt.', blocks: [
+        { type: 'rows', head: 'Wie ist dieser Vulkan entstanden?', rows: [
           { key: 'a2_island', label: 'Vulkane auf Island (Mittelatlantischer Rücken)', opts: ARTEN, c: ARTEN[0] },
           { key: 'a2_hawaii', label: 'Mauna Loa auf Hawaii, mitten in der Pazifischen Platte', opts: ARTEN, c: ARTEN[2] },
           { key: 'a2_helens', label: 'Mount St. Helens (USA), Ozeanplatte taucht unter Amerika ab', opts: ARTEN, c: ARTEN[1] },
@@ -364,12 +366,13 @@
           { v: 'wasser', t: 'Weil das Meerwasser das Gestein schmelzen lässt.' }
         ] }
       ] },
-      a3: { title: 'Schild- oder Schichtvulkan?', intro: 'a) Schau die Form an: Welcher Vulkan ist das? b) Ordne danach die Karten der richtigen Gruppe zu.', blocks: [
-        { type: 'rows', grid: true, rows: [
+      a3: { title: 'Schild- oder Schichtvulkan?', intro: '',
+        tip: 'Merkhilfe: Der <b>Schichtvulkan</b> ist steil wie ein Hütchen und gefährlich. Sein Magma ist zäh wie Honig. Der <b>Schildvulkan</b> ist flach wie ein Schild, der am Boden liegt. Sein Magma ist dünn wie Wasser.', blocks: [
+        { type: 'rows', grid: true, head: 'Schau die Form an: Welcher Vulkan ist das?', rows: [
           { key: 'a3_fig_strato', svg: SVG_STRATO, label: 'Vulkan mit dieser Form:', opts: ['Schichtvulkan', 'Schildvulkan'], c: 'Schichtvulkan' },
           { key: 'a3_fig_shield', svg: SVG_SHIELD, label: 'Vulkan mit dieser Form:', opts: ['Schichtvulkan', 'Schildvulkan'], c: 'Schildvulkan' }
         ] },
-        { type: 'dnd', key: 'a3_dnd', zones: ['Schichtvulkan', 'Schildvulkan'], cards: [
+        { type: 'dnd', key: 'a3_dnd', head: 'Ordne die Karten der richtigen Gruppe zu.', zones: ['Schichtvulkan', 'Schildvulkan'], cards: [
           { key: 'a3_k1', t: 'steil und hoch', c: 'Schichtvulkan' },
           { key: 'a3_k2', t: 'flach und breit', c: 'Schildvulkan' },
           { key: 'a3_k3', t: 'zähflüssiges Magma', c: 'Schichtvulkan' },
@@ -379,14 +382,15 @@
           { key: 'a3_k7', t: 'Vesuv und Ätna (Italien)', c: 'Schichtvulkan' },
           { key: 'a3_k8', t: 'Mauna Loa (Hawaii)', c: 'Schildvulkan' }
         ] },
-        { type: 'mc', key: 'a3_schichten', q: 'c) Warum besteht ein Schichtvulkan aus vielen Schichten?', c: 'wechsel', opts: [
+        { type: 'mc', key: 'a3_schichten', q: 'Warum besteht ein Schichtvulkan aus vielen Schichten?', c: 'wechsel', opts: [
           { v: 'wechsel', t: 'Bei den Ausbrüchen lagern sich abwechselnd Asche/Gestein und erstarrte Lava ab.' },
           { v: 'wind', t: 'Der Wind weht jedes Jahr eine neue Schicht Sand auf den Vulkan.' },
           { v: 'schnee', t: 'Schnee und Eis gefrieren in Schichten auf dem Vulkan.' },
           { v: 'platte', t: 'Zwei Erdplatten liegen übereinander.' }
         ] }
       ] },
-      a4: { title: 'So bricht ein Vulkan aus', intro: 'Setze die Wörter ein: zähflüssig, dünnflüssig, Gase, Druck, explosiv, fliessend. Jedes Wort passt genau einmal.', blocks: [
+      a4: { title: 'So bricht ein Vulkan aus', intro: 'Setze die Wörter ein: zähflüssig, dünnflüssig, Gase, Druck, explosiv, fliessend. Jedes Wort passt genau einmal.',
+        tip: 'Zähes Magma hält die Gase fest. Dann steigt der Druck, bis es knallt. Dünnes Magma lässt die Gase einfach entweichen. Dann gibt es kaum Druck und die Lava fliesst ruhig.', blocks: [
         { type: 'gaps', paras: [
           ['<b>Schichtvulkan:</b> Das Magma ist ', { key: 'a4_1', opts: WORTE_A4, c: 'zähflüssig' }, '. Die ', { key: 'a4_2', opts: WORTE_A4, c: 'Gase' },
            ' können kaum entweichen. Darum steigt im Schlot der ', { key: 'a4_3', opts: WORTE_A4, c: 'Druck' }, '. Der Ausbruch ist ', { key: 'a4_4', opts: WORTE_A4, c: 'explosiv' }, '.'],
@@ -394,7 +398,8 @@
            { key: 'a4_6', opts: WORTE_A4, c: 'fliessend' }, ' aus dem Krater.']
         ] }
       ] },
-      a5: { title: 'Ablauf eines explosiven Ausbruchs', intro: 'Bringe die Schritte beim Schichtvulkan in die richtige Reihenfolge (1 = zuerst).', blocks: [
+      a5: { title: 'Ablauf eines explosiven Ausbruchs', intro: 'Bringe die Schritte beim Schichtvulkan in die richtige Reihenfolge (1 = zuerst).',
+        tip: 'Denk an eine Flasche Mineralwasser, die du schüttelst: Zuerst ist das Gas gefangen. Dann steigt der Druck. Am Schluss knallt der Deckel weg. Und ganz am Anfang muss das Magma ja zuerst einmal nach oben kommen.', blocks: [
         { type: 'rows', order: true, rows: [
           { key: 'a5_1', label: 'Magma steigt aus der Tiefe auf und sammelt sich in der Magmakammer.', c: '1' },
           { key: 'a5_2', label: 'Die Gase bleiben im zähflüssigen Magma gefangen.', c: '2' },
@@ -403,100 +408,103 @@
           { key: 'a5_5', label: 'Explosion: Asche, Steine und Lava werden herausgeschleudert.', c: '5' }
         ] }
       ] },
-      a6: { title: 'Wann ist ein Vulkan inaktiv?', intro: '', blocks: [
-        { type: 'mc', key: 'a6_wann', q: 'a) Wann gilt ein Vulkan als inaktiv?', c: 'magma', opts: [
+      a6: { title: 'Wann ist ein Vulkan inaktiv?', intro: '',
+        tip: 'Ein Vulkan braucht immer Nachschub von Magma. Was passiert, wenn keines mehr kommt? Bei der Skizze: Die Platte wandert, der Hotspot bleibt am gleichen Ort. Welche Insel ist zuerst über dem Hotspot entstanden?', blocks: [
+        { type: 'mc', key: 'a6_wann', q: 'Wann gilt ein Vulkan als inaktiv?', c: 'magma', opts: [
           { v: 'magma', t: 'Wenn kein Magma mehr nachkommt und der Druck in der Magmakammer sinkt.' },
           { v: 'jahr', t: 'Wenn er ein Jahr lang nicht ausgebrochen ist.' },
           { v: 'schnee', t: 'Wenn Schnee auf dem Gipfel liegt.' },
           { v: 'rauch', t: 'Wenn man keinen Rauch mehr sieht.' }
         ] },
-        { type: 'checks', key: 'a6_gruende', q: 'b) Welche Gründe gibt es dafür? Kreuze die 2 richtigen an.', opts: [
+        { type: 'checks', key: 'a6_gruende', q: 'Warum wird ein Vulkan inaktiv? Kreuze die 2 richtigen Gründe an.', opts: [
           { id: 'hotspot', t: 'Die Platte bewegt sich weiter. Der Vulkan wandert vom Hotspot weg.', ok: true },
           { id: 'kammer', t: 'Die Magmakammer kühlt ab, wird fest und der Schlot verstopft.', ok: true },
           { id: 'regen', t: 'Es regnet zu viel in den Krater.', ok: false },
           { id: 'heiss', t: 'Die Lava wird zu heiss.', ok: false },
           { id: 'haeuser', t: 'Menschen bauen Häuser auf den Vulkan.', ok: false }
         ] },
-        { type: 'html', html: '<p class="text-sm font-semibold text-slate-800 pt-2">c) Die Platte bewegt sich über einen Hotspot. So entsteht eine Inselkette (wie Hawaii).</p>' + SVG_HOTSPOT },
-        { type: 'rows', rows: [
+        { type: 'rows', head: 'Die Platte bewegt sich über einen Hotspot. So entsteht eine Inselkette (wie Hawaii).', pre: SVG_HOTSPOT, rows: [
           { key: 'a6_alt', label: 'Welche Insel ist am ältesten?', opts: ['Insel A', 'Insel B', 'Insel C'], c: 'Insel A' },
           { key: 'a6_aktiv', label: 'Auf welcher Insel ist der Vulkan noch aktiv?', opts: ['Insel A', 'Insel B', 'Insel C'], c: 'Insel C' }
         ] }
       ] },
-      a7: { title: 'Wie entsteht ein Erdbeben?', intro: '', blocks: [
-        { type: 'mc', key: 'a7_1', q: 'a) Wie entsteht ein Erdbeben meistens?', c: 'spannung', opts: [
+      a7: { title: 'Wie entsteht ein Erdbeben?', intro: '',
+        tip: 'Erdbeben gibt es dort, wo Platten aneinander reiben oder sich verhaken. Bei den Messwörtern hilft das Ende: «-graph» ist ein Gerät (wie Fotograf), «-gramm» ist eine Aufzeichnung (wie Telegramm).', blocks: [
+        { type: 'mc', key: 'a7_1', q: 'Wie entsteht ein Erdbeben meistens?', c: 'spannung', opts: [
           { v: 'spannung', t: 'Zwei Platten verhaken sich. Die Spannung wird so gross, bis das Gestein plötzlich bricht.' },
           { v: 'wind', t: 'Starker Wind drückt auf die Erdoberfläche.' },
           { v: 'meer', t: 'Das Meer wird zu schwer für den Meeresboden.' },
           { v: 'regen', t: 'Viel Regen weicht den Boden auf.' }
         ] },
-        { type: 'mc', key: 'a7_2', q: 'b) Wo gibt es besonders viele Erdbeben?', c: 'grenze', opts: [
+        { type: 'mc', key: 'a7_2', q: 'Wo gibt es besonders viele Erdbeben?', c: 'grenze', opts: [
           { v: 'grenze', t: 'An den Plattengrenzen' },
           { v: 'mitte', t: 'In der Mitte der Platten, weit weg von den Grenzen' },
           { v: 'wueste', t: 'Nur in Wüsten' },
           { v: 'pol', t: 'Nur am Nordpol und Südpol' }
         ] },
-        { type: 'mc', key: 'a7_3', q: 'c) Bei der San-Andreas-Verwerfung (USA) gibt es oft Erdbeben. Was machen die Platten dort?', c: 'seitlich', opts: [
+        { type: 'mc', key: 'a7_3', q: 'Bei der San-Andreas-Verwerfung (USA) gibt es oft Erdbeben. Was machen die Platten dort?', c: 'seitlich', opts: [
           { v: 'seitlich', t: 'Sie gleiten seitlich aneinander vorbei.' },
           { v: 'weg', t: 'Sie bewegen sich voneinander weg.' },
           { v: 'still', t: 'Sie stehen völlig still.' }
         ] },
-        { type: 'mc', key: 'a7_4', q: 'd) Mit welchem Gerät misst man Erdbeben?', c: 'seismo', opts: [
+        { type: 'mc', key: 'a7_4', q: 'Mit welchem Gerät misst man Erdbeben?', c: 'seismo', opts: [
           { v: 'seismo', t: 'Seismograph' },
           { v: 'baro', t: 'Barometer' },
           { v: 'thermo', t: 'Thermometer' },
           { v: 'kompass', t: 'Kompass' }
         ] },
-        { type: 'mc', key: 'a7_herd', q: 'e) Wie heisst die Stelle in der Tiefe, wo ein Erdbeben beginnt?', c: 'herd', opts: [
+        { type: 'mc', key: 'a7_herd', q: 'Wie heisst die Stelle in der Tiefe, wo ein Erdbeben beginnt?', c: 'herd', opts: [
           { v: 'herd', t: 'Erdbebenherd' },
           { v: 'krater', t: 'Krater' },
           { v: 'kammer', t: 'Magmakammer' },
           { v: 'gramm', t: 'Seismogramm' }
         ] },
-        { type: 'mc', key: 'a7_gramm', q: 'f) Was ist ein Seismogramm?', c: 'kurve', opts: [
+        { type: 'mc', key: 'a7_gramm', q: 'Was ist ein Seismogramm?', c: 'kurve', opts: [
           { v: 'kurve', t: 'Die Aufzeichnung (Kurve) des Seismographen' },
           { v: 'geraet', t: 'Das Messgerät für Erdbeben' },
           { v: 'skala', t: 'Eine Skala für die Stärke von Vulkanen' },
           { v: 'karte', t: 'Eine Weltkarte mit allen Plattengrenzen' }
         ] }
       ] },
-      a8: { title: 'Richterskala und Auswirkungen', intro: '', blocks: [
-        { type: 'mc', key: 'a8_name', q: 'a) Wie heisst die Skala, mit der man die Stärke von Erdbeben angibt?', c: 'richter', opts: [
+      a8: { title: 'Richterskala und Auswirkungen', intro: '',
+        tip: 'Je höher die Zahl, desto schlimmer. Ordne die Auswirkungen zuerst von «kaum spürbar» bis «alles zerstört». Weltrekord: Chile 1960. Schweiz: eine Stadt am Rhein, im Jahr 1356.', blocks: [
+        { type: 'mc', key: 'a8_name', q: 'Wie heisst die Skala, mit der man die Stärke von Erdbeben angibt?', c: 'richter', opts: [
           { v: 'richter', t: 'Richterskala' },
           { v: 'beaufort', t: 'Beaufort-Skala' },
           { v: 'celsius', t: 'Celsius-Skala' },
           { v: 'noten', t: 'Notenskala' }
         ] },
-        { type: 'html', html: '<p class="text-sm font-semibold text-slate-800 pt-2">b) Was passiert bei welcher Stärke? Ordne zu.</p>' },
-        { type: 'rows', rows: [
+        { type: 'rows', head: 'Was passiert bei welcher Stärke? Ordne zu.', rows: [
           { key: 'a8_s2', label: 'Stärke 2', opts: RICHTER, c: RICHTER[0] },
           { key: 'a8_s4', label: 'Stärke 4', opts: RICHTER, c: RICHTER[1] },
           { key: 'a8_s6', label: 'Stärke 6', opts: RICHTER, c: RICHTER[2] },
           { key: 'a8_s7', label: 'Stärke 7', opts: RICHTER, c: RICHTER[3] },
           { key: 'a8_s8', label: 'Stärke 8', opts: RICHTER, c: RICHTER[4] }
         ] },
-        { type: 'mc', key: 'a8_max', q: 'c) Wie stark war das stärkste je gemessene Erdbeben (Chile, 1960)?', c: '95', opts: [
+        { type: 'mc', key: 'a8_max', q: 'Wie stark war das stärkste je gemessene Erdbeben (Chile, 1960)?', c: '95', opts: [
           { v: '95', t: 'Stärke 9.5' },
           { v: '72', t: 'Stärke 7.2' },
           { v: '12', t: 'Stärke 12' },
           { v: '20', t: 'Stärke 20' }
         ] },
-        { type: 'mc', key: 'a8_ch', q: 'd) Wo war 1356 das stärkste bekannte Erdbeben der Schweiz (ca. Stärke 6 bis 6.5)?', c: 'basel', opts: [
+        { type: 'mc', key: 'a8_ch', q: 'Wo war 1356 das stärkste bekannte Erdbeben der Schweiz (ca. Stärke 6 bis 6.5)?', c: 'basel', opts: [
           { v: 'basel', t: 'Basel' },
           { v: 'stgallen', t: 'St. Gallen' },
           { v: 'genf', t: 'Genf' },
           { v: 'chur', t: 'Chur' }
         ] }
       ] },
-      a9: { title: 'Energie berechnen', intro: 'Regel: 1 Stufe höher = Ausschlag × 10 und Energie × 32. Tippe die Zahl ein (ohne Taschenrechner geht es auch Schritt für Schritt).', blocks: [
+      a9: { title: 'Energie berechnen', intro: 'Regel: 1 Stufe höher = Ausschlag × 10 und Energie × 32. Tippe die Zahl ein (ohne Taschenrechner geht es auch Schritt für Schritt).',
+        tip: 'Zuerst die Stufen zählen: grosse Zahl minus kleine Zahl. Dann für jede Stufe einmal «× 10» (Ausschlag) oder «× 32» (Energie) rechnen. Beispiel: Stärke 8 statt 6 sind 2 Stufen. Ausschlag: 10 × 10 = 100-mal grösser.', blocks: [
         { type: 'num', rows: [
-          { key: 'a9_1', label: 'a) Stärke 5 statt 4: Wie viel Mal mehr <b>Energie</b>?', c: '32' },
-          { key: 'a9_2', label: 'b) Stärke 6 statt 3: Wie viel Mal grösser ist der <b>Ausschlag</b> im Seismogramm?', c: '1000' },
-          { key: 'a9_3', label: 'c) Stärke 7 statt 5: Wie viel Mal mehr <b>Energie</b>?', c: '1024' },
-          { key: 'a9_4', label: 'd) Japan 2011 hatte Stärke 9. Die Atombombe von Hiroshima entsprach etwa Stärke 6. Wie viel Mal mehr <b>Energie</b> hatte das Beben?', c: '32768' }
+          { key: 'a9_1', label: 'Stärke 5 statt 4: Wie viel Mal mehr <b>Energie</b>?', c: '32' },
+          { key: 'a9_2', label: 'Stärke 6 statt 3: Wie viel Mal grösser ist der <b>Ausschlag</b> im Seismogramm?', c: '1000' },
+          { key: 'a9_3', label: 'Stärke 7 statt 5: Wie viel Mal mehr <b>Energie</b>?', c: '1024' },
+          { key: 'a9_4', label: 'Japan 2011 hatte Stärke 9. Die Atombombe von Hiroshima entsprach etwa Stärke 6. Wie viel Mal mehr <b>Energie</b> hatte das Beben?', c: '32768' }
         ] }
       ] },
-      a9b: { title: 'Verhalten bei einem Erdbeben', intro: '', blocks: [
+      a9b: { title: 'Verhalten bei einem Erdbeben', intro: '',
+        tip: 'Frag dich bei jeder Antwort: Was kann bei einem Beben herunterfallen oder zerbrechen? Wo bist du geschützt? Was passiert mit einem Lift, wenn der Strom ausfällt?', blocks: [
         { type: 'checks', key: 'a9b_regeln', q: 'Was ist bei einem starken Erdbeben richtig? Kreuze die 3 richtigen an.', opts: [
           { id: 'tisch', t: 'Im Haus unter einen stabilen Tisch kriechen und sich festhalten.', ok: true },
           { id: 'fenster', t: 'Sich von Fenstern, Glas und schweren Schränken fernhalten.', ok: true },
@@ -506,27 +514,29 @@
           { id: 'wand', t: 'Sich im Freien direkt an eine Hauswand stellen.', ok: false }
         ] }
       ] },
-      a10: { title: 'Entstehung eines Tsunamis', intro: 'a) Bringe die Schritte in die richtige Reihenfolge (1 = zuerst).', blocks: [
-        { type: 'rows', order: true, rows: [
+      a10: { title: 'Entstehung eines Tsunamis', intro: '',
+        tip: 'Ein Tsunami beginnt ganz unten im Meer und endet an der Küste. Auf dem tiefen Meer ist die Welle flach. An der flachen Küste wird sie gebremst und das Wasser staut sich, wie Autos bei einem Stau.', blocks: [
+        { type: 'rows', order: true, head: 'Bringe die Schritte in die richtige Reihenfolge (1 = zuerst).', rows: [
           { key: 'a10_1', label: 'Am Meeresgrund gibt es ein Seebeben.', c: '1' },
           { key: 'a10_2', label: 'Der Meeresboden stösst das ganze Wasser darüber schlagartig nach oben.', c: '2' },
           { key: 'a10_3', label: 'Auf dem offenen Meer rast eine flache Welle (ca. 1 m) sehr schnell weiter.', c: '3' },
           { key: 'a10_4', label: 'An der flachen Küste wird die Welle abgebremst und türmt sich 10 bis 30 m hoch auf.', c: '4' }
         ] },
-        { type: 'mc', key: 'a10_schiff', q: 'b) Warum merkt man auf einem Schiff auf dem offenen Meer kaum etwas vom Tsunami?', c: 'flach', opts: [
+        { type: 'mc', key: 'a10_schiff', q: 'Warum merkt man auf einem Schiff auf dem offenen Meer kaum etwas vom Tsunami?', c: 'flach', opts: [
           { v: 'flach', t: 'Weil die Welle dort nur ca. 1 m hoch ist.' },
           { v: 'langsam', t: 'Weil die Welle dort sehr langsam ist.' },
           { v: 'keine', t: 'Weil es auf dem offenen Meer noch gar keine Welle gibt.' },
           { v: 'wind', t: 'Weil der Wind die Welle wegbläst.' }
         ] },
-        { type: 'mc', key: 'a10_kueste', q: 'c) Warum wird der Tsunami an der Küste und in engen Buchten so hoch?', c: 'stau', opts: [
+        { type: 'mc', key: 'a10_kueste', q: 'Warum wird der Tsunami an der Küste und in engen Buchten so hoch?', c: 'stau', opts: [
           { v: 'stau', t: 'Im flachen Wasser wird die Welle abgebremst. Das Wasser staut sich und türmt sich auf.' },
           { v: 'wind', t: 'Der Wind an der Küste bläst die Welle hoch.' },
           { v: 'regen', t: 'An der Küste kommt viel Regenwasser dazu.' },
           { v: 'schnell', t: 'Die Welle wird an der Küste immer schneller.' }
         ] }
       ] },
-      a11: { title: 'Normale Welle oder Tsunami?', intro: 'Ordne jede Karte der richtigen Gruppe zu.', blocks: [
+      a11: { title: 'Normale Welle oder Tsunami?', intro: 'Ordne jede Karte der richtigen Gruppe zu.',
+        tip: 'Frag dich bei jeder Karte: Kann der Wind das schaffen? Oder braucht es die riesige Kraft eines Seebebens, die das ganze Meer vom Grund her bewegt?', blocks: [
         { type: 'dnd', key: 'a11_dnd', zones: ['Normale Welle', 'Tsunami'], cards: [
           { key: 'a11_k1', t: 'entsteht durch Wind', c: 'Normale Welle' },
           { key: 'a11_k2', t: 'entsteht durch ein Seebeben', c: 'Tsunami' },
@@ -538,14 +548,15 @@
           { key: 'a11_k8', t: 'sehr schnell (bis 800 km/h)', c: 'Tsunami' }
         ] }
       ] },
-      a11b: { title: 'Warnzeichen und Verhalten am Strand', intro: '', blocks: [
-        { type: 'mc', key: 'a11b_zeichen', q: 'a) Welches Naturzeichen warnt am Strand vor einem Tsunami?', c: 'zurueck', opts: [
+      a11b: { title: 'Warnzeichen und Verhalten am Strand', intro: '',
+        tip: 'Bevor die Welle kommt, passiert etwas Seltsames mit dem Wasser am Strand. Und bei Gefahr gilt: weg vom Wasser und nach oben.', blocks: [
+        { type: 'mc', key: 'a11b_zeichen', q: 'Welches Naturzeichen warnt am Strand vor einem Tsunami?', c: 'zurueck', opts: [
           { v: 'zurueck', t: 'Das Meer zieht sich plötzlich weit zurück.' },
           { v: 'regen', t: 'Es beginnt plötzlich stark zu regnen.' },
           { v: 'wind', t: 'Der Wind dreht plötzlich.' },
           { v: 'kalt', t: 'Das Wasser wird plötzlich kalt.' }
         ] },
-        { type: 'checks', key: 'a11b_verhalten', q: 'b) Was machst du bei drohender Gefahr? Kreuze die 3 richtigen an.', opts: [
+        { type: 'checks', key: 'a11b_verhalten', q: 'Was machst du bei drohender Gefahr? Kreuze die 3 richtigen an.', opts: [
           { id: 'weg', t: 'Sofort weg vom Strand gehen.', ok: true },
           { id: 'hoch', t: 'Einen hohen Ort suchen: einen Hügel oder obere Stockwerke eines stabilen Betongebäudes.', ok: true },
           { id: 'warnen', t: 'Andere Menschen warnen.', ok: true },
@@ -921,15 +932,22 @@
     const CARD = 'bg-slate-50 border border-slate-200';
     let DISPLAY = {};   // gemischte Reihenfolgen
 
-    function initShuffledData() {
-      DISPLAY = {};
-      Object.values(DEFS).forEach(d => d.blocks.forEach((b, i) => {
+    // Mischt eine Aufgabe neu: Reihenfolge der Teilfragen, Zeilen, Antworten, Karten und Abschnitte im Lückentext
+    function shuffleTask(taskId) {
+      const d = DEFS[taskId];
+      d._order = shuffleArray(d.blocks);
+      d.blocks.forEach((b, i) => {
         const id = (b.key || '') + '#' + d.nr + '_' + i;
         b._id = id;
         if (b.type === 'rows' || b.type === 'num') DISPLAY[id] = shuffleArray(b.rows);
         if (b.type === 'mc' || b.type === 'checks') DISPLAY[id] = shuffleArray(b.opts);
         if (b.type === 'dnd') DISPLAY[id] = shuffleArray(b.cards);
-      }));
+        if (b.type === 'gaps') DISPLAY[id] = shuffleArray(b.paras);
+      });
+    }
+    function initShuffledData() {
+      DISPLAY = {};
+      Object.keys(DEFS).forEach(shuffleTask);
     }
 
     function selectHTML(key, opts, order, extra) {
@@ -940,12 +958,18 @@
         <option value="">${order ? '–' : '– wählen –'}</option>${options}</select>`;
     }
 
+    // Kopf eines Teils (mit Buchstaben a, b, c …) und optionalem Bild
+    function renderPart(b) {
+      const head = b.head ? `<p class="text-sm font-semibold text-slate-800 pt-1">${b._label || ''}${b.head}</p>` : '';
+      return head + (b.pre || '') + renderBlock(b);
+    }
+
     function renderBlock(b) {
       if (b.type === 'html') return b.html;
 
       if (b.type === 'gaps') {
         return `<div class="gap-text text-sm text-slate-700 leading-loose space-y-3">` +
-          b.paras.map(p => '<p>' + p.map(s => typeof s === 'string' ? s : selectHTML(s.key, s.opts)).join('') + '</p>').join('') +
+          DISPLAY[b._id].map(p => '<p>' + p.map(s => typeof s === 'string' ? s : selectHTML(s.key, s.opts)).join('') + '</p>').join('') +
           `</div>`;
       }
 
@@ -972,7 +996,7 @@
           <label class="flex items-start gap-2 p-2 rounded-lg hover:bg-white cursor-pointer text-sm text-slate-700">
             <input type="radio" name="${b.key}" value="${esc(o.v)}" data-key="${b.key}" class="mt-0.5 accent-orange-600" ${A(b.key) === o.v ? 'checked' : ''}>
             <span>${o.t}</span></label>`).join('');
-        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b.q}</p>${opts}</div>`;
+        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b._label || ''}${b.q}</p>${opts}</div>`;
       }
 
       if (b.type === 'checks') {
@@ -982,7 +1006,7 @@
             <input type="checkbox" data-key="${k}" class="mt-0.5 accent-orange-600" ${A(k) === true ? 'checked' : ''}>
             <span>${o.t}</span></label>`;
         }).join('');
-        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b.q}</p>${opts}
+        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b._label || ''}${b.q}</p>${opts}
           <p class="text-[11px] text-slate-500 px-2">Achtung: Eine falsche Antwort gibt einen Punkt Abzug.</p></div>`;
       }
 
@@ -1093,15 +1117,28 @@
     function renderTask(id) {
       const d = DEFS[id], host = document.querySelector(`[data-task="${id}"]`);
       if (!host) return;
+      const order = d._order || d.blocks;
+      const parts = order.filter(b => b.type !== 'html');
+      order.forEach(b => { b._label = ''; });
+      if (parts.length > 1) parts.forEach((b, i) => { b._label = `<b>${'abcdefgh'[i]})</b> `; });
+      const sec = host.closest('section');
+      const tab = sec ? sec.id.replace('view-', '') : '';
       host.innerHTML = `
         <div class="flex items-start justify-between gap-3">
           <h3 class="text-base font-black text-slate-900">Aufgabe ${d.nr}: ${d.title}</h3>
           <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-800">${TASKS[id].max} P.</span>
         </div>
         ${d.intro ? `<p class="text-sm text-slate-600">${d.intro}</p>` : ''}
-        ${d.blocks.map(renderBlock).join('')}
-        <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center gap-3">
-          <button onclick="checkTask('${id}')" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold transition">✓ Aufgabe ${d.nr} prüfen</button>
+        ${order.map(renderPart).join('')}
+        ${d.tip ? `<div id="tip-${id}" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${d.tip}</div>` : ''}
+        <div class="pt-3 border-t border-slate-100 space-y-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="checkTask('${id}')" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold transition">✓ Aufgabe ${d.nr} prüfen</button>
+            ${d.tip ? `<button type="button" onclick="toggleBox('tip','${id}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>` : ''}
+            <button type="button" onclick="openTheory('${tab}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
+            <button type="button" onclick="retryTask('${id}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>
+          </div>
           <div id="fb-${id}" class="text-xs font-semibold"></div>
         </div>`;
       host.querySelectorAll('select[data-key]').forEach(s => { s.value = A(s.dataset.key) || ''; });
@@ -1125,7 +1162,7 @@
       const pts = TASKS[id].score(), max = TASKS[id].max;
       const fb = document.getElementById(`fb-${id}`);
       if (fb) {
-        fb.textContent = pts === max ? `🌟 ${pts}/${max} Punkte: Alles richtig!` : `${pts}/${max} Punkte. Rot = noch falsch.`;
+        fb.textContent = pts === max ? `🌟 ${pts}/${max} Punkte: Alles richtig! Mit «🔀 Nochmals üben» kannst du sie neu gemischt wiederholen.` : `${pts}/${max} Punkte. Rot = noch falsch.${DEFS[id].tip ? ' Brauchst du Hilfe? Drück auf «💡 Tipp».' : ''}`;
         fb.className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-amber-700';
       }
       showToast(`Aufgabe ${DEFS[id].nr}`, `${pts} von ${max} Punkten.`);
@@ -1185,6 +1222,21 @@
       showToast('Auswertung fertig!', `${score} von ${MAX_POINTS} Punkten, Note ${grade.toFixed(1)}.`);
     }
 
+    // Eine Aufgabe leeren, neu mischen und nochmals lösen
+    function taskKeys(id) {
+      return DEFS[id].blocks.flatMap(b => b.type === 'checks' ? b.opts.map(o => `${b.key}__${o.id}`) : blockItems(b).map(it => it.key));
+    }
+    function retryTask(id) {
+      taskKeys(id).forEach(k => { delete STATE.answers[k]; });
+      persist();
+      dndSelected = null;
+      shuffleTask(id);
+      renderTask(id);
+      const host = document.querySelector(`[data-task="${id}"]`);
+      if (host) host.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showToast('🔀 Neu gemischt', `Aufgabe ${DEFS[id].nr} ist leer und neu gemischt. Viel Erfolg!`);
+    }
+
     function resetAll() {
       STATE.answers = {};
       dndSelected = null;
@@ -1213,7 +1265,7 @@
     // ==============================================================
     // START
     // ==============================================================
-    Object.assign(window, { switchTab, checkTask, evaluateFullExam, resetAll, toggleSolution, toggleBox, insertStarters, checkText, openTheory });
+    Object.assign(window, { switchTab, checkTask, evaluateFullExam, resetAll, toggleSolution, toggleBox, insertStarters, checkText, openTheory, retryTask });
 
     // Start sobald das HTML da ist – wartet NICHT auf Tailwind/Schriften
     function boot() {

@@ -14,6 +14,8 @@ Du bist der Regel-Prüfer für das Lernportal Schule Buchental. Du änderst kein
 ## Prüfliste (pro Seite)
 - **«ß»:** `grep -n "ß" <datei>` muss leer sein.
 - **Zufall:** Radio-Buttons, Checkboxen, Auswahlmenüs, Drag-&-Drop-Bausteine und Tabellenzeilen werden beim Laden gemischt (z. B. `shuffleArray`, `shuffleSelects`). `data-noshuffle` nur bei reinen Platznummern (1., 2., 3.).
+- **Reihenfolge:** Wo eine Aufgabe mehrere unabhängige Teilfragen hat, wird ihre Reihenfolge gemischt. Keine fest geschriebenen «a)», «b)» in Fragetexten, die gemischt werden.
+- **Hilfe:** Jede Aufgabe hat «💡 Tipp», «📖 Theorie» und «🔀 Nochmals üben». Tipps verraten die Lösung nicht direkt. Offene Textfragen haben Musterlösung und Hilfe-Treppe. Fehlt das bei älteren Seiten, als Hinweis melden.
 - **Bedienung:** Drag & Drop hat auch Antippen + Ziel antippen (Klick-Handler, nicht nur `dragstart`/`drop`). `tools/check.js` meldet keinen Überlauf auf 390 px.
 - **Speichern:** Jeder `localStorage`-Zugriff steht in `try/catch`.
 - **Start:** Kein `window.onload`. Start über `DOMContentLoaded` bzw. `document.readyState`.
@@ -21,6 +23,7 @@ Du bist der Regel-Prüfer für das Lernportal Schule Buchental. Du änderst kein
 - **Noten:** Note = Punkte ÷ Total × 5 + 1, gerundet auf 0.1. Bestanden ab 60 %.
 - **Technik:** Nur Tailwind (`cdn.tailwindcss.com`) und Inter (Google Fonts) als externe Quellen.
 - **Lehrplan:** Jede Aufgabe hat einen Kommentar `<!-- Aufgabe N: Titel | Code -->`, und der Code steht in `lehrplan/` (`grep -rn "<Code>" lehrplan/`). Fehlt der Code bei älteren Aufgaben, als Hinweis melden, nicht als Verstoss.
+- **Keine Tests im Repo:** `git ls-files | grep -iE "\.docx|test|pruefung|loesung"` darf keine echten Tests oder Lösungen zeigen (Repo ist öffentlich).
 - **Startseite:** Jede Lernseite hat eine Kachel in `index.html`, und jede Kachel zeigt auf eine vorhandene Datei.
 - **Scratch-Hub zusätzlich:** Blöcke nur mit `.sb-*`-Klassen, Texte wie im deutschen Scratch 3, kein «Ende»-Block, Tab 4 nur UND/ODER (keine «nicht»- oder «Notlandung»-Aufgaben), Test-Simulation 30 Punkte, bestanden ab 18.
 

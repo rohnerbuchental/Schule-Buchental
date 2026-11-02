@@ -15,7 +15,9 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 
 ## Regeln für alle Seiten (immer einhalten)
 - **Sprache:** Deutsch (Schweiz), immer «ss» statt «ß». Einfache Sätze für Schüler.
-- **Zufall:** Alle Antwortmöglichkeiten werden bei jedem Laden gemischt: Radio-Buttons, Checkboxen, Auswahlmenüs, Drag-&-Drop-Bausteine und Tabellenzeilen. Ausnahme: reine Platznummern (1., 2., 3.) mit `data-noshuffle`.
+- **Zufall:** Alle Antwortmöglichkeiten werden bei jedem Laden gemischt: Radio-Buttons, Checkboxen, Auswahlmenüs, Drag-&-Drop-Bausteine und Tabellenzeilen. Ausnahme: reine Platznummern (1., 2., 3.) mit `data-noshuffle`. Wo es Sinn macht, wird auch die Reihenfolge der Teilfragen (a, b, c …) und der Abschnitte in Lückentexten gemischt. Die Buchstaben a), b), c) setzt die Seite danach automatisch, darum nie fest in den Fragetext schreiben. So kann man die gleiche Aufgabe gut zweimal machen.
+- **Nochmals üben:** Jede Aufgabe hat den Knopf «🔀 Nochmals üben». Er leert nur diese Aufgabe und mischt sie neu.
+- **Hilfe (Wunsch Lehrperson, für schwächere Schüler):** Jede Aufgabe hat «💡 Tipp» (Hinweis, der die Lösung nicht verrät) und «📖 Theorie» (springt zur passenden Theorie). Offene Textfragen bekommen die Hilfe-Treppe: 1 Tipp mit Wortkasten → 2 Satzanfänge → 3 Antwort prüfen (Schlüsselwörter) → 4 Musterlösung.
 - **Bedienung:** Drag & Drop muss auch auf Tablet und Handy gehen (Antippen, dann aufs Ziel tippen). Nichts darf auf 390 px Breite seitlich überlaufen.
 - **Speichern:** Antworten im `localStorage`, jeder Zugriff in `try/catch`.
 - **Start:** Seiten starten mit `DOMContentLoaded`, nicht mit `window.onload`. Sonst bleiben die Felder leer, solange Tailwind oder Schriften laden.
@@ -52,6 +54,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 ## Agenten (`.claude/agents/`)
 - `aufgaben-ersteller`: baut neue Lernseiten oder Aufgaben nach den Regeln oben und trägt die Kachel in `index.html` ein.
 - `regel-pruefer`: prüft Seiten gegen diese Regeln und führt `tools/check.js` aus. Ändert nichts. Nach jeder grösseren Änderung einsetzen.
+- `test-ersteller`: macht aus einer Lernseite (und den Unterlagen der Lehrperson) einen Papiertest als Word mit separater Lösung und Notenskala. Speichert nur im Scratchpad, nie im Repo.
 
 ## Arbeitsablauf
 1. Änderungen nur hier im Repository machen. Keine Kopien mit anderen KI-Tools bearbeiten und wieder hochladen, sonst entstehen zwei Versionen.
