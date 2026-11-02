@@ -56,6 +56,11 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Tests als Word-Datei (.docx) direkt an die Lehrperson geben, immer mit separater Lösung inkl. Punkteverteilung und Notenskala.
 - Test-Aufgaben dürfen den Übungen ähnlich sein, aber nicht gleich (andere Bilder, Beispiele, Zahlen).
 
+## Lösungshefte (Wunsch Lehrperson)
+- Lösungen zu Dossiers kommen nicht aufs Lernportal. Sie gehen als Word (zum Anpassen) und PDF (zum Austeilen) direkt an die Lehrperson, wie die Tests nur im Scratchpad.
+- Layout zum Selbstkorrigieren: Titelseite «So korrigierst du», ein farbiges Band pro Kapitel, Aufgaben mit der gleichen Nummer wie im Dossier, «✔» für die richtige Antwort, gelbe Kästchen «☐ Das muss drin sein» bei Antworten in eigenen Worten, «✎ Eigene Antwort», wo es kein Richtig oder Falsch gibt.
+- Fehler in den Lösungen der Lehrperson nicht stillschweigend übernehmen: korrigieren und der Lehrperson melden.
+
 ## Lehrplan (`lehrplan/`)
 - Kompetenzen Zyklus 3 (Lehrplan Volksschule SG) als Markdown: Deutsch, Englisch, Medien und Informatik, RZG, Bildnerisches Gestalten. Übersicht in `lehrplan/README.md`.
 - Nur mit `grep` suchen, z.B. `grep -n "MI.2.2" lehrplan/medien-informatik.md`. Nie ganze Dateien lesen.
