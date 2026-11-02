@@ -299,7 +299,8 @@
 
               <!-- Schleife zurück zur Frage -->
               <path d="M 372 215 V 167 H 136" fill="none" stroke="#d97706" stroke-width="2.5" stroke-dasharray="6 3" marker-end="url(#flow-arrow-amber)"/>
-              <text x="256" y="159" text-anchor="middle" fill="#b45309" font-size="12" font-weight="700">↺ zurück zur Frage</text>
+              <rect x="176" y="153" width="160" height="28" rx="14" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+              <text x="256" y="172" text-anchor="middle" fill="#92400e" font-size="14" font-weight="800">↺ zurück zur Frage</text>
 
               <!-- JA-Pfad -->
               <line x1="130" y1="302" x2="130" y2="340" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
@@ -946,6 +947,16 @@
       if (key.startsWith('sq_')) renderSquarePreview();
     }
 
+    // Mischt die Antworten in allen Auswahl-Menüs (der Platzhalter "-- wählen --" bleibt oben)
+    function shuffleSelects(root) {
+      (root || document).querySelectorAll('select:not([data-noshuffle])').forEach(sel => {
+        const val = sel.value;
+        const opts = [...sel.options].filter(o => o.value !== '');
+        shuffleArray(opts).forEach(o => sel.appendChild(o));
+        sel.value = val;
+      });
+    }
+
     function bindSelect(id, key) {
       const el = document.getElementById(id);
       if (!el) return;
@@ -1018,7 +1029,8 @@
       dispA1b = shuffleArray(BASICS_A1B);
       dispFlow = shuffleArray(FLOW_CMDS);
       renderBasicsTab();
-      showToast("🔀 Neu gemischt", "Die Optionen in Aufgabe 1 und die Befehle in Aufgabe 2 wurden neu gemischt!");
+      shuffleSelects(document.getElementById('view-basics'));
+      showToast("🔀 Neu gemischt", "Alle Antworten und Befehle in diesem Teil wurden neu gemischt!");
     }
 
     // ---------- A2: Ablaufdiagramm Drag & Drop ----------
@@ -1174,7 +1186,7 @@
               <div class="sb-script">${squareBlockHTML(b.id, '')}</div>
               <div class="flex items-center gap-2 shrink-0">
                 <span class="text-xs font-semibold text-slate-500 hidden sm:inline">Platz:</span>
-                <select id="sel-sq-${b.id}" onchange="saveAnswer('sq_${b.id}', this.value)" class="bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold w-16">
+                <select id="sel-sq-${b.id}" data-noshuffle onchange="saveAnswer('sq_${b.id}', this.value)" class="bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold w-16">
                   <option value="">--</option>
                   <option value="1" ${saved === '1' ? 'selected' : ''}>1.</option>
                   <option value="2" ${saved === '2' ? 'selected' : ''}>2.</option>
@@ -1225,7 +1237,7 @@
       const saved = STATE.answers[key] || '';
       return `<select id="${id}" onchange="saveAnswer('${key}', this.value)" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 ${extraClass}">
         <option value="">-- wählen --</option>
-        ${options.map(o => `<option value="${o.v}" ${saved === o.v ? 'selected' : ''}>${o.t}</option>`).join('')}
+        ${shuffleArray(options).map(o => `<option value="${o.v}" ${saved === o.v ? 'selected' : ''}>${o.t}</option>`).join('')}
       </select>`;
     }
 
@@ -1281,7 +1293,8 @@
       dispSmart = shuffleArray(SMARTHOME_ROWS);
       dispEmergency = shuffleArray(EMERGENCY_ROWS);
       renderLogicTab();
-      showToast("🔀 Neu gemischt", "Die Zeilen der Logik-Aufgaben wurden zufällig neu angeordnet!");
+      shuffleSelects(document.getElementById('view-logic'));
+      showToast("🔀 Neu gemischt", "Alle Zeilen und Antworten der Logik-Aufgaben wurden neu gemischt!");
     }
 
     // ==============================================================
@@ -1565,6 +1578,7 @@
       document.querySelectorAll('.js-max-pts').forEach(el => el.textContent = MAX_POINTS);
       document.querySelectorAll('.js-pass-pts').forEach(el => el.textContent = PASS_POINTS);
       renderAll();
+      shuffleSelects(document);
       initFlowDnD();
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
