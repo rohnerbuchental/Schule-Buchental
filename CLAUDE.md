@@ -31,6 +31,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Kompetenzen Zyklus 3 (Lehrplan Volksschule SG) als Markdown: Deutsch, Englisch, Medien und Informatik, RZG, Bildnerisches Gestalten. Übersicht in `lehrplan/README.md`.
 - Nur mit `grep` suchen, z.B. `grep -n "MI.2.2" lehrplan/medien-informatik.md`. Nie ganze Dateien lesen.
 - Jede neue Aufgabe bekommt den passenden Code im Kommentar: `<!-- Aufgabe 3: Schleifen | MI.2.2.h -->`. Nur Codes verwenden, die in `lehrplan/` stehen.
+- Entscheid Lehrperson: Repo bleibt öffentlich, die Lehrplan-Auszüge dürfen drin sein (Texte sind auf sg.lehrplan.ch frei zugänglich). Weitere Fächer vorerst nicht; bei Bedarf von sg.lehrplan.ch holen.
 
 ## Agenten (`.claude/agents/`)
 - `aufgaben-ersteller`: baut neue Lernseiten oder Aufgaben nach den Regeln oben und trägt die Kachel in `index.html` ein.
