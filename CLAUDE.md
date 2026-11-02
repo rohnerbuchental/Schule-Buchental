@@ -30,6 +30,16 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Aufgabe 2 ist ein SVG-Ablaufdiagramm mit Drag & Drop (Felder `fs1`–`fs3`).
 - Tab 4 hat nur UND/ODER: 7a leicht, 7b Smarthome, 7c Gartenbewässerung. Die Aufgaben zu «nicht» und zur «Notlandung» hat die Lehrperson bewusst gestrichen; nicht wieder einbauen.
 - Test-Simulation: 30 Punkte, bestanden ab 18.
+- Jede Aufgabe hat Prüfen, «💡 Tipp» und «🔀 Nochmals üben». «📖 Theorie» nur bei 7a–7c (nur dort gibt es eine Erklärung). Teilfragen von 1, 3, 4, 5, 8 werden gemischt; Ablaufdiagramm, Quadrat-Reihenfolge und Skripte nicht. Die Aufgaben stehen auf der Seite in der Reihenfolge 1, 2, 3, 4, 6, 5, 8, 7a, 7b, 7c.
+- Skript-Bereiche sind höchstens so breit wie die Karte und scrollen innen (sonst Überlauf auf dem Handy).
+
+## Deutsch-Hub (Novemberschnee): Besonderheiten
+- Aufgaben 1–8 über die ganze Seite durchnummeriert. 1, 2, 3, 5, 7 geben Punkte (34 P., aus `TASKS`). 4, 6, 8 sind offene Fragen mit Hilfe-Treppe und Musterlösung, ohne Punkte. Keine Test-Simulation.
+- Gespeichert unter `ns_…` (offene Texte: `ns_open`).
+
+## Englisch-Hub (Open World 2, Unit 1): Besonderheiten
+- `TASKS` hat einen Eintrag pro 5er-Block (Übungen, total 210) und pro Probetest-Teil A/B/C (30 P., bestanden ab 18). Probetest-Teile kann man einzeln prüfen; die Lösung zeigt erst «Prüfung abgeben».
+- Sätze und die Wörter in `[ … / … ]` werden gemischt. Tipps auf Deutsch, Beispiele auf Englisch.
 
 ## RZG-Hub: Besonderheiten
 - Grundlagen: Dossier «Dynamik der Erde» (Real) mit Lösungen der Lehrperson und Blatt «Lernziele Dynamik der Erde Teil 2» (Ich-kann-Checkliste, LZ1 bis LZ5) mit Musterlösungen, die sich aufs Dossier stützen.
@@ -59,7 +69,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 ## Arbeitsablauf
 1. Änderungen nur hier im Repository machen. Keine Kopien mit anderen KI-Tools bearbeiten und wieder hochladen, sonst entstehen zwei Versionen.
 2. Nicht ganze Dateien lesen: mit `grep -n "<!-- Aufgabe"` die Stelle suchen und nur diesen Abschnitt lesen (spart Tokens).
-3. Nach jeder Änderung `node tools/check.js` ausführen (prüft alle Seiten auf JS-Fehler und Überlauf am Handy).
+3. Nach jeder Änderung `node tools/check.js` ausführen (prüft alle Seiten auf JS-Fehler und Überlauf am Handy). Achtung: `check.js` blockiert Tailwind und sieht darum nicht jeden Überlauf. Bei Layout-Änderungen zusätzlich mit lokal gebautem Tailwind (tailwindcss@3 im Scratchpad) auf 390 px prüfen, mit allen Tipp-/Lösungsboxen offen.
 4. Der Lehrperson eine Vorschau als Artifact-Link geben (Tailwind dafür als CSS einbetten).
 5. Auf einen Branch committen und pushen, dann Pull Request auf `main`.
 6. **Neue Wünsche oder Entscheidungen der Lehrperson hier in dieser Datei festhalten**, damit sie beim nächsten Mal nicht neu erklärt werden müssen.
