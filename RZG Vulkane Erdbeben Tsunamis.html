@@ -53,8 +53,11 @@
       <button onclick="switchTab('tsunami')" id="tab-btn-tsunami" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
         <span>🌊</span> 4. Tsunamis
       </button>
+      <button onclick="switchTab('blatt')" id="tab-btn-blatt" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
+        <span>📋</span> 5. Lernziel-Blatt
+      </button>
       <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/30">
-        <span>📝</span> 5. Test-Simulation (<span class="js-max-pts">–</span> P.)
+        <span>📝</span> 6. Test-Simulation (<span class="js-max-pts">–</span> P.)
       </button>
     </nav>
   </header>
@@ -220,7 +223,21 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- TAB 5: TEST-SIMULATION -->
+    <!-- TAB 5: LERNZIEL-BLATT MIT MUSTERLÖSUNGEN (Texte, nicht bewertet) -->
+    <!-- ============================================================== -->
+    <section id="view-blatt" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-black text-slate-900">📋 Lernziel-Blatt: «Ich kann…»</h2>
+        <p class="text-sm text-slate-600 mt-1">Schreib zu jedem Punkt deine Antwort in eigenen Worten. Vergleiche danach mit der Musterlösung. Setze ein Häkchen, wenn du es kannst.</p>
+        <p class="text-xs text-slate-500 mt-1">Dieser Teil gibt keine Punkte für die Test-Simulation. Deine Texte werden auf diesem Gerät gespeichert.</p>
+        <div id="blatt-progress" class="mt-3 text-sm font-bold text-orange-800"></div>
+      </div>
+      <!-- Lernziel-Blatt LZ1 bis LZ5 | RZG.1.3.a, RZG.1.3.b, RZG.1.3.c -->
+      <div id="blatt-list" class="space-y-5"></div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 6: TEST-SIMULATION -->
     <!-- ============================================================== -->
     <section id="view-exam" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-gradient-to-br from-white to-amber-50/50 rounded-2xl p-5 shadow-sm border border-amber-200">
@@ -541,6 +558,142 @@
     Object.values(DEFS).forEach((d, i) => { d.nr = i + 1; });
 
     // ==============================================================
+    // LERNZIEL-BLATT (Fragen vom Blatt der Lehrperson + Musterlösungen)
+    // ==============================================================
+    const BLATT = [
+      { lz: 'LZ1: Die Entstehung von Vulkanen erklären', items: [
+        { id: 'l1_arten', q: 'Ich kann die drei Hauptarten erklären, wie Vulkane entstehen.', sol: `
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>Platten driften auseinander:</b> Es entsteht ein Riss. Heisses Magma steigt auf und kühlt als neue Kruste ab (z.B. Island, Mittelatlantischer Rücken).</li>
+            <li><b>Platten stossen zusammen:</b> Die schwerere Ozeanplatte taucht unter die leichtere Platte ab. In der Tiefe schmilzt das Gestein durch Druck und Hitze. Das Magma ist leichter und steigt auf (z.B. Mount St. Helens, Japan, Anden).</li>
+            <li><b>Hotspots:</b> Mitten auf einer Platte steigt besonders heisses Magma als Strahl auf und brennt sich durch die Kruste (z.B. Hawaii).</li>
+          </ul>` },
+        { id: 'l1_hotspot', q: 'Ich kann erklären, was ein Hotspot ist und wie dadurch Inselketten wie Hawaii mitten auf einer Platte entstehen.', sol: `
+          <p>Ein Hotspot ist ein <b>fester, besonders heisser Punkt</b> im Erdmantel. Von dort steigt ein pilzförmiger <b>Magmastrahl</b> auf und brennt sich wie ein Schweissbrenner durch die Platte. So entsteht ein Vulkan.</p>
+          <p class="mt-1">Die Platte bewegt sich weiter, der Hotspot bleibt am gleichen Ort. Der alte Vulkan wird vom Magma abgeschnitten und erlischt. Über dem Hotspot entsteht ein neuer Vulkan. So entsteht eine <b>Kette von Inseln</b>: Je weiter weg vom Hotspot, desto älter die Insel. Nur die jüngste Insel hat noch aktive Vulkane.</p>` },
+        { id: 'l1_ring', q: 'Ich kann erklären, was der «Ring of Fire» ist und warum dort besonders viele Vulkane liegen.', sol: `
+          <p>Der «Ring of Fire» (Pazifischer Feuerring) ist ein Gürtel von Vulkanen <b>rund um den Pazifischen Ozean</b>. Dort liegen die meisten aktiven Vulkane der Welt.</p>
+          <p class="mt-1">Grund: Rund um die Pazifische Platte stossen Platten zusammen. Die schwere Ozeanplatte taucht unter andere Platten ab. In der Tiefe schmilzt das Gestein, Magma steigt auf. Darum gibt es dort sehr viele Vulkane und auch viele Erdbeben.</p>` }
+      ] },
+      { lz: 'LZ2: Schildvulkane und Schichtvulkane unterscheiden', items: [
+        { id: 'l2_form', q: 'Ich kann Schicht- und Schildvulkane an ihrer Form erkennen. Skizziere beide Vulkantypen.', sketch: true, sol: `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="text-center"><b>Schichtvulkan</b>${SVG_STRATO}<p class="text-xs">steil, hoch, kegelförmig</p></div>
+            <div class="text-center"><b>Schildvulkan</b>${SVG_SHIELD}<p class="text-xs">flach und breit wie ein liegender Schild</p></div>
+          </div>` },
+        { id: 'l2_magma', q: 'Ich kann die Eigenschaften des Magmas dem jeweiligen Vulkantyp richtig zuordnen.', sol: `
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>Schichtvulkan:</b> zähflüssiges Magma (ca. 700 bis 1000 °C). Viele Gase bleiben im Magma, hoher Druck.</li>
+            <li><b>Schildvulkan:</b> dünnflüssiges Magma (ca. 1000 bis 1200 °C). Gase können leicht entweichen, geringer Druck.</li>
+          </ul>` },
+        { id: 'l2_schichten', q: 'Ich kann erklären, warum ein Schichtvulkan aus abwechselnden Schichten von erstarrter Lava und Asche/Gestein aufgebaut ist.', sol: `
+          <p>Ein Schichtvulkan bricht immer wieder aus, mal <b>explosiv</b>, mal mit <b>Lavaströmen</b>. Bei einer Explosion fallen Asche und Gesteinsbrocken auf den Berg. Bei einem Lavastrom fliesst Lava über den Hang und erstarrt. So lagern sich über lange Zeit <b>abwechselnd Schichten</b> aus Asche/Gestein und erstarrter Lava ab. Der Vulkan wächst Schicht für Schicht in die Höhe.</p>` }
+      ] },
+      { lz: 'LZ3: Vulkanausbrüche', items: [
+        { id: 'l3_schicht', q: 'Ich kann in eigenen Worten erklären, wie ein Schichtvulkan ausbricht.', sol: `
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Das Magma ist <b>zähflüssig</b>.</li>
+            <li>Die <b>Gase</b> können nur schwer entweichen. Im Schlot baut sich ein enormer <b>Druck</b> auf.</li>
+            <li>Wird der Druck stärker als der Pfropfen aus Gestein, gibt es einen <b>explosiven Ausbruch</b>: Asche, Gesteinsbrocken (Pyroklastika) und Lava werden mit grosser Wucht herausgeschleudert.</li>
+          </ul>` },
+        { id: 'l3_schild', q: 'Ich kann in eigenen Worten erklären, wie ein Schildvulkan ausbricht.', sol: `
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Das Magma bzw. die Lava ist sehr <b>dünnflüssig</b> und heiss.</li>
+            <li>Die <b>Gase</b> können leicht entweichen. Darum baut sich kaum <b>Druck</b> auf.</li>
+            <li>Der Ausbruch ist ruhig und <b>fliessend</b>: Die Lava strömt gleichmässig aus dem Krater und breitet sich weit aus, bevor sie erstarrt.</li>
+          </ul>` }
+      ] },
+      { lz: 'LZ4: Erdbeben verstehen, messen und berechnen', items: [
+        { id: 'l4_entstehung', q: 'Ich kann erklären, wie Erdbeben durch das Verhaken und plötzliche Brechen von Erdplatten entstehen.', sol: `
+          <p>Die Erdplatten bewegen sich. An den Plattengrenzen <b>verhaken</b> sie sich. Die Platten drücken weiter, darum baut sich eine riesige <b>Spannung</b> im Gestein auf. Irgendwann ist die Spannung zu gross: Das Gestein <b>bricht plötzlich</b>. Diese Stelle in der Tiefe heisst <b>Erdbebenherd</b>. Die Energie wird schlagartig frei und breitet sich als Erschütterung aus: Die Erde bebt.</p>` },
+        { id: 'l4_messen', q: 'Ich kann die Messgeräte und die gängige Skala benennen.', sol: `
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>Seismograph:</b> das Messgerät für Erdbeben.</li>
+            <li><b>Seismogramm:</b> die Aufzeichnung (Zickzack-Kurve) des Seismographen.</li>
+            <li><b>Richter-Skala:</b> die gängige Skala für die Stärke eines Erdbebens.</li>
+          </ul>` },
+        { id: 'l4_rechnen', q: 'Ich kann den Unterschied zwischen dem Ausschlag im Seismogramm und der freigesetzten Energie erklären und einfache Rechnungen dazu durchführen.', sol: `
+          <p>Pro Stufe auf der Richter-Skala wird der <b>Ausschlag im Seismogramm 10-mal</b> grösser, die <b>freigesetzte Energie 32-mal</b> grösser.</p>
+          <p class="mt-1"><b>Beispiel Stärke 6 gegen Stärke 3:</b> 3 Stufen Unterschied.<br>Ausschlag: 10 × 10 × 10 = 1000-mal grösser.<br>Energie: 32 × 32 × 32 = 32 768-mal grösser.</p>` },
+        { id: 'l4_stufen', q: 'Ich kann beschreiben, welche Zerstörungen bestimmte Werte auf der Richter-Skala anrichten. Fasse alle Stufen kurz zusammen.', sol: `
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>unter 3:</b> kaum spürbar, nur Messgeräte zeichnen es auf.</li>
+            <li><b>3 bis 4:</b> viele spüren es, Geschirr klirrt, Gegenstände wackeln, kaum Schäden.</li>
+            <li><b>5:</b> Möbel verrutschen, leichte Schäden an Gebäuden.</li>
+            <li><b>6:</b> Risse und Schäden an Gebäuden, vor allem an schlecht gebauten, in einem kleineren Gebiet.</li>
+            <li><b>7:</b> schwere Schäden in grossen Gebieten, viele Gebäude stürzen ein.</li>
+            <li><b>8 und mehr:</b> totale Zerstörung über Hunderte von Kilometern.</li>
+          </ul>
+          <p class="mt-1">Stärkstes gemessenes Erdbeben: 9.5 (Chile, 1960). Stärkstes in der Schweiz: ca. 6 bis 6.5 (Basel, 1356).</p>` },
+        { id: 'l4_verhalten', q: 'Ich kann richtige Verhaltensregeln während eines starken Erdbebens nennen.', sol: `
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>Im Gebäude:</b> Unter einen stabilen Tisch kriechen und an den Tischbeinen festhalten. Weg von Fenstern, Glas, Spiegeln und schweren Schränken. Keinen Lift benutzen, nicht panisch ins Treppenhaus rennen.</li>
+            <li><b>Im Freien:</b> Auf einen freien Platz gehen. Abstand halten von Hauswänden, Balkonen, Ziegeln, Strommasten und Laternen.</li>
+            <li><b>Im Auto:</b> Am Strassenrand anhalten (nicht auf Brücken oder unter Überführungen) und im Auto sitzen bleiben.</li>
+          </ul>` }
+      ] },
+      { lz: 'LZ5: Tsunamis und Meereswellen vergleichen', items: [
+        { id: 'l5_ausloeser', q: 'Ich kann erklären, wie ein Tsunami ausgelöst wird.', sol: `
+          <p>Ein <b>Seebeben</b> am Meeresgrund hebt den Meeresboden ruckartig an. Dadurch wird das <b>ganze Wasser darüber</b>, vom Meeresgrund bis zur Oberfläche, schlagartig nach oben gestossen. Es entsteht eine riesige Welle, die sich in alle Richtungen ausbreitet.</p>` },
+        { id: 'l5_tabelle', q: 'Ich kann den Unterschied zwischen einer normalen windbedingten Meereswelle und einem Tsunami in einer Tabelle beschreiben.', sol: `
+          <div class="overflow-x-auto"><table class="w-full text-xs sm:text-sm border border-slate-300">
+            <thead class="bg-slate-100"><tr><th class="p-1.5 border border-slate-300 text-left"></th><th class="p-1.5 border border-slate-300 text-left">Normale Welle</th><th class="p-1.5 border border-slate-300 text-left">Tsunami</th></tr></thead>
+            <tbody>
+              <tr><td class="p-1.5 border border-slate-300 font-bold">Entstehung</td><td class="p-1.5 border border-slate-300">durch Wind</td><td class="p-1.5 border border-slate-300">durch ein Seebeben</td></tr>
+              <tr><td class="p-1.5 border border-slate-300 font-bold">Bewegung des Wassers</td><td class="p-1.5 border border-slate-300">nur die oberste Wasserschicht</td><td class="p-1.5 border border-slate-300">das ganze Wasser vom Grund bis oben</td></tr>
+              <tr><td class="p-1.5 border border-slate-300 font-bold">Wellenlänge</td><td class="p-1.5 border border-slate-300">bis ca. 400 m</td><td class="p-1.5 border border-slate-300">bis 1000 km</td></tr>
+              <tr><td class="p-1.5 border border-slate-300 font-bold">Geschwindigkeit</td><td class="p-1.5 border border-slate-300">eher langsam</td><td class="p-1.5 border border-slate-300">sehr schnell (bis 800 km/h)</td></tr>
+            </tbody></table></div>` },
+        { id: 'l5_kueste', q: 'Ich kann erklären, warum ein Tsunami auf offenem Meer kaum auffällt, sich aber an flachen Küsten und in engen Buchten extrem hoch auftürmt.', sol: `
+          <p><b>Offenes Meer:</b> Das Meer ist sehr tief. Die Energie verteilt sich auf das ganze Wasser. Die Welle ist nur ca. 1 m hoch und sehr lang. Ein Schiff merkt fast nichts.</p>
+          <p class="mt-1"><b>Küste:</b> Im flachen Wasser wird die Welle vom Boden <b>abgebremst</b>. Das Wasser von hinten schiebt nach, staut sich und <b>türmt sich auf</b> (10 bis 30 m). In <b>engen Buchten</b> wird das Wasser zusätzlich zusammengedrängt und hat keinen Platz zum Ausweichen. Darum wird die Welle dort noch höher.</p>` },
+        { id: 'l5_strand', q: 'Ich kann das entscheidende Naturanzeichen am Strand vor dem Eintreffen der Welle nennen und das richtige Verhalten beschreiben.', sol: `
+          <p><b>Anzeichen:</b> Das Meer <b>zieht sich plötzlich weit zurück</b>, der Meeresboden liegt trocken. (Oft spürt man vorher auch ein Erdbeben.)</p>
+          <p class="mt-1"><b>Verhalten:</b> Sofort weg vom Strand. Andere warnen. Einen hohen Ort suchen: einen Hügel oder die oberen Stockwerke eines stabilen Betongebäudes. Nicht zurückgehen, bis Entwarnung kommt. Es bleibt nur wenig Zeit!</p>` }
+      ] }
+    ];
+    const BLATT_ITEMS = BLATT.flatMap(s => s.items);
+
+    function renderBlatt() {
+      const list = document.getElementById('blatt-list');
+      if (!list) return;
+      list.innerHTML = BLATT.map(sec => `
+        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
+          <h3 class="text-base font-black text-slate-900">${sec.lz}</h3>
+          ${sec.items.map(it => `
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-2">
+              <p class="text-sm font-semibold text-slate-800">${it.q}</p>
+              ${it.sketch
+                ? '<p class="text-xs text-slate-500">Zeichne die Skizze auf dein Blatt. Vergleiche dann mit der Musterlösung.</p>'
+                : `<textarea data-key="blatt_${it.id}" rows="4" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-sm" placeholder="Deine Antwort in eigenen Worten …">${esc(A('blatt_' + it.id) || '')}</textarea>`}
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <button type="button" onclick="toggleSolution('${it.id}')" id="solbtn-${it.id}" class="px-3 py-1.5 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-900 text-xs font-bold">👀 Musterlösung zeigen</button>
+                <label class="flex items-center gap-1.5 text-xs font-semibold text-emerald-800 cursor-pointer">
+                  <input type="checkbox" data-key="blatt_ok_${it.id}" class="accent-emerald-600" ${A('blatt_ok_' + it.id) === true ? 'checked' : ''}> Das kann ich
+                </label>
+              </div>
+              <div id="sol-${it.id}" class="hidden rounded-lg border border-emerald-300 bg-emerald-50 p-3 text-sm text-slate-800 leading-relaxed">
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 mb-1">Musterlösung</div>${it.sol}
+              </div>
+            </div>`).join('')}
+        </div>`).join('');
+      updateBlattProgress();
+    }
+    function toggleSolution(id) {
+      const box = document.getElementById('sol-' + id), btn = document.getElementById('solbtn-' + id);
+      if (!box) return;
+      const show = box.classList.contains('hidden');
+      box.classList.toggle('hidden', !show);
+      if (btn) btn.textContent = show ? '🙈 Musterlösung verstecken' : '👀 Musterlösung zeigen';
+    }
+    function updateBlattProgress() {
+      const el = document.getElementById('blatt-progress');
+      if (!el) return;
+      const n = BLATT_ITEMS.filter(it => A('blatt_ok_' + it.id) === true).length;
+      el.textContent = `✅ ${n} von ${BLATT_ITEMS.length} Lernzielen kann ich schon.`;
+    }
+
+    // ==============================================================
     // HILFSFUNKTIONEN
     // ==============================================================
     function shuffleArray(arr) {
@@ -755,11 +908,13 @@
         if (!el) return;
         if (el.type === 'checkbox') saveAnswer(el.dataset.key, el.checked);
         else if (el.type === 'radio') { if (el.checked) saveAnswer(el.dataset.key, el.value); }
-        else saveAnswer(el.dataset.key, el.value);
+        else if (el.tagName !== 'TEXTAREA') saveAnswer(el.dataset.key, el.value);
+        if (el.dataset.key.startsWith('blatt_ok_')) updateBlattProgress();
       });
       document.addEventListener('input', (e) => {
         const el = e.target;
         if (el.matches && el.matches('input[type="text"][data-key]')) saveAnswer(el.dataset.key, el.value.trim());
+        if (el.matches && el.matches('textarea[data-key]')) saveAnswer(el.dataset.key, el.value);
       });
       document.addEventListener('click', (e) => {
         const card = e.target.closest('[data-card]');
@@ -813,7 +968,7 @@
       host.querySelectorAll('select[data-key]').forEach(s => { s.value = A(s.dataset.key) || ''; });
       shuffleSelects(host);
     }
-    function renderAll() { Object.keys(DEFS).forEach(renderTask); }
+    function renderAll() { Object.keys(DEFS).forEach(renderTask); renderBlatt(); }
 
     // Karten grün/rot färben
     function markCard(id, ok) {
@@ -919,7 +1074,7 @@
     // ==============================================================
     // START
     // ==============================================================
-    Object.assign(window, { switchTab, checkTask, evaluateFullExam, resetAll });
+    Object.assign(window, { switchTab, checkTask, evaluateFullExam, resetAll, toggleSolution });
 
     // Start sobald das HTML da ist – wartet NICHT auf Tailwind/Schriften
     function boot() {
