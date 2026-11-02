@@ -1,0 +1,36 @@
+# Lernportal Schule Buchental
+
+Statische Lernseiten (eine HTML-Datei pro Thema) für Sek-Schülerinnen und -Schüler.
+`index.html` ist die Startseite und verlinkt jede Lernseite als Kachel.
+Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare Antworten.
+
+## Seiten
+| Datei | Thema |
+|---|---|
+| `connected_3_scratch_trainingshub.html` | Informatik, Connected 3 «Abheben mit Algorithmen» (Scratch) |
+| `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» |
+| `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 |
+
+## Regeln für alle Seiten (immer einhalten)
+- **Sprache:** Deutsch (Schweiz), immer «ss» statt «ß». Einfache Sätze für Schüler.
+- **Zufall:** Alle Antwortmöglichkeiten werden bei jedem Laden gemischt: Radio-Buttons, Checkboxen, Auswahlmenüs, Drag-&-Drop-Bausteine und Tabellenzeilen. Ausnahme: reine Platznummern (1., 2., 3.) mit `data-noshuffle`.
+- **Bedienung:** Drag & Drop muss auch auf Tablet und Handy gehen (Antippen, dann aufs Ziel tippen). Nichts darf auf 390 px Breite seitlich überlaufen.
+- **Speichern:** Antworten im `localStorage`, jeder Zugriff in `try/catch`.
+- **Start:** Seiten starten mit `DOMContentLoaded`, nicht mit `window.onload`. Sonst bleiben die Felder leer, solange Tailwind oder Schriften laden.
+- **Bewertung:** Eine Stelle pro Seite (`TASKS` mit `max` und `score()`). Die Prüfen-Knöpfe und die Test-Simulation nutzen beide diese Stelle. Punktetotal nie von Hand eintragen.
+- **Noten:** Schweizer Skala. Note = Punkte ÷ Total × 5 + 1, gerundet auf 0.1. Bestanden ab 60 % (Note 4.0).
+- **Technik:** Eine Datei pro Seite, Tailwind über `cdn.tailwindcss.com`, Schrift Inter (Google Fonts). Keine weiteren Abhängigkeiten.
+
+## Scratch-Hub: Besonderheiten
+- Scratch-Blöcke nur mit den `.sb-*`-Klassen bauen (Scratch-3-Look: `.sb`, `.sb-hat`, `.sb-c`, `.sb-bool`, `.sb-num`, Farben `.sb-motion` usw.). Texte wie im deutschen Scratch 3 («gehe 10er-Schritt», «wiederhole 4 mal»). Keinen «Ende»-Block, den gibt es in Scratch nicht.
+- Aufgabe 2 ist ein SVG-Ablaufdiagramm mit Drag & Drop (Felder `fs1`–`fs3`).
+- Tab 4 hat nur UND/ODER: 7a leicht, 7b Smarthome, 7c Gartenbewässerung. Die Aufgaben zu «nicht» und zur «Notlandung» hat die Lehrperson bewusst gestrichen; nicht wieder einbauen.
+- Test-Simulation: 30 Punkte, bestanden ab 18.
+
+## Arbeitsablauf
+1. Änderungen nur hier im Repository machen. Keine Kopien mit anderen KI-Tools bearbeiten und wieder hochladen, sonst entstehen zwei Versionen.
+2. Nicht ganze Dateien lesen: mit `grep -n "<!-- Aufgabe"` die Stelle suchen und nur diesen Abschnitt lesen (spart Tokens).
+3. Nach jeder Änderung `node tools/check.js` ausführen (prüft alle Seiten auf JS-Fehler und Überlauf am Handy).
+4. Der Lehrperson eine Vorschau als Artifact-Link geben (Tailwind dafür als CSS einbetten).
+5. Auf einen Branch committen und pushen, dann Pull Request auf `main`.
+6. **Neue Wünsche oder Entscheidungen der Lehrperson hier in dieser Datei festhalten**, damit sie beim nächsten Mal nicht neu erklärt werden müssen.

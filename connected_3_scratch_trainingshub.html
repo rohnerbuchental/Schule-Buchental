@@ -13,42 +13,112 @@
     body { font-family: 'Inter', sans-serif; }
     .font-mono-code { font-family: 'JetBrains Mono', monospace; }
 
-    /* Scratch Block Simulation */
-    .scratch-block {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 700;
-      font-family: 'JetBrains Mono', monospace;
-      color: white;
-      box-shadow: 0 2px 0 rgba(0,0,0,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
+    /* ============ ECHTE SCRATCH-3-BLÖCKE ============ */
+    .sb-area {
+      background-color: #F9F9F9;
+      background-image: radial-gradient(#d9dce3 1px, transparent 1px);
+      background-size: 18px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      padding: 14px 16px 18px;
+      overflow-x: auto;
+    }
+    .sb-script {
+      display: inline-flex; flex-direction: column; align-items: flex-start;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.28));
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    .sb-script > * + *, .sb-c-inner > * + * { margin-top: -5px; }
+    .sb-script > .sb-hat + * { margin-top: 0; }
+
+    /* Stapel-Block mit Kerbe oben und Nase unten */
+    .sb { --c: #4C97FF; }
+    .sb, .sb-c-top {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--c); color: #fff;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px; font-weight: 500; line-height: 1; white-space: nowrap;
+      min-height: 45px; padding: 6px 12px 11px 10px;
+      clip-path: polygon(0 0, 12px 0, 17px 5px, 31px 5px, 36px 0, 100% 0, 100% calc(100% - 5px), 36px calc(100% - 5px), 31px 100%, 17px 100%, 12px calc(100% - 5px), 0 calc(100% - 5px));
       user-select: none;
     }
-    .scratch-motion { background-color: #4C97FF; }
-    .scratch-control { background-color: #FFAB19; color: #4D3800; }
-    .scratch-events { background-color: #FFBF00; color: #4D3800; }
-    .scratch-custom { background-color: #FF6680; }
-    .scratch-operators { background-color: #59C059; }
-    .scratch-sensing { background-color: #5CB1D6; }
-    
-    .scratch-input {
-      background: white;
-      color: #333;
-      padding: 0.1rem 0.4rem;
-      border-radius: 0.35rem;
-      font-weight: 700;
-      border: 1px solid rgba(0,0,0,0.15);
+    /* Hut-Block (Wenn ⚑ angeklickt / Definiere) */
+    .sb-hat {
+      clip-path: none; position: relative;
+      border-radius: 22px 22px 4px 4px;
+      min-height: 52px; padding: 16px 14px 8px 10px;
     }
-    .scratch-cond {
-      background: rgba(0,0,0,0.12);
-      padding: 0.1rem 0.4rem;
-      border-radius: 9999px;
-      border: 1px solid rgba(255,255,255,0.3);
+    .sb-hat::after {
+      content: ""; position: absolute; left: 12px; bottom: -5px; width: 24px; height: 5px;
+      background: var(--c); clip-path: polygon(0 0, 100% 0, 19px 100%, 5px 100%);
     }
+    .sb-hat.sb-define { border-radius: 14px 14px 4px 4px; padding-top: 14px; }
+
+    /* C-Block (wiederhole / falls) */
+    .sb-c { --c: #FFAB19; display: inline-flex; flex-direction: column; align-items: stretch; min-width: 170px; }
+    .sb-c-top {
+      display: flex; background: var(--c);
+      clip-path: polygon(0 0, 12px 0, 17px 5px, 31px 5px, 36px 0, 100% 0, 100% calc(100% - 5px), 52px calc(100% - 5px), 47px 100%, 33px 100%, 28px calc(100% - 5px), 16px calc(100% - 5px), 16px 100%, 0 100%);
+    }
+    .sb-c-mouth { display: flex; margin-top: -5px; }
+    .sb-c-arm { width: 16px; flex: none; background: var(--c); }
+    .sb-c-inner { display: flex; flex-direction: column; align-items: flex-start; min-height: 29px; }
+    .sb-c-bottom {
+      height: 29px; margin-top: -5px; background: var(--c);
+      clip-path: polygon(0 0, 28px 0, 33px 5px, 47px 5px, 52px 0, 100% 0, 100% calc(100% - 5px), 36px calc(100% - 5px), 31px 100%, 17px 100%, 12px calc(100% - 5px), 0 calc(100% - 5px));
+    }
+    .sb-c-bottom.sb-cap { clip-path: polygon(0 0, 28px 0, 33px 5px, 47px 5px, 52px 0, 100% 0, 100% 100%, 0 100%); height: 24px; border-radius: 0 0 4px 4px; }
+
+    /* Kategorie-Farben wie in Scratch 3 */
+    .sb-motion    { --c: #4C97FF; }
+    .sb-looks     { --c: #9966FF; }
+    .sb-events    { --c: #FFBF00; }
+    .sb-control   { --c: #FFAB19; }
+    .sb-sensing   { --c: #5CB1D6; }
+    .sb-operators { --c: #59C059; }
+    .sb-variables { --c: #FF8C1A; }
+    .sb-myblocks  { --c: #FF6680; }
+
+    /* Eingabefelder & Bedingungen */
+    .sb-num {
+      display: inline-block; background: #fff; color: #575E75;
+      border-radius: 999px; padding: 5px 10px; min-width: 30px; text-align: center;
+      font-size: 12px; font-weight: 500; border: 1px solid rgba(0,0,0,0.12);
+    }
+    .sb-num.sb-wrong { background: #fff1f2; color: #be123c; font-weight: 800; box-shadow: 0 0 0 2px #facc15; }
+    .sb-rep {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--c); color: #fff; border-radius: 999px; padding: 5px 10px;
+      font-size: 12px; border: 1px solid rgba(0,0,0,0.15);
+    }
+    .sb-bool {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--c); color: #fff; font-size: 12px;
+      padding: 6px 16px; min-height: 30px;
+      clip-path: polygon(11px 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 11px 100%, 0 50%);
+    }
+    .sb-bool .sb-bool { background: color-mix(in srgb, var(--c) 85%, #000); }
+    .sb-bool.sb-sensing, .sb-bool .sb-bool.sb-sensing { background: #5CB1D6; }
+    .sb-empty-bool { display: inline-block; width: 40px; height: 24px; background: rgba(0,0,0,0.15);
+      clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%); }
+    .sb-flag { color: #4CBF56; font-size: 16px; filter: drop-shadow(0 0 1px rgba(0,0,0,0.4)); }
+    .sb-glow { filter: drop-shadow(0 0 2px #FFD500) drop-shadow(0 0 3px #FFD500); }
+
+    /* Drag & Drop Ablaufdiagramm */
+    .flow-chip {
+      touch-action: none; cursor: grab; user-select: none;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.55rem 0.85rem; border-radius: 0.75rem;
+      background: #fff; border: 2px solid #7dd3fc; color: #0c4a6e;
+      font-weight: 700; font-size: 0.8rem; box-shadow: 0 2px 0 #bae6fd;
+      transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s;
+    }
+    .flow-chip:hover { transform: translateY(-1px); border-color: #0284c7; }
+    .flow-chip.is-selected { border-color: #0284c7; background: #e0f2fe; box-shadow: 0 0 0 3px rgba(2,132,199,0.35); }
+    .flow-ghost { position: fixed; z-index: 100; pointer-events: none; transform: translate(-50%, -50%) rotate(-2deg); box-shadow: 0 10px 25px rgba(0,0,0,0.25); cursor: grabbing; }
+    .flow-slot { cursor: pointer; }
+    .flow-slot rect { transition: fill 0.15s, stroke 0.15s; }
+    .flow-slot.is-hover rect { fill: #e0f2fe; stroke: #0284c7; }
 
     input:focus, select:focus {
       outline: none;
@@ -112,7 +182,7 @@
         <span>💡</span> 4. Smarthome & UND/ODER
       </button>
       <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/30">
-        <span>📝</span> 5. Test-Simulation (22 P.)
+        <span>📝</span> 5. Test-Simulation (<span class="js-max-pts">30</span> P.)
       </button>
     </nav>
   </header>
@@ -172,80 +242,100 @@
         </div>
       </div>
 
-      <!-- Aufgabe 2: Ablaufdiagramm für die Drohne -->
+      <!-- Aufgabe 2: Ablaufdiagramm für die Drohne (Drag & Drop) -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
-        <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 2: Ablaufdiagramm der Drohne lesen (3 Punkte)</h3>
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 2: Ablaufdiagramm der Postdrohne (4 Punkte)</h3>
+          <span class="text-xs font-semibold text-slate-400 whitespace-nowrap">Drag &amp; Drop</span>
         </div>
 
-        <div class="bg-sky-50 border-l-4 border-sky-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Situation:</strong> Eine Postdrohne soll ein Paket ausliefern. Schau dir das Diagramm genau an:
+        <div class="bg-sky-50 border-l-4 border-sky-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium space-y-1">
+          <p>👉 <strong>Situation:</strong> Eine Postdrohne soll ein Paket ausliefern. Sie steigt zuerst auf, fliegt dann so lange vorwärts, bis sie am Ziel ist, und landet dort.</p>
+          <p class="text-sky-900">🖱️ <strong>Ziehe</strong> die richtigen Befehle in die Felder 1–3. Auf dem Tablet: Befehl <strong>antippen</strong>, dann aufs Feld <strong>tippen</strong>. Ein Feld nochmals antippen = Befehl zurücklegen. Achtung: 2 Befehle passen nicht!</p>
         </div>
 
-        <!-- Diagramm-Box -->
-        <div class="p-4 bg-slate-900 text-white rounded-xl font-mono-code text-xs sm:text-sm leading-relaxed overflow-x-auto shadow-inner">
-<pre class="text-center font-bold text-sky-300">
-           ┌───────────┐
-           │   START   │
-           └─────┬─────┘
-                 │
-                 ▼
-       ┌───────────────────┐
-       │ Steige auf 20m    │  (1. Schritt)
-       └─────────┬─────────┘
-                 │
-                 ▼
-               /   \
-              / Ist \       NEIN
-             &lt;  Ziel &gt; ─────────────► ┌──────────────────────┐
-              \  da? /                │ Fliege 10m vorwärts  │
-               \   /                  └──────────┬───────────┘
-                 │                               │
-                 │ JA                            │ (wieder zurück zur Frage)
-                 ▼                               │
-       ┌───────────────────┐                     │
-       │ Lande und öffne   │ ◄───────────────────┘
-       │ den Paket-Haken   │
-       └─────────┬─────────┘
-                 │
-                 ▼
-           ┌───────────┐
-           │   STOPP   │
-           └───────────┘
-</pre>
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-4 items-start" id="card-a2-flow">
+          <!-- Diagramm -->
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-1 sm:p-3">
+            <svg viewBox="0 0 470 496" class="w-full max-w-xl mx-auto h-auto block" font-family="Inter, sans-serif" role="img" aria-label="Ablaufdiagramm der Postdrohne">
+              <defs>
+                <marker id="flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" fill="#475569"/>
+                </marker>
+                <marker id="flow-arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" fill="#d97706"/>
+                </marker>
+              </defs>
+
+              <!-- START -->
+              <rect x="75" y="6" width="110" height="42" rx="21" fill="#10b981"/>
+              <text x="130" y="33" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">START</text>
+              <line x1="130" y1="48" x2="130" y2="82" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
+
+              <!-- FELD 1 -->
+              <g class="flow-slot" data-slot="fs1" onclick="handleFlowSlotClick('fs1')">
+                <rect id="flow-rect-fs1" x="40" y="86" width="180" height="62" rx="10" fill="#ffffff" stroke="#0ea5e9" stroke-width="2.5" stroke-dasharray="7 4"/>
+                <text x="50" y="101" fill="#0369a1" font-size="11" font-weight="800">FELD 1</text>
+                <text id="flow-txt-fs1" data-cx="130" data-cy="123" x="130" y="128" text-anchor="middle" fill="#94a3b8" font-size="15" font-weight="700">hierher ziehen …</text>
+              </g>
+              <line x1="130" y1="148" x2="130" y2="186" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
+
+              <!-- RAUTE -->
+              <polygon points="130,190 218,246 130,302 42,246" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+              <text x="130" y="242" text-anchor="middle" fill="#78350f" font-size="15" font-weight="800">Ist das Ziel</text>
+              <text x="130" y="261" text-anchor="middle" fill="#78350f" font-size="15" font-weight="800">erreicht?</text>
+
+              <!-- NEIN-Pfad -->
+              <line x1="218" y1="246" x2="276" y2="246" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
+              <text x="247" y="236" text-anchor="middle" fill="#e11d48" font-size="13" font-weight="800">NEIN</text>
+
+              <!-- FELD 2 -->
+              <g class="flow-slot" data-slot="fs2" onclick="handleFlowSlotClick('fs2')">
+                <rect id="flow-rect-fs2" x="282" y="215" width="180" height="62" rx="10" fill="#ffffff" stroke="#0ea5e9" stroke-width="2.5" stroke-dasharray="7 4"/>
+                <text x="292" y="230" fill="#0369a1" font-size="11" font-weight="800">FELD 2</text>
+                <text id="flow-txt-fs2" data-cx="372" data-cy="252" x="372" y="257" text-anchor="middle" fill="#94a3b8" font-size="15" font-weight="700">hierher ziehen …</text>
+              </g>
+
+              <!-- Schleife zurück zur Frage -->
+              <path d="M 372 215 V 167 H 136" fill="none" stroke="#d97706" stroke-width="2.5" stroke-dasharray="6 3" marker-end="url(#flow-arrow-amber)"/>
+              <rect x="176" y="153" width="160" height="28" rx="14" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+              <text x="256" y="172" text-anchor="middle" fill="#92400e" font-size="14" font-weight="800">↺ zurück zur Frage</text>
+
+              <!-- JA-Pfad -->
+              <line x1="130" y1="302" x2="130" y2="340" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
+              <text x="142" y="326" fill="#059669" font-size="13" font-weight="800">JA</text>
+
+              <!-- FELD 3 -->
+              <g class="flow-slot" data-slot="fs3" onclick="handleFlowSlotClick('fs3')">
+                <rect id="flow-rect-fs3" x="40" y="344" width="180" height="62" rx="10" fill="#ffffff" stroke="#0ea5e9" stroke-width="2.5" stroke-dasharray="7 4"/>
+                <text x="50" y="359" fill="#0369a1" font-size="11" font-weight="800">FELD 3</text>
+                <text id="flow-txt-fs3" data-cx="130" data-cy="381" x="130" y="386" text-anchor="middle" fill="#94a3b8" font-size="15" font-weight="700">hierher ziehen …</text>
+              </g>
+              <line x1="130" y1="406" x2="130" y2="444" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
+
+              <!-- STOPP -->
+              <rect x="75" y="448" width="110" height="42" rx="21" fill="#f43f5e"/>
+              <text x="130" y="475" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">STOPP</text>
+            </svg>
+          </div>
+
+          <!-- Befehls-Ablage -->
+          <div class="order-first lg:order-none lg:sticky lg:top-32 rounded-xl border-2 border-dashed border-sky-200 bg-sky-50/50 p-3 space-y-2">
+            <div class="text-xs font-bold text-sky-900 uppercase tracking-wide">🧰 Befehle</div>
+            <div id="flow-bank" class="flex flex-wrap lg:flex-col gap-2"></div>
+            <div id="flow-bank-empty" class="hidden text-xs text-slate-500 italic">Alle Felder belegt. Tippe auf ein Feld, um einen Befehl zurückzulegen.</div>
+          </div>
         </div>
 
-        <!-- 3 Fragen zum Diagramm -->
-        <div class="space-y-3 pt-1 text-xs sm:text-sm">
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="card-a2-1">
-            <span class="font-medium text-slate-800">1. Was macht die Drohne als <strong>allerersten Schritt</strong> direkt nach dem Start?</span>
-            <select id="sel-a2-1" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold sm:w-60">
-              <option value="">-- wählen --</option>
-              <option value="right">Steigt auf 20 Meter auf</option>
-              <option value="wrong1">Fliegt 10m vorwärts</option>
-              <option value="wrong2">Öffnet den Pakethaken</option>
-            </select>
-          </div>
-
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="card-a2-2">
-            <span class="font-medium text-slate-800">2. Was macht die Drohne, solange die Antwort auf «Ist Ziel da?» <strong>NEIN</strong> ist?</span>
-            <select id="sel-a2-2" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold sm:w-60">
-              <option value="">-- wählen --</option>
-              <option value="wrong1">Sie stoppt sofort</option>
-              <option value="right">Sie fliegt 10m vorwärts und prüft wieder</option>
-              <option value="wrong2">Sie sinkt zum Boden ab</option>
-            </select>
-          </div>
-
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2" id="card-a2-3">
-            <span class="font-medium text-slate-800">3. Warum ist in der Mitte eine <strong>Raute ◇</strong> gezeichnet und kein Rechteck?</span>
-            <select id="sel-a2-3" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold sm:w-60">
-              <option value="">-- wählen --</option>
-              <option value="right">Weil dort eine Ja/Nein-Entscheidung getroffen wird</option>
-              <option value="wrong1">Weil die Drohne dort schneller fliegen soll</option>
-              <option value="wrong2">Weil dort der Akku geladen wird</option>
-            </select>
-          </div>
+        <!-- Zusatzfrage Raute -->
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs sm:text-sm" id="card-a2-3">
+          <span class="font-medium text-slate-800">Warum ist in der Mitte eine <strong>Raute ◇</strong> gezeichnet und kein Rechteck? (1 P.)</span>
+          <select id="sel-a2-3" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold sm:w-72">
+            <option value="">-- wählen --</option>
+            <option value="right">Weil dort eine Ja/Nein-Entscheidung getroffen wird</option>
+            <option value="wrong1">Weil die Drohne dort schneller fliegen soll</option>
+            <option value="wrong2">Weil dort der Akku geladen wird</option>
+          </select>
         </div>
 
         <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
@@ -278,15 +368,20 @@
         <p class="text-xs sm:text-sm text-slate-700">Die Drohne führt folgenden Scratch-Code aus:</p>
 
         <!-- Scratch Block Darstellung -->
-        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1 inline-block">
-          <div><span class="scratch-block scratch-control">wiederhole <span class="scratch-input">4</span> mal</span></div>
-          <div class="pl-4">
-            <span class="scratch-block scratch-motion">gehe <span class="scratch-input">10</span>er-Schritt</span>
+        <div class="sb-area inline-block">
+          <div class="sb-script">
+            <div class="sb sb-hat sb-events">Wenn <span class="sb-flag">⚑</span> angeklickt wird</div>
+            <div class="sb-c sb-control">
+              <div class="sb-c-top">wiederhole <span class="sb-num">4</span> mal</div>
+              <div class="sb-c-mouth"><div class="sb-c-arm"></div>
+                <div class="sb-c-inner">
+                  <div class="sb sb-motion">gehe <span class="sb-num">10</span> er-Schritt</div>
+                  <div class="sb sb-control">warte <span class="sb-num">1</span> Sekunden</div>
+                </div>
+              </div>
+              <div class="sb-c-bottom"><span></span></div>
+            </div>
           </div>
-          <div class="pl-4">
-            <span class="scratch-block scratch-control">warte <span class="scratch-input">1</span> Sekunde</span>
-          </div>
-          <div><span class="scratch-block scratch-control">Ende</span></div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs sm:text-sm">
@@ -372,7 +467,13 @@
           Bringe die 3 Bausteine in die richtige Reihenfolge (Zahlen 1, 2, 3):
         </div>
 
-        <div class="space-y-2.5 pt-1" id="square-sort-list"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1 items-start">
+          <div class="space-y-2.5" id="square-sort-list"></div>
+          <div class="space-y-1.5">
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-wide">👀 So sieht dein Skript in Scratch aus:</div>
+            <div class="sb-area min-h-[140px]" id="square-preview"></div>
+          </div>
+        </div>
 
         <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
           <button onclick="checkSquareSort()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold transition">
@@ -401,15 +502,21 @@
           <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 5: Unterprogramme verstehen (3 Punkte)</h3>
         </div>
 
-        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1 inline-block">
-          <div><span class="scratch-block scratch-custom">Definiere <span class="scratch-input">???</span></span></div>
-          <div class="pl-4">
-            <span class="scratch-block scratch-control">wiederhole bis <span class="scratch-cond">&lt; y-Position = 200 &gt;</span></span>
+        <div class="sb-area inline-block">
+          <div class="sb-script">
+            <div class="sb sb-hat sb-define sb-myblocks">Definiere <span class="sb-rep" style="--c:#FF4D6A">???</span></div>
+            <div class="sb-c sb-control">
+              <div class="sb-c-top">wiederhole bis
+                <span class="sb-bool sb-operators"><span class="sb-rep sb-motion">y-Position</span> = <span class="sb-num">200</span></span>
+              </div>
+              <div class="sb-c-mouth"><div class="sb-c-arm"></div>
+                <div class="sb-c-inner">
+                  <div class="sb sb-motion">ändere y um <span class="sb-num">1</span></div>
+                </div>
+              </div>
+              <div class="sb-c-bottom"></div>
+            </div>
           </div>
-          <div class="pl-8">
-            <span class="scratch-block scratch-motion">ändere y um <span class="scratch-input">1</span></span>
-          </div>
-          <div class="pl-4"><span class="scratch-block scratch-control">Ende</span></div>
         </div>
 
         <div class="space-y-4 pt-1 text-xs sm:text-sm">
@@ -451,15 +558,24 @@
         </div>
 
         <!-- Fehlerhafter Code -->
-        <div class="p-3.5 bg-slate-900 rounded-xl space-y-1 inline-block border border-slate-700">
-          <div><span class="scratch-block scratch-custom">Definiere <span class="scratch-input">Landen</span></span></div>
-          <div class="pl-4">
-            <span class="scratch-block scratch-control">wiederhole bis <span class="scratch-cond">&lt; wird Boden berührt? &gt;</span></span>
+        <div class="sb-area inline-block">
+          <div class="flex items-start gap-3">
+            <div class="sb-script">
+              <div class="sb sb-hat sb-define sb-myblocks">Definiere <span class="sb-rep" style="--c:#FF4D6A">Landen</span></div>
+              <div class="sb-c sb-control">
+                <div class="sb-c-top">wiederhole bis
+                  <span class="sb-bool sb-sensing">wird <span class="sb-rep" style="--c:#47A8D1">Boden ▾</span> berührt?</span>
+                </div>
+                <div class="sb-c-mouth"><div class="sb-c-arm"></div>
+                  <div class="sb-c-inner">
+                    <div class="sb sb-motion">ändere y um <span class="sb-num sb-wrong">5</span></div>
+                  </div>
+                </div>
+                <div class="sb-c-bottom"></div>
+              </div>
+            </div>
+            <div class="mt-[104px] text-xs font-black text-rose-600 whitespace-nowrap">◄ Hier steckt der Fehler!</div>
           </div>
-          <div class="pl-8">
-            <span class="scratch-block scratch-motion bg-rose-700 border-2 border-yellow-300">ändere y um <span class="scratch-input text-rose-700 font-black">5</span> ◄ FEHLER!</span>
-          </div>
-          <div class="pl-4"><span class="scratch-block scratch-control">Ende</span></div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs sm:text-sm">
@@ -494,26 +610,56 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- TAB 4: SMARTHOME & UND/ODER/NICHT (LZ 7 & 8) -->
+    <!-- TAB 4: SMARTHOME & UND/ODER (LZ 7 & 8) -->
     <!-- ============================================================== -->
     <section id="view-logic" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Lernziele 7 & 8 · MI.2.1.i</span>
-          <h2 class="text-lg sm:text-xl font-bold text-slate-800">💡 Logik mit UND, ODER und NICHT</h2>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-800">💡 Logik mit UND und ODER</h2>
           <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
-            Bedingungen verbinden: Wie steuert man ein Smarthome-Licht oder eine Sicherheitsabfrage?
+            Bedingungen verbinden: Wie steuert man ein Smarthome-Licht oder einen Rasensprenger?
           </p>
         </div>
         <button onclick="reshuffleLogic()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1 border border-slate-300 self-start sm:self-auto shrink-0">
-          <span>🔀</span> Tabelle neu mischen
+          <span>🔀</span> Aufgaben neu mischen
         </button>
+      </div>
+
+      <!-- Aufgabe 7a: Einstieg UND / ODER (leicht) -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7a: UND oder ODER? (4 Punkte)</h3>
+          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 whitespace-nowrap">🟢 leicht</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="sb-area flex items-center gap-3">
+            <span class="sb-bool sb-operators" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,.28))"><span class="sb-empty-bool"></span> und <span class="sb-empty-bool"></span></span>
+            <span class="text-xs text-slate-700"><strong>und</strong> = <strong>beide</strong> Bedingungen müssen stimmen.</span>
+          </div>
+          <div class="sb-area flex items-center gap-3">
+            <span class="sb-bool sb-operators" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,.28))"><span class="sb-empty-bool"></span> oder <span class="sb-empty-bool"></span></span>
+            <span class="text-xs text-slate-700"><strong>oder</strong> = <strong>mindestens eine</strong> Bedingung muss stimmen.</span>
+          </div>
+        </div>
+
+        <p class="text-xs sm:text-sm text-slate-700">Welches Wort gehört in die Lücke? Wähle <strong>und</strong> oder <strong>oder</strong>:</p>
+        <div class="space-y-2" id="andor-list"></div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button onclick="checkLogicAndOr()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Aufgabe 7a prüfen
+          </button>
+          <div id="fb-logic-andor" class="text-xs font-semibold"></div>
+        </div>
       </div>
 
       <!-- Aufgabe 7: Die Smarte Lichtsteuerung -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
-        <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7: Smarthome Lichtsteuerung (4 Punkte)</h3>
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7b: Smarthome Lichtsteuerung (4 Punkte)</h3>
+          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 whitespace-nowrap">🟡 mittel</span>
         </div>
 
         <!-- Regeln -->
@@ -535,53 +681,51 @@
         </div>
       </div>
 
-      <!-- Zusatzfrage: NICHT Block -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
-        <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Zusatzfrage: Die Negation «NICHT» (1 Punkt)</h3>
+      <!-- Aufgabe 7c: Smarte Gartenbewässerung -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7c: Smarte Gartenbewässerung (4 Punkte)</h3>
+          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 whitespace-nowrap">🟡 mittel</span>
         </div>
 
-        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1 inline-block">
-          <span class="scratch-block scratch-operators">&lt; nicht <span class="scratch-cond">&lt; wird Hindernis berührt? &gt;</span> &gt;</span>
+        <!-- Regeln -->
+        <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm space-y-1">
+          <div class="font-bold text-emerald-950">📋 Die 3 Regeln für den automatischen Rasensprenger:</div>
+          <p>1. <strong>Sprenger AUS:</strong> Wenn der Boden <strong>feucht</strong> ist <strong>ODER</strong> es <strong>regnet</strong>. (Diese Regel gilt immer zuerst!)</p>
+          <p>2. <strong>Sprenger AN (lang):</strong> Wenn der Boden <strong>trocken</strong> ist <strong>UND</strong> es <strong>Abend</strong> ist.</p>
+          <p>3. <strong>Sprenger KURZ:</strong> Wenn der Boden <strong>trocken</strong> ist <strong>UND</strong> es <strong>Mittag</strong> ist (in der Hitze verdunstet viel Wasser).</p>
         </div>
 
-        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a7-nicht">
-          <span class="text-xs sm:text-sm font-bold text-slate-800 block">Was bedeutet dieser Block in normaler menschlicher Sprache?</span>
-          <select id="sel-a7-nicht" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs sm:text-sm font-bold">
-            <option value="">-- wählen --</option>
-            <option value="wrong1">Die Drohne steckt mitten im Hindernis fest</option>
-            <option value="right">Solange der Weg frei ist (kein Hindernis berührt wird)</option>
-            <option value="wrong2">Die Drohne schaltet die Scheinwerfer aus</option>
-          </select>
-        </div>
+        <!-- Entscheidungstabelle (Zufällig gemischt) -->
+        <div class="space-y-2 pt-1" id="garden-table-list"></div>
 
-        <div class="pt-2 flex items-center justify-between gap-3">
-          <button onclick="checkLogicNicht()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ NICHT-Block prüfen
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button onclick="checkLogicGarden()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Gartenbewässerung prüfen
           </button>
-          <div id="fb-logic-nicht" class="text-xs font-semibold"></div>
+          <div id="fb-logic-garden" class="text-xs font-semibold"></div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================== -->
-    <!-- TAB 5: TEST-SIMULATION (22 PUNKTE) -->
+    <!-- TAB 5: TEST-SIMULATION -->
     <!-- ============================================================== -->
     <section id="view-exam" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-gradient-to-br from-white to-amber-50/50 rounded-2xl p-5 shadow-sm border border-amber-200">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-100">
           <div>
             <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
-              Prüfungsmodus · 22 Punkte · Real-Niveau
+              Prüfungsmodus · <span class="js-max-pts">30</span> Punkte · Real-Niveau
             </span>
             <h2 class="text-lg sm:text-xl font-black text-slate-800 mt-1">📝 Vollständige Test-Simulation</h2>
             <p class="text-xs text-slate-600 mt-0.5">
-              Simuliert exakt den bevorstehenden Papiertest. Schweizer Bestehensgrenze: 60 % (13.5 Punkte = Note 4.0).
+              Simuliert exakt den bevorstehenden Papiertest. Schweizer Bestehensgrenze: 60 % (<span class="js-pass-pts">18</span> Punkte = Note 4.0).
             </p>
           </div>
           <div class="text-right shrink-0">
             <span class="text-xs text-slate-500 block">Bestehen ab:</span>
-            <span class="text-sm font-extrabold text-amber-700">13.5 / 22 P. (60%)</span>
+            <span class="text-sm font-extrabold text-amber-700"><span class="js-pass-pts">18</span> / <span class="js-max-pts">30</span> P. (60%)</span>
           </div>
         </div>
 
@@ -591,7 +735,7 @@
 
       <div class="p-4 bg-white rounded-2xl border border-slate-200 text-center space-y-3">
         <p class="text-xs sm:text-sm text-slate-600">
-          Klicke auf den Button, um alle bisher in den Reitern 1 bis 4 gelösten Aufgaben zusammenzurechnen und deine Testnote zu sehen!
+          Klicke auf den Button, um alle in den Reitern 1 bis 4 gelösten Aufgaben zusammenzurechnen und deine Testnote zu sehen!
         </p>
         <div class="flex flex-wrap items-center justify-center gap-3">
           <button onclick="evaluateFullExam()" class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow transition flex items-center gap-2">
@@ -619,27 +763,40 @@
   <!-- JAVASCRIPT LOGIC -->
   <!-- ============================================================== -->
   <script>
-    // 1. DATA: BASICS A1
+    // ==============================================================
+    // DATEN
+    // ==============================================================
+    // A1: Begriff Algorithmus
     const BASICS_A1A = [
       { id: "opt_chip", text: "Ein Speicherchip in der Drohne.", correct: false },
       { id: "opt_rule", text: "Eine genaue Schritt-für-Schritt-Anleitung zur Lösung eines Problems.", correct: true },
       { id: "opt_rand", text: "Ein zufälliges Durcheinander von Zahlen.", correct: false }
     ];
-
     const BASICS_A1B = [
       { id: "opt_recipe", text: "Ein Backrezept mit genauen Mengenangaben und Schritten («Zuerst..., danach...»).", correct: true },
       { id: "opt_diary", text: "Ein Tagebucheintrag über das Wochenende.", correct: false },
       { id: "opt_list", text: "Eine Einkaufsliste mit 5 Früchten.", correct: false }
     ];
 
-    // 2. DATA: SQUARE SORT (1, 2, 3)
+    // A2: Ablaufdiagramm (Drag & Drop)
+    const FLOW_CMDS = [
+      { id: "c_up",   text: "Steige auf 20 m" },
+      { id: "c_fwd",  text: "Fliege 10 m vorwärts" },
+      { id: "c_land", text: "Lande & öffne den Paket-Haken" },
+      { id: "c_back", text: "Fliege 10 m rückwärts" },
+      { id: "c_open", text: "Öffne den Haken in der Luft" }
+    ];
+    const FLOW_SOLUTION = { fs1: "c_up", fs2: "c_fwd", fs3: "c_land" };
+    const FLOW_SLOTS = Object.keys(FLOW_SOLUTION);
+
+    // A6: Quadrat
     const SQUARE_BLOCKS = [
-      { id: "sq_loop", text: "wiederhole (4) mal", type: "control", correct: 1 },
-      { id: "sq_move", text: "gehe (50)er-Schritt", type: "motion", correct: 2 },
-      { id: "sq_turn", text: "drehe dich um (90) Grad", type: "motion", correct: 3 }
+      { id: "sq_loop", type: "control", correct: 1 },
+      { id: "sq_move", type: "motion", correct: 2 },
+      { id: "sq_turn", type: "motion", correct: 3 }
     ];
 
-    // 3. DATA: CUSTOM BLOCKS REASONS
+    // A5: Gründe für eigene Blöcke
     const CUSTOM_REASONS = [
       { id: "r1", text: "Der Code wird übersichtlicher und man muss lange Befehle nicht mehrfach bauen.", correct: true },
       { id: "r2", text: "Die Drohne fliegt mit eigenen Blöcken doppelt so schnell.", correct: false },
@@ -647,12 +804,28 @@
       { id: "r4", text: "Scratch braucht mit eigenen Blöcken kein Internet mehr.", correct: false }
     ];
 
-    // 4. DATA: SMARTHOME TABLE
+    // A7a: UND / ODER (leicht)
+    const ANDOR_ROWS = [
+      { id: "ao_1", before: "Die Drohne darf nur starten, wenn der Akku voll ist", after: "das Wetter gut ist.", correct: "und" },
+      { id: "ao_2", before: "Die Alarmanlage piepst, wenn die Tür", after: "das Fenster geöffnet wird.", correct: "oder" },
+      { id: "ao_3", before: "Du kommst ins Kino, wenn du ein Ticket hast", after: "pünktlich da bist.", correct: "und" },
+      { id: "ao_4", before: "Die Schulglocke läutet um 10:00 Uhr", after: "um 12:00 Uhr.", correct: "oder" }
+    ];
+
+    // A7b: Smarthome
     const SMARTHOME_ROWS = [
       { id: "sh_1", light: "Raum ist dunkel", sensor: "Bewegung erkannt", time: "23:00 Uhr (Nacht)", correct: "AN" },
       { id: "sh_2", light: "Raum ist dunkel", sensor: "Keine Bewegung", time: "02:00 Uhr (Nacht)", correct: "AUS" },
       { id: "sh_3", light: "Raum ist hell", sensor: "Keine Bewegung", time: "14:00 Uhr (Tag)", correct: "AUS" },
       { id: "sh_4", light: "Raum ist dunkel (Gewitter)", sensor: "Bewegung erkannt", time: "11:00 Uhr (Tag)", correct: "GEDIMMT" }
+    ];
+
+    // A7c: Gartenbewässerung (Regel "AUS" hat Vorrang)
+    const GARDEN_ROWS = [
+      { id: "gd_1", soil: "Boden trocken", weather: "Sonne", time: "19:00 Uhr (Abend)", correct: "AN" },
+      { id: "gd_2", soil: "Boden trocken", weather: "Sonne", time: "12:00 Uhr (Mittag)", correct: "KURZ" },
+      { id: "gd_3", soil: "Boden feucht", weather: "Sonne", time: "19:00 Uhr (Abend)", correct: "AUS" },
+      { id: "gd_4", soil: "Boden trocken", weather: "Regen", time: "19:00 Uhr (Abend)", correct: "AUS" }
     ];
 
     // Fisher-Yates Shuffle
@@ -665,31 +838,29 @@
       return copy;
     }
 
-    let dispA1a = [];
-    let dispA1b = [];
-    let dispSquare = [];
-    let dispReasons = [];
-    let dispSmart = [];
+    let dispA1a = [], dispA1b = [], dispFlow = [], dispSquare = [], dispReasons = [];
+    let dispAndOr = [], dispSmart = [], dispGarden = [];
 
     function initShuffledData() {
       dispA1a = shuffleArray(BASICS_A1A);
       dispA1b = shuffleArray(BASICS_A1B);
+      dispFlow = shuffleArray(FLOW_CMDS);
       dispSquare = shuffleArray(SQUARE_BLOCKS);
       dispReasons = shuffleArray(CUSTOM_REASONS);
+      dispAndOr = shuffleArray(ANDOR_ROWS);
       dispSmart = shuffleArray(SMARTHOME_ROWS);
+      dispGarden = shuffleArray(GARDEN_ROWS);
     }
 
+    // ==============================================================
     // STATE
-    const STATE = {
-      activeTab: 'basics',
-      answers: {}
-    };
+    // ==============================================================
+    const STATE = { activeTab: 'basics', answers: {} };
 
     function loadState() {
       try {
         const saved = localStorage.getItem('scratch_hub_answers');
-        if (saved) STATE.answers = JSON.parse(saved);
-
+        if (saved) STATE.answers = JSON.parse(saved) || {};
         const tm = localStorage.getItem('scratch_hub_timer');
         if (tm) {
           timerSeconds = parseInt(tm, 10) || 0;
@@ -698,487 +869,508 @@
       } catch (e) {}
     }
 
-    function saveAnswer(key, val) {
-      STATE.answers[key] = val;
+    function persist() {
       try { localStorage.setItem('scratch_hub_answers', JSON.stringify(STATE.answers)); } catch (e) {}
     }
 
+    function saveAnswer(key, val) {
+      STATE.answers[key] = val;
+      persist();
+      if (key.startsWith('sq_')) renderSquarePreview();
+    }
+
+    // Mischt die Antworten in allen Auswahl-Menüs (der Platzhalter "-- wählen --" bleibt oben)
+    function shuffleSelects(root) {
+      (root || document).querySelectorAll('select:not([data-noshuffle])').forEach(sel => {
+        const val = sel.value;
+        const opts = [...sel.options].filter(o => o.value !== '');
+        shuffleArray(opts).forEach(o => sel.appendChild(o));
+        sel.value = val;
+      });
+    }
+
+    function bindSelect(id, key) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.value = STATE.answers[key] || '';
+      el.onchange = (e) => saveAnswer(key, e.target.value);
+    }
+
+    // ==============================================================
     // TABS
+    // ==============================================================
     function switchTab(tabId) {
       STATE.activeTab = tabId;
       document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
       document.querySelectorAll('.tab-btn').forEach(b => {
         b.className = "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10";
       });
-
       const activeView = document.getElementById(`view-${tabId}`);
       const activeBtn = document.getElementById(`tab-btn-${tabId}`);
       if (activeView && activeBtn) {
         activeView.classList.remove('hidden');
-        if (tabId === 'exam') {
-          activeBtn.className = "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-amber-900 font-bold shadow-sm";
-        } else {
-          activeBtn.className = "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm";
-        }
+        activeBtn.className = tabId === 'exam'
+          ? "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-amber-900 font-bold shadow-sm"
+          : "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm";
       }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==============================================================
+    // SCRATCH-BLOCK BAUSTEINE (HTML)
+    // ==============================================================
+    const SB = {
+      flag: () => `<div class="sb sb-hat sb-events">Wenn <span class="sb-flag">⚑</span> angeklickt wird</div>`,
+      loop: (inner = '') => `
+        <div class="sb-c sb-control">
+          <div class="sb-c-top">wiederhole <span class="sb-num">4</span> mal</div>
+          <div class="sb-c-mouth"><div class="sb-c-arm"></div><div class="sb-c-inner">${inner}</div></div>
+          <div class="sb-c-bottom"></div>
+        </div>`,
+      move: () => `<div class="sb sb-motion">gehe <span class="sb-num">50</span> er-Schritt</div>`,
+      turn: () => `<div class="sb sb-motion">drehe dich <span style="font-size:15px">↻</span> um <span class="sb-num">90</span> Grad</div>`
+    };
+    function squareBlockHTML(id, inner) {
+      if (id === 'sq_loop') return SB.loop(inner);
+      if (id === 'sq_move') return SB.move();
+      return SB.turn();
     }
 
     // ==============================================================
     // RENDERING
     // ==============================================================
+    function radioListHTML(list, name, key, hover) {
+      return list.map(opt => `
+        <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer ${hover} transition text-xs sm:text-sm">
+          <input type="radio" name="${name}" value="${opt.id}" ${STATE.answers[key] === opt.id ? 'checked' : ''} onchange="saveAnswer('${key}', this.value)" class="w-4 h-4 text-sky-600 focus:ring-sky-500">
+          <span>${opt.text}</span>
+        </label>`).join('');
+    }
+
     function renderBasicsTab() {
-      // 1a
       const boxA = document.getElementById('opts-a1a');
-      if (boxA) {
-        boxA.innerHTML = dispA1a.map(opt => `
-          <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-sky-50 transition text-xs sm:text-sm">
-            <input type="radio" name="rad_a1a" value="${opt.id}" ${STATE.answers['a1a'] === opt.id ? 'checked' : ''} onchange="saveAnswer('a1a', this.value)" class="w-4 h-4 text-sky-600 focus:ring-sky-500">
-            <span>${opt.text}</span>
-          </label>
-        `).join('');
-      }
-
-      // 1b
+      if (boxA) boxA.innerHTML = radioListHTML(dispA1a, 'rad_a1a', 'a1a', 'hover:bg-sky-50');
       const boxB = document.getElementById('opts-a1b');
-      if (boxB) {
-        boxB.innerHTML = dispA1b.map(opt => `
-          <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-sky-50 transition text-xs sm:text-sm">
-            <input type="radio" name="rad_a1b" value="${opt.id}" ${STATE.answers['a1b'] === opt.id ? 'checked' : ''} onchange="saveAnswer('a1b', this.value)" class="w-4 h-4 text-sky-600 focus:ring-sky-500">
-            <span>${opt.text}</span>
-          </label>
-        `).join('');
-      }
-
-      // Restore A2
-      ['sel-a2-1', 'sel-a2-2', 'sel-a2-3'].forEach(k => {
-        const el = document.getElementById(k);
-        if (el && STATE.answers[k]) el.value = STATE.answers[k];
-        if (el) el.onchange = (e) => saveAnswer(k, e.target.value);
-      });
+      if (boxB) boxB.innerHTML = radioListHTML(dispA1b, 'rad_a1b', 'a1b', 'hover:bg-sky-50');
+      renderFlow();
+      bindSelect('sel-a2-3', 'sel-a2-3');
     }
 
     function reshuffleBasics() {
       dispA1a = shuffleArray(BASICS_A1A);
       dispA1b = shuffleArray(BASICS_A1B);
+      dispFlow = shuffleArray(FLOW_CMDS);
       renderBasicsTab();
-      showToast("🔀 Neu gemischt", "Die Optionen für Aufgabe 1 wurden zufällig neu sortiert!");
+      shuffleSelects(document.getElementById('view-basics'));
+      showToast("🔀 Neu gemischt", "Alle Antworten und Befehle in diesem Teil wurden neu gemischt!");
     }
 
+    // ---------- A2: Ablaufdiagramm Drag & Drop ----------
+    let flowSelected = null;   // angetippter Befehl (Tablet-Modus)
+    let flowDrag = null;       // laufender Zieh-Vorgang
+
+    function flowSlotOf(cmdId) {
+      return FLOW_SLOTS.find(sl => STATE.answers['flow_' + sl] === cmdId) || null;
+    }
+
+    function renderFlow() {
+      const bank = document.getElementById('flow-bank');
+      if (!bank) return;
+      const free = dispFlow.filter(c => !flowSlotOf(c.id));
+      bank.innerHTML = free.map(c => `
+        <div class="flow-chip ${flowSelected === c.id ? 'is-selected' : ''}" data-cmd="${c.id}" role="button" tabindex="0">
+          <span class="text-sky-400">⠿</span><span>${c.text}</span>
+        </div>`).join('');
+      document.getElementById('flow-bank-empty').classList.toggle('hidden', free.length > 0);
+
+      FLOW_SLOTS.forEach(sl => {
+        const cmd = FLOW_CMDS.find(c => c.id === STATE.answers['flow_' + sl]);
+        const rect = document.getElementById('flow-rect-' + sl);
+        const txt = document.getElementById('flow-txt-' + sl);
+        if (!rect || !txt) return;
+        if (cmd) {
+          setSvgLines(txt, cmd.text);
+          txt.setAttribute('fill', '#0c4a6e');
+          rect.setAttribute('fill', '#e0f2fe');
+          rect.setAttribute('stroke', '#0284c7');
+          rect.setAttribute('stroke-dasharray', '');
+        } else {
+          setSvgLines(txt, flowSelected ? 'hier antippen ✓' : 'hierher ziehen …');
+          txt.setAttribute('fill', flowSelected ? '#0284c7' : '#94a3b8');
+          rect.setAttribute('fill', '#ffffff');
+          rect.setAttribute('stroke', '#0ea5e9');
+          rect.setAttribute('stroke-dasharray', '7 4');
+        }
+      });
+    }
+
+    // Text im SVG-Feld auf max. 2 Zeilen umbrechen
+    function setSvgLines(txt, str) {
+      const cx = txt.dataset.cx, cy = parseFloat(txt.dataset.cy);
+      const lines = [];
+      str.split(' ').forEach(w => {
+        const last = lines[lines.length - 1];
+        if (last !== undefined && (last + ' ' + w).length <= 19) lines[lines.length - 1] = last + ' ' + w;
+        else lines.push(w);
+      });
+      const startY = cy + 5 - (lines.length - 1) * 9;
+      txt.innerHTML = lines.map((l, i) => `<tspan x="${cx}" y="${startY + i * 18}">${l.replace(/&/g, '&amp;')}</tspan>`).join('');
+    }
+
+    function placeFlowCmd(cmdId, slot) {
+      const old = flowSlotOf(cmdId);
+      if (old) delete STATE.answers['flow_' + old];
+      STATE.answers['flow_' + slot] = cmdId;
+      flowSelected = null;
+      persist();
+      renderFlow();
+    }
+
+    function handleFlowSlotClick(slot) {
+      if (flowSelected) {
+        placeFlowCmd(flowSelected, slot);
+      } else if (STATE.answers['flow_' + slot]) {
+        delete STATE.answers['flow_' + slot];
+        persist();
+        renderFlow();
+      }
+    }
+
+    function flowSlotAt(x, y) {
+      const el = document.elementFromPoint(x, y);
+      return el ? el.closest('[data-slot]') : null;
+    }
+
+    function initFlowDnD() {
+      const bank = document.getElementById('flow-bank');
+      if (!bank) return;
+
+      bank.addEventListener('pointerdown', (e) => {
+        const chip = e.target.closest('[data-cmd]');
+        if (!chip || e.button > 0) return;
+        e.preventDefault();
+        flowDrag = { cmd: chip.dataset.cmd, chip, x0: e.clientX, y0: e.clientY, ghost: null, hover: null };
+      });
+
+      bank.addEventListener('keydown', (e) => {
+        const chip = e.target.closest('[data-cmd]');
+        if (chip && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          flowSelected = flowSelected === chip.dataset.cmd ? null : chip.dataset.cmd;
+          renderFlow();
+        }
+      });
+
+      document.addEventListener('pointermove', (e) => {
+        if (!flowDrag) return;
+        const dist = Math.hypot(e.clientX - flowDrag.x0, e.clientY - flowDrag.y0);
+        if (!flowDrag.ghost && dist > 6) {
+          const g = flowDrag.chip.cloneNode(true);
+          g.classList.add('flow-ghost');
+          g.classList.remove('is-selected');
+          document.body.appendChild(g);
+          flowDrag.ghost = g;
+          flowDrag.chip.style.opacity = '0.35';
+        }
+        if (flowDrag.ghost) {
+          // Am Bildschirmrand automatisch scrollen (wichtig auf dem Handy)
+          if (e.clientY < 140) window.scrollBy(0, -14);
+          else if (e.clientY > window.innerHeight - 70) window.scrollBy(0, 14);
+          flowDrag.ghost.style.left = e.clientX + 'px';
+          flowDrag.ghost.style.top = e.clientY + 'px';
+          const slot = flowSlotAt(e.clientX, e.clientY);
+          if (flowDrag.hover && flowDrag.hover !== slot) flowDrag.hover.classList.remove('is-hover');
+          if (slot) slot.classList.add('is-hover');
+          flowDrag.hover = slot;
+        }
+      });
+
+      const endDrag = (e, cancelled) => {
+        if (!flowDrag) return;
+        const d = flowDrag;
+        flowDrag = null;
+        if (d.hover) d.hover.classList.remove('is-hover');
+        if (d.ghost) {
+          d.ghost.remove();
+          d.chip.style.opacity = '';
+          const slot = cancelled ? null : flowSlotAt(e.clientX, e.clientY);
+          if (slot) placeFlowCmd(d.cmd, slot.dataset.slot);
+        } else if (!cancelled) {
+          // Kurzer Tipp = auswählen (Tablet-Modus)
+          flowSelected = flowSelected === d.cmd ? null : d.cmd;
+          renderFlow();
+        }
+      };
+      document.addEventListener('pointerup', (e) => endDrag(e, false));
+      document.addEventListener('pointercancel', (e) => endDrag(e, true));
+    }
+
+    // ---------- Tab 2 ----------
     function renderLoopsTab() {
-      // A3 restore
-      ['sel-a3-1', 'sel-a3-2'].forEach(k => {
-        const el = document.getElementById(k);
-        if (el && STATE.answers[k]) el.value = STATE.answers[k];
-        if (el) el.onchange = (e) => saveAnswer(k, e.target.value);
-      });
+      ['sel-a3-1', 'sel-a3-2', 'sel-a4-1', 'sel-a4-2'].forEach(k => bindSelect(k, k));
 
-      // A4 restore
-      ['sel-a4-1', 'sel-a4-2'].forEach(k => {
-        const el = document.getElementById(k);
-        if (el && STATE.answers[k]) el.value = STATE.answers[k];
-        if (el) el.onchange = (e) => saveAnswer(k, e.target.value);
-      });
-
-      // A6 Square Sort
       const sqContainer = document.getElementById('square-sort-list');
       if (sqContainer) {
         sqContainer.innerHTML = dispSquare.map(b => {
           const saved = STATE.answers[`sq_${b.id}`] || "";
-          const colorClass = b.type === 'control' ? 'scratch-control' : 'scratch-motion';
           return `
             <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3" id="card-${b.id}">
-              <div class="flex items-center gap-2">
-                <span class="scratch-block ${colorClass}">${b.text}</span>
-              </div>
+              <div class="sb-script">${squareBlockHTML(b.id, '')}</div>
               <div class="flex items-center gap-2 shrink-0">
-                <span class="text-xs font-semibold text-slate-500">Reihenfolge:</span>
-                <select id="sel-sq-${b.id}" onchange="saveAnswer('sq_${b.id}', this.value)" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold w-20">
+                <span class="text-xs font-semibold text-slate-500 hidden sm:inline">Platz:</span>
+                <select id="sel-sq-${b.id}" data-noshuffle onchange="saveAnswer('sq_${b.id}', this.value)" class="bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold w-16">
                   <option value="">--</option>
-                  <option value="1" ${saved === '1' ? 'selected' : ''}>1. (Start)</option>
-                  <option value="2" ${saved === '2' ? 'selected' : ''}>2. (Innen)</option>
-                  <option value="3" ${saved === '3' ? 'selected' : ''}>3. (Innen)</option>
+                  <option value="1" ${saved === '1' ? 'selected' : ''}>1.</option>
+                  <option value="2" ${saved === '2' ? 'selected' : ''}>2.</option>
+                  <option value="3" ${saved === '3' ? 'selected' : ''}>3.</option>
                 </select>
               </div>
-            </div>
-          `;
+            </div>`;
         }).join('');
       }
+      renderSquarePreview();
     }
 
-    function renderCustomTab() {
-      // 5a
-      const sel5a = document.getElementById('sel-a5-1');
-      if (sel5a && STATE.answers['a5_1']) sel5a.value = STATE.answers['a5_1'];
-      if (sel5a) sel5a.onchange = (e) => saveAnswer('a5_1', e.target.value);
+    // Baut das Skript so zusammen, wie Scratch es beim Zusammenstecken tun würde:
+    // Alles, was nach der Schleife kommt, landet IN der Schleife.
+    function renderSquarePreview() {
+      const box = document.getElementById('square-preview');
+      if (!box) return;
+      const ordered = SQUARE_BLOCKS
+        .map(b => ({ id: b.id, pos: parseInt(STATE.answers[`sq_${b.id}`], 10) }))
+        .filter(b => b.pos >= 1 && b.pos <= 3)
+        .sort((a, b) => a.pos - b.pos);
+      const build = (list) => {
+        if (!list.length) return '';
+        const [first, ...rest] = list;
+        if (first.id === 'sq_loop') return squareBlockHTML('sq_loop', build(rest));
+        return squareBlockHTML(first.id) + build(rest);
+      };
+      box.innerHTML = `<div class="sb-script">${SB.flag()}${build(ordered)}</div>` +
+        (ordered.length ? '' : `<p class="text-xs text-slate-400 mt-3">Wähle bei den Blöcken die Plätze 1–3 aus.</p>`);
+    }
 
-      // 5b Reasons
+    // ---------- Tab 3 ----------
+    function renderCustomTab() {
+      bindSelect('sel-a5-1', 'a5_1');
       const rBox = document.getElementById('opts-a5-reasons');
       if (rBox) {
-        rBox.innerHTML = dispReasons.map(r => {
-          const checked = STATE.answers[`r_${r.id}`] === true;
-          return `
-            <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-rose-50 transition text-xs sm:text-sm">
-              <input type="checkbox" id="chk-${r.id}" ${checked ? 'checked' : ''} onchange="saveAnswer('r_${r.id}', this.checked)" class="w-4 h-4 text-rose-600 rounded">
-              <span>${r.text}</span>
-            </label>
-          `;
-        }).join('');
+        rBox.innerHTML = dispReasons.map(r => `
+          <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-rose-50 transition text-xs sm:text-sm">
+            <input type="checkbox" id="chk-${r.id}" ${STATE.answers[`r_${r.id}`] === true ? 'checked' : ''} onchange="saveAnswer('r_${r.id}', this.checked)" class="w-4 h-4 text-rose-600 rounded">
+            <span>${r.text}</span>
+          </label>`).join('');
       }
+      ['sel-a8-1', 'sel-a8-2'].forEach(k => bindSelect(k, k));
+    }
 
-      // A8 restore
-      ['sel-a8-1', 'sel-a8-2'].forEach(k => {
-        const el = document.getElementById(k);
-        if (el && STATE.answers[k]) el.value = STATE.answers[k];
-        if (el) el.onchange = (e) => saveAnswer(k, e.target.value);
-      });
+    // ---------- Tab 4 ----------
+    function selectHTML(id, key, options, extraClass = '') {
+      const saved = STATE.answers[key] || '';
+      return `<select id="${id}" onchange="saveAnswer('${key}', this.value)" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 ${extraClass}">
+        <option value="">-- wählen --</option>
+        ${shuffleArray(options).map(o => `<option value="${o.v}" ${saved === o.v ? 'selected' : ''}>${o.t}</option>`).join('')}
+      </select>`;
     }
 
     function renderLogicTab() {
-      // Smarthome Table
-      const container = document.getElementById('smarthome-table-list');
-      if (container) {
-        container.innerHTML = dispSmart.map((row, idx) => {
-          const saved = STATE.answers[row.id] || "";
-          return `
-            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5" id="card-${row.id}">
-              <div class="flex items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
-                <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
-                <span>${row.light} · <strong>${row.sensor}</strong> · (${row.time})</span>
-              </div>
-              <div class="sm:w-44 shrink-0 flex items-center gap-2">
-                <span class="text-xs text-slate-400">Lampe:</span>
-                <select id="sel-${row.id}" onchange="saveAnswer('${row.id}', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500">
-                  <option value="">-- wählen --</option>
-                  <option value="AN" ${saved === 'AN' ? 'selected' : ''}>💡 AN (Voll)</option>
-                  <option value="GEDIMMT" ${saved === 'GEDIMMT' ? 'selected' : ''}>🌙 GEDIMMT</option>
-                  <option value="AUS" ${saved === 'AUS' ? 'selected' : ''}>❌ AUS</option>
-                </select>
-              </div>
-            </div>
-          `;
-        }).join('');
+      const ao = document.getElementById('andor-list');
+      if (ao) {
+        ao.innerHTML = dispAndOr.map((row, idx) => `
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-xs sm:text-sm text-slate-800" id="card-${row.id}">
+            <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
+            <span>${row.before}</span>
+            ${selectHTML('sel-' + row.id, row.id, [{ v: 'und', t: 'und' }, { v: 'oder', t: 'oder' }], 'w-28')}
+            <span>${row.after}</span>
+          </div>`).join('');
       }
 
-      // NICHT restore
-      const selNicht = document.getElementById('sel-a7-nicht');
-      if (selNicht && STATE.answers['nicht']) selNicht.value = STATE.answers['nicht'];
-      if (selNicht) selNicht.onchange = (e) => saveAnswer('nicht', e.target.value);
+      const container = document.getElementById('smarthome-table-list');
+      if (container) {
+        container.innerHTML = dispSmart.map((row, idx) => `
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5" id="card-${row.id}">
+            <div class="flex items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
+              <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
+              <span>${row.light} · <strong>${row.sensor}</strong> · (${row.time})</span>
+            </div>
+            <div class="sm:w-44 shrink-0 flex items-center gap-2">
+              <span class="text-xs text-slate-400">Lampe:</span>
+              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💡 AN (Voll)' }, { v: 'GEDIMMT', t: '🌙 GEDIMMT' }, { v: 'AUS', t: '❌ AUS' }], 'w-full')}
+            </div>
+          </div>`).join('');
+      }
+
+      const garden = document.getElementById('garden-table-list');
+      if (garden) {
+        garden.innerHTML = dispGarden.map((row, idx) => `
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5" id="card-${row.id}">
+            <div class="flex items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
+              <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
+              <span>${row.soil} · <strong>${row.weather}</strong> · (${row.time})</span>
+            </div>
+            <div class="sm:w-48 shrink-0 flex items-center gap-2">
+              <span class="text-xs text-slate-400">Sprenger:</span>
+              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💦 AN (lang)' }, { v: 'KURZ', t: '💧 KURZ' }, { v: 'AUS', t: '❌ AUS' }], 'w-full')}
+            </div>
+          </div>`).join('');
+      }
     }
 
     function reshuffleLogic() {
+      dispAndOr = shuffleArray(ANDOR_ROWS);
       dispSmart = shuffleArray(SMARTHOME_ROWS);
+      dispGarden = shuffleArray(GARDEN_ROWS);
       renderLogicTab();
-      showToast("🔀 Neu gemischt", "Die Zeilen der Lichtsteuerung wurden zufällig neu angeordnet!");
+      shuffleSelects(document.getElementById('view-logic'));
+      showToast("🔀 Neu gemischt", "Alle Zeilen und Antworten der Logik-Aufgaben wurden neu gemischt!");
     }
 
     // ==============================================================
-    // CHECK FUNCTIONS
+    // BEWERTUNG (eine Quelle für Prüfen-Buttons UND Test-Simulation)
     // ==============================================================
+    const A = (k) => STATE.answers[k];
+    const TASKS = {
+      a1:  { max: 2, score: () => (A('a1a') === 'opt_rule') + (A('a1b') === 'opt_recipe') },
+      a2:  { max: 4, score: () => FLOW_SLOTS.filter(sl => A('flow_' + sl) === FLOW_SOLUTION[sl]).length + (A('sel-a2-3') === 'right') },
+      a3:  { max: 2, score: () => (A('sel-a3-1') === '4') + (A('sel-a3-2') === '40') },
+      a4:  { max: 2, score: () => (A('sel-a4-1') === 'bis') + (A('sel-a4-2') === 'yminus1') },
+      a6:  { max: 3, score: () => SQUARE_BLOCKS.filter(b => parseInt(A(`sq_${b.id}`), 10) === b.correct).length },
+      a5:  { max: 3, score: () => (A('a5_1') === 'abheben') + reasonPoints() },
+      a8:  { max: 2, score: () => (A('sel-a8-1') === 'right') + (A('sel-a8-2') === '-1') },
+      a7a: { max: ANDOR_ROWS.length, score: () => ANDOR_ROWS.filter(r => A(r.id) === r.correct).length },
+      a7b: { max: SMARTHOME_ROWS.length, score: () => SMARTHOME_ROWS.filter(r => A(r.id) === r.correct).length },
+      a7c: { max: GARDEN_ROWS.length, score: () => GARDEN_ROWS.filter(r => A(r.id) === r.correct).length }
+    };
+    const MAX_POINTS = Object.values(TASKS).reduce((s, t) => s + t.max, 0);
+    const PASS_POINTS = Math.round(MAX_POINTS * 0.6 * 10) / 10;
+
+    function reasonPoints() {
+      let p = (A('r_r1') === true) + (A('r_r3') === true);
+      if (A('r_r2') === true || A('r_r4') === true) p = Math.max(0, p - 1);
+      return p;
+    }
+
+    // Karten grün/rot färben
+    function markCard(id, ok) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('bg-slate-50', 'border-slate-200', 'bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
+      el.classList.add(ok ? 'bg-emerald-50' : 'bg-rose-50', ok ? 'border-emerald-300' : 'border-rose-300');
+    }
+
+    function feedback(fbId, task, label, perfectMsg) {
+      const pts = TASKS[task].score(), max = TASKS[task].max;
+      const fb = document.getElementById(fbId);
+      if (fb) {
+        fb.innerHTML = pts === max ? `🌟 ${pts}/${max} Punkte: ${perfectMsg}` : `${pts}/${max} Punkte.`;
+        fb.className = pts === max ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
+      }
+      showToast(label, `${pts} von ${max} Punkten erreicht.`);
+    }
+
     function checkBasicsA1() {
-      let pts = 0;
-      const cA = document.getElementById('card-a1a');
-      const cB = document.getElementById('card-a1b');
-
-      if (STATE.answers['a1a'] === 'opt_rule') {
-        pts++;
-        cA.className = "p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 space-y-2";
-      } else {
-        cA.className = "p-3.5 rounded-xl bg-rose-50 border border-rose-300 space-y-2";
-      }
-
-      if (STATE.answers['a1b'] === 'opt_recipe') {
-        pts++;
-        cB.className = "p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 space-y-2";
-      } else {
-        cB.className = "p-3.5 rounded-xl bg-rose-50 border border-rose-300 space-y-2";
-      }
-
-      const fb = document.getElementById('fb-basics-a1');
-      fb.innerHTML = pts === 2 ? "🌟 2/2 Punkte: Alles richtig!" : `${pts}/2 Punkte.`;
-      fb.className = pts === 2 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
-      showToast("Aufgabe 1", `${pts} von 2 Punkten erreicht.`);
+      markCard('card-a1a', A('a1a') === 'opt_rule');
+      markCard('card-a1b', A('a1b') === 'opt_recipe');
+      feedback('fb-basics-a1', 'a1', 'Aufgabe 1', 'Alles richtig!');
     }
 
     function checkBasicsA2() {
-      let pts = 0;
-      const pairs = [
-        { k: 'sel-a2-1', ok: 'right', card: 'card-a2-1' },
-        { k: 'sel-a2-2', ok: 'right', card: 'card-a2-2' },
-        { k: 'sel-a2-3', ok: 'right', card: 'card-a2-3' }
-      ];
-
-      pairs.forEach(p => {
-        const val = STATE.answers[p.k];
-        const card = document.getElementById(p.card);
-        if (val === p.ok) {
-          pts++;
-          if (card) card.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2";
-        } else {
-          if (card) card.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2";
-        }
+      FLOW_SLOTS.forEach(sl => {
+        const rect = document.getElementById('flow-rect-' + sl);
+        if (!rect) return;
+        const ok = A('flow_' + sl) === FLOW_SOLUTION[sl];
+        rect.setAttribute('fill', ok ? '#d1fae5' : '#ffe4e6');
+        rect.setAttribute('stroke', ok ? '#059669' : '#e11d48');
+        rect.setAttribute('stroke-dasharray', '');
       });
-
-      const fb = document.getElementById('fb-basics-a2');
-      fb.innerHTML = pts === 3 ? "🌟 3/3 Punkte: Diagramm perfekt verstanden!" : `${pts}/3 Punkte.`;
-      fb.className = pts === 3 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
-      showToast("Aufgabe 2", `${pts} von 3 Punkten erreicht.`);
+      markCard('card-a2-3', A('sel-a2-3') === 'right');
+      feedback('fb-basics-a2', 'a2', 'Aufgabe 2', 'Diagramm perfekt verstanden!');
     }
 
     function checkLoopsA3() {
-      let pts = 0;
-      const c1 = document.getElementById('card-a3-1');
-      const c2 = document.getElementById('card-a3-2');
-
-      if (STATE.answers['sel-a3-1'] === '4') {
-        pts++;
-        c1.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
-      } else {
-        c1.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
-      }
-
-      if (STATE.answers['sel-a3-2'] === '40') {
-        pts++;
-        c2.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
-      } else {
-        c2.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
-      }
-
-      const fb = document.getElementById('fb-loops-a3');
-      fb.innerHTML = pts === 2 ? "🌟 2/2 Punkte: Perfekt gerechnet!" : `${pts}/2 Punkte.`;
-      fb.className = pts === 2 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
-      showToast("Aufgabe 3", `${pts} von 2 Punkten erreicht.`);
+      markCard('card-a3-1', A('sel-a3-1') === '4');
+      markCard('card-a3-2', A('sel-a3-2') === '40');
+      feedback('fb-loops-a3', 'a3', 'Aufgabe 3', 'Perfekt gerechnet!');
     }
 
     function checkLoopsA4() {
-      let pts = 0;
-      const c1 = document.getElementById('card-a4-1');
-      const c2 = document.getElementById('card-a4-2');
-
-      if (STATE.answers['sel-a4-1'] === 'bis') {
-        pts++;
-        c1.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
-      } else {
-        c1.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
-      }
-
-      if (STATE.answers['sel-a4-2'] === 'yminus1') {
-        pts++;
-        c2.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
-      } else {
-        c2.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
-      }
-
-      const fb = document.getElementById('fb-loops-a4');
-      fb.innerHTML = pts === 2 ? "🌟 2/2 Punkte: Drohne landet sicher!" : `${pts}/2 Punkte.`;
-      fb.className = pts === 2 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
-      showToast("Aufgabe 4", `${pts} von 2 Punkten erreicht.`);
+      markCard('card-a4-1', A('sel-a4-1') === 'bis');
+      markCard('card-a4-2', A('sel-a4-2') === 'yminus1');
+      feedback('fb-loops-a4', 'a4', 'Aufgabe 4', 'Drohne landet sicher!');
     }
 
     function checkSquareSort() {
-      let pts = 0;
-      SQUARE_BLOCKS.forEach(b => {
-        const row = document.getElementById(`card-${b.id}`);
-        const userVal = parseInt(STATE.answers[`sq_${b.id}`], 10);
-        if (userVal === b.correct) {
-          pts++;
-          if (row) row.className = "p-2.5 rounded-xl bg-emerald-50 border border-emerald-300 flex items-center justify-between gap-3";
-        } else {
-          if (row) row.className = "p-2.5 rounded-xl bg-rose-50 border border-rose-300 flex items-center justify-between gap-3";
-        }
-      });
-
-      const fb = document.getElementById('fb-square-sort');
-      fb.innerHTML = pts === 3 ? "🌟 3/3 Punkte: Perfektes Quadrat!" : `${pts}/3 Punkte richtig.`;
-      fb.className = pts === 3 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
-      showToast("Quadrat", `${pts} von 3 Bausteinen richtig.`);
+      SQUARE_BLOCKS.forEach(b => markCard(`card-${b.id}`, parseInt(A(`sq_${b.id}`), 10) === b.correct));
+      feedback('fb-square-sort', 'a6', 'Quadrat', 'Perfektes Quadrat!');
     }
 
     function checkCustomA5() {
-      let pts = 0;
-      const c1 = document.getElementById('card-a5-1');
-      if (STATE.answers['a5_1'] === 'abheben') {
-        pts++;
-        c1.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
-      } else {
-        c1.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
-      }
-
-      // Check the 2 reasons
-      const c2 = document.getElementById('card-a5-2');
-      const r1 = STATE.answers['r_r1'] === true;
-      const r2 = STATE.answers['r_r2'] === true;
-      const r3 = STATE.answers['r_r3'] === true;
-      const r4 = STATE.answers['r_r4'] === true;
-
-      let reasonPts = 0;
-      if (r1) reasonPts++;
-      if (r3) reasonPts++;
-      if (r2 || r4) reasonPts = Math.max(0, reasonPts - 1);
-
-      pts += reasonPts;
-      if (reasonPts === 2) {
-        c2.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-2";
-      } else {
-        c2.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-2";
-      }
-
-      const fb = document.getElementById('fb-custom-a5');
-      fb.innerHTML = pts === 3 ? "🌟 3/3 Punkte: Unterprogramme verstanden!" : `${pts}/3 Punkte.`;
-      fb.className = pts === 3 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
-      showToast("Aufgabe 5", `${pts} von 3 Punkten erreicht.`);
+      markCard('card-a5-1', A('a5_1') === 'abheben');
+      markCard('card-a5-2', reasonPoints() === 2);
+      feedback('fb-custom-a5', 'a5', 'Aufgabe 5', 'Unterprogramme verstanden!');
     }
 
     function checkCustomA8() {
-      let pts = 0;
-      const c1 = document.getElementById('card-a8-1');
-      const c2 = document.getElementById('card-a8-2');
+      markCard('card-a8-1', A('sel-a8-1') === 'right');
+      markCard('card-a8-2', A('sel-a8-2') === '-1');
+      feedback('fb-custom-a8', 'a8', 'Bugfix', 'Bug erfolgreich behoben!');
+    }
 
-      if (STATE.answers['sel-a8-1'] === 'right') {
-        pts++;
-        c1.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
-      } else {
-        c1.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
-      }
-
-      if (STATE.answers['sel-a8-2'] === '-1') {
-        pts++;
-        c2.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
-      } else {
-        c2.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
-      }
-
-      const fb = document.getElementById('fb-custom-a8');
-      fb.innerHTML = pts === 2 ? "🌟 2/2 Punkte: Bug erfolgreich behoben!" : `${pts}/2 Punkte.`;
-      fb.className = pts === 2 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
-      showToast("Bugfix", `${pts} von 2 Punkten erreicht.`);
+    function checkLogicAndOr() {
+      ANDOR_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
+      feedback('fb-logic-andor', 'a7a', 'UND / ODER', 'Logik-Wörter sitzen!');
     }
 
     function checkLogicA7() {
-      let pts = 0;
-      SMARTHOME_ROWS.forEach(row => {
-        const card = document.getElementById(`card-${row.id}`);
-        const userVal = STATE.answers[row.id];
-        if (userVal === row.correct) {
-          pts++;
-          if (card) card.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5";
-        } else {
-          if (card) card.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5";
-        }
-      });
-
-      const fb = document.getElementById('fb-logic-a7');
-      fb.innerHTML = pts === 4 ? "🌟 4/4 Punkte: Smarthome schaltet perfekt!" : `${pts}/4 Punkte.`;
-      fb.className = pts === 4 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
-      showToast("Lichtsteuerung", `${pts} von 4 Zeilen richtig.`);
+      SMARTHOME_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
+      feedback('fb-logic-a7', 'a7b', 'Lichtsteuerung', 'Smarthome schaltet perfekt!');
     }
 
-    function checkLogicNicht() {
-      let pts = 0;
-      const card = document.getElementById('card-a7-nicht');
-      if (STATE.answers['nicht'] === 'right') {
-        pts = 1;
-        card.className = "p-3 rounded-xl bg-emerald-50 border border-emerald-300 space-y-1.5";
-      } else {
-        card.className = "p-3 rounded-xl bg-rose-50 border border-rose-300 space-y-1.5";
-      }
-
-      const fb = document.getElementById('fb-logic-nicht');
-      fb.innerHTML = pts === 1 ? "🌟 1/1 Punkt: Logische Negation verstanden!" : "0/1 Punkt.";
-      fb.className = pts === 1 ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-rose-700";
-      showToast("NICHT-Block", `${pts}/1 Punkt.`);
+    function checkLogicGarden() {
+      GARDEN_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
+      feedback('fb-logic-garden', 'a7c', 'Gartenbewässerung', 'Der Rasen ist perfekt gegossen!');
     }
 
     // ==============================================================
-    // FULL EXAM EVALUATION (22 POINTS · SWISS SCALE)
+    // TEST-SIMULATION (SCHWEIZER NOTENSKALA)
     // ==============================================================
     function evaluateFullExam() {
-      let score = 0;
+      const score = Object.values(TASKS).reduce((s, t) => s + t.score(), 0);
+      const pct = Math.round((score / MAX_POINTS) * 100);
+      const grade = Math.round(((score / MAX_POINTS) * 5 + 1) * 10) / 10;
+      const passed = score >= PASS_POINTS;
 
-      // A1 (2 P.)
-      if (STATE.answers['a1a'] === 'opt_rule') score += 1;
-      if (STATE.answers['a1b'] === 'opt_recipe') score += 1;
-
-      // A2 (3 P.)
-      if (STATE.answers['sel-a2-1'] === 'right') score += 1;
-      if (STATE.answers['sel-a2-2'] === 'right') score += 1;
-      if (STATE.answers['sel-a2-3'] === 'right') score += 1;
-
-      // A3 (2 P.)
-      if (STATE.answers['sel-a3-1'] === '4') score += 1;
-      if (STATE.answers['sel-a3-2'] === '40') score += 1;
-
-      // A4 (2 P.)
-      if (STATE.answers['sel-a4-1'] === 'bis') score += 1;
-      if (STATE.answers['sel-a4-2'] === 'yminus1') score += 1;
-
-      // A6 (3 P.)
-      SQUARE_BLOCKS.forEach(b => {
-        if (parseInt(STATE.answers[`sq_${b.id}`], 10) === b.correct) score += 1;
-      });
-
-      // A5 (3 P.)
-      if (STATE.answers['a5_1'] === 'abheben') score += 1;
-      let reasonPts = 0;
-      if (STATE.answers['r_r1'] === true) reasonPts++;
-      if (STATE.answers['r_r3'] === true) reasonPts++;
-      if (STATE.answers['r_r2'] === true || STATE.answers['r_r4'] === true) reasonPts = Math.max(0, reasonPts - 1);
-      score += reasonPts;
-
-      // A8 (2 P.)
-      if (STATE.answers['sel-a8-1'] === 'right') score += 1;
-      if (STATE.answers['sel-a8-2'] === '-1') score += 1;
-
-      // A7 (4 P.)
-      SMARTHOME_ROWS.forEach(r => {
-        if (STATE.answers[r.id] === r.correct) score += 1;
-      });
-
-      // A7-Zusatz (1 P.)
-      if (STATE.answers['nicht'] === 'right') score += 1;
-
-      // Total: 22 Points
-      const pct = Math.round((score / 22) * 100);
-      let grade = (score / 22) * 5 + 1;
-      grade = Math.round(grade * 10) / 10;
-
-      let ratingTitle = "";
-      let ratingClass = "";
-      let badgeColor = "";
-
+      let ratingTitle, ratingClass, badgeColor;
       if (pct >= 90) {
         ratingTitle = "Sehr gut ⭐ (Kompetenzen vollumfänglich erreicht)";
-        ratingClass = "bg-sky-50 border-sky-300 text-sky-950";
-        badgeColor = "bg-sky-600 text-white";
+        ratingClass = "bg-sky-50 border-sky-300 text-sky-950"; badgeColor = "bg-sky-600 text-white";
       } else if (pct >= 75) {
         ratingTitle = "Gut 👏 (Kompetenzen solide erreicht)";
-        ratingClass = "bg-emerald-50 border-emerald-300 text-emerald-950";
-        badgeColor = "bg-emerald-600 text-white";
-      } else if (pct >= 60) {
+        ratingClass = "bg-emerald-50 border-emerald-300 text-emerald-950"; badgeColor = "bg-emerald-600 text-white";
+      } else if (passed) {
         ratingTitle = "Erreicht / Bestanden 👍 (Grundkompetenzen erfüllt)";
-        ratingClass = "bg-amber-50 border-amber-300 text-amber-950";
-        badgeColor = "bg-amber-600 text-white";
+        ratingClass = "bg-amber-50 border-amber-300 text-amber-950"; badgeColor = "bg-amber-600 text-white";
       } else {
         ratingTitle = "Nicht erreicht ⚠️ (Nochmals vertiefen & üben)";
-        ratingClass = "bg-rose-50 border-rose-300 text-rose-950";
-        badgeColor = "bg-rose-600 text-white";
+        ratingClass = "bg-rose-50 border-rose-300 text-rose-950"; badgeColor = "bg-rose-600 text-white";
       }
 
       const banner = document.getElementById('exam-result-banner');
       if (banner) {
-        banner.className = `p-5 rounded-2xl border shadow-sm ${ratingClass} block animate-fade-in`;
+        banner.className = `mt-4 p-5 rounded-2xl border shadow-sm ${ratingClass} block animate-fade-in`;
         banner.innerHTML = `
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10">
             <div>
               <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full ${badgeColor}">
-                ${pct >= 60 ? 'Bestanden' : 'Nicht bestanden'}
+                ${passed ? 'Bestanden' : 'Nicht bestanden'}
               </span>
               <h3 class="text-xl sm:text-2xl font-black mt-2">${ratingTitle}</h3>
-              <p class="text-xs sm:text-sm mt-1 opacity-90">Bestehensgrenze: 60 % (ab 13.5 P. = Note 4.0).</p>
+              <p class="text-xs sm:text-sm mt-1 opacity-90">Bestehensgrenze: 60 % (ab ${PASS_POINTS} P. = Note 4.0).</p>
             </div>
             <div class="flex items-center gap-4 bg-white/80 p-3 rounded-xl border border-black/10 self-start sm:self-auto">
               <div class="text-center px-2">
                 <div class="text-[10px] font-bold text-slate-500 uppercase">Punkte</div>
-                <div class="text-2xl font-black">${score} <span class="text-xs text-slate-500 font-normal">/ 22</span></div>
+                <div class="text-2xl font-black">${score} <span class="text-xs text-slate-500 font-normal">/ ${MAX_POINTS}</span></div>
               </div>
               <div class="h-8 w-px bg-slate-300"></div>
               <div class="text-center px-2">
@@ -1188,47 +1380,45 @@
               <div class="h-8 w-px bg-slate-300"></div>
               <div class="text-center px-2">
                 <div class="text-[10px] font-bold text-slate-500 uppercase">Note</div>
-                <div class="text-2xl font-black text-blue-700">${grade}</div>
+                <div class="text-2xl font-black text-blue-700">${grade.toFixed(1)}</div>
               </div>
             </div>
           </div>
-
           <div class="pt-3 text-xs sm:text-sm text-slate-700">
-            <strong>Hinweis für den Papiertest:</strong> Genau diese Aufgabentypen kommen im Test auf Papier dran. Wenn du hier mehr als 14 Punkte hast, bist du bestens vorbereitet!
-          </div>
-        `;
+            <strong>Hinweis für den Papiertest:</strong> Genau diese Aufgabentypen kommen im Test auf Papier dran. Wenn du hier mehr als ${Math.ceil(MAX_POINTS * 0.65)} Punkte hast, bist du bestens vorbereitet!
+          </div>`;
         banner.scrollIntoView({ behavior: 'smooth' });
       }
-
-      showToast("Auswertung fertig!", `${score} von 22 Punkten (${pct}%, Note ${grade}).`);
+      showToast("Auswertung fertig!", `${score} von ${MAX_POINTS} Punkten (${pct}%, Note ${grade.toFixed(1)}).`);
     }
 
     function resetAllHubData() {
       STATE.answers = {};
+      flowSelected = null;
       try { localStorage.removeItem('scratch_hub_answers'); } catch (e) {}
-      
       const banner = document.getElementById('exam-result-banner');
       if (banner) banner.classList.add('hidden');
-
-      renderBasicsTab();
-      renderLoopsTab();
-      renderCustomTab();
-      renderLogicTab();
+      // Farben und Rückmeldungen zurücksetzen
+      document.querySelectorAll('.bg-emerald-50.border-emerald-300, .bg-rose-50.border-rose-300').forEach(el => {
+        if (el.id === 'exam-result-banner') return;
+        el.classList.remove('bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
+        el.classList.add('bg-slate-50', 'border-slate-200');
+      });
+      document.querySelectorAll('[id^="fb-"]').forEach(el => { el.innerHTML = ''; });
+      renderAll();
       showToast("Zurückgesetzt", "Alle Antworten wurden geleert.");
     }
 
     // ==============================================================
-    // STOPWATCH
+    // STOPPUHR
     // ==============================================================
     let timerSeconds = 0;
     let timerInterval = null;
     let timerRunning = false;
 
     function formatTime(totalSec) {
-      const mins = Math.floor(totalSec / 60);
-      const secs = totalSec % 60;
       const pad = (n) => String(n).padStart(2, '0');
-      return `${pad(mins)}:${pad(secs)}`;
+      return `${pad(Math.floor(totalSec / 60))}:${pad(totalSec % 60)}`;
     }
 
     function updateTimerDisplay() {
@@ -1269,50 +1459,52 @@
       showToast("⏱️ Zurückgesetzt", "Uhr steht auf 00:00.");
     }
 
+    let toastTimeout = null;
     function showToast(title, msg) {
       const toast = document.getElementById('toast');
       const toastTitle = document.getElementById('toast-title');
       const toastMsg = document.getElementById('toast-msg');
       if (!toast || !toastTitle || !toastMsg) return;
-
       toastTitle.innerText = title;
       toastMsg.innerText = msg;
       toast.classList.remove('translate-y-20', 'opacity-0');
       toast.classList.add('translate-y-0', 'opacity-100');
-
-      setTimeout(() => {
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
         toast.classList.remove('translate-y-0', 'opacity-100');
         toast.classList.add('translate-y-20', 'opacity-0');
       }, 2500);
     }
 
-    // EXPOSE TO GLOBAL
-    window.switchTab = switchTab;
-    window.saveAnswer = saveAnswer;
-    window.reshuffleBasics = reshuffleBasics;
-    window.reshuffleLogic = reshuffleLogic;
-    window.checkBasicsA1 = checkBasicsA1;
-    window.checkBasicsA2 = checkBasicsA2;
-    window.checkLoopsA3 = checkLoopsA3;
-    window.checkLoopsA4 = checkLoopsA4;
-    window.checkSquareSort = checkSquareSort;
-    window.checkCustomA5 = checkCustomA5;
-    window.checkCustomA8 = checkCustomA8;
-    window.checkLogicA7 = checkLogicA7;
-    window.checkLogicNicht = checkLogicNicht;
-    window.evaluateFullExam = evaluateFullExam;
-    window.resetAllHubData = resetAllHubData;
-    window.toggleTimer = toggleTimer;
-    window.resetTimer = resetTimer;
+    // ==============================================================
+    // START
+    // ==============================================================
+    Object.assign(window, {
+      switchTab, saveAnswer, reshuffleBasics, reshuffleLogic,
+      checkBasicsA1, checkBasicsA2, checkLoopsA3, checkLoopsA4, checkSquareSort,
+      checkCustomA5, checkCustomA8, checkLogicAndOr, checkLogicA7, checkLogicGarden,
+      handleFlowSlotClick, evaluateFullExam, resetAllHubData, toggleTimer, resetTimer
+    });
 
-    window.onload = function() {
-      initShuffledData();
-      loadState();
+    function renderAll() {
       renderBasicsTab();
       renderLoopsTab();
       renderCustomTab();
       renderLogicTab();
-    };
+    }
+
+    // Start sobald das HTML da ist – wartet NICHT auf Tailwind/Schriften (verhindert leere Felder bei langsamem Netz)
+    function boot() {
+      initShuffledData();
+      loadState();
+      document.querySelectorAll('.js-max-pts').forEach(el => el.textContent = MAX_POINTS);
+      document.querySelectorAll('.js-pass-pts').forEach(el => el.textContent = PASS_POINTS);
+      renderAll();
+      shuffleSelects(document);
+      initFlowDnD();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
   </script>
 </body>
 </html>
