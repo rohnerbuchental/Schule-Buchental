@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RZG · Vulkane, Erdbeben, Tsunamis (Test 2)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    input:focus, select:focus { outline: none; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.35); }
+    select { max-width: 100%; }
+    .gap-text select { display: inline-block; margin: 2px 0; }
+    .dnd-card { cursor: grab; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+    .dnd-card.is-selected { box-shadow: 0 0 0 3px #f97316; }
+    .dnd-zone { touch-action: manipulation; transition: background-color 0.15s, border-color 0.15s; }
+    .dnd-zone.is-ready { border-color: #f97316; background-color: #fff7ed; }
+    details > summary { cursor: pointer; list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-orange-600 selection:text-white">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-orange-900 via-red-950 to-slate-900 text-white shadow-lg sticky top-0 z-40 border-b border-orange-800/50">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center gap-3">
+      <a href="index.html" class="text-2xl sm:text-3xl p-1.5 sm:p-2 bg-white/10 rounded-2xl border border-white/10 shadow-inner" title="Zur Startseite">🌋</a>
+      <div class="min-w-0">
+        <div class="flex flex-wrap items-center gap-1.5">
+          <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-orange-400/20 text-orange-200 border border-orange-400/30">RZG · Dynamik der Erde · Test 2</span>
+          <span class="text-[10px] font-medium bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 px-1.5 py-0.5 rounded-md">💾 Auto-Save</span>
+          <span class="text-[10px] font-medium bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 px-1.5 py-0.5 rounded-md">🔀 Zufall</span>
+        </div>
+        <h1 class="text-base sm:text-lg font-bold leading-tight mt-0.5">Vulkane, Erdbeben und Tsunamis</h1>
+      </div>
+    </div>
+
+    <nav class="max-w-5xl mx-auto px-4 flex gap-1.5 overflow-x-auto border-t border-white/10 py-2 text-xs sm:text-sm font-medium">
+      <button onclick="switchTab('entstehung')" id="tab-btn-entstehung" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm">
+        <span>🌋</span> 1. Vulkane entstehen
+      </button>
+      <button onclick="switchTab('ausbruch')" id="tab-btn-ausbruch" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
+        <span>💥</span> 2. Ausbruch & inaktiv
+      </button>
+      <button onclick="switchTab('erdbeben')" id="tab-btn-erdbeben" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
+        <span>📈</span> 3. Erdbeben
+      </button>
+      <button onclick="switchTab('tsunami')" id="tab-btn-tsunami" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
+        <span>🌊</span> 4. Tsunamis
+      </button>
+      <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/30">
+        <span>📝</span> 5. Test-Simulation (<span class="js-max-pts">–</span> P.)
+      </button>
+    </nav>
+  </header>
+
+  <main class="max-w-5xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-6">
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: VULKANE ENTSTEHEN (LZ7, LZ8) -->
+    <!-- ============================================================== -->
+    <section id="view-entstehung" class="tab-view space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-black text-slate-900">🌋 Wie entstehen Vulkane?</h2>
+        <p class="text-xs text-slate-500 mt-1">LZ7: Die Entstehung eines Vulkans beschreiben. · LZ8: Schild- und Schichtvulkane benennen und an ihrer Form unterscheiden.</p>
+        <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
+          <summary class="text-sm font-bold text-orange-800">📖 Theorie lesen (antippen)</summary>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">
+            <p>Vulkane entstehen, wenn flüssiges Gestein (<b>Magma</b>) aus dem Erdinneren aufsteigt und an die Erdoberfläche gelangt. Das passiert meist dort, wo sich die Erdplatten bewegen.</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><b>Platten driften auseinander:</b> Es entsteht ein Riss. Heisses Magma steigt auf und kühlt als neue Kruste ab. Beispiel: Island.</li>
+              <li><b>Platten stossen zusammen:</b> Die schwerere Platte schiebt sich unter die leichtere. In der Tiefe schmilzt das Gestein. Das Magma ist leichter und steigt auf. Beispiel: Mount St. Helens (USA).</li>
+              <li><b>Hotspot:</b> Besonders heisses Magma steigt wie ein Schweissbrenner durch die Platte. Beispiel: Hawaii.</li>
+            </ul>
+            <p>Rund um die Pazifische Platte liegen die aktivsten Vulkane der Welt. Man nennt das den <b>«Ring of Fire»</b>.</p>
+            <div class="grid sm:grid-cols-2 gap-2 pt-1">
+              <div class="bg-white rounded-lg border border-orange-200 p-2.5">
+                <b>Schichtvulkan (Stratovulkan)</b><br>steil und hoch · zähflüssiges Magma · explosiver Ausbruch · Schichten aus Lava und Asche · z.B. Vesuv, Ätna, Fujiyama
+              </div>
+              <div class="bg-white rounded-lg border border-orange-200 p-2.5">
+                <b>Schildvulkan</b><br>flach und breit · dünnflüssiges Magma · ruhiger, fliessender Ausbruch · viele dünne Lavaschichten · z.B. Mauna Loa (Hawaii)
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Aufgabe 1: Drei Arten der Vulkan-Entstehung | RZG.1.3.a -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a1"></div>
+
+      <!-- Aufgabe 2: Beispiele und Ring of Fire | RZG.1.3.a -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a2"></div>
+
+      <!-- Aufgabe 3: Schild- oder Schichtvulkan? | RZG.1.3.a -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a3"></div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: AUSBRUCH UND INAKTIV (LZ9, LZ10) -->
+    <!-- ============================================================== -->
+    <section id="view-ausbruch" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-black text-slate-900">💥 Warum bricht ein Vulkan aus?</h2>
+        <p class="text-xs text-slate-500 mt-1">LZ9: Beschreiben, warum ein Vulkan ausbricht. · LZ10: Beschreiben, wann ein Vulkan als inaktiv gilt und warum.</p>
+        <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
+          <summary class="text-sm font-bold text-orange-800">📖 Theorie lesen (antippen)</summary>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">
+            <p><b>Schichtvulkan:</b> Das Magma ist zähflüssig. Die Gase können nur schwer entweichen. Im Schlot baut sich ein enormer Druck auf. Wird der Druck stärker als der Pfropfen aus Gestein, gibt es einen explosiven Ausbruch: Asche, Steine (Pyroklastika) und Lava fliegen heraus.</p>
+            <p><b>Schildvulkan:</b> Die Lava ist dünnflüssig und sehr heiss. Die Gase entweichen leicht, darum gibt es kaum Druck. Die Lava fliesst ruhig aus dem Krater und breitet sich weit aus.</p>
+            <p><b>Inaktiv («schlafend»)</b> ist ein Vulkan, wenn kein Magma mehr nachkommt und der Druck in der Magmakammer sinkt. Gründe:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Die Platte bewegt sich weiter. Der Vulkan wandert vom Hotspot weg und bekommt kein Magma mehr. Am Hotspot entsteht ein neuer Vulkan.</li>
+              <li>Die Magmakammer ist leer: Das Magma kühlt ab, wird fest und der Schlot verstopft.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- Aufgabe 4: Ausbruch von Schicht- und Schildvulkan | RZG.1.3.b -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a4"></div>
+
+      <!-- Aufgabe 5: Ablauf eines explosiven Ausbruchs | RZG.1.3.b -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a5"></div>
+
+      <!-- Aufgabe 6: Wann ist ein Vulkan inaktiv? | RZG.1.3.b -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a6"></div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: ERDBEBEN (LZ11, LZ12, LZ13) -->
+    <!-- ============================================================== -->
+    <section id="view-erdbeben" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-black text-slate-900">📈 Erdbeben und Richterskala</h2>
+        <p class="text-xs text-slate-500 mt-1">LZ11: Erklären, wie Erdbeben entstehen. · LZ12: Die Richterskala benennen und den Zahlen Auswirkungen zuordnen. · LZ13: Berechnen, wie viel mehr Energie frei wird.</p>
+        <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
+          <summary class="text-sm font-bold text-orange-800">📖 Theorie lesen (antippen)</summary>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">
+            <p><b>Entstehung:</b> Erdbeben gibt es vor allem an den Plattengrenzen. Zwei Platten verhaken sich. Es baut sich eine riesige Spannung auf. Plötzlich bricht das Gestein und die Spannung entlädt sich schlagartig: Die Erde bebt. Beispiel: San-Andreas-Verwerfung (USA), dort gleiten zwei Platten seitlich aneinander vorbei.</p>
+            <p><b>Messen:</b> Das Messgerät heisst <b>Seismograph</b>. Die Stärke gibt man auf der <b>Richterskala</b> an. Das stärkste je gemessene Beben hatte Stärke 9.5 (Chile, 1960). In der Schweiz war es das Beben von Basel 1356 (ca. 6 bis 6.5).</p>
+            <div class="bg-white rounded-lg border border-orange-200 p-2.5">
+              <b>Rechenregel:</b> 1 Stufe höher = Ausschlag im Seismogramm <b>× 10</b> und Energie <b>× 32</b>.<br>
+              Beispiel: Stärke 5 statt 3 = 2 Stufen → Ausschlag 10 × 10 = 100-mal, Energie 32 × 32 = 1024-mal grösser.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Aufgabe 7: Wie entsteht ein Erdbeben? | RZG.1.3.b -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a7"></div>
+
+      <!-- Aufgabe 8: Richterskala und Auswirkungen | RZG.1.3.c -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a8"></div>
+
+      <!-- Aufgabe 9: Energie berechnen | RZG.1.3.b -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a9"></div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: TSUNAMIS (LZ14, LZ15) -->
+    <!-- ============================================================== -->
+    <section id="view-tsunami" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
+        <h2 class="text-lg font-black text-slate-900">🌊 Wie entsteht ein Tsunami?</h2>
+        <p class="text-xs text-slate-500 mt-1">LZ14: Die Entstehung von Tsunamis beschreiben. · LZ15: Den Unterschied zwischen einer normalen Welle und einem Tsunami beschreiben.</p>
+        <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
+          <summary class="text-sm font-bold text-orange-800">📖 Theorie lesen (antippen)</summary>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">
+            <svg viewBox="0 0 360 150" class="w-full h-auto" role="img" aria-label="Schema: Ein Seebeben erzeugt eine Welle, die an der Küste hoch wird">
+              <rect x="0" y="40" width="360" height="110" fill="#bae6fd"/>
+              <path d="M0,150 L0,130 L230,125 L330,60 L360,50 L360,150 Z" fill="#a8a29e"/>
+              <path d="M330,60 L360,50 L360,40 L330,40 Z" fill="#86efac"/>
+              <path d="M70,40 Q85,33 100,40" fill="#38bdf8" stroke="#0369a1" stroke-width="2"/>
+              <path d="M262,40 Q285,0 305,40" fill="#38bdf8" stroke="#0369a1" stroke-width="2"/>
+              <polygon points="40,128 44,118 48,128 58,128 50,134 53,144 44,138 35,144 38,134 30,128" fill="#ef4444"/>
+              <text x="62" y="140" font-size="11" fill="#7f1d1d" font-weight="700">Seebeben</text>
+              <text x="85" y="28" font-size="10" fill="#0c4a6e" text-anchor="middle">ca. 1 m, sehr schnell</text>
+              <text x="250" y="12" font-size="10" fill="#0c4a6e" text-anchor="end">Küste: 10 bis 30 m</text>
+              <path d="M110,60 L200,60" stroke="#0369a1" stroke-width="2" marker-end="url(#arrT)"/>
+              <defs><marker id="arrT" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#0369a1"/></marker></defs>
+            </svg>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>Ein Seebeben stösst den Meeresboden und damit das ganze Wasser darüber schlagartig nach oben.</li>
+              <li>Auf dem offenen Meer ist die Welle flach (ca. 1 m), aber extrem schnell (bis 800 km/h).</li>
+              <li>An der flachen Küste wird die Welle abgebremst, staut sich und türmt sich 10 bis 30 m hoch auf.</li>
+            </ol>
+            <p><b>Normale Welle:</b> entsteht durch Wind. Nur die oberste Wasserschicht bewegt sich. Wellenlänge bis ca. 400 m, eher langsam.<br>
+            <b>Tsunami:</b> entsteht durch ein Seebeben. Das ganze Wasser vom Meeresgrund bis zur Oberfläche bewegt sich. Wellenlänge bis 1000 km, sehr schnell.</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Aufgabe 10: Entstehung eines Tsunamis | RZG.1.3.b -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a10"></div>
+
+      <!-- Aufgabe 11: Normale Welle oder Tsunami? | RZG.1.3.b -->
+      <div class="task-card bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3" data-task="a11"></div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 5: TEST-SIMULATION -->
+    <!-- ============================================================== -->
+    <section id="view-exam" class="tab-view hidden space-y-5 animate-fade-in">
+      <div class="bg-gradient-to-br from-white to-amber-50/50 rounded-2xl p-5 shadow-sm border border-amber-200">
+        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
+          Prüfungsmodus · <span class="js-max-pts">–</span> Punkte
+        </span>
+        <h2 class="text-lg sm:text-xl font-black text-slate-800 mt-2">📝 Test-Simulation</h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1">
+          Löse zuerst alle Aufgaben in den Reitern 1 bis 4. Hier werden alle Punkte zusammengezählt.
+          Bestanden ab 60 % (<span class="js-pass-pts">–</span> Punkte = Note 4.0).
+        </p>
+        <div id="exam-result-banner" class="hidden mt-4 p-4 rounded-xl border"></div>
+      </div>
+
+      <div class="p-4 bg-white rounded-2xl border border-slate-200 text-center space-y-3">
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <button onclick="evaluateFullExam()" class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow transition">
+            🚀 Test auswerten und Note berechnen
+          </button>
+          <button onclick="resetAll()" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 font-semibold text-xs transition">
+            Alles zurücksetzen
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-center py-6 text-xs text-slate-400 border-t border-slate-200 px-4">
+    <a href="index.html" class="underline">← Zur Startseite</a> · Deine Antworten werden automatisch auf diesem Gerät gespeichert.
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-5 right-5 left-5 sm:left-auto z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-slate-700 pointer-events-none text-xs sm:text-sm">
+    <div id="toast-title" class="font-bold">Mitteilung</div>
+    <div id="toast-msg" class="text-slate-300 text-xs">Details</div>
+  </div>
+
+  <script>
+    // ==============================================================
+    // BILDER (SVG)
+    // ==============================================================
+    const SVG_STRATO = `
+      <svg viewBox="0 0 200 150" class="w-full h-auto max-w-[220px] mx-auto" role="img" aria-label="Vulkan">
+        <rect x="0" y="135" width="200" height="15" fill="#a3a3a3"/>
+        <polygon points="30,135 90,35 110,35 170,135" fill="#78716c"/>
+        <polyline points="50,135 94,60 106,60 150,135" fill="none" stroke="#44403c" stroke-width="3"/>
+        <polyline points="70,135 97,88 103,88 130,135" fill="none" stroke="#44403c" stroke-width="3"/>
+        <polygon points="90,35 100,46 110,35" fill="#ef4444"/>
+        <circle cx="100" cy="20" r="12" fill="#9ca3af"/><circle cx="84" cy="15" r="9" fill="#9ca3af"/><circle cx="117" cy="13" r="10" fill="#9ca3af"/>
+      </svg>`;
+    const SVG_SHIELD = `
+      <svg viewBox="0 0 200 150" class="w-full h-auto max-w-[220px] mx-auto" role="img" aria-label="Vulkan">
+        <rect x="0" y="135" width="200" height="15" fill="#a3a3a3"/>
+        <path d="M5,135 C40,112 70,100 100,100 C130,100 160,112 195,135 Z" fill="#78716c"/>
+        <path d="M30,135 C60,118 80,111 100,111 C120,111 140,118 170,135" fill="none" stroke="#44403c" stroke-width="2"/>
+        <path d="M55,135 C75,125 88,121 100,121 C112,121 125,125 145,135" fill="none" stroke="#44403c" stroke-width="2"/>
+        <path d="M96,101 C88,110 76,118 62,126" fill="none" stroke="#f97316" stroke-width="3"/>
+        <path d="M104,101 C114,108 128,116 146,124" fill="none" stroke="#f97316" stroke-width="3"/>
+        <ellipse cx="100" cy="100" rx="9" ry="2.5" fill="#ef4444"/>
+      </svg>`;
+    const SVG_HOTSPOT = `
+      <svg viewBox="0 0 360 210" class="w-full h-auto" role="img" aria-label="Inselkette über einem Hotspot">
+        <rect x="0" y="60" width="360" height="50" fill="#bae6fd"/>
+        <path d="M30,110 Q70,0 110,110 Z" fill="#a8a29e"/>
+        <path d="M130,110 Q175,-30 220,110 Z" fill="#a8a29e"/>
+        <path d="M240,110 Q290,-60 340,110 Z" fill="#78716c"/>
+        <path d="M283,27 L290,22 L297,27 L294,40 L286,40 Z" fill="#ef4444"/>
+        <rect x="0" y="110" width="360" height="34" fill="#57534e"/>
+        <rect x="0" y="144" width="360" height="66" fill="#fdba74"/>
+        <rect x="287" y="40" width="6" height="104" fill="#ef4444"/>
+        <path d="M268,210 C276,185 282,165 284,144 L296,144 C298,165 304,185 312,210 Z" fill="#ef4444"/>
+        <text x="70" y="50" font-size="16" font-weight="800" text-anchor="middle" fill="#0f172a">A</text>
+        <text x="175" y="35" font-size="16" font-weight="800" text-anchor="middle" fill="#0f172a">B</text>
+        <text x="265" y="18" font-size="16" font-weight="800" text-anchor="middle" fill="#0f172a">C</text>
+        <text x="150" y="132" font-size="12" fill="#fff" text-anchor="middle">◀ Bewegung der Platte</text>
+        <text x="262" y="195" font-size="12" font-weight="700" fill="#7f1d1d" text-anchor="end">Hotspot</text>
+        <text x="8" y="175" font-size="11" fill="#7c2d12">Erdmantel</text>
+      </svg>`;
+
+    // ==============================================================
+    // AUFGABEN (Inhalt und Lösungen)
+    // Blocktypen: gaps (Lückentext), rows (Auswahl pro Zeile), mc (eine Antwort),
+    //             checks (mehrere Antworten), dnd (Karten in Gruppen), num (Zahl eintippen)
+    // ==============================================================
+    const ARTEN = ['Platten driften auseinander', 'Platten stossen zusammen', 'Hotspot'];
+    const WORTE_A4 = ['zähflüssig', 'dünnflüssig', 'Gase', 'Druck', 'explosiv', 'fliessend'];
+    const RICHTER = [
+      'Man spürt es kaum. Nur Messgeräte zeichnen es auf.',
+      'Viele Menschen spüren es. Geschirr klirrt, Gegenstände wackeln.',
+      'Gebäude werden beschädigt, in einem kleineren Gebiet.',
+      'Schwere Zerstörung über Hunderte von Kilometern.'
+    ];
+
+    const DEFS = {
+      a1: { nr: 1, title: 'Drei Arten der Vulkan-Entstehung', intro: 'Wähle in jeder Lücke das richtige Wort.', blocks: [
+        { type: 'gaps', paras: [
+          ['<b>1. Auseinander:</b> Zwei Platten bewegen sich ', { key: 'a1_1', opts: ['voneinander weg', 'aufeinander zu', 'seitlich aneinander vorbei'], c: 'voneinander weg' },
+           '. Es entsteht ein Riss. Heisses ', { key: 'a1_2', opts: ['Magma', 'Meerwasser', 'Eis'], c: 'Magma' }, ' steigt nach oben und kühlt als neue Kruste ab.'],
+          ['<b>2. Zusammen:</b> Die ', { key: 'a1_3', opts: ['schwerere', 'leichtere'], c: 'schwerere' },
+           ' Platte schiebt sich unter die andere. In der Tiefe ', { key: 'a1_4', opts: ['schmilzt', 'gefriert', 'verdunstet'], c: 'schmilzt' }, ' das Gestein. Das Magma steigt auf.'],
+          ['<b>3. Ohne Plattengrenze:</b> Bei einem ', { key: 'a1_5', opts: ['Hotspot', 'Tiefseegraben', 'Gletscher'], c: 'Hotspot' },
+           ' brennt sich heisses Magma wie ein Schweissbrenner durch die Platte. Ein bekanntes Beispiel ist ', { key: 'a1_6', opts: ['Hawaii', 'die Alpen', 'der Mount St. Helens'], c: 'Hawaii' }, '.']
+        ] }
+      ] },
+      a2: { nr: 2, title: 'Beispiele und «Ring of Fire»', intro: 'Wie ist dieser Vulkan entstanden?', blocks: [
+        { type: 'rows', rows: [
+          { key: 'a2_island', label: 'Vulkane auf Island (Mittelatlantischer Rücken)', opts: ARTEN, c: ARTEN[0] },
+          { key: 'a2_hawaii', label: 'Mauna Loa auf Hawaii, mitten in der Pazifischen Platte', opts: ARTEN, c: ARTEN[2] },
+          { key: 'a2_helens', label: 'Mount St. Helens (USA), Ozeanplatte taucht unter Amerika ab', opts: ARTEN, c: ARTEN[1] },
+          { key: 'a2_fuji', label: 'Fujiyama (Japan), am Rand der Pazifischen Platte', opts: ARTEN, c: ARTEN[1] }
+        ] },
+        { type: 'mc', key: 'a2_ring', q: 'Wo liegen die meisten aktiven Vulkane der Welt («Ring of Fire»)?', c: 'ring', opts: [
+          { v: 'ring', t: 'Rund um die Pazifische Platte' },
+          { v: 'afrika', t: 'Mitten in Afrika' },
+          { v: 'alpen', t: 'In den Alpen' },
+          { v: 'antarktis', t: 'Rund um die Antarktis' }
+        ] }
+      ] },
+      a3: { nr: 3, title: 'Schild- oder Schichtvulkan?', intro: 'a) Schau die Form an: Welcher Vulkan ist das? b) Ordne danach die Karten der richtigen Gruppe zu.', blocks: [
+        { type: 'rows', grid: true, rows: [
+          { key: 'a3_fig_strato', svg: SVG_STRATO, label: 'Vulkan mit dieser Form:', opts: ['Schichtvulkan', 'Schildvulkan'], c: 'Schichtvulkan' },
+          { key: 'a3_fig_shield', svg: SVG_SHIELD, label: 'Vulkan mit dieser Form:', opts: ['Schichtvulkan', 'Schildvulkan'], c: 'Schildvulkan' }
+        ] },
+        { type: 'dnd', key: 'a3_dnd', zones: ['Schichtvulkan', 'Schildvulkan'], cards: [
+          { key: 'a3_k1', t: 'steil und hoch', c: 'Schichtvulkan' },
+          { key: 'a3_k2', t: 'flach und breit', c: 'Schildvulkan' },
+          { key: 'a3_k3', t: 'zähflüssiges Magma', c: 'Schichtvulkan' },
+          { key: 'a3_k4', t: 'dünnflüssiges Magma', c: 'Schildvulkan' },
+          { key: 'a3_k5', t: 'explosiver, heftiger Ausbruch', c: 'Schichtvulkan' },
+          { key: 'a3_k6', t: 'ruhiger, fliessender Ausbruch', c: 'Schildvulkan' },
+          { key: 'a3_k7', t: 'Vesuv und Ätna (Italien)', c: 'Schichtvulkan' },
+          { key: 'a3_k8', t: 'Mauna Loa (Hawaii)', c: 'Schildvulkan' }
+        ] }
+      ] },
+      a4: { nr: 4, title: 'So bricht ein Vulkan aus', intro: 'Setze die Wörter ein: zähflüssig, dünnflüssig, Gase, Druck, explosiv, fliessend. Jedes Wort passt genau einmal.', blocks: [
+        { type: 'gaps', paras: [
+          ['<b>Schichtvulkan:</b> Das Magma ist ', { key: 'a4_1', opts: WORTE_A4, c: 'zähflüssig' }, '. Die ', { key: 'a4_2', opts: WORTE_A4, c: 'Gase' },
+           ' können kaum entweichen. Darum steigt im Schlot der ', { key: 'a4_3', opts: WORTE_A4, c: 'Druck' }, '. Der Ausbruch ist ', { key: 'a4_4', opts: WORTE_A4, c: 'explosiv' }, '.'],
+          ['<b>Schildvulkan:</b> Die Lava ist ', { key: 'a4_5', opts: WORTE_A4, c: 'dünnflüssig' }, '. Die Gase entweichen leicht. Die Lava strömt ruhig und ',
+           { key: 'a4_6', opts: WORTE_A4, c: 'fliessend' }, ' aus dem Krater.']
+        ] }
+      ] },
+      a5: { nr: 5, title: 'Ablauf eines explosiven Ausbruchs', intro: 'Bringe die Schritte beim Schichtvulkan in die richtige Reihenfolge (1 = zuerst).', blocks: [
+        { type: 'rows', order: true, rows: [
+          { key: 'a5_1', label: 'Magma steigt aus der Tiefe auf und sammelt sich in der Magmakammer.', c: '1' },
+          { key: 'a5_2', label: 'Die Gase bleiben im zähflüssigen Magma gefangen.', c: '2' },
+          { key: 'a5_3', label: 'Der Druck im Schlot wird immer grösser.', c: '3' },
+          { key: 'a5_4', label: 'Der Druck wird stärker als der Pfropfen aus Gestein.', c: '4' },
+          { key: 'a5_5', label: 'Explosion: Asche, Steine und Lava werden herausgeschleudert.', c: '5' }
+        ] }
+      ] },
+      a6: { nr: 6, title: 'Wann ist ein Vulkan inaktiv?', intro: '', blocks: [
+        { type: 'mc', key: 'a6_wann', q: 'a) Wann gilt ein Vulkan als inaktiv?', c: 'magma', opts: [
+          { v: 'magma', t: 'Wenn kein Magma mehr nachkommt und der Druck in der Magmakammer sinkt.' },
+          { v: 'jahr', t: 'Wenn er ein Jahr lang nicht ausgebrochen ist.' },
+          { v: 'schnee', t: 'Wenn Schnee auf dem Gipfel liegt.' },
+          { v: 'rauch', t: 'Wenn man keinen Rauch mehr sieht.' }
+        ] },
+        { type: 'checks', key: 'a6_gruende', q: 'b) Welche Gründe gibt es dafür? Kreuze die 2 richtigen an.', opts: [
+          { id: 'hotspot', t: 'Die Platte bewegt sich weiter. Der Vulkan wandert vom Hotspot weg.', ok: true },
+          { id: 'kammer', t: 'Die Magmakammer kühlt ab, wird fest und der Schlot verstopft.', ok: true },
+          { id: 'regen', t: 'Es regnet zu viel in den Krater.', ok: false },
+          { id: 'heiss', t: 'Die Lava wird zu heiss.', ok: false },
+          { id: 'haeuser', t: 'Menschen bauen Häuser auf den Vulkan.', ok: false }
+        ] },
+        { type: 'html', html: '<p class="text-sm font-semibold text-slate-800 pt-2">c) Die Platte bewegt sich über einen Hotspot. So entsteht eine Inselkette (wie Hawaii).</p>' + SVG_HOTSPOT },
+        { type: 'rows', rows: [
+          { key: 'a6_alt', label: 'Welche Insel ist am ältesten?', opts: ['Insel A', 'Insel B', 'Insel C'], c: 'Insel A' },
+          { key: 'a6_aktiv', label: 'Auf welcher Insel ist der Vulkan noch aktiv?', opts: ['Insel A', 'Insel B', 'Insel C'], c: 'Insel C' }
+        ] }
+      ] },
+      a7: { nr: 7, title: 'Wie entsteht ein Erdbeben?', intro: '', blocks: [
+        { type: 'mc', key: 'a7_1', q: 'a) Wie entsteht ein Erdbeben meistens?', c: 'spannung', opts: [
+          { v: 'spannung', t: 'Zwei Platten verhaken sich. Die Spannung wird so gross, bis das Gestein plötzlich bricht.' },
+          { v: 'wind', t: 'Starker Wind drückt auf die Erdoberfläche.' },
+          { v: 'meer', t: 'Das Meer wird zu schwer für den Meeresboden.' },
+          { v: 'regen', t: 'Viel Regen weicht den Boden auf.' }
+        ] },
+        { type: 'mc', key: 'a7_2', q: 'b) Wo gibt es besonders viele Erdbeben?', c: 'grenze', opts: [
+          { v: 'grenze', t: 'An den Plattengrenzen' },
+          { v: 'mitte', t: 'In der Mitte der Platten, weit weg von den Grenzen' },
+          { v: 'wueste', t: 'Nur in Wüsten' },
+          { v: 'pol', t: 'Nur am Nordpol und Südpol' }
+        ] },
+        { type: 'mc', key: 'a7_3', q: 'c) Bei der San-Andreas-Verwerfung (USA) gibt es oft Erdbeben. Was machen die Platten dort?', c: 'seitlich', opts: [
+          { v: 'seitlich', t: 'Sie gleiten seitlich aneinander vorbei.' },
+          { v: 'weg', t: 'Sie bewegen sich voneinander weg.' },
+          { v: 'still', t: 'Sie stehen völlig still.' }
+        ] },
+        { type: 'mc', key: 'a7_4', q: 'd) Mit welchem Gerät misst man Erdbeben?', c: 'seismo', opts: [
+          { v: 'seismo', t: 'Seismograph' },
+          { v: 'baro', t: 'Barometer' },
+          { v: 'thermo', t: 'Thermometer' },
+          { v: 'kompass', t: 'Kompass' }
+        ] }
+      ] },
+      a8: { nr: 8, title: 'Richterskala und Auswirkungen', intro: '', blocks: [
+        { type: 'mc', key: 'a8_name', q: 'a) Wie heisst die Skala, mit der man die Stärke von Erdbeben angibt?', c: 'richter', opts: [
+          { v: 'richter', t: 'Richterskala' },
+          { v: 'beaufort', t: 'Beaufort-Skala' },
+          { v: 'celsius', t: 'Celsius-Skala' },
+          { v: 'noten', t: 'Notenskala' }
+        ] },
+        { type: 'html', html: '<p class="text-sm font-semibold text-slate-800 pt-2">b) Was passiert bei welcher Stärke? Ordne zu.</p>' },
+        { type: 'rows', rows: [
+          { key: 'a8_s2', label: 'Stärke 2', opts: RICHTER, c: RICHTER[0] },
+          { key: 'a8_s4', label: 'Stärke 4', opts: RICHTER, c: RICHTER[1] },
+          { key: 'a8_s6', label: 'Stärke 6', opts: RICHTER, c: RICHTER[2] },
+          { key: 'a8_s8', label: 'Stärke 8', opts: RICHTER, c: RICHTER[3] }
+        ] },
+        { type: 'mc', key: 'a8_max', q: 'c) Wie stark war das stärkste je gemessene Erdbeben (Chile, 1960)?', c: '95', opts: [
+          { v: '95', t: 'Stärke 9.5' },
+          { v: '72', t: 'Stärke 7.2' },
+          { v: '12', t: 'Stärke 12' },
+          { v: '20', t: 'Stärke 20' }
+        ] },
+        { type: 'mc', key: 'a8_ch', q: 'd) Wo war 1356 das stärkste bekannte Erdbeben der Schweiz (ca. Stärke 6 bis 6.5)?', c: 'basel', opts: [
+          { v: 'basel', t: 'Basel' },
+          { v: 'stgallen', t: 'St. Gallen' },
+          { v: 'genf', t: 'Genf' },
+          { v: 'chur', t: 'Chur' }
+        ] }
+      ] },
+      a9: { nr: 9, title: 'Energie berechnen', intro: 'Regel: 1 Stufe höher = Ausschlag × 10 und Energie × 32. Tippe die Zahl ein (ohne Taschenrechner geht es auch Schritt für Schritt).', blocks: [
+        { type: 'num', rows: [
+          { key: 'a9_1', label: 'a) Stärke 5 statt 4: Wie viel Mal mehr <b>Energie</b>?', c: '32' },
+          { key: 'a9_2', label: 'b) Stärke 6 statt 3: Wie viel Mal grösser ist der <b>Ausschlag</b> im Seismogramm?', c: '1000' },
+          { key: 'a9_3', label: 'c) Stärke 7 statt 5: Wie viel Mal mehr <b>Energie</b>?', c: '1024' },
+          { key: 'a9_4', label: 'd) Japan 2011 hatte Stärke 9. Die Atombombe von Hiroshima entsprach etwa Stärke 6. Wie viel Mal mehr <b>Energie</b> hatte das Beben?', c: '32768' }
+        ] }
+      ] },
+      a10: { nr: 10, title: 'Entstehung eines Tsunamis', intro: 'a) Bringe die Schritte in die richtige Reihenfolge (1 = zuerst).', blocks: [
+        { type: 'rows', order: true, rows: [
+          { key: 'a10_1', label: 'Am Meeresgrund gibt es ein Seebeben.', c: '1' },
+          { key: 'a10_2', label: 'Der Meeresboden stösst das ganze Wasser darüber schlagartig nach oben.', c: '2' },
+          { key: 'a10_3', label: 'Auf dem offenen Meer rast eine flache Welle (ca. 1 m) sehr schnell weiter.', c: '3' },
+          { key: 'a10_4', label: 'An der flachen Küste wird die Welle abgebremst und türmt sich 10 bis 30 m hoch auf.', c: '4' }
+        ] },
+        { type: 'mc', key: 'a10_schiff', q: 'b) Warum merkt man auf einem Schiff auf dem offenen Meer kaum etwas vom Tsunami?', c: 'flach', opts: [
+          { v: 'flach', t: 'Weil die Welle dort nur ca. 1 m hoch ist.' },
+          { v: 'langsam', t: 'Weil die Welle dort sehr langsam ist.' },
+          { v: 'keine', t: 'Weil es auf dem offenen Meer noch gar keine Welle gibt.' },
+          { v: 'wind', t: 'Weil der Wind die Welle wegbläst.' }
+        ] }
+      ] },
+      a11: { nr: 11, title: 'Normale Welle oder Tsunami?', intro: 'Ordne jede Karte der richtigen Gruppe zu.', blocks: [
+        { type: 'dnd', key: 'a11_dnd', zones: ['Normale Welle', 'Tsunami'], cards: [
+          { key: 'a11_k1', t: 'entsteht durch Wind', c: 'Normale Welle' },
+          { key: 'a11_k2', t: 'entsteht durch ein Seebeben', c: 'Tsunami' },
+          { key: 'a11_k3', t: 'nur die oberste Wasserschicht bewegt sich', c: 'Normale Welle' },
+          { key: 'a11_k4', t: 'das ganze Wasser vom Grund bis oben bewegt sich', c: 'Tsunami' },
+          { key: 'a11_k5', t: 'Wellenlänge bis ca. 400 m', c: 'Normale Welle' },
+          { key: 'a11_k6', t: 'Wellenlänge bis 1000 km', c: 'Tsunami' },
+          { key: 'a11_k7', t: 'eher langsam', c: 'Normale Welle' },
+          { key: 'a11_k8', t: 'sehr schnell (bis 800 km/h)', c: 'Tsunami' }
+        ] }
+      ] }
+    };
+
+    // ==============================================================
+    // HILFSFUNKTIONEN
+    // ==============================================================
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    const digits = (v) => String(v == null ? '' : v).replace(/\D/g, '').replace(/^0+(?=\d)/, '');
+
+    // Antworten in Auswahlmenüs mischen (Platzhalter bleibt oben, Platznummern mit data-noshuffle bleiben geordnet)
+    function shuffleSelects(root) {
+      (root || document).querySelectorAll('select:not([data-noshuffle])').forEach(sel => {
+        const val = sel.value;
+        const opts = [...sel.options].filter(o => o.value !== '');
+        shuffleArray(opts).forEach(o => sel.appendChild(o));
+        sel.value = val;
+      });
+    }
+
+    // ==============================================================
+    // SPEICHERN
+    // ==============================================================
+    const STORE_KEY = 'rzg_dyn2_answers';
+    const STATE = { answers: {} };
+    const A = (k) => STATE.answers[k];
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORE_KEY);
+        if (saved) STATE.answers = JSON.parse(saved) || {};
+      } catch (e) { STATE.answers = {}; }
+    }
+    function persist() {
+      try { localStorage.setItem(STORE_KEY, JSON.stringify(STATE.answers)); } catch (e) {}
+    }
+    function saveAnswer(key, val) {
+      if (val === '' || val === false || val == null) delete STATE.answers[key];
+      else STATE.answers[key] = val;
+      persist();
+    }
+
+    // ==============================================================
+    // BEWERTUNG (eine Quelle für Prüfen-Knöpfe UND Test-Simulation)
+    // ==============================================================
+    function blockItems(b) {
+      if (b.type === 'gaps') return b.paras.flat().filter(s => typeof s === 'object');
+      if (b.type === 'rows' || b.type === 'num') return b.rows;
+      if (b.type === 'mc') return [b];
+      if (b.type === 'dnd') return b.cards;
+      return [];
+    }
+    function itemOk(b, it) {
+      if (b.type === 'num') return digits(A(it.key)) === it.c;
+      return A(it.key) === it.c;
+    }
+    function blockMax(b) {
+      if (b.type === 'checks') return b.opts.filter(o => o.ok).length;
+      return blockItems(b).length;
+    }
+    function blockScore(b) {
+      if (b.type === 'checks') {
+        const right = b.opts.filter(o => o.ok && A(`${b.key}__${o.id}`) === true).length;
+        const wrong = b.opts.filter(o => !o.ok && A(`${b.key}__${o.id}`) === true).length;
+        return Math.max(0, right - wrong);
+      }
+      return blockItems(b).filter(it => itemOk(b, it)).length;
+    }
+
+    const TASKS = {};
+    Object.entries(DEFS).forEach(([id, d]) => {
+      TASKS[id] = {
+        max: d.blocks.reduce((s, b) => s + blockMax(b), 0),
+        score: () => d.blocks.reduce((s, b) => s + blockScore(b), 0)
+      };
+    });
+    const MAX_POINTS = Object.values(TASKS).reduce((s, t) => s + t.max, 0);
+    const PASS_POINTS = Math.ceil(MAX_POINTS * 0.6);
+
+    // ==============================================================
+    // DARSTELLUNG
+    // ==============================================================
+    const CARD = 'bg-slate-50 border border-slate-200';
+    let DISPLAY = {};   // gemischte Reihenfolgen
+
+    function initShuffledData() {
+      DISPLAY = {};
+      Object.values(DEFS).forEach(d => d.blocks.forEach((b, i) => {
+        const id = (b.key || '') + '#' + d.nr + '_' + i;
+        b._id = id;
+        if (b.type === 'rows' || b.type === 'num') DISPLAY[id] = shuffleArray(b.rows);
+        if (b.type === 'mc' || b.type === 'checks') DISPLAY[id] = shuffleArray(b.opts);
+        if (b.type === 'dnd') DISPLAY[id] = shuffleArray(b.cards);
+      }));
+    }
+
+    function selectHTML(key, opts, order, extra) {
+      const options = order
+        ? opts.map(o => `<option value="${esc(o)}">${o}.</option>`).join('')
+        : opts.map(o => `<option value="${esc(o)}">${o}</option>`).join('');
+      return `<select id="card-${key}" data-key="${key}" ${order ? 'data-noshuffle' : ''} class="${CARD} rounded-lg px-2 py-1 text-sm font-semibold text-slate-800 ${extra || ''}">
+        <option value="">${order ? '–' : '– wählen –'}</option>${options}</select>`;
+    }
+
+    function renderBlock(b) {
+      if (b.type === 'html') return b.html;
+
+      if (b.type === 'gaps') {
+        return `<div class="gap-text text-sm text-slate-700 leading-loose space-y-3">` +
+          b.paras.map(p => '<p>' + p.map(s => typeof s === 'string' ? s : selectHTML(s.key, s.opts)).join('') + '</p>').join('') +
+          `</div>`;
+      }
+
+      if (b.type === 'rows') {
+        const n = b.rows.length;
+        const nums = Array.from({ length: n }, (_, i) => String(i + 1));
+        const rows = DISPLAY[b._id].map(r => {
+          if (r.svg) {
+            return `<div class="bg-white border border-slate-200 rounded-xl p-3 space-y-2">${r.svg}
+              <label class="block text-sm font-semibold text-slate-700">${r.label}</label>${selectHTML(r.key, r.opts, false, 'w-full')}</div>`;
+          }
+          if (b.order) {
+            return `<div class="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-2.5">
+              ${selectHTML(r.key, nums, true, 'shrink-0 w-16')}<span class="text-sm text-slate-700">${r.label}</span></div>`;
+          }
+          return `<div class="bg-white border border-slate-200 rounded-xl p-2.5 space-y-1.5">
+            <div class="text-sm font-semibold text-slate-800">${r.label}</div>${selectHTML(r.key, r.opts, false, 'w-full')}</div>`;
+        }).join('');
+        return `<div class="${b.grid ? 'grid sm:grid-cols-2 gap-3' : 'space-y-2'}">${rows}</div>`;
+      }
+
+      if (b.type === 'mc') {
+        const opts = DISPLAY[b._id].map(o => `
+          <label class="flex items-start gap-2 p-2 rounded-lg hover:bg-white cursor-pointer text-sm text-slate-700">
+            <input type="radio" name="${b.key}" value="${esc(o.v)}" data-key="${b.key}" class="mt-0.5 accent-orange-600" ${A(b.key) === o.v ? 'checked' : ''}>
+            <span>${o.t}</span></label>`).join('');
+        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b.q}</p>${opts}</div>`;
+      }
+
+      if (b.type === 'checks') {
+        const opts = DISPLAY[b._id].map(o => {
+          const k = `${b.key}__${o.id}`;
+          return `<label class="flex items-start gap-2 p-2 rounded-lg hover:bg-white cursor-pointer text-sm text-slate-700">
+            <input type="checkbox" data-key="${k}" class="mt-0.5 accent-orange-600" ${A(k) === true ? 'checked' : ''}>
+            <span>${o.t}</span></label>`;
+        }).join('');
+        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b.q}</p>${opts}
+          <p class="text-[11px] text-slate-500 px-2">Achtung: Eine falsche Antwort gibt einen Punkt Abzug.</p></div>`;
+      }
+
+      if (b.type === 'num') {
+        return `<div class="space-y-2">` + DISPLAY[b._id].map(r => `
+          <div class="bg-white border border-slate-200 rounded-xl p-2.5 space-y-1.5">
+            <div class="text-sm text-slate-800">${r.label}</div>
+            <div class="flex items-center gap-2"><input type="text" inputmode="numeric" autocomplete="off" id="card-${r.key}" data-key="${r.key}"
+              value="${esc(A(r.key) || '')}" class="${CARD} rounded-lg px-2 py-1 text-sm font-bold w-32" placeholder="Zahl">
+              <span class="text-sm text-slate-500">-mal</span></div>
+          </div>`).join('') + `</div>`;
+      }
+
+      if (b.type === 'dnd') return `<div id="dnd-${b.key}">${renderDnd(b)}</div>`;
+      return '';
+    }
+
+    // ---------- Drag & Drop (Maus ziehen ODER antippen + Ziel antippen) ----------
+    let dndSelected = null;   // { block, key }
+    const DND_BLOCKS = {};
+
+    function dndCardHTML(c) {
+      const sel = dndSelected && dndSelected.key === c.key;
+      return `<div id="card-${c.key}" data-card="${c.key}" draggable="true"
+        class="dnd-card ${CARD} rounded-lg px-2.5 py-1.5 text-sm font-medium text-slate-800 ${sel ? 'is-selected' : ''}">${c.t}</div>`;
+    }
+    function renderDnd(b) {
+      DND_BLOCKS[b.key] = b;
+      const cards = DISPLAY[b._id];
+      const pool = cards.filter(c => !b.zones.includes(A(c.key)));
+      const ready = dndSelected && dndSelected.block === b.key ? 'is-ready' : '';
+      const zone = (z) => `
+        <div data-zone="${esc(z)}" data-block="${b.key}" class="dnd-zone ${ready} rounded-xl border-2 border-dashed border-slate-300 bg-white p-2.5 min-h-[110px]">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-orange-700 mb-2">${z}</div>
+          <div class="flex flex-wrap gap-1.5">${cards.filter(c => A(c.key) === z).map(dndCardHTML).join('')}</div>
+        </div>`;
+      return `
+        <div data-zone="" data-block="${b.key}" class="dnd-zone ${ready} rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/60 p-2.5 min-h-[56px]">
+          <div class="text-[11px] font-semibold text-slate-500 mb-1.5">Karten: antippen, dann die Gruppe antippen (oder mit der Maus ziehen).</div>
+          <div class="flex flex-wrap gap-1.5">${pool.map(dndCardHTML).join('') || '<span class="text-xs text-slate-400">Alle Karten verteilt.</span>'}</div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">${b.zones.map(zone).join('')}</div>`;
+    }
+    function refreshDnd(blockKey) {
+      const b = DND_BLOCKS[blockKey];
+      const el = document.getElementById('dnd-' + blockKey);
+      if (b && el) el.innerHTML = renderDnd(b);
+    }
+    function blockOfCard(key) {
+      return Object.keys(DND_BLOCKS).find(bk => DND_BLOCKS[bk].cards.some(c => c.key === key));
+    }
+    function dropCard(blockKey, zone) {
+      if (!dndSelected || dndSelected.block !== blockKey) return;
+      saveAnswer(dndSelected.key, zone);
+      dndSelected = null;
+      refreshDnd(blockKey);
+    }
+
+    function initEvents() {
+      document.addEventListener('change', (e) => {
+        const el = e.target.closest('[data-key]');
+        if (!el) return;
+        if (el.type === 'checkbox') saveAnswer(el.dataset.key, el.checked);
+        else if (el.type === 'radio') { if (el.checked) saveAnswer(el.dataset.key, el.value); }
+        else saveAnswer(el.dataset.key, el.value);
+      });
+      document.addEventListener('input', (e) => {
+        const el = e.target;
+        if (el.matches && el.matches('input[type="text"][data-key]')) saveAnswer(el.dataset.key, el.value.trim());
+      });
+      document.addEventListener('click', (e) => {
+        const card = e.target.closest('[data-card]');
+        if (card) {
+          const key = card.dataset.card, bk = blockOfCard(key);
+          const prev = dndSelected && dndSelected.block;
+          // Karte gewählt und auf eine Karte in einer anderen Gruppe getippt: dorthin ablegen
+          const zoneEl = card.closest('[data-zone]');
+          if (dndSelected && prev === bk && dndSelected.key !== key && zoneEl &&
+              (A(dndSelected.key) || '') !== zoneEl.dataset.zone) {
+            dropCard(bk, zoneEl.dataset.zone);
+            return;
+          }
+          dndSelected = (dndSelected && dndSelected.key === key) ? null : { block: bk, key };
+          if (prev && prev !== bk) refreshDnd(prev);
+          refreshDnd(bk);
+          return;
+        }
+        const zone = e.target.closest('[data-zone]');
+        if (zone) dropCard(zone.dataset.block, zone.dataset.zone);
+      });
+      document.addEventListener('dragstart', (e) => {
+        const card = e.target.closest && e.target.closest('[data-card]');
+        if (!card) return;
+        dndSelected = { block: blockOfCard(card.dataset.card), key: card.dataset.card };
+        try { e.dataTransfer.setData('text/plain', card.dataset.card); } catch (err) {}
+      });
+      document.addEventListener('dragover', (e) => { if (e.target.closest && e.target.closest('[data-zone]')) e.preventDefault(); });
+      document.addEventListener('drop', (e) => {
+        const zone = e.target.closest && e.target.closest('[data-zone]');
+        if (!zone) return;
+        e.preventDefault();
+        dropCard(zone.dataset.block, zone.dataset.zone);
+      });
+    }
+
+    function renderTask(id) {
+      const d = DEFS[id], host = document.querySelector(`[data-task="${id}"]`);
+      if (!host) return;
+      host.innerHTML = `
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="text-base font-black text-slate-900">Aufgabe ${d.nr}: ${d.title}</h3>
+          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-800">${TASKS[id].max} P.</span>
+        </div>
+        ${d.intro ? `<p class="text-sm text-slate-600">${d.intro}</p>` : ''}
+        ${d.blocks.map(renderBlock).join('')}
+        <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center gap-3">
+          <button onclick="checkTask('${id}')" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold transition">✓ Aufgabe ${d.nr} prüfen</button>
+          <div id="fb-${id}" class="text-xs font-semibold"></div>
+        </div>`;
+      host.querySelectorAll('select[data-key]').forEach(s => { s.value = A(s.dataset.key) || ''; });
+      shuffleSelects(host);
+    }
+    function renderAll() { Object.keys(DEFS).forEach(renderTask); }
+
+    // Karten grün/rot färben
+    function markCard(id, ok) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('bg-slate-50', 'border-slate-200', 'bg-emerald-50', 'border-emerald-400', 'bg-rose-50', 'border-rose-400');
+      el.classList.add(ok ? 'bg-emerald-50' : 'bg-rose-50', ok ? 'border-emerald-400' : 'border-rose-400');
+    }
+
+    function checkTask(id) {
+      DEFS[id].blocks.forEach(b => {
+        if (b.type === 'checks') markCard(`card-${b.key}`, blockScore(b) === blockMax(b));
+        else blockItems(b).forEach(it => markCard(`card-${it.key}`, itemOk(b, it)));
+      });
+      const pts = TASKS[id].score(), max = TASKS[id].max;
+      const fb = document.getElementById(`fb-${id}`);
+      if (fb) {
+        fb.textContent = pts === max ? `🌟 ${pts}/${max} Punkte: Alles richtig!` : `${pts}/${max} Punkte. Rot = noch falsch.`;
+        fb.className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-amber-700';
+      }
+      showToast(`Aufgabe ${DEFS[id].nr}`, `${pts} von ${max} Punkten.`);
+    }
+
+    // ==============================================================
+    // TABS
+    // ==============================================================
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.className = b.id === 'tab-btn-exam'
+          ? 'tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/30'
+          : 'tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10';
+      });
+      const view = document.getElementById(`view-${tabId}`), btn = document.getElementById(`tab-btn-${tabId}`);
+      if (view && btn) {
+        view.classList.remove('hidden');
+        btn.className = `tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white ${tabId === 'exam' ? 'text-amber-900' : 'text-slate-900'} font-bold shadow-sm`;
+      }
+      try { localStorage.setItem('rzg_dyn2_tab', tabId); } catch (e) {}
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==============================================================
+    // TEST-SIMULATION (SCHWEIZER NOTENSKALA)
+    // ==============================================================
+    function evaluateFullExam() {
+      const score = Object.values(TASKS).reduce((s, t) => s + t.score(), 0);
+      const pct = Math.round((score / MAX_POINTS) * 100);
+      const grade = Math.round(((score / MAX_POINTS) * 5 + 1) * 10) / 10;
+      const passed = score >= PASS_POINTS;
+      let title, cls, badge;
+      if (pct >= 90)      { title = 'Sehr gut ⭐'; cls = 'bg-sky-50 border-sky-300 text-sky-950'; badge = 'bg-sky-600'; }
+      else if (pct >= 75) { title = 'Gut 👏'; cls = 'bg-emerald-50 border-emerald-300 text-emerald-950'; badge = 'bg-emerald-600'; }
+      else if (passed)    { title = 'Bestanden 👍'; cls = 'bg-amber-50 border-amber-300 text-amber-950'; badge = 'bg-amber-600'; }
+      else                { title = 'Noch nicht erreicht ⚠️ Nochmals üben!'; cls = 'bg-rose-50 border-rose-300 text-rose-950'; badge = 'bg-rose-600'; }
+
+      const rows = Object.entries(TASKS).map(([id, t]) => {
+        const p = t.score();
+        return `<li class="flex justify-between gap-2 py-1 border-b border-black/5"><span>Aufgabe ${DEFS[id].nr}: ${DEFS[id].title}</span>
+          <span class="font-bold ${p === t.max ? 'text-emerald-700' : 'text-slate-700'} shrink-0">${p} / ${t.max}</span></li>`;
+      }).join('');
+
+      const banner = document.getElementById('exam-result-banner');
+      banner.className = `mt-4 p-4 sm:p-5 rounded-2xl border shadow-sm ${cls} block animate-fade-in`;
+      banner.innerHTML = `
+        <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full text-white ${badge}">${passed ? 'Bestanden' : 'Nicht bestanden'}</span>
+        <h3 class="text-xl font-black mt-2">${title}</h3>
+        <div class="flex flex-wrap gap-3 mt-3">
+          <div class="bg-white/80 rounded-xl border border-black/10 px-3 py-2 text-center"><div class="text-[10px] font-bold text-slate-500 uppercase">Punkte</div><div class="text-2xl font-black">${score} <span class="text-xs text-slate-500 font-normal">/ ${MAX_POINTS}</span></div></div>
+          <div class="bg-white/80 rounded-xl border border-black/10 px-3 py-2 text-center"><div class="text-[10px] font-bold text-slate-500 uppercase">Prozent</div><div class="text-2xl font-black">${pct}%</div></div>
+          <div class="bg-white/80 rounded-xl border border-black/10 px-3 py-2 text-center"><div class="text-[10px] font-bold text-slate-500 uppercase">Note</div><div class="text-2xl font-black text-blue-700">${grade.toFixed(1)}</div></div>
+        </div>
+        <ul class="mt-4 text-xs sm:text-sm">${rows}</ul>`;
+      banner.scrollIntoView({ behavior: 'smooth' });
+      showToast('Auswertung fertig!', `${score} von ${MAX_POINTS} Punkten, Note ${grade.toFixed(1)}.`);
+    }
+
+    function resetAll() {
+      STATE.answers = {};
+      dndSelected = null;
+      try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+      document.getElementById('exam-result-banner').classList.add('hidden');
+      initShuffledData();
+      renderAll();
+      showToast('Zurückgesetzt', 'Alle Antworten wurden gelöscht und neu gemischt.');
+    }
+
+    let toastTimeout = null;
+    function showToast(title, msg) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      document.getElementById('toast-title').innerText = title;
+      document.getElementById('toast-msg').innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    // ==============================================================
+    // START
+    // ==============================================================
+    Object.assign(window, { switchTab, checkTask, evaluateFullExam, resetAll });
+
+    // Start sobald das HTML da ist – wartet NICHT auf Tailwind/Schriften
+    function boot() {
+      loadState();
+      initShuffledData();
+      document.querySelectorAll('.js-max-pts').forEach(el => el.textContent = MAX_POINTS);
+      document.querySelectorAll('.js-pass-pts').forEach(el => el.textContent = PASS_POINTS);
+      renderAll();
+      initEvents();
+      let tab = null;
+      try { tab = localStorage.getItem('rzg_dyn2_tab'); } catch (e) {}
+      if (tab && document.getElementById('view-' + tab)) switchTab(tab);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
+  </script>
+</body>
+</html>

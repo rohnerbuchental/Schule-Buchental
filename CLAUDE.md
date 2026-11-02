@@ -10,6 +10,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 | `connected_3_scratch_trainingshub.html` | Informatik, Connected 3 «Abheben mit Algorithmen» (Scratch) |
 | `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» |
 | `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 |
+| `RZG Vulkane Erdbeben Tsunamis.html` | RZG, Dynamik der Erde, Test 2 (Vulkane, Erdbeben, Tsunamis) |
 
 ## Regeln für alle Seiten (immer einhalten)
 - **Sprache:** Deutsch (Schweiz), immer «ss» statt «ß». Einfache Sätze für Schüler.
@@ -26,6 +27,11 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Aufgabe 2 ist ein SVG-Ablaufdiagramm mit Drag & Drop (Felder `fs1`–`fs3`).
 - Tab 4 hat nur UND/ODER: 7a leicht, 7b Smarthome, 7c Gartenbewässerung. Die Aufgaben zu «nicht» und zur «Notlandung» hat die Lehrperson bewusst gestrichen; nicht wieder einbauen.
 - Test-Simulation: 30 Punkte, bestanden ab 18.
+
+## RZG-Hub: Besonderheiten
+- Grundlage: Dossier «Dynamik der Erde» (Real) mit Lösungen der Lehrperson.
+- Die Seite deckt nur Test 2 ab: LZ7 bis LZ15 (Vulkan-Entstehung, Schild-/Schichtvulkan, Ausbruch, inaktiv, Erdbeben, Richterskala, Energie rechnen ×10 Ausschlag / ×32 Energie, Tsunamis). Teil 1 (Aufbau der Erde, Plattentektonik) war schon Test 1, nicht einbauen.
+- Aufgaben sind Daten in `DEFS` (Blocktypen gaps, rows, mc, checks, dnd, num). `TASKS` wird daraus berechnet.
 
 ## Lehrplan (`lehrplan/`)
 - Kompetenzen Zyklus 3 (Lehrplan Volksschule SG) als Markdown: Deutsch, Englisch, Medien und Informatik, RZG, Bildnerisches Gestalten. Übersicht in `lehrplan/README.md`.
