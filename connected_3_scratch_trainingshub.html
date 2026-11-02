@@ -8,10 +8,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', sans-serif; }
-    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    .font-mono-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
     /* ============ ECHTE SCRATCH-3-BLÖCKE ============ */
     .sb-area {
@@ -22,6 +22,7 @@
       border-radius: 0.75rem;
       padding: 14px 16px 18px;
       overflow-x: auto;
+      max-width: 100%;   /* auch als inline-block nie breiter als die Karte (Handy 390 px) */
     }
     .sb-script {
       display: inline-flex; flex-direction: column; align-items: flex-start;
@@ -129,6 +130,14 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .animate-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+    @keyframes theoryFlash {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+      30% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.55); }
+    }
+    .theory-flash { animation: theoryFlash 1.8s ease-out 1; border-radius: 0.75rem; }
+    /* Beim Springen zu einer Aufgabe nicht unter dem festen Kopf verschwinden */
+    [data-task] { scroll-margin-top: 13rem; }
+    @media (min-width: 640px) { [data-task] { scroll-margin-top: 11rem; } }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-sky-600 selection:text-white">
@@ -198,7 +207,7 @@
     <section id="view-basics" class="tab-view space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <span class="text-xs font-bold text-sky-700 uppercase tracking-wider">Lernziele 1 & 2 · MI.2.2.g</span>
+          <span class="text-xs font-bold text-sky-700 uppercase tracking-wider">Lernziele 1 & 2 · MI.2.2.h · MI.2.2.g</span>
           <h2 class="text-lg sm:text-xl font-bold text-slate-800">📜 Was ist ein Algorithmus? & Ablaufdiagramme lesen</h2>
           <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
             Lerne den Unterschied zwischen genauen Anleitungen und losen Listen und verstehe Entscheidungs-Rauten.
@@ -209,43 +218,51 @@
         </button>
       </div>
 
-      <!-- Aufgabe 1: Definition & Alltag -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
-        <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 1: Der Begriff «Algorithmus» (2 Punkte)</h3>
+      <!-- Theorie zum Aufklappen (Ziel des Knopfs «📖 Theorie») -->
+      <details id="theory-basics" class="bg-white rounded-2xl p-4 shadow-sm border border-sky-200">
+        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-sky-800 cursor-pointer select-none"><span>📖 Theorie: Algorithmus und Ablaufdiagramm</span><span class="text-xs font-semibold text-slate-400">antippen</span></summary>
+        <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
+          <p><b>Algorithmus:</b> eine genaue Anleitung, Schritt für Schritt. Jeder Schritt ist klar, die Reihenfolge stimmt, und am Ende ist die Aufgabe gelöst. Wie ein Rezept.</p>
+          <p><b>Ablaufdiagramm:</b> zeigt einen Algorithmus als Bild. Die Pfeile zeigen, wie es weitergeht.</p>
+          <ul class="space-y-1.5">
+            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><rect x="2" y="3" width="36" height="18" rx="9" fill="#10b981"/></svg><span>Start oder Ende</span></li>
+            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><rect x="2" y="3" width="36" height="18" rx="3" fill="#fff" stroke="#0ea5e9" stroke-width="2"/></svg><span>ein Befehl: etwas tun</span></li>
+            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><polygon points="20,1 38,12 20,23 2,12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/></svg><span>eine Frage mit zwei Ausgängen: JA und NEIN</span></li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Aufgabe 1: Der Begriff «Algorithmus» | MI.2.2.h -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a1">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 1: Der Begriff «Algorithmus» (<span data-max="a1"></span> Punkte)</h3>
           <span class="text-xs font-semibold text-slate-400">Multiple Choice</span>
         </div>
 
-        <div class="space-y-4 pt-1">
-          <!-- 1a -->
-          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a1a">
+        <!-- Teilfragen: Reihenfolge wird gemischt, Buchstaben setzt die Seite -->
+        <div class="space-y-4 pt-1" data-parts="a1">
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a1a" data-part>
             <span class="text-xs sm:text-sm font-bold text-slate-900 block">
-              a) Was beschreibt am besten, was ein Algorithmus ist? (1 P.)
+              <span class="js-label"></span>Was beschreibt am besten, was ein Algorithmus ist? (1 P.)
             </span>
             <div class="space-y-1.5" id="opts-a1a"></div>
           </div>
 
-          <!-- 1b -->
-          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a1b">
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a1b" data-part>
             <span class="text-xs sm:text-sm font-bold text-slate-900 block">
-              b) Welches Beispiel aus dem Alltag ist ein echter Algorithmus? (1 P.)
+              <span class="js-label"></span>Welches Beispiel aus dem Alltag ist ein echter Algorithmus? (1 P.)
             </span>
             <div class="space-y-1.5" id="opts-a1b"></div>
           </div>
         </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkBasicsA1()" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Aufgabe 1 prüfen
-          </button>
-          <div id="fb-basics-a1" class="text-xs font-semibold"></div>
-        </div>
+        <div data-tools="a1"></div>
       </div>
 
-      <!-- Aufgabe 2: Ablaufdiagramm für die Drohne (Drag & Drop) -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+      <!-- Aufgabe 2: Ablaufdiagramm der Postdrohne | MI.2.2.g -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a2">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 2: Ablaufdiagramm der Postdrohne (4 Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 2: Ablaufdiagramm der Postdrohne (<span data-max="a2"></span> Punkte)</h3>
           <span class="text-xs font-semibold text-slate-400 whitespace-nowrap">Drag &amp; Drop</span>
         </div>
 
@@ -338,12 +355,7 @@
           </select>
         </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkBasicsA2()" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Aufgabe 2 prüfen
-          </button>
-          <div id="fb-basics-a2" class="text-xs font-semibold"></div>
-        </div>
+        <div data-tools="a2"></div>
       </div>
     </section>
 
@@ -359,10 +371,37 @@
         </p>
       </div>
 
-      <!-- Aufgabe 3: Schleifen & Schrittweiten -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+      <!-- Theorie zum Aufklappen (Ziel des Knopfs «📖 Theorie») -->
+      <details id="theory-loops" class="bg-white rounded-2xl p-4 shadow-sm border border-amber-200">
+        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-amber-800 cursor-pointer select-none"><span>📖 Theorie: Schleifen und Quadrat</span><span class="text-xs font-semibold text-slate-400">antippen</span></summary>
+        <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
+          <p><b>Schleife:</b> Alles, was in der orangen Klammer liegt, wird wiederholt.</p>
+          <div class="sb-area inline-block max-w-full">
+            <div class="sb-script">
+              <div class="sb-c sb-control">
+                <div class="sb-c-top">wiederhole <span class="sb-num">3</span> mal</div>
+                <div class="sb-c-mouth"><div class="sb-c-arm"></div>
+                  <div class="sb-c-inner"><div class="sb sb-motion">gehe <span class="sb-num">5</span> er-Schritt</div></div>
+                </div>
+                <div class="sb-c-bottom"><span></span></div>
+              </div>
+            </div>
+          </div>
+          <p>Rechnen: <b>Wiederholungen × Schritte</b>. Hier: 3 × 5 = 15 Schritte.</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>wiederhole … mal:</b> genau so oft, dann ist Schluss.</li>
+            <li><b>wiederhole bis &lt; … &gt;:</b> so lange, bis die Bedingung stimmt. Dann hört die Schleife von selbst auf.</li>
+            <li><b>wiederhole fortlaufend:</b> hört nie auf.</li>
+          </ul>
+          <p><b>Richtung:</b> x geht nach links und rechts, y nach oben und unten. Ein Plus bei y heisst nach oben, ein Minus heisst nach unten.</p>
+          <p><b>Quadrat:</b> 4 gleiche Seiten und 4 Ecken mit je 90 Grad. 4 × 90 Grad = 360 Grad, also einmal ganz herum.</p>
+        </div>
+      </details>
+
+      <!-- Aufgabe 3: Schleifen und Schritte berechnen | MI.2.2.g -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a3">
         <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 3: Schleifen und Schritte berechnen (2 Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 3: Schleifen und Schritte berechnen (<span data-max="a3"></span> Punkte)</h3>
         </div>
 
         <p class="text-xs sm:text-sm text-slate-700">Die Drohne führt folgenden Scratch-Code aus:</p>
@@ -384,9 +423,9 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs sm:text-sm">
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a3-1">
-            <span class="font-bold text-slate-800 block">1. Wie oft wird der blaue Befehl wiederholt?</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs sm:text-sm" data-parts="a3">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a3-1" data-part>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Wie oft wird der blaue Befehl wiederholt?</span>
             <select id="sel-a3-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
               <option value="">-- wählen --</option>
               <option value="1">1 mal</option>
@@ -396,8 +435,8 @@
             </select>
           </div>
 
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a3-2">
-            <span class="font-bold text-slate-800 block">2. Wie viele Schritte ist die Drohne am Ende insgesamt geflogen?</span>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a3-2" data-part>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Wie viele Schritte ist die Drohne am Ende insgesamt geflogen?</span>
             <select id="sel-a3-2" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
               <option value="">-- wählen --</option>
               <option value="10">10 Schritte</option>
@@ -407,27 +446,22 @@
           </div>
         </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkLoopsA3()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Aufgabe 3 prüfen
-          </button>
-          <div id="fb-loops-a3" class="text-xs font-semibold"></div>
-        </div>
+        <div data-tools="a3"></div>
       </div>
 
-      <!-- Aufgabe 4: Drohne landen -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+      <!-- Aufgabe 4: Die richtige Schleife zum Landen wählen | MI.2.2.g -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a4">
         <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 4: Die richtige Schleife zum Landen wählen (2 Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 4: Die richtige Schleife zum Landen wählen (<span data-max="a4"></span> Punkte)</h3>
         </div>
 
         <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
           👉 <strong>Aufgabe:</strong> Die Drohne ist in der Luft. Sie soll so lange langsam nach unten sinken, <strong>bis sie den Boden berührt</strong>.
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs sm:text-sm">
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a4-1">
-            <span class="font-bold text-slate-800 block">a) Welcher Schleifen-Block ist dafür perfekt?</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs sm:text-sm" data-parts="a4">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a4-1" data-part>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Welcher Schleifen-Block ist dafür perfekt?</span>
             <select id="sel-a4-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
               <option value="">-- wählen --</option>
               <option value="fortlaufend">wiederhole fortlaufend</option>
@@ -436,8 +470,8 @@
             </select>
           </div>
 
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a4-2">
-            <span class="font-bold text-slate-800 block">b) Welcher y-Wert lässt die Drohne nach UNTEN sinken?</span>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a4-2" data-part>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Welcher y-Wert lässt die Drohne nach UNTEN sinken?</span>
             <select id="sel-a4-2" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
               <option value="">-- wählen --</option>
               <option value="y10">ändere y um ( 10 )</option>
@@ -447,18 +481,13 @@
           </div>
         </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkLoopsA4()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Aufgabe 4 prüfen
-          </button>
-          <div id="fb-loops-a4" class="text-xs font-semibold"></div>
-        </div>
+        <div data-tools="a4"></div>
       </div>
 
-      <!-- Aufgabe 6: Quadrat fliegen (1, 2, 3 Sortieren) -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
-        <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 6: Ein Quadrat fliegen (3 Punkte)</h3>
+      <!-- Aufgabe 6: Ein Quadrat fliegen | MI.2.2.g -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a6">
+        <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 6: Ein Quadrat fliegen (<span data-max="a6"></span> Punkte)</h3>
           <span class="text-xs font-semibold text-slate-400">Reihenfolge 1–3</span>
         </div>
 
@@ -475,12 +504,7 @@
           </div>
         </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkSquareSort()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Quadrat-Reihenfolge prüfen
-          </button>
-          <div id="fb-square-sort" class="text-xs font-semibold"></div>
-        </div>
+        <div data-tools="a6"></div>
       </div>
     </section>
 
@@ -496,10 +520,26 @@
         </p>
       </div>
 
-      <!-- Aufgabe 5: Unterprogramm benennen & verstehen -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+      <!-- Theorie zum Aufklappen (Ziel des Knopfs «📖 Theorie») -->
+      <details id="theory-custom" class="bg-white rounded-2xl p-4 shadow-sm border border-rose-200">
+        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-rose-800 cursor-pointer select-none"><span>📖 Theorie: Eigene Blöcke und Fehlersuche</span><span class="text-xs font-semibold text-slate-400">antippen</span></summary>
+        <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
+          <p><b>Eigener Block (Unterprogramm):</b> Mehrere Befehle bekommen zusammen einen Namen. Mit dem pinken Block <b>«Definiere …»</b> legst du fest, was der Block tut. Danach brauchst du nur noch den Namen.</p>
+          <p>Das ist wie eine Rezeptkarte: einmal schreiben, immer wieder brauchen. Das Programm wird kürzer und übersichtlicher, und eine Änderung machst du nur an einer Stelle.</p>
+          <p><b>Fehlersuche (Bugfixing) in 4 Schritten:</b></p>
+          <ol class="list-decimal pl-5 space-y-1">
+            <li>Was <b>soll</b> passieren?</li>
+            <li>Was passiert <b>wirklich</b>?</li>
+            <li>Geh das Skript Block für Block durch. Achte auf Zahlen, Plus und Minus und die Reihenfolge.</li>
+            <li>Ändere eine Sache und teste nochmals.</li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- Aufgabe 5: Unterprogramme verstehen | MI.2.2.h -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a5">
         <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 5: Unterprogramme verstehen (3 Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 5: Unterprogramme verstehen (<span data-max="a5"></span> Punkte)</h3>
         </div>
 
         <div class="sb-area inline-block">
@@ -519,10 +559,10 @@
           </div>
         </div>
 
-        <div class="space-y-4 pt-1 text-xs sm:text-sm">
-          <!-- 5a -->
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a5-1">
-            <span class="font-bold text-slate-800 block">a) Welcher Name passt am besten für diesen Block? (Was macht die Drohne hier?) (1 P.)</span>
+        <!-- Teilfragen: Reihenfolge wird gemischt, Buchstaben setzt die Seite -->
+        <div class="space-y-4 pt-1 text-xs sm:text-sm" data-parts="a5">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a5-1" data-part>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Welcher Name passt am besten für diesen Block? (Was macht die Drohne hier?) (1 P.)</span>
             <select id="sel-a5-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
               <option value="">-- wählen --</option>
               <option value="abheben">abheben</option>
@@ -531,25 +571,19 @@
             </select>
           </div>
 
-          <!-- 5b -->
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a5-2">
-            <span class="font-bold text-slate-800 block">b) Warum nutzt man eigene Blöcke (Unterprogramme)? (Wähle die ZWEI richtigen Gründe!) (2 P.)</span>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a5-2" data-part>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Warum nutzt man eigene Blöcke (Unterprogramme)? (Wähle die ZWEI richtigen Gründe!) (2 P.)</span>
             <div class="space-y-1.5" id="opts-a5-reasons"></div>
           </div>
         </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkCustomA5()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Aufgabe 5 prüfen
-          </button>
-          <div id="fb-custom-a5" class="text-xs font-semibold"></div>
-        </div>
+        <div data-tools="a5"></div>
       </div>
 
-      <!-- Aufgabe 8: Bugfixing (Fehlersuche) -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+      <!-- Aufgabe 8: Bugfixing – Finde den Programmierfehler | MI.2.2.h -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a8">
         <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 8: Bugfixing – Finde den Programmierfehler! (2 Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 8: Bugfixing – Finde den Programmierfehler! (<span data-max="a8"></span> Punkte)</h3>
         </div>
 
         <div class="bg-rose-50 border-l-4 border-rose-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
@@ -559,7 +593,7 @@
 
         <!-- Fehlerhafter Code -->
         <div class="sb-area inline-block">
-          <div class="flex items-start gap-3">
+          <div class="flex flex-wrap items-start gap-x-3 gap-y-2">
             <div class="sb-script">
               <div class="sb sb-hat sb-define sb-myblocks">Definiere <span class="sb-rep" style="--c:#FF4D6A">Landen</span></div>
               <div class="sb-c sb-control">
@@ -574,13 +608,13 @@
                 <div class="sb-c-bottom"></div>
               </div>
             </div>
-            <div class="mt-[104px] text-xs font-black text-rose-600 whitespace-nowrap">◄ Hier steckt der Fehler!</div>
+            <div class="sm:mt-[104px] text-xs font-black text-rose-600"><span class="hidden sm:inline">◄ Hier steckt der Fehler!</span><span class="sm:hidden">▲ Der Fehler steckt in der gelb markierten Zahl.</span></div>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs sm:text-sm">
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a8-1">
-            <span class="font-bold text-slate-800 block">1. Warum fliegt die Drohne nach oben statt zum Boden?</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs sm:text-sm" data-parts="a8">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a8-1" data-part>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Warum fliegt die Drohne nach oben statt zum Boden?</span>
             <select id="sel-a8-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
               <option value="">-- wählen --</option>
               <option value="right">Weil dort eine positive Zahl (+5) steht statt einer Minuszahl</option>
@@ -589,8 +623,8 @@
             </select>
           </div>
 
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a8-2">
-            <span class="font-bold text-slate-800 block">2. Was muss man eintragen, damit sie nach unten sinkt?</span>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a8-2" data-part>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Was muss man eintragen, damit sie nach unten sinkt?</span>
             <select id="sel-a8-2" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
               <option value="">-- Zahl wählen --</option>
               <option value="10">ändere y um ( 10 )</option>
@@ -600,12 +634,7 @@
           </div>
         </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkCustomA8()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Bugfix überprüfen
-          </button>
-          <div id="fb-custom-a8" class="text-xs font-semibold"></div>
-        </div>
+        <div data-tools="a8"></div>
       </div>
     </section>
 
@@ -626,14 +655,15 @@
         </button>
       </div>
 
-      <!-- Aufgabe 7a: Einstieg UND / ODER (leicht) -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+      <!-- Aufgabe 7a: UND oder ODER? (leicht) | MI.2.1.i -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a7a">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7a: UND oder ODER? (4 Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7a: UND oder ODER? (<span data-max="a7a"></span> Punkte)</h3>
           <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 whitespace-nowrap">🟢 leicht</span>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <!-- Erklärung und / oder: Ziel des Knopfs «📖 Theorie» in 7a, 7b, 7c -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="theory-andor">
           <div class="sb-area flex items-center gap-3">
             <span class="sb-bool sb-operators" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,.28))"><span class="sb-empty-bool"></span> und <span class="sb-empty-bool"></span></span>
             <span class="text-xs text-slate-700"><strong>und</strong> = <strong>beide</strong> Bedingungen müssen stimmen.</span>
@@ -647,18 +677,13 @@
         <p class="text-xs sm:text-sm text-slate-700">Welches Wort gehört in die Lücke? Wähle <strong>und</strong> oder <strong>oder</strong>:</p>
         <div class="space-y-2" id="andor-list"></div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkLogicAndOr()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Aufgabe 7a prüfen
-          </button>
-          <div id="fb-logic-andor" class="text-xs font-semibold"></div>
-        </div>
+        <div data-tools="a7a"></div>
       </div>
 
-      <!-- Aufgabe 7: Die Smarte Lichtsteuerung -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+      <!-- Aufgabe 7b: Smarthome Lichtsteuerung (mittel) | MI.2.1.i -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a7b">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7b: Smarthome Lichtsteuerung (4 Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7b: Smarthome Lichtsteuerung (<span data-max="a7b"></span> Punkte)</h3>
           <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 whitespace-nowrap">🟡 mittel</span>
         </div>
 
@@ -673,18 +698,13 @@
         <!-- Entscheidungstabelle (Zufällig gemischt) -->
         <div class="space-y-2 pt-1" id="smarthome-table-list"></div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkLogicA7()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Lichtsteuerung prüfen
-          </button>
-          <div id="fb-logic-a7" class="text-xs font-semibold"></div>
-        </div>
+        <div data-tools="a7b"></div>
       </div>
 
-      <!-- Aufgabe 7c: Smarte Gartenbewässerung -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
+      <!-- Aufgabe 7c: Smarte Gartenbewässerung (mittel) | MI.2.1.i -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a7c">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7c: Smarte Gartenbewässerung (4 Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7c: Smarte Gartenbewässerung (<span data-max="a7c"></span> Punkte)</h3>
           <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 whitespace-nowrap">🟡 mittel</span>
         </div>
 
@@ -699,12 +719,7 @@
         <!-- Entscheidungstabelle (Zufällig gemischt) -->
         <div class="space-y-2 pt-1" id="garden-table-list"></div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkLogicGarden()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Gartenbewässerung prüfen
-          </button>
-          <div id="fb-logic-garden" class="text-xs font-semibold"></div>
-        </div>
+        <div data-tools="a7c"></div>
       </div>
     </section>
 
@@ -947,19 +962,26 @@
         </label>`).join('');
     }
 
-    function renderBasicsTab() {
+    function renderA1() {
       const boxA = document.getElementById('opts-a1a');
       if (boxA) boxA.innerHTML = radioListHTML(dispA1a, 'rad_a1a', 'a1a', 'hover:bg-sky-50');
       const boxB = document.getElementById('opts-a1b');
       if (boxB) boxB.innerHTML = radioListHTML(dispA1b, 'rad_a1b', 'a1b', 'hover:bg-sky-50');
+    }
+    function renderA2() {
       renderFlow();
       bindSelect('sel-a2-3', 'sel-a2-3');
+    }
+    function renderBasicsTab() {
+      renderA1();
+      renderA2();
     }
 
     function reshuffleBasics() {
       dispA1a = shuffleArray(BASICS_A1A);
       dispA1b = shuffleArray(BASICS_A1B);
       dispFlow = shuffleArray(FLOW_CMDS);
+      shuffleParts('a1');
       renderBasicsTab();
       shuffleSelects(document.getElementById('view-basics'));
       showToast("🔀 Neu gemischt", "Alle Antworten und Befehle in diesem Teil wurden neu gemischt!");
@@ -1108,7 +1130,11 @@
     // ---------- Tab 2 ----------
     function renderLoopsTab() {
       ['sel-a3-1', 'sel-a3-2', 'sel-a4-1', 'sel-a4-2'].forEach(k => bindSelect(k, k));
+      renderSquare();
+    }
 
+    // A6: Die Platz-Auswahl 1., 2., 3. ist eine reine Platznummer (data-noshuffle), die Bausteine selbst werden gemischt
+    function renderSquare() {
       const sqContainer = document.getElementById('square-sort-list');
       if (sqContainer) {
         sqContainer.innerHTML = dispSquare.map(b => {
@@ -1152,6 +1178,10 @@
 
     // ---------- Tab 3 ----------
     function renderCustomTab() {
+      renderA5();
+      ['sel-a8-1', 'sel-a8-2'].forEach(k => bindSelect(k, k));
+    }
+    function renderA5() {
       bindSelect('sel-a5-1', 'a5_1');
       const rBox = document.getElementById('opts-a5-reasons');
       if (rBox) {
@@ -1161,7 +1191,6 @@
             <span>${r.text}</span>
           </label>`).join('');
       }
-      ['sel-a8-1', 'sel-a8-2'].forEach(k => bindSelect(k, k));
     }
 
     // ---------- Tab 4 ----------
@@ -1174,6 +1203,12 @@
     }
 
     function renderLogicTab() {
+      renderAndOr();
+      renderSmart();
+      renderGarden();
+    }
+
+    function renderAndOr() {
       const ao = document.getElementById('andor-list');
       if (ao) {
         ao.innerHTML = dispAndOr.map((row, idx) => `
@@ -1184,7 +1219,9 @@
             <span>${row.after}</span>
           </div>`).join('');
       }
+    }
 
+    function renderSmart() {
       const container = document.getElementById('smarthome-table-list');
       if (container) {
         container.innerHTML = dispSmart.map((row, idx) => `
@@ -1199,7 +1236,9 @@
             </div>
           </div>`).join('');
       }
+    }
 
+    function renderGarden() {
       const garden = document.getElementById('garden-table-list');
       if (garden) {
         garden.innerHTML = dispGarden.map((row, idx) => `
@@ -1258,20 +1297,22 @@
       el.classList.add(ok ? 'bg-emerald-50' : 'bg-rose-50', ok ? 'border-emerald-300' : 'border-rose-300');
     }
 
-    function feedback(fbId, task, label, perfectMsg) {
+    function feedback(task, perfectMsg) {
       const pts = TASKS[task].score(), max = TASKS[task].max;
-      const fb = document.getElementById(fbId);
+      const fb = document.getElementById('fb-' + task);
       if (fb) {
-        fb.innerHTML = pts === max ? `🌟 ${pts}/${max} Punkte: ${perfectMsg}` : `${pts}/${max} Punkte.`;
+        fb.textContent = pts === max
+          ? `🌟 ${pts}/${max} Punkte: ${perfectMsg} Mit «🔀 Nochmals üben» kannst du sie neu gemischt wiederholen.`
+          : `${pts}/${max} Punkte. Rot = noch falsch. Brauchst du Hilfe? Drück auf «💡 Tipp».`;
         fb.className = pts === max ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
       }
-      showToast(label, `${pts} von ${max} Punkten erreicht.`);
+      showToast(`Aufgabe ${TASK_UI[task].nr}`, `${pts} von ${max} Punkten erreicht.`);
     }
 
     function checkBasicsA1() {
       markCard('card-a1a', A('a1a') === 'opt_rule');
       markCard('card-a1b', A('a1b') === 'opt_recipe');
-      feedback('fb-basics-a1', 'a1', 'Aufgabe 1', 'Alles richtig!');
+      feedback('a1', 'Alles richtig!');
     }
 
     function checkBasicsA2() {
@@ -1284,51 +1325,212 @@
         rect.setAttribute('stroke-dasharray', '');
       });
       markCard('card-a2-3', A('sel-a2-3') === 'right');
-      feedback('fb-basics-a2', 'a2', 'Aufgabe 2', 'Diagramm perfekt verstanden!');
+      feedback('a2', 'Diagramm perfekt verstanden!');
     }
 
     function checkLoopsA3() {
       markCard('card-a3-1', A('sel-a3-1') === '4');
       markCard('card-a3-2', A('sel-a3-2') === '40');
-      feedback('fb-loops-a3', 'a3', 'Aufgabe 3', 'Perfekt gerechnet!');
+      feedback('a3', 'Perfekt gerechnet!');
     }
 
     function checkLoopsA4() {
       markCard('card-a4-1', A('sel-a4-1') === 'bis');
       markCard('card-a4-2', A('sel-a4-2') === 'yminus1');
-      feedback('fb-loops-a4', 'a4', 'Aufgabe 4', 'Drohne landet sicher!');
+      feedback('a4', 'Drohne landet sicher!');
     }
 
     function checkSquareSort() {
       SQUARE_BLOCKS.forEach(b => markCard(`card-${b.id}`, parseInt(A(`sq_${b.id}`), 10) === b.correct));
-      feedback('fb-square-sort', 'a6', 'Quadrat', 'Perfektes Quadrat!');
+      feedback('a6', 'Perfektes Quadrat!');
     }
 
     function checkCustomA5() {
       markCard('card-a5-1', A('a5_1') === 'abheben');
       markCard('card-a5-2', reasonPoints() === 2);
-      feedback('fb-custom-a5', 'a5', 'Aufgabe 5', 'Unterprogramme verstanden!');
+      feedback('a5', 'Unterprogramme verstanden!');
     }
 
     function checkCustomA8() {
       markCard('card-a8-1', A('sel-a8-1') === 'right');
       markCard('card-a8-2', A('sel-a8-2') === '-1');
-      feedback('fb-custom-a8', 'a8', 'Bugfix', 'Bug erfolgreich behoben!');
+      feedback('a8', 'Bug erfolgreich behoben!');
     }
 
     function checkLogicAndOr() {
       ANDOR_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
-      feedback('fb-logic-andor', 'a7a', 'UND / ODER', 'Logik-Wörter sitzen!');
+      feedback('a7a', 'Die Logik-Wörter sitzen!');
     }
 
     function checkLogicA7() {
       SMARTHOME_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
-      feedback('fb-logic-a7', 'a7b', 'Lichtsteuerung', 'Smarthome schaltet perfekt!');
+      feedback('a7b', 'Das Smarthome schaltet perfekt!');
     }
 
     function checkLogicGarden() {
       GARDEN_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
-      feedback('fb-logic-garden', 'a7c', 'Gartenbewässerung', 'Der Rasen ist perfekt gegossen!');
+      feedback('a7c', 'Der Rasen ist perfekt gegossen!');
+    }
+
+    // ==============================================================
+    // HILFEN PRO AUFGABE: 💡 Tipp, 📖 Theorie, 🔀 Nochmals üben
+    // keys(): alle Antwort-Schlüssel der Aufgabe (gleiche Schlüssel wie in TASKS)
+    // mix(): mischt Antworten/Zeilen/Bausteine der Aufgabe neu
+    // theory: id einer Erklärung auf der Seite (nur wo es eine gibt)
+    // ==============================================================
+    const bindAll = (ids) => () => ids.forEach(k => bindSelect(k, k));
+    const TASK_UI = {
+      a1: {
+        nr: '1', check: checkBasicsA1, render: renderA1, theory: 'theory-basics',
+        keys: () => ['a1a', 'a1b'],
+        mix: () => { dispA1a = shuffleArray(BASICS_A1A); dispA1b = shuffleArray(BASICS_A1B); },
+        tip: 'Stell dir vor, du erklärst einem Roboter, wie er ein Sandwich macht. Der Roboter denkt nicht selber mit. Frag dich bei jeder Antwort: Könnte der Roboter damit eine Aufgabe lösen, ohne nachzufragen? Weiss er, was zuerst kommt und was danach?'
+      },
+      a2: {
+        nr: '2', check: checkBasicsA2, render: renderA2, theory: 'theory-basics',
+        keys: () => [...FLOW_SLOTS.map(sl => 'flow_' + sl), 'sel-a2-3'],
+        mix: () => { dispFlow = shuffleArray(FLOW_CMDS); flowSelected = null; },
+        tip: 'Lies die Situation oben nochmals langsam. Frag dich: Was macht die Drohne ganz am Anfang? Was macht sie immer wieder, solange sie noch nicht am Ziel ist? Folge mit dem Finger dem Pfeil NEIN: Wohin führt er? Bei der Raute: Wie viele Pfeile gehen aus ihr hinaus, und was steht daran? Achtung: Zwei Befehle bleiben übrig.'
+      },
+      a3: {
+        nr: '3', check: checkLoopsA3, render: bindAll(['sel-a3-1', 'sel-a3-2']), theory: 'theory-loops',
+        keys: () => ['sel-a3-1', 'sel-a3-2'],
+        tip: 'Denk an eine Treppe: Du gehst 3-mal hintereinander je 5 Stufen hoch. Wie viele Stufen sind das zusammen? Schau dann ins Skript: Welcher Block ist wie eine Klammer um die anderen? Welche Zahl gehört zum Fliegen? Der Warte-Block macht nur eine Pause, er bewegt nichts.'
+      },
+      a4: {
+        nr: '4', check: checkLoopsA4, render: bindAll(['sel-a4-1', 'sel-a4-2']), theory: 'theory-loops',
+        keys: () => ['sel-a4-1', 'sel-a4-2'],
+        tip: 'Überlege bei jedem Block: Hört er irgendwann von selbst auf? Hört er genau im richtigen Moment auf? Oder prüft er nur ein einziges Mal? Für die Richtung denk an einen Lift: Was passiert mit der Stockwerk-Zahl, wenn er nach unten fährt? Und denk daran: x geht nach links und rechts, y nach oben und unten.'
+      },
+      a6: {
+        nr: '6', check: checkSquareSort, render: renderSquare, theory: 'theory-loops',
+        keys: () => SQUARE_BLOCKS.map(b => 'sq_' + b.id),
+        mix: () => { dispSquare = shuffleArray(SQUARE_BLOCKS); },
+        tip: 'Der orange Block ist wie eine Schachtel: Alles, was in der Schachtel liegt, wird 4-mal gemacht. Schau in die Vorschau: Liegen alle Befehle in der Schachtel, die sich wiederholen sollen? Lies den Plan nochmals Wort für Wort und achte darauf, in welcher Reihenfolge er Fliegen und Drehen nennt.'
+      },
+      a5: {
+        nr: '5', check: checkCustomA5, render: renderA5, theory: 'theory-custom',
+        keys: () => ['a5_1', ...CUSTOM_REASONS.map(r => 'r_' + r.id)],
+        mix: () => { dispReasons = shuffleArray(CUSTOM_REASONS); },
+        tip: 'Lies den pinken Block wie eine kleine Geschichte: Wird y grösser oder kleiner? Fliegt die Drohne also höher oder tiefer? Wann hört sie auf? Bei den Gründen denk an eine Rezeptkarte für Pizzateig. Du schreibst sie einmal und brauchst sie für jede Pizza wieder. Was ist daran praktisch? Achtung: Ein falsches Kreuz gibt Abzug.'
+      },
+      a8: {
+        nr: '8', check: checkCustomA8, render: bindAll(['sel-a8-1', 'sel-a8-2']), theory: 'theory-custom',
+        keys: () => ['sel-a8-1', 'sel-a8-2'],
+        tip: 'Sei ein Detektiv: Der Pfeil zeigt dir, wo der Fehler steckt. Was bedeutet diese Zahl für die Richtung? Denk an einen Lift: Was muss mit der Stockwerk-Zahl passieren, damit er nach unten fährt?'
+      },
+      a7a: {
+        nr: '7a', check: checkLogicAndOr, render: renderAndOr, theory: 'theory-andor',
+        keys: () => ANDOR_ROWS.map(r => r.id),
+        mix: () => { dispAndOr = shuffleArray(ANDOR_ROWS); },
+        tip: 'Mach bei jedem Satz die Probe: Muss beides gleichzeitig stimmen? Oder reicht schon eines davon? Denk an deinen Alltag: Wann brauchst du zwei Sachen zusammen, und wann genügt eine? Frag dich auch: Kann beides überhaupt gleichzeitig passieren?'
+      },
+      a7b: {
+        nr: '7b', check: checkLogicA7, render: renderSmart, theory: 'theory-andor',
+        keys: () => SMARTHOME_ROWS.map(r => r.id),
+        mix: () => { dispSmart = shuffleArray(SMARTHOME_ROWS); },
+        tip: 'Geh jede Zeile durch, als wärst du die Lampe. Schau zuerst: Ist eine Bewegung da? Dann: Ist es richtig Nacht, oder ist es am Tag nur düster? Vergleiche erst danach mit den 3 Regeln. Bei «UND» müssen beide Teile stimmen.'
+      },
+      a7c: {
+        nr: '7c', check: checkLogicGarden, render: renderGarden, theory: 'theory-andor',
+        keys: () => GARDEN_ROWS.map(r => r.id),
+        mix: () => { dispGarden = shuffleArray(GARDEN_ROWS); },
+        tip: 'Die Regel AUS gilt immer zuerst, wie eine rote Ampel: Dann ist alles andere egal. Prüfe also bei jeder Zeile zuerst: Ist der Boden feucht, oder regnet es? Erst wenn beides nicht stimmt, schaust du auf die Uhrzeit.'
+      }
+    };
+
+    // Farbe des Prüfen-Knopfs pro Reiter
+    const TAB_BTN = {
+      basics: 'bg-sky-600 hover:bg-sky-700',
+      loops: 'bg-amber-600 hover:bg-amber-700',
+      custom: 'bg-rose-600 hover:bg-rose-700',
+      logic: 'bg-emerald-600 hover:bg-emerald-700'
+    };
+
+    // Fusszeile jeder Aufgabe: Tipp-Box, Knöpfe, Rückmeldung
+    function renderTools(id) {
+      const u = TASK_UI[id], host = document.querySelector(`[data-tools="${id}"]`);
+      if (!u || !host) return;
+      const sec = host.closest('section');
+      const tab = sec ? sec.id.replace('view-', '') : 'basics';
+      const small = 'px-2.5 py-2 rounded-xl text-xs font-bold border transition';
+      host.innerHTML = `
+        <div id="tip-${id}" class="hidden mb-3 rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-xs sm:text-sm text-slate-800 leading-relaxed">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${u.tip}
+        </div>
+        <div class="pt-3 border-t border-slate-100 space-y-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" onclick="checkTask('${id}')" class="px-4 py-2 rounded-xl ${TAB_BTN[tab] || TAB_BTN.basics} text-white text-xs sm:text-sm font-bold transition">✓ Aufgabe ${u.nr} prüfen</button>
+            <button type="button" onclick="toggleTip('${id}')" class="${small} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>
+            ${u.theory ? `<button type="button" onclick="openTheory('${u.theory}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>` : ''}
+            <button type="button" onclick="retryTask('${id}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>
+          </div>
+          <div id="fb-${id}" class="text-xs font-semibold"></div>
+        </div>`;
+    }
+
+    function checkTask(id) {
+      if (TASK_UI[id]) TASK_UI[id].check();
+    }
+
+    function toggleTip(id) {
+      const box = document.getElementById('tip-' + id);
+      if (box) box.classList.toggle('hidden');
+    }
+
+    // Springt zur Erklärung auf der Seite und lässt sie kurz aufleuchten
+    function openTheory(targetId) {
+      const el = document.getElementById(targetId);
+      if (!el) return;
+      const sec = el.closest('section');
+      const tab = sec ? sec.id.replace('view-', '') : null;
+      if (tab && STATE.activeTab !== tab) switchTab(tab);
+      if (el.tagName === 'DETAILS') el.open = true;
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.remove('theory-flash');
+        void el.offsetWidth;
+        el.classList.add('theory-flash');
+      }, 60);
+    }
+
+    // Mischt die Reihenfolge der Teilfragen und setzt die Buchstaben a), b) …
+    function shuffleParts(id) {
+      const box = document.querySelector(`[data-parts="${id}"]`);
+      if (!box) return;
+      shuffleArray([...box.querySelectorAll(':scope > [data-part]')]).forEach((part, i) => {
+        box.appendChild(part);
+        const label = part.querySelector('.js-label');
+        if (label) label.textContent = 'abcdefgh'[i] + ') ';
+      });
+    }
+
+    // Grün/Rot-Färbung entfernen
+    function clearMarks(root) {
+      root.querySelectorAll('.bg-emerald-50.border-emerald-300, .bg-rose-50.border-rose-300').forEach(el => {
+        if (el.id === 'exam-result-banner') return;
+        el.classList.remove('bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
+        el.classList.add('bg-slate-50', 'border-slate-200');
+      });
+    }
+
+    // «🔀 Nochmals üben»: leert NUR diese Aufgabe und mischt sie neu
+    function retryTask(id) {
+      const u = TASK_UI[id], host = document.querySelector(`[data-task="${id}"]`);
+      if (!u || !host) return;
+      u.keys().forEach(k => { delete STATE.answers[k]; });
+      persist();
+      if (u.mix) u.mix();
+      shuffleParts(id);
+      u.render();
+      shuffleSelects(host);
+      clearMarks(host);
+      const fb = document.getElementById('fb-' + id);
+      if (fb) { fb.textContent = ''; fb.className = 'text-xs font-semibold'; }
+      const tip = document.getElementById('tip-' + id);
+      if (tip) tip.classList.add('hidden');
+      host.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showToast('🔀 Neu gemischt', `Aufgabe ${u.nr} ist leer und neu gemischt. Viel Erfolg!`);
     }
 
     // ==============================================================
@@ -1399,12 +1601,8 @@
       const banner = document.getElementById('exam-result-banner');
       if (banner) banner.classList.add('hidden');
       // Farben und Rückmeldungen zurücksetzen
-      document.querySelectorAll('.bg-emerald-50.border-emerald-300, .bg-rose-50.border-rose-300').forEach(el => {
-        if (el.id === 'exam-result-banner') return;
-        el.classList.remove('bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
-        el.classList.add('bg-slate-50', 'border-slate-200');
-      });
-      document.querySelectorAll('[id^="fb-"]').forEach(el => { el.innerHTML = ''; });
+      clearMarks(document);
+      document.querySelectorAll('[id^="fb-"]').forEach(el => { el.innerHTML = ''; el.className = 'text-xs font-semibold'; });
       renderAll();
       showToast("Zurückgesetzt", "Alle Antworten wurden geleert.");
     }
@@ -1481,6 +1679,7 @@
     // ==============================================================
     Object.assign(window, {
       switchTab, saveAnswer, reshuffleBasics, reshuffleLogic,
+      checkTask, toggleTip, openTheory, retryTask,
       checkBasicsA1, checkBasicsA2, checkLoopsA3, checkLoopsA4, checkSquareSort,
       checkCustomA5, checkCustomA8, checkLogicAndOr, checkLogicA7, checkLogicGarden,
       handleFlowSlotClick, evaluateFullExam, resetAllHubData, toggleTimer, resetTimer
@@ -1499,6 +1698,8 @@
       loadState();
       document.querySelectorAll('.js-max-pts').forEach(el => el.textContent = MAX_POINTS);
       document.querySelectorAll('.js-pass-pts').forEach(el => el.textContent = PASS_POINTS);
+      document.querySelectorAll('[data-max]').forEach(el => { el.textContent = TASKS[el.dataset.max].max; });
+      Object.keys(TASK_UI).forEach(id => { shuffleParts(id); renderTools(id); });
       renderAll();
       shuffleSelects(document);
       initFlowDnD();
