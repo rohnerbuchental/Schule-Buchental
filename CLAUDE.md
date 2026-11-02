@@ -2,6 +2,7 @@
 
 Statische Lernseiten (eine HTML-Datei pro Thema) für Sek-Schülerinnen und -Schüler.
 `index.html` ist die Startseite und verlinkt jede Lernseite als Kachel.
+Die Schüler bekommen nur die Startseite: https://rohnerbuchental.github.io/Schule-Buchental/ (GitHub Pages). Neue Seiten darum immer als Kachel in `index.html` eintragen.
 Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare Antworten.
 
 ## Seiten
