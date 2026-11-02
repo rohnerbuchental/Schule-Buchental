@@ -27,6 +27,10 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Tab 4 hat nur UND/ODER: 7a leicht, 7b Smarthome, 7c Gartenbewässerung. Die Aufgaben zu «nicht» und zur «Notlandung» hat die Lehrperson bewusst gestrichen; nicht wieder einbauen.
 - Test-Simulation: 30 Punkte, bestanden ab 18.
 
+## Agenten (`.claude/agents/`)
+- `aufgaben-ersteller`: baut neue Lernseiten oder Aufgaben nach den Regeln oben und trägt die Kachel in `index.html` ein.
+- `regel-pruefer`: prüft Seiten gegen diese Regeln und führt `tools/check.js` aus. Ändert nichts. Nach jeder grösseren Änderung einsetzen.
+
 ## Arbeitsablauf
 1. Änderungen nur hier im Repository machen. Keine Kopien mit anderen KI-Tools bearbeiten und wieder hochladen, sonst entstehen zwei Versionen.
 2. Nicht ganze Dateien lesen: mit `grep -n "<!-- Aufgabe"` die Stelle suchen und nur diesen Abschnitt lesen (spart Tokens).
