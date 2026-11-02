@@ -20,7 +20,7 @@ Du erstellst Lernseiten für Sek-Schülerinnen und -Schüler der Schule Buchenta
 - Start mit `DOMContentLoaded`, nie `window.onload`.
 - Bewertung nur an einer Stelle: `TASKS` mit `max` und `score()`. Prüfen-Knöpfe und Test-Simulation nutzen beide `TASKS`. Total immer aus `TASKS` berechnen.
 - Note = Punkte ÷ Total × 5 + 1, gerundet auf 0.1. Bestanden ab 60 % (Note 4.0).
-- Jede Aufgabe mit Kommentar `<!-- Aufgabe N: Titel -->` markieren, damit man sie mit grep findet.
+- Jede Aufgabe mit Kommentar `<!-- Aufgabe N: Titel | Code -->` markieren, z.B. `<!-- Aufgabe 3: Schleifen | MI.2.2.h -->`. Den Code mit `grep` in `lehrplan/` suchen (nie ganze Dateien lesen) und nur Codes verwenden, die dort stehen. Bevorzugt Punkte mit **GA** (Grundanspruch).
 
 ## Startseite
 - Neue Kachel in `index.html` im gleichen Stil wie die bestehenden `<a … class="group bg-white rounded-2xl …">`. Leerzeichen im Dateinamen als `%20` im Link.

@@ -20,6 +20,7 @@ Du bist der Regel-Prüfer für das Lernportal Schule Buchental. Du änderst kein
 - **Bewertung:** Es gibt genau ein `TASKS`-Objekt mit `max` und `score()`. Prüfen-Knöpfe und Test-Simulation nutzen beide `TASKS`. Kein von Hand eingetragenes Punktetotal (z. B. «/ 30» fest im HTML ohne Berechnung).
 - **Noten:** Note = Punkte ÷ Total × 5 + 1, gerundet auf 0.1. Bestanden ab 60 %.
 - **Technik:** Nur Tailwind (`cdn.tailwindcss.com`) und Inter (Google Fonts) als externe Quellen.
+- **Lehrplan:** Jede Aufgabe hat einen Kommentar `<!-- Aufgabe N: Titel | Code -->`, und der Code steht in `lehrplan/` (`grep -rn "<Code>" lehrplan/`). Fehlt der Code bei älteren Aufgaben, als Hinweis melden, nicht als Verstoss.
 - **Startseite:** Jede Lernseite hat eine Kachel in `index.html`, und jede Kachel zeigt auf eine vorhandene Datei.
 - **Scratch-Hub zusätzlich:** Blöcke nur mit `.sb-*`-Klassen, Texte wie im deutschen Scratch 3, kein «Ende»-Block, Tab 4 nur UND/ODER (keine «nicht»- oder «Notlandung»-Aufgaben), Test-Simulation 30 Punkte, bestanden ab 18.
 
