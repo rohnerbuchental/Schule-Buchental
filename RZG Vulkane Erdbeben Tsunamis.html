@@ -13,6 +13,7 @@
     body { font-family: 'Inter', sans-serif; }
     input:focus, select:focus { outline: none; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.35); }
     select { max-width: 100%; }
+    .hidden { display: none; } /* auch ohne Tailwind (langsames Netz) versteckt */
     .gap-text select { display: inline-block; margin: 2px 0; }
     .dnd-card { cursor: grab; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
     .dnd-card.is-selected { box-shadow: 0 0 0 3px #f97316; }
@@ -561,7 +562,7 @@
     // LERNZIEL-BLATT (Fragen vom Blatt der Lehrperson + Musterlösungen)
     // ==============================================================
     const BLATT = [
-      { lz: 'LZ1: Die Entstehung von Vulkanen erklären', items: [
+      { tab: 'entstehung', lz: 'LZ1: Die Entstehung von Vulkanen erklären', items: [
         { id: 'l1_arten', q: 'Ich kann die drei Hauptarten erklären, wie Vulkane entstehen.', sol: `
           <ul class="list-disc pl-5 space-y-1">
             <li><b>Platten driften auseinander:</b> Es entsteht ein Riss. Heisses Magma steigt auf und kühlt als neue Kruste ab (z.B. Island, Mittelatlantischer Rücken).</li>
@@ -575,7 +576,7 @@
           <p>Der «Ring of Fire» (Pazifischer Feuerring) ist ein Gürtel von Vulkanen <b>rund um den Pazifischen Ozean</b>. Dort liegen die meisten aktiven Vulkane der Welt.</p>
           <p class="mt-1">Grund: Rund um die Pazifische Platte stossen Platten zusammen. Die schwere Ozeanplatte taucht unter andere Platten ab. In der Tiefe schmilzt das Gestein, Magma steigt auf. Darum gibt es dort sehr viele Vulkane und auch viele Erdbeben.</p>` }
       ] },
-      { lz: 'LZ2: Schildvulkane und Schichtvulkane unterscheiden', items: [
+      { tab: 'entstehung', lz: 'LZ2: Schildvulkane und Schichtvulkane unterscheiden', items: [
         { id: 'l2_form', q: 'Ich kann Schicht- und Schildvulkane an ihrer Form erkennen. Skizziere beide Vulkantypen.', sketch: true, sol: `
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="text-center"><b>Schichtvulkan</b>${SVG_STRATO}<p class="text-xs">steil, hoch, kegelförmig</p></div>
@@ -589,7 +590,7 @@
         { id: 'l2_schichten', q: 'Ich kann erklären, warum ein Schichtvulkan aus abwechselnden Schichten von erstarrter Lava und Asche/Gestein aufgebaut ist.', sol: `
           <p>Ein Schichtvulkan bricht immer wieder aus, mal <b>explosiv</b>, mal mit <b>Lavaströmen</b>. Bei einer Explosion fallen Asche und Gesteinsbrocken auf den Berg. Bei einem Lavastrom fliesst Lava über den Hang und erstarrt. So lagern sich über lange Zeit <b>abwechselnd Schichten</b> aus Asche/Gestein und erstarrter Lava ab. Der Vulkan wächst Schicht für Schicht in die Höhe.</p>` }
       ] },
-      { lz: 'LZ3: Vulkanausbrüche', items: [
+      { tab: 'ausbruch', lz: 'LZ3: Vulkanausbrüche', items: [
         { id: 'l3_schicht', q: 'Ich kann in eigenen Worten erklären, wie ein Schichtvulkan ausbricht.', sol: `
           <ul class="list-disc pl-5 space-y-1">
             <li>Das Magma ist <b>zähflüssig</b>.</li>
@@ -603,7 +604,7 @@
             <li>Der Ausbruch ist ruhig und <b>fliessend</b>: Die Lava strömt gleichmässig aus dem Krater und breitet sich weit aus, bevor sie erstarrt.</li>
           </ul>` }
       ] },
-      { lz: 'LZ4: Erdbeben verstehen, messen und berechnen', items: [
+      { tab: 'erdbeben', lz: 'LZ4: Erdbeben verstehen, messen und berechnen', items: [
         { id: 'l4_entstehung', q: 'Ich kann erklären, wie Erdbeben durch das Verhaken und plötzliche Brechen von Erdplatten entstehen.', sol: `
           <p>Die Erdplatten bewegen sich. An den Plattengrenzen <b>verhaken</b> sie sich. Die Platten drücken weiter, darum baut sich eine riesige <b>Spannung</b> im Gestein auf. Irgendwann ist die Spannung zu gross: Das Gestein <b>bricht plötzlich</b>. Diese Stelle in der Tiefe heisst <b>Erdbebenherd</b>. Die Energie wird schlagartig frei und breitet sich als Erschütterung aus: Die Erde bebt.</p>` },
         { id: 'l4_messen', q: 'Ich kann die Messgeräte und die gängige Skala benennen.', sol: `
@@ -632,7 +633,7 @@
             <li><b>Im Auto:</b> Am Strassenrand anhalten (nicht auf Brücken oder unter Überführungen) und im Auto sitzen bleiben.</li>
           </ul>` }
       ] },
-      { lz: 'LZ5: Tsunamis und Meereswellen vergleichen', items: [
+      { tab: 'tsunami', lz: 'LZ5: Tsunamis und Meereswellen vergleichen', items: [
         { id: 'l5_ausloeser', q: 'Ich kann erklären, wie ein Tsunami ausgelöst wird.', sol: `
           <p>Ein <b>Seebeben</b> am Meeresgrund hebt den Meeresboden ruckartig an. Dadurch wird das <b>ganze Wasser darüber</b>, vom Meeresgrund bis zur Oberfläche, schlagartig nach oben gestossen. Es entsteht eine riesige Welle, die sich in alle Richtungen ausbreitet.</p>` },
         { id: 'l5_tabelle', q: 'Ich kann den Unterschied zwischen einer normalen windbedingten Meereswelle und einem Tsunami in einer Tabelle beschreiben.', sol: `
@@ -654,28 +655,166 @@
     ];
     const BLATT_ITEMS = BLATT.flatMap(s => s.items);
 
+    // Hilfe-Treppe pro Lernziel: Tipp (mit Wortkasten) → Satzanfänge → Antwort prüfen (Schlüsselwörter) → Musterlösung
+    // keys: [Anzeige-Text, [Wortteile]] – Wortteile kleingeschrieben, ä=ae, ö=oe, ü=ue
+    const HELP = {
+      l1_arten: { tip: 'Es gibt zwei Arten an den Plattengrenzen und eine Art mitten auf einer Platte. Frag dich jedes Mal: Was machen die Platten? Woher kommt das Magma?',
+        words: ['auseinander', 'Riss', 'zusammenstossen', 'abtauchen', 'Gestein schmilzt', 'Hotspot', 'Magma steigt auf'],
+        starters: '1. Wenn zwei Platten auseinanderdriften, …\n2. Wenn zwei Platten zusammenstossen, …\n3. Bei einem Hotspot …',
+        keys: [['Riss / Lücke zwischen den Platten', ['riss', 'luecke', 'spalt']], ['eine Platte taucht ab / schiebt sich darunter', ['abtauch', 'unter', 'schieb']],
+               ['Gestein schmilzt', ['schmilz', 'schmelz', 'geschmolz']], ['Magma steigt auf', ['magma']], ['heisser Punkt (Hotspot)', ['heiss']]] },
+      l1_hotspot: { tip: 'Schau die Inselketten-Skizze im Reiter 2 an. Was bleibt am gleichen Ort: die Platte oder der Hotspot? Was passiert mit dem alten Vulkan, wenn die Platte weiterwandert?',
+        words: ['heisser Punkt', 'Erdmantel', 'Magmastrahl', 'Platte bewegt sich', 'neuer Vulkan', 'erlischt'],
+        starters: 'Ein Hotspot ist …\nDie Platte bewegt sich, aber der Hotspot …\nDarum entsteht …\nDer alte Vulkan …',
+        keys: [['heisser Punkt', ['heiss']], ['Magma(strahl) steigt auf', ['magma']], ['die Platte bewegt sich', ['beweg', 'wander', 'verschieb', 'schieb']],
+               ['ein neuer Vulkan / eine neue Insel entsteht', ['neu']], ['der alte Vulkan erlischt (kein Magma mehr)', ['erlisch', 'erlosch', 'kein magma', 'inaktiv', 'aus ']]] },
+      l1_ring: { tip: 'Der Name sagt es: ein «Ring» aus «Feuer». Um welchen Ozean liegt er? Was passiert dort mit den Platten?',
+        words: ['Pazifischer Ozean', 'rund um', 'Ozeanplatte', 'abtauchen', 'Gestein schmilzt', 'Magma'],
+        starters: 'Der «Ring of Fire» ist …\nDort gibt es viele Vulkane, weil …',
+        keys: [['rund um den Pazifik', ['pazifi']], ['Platten stossen zusammen / tauchen ab', ['abtauch', 'unter', 'zusammen', 'stoss']], ['Gestein schmilzt / Magma steigt auf', ['schmilz', 'schmelz', 'magma']]] },
+      l2_form: { tip: 'Ein Schichtvulkan ist steil und spitz wie ein Kegel (Hütchen). Ein Schildvulkan ist flach und breit wie ein Schild, der am Boden liegt.',
+        words: ['steil', 'spitz', 'kegelförmig', 'flach', 'breit'] },
+      l2_magma: { tip: 'Denk an Honig und Wasser: Honig ist zähflüssig, Wasser ist dünnflüssig. Welcher Vulkan hat «Honig-Magma»?',
+        words: ['zähflüssig', 'dünnflüssig', 'Gase', 'Druck'],
+        starters: 'Beim Schichtvulkan ist das Magma …\nBeim Schildvulkan ist das Magma …',
+        keys: [['zähflüssig', ['zaeh']], ['dünnflüssig', ['duenn']]] },
+      l2_schichten: { tip: 'Ein Schichtvulkan bricht viele Male aus. Was fällt bei einer Explosion auf den Berg? Was fliesst den Hang hinunter und wird hart?',
+        words: ['immer wieder', 'Ausbruch', 'Asche', 'Gestein', 'Lava', 'erstarrt', 'abwechselnd'],
+        starters: 'Ein Schichtvulkan bricht immer wieder aus. Bei einer Explosion …\nDie Lava …\nSo entstehen …',
+        keys: [['Asche / Gestein', ['asche', 'stein']], ['Lava erstarrt / wird hart', ['erstarr', 'hart', 'fest', 'abkuehl', 'kuehlt']], ['abwechselnd / übereinander', ['abwechselnd', 'wechsel', 'uebereinander', 'nacheinander']]] },
+      l3_schicht: { tip: 'Stell dir eine geschüttelte Flasche Mineralwasser vor: Das Gas kann nicht raus, der Druck steigt. Was passiert, wenn du sie öffnest?',
+        words: ['zähflüssig', 'Gase', 'Druck', 'Pfropfen', 'explosiv', 'Asche', 'Steine'],
+        starters: 'Das Magma ist …\nDie Gase können …\nDarum steigt …\nWenn der Druck zu gross wird, …',
+        keys: [['zähflüssig', ['zaeh']], ['Gase', ['gas']], ['Druck', ['druck']], ['explosiv / Explosion', ['explo']]] },
+      l3_schild: { tip: 'Hier ist es wie bei einer offenen Flasche: Das Gas kann einfach entweichen. Gibt es dann viel oder wenig Druck?',
+        words: ['dünnflüssig', 'Gase entweichen', 'wenig Druck', 'ruhig', 'fliessend', 'Lava'],
+        starters: 'Die Lava ist …\nDie Gase können …\nDarum ist der Ausbruch …',
+        keys: [['dünnflüssig', ['duenn']], ['Gase entweichen', ['gas']], ['wenig / kein Druck', ['druck']], ['ruhig / fliessend', ['fliess', 'ruhig']]] },
+      l4_entstehung: { tip: 'Drück deine Handflächen fest gegeneinander und schieb. Zuerst bewegt sich nichts, dann rutschen sie plötzlich ab. Genau so ist es bei den Platten.',
+        words: ['Platten', 'verhaken', 'Spannung', 'bricht plötzlich', 'Erdbebenherd', 'Energie'],
+        starters: 'Die Platten bewegen sich und …\nDadurch baut sich …\nPlötzlich …\nDie Stelle, wo das Beben beginnt, heisst …',
+        keys: [['die Platten verhaken sich', ['verhak', 'haeng', 'klemm', 'blockier']], ['Spannung baut sich auf', ['spannung']],
+               ['das Gestein bricht plötzlich', ['bricht', 'bruch', 'brech', 'zerreiss', 'ruck', 'rutsch']], ['Erdbebenherd', ['herd']]] },
+      l4_messen: { tip: 'Das Gerät endet auf «-graph» (wie Fotograf). Die Aufzeichnung endet auf «-gramm» (wie Telegramm). Die Skala ist nach dem Forscher Charles Richter benannt.',
+        words: ['Seismograph', 'Seismogramm', 'Richter-Skala'],
+        starters: 'Das Messgerät heisst …\nDie Aufzeichnung heisst …\nDie Skala heisst …',
+        keys: [['Seismograph', ['seismograph', 'seismograf']], ['Seismogramm', ['seismogramm']], ['Richter-Skala', ['richter']]] },
+      l4_rechnen: { tip: 'Merke dir zwei Zahlen: 10 und 32. Pro Stufe: Ausschlag mal 10, Energie mal 32. Zähle zuerst die Stufen (grosse Zahl minus kleine Zahl). Dann so oft mal 10 bzw. mal 32 rechnen.',
+        words: ['Ausschlag', '× 10', 'Energie', '× 32', 'Stufen'],
+        starters: 'Pro Stufe wird der Ausschlag …-mal grösser.\nPro Stufe wird die Energie …-mal grösser.\nBeispiel Stärke 6 gegen 3: Das sind … Stufen. Ausschlag: … Energie: …',
+        keys: [['Ausschlag mal 10', ['10', 'zehn']], ['Energie mal 32', ['32']], ['Beispiel richtig: 1000-mal Ausschlag', ['1000', '1 000', "1'000", '1.000']], ['Beispiel richtig: 32 768-mal Energie', ['32768', '32 768', "32'768", '32.768']]] },
+      l4_stufen: { tip: 'Geh von klein nach gross: Was merkt man bei einem kleinen Beben? Ab wann gehen Gebäude kaputt? Wann ist alles zerstört?',
+        words: ['kaum spürbar', 'Geschirr klirrt', 'Risse', 'Schäden', 'stürzen ein', 'totale Zerstörung'],
+        starters: 'Unter 3: …\n4: …\n5: …\n6: …\n7: …\n8 und mehr: …',
+        keys: [['kleine Stärke: kaum spürbar', ['kaum', 'spuer', 'merkt']], ['Stärke 6: Schäden / Risse an Gebäuden', ['schaed', 'riss', 'kaputt']], ['Stärke 7: Gebäude stürzen ein', ['stuerz']], ['Stärke 8 und mehr: totale Zerstörung', ['zerstoer', 'verwuest']]] },
+      l4_verhalten: { tip: 'Denk an drei Orte: im Haus, draussen und im Auto. Was kann herunterfallen oder kaputtgehen? Wo bist du geschützt?',
+        words: ['Tisch', 'festhalten', 'Fenster', 'kein Lift', 'freier Platz', 'Auto anhalten'],
+        starters: 'Im Haus …\nIm Freien …\nIm Auto …',
+        keys: [['unter einen Tisch', ['tisch']], ['weg von Fenstern / Glas / Schränken', ['fenster', 'glas', 'schrank', 'regal']], ['keinen Lift benutzen', ['lift', 'aufzug']], ['im Freien: auf einen freien Platz', ['platz', 'frei']], ['im Auto: anhalten und sitzen bleiben', ['auto']]] },
+      l5_ausloeser: { tip: 'Ein Tsunami beginnt nicht mit Wind, sondern unter dem Meer. Was bewegt sich dort plötzlich?',
+        words: ['Seebeben', 'Meeresboden', 'ganzes Wasser', 'nach oben gestossen'],
+        starters: 'Ein Tsunami entsteht durch …\nDer Meeresboden …\nDadurch wird …',
+        keys: [['Seebeben / Erdbeben im Meer', ['beben']], ['der Meeresboden bewegt sich', ['boden', 'grund']], ['das ganze Wasser wird nach oben gestossen', ['ganz', 'gesamt', 'alles', 'oben', 'hoch']]] },
+      l5_tabelle: { tip: 'Vergleiche vier Dinge: Wie entsteht die Welle? Welches Wasser bewegt sich? Wie lang ist die Welle? Wie schnell ist sie?',
+        words: ['Wind', 'Seebeben', 'oberste Schicht', 'ganzes Wasser', '400 m', '1000 km', 'langsam', 'sehr schnell'],
+        starters: 'Entstehung: normale Welle … / Tsunami …\nBewegung des Wassers: normale Welle … / Tsunami …\nWellenlänge: normale Welle … / Tsunami …\nGeschwindigkeit: normale Welle … / Tsunami …',
+        keys: [['Wind', ['wind']], ['Seebeben', ['beben']], ['nur oben / oberste Schicht', ['ober', 'nur oben']], ['ganzes Wasser', ['ganz', 'gesamt', 'grund']],
+               ['bis ca. 400 m', ['400']], ['bis 1000 km', ['1000', '1 000', "1'000", '1.000']], ['langsam', ['langsam']], ['sehr schnell', ['schnell']]] },
+      l5_kueste: { tip: 'Teil 1: Wie tief ist das offene Meer? Wie hoch ist dort die Welle? Teil 2: Was passiert, wenn die schnelle Welle ins flache Wasser kommt? Denk an einen Stau auf der Autobahn.',
+        words: ['tief', 'ca. 1 m', 'abgebremst', 'staut sich', 'türmt sich auf', 'enge Bucht'],
+        starters: 'Auf dem offenen Meer …\nAn der Küste wird die Welle …\nIn engen Buchten …',
+        keys: [['offenes Meer: Welle nur ca. 1 m / flach', ['1 m', '1m', 'meter', 'flach', 'klein', 'niedrig', 'tief']], ['an der Küste abgebremst', ['brems', 'langsamer']],
+               ['das Wasser staut sich / türmt sich auf', ['stau', 'tuerm', 'hoch']], ['enge Bucht: kein Platz zum Ausweichen', ['bucht', 'eng', 'platz']]] },
+      l5_strand: { tip: 'Das Meer macht vor dem Tsunami etwas Seltsames mit dem Wasser am Strand. Und dann: Wohin musst du gehen, damit das Wasser dich nicht erreicht?',
+        words: ['Meer zieht sich zurück', 'weg vom Strand', 'hoher Ort', 'Hügel', 'andere warnen'],
+        starters: 'Das Warnzeichen ist: …\nIch muss sofort …',
+        keys: [['das Meer zieht sich zurück', ['zurueck']], ['sofort weg vom Strand', ['weg', 'renn', 'flieh', 'lauf']], ['an einen hohen Ort (Hügel, hohes Gebäude)', ['hoch', 'hoeh', 'huegel', 'berg', 'stock', 'dach']], ['andere warnen', ['warn']]] }
+    };
+
+    const normText = (s) => String(s || '').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/\u00df/g, 'ss');
+
+    function toggleBox(prefix, id) {
+      const box = document.getElementById(prefix + '-' + id);
+      if (box) box.classList.toggle('hidden');
+    }
+    function insertStarters(id) {
+      const h = HELP[id], ta = document.querySelector(`textarea[data-key="blatt_${id}"]`);
+      if (!h || !h.starters || !ta) return;
+      const first = h.starters.split('\n')[0].split('…')[0].trim();
+      if (ta.value.includes(first)) { ta.focus(); return; }
+      ta.value = ta.value.trim() ? ta.value.replace(/\s+$/, '') + '\n' + h.starters : h.starters;
+      ta.rows = Math.max(ta.rows, h.starters.split('\n').length + 2);
+      saveAnswer('blatt_' + id, ta.value);
+      ta.focus();
+      showToast('✏️ Satzanfänge eingefügt', 'Schreib bei den drei Punkten … weiter.');
+    }
+    // Sucht die wichtigen Punkte im Text der Schüler (die eingefügten Satzanfänge zählen nicht mit)
+    function checkText(id) {
+      const h = HELP[id], box = document.getElementById('chk-' + id);
+      if (!h || !h.keys || !box) return;
+      let text = A('blatt_' + id) || '';
+      if (h.starters) h.starters.split('\n').forEach(line => {
+        const pre = line.split('…')[0].trim();
+        if (pre) text = text.split(pre).join(' ');
+      });
+      text = normText(text.replace(/…/g, ' '));
+      if (text.replace(/[^a-z0-9]/g, '').length < 5) {
+        box.innerHTML = '<p class="font-semibold text-amber-800">Schreib zuerst eine Antwort ins Feld. Tipp und Satzanfänge helfen dir dabei.</p>';
+        box.classList.remove('hidden');
+        return;
+      }
+      const res = h.keys.map(([label, parts]) => ({ label, ok: parts.some(p => text.includes(p)) }));
+      const n = res.filter(r => r.ok).length;
+      box.innerHTML = `
+        <p class="font-bold ${n === res.length ? 'text-emerald-700' : 'text-amber-800'}">${n === res.length ? '🌟 Super! Alle wichtigen Punkte sind drin.' : `Du hast ${n} von ${res.length} wichtigen Punkten.`}</p>
+        <ul class="mt-1 space-y-0.5">${res.map(r => `<li>${r.ok ? '✅' : '❌'} ${r.label}</li>`).join('')}</ul>
+        <p class="text-[11px] text-slate-500 mt-1">Der Computer sucht nur nach wichtigen Wörtern. Vergleiche danach trotzdem mit der Musterlösung.</p>`;
+      box.classList.remove('hidden');
+    }
+    function openTheory(tab) {
+      switchTab(tab);
+      const d = document.querySelector(`#view-${tab} details`);
+      if (d) { d.open = true; setTimeout(() => d.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); }
+    }
+
     function renderBlatt() {
       const list = document.getElementById('blatt-list');
       if (!list) return;
+      const btn = 'px-2.5 py-1.5 rounded-lg text-xs font-bold border';
       list.innerHTML = BLATT.map(sec => `
         <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
           <h3 class="text-base font-black text-slate-900">${sec.lz}</h3>
-          ${sec.items.map(it => `
+          ${sec.items.map(it => {
+            const h = HELP[it.id] || {};
+            const words = h.words ? shuffleArray(h.words) : [];
+            return `
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-2">
               <p class="text-sm font-semibold text-slate-800">${it.q}</p>
               ${it.sketch
                 ? '<p class="text-xs text-slate-500">Zeichne die Skizze auf dein Blatt. Vergleiche dann mit der Musterlösung.</p>'
                 : `<textarea data-key="blatt_${it.id}" rows="4" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-sm" placeholder="Deine Antwort in eigenen Worten …">${esc(A('blatt_' + it.id) || '')}</textarea>`}
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <button type="button" onclick="toggleSolution('${it.id}')" id="solbtn-${it.id}" class="px-3 py-1.5 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-900 text-xs font-bold">👀 Musterlösung zeigen</button>
-                <label class="flex items-center gap-1.5 text-xs font-semibold text-emerald-800 cursor-pointer">
-                  <input type="checkbox" data-key="blatt_ok_${it.id}" class="accent-emerald-600" ${A('blatt_ok_' + it.id) === true ? 'checked' : ''}> Das kann ich
-                </label>
+              <p class="text-[11px] text-slate-500">Weisst du nicht weiter? Geh Schritt für Schritt: 1 → 2 → 3 → 4.</p>
+              <div class="flex flex-wrap gap-1.5">
+                ${h.tip ? `<button type="button" onclick="toggleBox('tip','${it.id}')" class="${btn} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">1 · 💡 Tipp</button>` : ''}
+                ${h.starters ? `<button type="button" onclick="insertStarters('${it.id}')" class="${btn} bg-sky-50 border-sky-300 text-sky-900 hover:bg-sky-100">2 · ✏️ Satzanfänge</button>` : ''}
+                ${h.keys ? `<button type="button" onclick="checkText('${it.id}')" class="${btn} bg-violet-50 border-violet-300 text-violet-900 hover:bg-violet-100">3 · 🔍 Antwort prüfen</button>` : ''}
+                <button type="button" onclick="toggleSolution('${it.id}')" id="solbtn-${it.id}" class="${btn} bg-orange-100 border-orange-300 text-orange-900 hover:bg-orange-200">${h.keys ? '4' : '2'} · 👀 Musterlösung zeigen</button>
+                <button type="button" onclick="openTheory('${sec.tab}')" class="${btn} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
               </div>
+              ${h.tip ? `<div id="tip-${it.id}" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${h.tip}
+                ${words.length ? `<div class="mt-2 text-[11px] font-bold text-yellow-800">Diese Wörter helfen dir:</div>
+                <div class="flex flex-wrap gap-1 mt-1">${words.map(w => `<span class="px-2 py-0.5 rounded-full bg-white border border-yellow-300 text-xs font-semibold">${w}</span>`).join(' ')}</div>` : ''}
+              </div>` : ''}
+              <div id="chk-${it.id}" class="hidden rounded-lg border border-violet-300 bg-violet-50 p-3 text-sm text-slate-800"></div>
               <div id="sol-${it.id}" class="hidden rounded-lg border border-emerald-300 bg-emerald-50 p-3 text-sm text-slate-800 leading-relaxed">
                 <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 mb-1">Musterlösung</div>${it.sol}
               </div>
-            </div>`).join('')}
+              <label class="flex items-center gap-1.5 text-xs font-semibold text-emerald-800 cursor-pointer pt-1">
+                <input type="checkbox" data-key="blatt_ok_${it.id}" class="accent-emerald-600" ${A('blatt_ok_' + it.id) === true ? 'checked' : ''}> Das kann ich jetzt
+              </label>
+            </div>`;
+          }).join('')}
         </div>`).join('');
       updateBlattProgress();
     }
@@ -684,7 +823,7 @@
       if (!box) return;
       const show = box.classList.contains('hidden');
       box.classList.toggle('hidden', !show);
-      if (btn) btn.textContent = show ? '🙈 Musterlösung verstecken' : '👀 Musterlösung zeigen';
+      if (btn) btn.textContent = show ? btn.textContent.replace('👀', '🙈').replace('zeigen', 'verstecken') : btn.textContent.replace('🙈', '👀').replace('verstecken', 'zeigen');
     }
     function updateBlattProgress() {
       const el = document.getElementById('blatt-progress');
@@ -1074,7 +1213,7 @@
     // ==============================================================
     // START
     // ==============================================================
-    Object.assign(window, { switchTab, checkTask, evaluateFullExam, resetAll, toggleSolution });
+    Object.assign(window, { switchTab, checkTask, evaluateFullExam, resetAll, toggleSolution, toggleBox, insertStarters, checkText, openTheory });
 
     // Start sobald das HTML da ist – wartet NICHT auf Tailwind/Schriften
     function boot() {
