@@ -8,10 +8,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', sans-serif; }
-    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    .font-mono-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     input:focus, select:focus {
       outline: none;
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
@@ -21,6 +21,9 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .animate-fade-in { animation: fadeIn 0.25s ease-out forwards; }
+    /* Sprungziele nicht unter dem fixierten Kopf verstecken */
+    [data-task], #exam-results-banner, #spick-grammar details { scroll-margin-top: 15rem; }
+    @media (min-width: 640px) { [data-task], #exam-results-banner, #spick-grammar details { scroll-margin-top: 8rem; } }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
@@ -56,7 +59,7 @@
         <!-- Übungsfortschritt -->
         <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl border border-white/15 text-xs font-medium">
           <span class="text-sky-300">Fortschritt:</span>
-          <span id="header-stat" class="font-bold text-white font-mono-code bg-white/20 px-2 py-0.5 rounded-lg">0 / 210</span>
+          <span id="header-stat" class="font-bold text-white font-mono-code bg-white/20 px-2 py-0.5 rounded-lg">–</span>
         </div>
       </div>
     </div>
@@ -73,10 +76,10 @@
         <span>🔗</span> 3. Konjunktionen
       </button>
       <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/40">
-        <span>📝</span> Probeprüfung (30 P.)
+        <span>📝</span> <span>Probeprüfung (<span class="js-max-pts">–</span> P.)</span>
       </button>
       <button onclick="switchTab('voci')" id="tab-btn-voci" class="tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-sky-100 hover:bg-white/10">
-        <span>📖</span> Voci-Spickzettel
+        <span>📖</span> Spickzettel
       </button>
     </nav>
   </header>
@@ -101,7 +104,7 @@
           </div>
 
           <!-- Level Switcher -->
-          <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
+          <div class="flex flex-wrap items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
             <span class="text-slate-500 pl-2">Niveau:</span>
             <button onclick="selectLevel('tags', 1)" id="lvl-btn-tags-1" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white shadow-sm transition">
               Niveau 1 (Auswahl)
@@ -122,7 +125,9 @@
         </div>
       </div>
 
-      <!-- Exercise Container -->
+      <!-- Je Niveau eine Aufgabe mit 6 Blöcken à 5 Sätzen. Der aktive Block wird per JS hier eingefügt. -->
+      <!-- Aufgabe 1: Question Tags, Niveau 1 (Auswahl) | FS1E.5.D.1.c -->
+      <!-- Aufgabe 2: Question Tags, Niveau 2 (freie Eingabe) | FS1E.5.D.1.d -->
       <div id="container-tags" class="space-y-4"></div>
     </section>
 
@@ -143,7 +148,7 @@
           </div>
 
           <!-- Level Switcher -->
-          <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
+          <div class="flex flex-wrap items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
             <span class="text-slate-500 pl-2">Niveau:</span>
             <button onclick="selectLevel('will', 1)" id="lvl-btn-will-1" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-sm transition">
               Niveau 1 (Auswahl)
@@ -164,6 +169,8 @@
         </div>
       </div>
 
+      <!-- Aufgabe 3: Future with «will», Niveau 1 (Auswahl) | FS1E.5.D.2.b -->
+      <!-- Aufgabe 4: Future with «will», Niveau 2 (Lückentext) | FS1E.5.D.1.c -->
       <div id="container-will" class="space-y-4"></div>
     </section>
 
@@ -184,7 +191,7 @@
           </div>
 
           <!-- Level Switcher -->
-          <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
+          <div class="flex flex-wrap items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
             <span class="text-slate-500 pl-2">Niveau:</span>
             <button onclick="selectLevel('conj', 1)" id="lvl-btn-conj-1" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white shadow-sm transition">
               Niv. 1 (Auswahl)
@@ -208,27 +215,30 @@
         </div>
       </div>
 
+      <!-- Aufgabe 5: Konjunktionen, Niveau 1 (Auswahl) | FS1E.5.D.1.c -->
+      <!-- Aufgabe 6: Konjunktionen, Niveau 2 (Lückentext) | FS1E.5.D.1.d -->
+      <!-- Aufgabe 7: Konjunktionen, Niveau 3 (Satzbau) | FS1E.5.D.1.d -->
       <div id="container-conj" class="space-y-4"></div>
     </section>
 
     <!-- ============================================================== -->
-    <!-- TAB 4: PROBEPRÜFUNG (30 FRAGEN) -->
+    <!-- TAB 4: PROBEPRÜFUNG (Punkte werden aus TASKS berechnet) -->
     <!-- ============================================================== -->
     <section id="view-exam" class="tab-view hidden space-y-6 animate-fade-in">
       <div class="bg-gradient-to-br from-white to-amber-50/50 rounded-2xl p-5 sm:p-6 shadow-sm border border-amber-200">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-amber-100">
           <div>
             <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300 mb-1">
-              Testmodus · 30 Aufgaben · 30 Punkte · Schweizer Notenskala
+              <span>Testmodus · <span class="js-exam-items">–</span> Aufgaben · <span class="js-max-pts">–</span> Punkte · Schweizer Notenskala</span>
             </div>
             <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📝 Probeprüfung: Unit 1 Grammatik</h2>
             <p class="text-xs sm:text-sm text-slate-600 mt-1">
-              10 Question Tags + 10 Future with «will» + 10 Konjunktionen. Richtig = 1 Punkt, Falsch = 0 Punkte.
+              <span data-items="exam_tags">–</span> Question Tags + <span data-items="exam_will">–</span> Future with «will» + <span data-items="exam_conj">–</span> Konjunktionen. Richtig = 1 Punkt, Falsch = 0 Punkte.
             </p>
           </div>
-          <div class="text-right">
-            <div class="text-xs text-slate-600 font-medium">Bestehensgrenze: <strong>60%</strong> (18 P.)</div>
-            <div class="text-xs font-semibold text-emerald-700">75% = Gut (23 P.) · 90% = Sehr gut (27 P.)</div>
+          <div class="md:text-right">
+            <div class="text-xs text-slate-600 font-medium">Bestehensgrenze: <strong>60%</strong> (<span class="js-pass-pts">–</span> P. = Note 4.0)</div>
+            <div class="text-xs font-semibold text-emerald-700">75% = Gut (<span class="js-good-pts">–</span> P.) · 90% = Sehr gut (<span class="js-top-pts">–</span> P.)</div>
           </div>
         </div>
 
@@ -238,36 +248,36 @@
 
       <!-- Exam Questions Form -->
       <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-8" id="exam-content">
-        <!-- Part 1: Tags -->
-        <div class="space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <!-- Aufgabe 8: Probeprüfung Teil 1, Question Tags | FS1E.5.D.1.d -->
+        <div class="space-y-4" data-task="exam_tags">
+          <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-slate-100 pb-2">
             <h3 class="font-bold text-slate-800 flex items-center gap-2 text-base sm:text-lg">
               <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-xs font-bold">A</span>
-              Teil 1: Question Tags (10 Aufgaben · 10 Punkte)
+              <span>Teil 1: Question Tags (<span data-items="exam_tags">–</span> Aufgaben · <span data-max="exam_tags">–</span> Punkte)</span>
             </h3>
-            <span class="text-xs text-slate-500">Freie Eingabe (z.B. <code class="font-mono-code text-blue-700">aren't you</code>)</span>
+            <span class="text-xs text-slate-500">Freie Eingabe: Hilfsverb + Pronomen (z.B. <code class="font-mono-code text-blue-700">isn't she</code>)</span>
           </div>
           <div id="exam-list-tags" class="space-y-3"></div>
         </div>
 
-        <!-- Part 2: Future with will -->
-        <div class="space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <!-- Aufgabe 9: Probeprüfung Teil 2, Future with «will» | FS1E.5.D.1.c -->
+        <div class="space-y-4" data-task="exam_will">
+          <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-slate-100 pb-2">
             <h3 class="font-bold text-slate-800 flex items-center gap-2 text-base sm:text-lg">
               <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center text-xs font-bold">B</span>
-              Teil 2: Future with «will» (10 Aufgaben · 10 Punkte)
+              <span>Teil 2: Future with «will» (<span data-items="exam_will">–</span> Aufgaben · <span data-max="exam_will">–</span> Punkte)</span>
             </h3>
             <span class="text-xs text-slate-500">Formen bilden (+ / – / ?) im Testformat</span>
           </div>
           <div id="exam-list-will" class="space-y-3"></div>
         </div>
 
-        <!-- Part 3: Conjunctions -->
-        <div class="space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <!-- Aufgabe 10: Probeprüfung Teil 3, Konjunktionen | FS1E.5.D.1.d -->
+        <div class="space-y-4" data-task="exam_conj">
+          <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-slate-100 pb-2">
             <h3 class="font-bold text-slate-800 flex items-center gap-2 text-base sm:text-lg">
               <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold">C</span>
-              Teil 3: Konjunktionen (10 Aufgaben · 10 Punkte)
+              <span>Teil 3: Konjunktionen (<span data-items="exam_conj">–</span> Aufgaben · <span data-max="exam_conj">–</span> Punkte)</span>
             </h3>
             <span class="text-xs text-slate-500">so, so ... that, in order to, because, (either) ... or</span>
           </div>
@@ -279,9 +289,9 @@
           <div class="text-xs text-slate-500">
             Klicke auf «Prüfung abgeben», um die Note und detaillierte Fehler-Tipps zu erhalten.
           </div>
-          <div class="flex items-center gap-3 w-full sm:w-auto">
+          <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
             <button onclick="resetExam()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 text-sm font-semibold transition w-full sm:w-auto">
-              Test zurücksetzen
+              🔀 Test leeren & neu mischen
             </button>
             <button onclick="submitExam()" id="exam-submit-btn" class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold shadow-md transition w-full sm:w-auto flex items-center justify-center gap-2">
               <span>🚀</span> Prüfung abgeben & auswerten
@@ -292,16 +302,26 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- TAB 5: VOCABULARY GLOSSARY -->
+    <!-- TAB 5: SPICKZETTEL (GRAMMATIK + VOCI) -->
     <!-- ============================================================== -->
     <section id="view-voci" class="tab-view hidden space-y-6 animate-fade-in">
+      <!-- Grammatik-Spickzettel: Inhalt kommt aus THEORY (gleicher Text wie beim Knopf «📖 Theorie») -->
+      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-100 text-sky-800 border border-sky-200 mb-1">
+          LZ 1 bis LZ 4 · Grammatik
+        </div>
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📖 Grammatik-Spickzettel</h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1">Die Regeln zu Question Tags, «will» und Konjunktionen. Antippen zum Öffnen.</p>
+        <div id="spick-grammar" class="mt-4 space-y-3"></div>
+      </div>
+
       <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div>
             <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-100 text-purple-800 border border-purple-200 mb-1">
               LZ 5 · Open World 2 · Unit 1
             </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📖 Voci-Spickzettel (40 Wörter)</h2>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📖 Voci-Spickzettel (<span id="voci-count">–</span> Wörter)</h2>
             <p class="text-xs sm:text-sm text-slate-600 mt-1">
               Wortschatz aus den beiden Vokabeltests rund um Flughafen, Fliegen, Wettbewerb und Pioniere.
             </p>
@@ -336,7 +356,7 @@
   <!-- JavaScript Application Logic -->
   <script>
     // ==========================================================
-    // DATA STORE: 40 VOCABULARY ITEMS (OPEN WORLD 2 UNIT 1)
+    // WORTSCHATZ (OPEN WORLD 2 UNIT 1), Anzahl wird gezählt
     // ==========================================================
     const VOCABULARY = [
       // Part 1
@@ -397,7 +417,7 @@
     ];
 
     // ==========================================================
-    // EXERCISE DATABASE: 210 ITEMS (ORGANIZED IN 5-QUESTION BLOCKS)
+    // ÜBUNGEN: je Niveau 30 Sätze in 6 Blöcken à 5 (Punkte: siehe TASKS)
     // ==========================================================
     const DB = {
       // --------------------------------------------------------
@@ -696,7 +716,7 @@
     };
 
     // ==========================================================
-    // PROBEPRÜFUNG DATA: EXACTLY 30 ITEMS (10 + 10 + 10)
+    // PROBEPRÜFUNG: 10 + 10 + 10 Sätze (Punkte: siehe TASKS)
     // ==========================================================
     const EXAM_DATA = {
       tags: [
@@ -735,6 +755,120 @@
         { id: "ec_9", s: "The announcement was [so / because / either] ... quiet that nobody heard it.", c: "so", r: "«so + quiet + that»" },
         { id: "ec_10", s: "Please show [either / so / because] ... your passport or your ID card.", c: "either", r: "«either ... or»" }
       ]
+    };
+
+    // ==========================================================
+    // AUFGABEN: eine Aufgabe pro Niveau (6 Blöcke à 5 Sätze)
+    // Lehrplan-Code steht auch im Aufgaben-Kommentar im HTML (bei den Containern).
+    // Tipps: Leitfragen und Regel-Erinnerung, verraten nie die Lösung.
+    // ==========================================================
+    const TIP_TAGS = `
+      <p>Ein Question Tag ist wie ein Echo, das umgekehrt zurückkommt. Frag dich der Reihe nach:</p>
+      <ol class="list-decimal pl-5 space-y-0.5 mt-1">
+        <li>Ist der Satz <b>positiv</b>? Oder steht schon ein <b>not / n't</b> drin? Das Echo macht es umgekehrt.</li>
+        <li>Welches <b>Hilfsverb</b> steht im Satz (z.B. <i>is, are, was, can, will, must, have</i>)? Steht keines da, brauchst du eine Form von <b>do</b>. Welche Zeit hat der Satz: heute oder gestern?</li>
+        <li>Wer ist gemeint? Am Schluss steht immer ein <b>Pronomen</b> (<i>I, you, he, she, it, we, they</i>), nie ein Name.</li>
+      </ol>`;
+    const TIP_WILL = `
+      <p>Schau zuerst auf das Zeichen in der Klammer:</p>
+      <ul class="list-disc pl-5 space-y-0.5 mt-1">
+        <li><b>(+)</b> Aussage: Was wird in der Zukunft passieren?</li>
+        <li><b>(–)</b> Verneinung: Was wird <i>nicht</i> passieren? Welche Kurzform von <i>will not</i> kennst du?</li>
+        <li><b>(?)</b> Frage: Welches Wort steht bei einer Frage ganz vorne? Wo steht dann die Person?</li>
+      </ul>
+      <p class="mt-1">Prüfe am Schluss das Verb nach <b>will</b>: Hat es ein <i>-s, -ed, -ing</i> oder ein <i>to</i>? Wie im Deutschen: «Ich werde gehen», nicht «Ich werde gehst».</p>`;
+    const TIP_CONJ = `
+      <p>Übersetze den Satz im Kopf auf Deutsch. Was gehört in die Lücke?</p>
+      <ul class="list-disc pl-5 space-y-0.5 mt-1">
+        <li>ein <b>Grund</b> («weil …»)?</li>
+        <li>eine <b>Folge</b> («deshalb …»)?</li>
+        <li>ein <b>Ziel</b> («um … zu …»)?</li>
+        <li>eine <b>Auswahl</b> («entweder … oder …»)?</li>
+      </ul>
+      <p class="mt-1">Schau auch auf die Nachbarn der Lücke: Kommt gleich danach ein Verb in der Grundform? Steht weiter hinten <i>that</i> oder <i>or</i>? Manche Bindewörter haben einen Partner im Satz.</p>`;
+
+    const LEVELS = {
+      tags_1: { nr: 1, cat: 'tags', title: 'Question Tags · Niveau 1 (Auswahl)', code: 'FS1E.5.D.1.c',
+        intro: 'Wähle im Menü den passenden Question Tag.',
+        tip: TIP_TAGS + `<p class="mt-1">Streiche zuerst die Antworten, die sicher nicht passen.</p>` },
+      tags_2: { nr: 2, cat: 'tags', title: 'Question Tags · Niveau 2 (freie Eingabe)', code: 'FS1E.5.D.1.d',
+        intro: 'Schreib den passenden Question Tag ins Feld: Hilfsverb + Pronomen.',
+        tip: TIP_TAGS + `<p class="mt-1">Du schreibst zwei Wörter. Das Fragezeichen kannst du weglassen.</p>` },
+      will_1: { nr: 3, cat: 'will', title: 'Future with «will» · Niveau 1 (Auswahl)', code: 'FS1E.5.D.2.b',
+        intro: 'Wähle die richtige Form mit «will». (+) = Aussage, (–) = Verneinung, (?) = Frage.',
+        tip: TIP_WILL },
+      will_2: { nr: 4, cat: 'will', title: 'Future with «will» · Niveau 2 (Lückentext)', code: 'FS1E.5.D.1.c',
+        intro: 'Schreib die richtige Form mit «will» ins Feld. (+) = Aussage, (–) = Verneinung, (?) = Frage.',
+        tip: TIP_WILL + `<p class="mt-1">Schreib alles, was an Stelle der Klammer steht. Bei einer Frage gehört auch die Person dazu.</p>` },
+      conj_1: { nr: 5, cat: 'conj', title: 'Konjunktionen · Niveau 1 (Auswahl)', code: 'FS1E.5.D.1.c',
+        intro: 'Wähle das passende Bindewort für die Lücke (…).',
+        tip: TIP_CONJ },
+      conj_2: { nr: 6, cat: 'conj', title: 'Konjunktionen · Niveau 2 (Lückentext)', code: 'FS1E.5.D.1.d',
+        intro: 'Schreib das passende Bindewort aus der Klammer ins Feld.',
+        tip: TIP_CONJ + `<p class="mt-1">Die Antwort steht in der eckigen Klammer. Probier jedes Wort im Kopf aus.</p>` },
+      conj_3: { nr: 7, cat: 'conj', title: 'Konjunktionen · Niveau 3 (Satzbau)', code: 'FS1E.5.D.1.d',
+        intro: 'Verbinde die zwei Sätze. Schreib nur das fehlende Bindewort ins Feld.',
+        tip: `
+          <p>Lies zuerst die zwei kurzen Sätze. Wie hängen sie zusammen?</p>
+          <ul class="list-disc pl-5 space-y-0.5 mt-1">
+            <li>Ist der zweite Satz der <b>Grund</b> für den ersten?</li>
+            <li>Ist er die <b>Folge</b> davon?</li>
+            <li>Will jemand etwas <b>erreichen</b> (ein Ziel)?</li>
+            <li>Gibt es <b>zwei Möglichkeiten</b> zur Auswahl?</li>
+          </ul>
+          <p class="mt-1">Steht ein Bindewort in Klammern, hilft es dir. Schau, welcher Teil davon bei den Punkten … noch fehlt. Schreib nur dieses Wort, nicht den ganzen Satz.</p>` }
+    };
+
+    // Probeprüfung: drei Teile, je eine Aufgabe
+    const EXAM_PARTS = {
+      tags: { nr: 8, letter: 'A', label: '🏷️ Question Tags', code: 'FS1E.5.D.1.d', bar: 'bg-blue-600',
+        placeholder: 'Hilfsverb + Pronomen', input: 'w-full sm:w-48 focus:ring-blue-500',
+        tip: TIP_TAGS + `<p class="mt-1">Du schreibst zwei Wörter. Das Fragezeichen kannst du weglassen.</p>` },
+      will: { nr: 9, letter: 'B', label: '🔮 Future with «will»', code: 'FS1E.5.D.1.c', bar: 'bg-indigo-600',
+        placeholder: "will / won't Form", input: 'w-full sm:w-48 focus:ring-indigo-500',
+        tip: TIP_WILL + `<p class="mt-1">Schreib alles, was an Stelle der Klammer steht. Bei einer Frage gehört auch die Person dazu.</p>` },
+      conj: { nr: 10, letter: 'C', label: '🔗 Konjunktionen', code: 'FS1E.5.D.1.d', bar: 'bg-emerald-600',
+        placeholder: 'Bindewort', input: 'w-full sm:w-36 focus:ring-emerald-500',
+        tip: TIP_CONJ + `<p class="mt-1">Die Antwort steht in der eckigen Klammer. Probier jedes Wort im Kopf aus.</p>` }
+    };
+
+    // ==========================================================
+    // THEORIE (für den Knopf «📖 Theorie» und den Spickzettel)
+    // ==========================================================
+    const THEORY = {
+      tags: { title: 'Question Tags', html: `
+        <p><b>Question Tags</b> sind kurze Fragen am Satzende. Auf Deutsch sagst du «…, oder?» oder «…, nicht wahr?».</p>
+        <ul class="list-disc pl-5 space-y-1 mt-1">
+          <li><b>Satz positiv (+) → Tag negativ (–):</b> <i>Lisa is funny, isn't she?</i></li>
+          <li><b>Satz negativ (–) → Tag positiv (+):</b> <i>Lisa isn't funny, is she?</i></li>
+          <li><b>Hilfsverb aus dem Satz nehmen:</b> <i>is, are, was, were, can, must, will, have</i> → <i>isn't, aren't, wasn't, weren't, can't, mustn't, won't, haven't</i>.</li>
+          <li><b>Kein Hilfsverb im Satz?</b> Dann <i>do / does / did</i>: <i>You like dogs, don't you?</i> · <i>Sam likes dogs, doesn't he?</i> · <i>They liked the film, didn't they?</i></li>
+          <li><b>Am Schluss immer ein Pronomen</b> (<i>I, you, he, she, it, we, they</i>), nie ein Name: <i>My bike is new, isn't it?</i></li>
+        </ul>` },
+      will: { title: 'Future with «will»', html: `
+        <p>Mit <b>will</b> sprichst du über die Zukunft: Vorhersagen, Versprechen und spontane Entscheide. Im Deutschen heisst das «werden».</p>
+        <div class="overflow-x-auto mt-1">
+          <table class="text-xs sm:text-sm border border-slate-200 bg-white rounded">
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold">(+)</td><td class="p-1.5">Person + <b>will</b> + Verb</td><td class="p-1.5"><i>I will (I'll) read.</i></td></tr>
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold">(–)</td><td class="p-1.5">Person + <b>won't</b> + Verb</td><td class="p-1.5"><i>I won't (will not) read.</i></td></tr>
+            <tr><td class="p-1.5 font-bold">(?)</td><td class="p-1.5"><b>Will</b> + Person + Verb …?</td><td class="p-1.5"><i>Will you read?</i></td></tr>
+          </table>
+        </div>
+        <ul class="list-disc pl-5 space-y-1 mt-2">
+          <li>Nach <i>will / won't</i> kommt die <b>Grundform</b>: <i>will read</i>, nicht <i>will reads / will reading / will to read</i>.</li>
+          <li><i>will</i> ist für alle Personen gleich: <i>I will, she will, they will</i> (kein -s).</li>
+          <li>Vergleich Deutsch: «Ich werde morgen <u>lesen</u>.» Im Englischen steht das Verb direkt nach will: <i>I will <u>read</u> tomorrow.</i></li>
+        </ul>` },
+      conj: { title: 'Konjunktionen (Bindewörter)', html: `
+        <div class="overflow-x-auto">
+          <table class="text-xs sm:text-sm border border-slate-200 bg-white rounded">
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold">because</td><td class="p-1.5">weil (Grund)</td><td class="p-1.5"><i>I stayed at home because I was ill.</i></td></tr>
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold">so</td><td class="p-1.5">deshalb (Folge)</td><td class="p-1.5"><i>I was hungry, so I made a sandwich.</i></td></tr>
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold">so … that</td><td class="p-1.5">so …, dass</td><td class="p-1.5"><i>The pizza was so big that we shared it.</i></td></tr>
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold">in order to</td><td class="p-1.5">um … zu (Ziel) + Grundform</td><td class="p-1.5"><i>I got up early in order to see the sunrise.</i></td></tr>
+            <tr><td class="p-1.5 font-bold">(either) … or</td><td class="p-1.5">entweder … oder (Auswahl)</td><td class="p-1.5"><i>We can watch either a film or a match.</i></td></tr>
+          </table>
+        </div>` }
     };
 
     // ==========================================================
@@ -919,126 +1053,10 @@
       renderSection(sectionKey);
     }
 
-    // Render regular exercise section
-    // Antworten in Auswahlmenüs zufällig mischen (bei jedem Laden neu, beim Blättern gleich)
-    const OPTION_ORDER = {};
-    function shuffledOptions(item) {
-      if (!OPTION_ORDER[item.id]) {
-        const copy = [...item.options];
-        for (let i = copy.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [copy[i], copy[j]] = [copy[j], copy[i]];
-        }
-        OPTION_ORDER[item.id] = copy;
-      }
-      return OPTION_ORDER[item.id];
-    }
-
-    function renderSection(sectionKey) {
-      const items = DB[sectionKey];
-      if (!items) return;
-
-      const cat = sectionKey.split('_')[0];
-      const currentBlockIndex = STATE.currentBlock[sectionKey] || 0;
-      const totalBlocks = Math.ceil(items.length / 5);
-
-      // Render Block Pills
-      const pillsContainer = document.getElementById(`block-pills-${cat}`);
-      if (pillsContainer) {
-        let pillsHtml = '';
-        for (let b = 0; b < totalBlocks; b++) {
-          const isActive = b === currentBlockIndex;
-          const bg = isActive ? 'bg-slate-800 text-white font-bold' : 'bg-white text-slate-600 hover:bg-slate-200';
-          pillsHtml += `
-            <button onclick="goToBlock('${sectionKey}', ${b})" class="w-7 h-7 rounded-lg text-xs flex items-center justify-center border border-slate-200 transition ${bg}">
-              ${b + 1}
-            </button>
-          `;
-        }
-        pillsContainer.innerHTML = pillsHtml;
-      }
-
-      // Slice current 5 items
-      const startIdx = currentBlockIndex * 5;
-      const currentItems = items.slice(startIdx, startIdx + 5);
-
-      const container = document.getElementById(`container-${cat}`);
-      if (!container) return;
-
-      let html = `
-        <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-5">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-            <span class="text-xs sm:text-sm font-bold text-slate-700 flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-              Aufgaben ${startIdx + 1} bis ${startIdx + currentItems.length} (Block ${currentBlockIndex + 1} von ${totalBlocks})
-            </span>
-            <span class="text-xs text-slate-400 font-mono-code">${currentItems.length} Sätze</span>
-          </div>
-          <div class="space-y-3.5">
-      `;
-
-      currentItems.forEach((item, idx) => {
-        const itemNumber = startIdx + idx + 1;
-        const savedVal = STATE.userAnswers[item.id] || "";
-
-        html += `
-          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition" id="item-${item.id}">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-              <div class="flex items-center gap-2.5 flex-1">
-                <span class="text-xs font-bold text-slate-500 w-5">${itemNumber}.</span>
-                <span class="text-sm font-medium text-slate-800">${item.sentence}</span>
-              </div>
-              <div class="sm:w-56 shrink-0">
-        `;
-
-        if (item.type === 'dropdown') {
-          html += `
-            <select id="input-${item.id}" onchange="saveAns('${item.id}', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500">
-              <option value="">-- wählen --</option>
-              ${shuffledOptions(item).map(opt => `<option value="${opt}" ${savedVal === opt ? 'selected' : ''}>${opt}</option>`).join('')}
-            </select>
-          `;
-        } else {
-          html += `
-            <input type="text" id="input-${item.id}" value="${escAttr(savedVal)}" oninput="saveAns('${item.id}', this.value)" placeholder="Deine Antwort..." class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500" />
-          `;
-        }
-
-        html += `
-              </div>
-            </div>
-            <div id="feedback-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
-          </div>
-        `;
-      });
-
-      // Actions Toolbar
-      html += `
-          </div>
-          <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-2">
-              <button onclick="checkBlock('${sectionKey}')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-sm transition flex items-center gap-1.5">
-                <span>✓</span> Überprüfen (5 Aufgaben)
-              </button>
-              <button onclick="toggleSolution('${sectionKey}')" id="btn-sol-${sectionKey}" class="px-3.5 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs sm:text-sm font-semibold transition">
-                💡 Lösungen anzeigen
-              </button>
-              <button onclick="resetBlock('${sectionKey}')" class="px-3 py-2 rounded-xl text-slate-500 hover:text-slate-800 text-xs font-semibold transition">
-                Zurücksetzen
-              </button>
-            </div>
-            <div class="flex items-center gap-2">
-              ${currentBlockIndex > 0 ? `<button onclick="goToBlock('${sectionKey}', ${currentBlockIndex - 1})" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-100">← Vorherige 5</button>` : ''}
-              ${currentBlockIndex < totalBlocks - 1 ? `<button onclick="goToBlock('${sectionKey}', ${currentBlockIndex + 1})" class="px-3 py-1.5 rounded-lg bg-slate-800 text-white text-xs font-semibold hover:bg-slate-900">Nächste 5 →</button>` : ''}
-            </div>
-          </div>
-        </div>
-      `;
-
-      container.innerHTML = html;
-    }
-
-    // AUTO-SAVE: Antworten bleiben im Browser gespeichert
+    // ==========================================================
+    // SPEICHERN (Schlüssel und Format bleiben gleich wie früher)
+    // Antworten hängen an der ID der Frage, nicht an der Position.
+    // ==========================================================
     const SAVE_KEY = 'openworld2_unit1_answers';
     function persist() {
       try {
@@ -1062,45 +1080,283 @@
     function saveAns(id, val) {
       STATE.userAnswers[id] = val;
       persist();
+      updateOverallStats();
+    }
+    function saveExamAns(id, val) {
+      STATE.examAnswers[id] = val;
+      persist();
     }
 
-    // Check 5 items in a block with diagnostic engine
-    function checkBlock(sectionKey) {
+    // ==========================================================
+    // BEWERTUNG: eine Quelle für «Prüfen» UND die Probeprüfung
+    // TASKS: ein Eintrag pro 5er-Block (Übung) und pro Teil (Probeprüfung)
+    // ==========================================================
+    const BLOCK_SIZE = 5;
+    // Erlaubte Lösungen einer Frage (Übung: correct / answers, Probeprüfung: c / alt)
+    function acceptedAnswers(item) {
+      if (item.c) return [item.c, ...(item.alt || [])];
+      return item.type === 'dropdown' ? [item.correct] : item.answers;
+    }
+    function itemOk(task, item) {
+      const u = normalize(STATE[task.store][item.id] || '');
+      return u !== '' && acceptedAnswers(item).some(a => normalize(a) === u);
+    }
+
+    const TASKS = {};
+    Object.keys(DB).forEach(sec => {
+      for (let b = 0; b * BLOCK_SIZE < DB[sec].length; b++) {
+        const items = DB[sec].slice(b * BLOCK_SIZE, (b + 1) * BLOCK_SIZE);
+        const t = { kind: 'practice', sec, cat: LEVELS[sec].cat, block: b, items, store: 'userAnswers', max: items.length };
+        t.score = () => items.filter(it => itemOk(t, it)).length;
+        TASKS[`${sec}_b${b + 1}`] = t;
+      }
+    });
+    Object.keys(EXAM_DATA).forEach(cat => {
+      const items = EXAM_DATA[cat];
+      const t = { kind: 'exam', cat, items, store: 'examAnswers', max: items.length };
+      t.score = () => items.filter(it => itemOk(t, it)).length;
+      TASKS[`exam_${cat}`] = t;
+    });
+    const PRACTICE_TASKS = Object.entries(TASKS).filter(([, t]) => t.kind === 'practice');
+    const EXAM_TASKS = Object.entries(TASKS).filter(([, t]) => t.kind === 'exam');
+    const PRACTICE_MAX = PRACTICE_TASKS.reduce((s, [, t]) => s + t.max, 0);
+    const PRACTICE_ITEMS = PRACTICE_TASKS.reduce((s, [, t]) => s + t.items.length, 0);
+    const EXAM_ITEMS = EXAM_TASKS.reduce((s, [, t]) => s + t.items.length, 0);
+    const MAX_POINTS = EXAM_TASKS.reduce((s, [, t]) => s + t.max, 0);
+    const PASS_POINTS = Math.ceil(MAX_POINTS * 0.6);   // Note 4.0
+    const GOOD_POINTS = Math.ceil(MAX_POINTS * 0.75);
+    const TOP_POINTS = Math.ceil(MAX_POINTS * 0.9);
+    // Schweizer Note: Punkte ÷ Total × 5 + 1, auf 0.1 gerundet
+    const gradeOf = (pts, max) => Math.round((pts / max * 5 + 1) * 10) / 10;
+
+    // ==========================================================
+    // MISCHEN: Reihenfolge der Sätze, Antworten im Menü und Wörter in [ … ]
+    // ==========================================================
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+    // Neu mischen, aber sicher anders als vorher (damit «Nochmals üben» sichtbar mischt)
+    function shuffleNew(arr, prev) {
+      let next = shuffleArray(arr);
+      for (let i = 0; i < 20 && prev && arr.length > 1 && next.every((x, k) => x === prev[k]); i++) next = shuffleArray(arr);
+      return next;
+    }
+    const ORDER = {};         // Aufgabe → Sätze in angezeigter Reihenfolge
+    const OPTION_ORDER = {};  // Frage-ID → Antworten im Auswahlmenü
+    const BRACKET = {};       // Frage-ID → Satz mit gemischten Wörtern in [ … ]
+    function shuffleTask(id) {
+      const t = TASKS[id];
+      ORDER[id] = shuffleNew(t.items, ORDER[id]);
+      t.items.forEach(it => {
+        if (it.options) OPTION_ORDER[it.id] = shuffleNew(it.options, OPTION_ORDER[it.id]);
+        delete BRACKET[it.id];
+      });
+    }
+    function sentenceOf(item) {
+      const text = item.sentence || item.s;
+      if (!/\[[^\]]+\]/.test(text)) return text;
+      if (!BRACKET[item.id]) {
+        BRACKET[item.id] = text.replace(/\[([^\]]+)\]/, (m, inner) => '[' + shuffleArray(inner.split(' / ')).join(' / ') + ']');
+      }
+      return BRACKET[item.id];
+    }
+
+    // ==========================================================
+    // TIPP- UND THEORIE-KASTEN
+    // ==========================================================
+    const BTN_SMALL = 'px-2.5 py-2 rounded-xl text-xs font-bold border transition';
+    function tipBox(id, tip) {
+      return `<div id="tip-${id}" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${tip}</div>`;
+    }
+    function theoryBox(id, cat) {
+      return `<div id="theory-${id}" class="hidden rounded-lg border border-sky-200 bg-sky-50/70 p-3 text-sm text-slate-700 leading-relaxed">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-sky-800 mb-1">📖 Theorie: ${THEORY[cat].title}</div>
+          ${THEORY[cat].html}
+          <button type="button" onclick="openSpick('${cat}')" class="mt-2 px-2.5 py-1.5 rounded-lg text-xs font-bold border bg-white border-sky-300 text-sky-800 hover:bg-sky-100">Zum ganzen Spickzettel →</button>
+        </div>`;
+    }
+    function taskButtons(id) {
+      return `
+              <button type="button" onclick="toggleBox('tip','${id}')" class="${BTN_SMALL} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>
+              <button type="button" onclick="openTheory('${id}')" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
+              <button type="button" onclick="retryTask('${id}')" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>`;
+    }
+    function toggleBox(prefix, id) {
+      const box = document.getElementById(`${prefix}-${id}`);
+      if (box) box.classList.toggle('hidden');
+      return box;
+    }
+    function openTheory(id) {
+      const box = toggleBox('theory', id);
+      if (box && !box.classList.contains('hidden')) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    // Springt zum Grammatik-Spickzettel und öffnet das passende Kapitel
+    function openSpick(cat) {
+      switchTab('voci');
+      const d = document.getElementById(`spick-${cat}`);
+      if (d) { d.open = true; setTimeout(() => d.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); }
+    }
+    function renderSpick() {
+      const box = document.getElementById('spick-grammar');
+      if (!box) return;
+      box.innerHTML = Object.entries(THEORY).map(([cat, th]) => `
+        <details id="spick-${cat}" class="rounded-xl border border-sky-200 bg-sky-50/60 p-3">
+          <summary class="text-sm font-bold text-sky-900 cursor-pointer">📖 ${th.title}</summary>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">${th.html}</div>
+        </details>`).join('');
+    }
+
+    // ==========================================================
+    // ÜBUNGEN: aktiven 5er-Block darstellen
+    // ==========================================================
+    function currentTaskId(sectionKey) {
+      return `${sectionKey}_b${(STATE.currentBlock[sectionKey] || 0) + 1}`;
+    }
+
+    function renderSection(sectionKey) {
       const items = DB[sectionKey];
+      if (!items) return;
+
+      const lv = LEVELS[sectionKey];
+      const cat = lv.cat;
       const currentBlockIndex = STATE.currentBlock[sectionKey] || 0;
-      const startIdx = currentBlockIndex * 5;
-      const currentItems = items.slice(startIdx, startIdx + 5);
+      const totalBlocks = Math.ceil(items.length / BLOCK_SIZE);
+      const id = currentTaskId(sectionKey);
+      const t = TASKS[id];
 
-      let correct = 0;
-      const category = sectionKey.split('_')[0];
+      // Block-Knöpfe 1–6
+      const pillsContainer = document.getElementById(`block-pills-${cat}`);
+      if (pillsContainer) {
+        let pillsHtml = '';
+        for (let b = 0; b < totalBlocks; b++) {
+          const isActive = b === currentBlockIndex;
+          const bg = isActive ? 'bg-slate-800 text-white font-bold' : 'bg-white text-slate-600 hover:bg-slate-200';
+          pillsHtml += `
+            <button onclick="goToBlock('${sectionKey}', ${b})" class="w-7 h-7 rounded-lg text-xs flex items-center justify-center border border-slate-200 transition ${bg}">
+              ${b + 1}
+            </button>
+          `;
+        }
+        pillsContainer.innerHTML = pillsHtml;
+      }
 
-      currentItems.forEach(item => {
+      const startIdx = currentBlockIndex * BLOCK_SIZE;
+      const container = document.getElementById(`container-${cat}`);
+      if (!container) return;
+
+      let html = `
+        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 space-y-4" data-task="${id}">
+          <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
+            <div class="min-w-0">
+              <h3 class="text-sm sm:text-base font-black text-slate-900">${lv.title} · Block ${currentBlockIndex + 1} von ${totalBlocks}</h3>
+              <p class="text-xs sm:text-sm text-slate-600 mt-0.5">${lv.intro}</p>
+            </div>
+            <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800">${t.max} P.</span>
+          </div>
+          <div class="space-y-3.5">
+      `;
+
+      // Nummern 1., 2., … folgen der gemischten Reihenfolge
+      ORDER[id].forEach((item, idx) => {
+        const itemNumber = startIdx + idx + 1;
+        const savedVal = STATE.userAnswers[item.id] || "";
+
+        html += `
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition" id="item-${item.id}" data-item="${item.id}">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div class="flex items-start gap-2.5 flex-1 min-w-0">
+                <span class="text-xs font-bold text-slate-500 w-5 shrink-0 pt-0.5">${itemNumber}.</span>
+                <span class="text-sm font-medium text-slate-800 break-words min-w-0">${sentenceOf(item)}</span>
+              </div>
+              <div class="sm:w-56 shrink-0">
+        `;
+
+        if (item.type === 'dropdown') {
+          html += `
+            <select id="input-${item.id}" onchange="saveAns('${item.id}', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500">
+              <option value="">-- wählen --</option>
+              ${OPTION_ORDER[item.id].map(opt => `<option value="${opt}" ${savedVal === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+            </select>
+          `;
+        } else {
+          html += `
+            <input type="text" id="input-${item.id}" value="${escAttr(savedVal)}" oninput="saveAns('${item.id}', this.value)" placeholder="Deine Antwort..." autocomplete="off" autocapitalize="off" spellcheck="false" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500" />
+          `;
+        }
+
+        html += `
+              </div>
+            </div>
+            <div id="feedback-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
+          </div>
+        `;
+      });
+
+      // Knöpfe
+      html += `
+          </div>
+          ${tipBox(id, lv.tip)}
+          ${theoryBox(id, cat)}
+          <div class="pt-3 border-t border-slate-100 space-y-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="checkBlock('${sectionKey}')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-sm transition flex items-center gap-1.5">
+                <span>✓</span> Block ${currentBlockIndex + 1} prüfen
+              </button>
+              ${taskButtons(id)}
+              <button onclick="toggleSolution('${sectionKey}')" id="btn-sol-${sectionKey}" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">
+                👀 Lösungen anzeigen
+              </button>
+            </div>
+            <div id="fb-${id}" class="text-xs font-semibold"></div>
+            <div class="flex flex-wrap items-center justify-end gap-2">
+              ${currentBlockIndex > 0 ? `<button onclick="goToBlock('${sectionKey}', ${currentBlockIndex - 1})" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-100">← Vorherige 5</button>` : ''}
+              ${currentBlockIndex < totalBlocks - 1 ? `<button onclick="goToBlock('${sectionKey}', ${currentBlockIndex + 1})" class="px-3 py-1.5 rounded-lg bg-slate-800 text-white text-xs font-semibold hover:bg-slate-900">Nächste 5 →</button>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    // Rückmeldung unter der Aufgabe (Punkte kommen immer aus TASKS)
+    function setTaskFeedback(id) {
+      const t = TASKS[id], pts = t.score(), max = t.max;
+      const fb = document.getElementById(`fb-${id}`);
+      if (fb) {
+        fb.textContent = pts === max
+          ? `🌟 ${pts}/${max} Punkte: Alles richtig! Mit «🔀 Nochmals üben» kannst du neu gemischt wiederholen.`
+          : `${pts}/${max} Punkte. Rot = noch falsch. Brauchst du Hilfe? Drück auf «💡 Tipp» oder «📖 Theorie».`;
+        fb.className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-amber-700';
+      }
+      return pts;
+    }
+
+    // Einen 5er-Block prüfen (mit Fehler-Diagnose)
+    function checkBlock(sectionKey) {
+      const id = currentTaskId(sectionKey);
+      const t = TASKS[id];
+
+      t.items.forEach(item => {
         const itemEl = document.getElementById(`item-${item.id}`);
         const fbEl = document.getElementById(`feedback-${item.id}`);
         const userRaw = STATE.userAnswers[item.id] || "";
-        const userNorm = normalize(userRaw);
 
-        let isRight = false;
-        if (item.type === 'dropdown') {
-          isRight = normalize(item.correct) === userNorm;
-        } else {
-          isRight = item.answers.some(ans => normalize(ans) === userNorm);
-        }
-
-        if (isRight) {
-          correct++;
-          if (itemEl) {
-            itemEl.className = "p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-300 transition";
-          }
+        if (itemOk(t, item)) {
+          if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-300 transition";
           if (fbEl) {
             fbEl.className = "text-xs font-semibold text-emerald-800 block mt-2 pt-2 border-t border-emerald-200";
             fbEl.innerHTML = `✅ <strong>Richtig!</strong> ${item.rule}`;
           }
         } else {
-          if (itemEl) {
-            itemEl.className = "p-3.5 rounded-xl bg-rose-50/70 border border-rose-300 transition";
-          }
-          const diagHint = getDiagnosticFeedback(category, item.sentence, userRaw, item.type === 'dropdown' ? item.correct : item.answers[0]);
+          if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-rose-50/70 border border-rose-300 transition";
+          const diagHint = getDiagnosticFeedback(t.cat, item.sentence, userRaw, acceptedAnswers(item)[0]);
           if (fbEl) {
             fbEl.className = "text-xs text-rose-800 block mt-2 pt-2 border-t border-rose-200 space-y-1.5";
             fbEl.innerHTML = `
@@ -1111,24 +1367,21 @@
         }
       });
 
+      const pts = setTaskFeedback(id), max = t.max;
       updateOverallStats();
       showToast(
-        correct === 5 ? "🌟 Perfekt!" : (correct >= 3 ? "👍 Gut gemacht!" : "💪 Weiter üben!"),
-        `Du hast ${correct} von 5 Aufgaben in diesem Block richtig.`
+        pts === max ? "🌟 Perfekt!" : (pts >= Math.ceil(max * 0.6) ? "👍 Gut gemacht!" : "💪 Weiter üben!"),
+        `Du hast ${pts} von ${max} Punkten in diesem Block.`
       );
     }
 
-    // Toggle solutions in block
+    // Lösungen im Block ein- und ausblenden
     function toggleSolution(sectionKey) {
-      const items = DB[sectionKey];
-      const currentBlockIndex = STATE.currentBlock[sectionKey] || 0;
-      const startIdx = currentBlockIndex * 5;
-      const currentItems = items.slice(startIdx, startIdx + 5);
-
+      const t = TASKS[currentTaskId(sectionKey)];
       const btn = document.getElementById(`btn-sol-${sectionKey}`);
       const isShowing = btn && btn.innerText.includes("ausblenden");
 
-      currentItems.forEach(item => {
+      t.items.forEach(item => {
         const fbEl = document.getElementById(`feedback-${item.id}`);
         if (!fbEl) return;
 
@@ -1136,162 +1389,127 @@
           fbEl.classList.add('hidden');
         } else {
           fbEl.className = "text-xs font-medium text-slate-700 block mt-2 pt-2 border-t border-slate-200 bg-amber-50/60 p-2 rounded";
-          const sol = item.type === 'dropdown' ? item.correct : item.answers.join(' / ');
-          fbEl.innerHTML = `💡 <strong>Musterlösung:</strong> <span class="font-mono-code font-bold text-blue-700">${sol}</span> · ${item.rule}`;
+          fbEl.innerHTML = `👀 <strong>Musterlösung:</strong> <span class="font-mono-code font-bold text-blue-700">${acceptedAnswers(item).join(' / ')}</span> · ${item.rule}`;
         }
       });
 
       if (btn) {
-        btn.innerText = isShowing ? "💡 Lösungen anzeigen" : "🙈 Lösungen ausblenden";
+        btn.innerText = isShowing ? "👀 Lösungen anzeigen" : "🙈 Lösungen ausblenden";
       }
     }
 
-    // Reset block
-    function resetBlock(sectionKey) {
-      const items = DB[sectionKey];
-      const currentBlockIndex = STATE.currentBlock[sectionKey] || 0;
-      const startIdx = currentBlockIndex * 5;
-      const currentItems = items.slice(startIdx, startIdx + 5);
-
-      currentItems.forEach(item => {
-        delete STATE.userAnswers[item.id];
-        persist();
-        const inputEl = document.getElementById(`input-${item.id}`);
-        if (inputEl) inputEl.value = "";
-
-        const itemEl = document.getElementById(`item-${item.id}`);
-        if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition";
-
-        const fbEl = document.getElementById(`feedback-${item.id}`);
-        if (fbEl) {
-          fbEl.className = "hidden text-xs mt-2 pt-2 border-t border-slate-200";
-          fbEl.innerHTML = "";
-        }
-      });
-
-      updateOverallStats();
-      showToast("Block zurückgesetzt", "Die Eingaben dieses 5er-Blocks wurden geleert.");
-    }
-
-    // ==========================================================
-    // PROBEPRÜFUNG: RENDER & EVALUATE
-    // ==========================================================
-    function renderExam() {
-      // Tags
-      const tagsContainer = document.getElementById('exam-list-tags');
-      if (tagsContainer) {
-        tagsContainer.innerHTML = EXAM_DATA.tags.map((item, i) => `
-          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition" id="exam-item-${item.id}">
-            <div class="flex items-center justify-between gap-2 flex-wrap">
-              <span class="text-xs font-bold text-slate-500 w-6">A${i+1}.</span>
-              <span class="flex-1 text-sm font-medium text-slate-800">${item.s}</span>
-              <input type="text" id="input-${item.id}" value="${escAttr(STATE.examAnswers[item.id] || '')}" placeholder="Question Tag (z.B. aren't you)" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
-            </div>
-            <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
-          </div>
-        `).join('');
-      }
-
-      // Will
-      const willContainer = document.getElementById('exam-list-will');
-      if (willContainer) {
-        willContainer.innerHTML = EXAM_DATA.will.map((item, i) => `
-          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition" id="exam-item-${item.id}">
-            <div class="flex items-center justify-between gap-2 flex-wrap">
-              <span class="text-xs font-bold text-slate-500 w-6">B${i+1}.</span>
-              <span class="flex-1 text-sm font-medium text-slate-800">${item.s}</span>
-              <input type="text" id="input-${item.id}" value="${escAttr(STATE.examAnswers[item.id] || '')}" placeholder="will / won't Form" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-48 focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
-            </div>
-            <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
-          </div>
-        `).join('');
-      }
-
-      // Conjunctions
-      const conjContainer = document.getElementById('exam-list-conj');
-      if (conjContainer) {
-        conjContainer.innerHTML = EXAM_DATA.conj.map((item, i) => `
-          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition" id="exam-item-${item.id}">
-            <div class="flex items-center justify-between gap-2 flex-wrap">
-              <span class="text-xs font-bold text-slate-500 w-6">C${i+1}.</span>
-              <span class="flex-1 text-sm font-medium text-slate-800">${item.s}</span>
-              <input type="text" id="input-${item.id}" value="${escAttr(STATE.examAnswers[item.id] || '')}" placeholder="Bindewort" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold w-36 focus:ring-2 focus:ring-emerald-500 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
-            </div>
-            <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
-          </div>
-        `).join('');
-      }
-    }
-
-    function saveExamAns(id, val) {
-      STATE.examAnswers[id] = val;
+    // «🔀 Nochmals üben»: nur diese Aufgabe leeren und neu mischen
+    function retryTask(id) {
+      const t = TASKS[id];
+      if (!t) return;
+      t.items.forEach(it => { delete STATE[t.store][it.id]; });
       persist();
+      shuffleTask(id);
+      if (t.kind === 'practice') {
+        renderSection(t.sec);
+      } else {
+        renderExamPart(t.cat);
+        hideExamBanner();
+      }
+      updateOverallStats();
+      const host = document.querySelector(`[data-task="${id}"]`);
+      if (host) host.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showToast('🔀 Neu gemischt', 'Die Aufgabe ist leer und neu gemischt. Viel Erfolg!');
+    }
+    // alter Name, falls noch irgendwo verwendet
+    function resetBlock(sectionKey) { retryTask(currentTaskId(sectionKey)); }
+
+    // ==========================================================
+    // PROBEPRÜFUNG: DARSTELLEN & AUSWERTEN (Punkte aus EXAM_TASKS)
+    // ==========================================================
+    function renderExamPart(cat) {
+      const p = EXAM_PARTS[cat], id = `exam_${cat}`;
+      const box = document.getElementById(`exam-list-${cat}`);
+      if (!box) return;
+      box.innerHTML = ORDER[id].map((item, i) => `
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 transition" id="exam-item-${item.id}" data-item="${item.id}">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <span class="text-xs font-bold text-slate-500 w-7 shrink-0">${p.letter}${i + 1}.</span>
+              <span class="flex-1 min-w-0 break-words text-sm font-medium text-slate-800">${sentenceOf(item)}</span>
+              <input type="text" id="input-${item.id}" value="${escAttr(STATE.examAnswers[item.id] || '')}" placeholder="${p.placeholder}" autocomplete="off" autocapitalize="off" spellcheck="false" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold ${p.input} focus:ring-2 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
+            </div>
+            <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
+          </div>
+        `).join('') + `
+          ${tipBox(id, p.tip)}
+          ${theoryBox(id, cat)}
+          <div class="pt-1 space-y-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="checkExamPart('${cat}')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs sm:text-sm font-bold shadow-sm transition">✓ Teil ${p.letter} prüfen</button>
+              ${taskButtons(id)}
+            </div>
+            <div id="fb-${id}" class="text-xs font-semibold"></div>
+          </div>`;
+    }
+    function renderExam() {
+      Object.keys(EXAM_PARTS).forEach(renderExamPart);
     }
 
-    // Submit and Evaluate Exam
+    // Eine Frage der Probeprüfung färben. reveal = Lösung zeigen (nur bei «Prüfung abgeben»)
+    function markExamItem(t, item, reveal) {
+      const userRaw = STATE.examAnswers[item.id] || "";
+      const itemEl = document.getElementById(`exam-item-${item.id}`);
+      const fbEl = document.getElementById(`exam-fb-${item.id}`);
+      if (itemOk(t, item)) {
+        if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-300 transition";
+        if (fbEl) {
+          fbEl.className = "text-xs font-semibold text-emerald-800 block mt-2 pt-2 border-t border-emerald-200";
+          fbEl.innerHTML = reveal ? `✅ <strong>1/1 Punkt:</strong> Richtig gelöst!` : `✅ <strong>Richtig!</strong>`;
+        }
+      } else {
+        if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-rose-50/70 border border-rose-300 transition";
+        const diagHint = getDiagnosticFeedback(t.cat, item.s, userRaw, item.c);
+        if (fbEl) {
+          fbEl.className = "text-xs text-rose-800 block mt-2 pt-2 border-t border-rose-200 space-y-1.5";
+          fbEl.innerHTML = `
+            <div>${reveal
+              ? `❌ <strong>0/1 Punkt</strong> · Richtige Lösung: <span class="font-mono-code font-bold text-slate-900 bg-white px-1.5 py-0.5 rounded border border-rose-200">${item.c}</span>`
+              : `❌ <strong>Noch nicht richtig.</strong>`}</div>
+            <div class="text-slate-800 bg-amber-50/90 p-2.5 rounded-lg border border-amber-200/80 font-medium">${diagHint}</div>
+          `;
+        }
+      }
+    }
+
+    // Einen Teil der Probeprüfung prüfen (gleiche Punkte wie bei «Prüfung abgeben»)
+    function checkExamPart(cat) {
+      const id = `exam_${cat}`, t = TASKS[id];
+      t.items.forEach(item => markExamItem(t, item, false));
+      const pts = setTaskFeedback(id);
+      showToast(`Teil ${EXAM_PARTS[cat].letter}`, `${pts} von ${t.max} Punkten.`);
+    }
+
+    // Ganze Probeprüfung abgeben und mit Schweizer Note auswerten
     function submitExam() {
       STATE.examSubmitted = true;
-      let scoreTags = 0;
-      let scoreWill = 0;
-      let scoreConj = 0;
+      EXAM_TASKS.forEach(([id, t]) => {
+        t.items.forEach(item => markExamItem(t, item, true));
+        setTaskFeedback(id);
+      });
 
-      const evaluateCategory = (category, list) => {
-        let catScore = 0;
-        list.forEach(item => {
-          const userRaw = STATE.examAnswers[item.id] || "";
-          const userNorm = normalize(userRaw);
-          const accepted = [item.c, ...(item.alt || [])].map(a => normalize(a));
-          const isCorrect = accepted.includes(userNorm);
-
-          const itemEl = document.getElementById(`exam-item-${item.id}`);
-          const fbEl = document.getElementById(`exam-fb-${item.id}`);
-
-          if (isCorrect) {
-            catScore++;
-            if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-300 transition";
-            if (fbEl) {
-              fbEl.className = "text-xs font-semibold text-emerald-800 block mt-2 pt-2 border-t border-emerald-200";
-              fbEl.innerHTML = `✅ <strong>1/1 Punkt:</strong> Richtig gelöst!`;
-            }
-          } else {
-            if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-rose-50/70 border border-rose-300 transition";
-            const diagHint = getDiagnosticFeedback(category, item.s, userRaw, item.c);
-            if (fbEl) {
-              fbEl.className = "text-xs text-rose-800 block mt-2 pt-2 border-t border-rose-200 space-y-1.5";
-              fbEl.innerHTML = `
-                <div>❌ <strong>0/1 Punkt</strong> · Richtige Lösung: <span class="font-mono-code font-bold text-slate-900 bg-white px-1.5 py-0.5 rounded border border-rose-200">${item.c}</span></div>
-                <div class="text-slate-800 bg-amber-50/90 p-2.5 rounded-lg border border-amber-200/80 font-medium">${diagHint}</div>
-              `;
-            }
-          }
-        });
-        return catScore;
-      };
-
-      scoreTags = evaluateCategory('tags', EXAM_DATA.tags);
-      scoreWill = evaluateCategory('will', EXAM_DATA.will);
-      scoreConj = evaluateCategory('conj', EXAM_DATA.conj);
-
-      const totalScore = scoreTags + scoreWill + scoreConj;
-      const pct = Math.round((totalScore / 30) * 100);
-
-      // Swiss Grade Calculation: Score/30 * 5 + 1
-      let swissGrade = (totalScore / 30) * 5 + 1;
-      swissGrade = Math.round(swissGrade * 10) / 10;
+      const totalScore = EXAM_TASKS.reduce((s, [, t]) => s + t.score(), 0);
+      const pct = Math.round((totalScore / MAX_POINTS) * 100);
+      const swissGrade = gradeOf(totalScore, MAX_POINTS);
+      const passed = totalScore >= PASS_POINTS;
 
       let ratingTitle = "";
       let ratingClass = "";
       let badgeColor = "";
 
-      if (pct >= 90) {
+      if (totalScore >= TOP_POINTS) {
         ratingTitle = "Sehr gut ⭐ (Kompetenz vollumfänglich und sicher erreicht)";
         ratingClass = "bg-sky-50 border-sky-300 text-sky-950";
         badgeColor = "bg-sky-600 text-white";
-      } else if (pct >= 75) {
+      } else if (totalScore >= GOOD_POINTS) {
         ratingTitle = "Gut 👏 (Kompetenz gut und solide erreicht)";
         ratingClass = "bg-emerald-50 border-emerald-300 text-emerald-950";
         badgeColor = "bg-emerald-600 text-white";
-      } else if (pct >= 60) {
+      } else if (passed) {
         ratingTitle = "Erreicht / Bestanden 👍 (Grundkompetenzen erfüllt)";
         ratingClass = "bg-amber-50 border-amber-300 text-amber-950";
         badgeColor = "bg-amber-600 text-white";
@@ -1303,22 +1521,37 @@
 
       const timerInfo = timerSeconds > 0 ? `· ⏱️ Gestoppte Zeit: <strong>${formatTime(timerSeconds)}</strong>` : '';
 
+      // Aufteilung nach Teilen (aus EXAM_TASKS)
+      const parts = EXAM_TASKS.map(([id, t]) => {
+        const p = t.score(), part = EXAM_PARTS[t.cat];
+        return `
+            <div class="bg-white/80 p-3 rounded-xl border border-black/5" data-part="${id}">
+              <div class="font-bold flex items-center justify-between gap-2">
+                <span>${part.label}</span>
+                <span class="font-mono-code shrink-0 ${p >= Math.ceil(t.max * 0.6) ? 'text-emerald-700 font-extrabold' : 'text-rose-700'}">${p} / ${t.max} Pkt.</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2 rounded-full mt-2 overflow-hidden">
+                <div class="${part.bar} h-full rounded-full" style="width: ${(p / t.max) * 100}%"></div>
+              </div>
+            </div>`;
+      }).join('');
+
       const banner = document.getElementById('exam-results-banner');
       if (banner) {
-        banner.className = `p-5 sm:p-6 rounded-2xl border shadow-sm ${ratingClass} block animate-fade-in`;
+        banner.className = `mt-6 p-5 sm:p-6 rounded-2xl border shadow-sm ${ratingClass} block animate-fade-in`;
         banner.innerHTML = `
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-black/10">
             <div>
               <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full ${badgeColor}">
-                ${pct >= 60 ? 'Bestanden' : 'Nicht bestanden'}
+                ${passed ? 'Bestanden' : 'Nicht bestanden'}
               </span>
               <h3 class="text-xl sm:text-2xl font-black mt-2">${ratingTitle}</h3>
-              <p class="text-xs sm:text-sm mt-1 opacity-90">Detaillierte Testauswertung nach Schweizer Lehrplan 21 ${timerInfo}.</p>
+              <p class="text-xs sm:text-sm mt-1 opacity-90">Auswertung nach Schweizer Notenskala ${timerInfo}.</p>
             </div>
-            <div class="flex items-center gap-4 bg-white/80 p-3 rounded-xl border border-black/10 self-start md:self-auto">
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4 bg-white/80 p-3 rounded-xl border border-black/10 self-start md:self-auto">
               <div class="text-center px-2">
                 <div class="text-[11px] font-bold text-slate-500 uppercase">Punkte</div>
-                <div class="text-2xl font-black">${totalScore} <span class="text-xs text-slate-500 font-normal">/ 30</span></div>
+                <div class="text-2xl font-black" id="exam-total">${totalScore} <span class="text-xs text-slate-500 font-normal">/ ${MAX_POINTS}</span></div>
               </div>
               <div class="h-8 w-px bg-slate-300"></div>
               <div class="text-center px-2">
@@ -1327,66 +1560,41 @@
               </div>
               <div class="h-8 w-px bg-slate-300"></div>
               <div class="text-center px-2">
-                <div class="text-[11px] font-bold text-slate-500 uppercase">Richtnote</div>
-                <div class="text-2xl font-black text-blue-700">${swissGrade}</div>
+                <div class="text-[11px] font-bold text-slate-500 uppercase">Note</div>
+                <div class="text-2xl font-black text-blue-700" id="exam-grade">${swissGrade.toFixed(1)}</div>
               </div>
             </div>
           </div>
 
-          <!-- Category Breakdown -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-4 text-xs sm:text-sm">
-            <div class="bg-white/80 p-3 rounded-xl border border-black/5">
-              <div class="font-bold flex items-center justify-between">
-                <span>🏷️ Question Tags</span>
-                <span class="font-mono-code ${scoreTags >= 6 ? 'text-emerald-700 font-extrabold' : 'text-rose-700'}">${scoreTags} / 10 Pkt.</span>
-              </div>
-              <div class="w-full bg-slate-200 h-2 rounded-full mt-2 overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full" style="width: ${(scoreTags/10)*100}%"></div>
-              </div>
-            </div>
-
-            <div class="bg-white/80 p-3 rounded-xl border border-black/5">
-              <div class="font-bold flex items-center justify-between">
-                <span>🔮 Future with «will»</span>
-                <span class="font-mono-code ${scoreWill >= 6 ? 'text-emerald-700 font-extrabold' : 'text-rose-700'}">${scoreWill} / 10 Pkt.</span>
-              </div>
-              <div class="w-full bg-slate-200 h-2 rounded-full mt-2 overflow-hidden">
-                <div class="bg-indigo-600 h-full rounded-full" style="width: ${(scoreWill/10)*100}%"></div>
-              </div>
-            </div>
-
-            <div class="bg-white/80 p-3 rounded-xl border border-black/5">
-              <div class="font-bold flex items-center justify-between">
-                <span>🔗 Konjunktionen</span>
-                <span class="font-mono-code ${scoreConj >= 6 ? 'text-emerald-700 font-extrabold' : 'text-rose-700'}">${scoreConj} / 10 Pkt.</span>
-              </div>
-              <div class="w-full bg-slate-200 h-2 rounded-full mt-2 overflow-hidden">
-                <div class="bg-emerald-600 h-full rounded-full" style="width: ${(scoreConj/10)*100}%"></div>
-              </div>
-            </div>
-          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-4 text-xs sm:text-sm">${parts}</div>
         `;
         banner.scrollIntoView({ behavior: 'smooth' });
       }
 
-      showToast("Prüfung ausgewertet!", `Ergebnis: ${totalScore} von 30 Punkten (${pct}%, Note ${swissGrade}).`);
+      showToast("Prüfung ausgewertet!", `Ergebnis: ${totalScore} von ${MAX_POINTS} Punkten (${pct}%, Note ${swissGrade.toFixed(1)}).`);
     }
 
-    function resetExam() {
-      STATE.examAnswers = {};
+    function hideExamBanner() {
       STATE.examSubmitted = false;
-      persist();
       const banner = document.getElementById('exam-results-banner');
       if (banner) {
         banner.classList.add('hidden');
         banner.innerHTML = '';
       }
+    }
+
+    // Ganze Probeprüfung leeren und neu mischen
+    function resetExam() {
+      STATE.examAnswers = {};
+      persist();
+      hideExamBanner();
+      EXAM_TASKS.forEach(([id]) => shuffleTask(id));
       renderExam();
-      showToast("Test zurückgesetzt", "Alle Eingaben der Probeprüfung wurden geleert.");
+      showToast("Test zurückgesetzt", "Alle Eingaben der Probeprüfung sind leer und neu gemischt.");
     }
 
     // ==========================================================
-    // VOCABULARY GLOSSARY (40 WORDS)
+    // VOCI-SPICKZETTEL (Anzahl Wörter wird gezählt)
     // ==========================================================
     function filterVoci(type) {
       STATE.vociFilter = type;
@@ -1436,11 +1644,12 @@
       `).join('');
     }
 
-    // Overall stats helper
+    // Fortschritt oben: beantwortete Übungssätze (Total aus TASKS)
     function updateOverallStats() {
-      const answeredCount = Object.keys(STATE.userAnswers).filter(k => STATE.userAnswers[k] && STATE.userAnswers[k].trim() !== '').length;
+      const answeredCount = PRACTICE_TASKS.reduce((s, [, t]) =>
+        s + t.items.filter(it => String(STATE.userAnswers[it.id] || '').trim() !== '').length, 0);
       const el = document.getElementById('header-stat');
-      if (el) el.innerText = `${answeredCount} / 210`;
+      if (el) el.innerText = `${answeredCount} / ${PRACTICE_ITEMS}`;
     }
 
     // ==========================================================
@@ -1518,30 +1727,31 @@
     // ==========================================================
     // EXPOSE ALL FUNCTIONS EXPLICITLY TO WINDOW FOR INLINE ONCLICK
     // ==========================================================
-    window.switchTab = switchTab;
-    window.selectLevel = selectLevel;
-    window.goToBlock = goToBlock;
-    window.checkBlock = checkBlock;
-    window.toggleSolution = toggleSolution;
-    window.resetBlock = resetBlock;
-    window.saveAns = saveAns;
-    window.filterVoci = filterVoci;
-    window.renderVocabulary = renderVocabulary;
-    window.saveExamAns = saveExamAns;
-    window.submitExam = submitExam;
-    window.resetExam = resetExam;
-    window.showToast = showToast;
-    window.toggleTimer = toggleTimer;
-    window.resetTimer = resetTimer;
+    Object.assign(window, {
+      switchTab, selectLevel, goToBlock, checkBlock, toggleSolution, resetBlock, retryTask,
+      saveAns, filterVoci, renderVocabulary, saveExamAns, submitExam, resetExam, checkExamPart,
+      toggleBox, openTheory, openSpick, showToast, toggleTimer, resetTimer
+    });
 
-    // Initialization on load
     // Start sobald das HTML da ist (wartet nicht auf Tailwind/Schriften)
     document.addEventListener('DOMContentLoaded', function() {
       loadSaved();
+      Object.keys(TASKS).forEach(shuffleTask);
+      // Totals und Grenzen immer aus TASKS
+      document.querySelectorAll('.js-max-pts').forEach(el => el.textContent = MAX_POINTS);
+      document.querySelectorAll('.js-pass-pts').forEach(el => el.textContent = PASS_POINTS);
+      document.querySelectorAll('.js-good-pts').forEach(el => el.textContent = GOOD_POINTS);
+      document.querySelectorAll('.js-top-pts').forEach(el => el.textContent = TOP_POINTS);
+      document.querySelectorAll('.js-exam-items').forEach(el => el.textContent = EXAM_ITEMS);
+      document.querySelectorAll('[data-max]').forEach(el => el.textContent = TASKS[el.dataset.max].max);
+      document.querySelectorAll('[data-items]').forEach(el => el.textContent = TASKS[el.dataset.items].items.length);
+      const vc = document.getElementById('voci-count');
+      if (vc) vc.textContent = VOCABULARY.length;
       renderSection('tags_1');
       renderSection('will_1');
       renderSection('conj_1');
       renderExam();
+      renderSpick();
       renderVocabulary();
       updateOverallStats();
     });
