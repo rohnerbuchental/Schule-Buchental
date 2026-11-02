@@ -61,7 +61,6 @@
       clip-path: polygon(0 0, 12px 0, 17px 5px, 31px 5px, 36px 0, 100% 0, 100% calc(100% - 5px), 52px calc(100% - 5px), 47px 100%, 33px 100%, 28px calc(100% - 5px), 16px calc(100% - 5px), 16px 100%, 0 100%);
     }
     .sb-c-mouth { display: flex; margin-top: -5px; }
-    .sb-c .sb-c { filter: drop-shadow(0 0 1px rgba(0,0,0,0.55)); }
     .sb-c-arm { width: 16px; flex: none; background: var(--c); }
     .sb-c-inner { display: flex; flex-direction: column; align-items: flex-start; min-height: 29px; }
     .sb-c-bottom {
@@ -183,7 +182,7 @@
         <span>💡</span> 4. Smarthome & UND/ODER
       </button>
       <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/30">
-        <span>📝</span> 5. Test-Simulation (<span class="js-max-pts">32</span> P.)
+        <span>📝</span> 5. Test-Simulation (<span class="js-max-pts">30</span> P.)
       </button>
     </nav>
   </header>
@@ -611,15 +610,15 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- TAB 4: SMARTHOME & UND/ODER/NICHT (LZ 7 & 8) -->
+    <!-- TAB 4: SMARTHOME & UND/ODER (LZ 7 & 8) -->
     <!-- ============================================================== -->
     <section id="view-logic" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Lernziele 7 & 8 · MI.2.1.i</span>
-          <h2 class="text-lg sm:text-xl font-bold text-slate-800">💡 Logik mit UND, ODER und NICHT</h2>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-800">💡 Logik mit UND und ODER</h2>
           <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
-            Bedingungen verbinden: Wie steuert man ein Smarthome-Licht oder eine Sicherheitsabfrage?
+            Bedingungen verbinden: Wie steuert man ein Smarthome-Licht oder einen Rasensprenger?
           </p>
         </div>
         <button onclick="reshuffleLogic()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1 border border-slate-300 self-start sm:self-auto shrink-0">
@@ -682,94 +681,29 @@
         </div>
       </div>
 
-      <!-- Zusatzfrage: NICHT Block -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
-        <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7c: Die Negation «nicht» (1 Punkt)</h3>
-        </div>
-
-        <div class="sb-area inline-block">
-          <span class="sb-bool sb-operators" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,.28))">nicht
-            <span class="sb-bool sb-sensing">wird <span class="sb-rep" style="--c:#47A8D1">Hindernis ▾</span> berührt?</span>
-          </span>
-        </div>
-
-        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a7-nicht">
-          <span class="text-xs sm:text-sm font-bold text-slate-800 block">Was bedeutet dieser Block in normaler menschlicher Sprache?</span>
-          <select id="sel-a7-nicht" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs sm:text-sm font-bold">
-            <option value="">-- wählen --</option>
-            <option value="wrong1">Die Drohne steckt mitten im Hindernis fest</option>
-            <option value="right">Solange der Weg frei ist (kein Hindernis berührt wird)</option>
-            <option value="wrong2">Die Drohne schaltet die Scheinwerfer aus</option>
-          </select>
-        </div>
-
-        <div class="pt-2 flex items-center justify-between gap-3">
-          <button onclick="checkLogicNicht()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ NICHT-Block prüfen
-          </button>
-          <div id="fb-logic-nicht" class="text-xs font-semibold"></div>
-        </div>
-      </div>
-
-      <!-- Aufgabe 7d: Profi-Logik (schwierig) -->
+      <!-- Aufgabe 7c: Smarte Gartenbewässerung -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7d: Profi-Logik – Die Notlandung (5 Punkte)</h3>
-          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300 whitespace-nowrap">🔴 schwierig</span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7c: Smarte Gartenbewässerung (4 Punkte)</h3>
+          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 whitespace-nowrap">🟡 mittel</span>
         </div>
 
-        <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Situation:</strong> Die Drohne hat einen Notfall-Sensor eingebaut. Lies das Skript genau – achte auf die <strong>Klammern</strong>, auf <strong>&lt;</strong> und <strong>&gt;</strong> und auf das <strong>nicht</strong>!
+        <!-- Regeln -->
+        <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm space-y-1">
+          <div class="font-bold text-emerald-950">📋 Die 3 Regeln für den automatischen Rasensprenger:</div>
+          <p>1. <strong>Sprenger AUS:</strong> Wenn der Boden <strong>feucht</strong> ist <strong>ODER</strong> es <strong>regnet</strong>. (Diese Regel gilt immer zuerst!)</p>
+          <p>2. <strong>Sprenger AN (lang):</strong> Wenn der Boden <strong>trocken</strong> ist <strong>UND</strong> es <strong>Abend</strong> ist.</p>
+          <p>3. <strong>Sprenger KURZ:</strong> Wenn der Boden <strong>trocken</strong> ist <strong>UND</strong> es <strong>Mittag</strong> ist (in der Hitze verdunstet viel Wasser).</p>
         </div>
 
-        <div class="sb-area">
-          <div class="sb-script">
-            <div class="sb sb-hat sb-events">Wenn <span class="sb-flag">⚑</span> angeklickt wird</div>
-            <div class="sb-c sb-control">
-              <div class="sb-c-top">wiederhole fortlaufend</div>
-              <div class="sb-c-mouth"><div class="sb-c-arm"></div>
-                <div class="sb-c-inner">
-                  <div class="sb-c sb-control">
-                    <div class="sb-c-top">falls
-                      <span class="sb-bool sb-operators">
-                        <span class="sb-bool sb-operators">
-                          <span class="sb-bool sb-operators"><span class="sb-rep sb-variables">Akku</span> &lt; <span class="sb-num">20</span></span>
-                          oder
-                          <span class="sb-bool sb-operators"><span class="sb-rep sb-variables">Wind</span> &gt; <span class="sb-num">50</span></span>
-                        </span>
-                        und
-                        <span class="sb-bool sb-operators">nicht <span class="sb-bool sb-sensing">wird <span class="sb-rep" style="--c:#47A8D1">Boden ▾</span> berührt?</span></span>
-                      </span>
-                      , dann
-                    </div>
-                    <div class="sb-c-mouth"><div class="sb-c-arm"></div>
-                      <div class="sb-c-inner">
-                        <div class="sb sb-looks">sage <span class="sb-num">Notlandung!</span></div>
-                      </div>
-                    </div>
-                    <div class="sb-c-bottom"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="sb-c-bottom sb-cap"></div>
-            </div>
-          </div>
-        </div>
-
-        <p class="text-xs sm:text-sm text-slate-700">Sagt die Drohne in diesen Situationen <strong>«Notlandung!»</strong>?</p>
-        <div class="space-y-2" id="emergency-list"></div>
-
-        <details class="text-xs text-slate-600 bg-slate-50 border border-slate-200 rounded-xl p-3">
-          <summary class="font-bold cursor-pointer text-slate-700">💡 Tipp (nur anschauen, wenn du nicht weiterkommst)</summary>
-          <p class="mt-2">Arbeite von innen nach aussen: Prüfe zuerst die <strong>oder</strong>-Klammer (ist mindestens eins wahr?). Dann prüfe <strong>nicht &lt;wird Boden berührt?&gt;</strong> – das ist nur wahr, wenn die Drohne <strong>in der Luft</strong> ist. Erst wenn <strong>beide</strong> Teile wahr sind, gilt das <strong>und</strong>. Achtung: 20 ist <strong>nicht</strong> kleiner als 20!</p>
-        </details>
+        <!-- Entscheidungstabelle (Zufällig gemischt) -->
+        <div class="space-y-2 pt-1" id="garden-table-list"></div>
 
         <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
-          <button onclick="checkLogicEmergency()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
-            ✓ Aufgabe 7d prüfen
+          <button onclick="checkLogicGarden()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
+            ✓ Gartenbewässerung prüfen
           </button>
-          <div id="fb-logic-emergency" class="text-xs font-semibold"></div>
+          <div id="fb-logic-garden" class="text-xs font-semibold"></div>
         </div>
       </div>
     </section>
@@ -782,16 +716,16 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-100">
           <div>
             <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
-              Prüfungsmodus · <span class="js-max-pts">32</span> Punkte · Real-Niveau
+              Prüfungsmodus · <span class="js-max-pts">30</span> Punkte · Real-Niveau
             </span>
             <h2 class="text-lg sm:text-xl font-black text-slate-800 mt-1">📝 Vollständige Test-Simulation</h2>
             <p class="text-xs text-slate-600 mt-0.5">
-              Simuliert exakt den bevorstehenden Papiertest. Schweizer Bestehensgrenze: 60 % (<span class="js-pass-pts">19.2</span> Punkte = Note 4.0).
+              Simuliert exakt den bevorstehenden Papiertest. Schweizer Bestehensgrenze: 60 % (<span class="js-pass-pts">18</span> Punkte = Note 4.0).
             </p>
           </div>
           <div class="text-right shrink-0">
             <span class="text-xs text-slate-500 block">Bestehen ab:</span>
-            <span class="text-sm font-extrabold text-amber-700"><span class="js-pass-pts">19.2</span> / <span class="js-max-pts">32</span> P. (60%)</span>
+            <span class="text-sm font-extrabold text-amber-700"><span class="js-pass-pts">18</span> / <span class="js-max-pts">30</span> P. (60%)</span>
           </div>
         </div>
 
@@ -886,15 +820,13 @@
       { id: "sh_4", light: "Raum ist dunkel (Gewitter)", sensor: "Bewegung erkannt", time: "11:00 Uhr (Tag)", correct: "GEDIMMT" }
     ];
 
-    // A7d: Notlandung (schwierig)
-    // Notlandung = (Akku < 20 ODER Wind > 50) UND NICHT Boden berührt
-    const EMERGENCY_ROWS = [
-      { id: "em_1", akku: 15, wind: 10, ground: false },
-      { id: "em_2", akku: 80, wind: 70, ground: false },
-      { id: "em_3", akku: 10, wind: 60, ground: true },
-      { id: "em_4", akku: 50, wind: 30, ground: false },
-      { id: "em_5", akku: 20, wind: 50, ground: false }
-    ].map(r => ({ ...r, correct: ((r.akku < 20 || r.wind > 50) && !r.ground) ? "JA" : "NEIN" }));
+    // A7c: Gartenbewässerung (Regel "AUS" hat Vorrang)
+    const GARDEN_ROWS = [
+      { id: "gd_1", soil: "Boden trocken", weather: "Sonne", time: "19:00 Uhr (Abend)", correct: "AN" },
+      { id: "gd_2", soil: "Boden trocken", weather: "Sonne", time: "12:00 Uhr (Mittag)", correct: "KURZ" },
+      { id: "gd_3", soil: "Boden feucht", weather: "Sonne", time: "19:00 Uhr (Abend)", correct: "AUS" },
+      { id: "gd_4", soil: "Boden trocken", weather: "Regen", time: "19:00 Uhr (Abend)", correct: "AUS" }
+    ];
 
     // Fisher-Yates Shuffle
     function shuffleArray(arr) {
@@ -907,7 +839,7 @@
     }
 
     let dispA1a = [], dispA1b = [], dispFlow = [], dispSquare = [], dispReasons = [];
-    let dispAndOr = [], dispSmart = [], dispEmergency = [];
+    let dispAndOr = [], dispSmart = [], dispGarden = [];
 
     function initShuffledData() {
       dispA1a = shuffleArray(BASICS_A1A);
@@ -917,7 +849,7 @@
       dispReasons = shuffleArray(CUSTOM_REASONS);
       dispAndOr = shuffleArray(ANDOR_ROWS);
       dispSmart = shuffleArray(SMARTHOME_ROWS);
-      dispEmergency = shuffleArray(EMERGENCY_ROWS);
+      dispGarden = shuffleArray(GARDEN_ROWS);
     }
 
     // ==============================================================
@@ -1268,21 +1200,17 @@
           </div>`).join('');
       }
 
-      bindSelect('sel-a7-nicht', 'nicht');
-
-      const em = document.getElementById('emergency-list');
-      if (em) {
-        em.innerHTML = dispEmergency.map((row, idx) => `
+      const garden = document.getElementById('garden-table-list');
+      if (garden) {
+        garden.innerHTML = dispGarden.map((row, idx) => `
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5" id="card-${row.id}">
-            <div class="flex flex-wrap items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
+            <div class="flex items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
               <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
-              <span class="px-2 py-0.5 rounded-md bg-orange-100 text-orange-900 font-semibold">🔋 Akku = ${row.akku}</span>
-              <span class="px-2 py-0.5 rounded-md bg-orange-100 text-orange-900 font-semibold">💨 Wind = ${row.wind}</span>
-              <span class="px-2 py-0.5 rounded-md bg-sky-100 text-sky-900 font-semibold">${row.ground ? '🛬 steht am Boden' : '🚁 ist in der Luft'}</span>
+              <span>${row.soil} · <strong>${row.weather}</strong> · (${row.time})</span>
             </div>
-            <div class="shrink-0 flex items-center gap-2">
-              <span class="text-xs text-slate-400 whitespace-nowrap">«Notlandung!»?</span>
-              ${selectHTML('sel-' + row.id, row.id, [{ v: 'JA', t: '✅ JA' }, { v: 'NEIN', t: '❌ NEIN' }], 'w-32')}
+            <div class="sm:w-48 shrink-0 flex items-center gap-2">
+              <span class="text-xs text-slate-400">Sprenger:</span>
+              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💦 AN (lang)' }, { v: 'KURZ', t: '💧 KURZ' }, { v: 'AUS', t: '❌ AUS' }], 'w-full')}
             </div>
           </div>`).join('');
       }
@@ -1291,7 +1219,7 @@
     function reshuffleLogic() {
       dispAndOr = shuffleArray(ANDOR_ROWS);
       dispSmart = shuffleArray(SMARTHOME_ROWS);
-      dispEmergency = shuffleArray(EMERGENCY_ROWS);
+      dispGarden = shuffleArray(GARDEN_ROWS);
       renderLogicTab();
       shuffleSelects(document.getElementById('view-logic'));
       showToast("🔀 Neu gemischt", "Alle Zeilen und Antworten der Logik-Aufgaben wurden neu gemischt!");
@@ -1311,8 +1239,7 @@
       a8:  { max: 2, score: () => (A('sel-a8-1') === 'right') + (A('sel-a8-2') === '-1') },
       a7a: { max: ANDOR_ROWS.length, score: () => ANDOR_ROWS.filter(r => A(r.id) === r.correct).length },
       a7b: { max: SMARTHOME_ROWS.length, score: () => SMARTHOME_ROWS.filter(r => A(r.id) === r.correct).length },
-      a7c: { max: 1, score: () => +(A('nicht') === 'right') },
-      a7d: { max: EMERGENCY_ROWS.length, score: () => EMERGENCY_ROWS.filter(r => A(r.id) === r.correct).length }
+      a7c: { max: GARDEN_ROWS.length, score: () => GARDEN_ROWS.filter(r => A(r.id) === r.correct).length }
     };
     const MAX_POINTS = Object.values(TASKS).reduce((s, t) => s + t.max, 0);
     const PASS_POINTS = Math.round(MAX_POINTS * 0.6 * 10) / 10;
@@ -1399,14 +1326,9 @@
       feedback('fb-logic-a7', 'a7b', 'Lichtsteuerung', 'Smarthome schaltet perfekt!');
     }
 
-    function checkLogicNicht() {
-      markCard('card-a7-nicht', A('nicht') === 'right');
-      feedback('fb-logic-nicht', 'a7c', 'nicht-Block', 'Logische Negation verstanden!');
-    }
-
-    function checkLogicEmergency() {
-      EMERGENCY_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
-      feedback('fb-logic-emergency', 'a7d', 'Notlandung', 'Profi-Logik geknackt!');
+    function checkLogicGarden() {
+      GARDEN_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
+      feedback('fb-logic-garden', 'a7c', 'Gartenbewässerung', 'Der Rasen ist perfekt gegossen!');
     }
 
     // ==============================================================
@@ -1560,7 +1482,7 @@
     Object.assign(window, {
       switchTab, saveAnswer, reshuffleBasics, reshuffleLogic,
       checkBasicsA1, checkBasicsA2, checkLoopsA3, checkLoopsA4, checkSquareSort,
-      checkCustomA5, checkCustomA8, checkLogicAndOr, checkLogicA7, checkLogicNicht, checkLogicEmergency,
+      checkCustomA5, checkCustomA8, checkLogicAndOr, checkLogicA7, checkLogicGarden,
       handleFlowSlotClick, evaluateFullExam, resetAllHubData, toggleTimer, resetTimer
     });
 
