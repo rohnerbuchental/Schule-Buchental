@@ -59,6 +59,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 ## Lösungshefte (Wunsch Lehrperson)
 - Lösungen zu Dossiers kommen nicht aufs Lernportal. Sie gehen als Word (zum Anpassen) und PDF (zum Austeilen) direkt an die Lehrperson und kommen in die private Ablage.
 - Layout zum Selbstkorrigieren: Titelseite «So korrigierst du», ein farbiges Band pro Kapitel, Aufgaben mit der gleichen Nummer wie im Dossier, «✔» für die richtige Antwort, gelbe Kästchen «☐ Das muss drin sein» bei Antworten in eigenen Worten, «✎ Eigene Antwort», wo es kein Richtig oder Falsch gibt.
+- Gleiche Struktur in allen Lösungsheften (Wunsch Lehrperson): Jede «Musterantwort:» hat darunter immer das gelbe Kästchen «Das muss drin sein». In Tabellen sind die Lösungswörter immer fett und blau.
 - Fehler in den Lösungen der Lehrperson nicht stillschweigend übernehmen: korrigieren und der Lehrperson melden.
 
 ## Klasse und Schreibanlässe (Deutsch)
