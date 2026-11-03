@@ -61,6 +61,11 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Layout zum Selbstkorrigieren: Titelseite «So korrigierst du», ein farbiges Band pro Kapitel, Aufgaben mit der gleichen Nummer wie im Dossier, «✔» für die richtige Antwort, gelbe Kästchen «☐ Das muss drin sein» bei Antworten in eigenen Worten, «✎ Eigene Antwort», wo es kein Richtig oder Falsch gibt.
 - Fehler in den Lösungen der Lehrperson nicht stillschweigend übernehmen: korrigieren und der Lehrperson melden.
 
+## Klasse und Schreibanlässe (Deutsch)
+- Die Klasse der Lehrperson ist eine **Realklasse mit eher schwachen Schülern**: Anweisungen immer ganz einfach (kurze Sätze, klare Schritte, Hilfen wie Satzanfänge, Ideen und Wortkasten). Schwierigere Aufgaben macht nur die Sek-Parallelklasse.
+- Schreibanlässe auf der Word-Vorlage der Lehrperson (eine Seite): «Schreibanlass N: Datum», Titel, Auftrag, Hilfe-Kasten «So gehst du vor» (Einleitung – Hauptteil – Schluss mit Anzahl Sätzen und Satzanfängen), danach die Checkliste der Lehrperson unverändert. Umfang immer 10–20 Sätze, Rhythmus 2 Wochen.
+- Schreibanlässe sind Unterrichtsmaterial, nicht fürs Lernportal: als Word (und PDF) direkt an die Lehrperson.
+
 ## Lehrplan (`lehrplan/`)
 - Kompetenzen Zyklus 3 (Lehrplan Volksschule SG) als Markdown: Deutsch, Englisch, Medien und Informatik, RZG, Bildnerisches Gestalten. Übersicht in `lehrplan/README.md`.
 - Nur mit `grep` suchen, z.B. `grep -n "MI.2.2" lehrplan/medien-informatik.md`. Nie ganze Dateien lesen.
