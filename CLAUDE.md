@@ -53,11 +53,11 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 
 ## Tests (Prüfungen)
 - Echte Tests nie ins Repository und nie aufs Lernportal: Das Repo ist öffentlich, die Schüler könnten sie finden.
-- Tests als Word-Datei (.docx) direkt an die Lehrperson geben, immer mit separater Lösung inkl. Punkteverteilung und Notenskala.
+- Tests als Word-Datei (.docx) direkt an die Lehrperson geben, immer mit separater Lösung inkl. Punkteverteilung und Notenskala. Danach in der privaten Ablage speichern (siehe unten).
 - Test-Aufgaben dürfen den Übungen ähnlich sein, aber nicht gleich (andere Bilder, Beispiele, Zahlen).
 
 ## Lösungshefte (Wunsch Lehrperson)
-- Lösungen zu Dossiers kommen nicht aufs Lernportal. Sie gehen als Word (zum Anpassen) und PDF (zum Austeilen) direkt an die Lehrperson, wie die Tests nur im Scratchpad.
+- Lösungen zu Dossiers kommen nicht aufs Lernportal. Sie gehen als Word (zum Anpassen) und PDF (zum Austeilen) direkt an die Lehrperson und kommen in die private Ablage.
 - Layout zum Selbstkorrigieren: Titelseite «So korrigierst du», ein farbiges Band pro Kapitel, Aufgaben mit der gleichen Nummer wie im Dossier, «✔» für die richtige Antwort, gelbe Kästchen «☐ Das muss drin sein» bei Antworten in eigenen Worten, «✎ Eigene Antwort», wo es kein Richtig oder Falsch gibt.
 - Fehler in den Lösungen der Lehrperson nicht stillschweigend übernehmen: korrigieren und der Lehrperson melden.
 
@@ -66,6 +66,12 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Schreibanlässe auf der Word-Vorlage der Lehrperson (eine Seite): «Schreibanlass N: Datum», Titel, Auftrag, Hilfe-Kasten «So gehst du vor» (Einleitung – Hauptteil – Schluss mit Anzahl Sätzen und Satzanfängen), danach die Checkliste der Lehrperson unverändert. Umfang immer 10–20 Sätze, Rhythmus 2 Wochen.
 - Schreibanlässe sind Unterrichtsmaterial, nicht fürs Lernportal: als Word (und PDF) direkt an die Lehrperson.
 - Zu jedem Schreibanlass gehört ein **Korrektur-Prompt für die KI** auf Seite 2 des Word-Dokuments (grauer Kasten, darüber «So geht es: Kopiere den ganzen Text … füge deinen eigenen Text darunter ein»). Aufbau wie der Prompt der Lehrperson: «Hier ist mein Text. Der Auftrag war: Schreibanlass N – Titel», Textsorte, Umfang (10 bis 20 Sätze), Aufgabe, Kriterien passend zum Auftrag; danach immer gleich: korrigieren ohne Stil zu ändern und Änderungen fett, wichtigster Fehlerschwerpunkt, Regel in max. 2 einfachen Sätzen, Tabelle mit bis zu 3 Beispielen (falsch / richtig), inhaltliche Rückmeldung in genau 1 Satz, einfache Sprache für 14-Jährige. Immer den Satz «Wir schreiben Schweizer Hochdeutsch: «ss» statt «ß» ist richtig und kein Fehler.» einbauen.
+
+## Private Ablage (Material, das nicht aufs Lernportal gehört)
+- Tests, Lösungen, Lösungshefte, Schreibanlässe und die Originale/Vorlagen der Lehrperson liegen im **privaten Repo `rohnerbuchental/Schu-e-Buchental-Material`** (Name so, mit Bindestrich). Nie ins öffentliche Repo `Schule-Buchental`: GitHub Pages veröffentlicht jede Datei darin.
+- Zu Beginn einer Sitzung bei Bedarf mit `add_repo` verbinden und nach `/home/user/schu-e-buchental-material` klonen. Ordner pro Fach/Thema, z.B. `RZG Dynamik der Erde/Test Teil 2/`. Neben jedem Dokument unter `_quelle/` das Erstell-Skript und die Bilder ablegen, damit man es später anpassen kann. Übersicht in der `README.md` dort.
+- Direkt auf `main` committen und pushen (reines Archiv, keine Pull Requests nötig).
+- Die Lehrperson hat zusätzlich in ihrem OneDrive den Ordner «Schule Buchental Material» (Unterordner «RZG Dynamik der Erde», «Deutsch Schreibanlässe», «Vorlagen»). Word/PDF über den OneDrive-Connector hochzuladen ist nicht praktikabel; dort legt die Lehrperson die Dateien selbst ab.
 
 ## Lehrplan (`lehrplan/`)
 - Kompetenzen Zyklus 3 (Lehrplan Volksschule SG) als Markdown: Deutsch, Englisch, Medien und Informatik, RZG, Bildnerisches Gestalten. Übersicht in `lehrplan/README.md`.
@@ -76,7 +82,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 ## Agenten (`.claude/agents/`)
 - `aufgaben-ersteller`: baut neue Lernseiten oder Aufgaben nach den Regeln oben und trägt die Kachel in `index.html` ein.
 - `regel-pruefer`: prüft Seiten gegen diese Regeln und führt `tools/check.js` aus. Ändert nichts. Nach jeder grösseren Änderung einsetzen.
-- `test-ersteller`: macht aus einer Lernseite (und den Unterlagen der Lehrperson) einen Papiertest als Word mit separater Lösung und Notenskala. Speichert nur im Scratchpad, nie im Repo.
+- `test-ersteller`: macht aus einer Lernseite (und den Unterlagen der Lehrperson) einen Papiertest als Word mit separater Lösung und Notenskala. Arbeitet im Scratchpad, nie im öffentlichen Repo; das Ergebnis kommt danach in die private Ablage.
 
 ## Arbeitsablauf
 1. Änderungen nur hier im Repository machen. Keine Kopien mit anderen KI-Tools bearbeiten und wieder hochladen, sonst entstehen zwei Versionen.
