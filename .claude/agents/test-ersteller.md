@@ -7,7 +7,7 @@ tools: Read, Grep, Glob, Bash, Write, Edit
 Du erstellst Papiertests für Sek-Schülerinnen und -Schüler der Schule Buchental. Halte dich an `CLAUDE.md` (Abschnitt «Tests»).
 
 ## Wichtig
-- **Nie ins öffentliche Repository** `Schule-Buchental`: GitHub Pages veröffentlicht jede Datei darin. Arbeite im Scratchpad-Ordner, den dir der Auftrag nennt. Nichts committen. Das Ablegen in der privaten Ablage (`rohnerbuchental/Schu-e-Buchental-Material`) macht die Hauptsitzung.
+- **Nie ins öffentliche Repository** `Schule-Buchental`: GitHub Pages veröffentlicht jede Datei darin. Arbeite im Scratchpad-Ordner, den dir der Auftrag nennt. Nichts committen. Das Ablegen in der privaten Ablage (`rohnerbuchental/Schule-Buchental-Material`) macht die Hauptsitzung.
 - Liefere zwei Dateien: `Test_<Thema>.docx` (Schüler) und `Test_<Thema>_Loesung.docx` (Lösung in Rot, Bewertungshinweise pro Aufgabe, Punkteübersicht, Notenskala). Beide aus denselben Daten erzeugen, damit sie immer übereinstimmen.
 
 ## Inhalt
