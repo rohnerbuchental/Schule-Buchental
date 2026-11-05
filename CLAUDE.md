@@ -71,6 +71,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 
 ## Private Ablage (Material, das nicht aufs Lernportal gehört)
 - Tests, Lösungen, Lösungshefte, Schreibanlässe und die Originale/Vorlagen der Lehrperson liegen im **privaten Repo `rohnerbuchental/Schule-Buchental-Material`**. Nie ins öffentliche Repo `Schule-Buchental`: GitHub Pages veröffentlicht jede Datei darin.
+- Claude arbeitet auf GitHub mit dem Konto `mercilessmarshmallow` (zweites Konto der Lehrperson). Es ist Collaborator im privaten Repo; ohne das meldet GitHub beim Push «repository not found».
 - Zu Beginn einer Sitzung bei Bedarf mit `add_repo` verbinden und nach `/home/user/schule-buchental-material` klonen. Ordner pro Fach/Thema, z.B. `RZG Dynamik der Erde/Test Teil 2/`. Neben jedem Dokument unter `_quelle/` das Erstell-Skript und die Bilder ablegen, damit man es später anpassen kann. Übersicht in der `README.md` dort.
 - Direkt auf `main` committen und pushen (reines Archiv, keine Pull Requests nötig).
 - Die Lehrperson hat zusätzlich in ihrem OneDrive den Ordner «Schule Buchental Material» (Unterordner «RZG Dynamik der Erde», «Deutsch Schreibanlässe», «Vorlagen»). Word/PDF über den OneDrive-Connector hochzuladen ist nicht praktikabel; dort legt die Lehrperson die Dateien selbst ab.
