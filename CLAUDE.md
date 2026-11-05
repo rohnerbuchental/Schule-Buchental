@@ -56,6 +56,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Tests als Word-Datei (.docx) direkt an die Lehrperson geben, immer mit separater Lösung inkl. Punkteverteilung und Notenskala. Danach in der privaten Ablage speichern (siehe unten).
 - Test-Aufgaben dürfen den Übungen ähnlich sein, aber nicht gleich (andere Bilder, Beispiele, Zahlen).
 - Lückentexte mit Auswahl (z.B. Konjunktionen): Jede Lücke darf nur eine richtige Lösung haben. Vor dem Abgeben jede Lücke mit allen Wörtern der Auswahl durchprobieren. Passt noch ein anderes Wort, die Lücke umschreiben (Wunsch Lehrperson: Englischtest Unit 1, Aufgabe 4 Nr. 9, dort passte auch «because» statt «so that»). Lösungen der Lehrperson ebenso prüfen und Alternativen in der Lösung als «auch richtig» angeben.
+- Kompetenznachweise Englisch (10 Punkte pro Kompetenz): erreicht ab 6, gut ab 8, sehr gut ab 9 Punkten (Entscheid Lehrperson; «sehr gut» soll wirklich sehr gut sein, darum nicht tiefer).
 
 ## Lösungshefte (Wunsch Lehrperson)
 - Lösungen zu Dossiers kommen nicht aufs Lernportal. Sie gehen als Word (zum Anpassen) und PDF (zum Austeilen) direkt an die Lehrperson und kommen in die private Ablage.
