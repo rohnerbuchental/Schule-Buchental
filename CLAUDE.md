@@ -54,6 +54,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 ## Tests (Prüfungen)
 - Echte Tests nie ins Repository und nie aufs Lernportal: Das Repo ist öffentlich, die Schüler könnten sie finden.
 - Tests als Word-Datei (.docx) direkt an die Lehrperson geben, immer mit separater Lösung inkl. Punkteverteilung und Notenskala. Danach in der privaten Ablage speichern (siehe unten).
+- **Lösung = Test mit Antworten am gleichen Ort** (Wunsch Lehrperson, sehr wichtig): Die Lösung ist eine Kopie des Tests, die Antworten stehen in Rot genau in den Lücken. Die Lehrperson legt Test und Lösung beim Korrigieren nebeneinander und will nichts suchen. Keine Aufgabe darf auf eine andere Seite, Zeile oder Spalte rutschen: Antwort nicht breiter als die Lücke, kürzere Antworten auf die Breite der Lücke auffüllen, damit der Zeilenumbruch gleich bleibt. Bewertung, Kompetenz-Grenzen und Notenskala kommen als letzte Seite dazu. Vorbild: Lösung Englischtest Unit 1 in der privaten Ablage. Danach immer `loesungs-pruefer` einsetzen.
 - Test-Aufgaben dürfen den Übungen ähnlich sein, aber nicht gleich (andere Bilder, Beispiele, Zahlen).
 - Lückentexte mit Auswahl (z.B. Konjunktionen): Jede Lücke darf nur eine richtige Lösung haben. Vor dem Abgeben jede Lücke mit allen Wörtern der Auswahl durchprobieren. Passt noch ein anderes Wort, die Lücke umschreiben (Wunsch Lehrperson: Englischtest Unit 1, Aufgabe 4 Nr. 9, dort passte auch «because» statt «so that»). Lösungen der Lehrperson ebenso prüfen und Alternativen in der Lösung als «auch richtig» angeben.
 - Kompetenznachweise Englisch (10 Punkte pro Kompetenz): erreicht ab 6, gut ab 8, sehr gut ab 9 Punkten (Entscheid Lehrperson; «sehr gut» soll wirklich sehr gut sein, darum nicht tiefer).
@@ -88,6 +89,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 ## Agenten (`.claude/agents/`)
 - `aufgaben-ersteller`: baut neue Lernseiten oder Aufgaben nach den Regeln oben und trägt die Kachel in `index.html` ein.
 - `regel-pruefer`: prüft Seiten gegen diese Regeln und führt `tools/check.js` aus. Ändert nichts. Nach jeder grösseren Änderung einsetzen.
+- `loesungs-pruefer`: vergleicht Test und Lösung mit `tools/lage_vergleich.py` und von Auge: Steht alles auf der gleichen Seite, Zeile und Spalte? Ändert nichts. Nach jeder neuen oder geänderten Test-Lösung einsetzen.
 - `test-ersteller`: macht aus einer Lernseite (und den Unterlagen der Lehrperson) einen Papiertest als Word mit separater Lösung und Notenskala. Arbeitet im Scratchpad, nie im öffentlichen Repo; das Ergebnis kommt danach in die private Ablage.
 
 ## Arbeitsablauf
