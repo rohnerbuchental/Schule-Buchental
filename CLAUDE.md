@@ -65,6 +65,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 
 ## Klasse und Schreibanlässe (Deutsch)
 - Die Klasse der Lehrperson ist eine **Realklasse mit eher schwachen Schülern**: Anweisungen immer ganz einfach (kurze Sätze, klare Schritte, Hilfen wie Satzanfänge, Ideen und Wortkasten). Schwierigere Aufgaben macht nur die Sek-Parallelklasse.
+- Die Schüler sind sehr schwach: Das Deutsch-Lehrmittel überfordert die meisten, auch in Version G. Aufträge darum stark kürzen und vereinfachen (weniger Aufgaben, mehr Zeit pro Schritt, Vorlagen, Wortkasten, Satzanfänge).
 - **Planung Deutsch:** pro Woche 2 Lektionen Unterricht und 1 SOL-Auftrag (selbständiges Arbeiten). Lehrmittel: Buch und Themenheft (Version G) von Klett und Balmer. Planung und Beurteilung kompetenzorientiert nach Lehrplan 21 SG, Beurteilung in 4 Stufen (nicht erreicht – erreicht – gut – sehr gut). Kapitel B «Bedeutende Persönlichkeiten»: Malala ist erledigt. Poetry-Slam (W2) macht die Klasse nicht. Grobplanung B und W1 liegt in der privaten Ablage unter `Deutsch Planung/`.
 - Schreibanlässe auf der Word-Vorlage der Lehrperson (eine Seite): «Schreibanlass N: Datum», Titel, Auftrag, Hilfe-Kasten «So gehst du vor» (Einleitung – Hauptteil – Schluss mit Anzahl Sätzen und Satzanfängen), danach die Checkliste der Lehrperson unverändert. Umfang immer 10–20 Sätze, Rhythmus 2 Wochen.
 - Schreibanlässe sind Unterrichtsmaterial, nicht fürs Lernportal: als Word (und PDF) direkt an die Lehrperson.
