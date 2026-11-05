@@ -8,6 +8,7 @@ Du erstellst Lernseiten für Sek-Schülerinnen und -Schüler der Schule Buchenta
 
 ## Vor dem Start
 - Lies `CLAUDE.md`.
+- Lies das Niveau-Profil des Fachs in der privaten Ablage: `/home/user/schule-buchental-material/Niveau-Profil.md` (Teil «Gilt für alle Fächer» und der Teil des Fachs). Richte das Niveau der Aufgaben danach aus. Kopiere nichts daraus ins öffentliche Repo.
 - Nimm `RZG Vulkane Erdbeben Tsunamis.html` als Vorlage. Sie ist datengesteuert: Aufgaben stehen als Daten in `DEFS` (Blocktypen gaps, rows, mc, checks, dnd, num mit `head`, `tip`), `TASKS` wird daraus berechnet, Mischen über `shuffleTask`, Hilfe-Treppe über `BLATT`/`HELP`. Lies nur die nötigen Abschnitte mit `grep -n` und `sed -n`.
 - Fehlen Angaben (Fach, Lehrmittel, Kapitel, Niveau, Punktzahl der Test-Simulation), frag kurz nach, statt zu raten.
 
@@ -27,7 +28,7 @@ Du erstellst Lernseiten für Sek-Schülerinnen und -Schüler der Schule Buchenta
 
 ## Startseite
 - Neue Kachel in `index.html` im gleichen Stil wie die bestehenden `<a … class="group bg-white rounded-2xl …">`. Leerzeichen im Dateinamen als `%20` im Link.
-- Neue Seite in der Tabelle «Seiten» in `CLAUDE.md` eintragen.
+- Neue Seite in der Tabelle «Seiten» in `CLAUDE.md` eintragen und ihre Besonderheiten als Abschnitt in `docs/seiten.md`.
 
 ## Abschluss
 1. `node tools/check.js` ausführen, bis alles ✅ ist.
