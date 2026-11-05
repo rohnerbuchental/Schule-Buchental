@@ -20,7 +20,7 @@ Massstab ist die Lösung zum Englischtest Unit 1 in der privaten Ablage: So ist 
    - Jede Lücke des Tests hat in der Lösung eine Antwort in Rot. Keine Lücke ist leer.
    - Die Antwort steht in der Lücke, nicht daneben oder darüber.
    - Der Text nach einer Lücke bricht an der gleichen Stelle um wie im Test.
-   - Am Schluss gibt es eine Seite mit Punkteverteilung, Hinweisen zur Korrektur, Kompetenz-Grenzen und Notenskala. Die Notenskala passt auf eine Seite und stimmt (Note = Punkte ÷ Total × 5 + 1, gerundet auf 0.1). Englisch: Kompetenz-Grenzen wie in `CLAUDE.md`.
+   - Am Schluss gibt es eine Seite mit Punkteverteilung, Hinweisen zur Korrektur, Kompetenz-Grenzen und Notenskala. Die Notenskala passt auf eine Seite und stimmt (Note = Punkte ÷ Total × 5 + 1, gerundet auf 0.1). Englisch: Kompetenz-Grenzen wie in der privaten `/home/user/schule-buchental-material/CLAUDE.md`.
 
 ## Typische Ursachen und Lösung (für den Bericht)
 - **Antwort kürzer als die Lücke** → Zeile bricht anders um. Die Antwort mit Unterstrichen oder unterstrichenen Leerzeichen auf die Breite der Lücke auffüllen.

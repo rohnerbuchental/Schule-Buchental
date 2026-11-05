@@ -28,7 +28,7 @@ Du erstellst Lernseiten für Sek-Schülerinnen und -Schüler der Schule Buchenta
 
 ## Startseite
 - Neue Kachel in `index.html` im gleichen Stil wie die bestehenden `<a … class="group bg-white rounded-2xl …">`. Leerzeichen im Dateinamen als `%20` im Link.
-- Neue Seite in der Tabelle «Seiten» in `CLAUDE.md` eintragen.
+- Neue Seite in der Tabelle «Seiten» in `CLAUDE.md` eintragen und ihre Besonderheiten als Abschnitt in `docs/seiten.md`.
 
 ## Abschluss
 1. `node tools/check.js` ausführen, bis alles ✅ ist.
