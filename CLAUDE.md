@@ -66,6 +66,13 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Gleiche Struktur in allen Lösungsheften (Wunsch Lehrperson): Jede «Musterantwort:» hat darunter immer das gelbe Kästchen «Das muss drin sein». In Tabellen sind die Lösungswörter immer fett und blau.
 - Fehler in den Lösungen der Lehrperson nicht stillschweigend übernehmen: korrigieren und der Lehrperson melden.
 
+## Niveau pro Fach (Wunsch Lehrperson)
+- Die Klasse ist in der 2. Oberstufe (etwa 14 Jahre). Die Lehrperson unterrichtet Deutsch, Englisch, RZG, Medien und Informatik und Bildnerisches Gestalten.
+- Das **Niveau-Profil pro Fach** liegt in der privaten Ablage: `Niveau-Profil.md` (was die Klasse kann, was schwierig ist, Rückmeldungen, Ergebnisse). Nicht ins öffentliche Repo, weil es Einschätzungen zur Klasse enthält.
+- **Vor jeder neuen Aufgabe, jedem Arbeitsblatt und jedem Test** das Profil des Fachs lesen und das Niveau daran ausrichten. Das Niveau ist von Fach zu Fach verschieden.
+- **Nach jeder Rückmeldung** der Lehrperson (zu einfach, zu schwer, nicht verstanden, Testergebnisse) das Profil mit Datum nachführen und der Lehrperson in einem Satz sagen, was angepasst wurde. Wenn wir über ein Fach sprechen, das Niveau kurz einschätzen.
+- In allen Fächern gilt: Luft zwischen den Aufgaben (siehe Vorbild-Test unten).
+
 ## Klasse und Schreibanlässe (Deutsch)
 - Die Klasse der Lehrperson ist eine **Realklasse mit eher schwachen Schülern**: Anweisungen immer ganz einfach (kurze Sätze, klare Schritte, Hilfen wie Satzanfänge, Ideen und Wortkasten). Schwierigere Aufgaben macht nur die Sek-Parallelklasse.
 - Die Schüler sind sehr schwach: Das Deutsch-Lehrmittel überfordert die meisten, auch in Version G. Aufträge darum stark kürzen und vereinfachen (weniger Aufgaben, mehr Zeit pro Schritt, Vorlagen, Wortkasten, Satzanfänge).
