@@ -55,6 +55,7 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 - Echte Tests nie ins Repository und nie aufs Lernportal: Das Repo ist öffentlich, die Schüler könnten sie finden.
 - Tests als Word-Datei (.docx) direkt an die Lehrperson geben, immer mit separater Lösung inkl. Punkteverteilung und Notenskala. Danach in der privaten Ablage speichern (siehe unten).
 - Test-Aufgaben dürfen den Übungen ähnlich sein, aber nicht gleich (andere Bilder, Beispiele, Zahlen).
+- Lückentexte mit Auswahl (z.B. Konjunktionen): Jede Lücke darf nur eine richtige Lösung haben. Vor dem Abgeben jede Lücke mit allen Wörtern der Auswahl durchprobieren. Passt noch ein anderes Wort, die Lücke umschreiben (Wunsch Lehrperson: Englischtest Unit 1, Aufgabe 4 Nr. 9, dort passte auch «because» statt «so that»). Lösungen der Lehrperson ebenso prüfen und Alternativen in der Lösung als «auch richtig» angeben.
 
 ## Lösungshefte (Wunsch Lehrperson)
 - Lösungen zu Dossiers kommen nicht aufs Lernportal. Sie gehen als Word (zum Anpassen) und PDF (zum Austeilen) direkt an die Lehrperson und kommen in die private Ablage.
