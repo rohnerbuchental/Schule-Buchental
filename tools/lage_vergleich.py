@@ -17,6 +17,7 @@ Schluss zusätzlich hat (Bewertung, Notenskala), werden nur gezählt.
 Ausgabe: pro Seite «OK» oder die Stellen, die sich verschoben haben.
 Exit-Code 0 = alles am gleichen Ort, 1 = Verschiebungen gefunden.
 """
+import collections
 import difflib
 import html
 import os
@@ -27,6 +28,7 @@ import sys
 import tempfile
 
 PT_MM = 25.4 / 72
+BOXES = {c: '☐' for c in '☐☒☑✗✘'}   # leeres und angekreuztes Kästchen gelten als gleich
 BLANK = re.compile(r'^[_.…·\-–]+$')   # Lücken-Striche: werden in der Lösung ersetzt, nicht vergleichen
 
 
@@ -55,6 +57,7 @@ def words(pdf):
             w = html.unescape(w)
             if BLANK.match(w):
                 continue
+            w = BOXES.get(w, w)
             ws.append((w, float(x0), float(y1)))   # y1 = Grundlinie, stabil bei Schriftgrösse
         pages.append(ws)
     return pages
@@ -104,6 +107,13 @@ def compare(test_pdf, sol_pdf, tol):
         if not moved_v and not moved_h and quote > 0.97:
             print(f'✅ Seite {nr}: OK ({len(shifts)} Wörter am gleichen Ort)')
             continue
+        if missing and quote <= 0.97 and not moved_v and not moved_h:
+            # alle fehlenden Wörter stehen auf der gleichen Seite der Lösung, nur in anderer Lesereihenfolge?
+            rest = collections.Counter(w for w, _, _ in sws)
+            rest.subtract(w for i, (w, _, _) in enumerate(tws) if matched[i])
+            if all(rest[tws[i][0]] > 0 for i in missing):
+                print(f'✅ Seite {nr}: OK, nur andere Lesereihenfolge (z.B. «{context(tws, missing[0])}»), keine Verschiebung')
+                continue
         problems += 1
         print(f'❌ Seite {nr}: {len(shifts)} von {len(tws)} Wörtern gefunden')
         if moved_v:
