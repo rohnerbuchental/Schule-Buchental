@@ -67,6 +67,8 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 - **Verteilt wiederholen:** Grammatik aus früheren Wochen kommt kurz wieder (Cepeda et al., 2006; Dunlosky et al., 2013).
 - **Nur eine Sache pro Aufgabe**, keine Fallen, Schwieriges weglassen (Cognitive Load, Sweller, 1988).
 
+**So setzt es das Portal um (Grammatik-Pfad Unit 2, present continuous):** zuerst kurze Regel mit Beispiel, dann 4 Stufen: auswählen (am / is / are), auswählen (Verb + ing), Satz aus Bausteinen bauen, selber schreiben. Zu jeder Stufe ein vorgemachtes Beispiel, das in keiner Aufgabe vorkommt; die Hilfe wird von Stufe zu Stufe kleiner (Renkl & Atkinson, 2003). Erst verstehen und erkennen, dann selber bilden: Beides wirkt (Shintani, 2015). Wiederholung nach 1 und 3 Tagen wie bei den Wörtern.
+
 ## 4 Grenzen
 
 - Studien zeigen Durchschnittswerte. Bei einzelnen Schülerinnen und Schülern kann es anders sein.
@@ -97,9 +99,11 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 - Rawson, K. A., & Dunlosky, J. (2011). Optimizing schedules of retrieval practice for durable and efficient learning: How much is enough? *Journal of Experimental Psychology: General, 140*(3), 283–302.
 - Rawson, K. A., & Dunlosky, J. (2022). Successive relearning: An underexplored but potent technique for obtaining and maintaining knowledge. *Current Directions in Psychological Science, 31*(4), 362–368. https://doi.org/10.1177/09637214221100484
 - Rosenshine, B. (2012). Principles of instruction: Research-based strategies that all teachers should know. *American Educator, 36*(1), 12–19, 39.
+- Renkl, A., & Atkinson, R. K. (2003). Structuring the transition from example study to problem solving in cognitive skill acquisition: A cognitive load perspective. *Educational Psychologist, 38*(1), 15–22.
 - Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. *Psychological Science, 17*(3), 249–255. https://doi.org/10.1111/j.1467-9280.2006.01693.x
 - Ryan, R. M., & Deci, E. L. (2000). Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being. *American Psychologist, 55*(1), 68–78. https://doi.org/10.1037/0003-066X.55.1.68
 - Sailer, M., & Homner, L. (2020). The gamification of learning: A meta-analysis. *Educational Psychology Review, 32*, 77–112. https://doi.org/10.1007/s10648-019-09498-w
+- Shintani, N. (2015). The effectiveness of processing instruction and production-based instruction on L2 grammar acquisition: A meta-analysis. *Applied Linguistics, 36*(3), 306–325. https://doi.org/10.1093/applin/amu067
 - Sisk, V. F., Burgoyne, A. P., Sun, J., Butler, J. L., & Macnamara, B. N. (2018). To what extent and under which circumstances are growth mind-sets important to academic achievement? Two meta-analyses. *Psychological Science, 29*(4), 549–571. https://doi.org/10.1177/0956797617739704
 - Spada, N., & Tomita, Y. (2010). Interactions between type of instruction and type of language feature: A meta-analysis. *Language Learning, 60*(2), 263–308.
 - Sweller, J. (1988). Cognitive load during problem solving: Effects on learning. *Cognitive Science, 12*(2), 257–285. https://doi.org/10.1207/s15516709cog1202_4

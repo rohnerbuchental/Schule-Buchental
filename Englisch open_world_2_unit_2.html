@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open World 2 · Unit 2: Weird and wonderful games · Wörter lernen</title>
+  <title>Open World 2 · Unit 2: Weird and wonderful games · Wörter und Grammatik</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
     input:focus { outline: none; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.3); }
     .wrap-any { overflow-wrap: anywhere; }
     .no-tts .say-btn { display: none !important; }
-    [data-task], #theory { scroll-margin-top: 5rem; }
+    [data-task], #theory, #theory-g { scroll-margin-top: 9.5rem; }
     @keyframes pop { 0% { transform: scale(0.96); } 60% { transform: scale(1.03); } 100% { transform: scale(1); } }
     .pop { animation: pop 0.25s ease-out; }
     .fly-star { position: fixed; z-index: 60; font-size: 2rem; pointer-events: none; transition: transform 0.8s cubic-bezier(.5,-0.3,.6,1), opacity 0.8s; }
@@ -31,15 +31,20 @@
       <span class="text-2xl p-2 bg-white/10 rounded-2xl shrink-0">🎯</span>
       <div class="min-w-0 flex-1">
         <div class="text-[11px] font-bold tracking-wider uppercase text-emerald-200">Open World 2 · Unit 2</div>
-        <h1 class="text-lg sm:text-xl font-bold leading-tight">Wörter lernen</h1>
+        <h1 class="text-lg sm:text-xl font-bold leading-tight">Weird and wonderful games</h1>
       </div>
       <div class="shrink-0 bg-white/10 px-2.5 py-1 rounded-xl border border-white/15 text-xs font-bold" title="Gemeisterte Wörter">
-        ⭐ <span id="header-known" class="inline-block">0</span>
+        <span id="header-icon">⭐</span> <span id="header-known" class="inline-block">0</span>
       </div>
     </div>
+    <nav class="max-w-3xl mx-auto px-4 pb-2.5 grid grid-cols-2 gap-2 text-sm font-bold">
+      <button type="button" id="tab-btn-woerter" onclick="switchTab('woerter')" class="tab-btn">🔤 Wörter</button>
+      <button type="button" id="tab-btn-grammatik" onclick="switchTab('grammatik')" class="tab-btn">🧩 Grammatik</button>
+    </nav>
   </header>
 
-  <main class="max-w-3xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-5">
+  <main class="max-w-3xl w-full mx-auto p-4 sm:p-6 flex-1">
+    <div id="view-woerter" class="tab-view space-y-5">
 
     <!-- Teil wählen -->
     <section class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
@@ -107,6 +112,57 @@
       </ul>
       <button type="button" onclick="backToTask()" class="mt-3 px-3 py-1.5 rounded-lg text-xs font-bold border bg-white border-slate-300 text-slate-700">↩ Zurück zur Aufgabe</button>
     </details>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- REITER GRAMMATIK                                                -->
+    <!-- ============================================================== -->
+    <div id="view-grammatik" class="tab-view hidden space-y-5">
+      <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-2">
+        <div id="week-days-g" class="pb-2 mb-1 border-b border-slate-100"></div>
+        <h2 class="text-lg font-bold text-slate-900">🧩 Pläne für die Zukunft</h2>
+        <p class="text-sm text-slate-700">Ist etwas schon <b>abgemacht</b>? Dann brauchst du <b>am / is / are + Verb-ing</b>.</p>
+        <div class="rounded-xl bg-sky-50 border border-sky-200 p-3 text-sm text-slate-800" lang="en"><b>We're flying</b> to London on Friday. <span class="text-slate-500" lang="de">= Wir fliegen am Freitag nach London (das ist abgemacht).</span></div>
+      </section>
+
+      <!-- Aufgabe 3: Grammatik-Pfad «present continuous für Abmachungen» (erkennen → auswählen → Satz bauen → schreiben) | FS1E.5.D.1.c -->
+      <section id="task-gram" data-task="gram" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">Grammatik-Pfad</h2>
+          <p class="text-sm text-slate-600">4 Stufen, vom Auswählen bis zum Schreiben. Fehler sind okay: Der Satz kommt einfach nochmals.</p>
+        </div>
+        <div id="gram-progress"></div>
+        <div id="body-gram"></div>
+        <div id="tip-gram" class="hidden rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
+          Frag dich zuerst: Wer macht es? Schau dann in die Tabelle in der Theorie. Wie bei einem Zug mit zwei Wagen: Zuerst kommt der Wagen «am / is / are», dann der Wagen «Verb + ing».
+        </div>
+        <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="toggleTip('gram')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900">💡 Tipp</button>
+          <button type="button" onclick="openTheoryG()" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">📖 Theorie</button>
+          <button type="button" onclick="retryTask('gram')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">🔀 Nochmals üben</button>
+        </div>
+      </section>
+
+      <!-- Theorie Grammatik (kurz, zugeklappt) -->
+      <details id="theory-g" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
+        <summary class="text-base font-bold text-slate-900 cursor-pointer">📖 Theorie: Pläne mit am / is / are + Verb-ing</summary>
+        <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
+          <p><b>Wann?</b> Für feste Abmachungen in der Zukunft. Oft steht eine Zeit dabei: <i lang="en">at 6 pm, on Saturday, tomorrow, tonight</i>.</p>
+          <table class="w-full text-sm border border-slate-200 rounded-lg overflow-hidden" lang="en">
+            <tbody>
+              <tr class="border-b border-slate-200"><td class="p-2 font-bold">I</td><td class="p-2"><b>am</b> ('m) reading</td></tr>
+              <tr class="border-b border-slate-200"><td class="p-2 font-bold">he / she / it / Lea</td><td class="p-2"><b>is</b> ('s) reading</td></tr>
+              <tr><td class="p-2 font-bold">we / you / they</td><td class="p-2"><b>are</b> ('re) reading</td></tr>
+            </tbody>
+          </table>
+          <p><b>Frage:</b> <span lang="en">When <b>are</b> you <b>leaving</b> on Monday? – I'm <b>leaving</b> at 8 am.</span></p>
+          <p><b>-ing:</b> <span lang="en">read → reading, fly → flying.</span> Endet das Verb auf -e, fällt das e weg: <span lang="en">ride → riding</span>.</p>
+        </div>
+        <button type="button" onclick="backToTaskG()" class="mt-3 px-3 py-1.5 rounded-lg text-xs font-bold border bg-white border-slate-300 text-slate-700">↩ Zurück zur Aufgabe</button>
+      </details>
+    </div>
 
   </main>
 
@@ -344,7 +400,7 @@
     // SPEICHERN (jeder Zugriff in try/catch)
     // ==========================================================
     const SAVE_KEY = 'ow2u2_lernpfad';
-    const STATE = { part: 't1', path: {}, medal: {}, tests: {}, testOpen: {}, days: [] };
+    const STATE = { part: 't1', tab: 'woerter', path: {}, medal: {}, tests: {}, testOpen: {}, days: [], gram: null };
     function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(STATE)); } catch (e) {} }
     function load() {
       try {
@@ -356,6 +412,8 @@
         if (s.tests && typeof s.tests === 'object') STATE.tests = s.tests;
         if (s.testOpen && typeof s.testOpen === 'object') STATE.testOpen = s.testOpen;
         if (Array.isArray(s.days)) STATE.days = s.days.filter(d => typeof d === 'string').slice(-60);
+        if (s.tab === 'woerter' || s.tab === 'grammatik') STATE.tab = s.tab;
+        if (s.gram && typeof s.gram === 'object') STATE.gram = s.gram;
       } catch (e) {}
     }
 
@@ -366,6 +424,10 @@
       pfad: {
         get max() { return partWords().length; },
         score() { return partWords().filter(w => isMastered(w)).length; }
+      },
+      gram: {
+        get max() { return G_ALL.length; },
+        score() { return gDoneCount(); }
       },
       test: {
         get max() { return T().a.length + T().b.length; },
@@ -412,7 +474,7 @@
         b.className = 'px-3 py-2.5 rounded-xl border-2 text-center transition ' + (on ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50');
         b.setAttribute('aria-pressed', on);
       });
-      $('header-known').textContent = `${TASKS.pfad.score()} / ${TASKS.pfad.max}`;
+      renderHeader();
       renderWeek();
     }
 
@@ -485,7 +547,9 @@
         return `<div class="flex flex-col items-center gap-0.5"><span class="text-[11px] font-semibold ${today ? 'text-slate-900' : 'text-slate-500'}">${n}</span><span class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-black ${done ? 'bg-emerald-500 text-white' : today ? 'border-2 border-emerald-400 text-emerald-600' : 'bg-slate-100 text-slate-300'}">${done ? '✓' : ''}</span></div>`;
       }).join('');
       const n = names.filter((_, i) => { const d = new Date(monday); d.setDate(monday.getDate() + i); return STATE.days.includes(dayKey(d)); }).length;
-      $('week-days').innerHTML = `<div class="flex items-center justify-between gap-2"><span class="text-xs font-bold text-slate-600">Diese Woche geübt${n ? `: ${n} ${n === 1 ? 'Tag' : 'Tage'}` : ''}</span><div class="flex gap-1.5">${cells}</div></div>`;
+      const weekHtml = `<div class="flex items-center justify-between gap-2"><span class="text-xs font-bold text-slate-600">Diese Woche geübt${n ? `: ${n} ${n === 1 ? 'Tag' : 'Tage'}` : ''}</span><div class="flex gap-1.5">${cells}</div></div>`;
+      $('week-days').innerHTML = weekHtml;
+      if ($('week-days-g')) $('week-days-g').innerHTML = weekHtml;
     }
     // Stern fliegt vom Wort zum Zähler oben
     function flyStar(fromEl) {
@@ -873,6 +937,301 @@
     }
 
     // ==========================================================
+    // REITER
+    // ==========================================================
+    // Zähler oben: Wörter (⭐) oder Grammatik (🧩), je nach Reiter
+    function renderHeader() {
+      const g = STATE.tab === 'grammatik';
+      const icon = $('header-icon');
+      if (icon) icon.textContent = g ? '🧩' : '⭐';
+      $('header-known').textContent = g ? `${TASKS.gram.score()} / ${TASKS.gram.max}` : `${TASKS.pfad.score()} / ${TASKS.pfad.max}`;
+    }
+    function switchTab(tab) {
+      if (tab !== 'woerter' && tab !== 'grammatik') tab = 'woerter';
+      STATE.tab = tab;
+      document.querySelectorAll('.tab-view').forEach(v => v.classList.toggle('hidden', v.id !== 'view-' + tab));
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        const on = b.id === 'tab-btn-' + tab;
+        b.className = 'tab-btn px-3 py-2 rounded-xl transition ' + (on ? 'bg-white text-emerald-900 shadow-sm' : 'bg-white/10 text-emerald-50 hover:bg-white/20');
+        b.setAttribute('aria-pressed', on);
+      });
+      renderHeader();
+      save();
+    }
+
+    // ==========================================================
+    // GRAMMATIK-PFAD: present continuous für Abmachungen
+    // Eigene Sätze (nicht aus dem Lehrmittel). 4 Stufen: erkennen/auswählen → Satz bauen → selber schreiben.
+    // Jede Stufe: alle Sätze einmal richtig; falsche kommen nach 2 anderen wieder.
+    // Danach Wiederholung nach 1 und nach weiteren 3 Tagen (4 Sätze schreiben).
+    // ==========================================================
+    const G_STAGES = [
+      { key: 'be', type: 'mc', label: 'am / is / are auswählen', example: '<b>He is</b> playing tennis on Monday.' },
+      { key: 'ing', type: 'mc', label: 'Verb + ing auswählen', example: 'I am <b>reading</b> a book tonight.' },
+      { key: 'build', type: 'tiles', label: 'Satz bauen', example: 'She · is · reading · a book · tonight' },
+      { key: 'write', type: 'write', label: 'Selber schreiben', example: 'He ___ (read) a book tonight. → <b>is reading</b>' }
+    ];
+    const G_ITEMS = {
+      be: [
+        ['I ___ meeting my friends at 6 pm.', 'am'], ['Lea ___ visiting her cousin on Sunday.', 'is'],
+        ['We ___ watching a football match at 2 pm.', 'are'], ['My brother ___ playing ice hockey tomorrow.', 'is'],
+        ['They ___ having pizza tonight.', 'are'], ['___ you coming to the party on Friday?', 'are'],
+        ['Ben ___ meeting his coach at the sports hall at 5 pm.', 'is'], ['I ___ going to the zoo on Saturday.', 'am'],
+        ['Tom and Mia ___ travelling to Scotland next week.', 'are'], ['My mum ___ working late on Monday.', 'is']
+      ],
+      ing: [
+        ['We are ___ basketball on Thursday.', ['playing', 'play', 'plays']],
+        ['I am ___ my grandma on Sunday.', ['visiting', 'visit', 'visits']],
+        ['She is ___ to the cinema tonight.', ['going', 'go', 'goes']],
+        ['They are ___ the bus at 8 am.', ['taking', 'take', 'takes']],
+        ['Lea is ___ her grandpa after dinner.', ['calling', 'call', 'calls']],
+        ['Are you ___ to the Highland Games on Saturday?', ['coming', 'come', 'comes']],
+        ['My dad is ___ dinner tonight.', ['cooking', 'cook', 'cooks']],
+        ['We are ___ the fireworks at 10 pm.', ['watching', 'watch', 'watches']],
+        ['I am ___ my friends at the bus stop at 4 pm.', ['meeting', 'meet', 'meets']],
+        ['Moira is ___ in a race on Sunday.', ['running', 'run', 'runs']]
+      ],
+      build: [
+        { t: ['I', 'am', 'meeting', 'Tom', 'at 6 pm'], time: true },
+        { t: ['Lea', 'is', 'visiting', 'her cousin', 'on Sunday'], time: true },
+        { t: ['we', 'are', 'playing', 'table tennis', 'after school'], time: true },
+        { t: ['my sister', 'is', 'having', 'a party', 'on Friday'], time: true },
+        { t: ['they', 'are', 'watching', 'a film', 'tonight'], time: true },
+        { t: ['are', 'you', 'coming', 'to the fête', 'on Saturday'], time: false, q: true },
+        { t: ['what', 'are', 'you', 'doing', 'this weekend'], time: false, q: true }
+      ],
+      write: [
+        ['I ___ (meet) my friends at the station at 4 pm.', 'am meeting'], ['Lea ___ (visit) her cousin on Sunday.', 'is visiting'],
+        ['We ___ (watch) the Highland Games on Saturday.', 'are watching'], ['My cousin ___ (play) ice hockey on Friday.', 'is playing'],
+        ['They ___ (go) to the swimming pool tonight.', 'are going'], ['Ben ___ (call) his aunt tonight.', 'is calling'],
+        ['I ___ (help) my mum in the garden on Wednesday.', 'am helping'], ['We ___ (have) a picnic on Sunday.', 'are having']
+      ]
+    };
+    const G_ALL = G_STAGES.flatMap((st, s) => G_ITEMS[st.key].map((_, i) => st.key + i));
+    const gItem = id => { const key = id.replace(/\d+$/, ''), i = Number(id.match(/\d+$/)[0]); return { key, i, data: G_ITEMS[key][i], stage: G_STAGES.findIndex(s => s.key === key) }; };
+    const G = { id: null, phase: 'ask', ok: false, ans: '', dontKnow: false, hint: false, opts: [], pick: -1, placed: [], pool: [], token: 0, streak: 0, answers: 0, right: 0, etappe: 0, review: false };
+    function GS() {
+      const g = STATE.gram;
+      if (!g || typeof g !== 'object' || typeof g.done !== 'object' || !Array.isArray(g.queue)) STATE.gram = { stage: 0, done: {}, queue: [], rev: 0, revDue: 0, revQueue: [] };
+      const s = STATE.gram;
+      s.stage = Math.max(0, Math.min(G_STAGES.length, Number(s.stage) || 0));
+      if (!Array.isArray(s.revQueue)) s.revQueue = [];
+      return s;
+    }
+    const gDoneCount = () => G_ALL.filter(id => GS().done[id]).length;
+    const gReviewDue = () => { const s = GS(); return s.stage >= G_STAGES.length && s.rev < REVIEW_DAYS.length && Number(s.revDue) <= Date.now(); };
+    function gRefill() {
+      const s = GS();
+      if (s.stage >= G_STAGES.length) return;
+      const key = G_STAGES[s.stage].key;
+      const open = G_ITEMS[key].map((_, i) => key + i).filter(id => !s.done[id]);
+      s.queue = s.queue.filter(id => open.includes(id));
+      shuffle(open.filter(id => !s.queue.includes(id))).forEach(id => s.queue.push(id));
+    }
+    function gNew() {
+      const s = GS();
+      G.hint = false; G.pick = -1; G.ans = ''; G.ok = false; G.dontKnow = false; G.placed = []; G.pool = [];
+      // Wiederholung an späteren Tagen: 4 Sätze schreiben
+      if (gReviewDue()) {
+        if (!s.revQueue.length) s.revQueue = shuffle(G_ITEMS.write.map((_, i) => 'write' + i)).slice(0, 4);
+        G.review = true;
+        G.id = s.revQueue[0];
+        G.phase = 'ask';
+        return;
+      }
+      G.review = false;
+      gRefill();
+      if (s.stage >= G_STAGES.length) { G.id = null; G.phase = 'done'; return; }
+      if (!s.queue.length) { G.id = null; G.phase = 'stageDone'; return; }
+      G.id = s.queue[0];
+      G.phase = 'ask';
+      const it = gItem(G.id);
+      if (it.key === 'be') G.opts = shuffle(it.data[0].startsWith('___') ? ['Am', 'Is', 'Are'] : ['am', 'is', 'are']);
+      if (it.key === 'ing') G.opts = shuffle(it.data[1]);
+      if (it.key === 'build') G.pool = shuffle(it.data.t.map((t, k) => k));
+    }
+    const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
+    const gRight = it => it.key === 'be' ? (it.data[0].startsWith('___') ? cap(it.data[1]) : it.data[1])
+      : it.key === 'ing' ? it.data[1][0] : it.key === 'write' ? it.data[1] : cap(it.data.t.join(' ')) + (it.data.q ? '?' : '.');
+    // Schreiben: «am meeting» oder «'m meeting», Gross/Klein und Leerzeichen egal
+    function gWriteOk(answer, input, sentence) {
+      const n = x => String(x || '').toLowerCase().replace(/[’‘´`]/g, "'").replace(/[.!?,;:]+/g, ' ').replace(/\s+/g, ' ').trim();
+      let u = n(input);
+      const a = n(answer);
+      if (!u) return false;
+      // Subjekt aus dem Satz darf mitgeschrieben werden: «I'm meeting», «Lea's visiting», «I am meeting»
+      const subj = n(String(sentence || '').split('___')[0]);
+      if (subj && u.startsWith(subj)) u = u.slice(subj.length).trim();
+      const short = a.replace(/^am /, "'m ").replace(/^is /, "'s ").replace(/^are /, "'re ");
+      return u === a || u === short;
+    }
+    function gTilesOk(it, placed) {
+      const words = placed.map(k => it.data.t[k]);
+      const target = it.data.t;
+      if (words.join(' ').toLowerCase() === target.join(' ').toLowerCase()) return true;
+      // Zeitangabe darf auch vorne stehen: «At 6 pm I am meeting Tom»
+      return it.data.time && words.join(' ').toLowerCase() === [target[target.length - 1], ...target.slice(0, -1)].join(' ').toLowerCase();
+    }
+    function gAnswer(ok, ans, dontKnow) {
+      const s = GS(), id = G.id;
+      G.phase = 'answered'; G.ok = ok; G.ans = ans; G.dontKnow = dontKnow;
+      G.praise = ok ? praise() : '';
+      G.streak = ok ? G.streak + 1 : 0;
+      G.answers++; if (ok) G.right++;
+      markToday();
+      if (G.review) {
+        s.revQueue = s.revQueue.filter(x => x !== id);
+        if (!ok) s.revQueue.splice(Math.min(2, s.revQueue.length), 0, id);
+        if (!s.revQueue.length) { s.rev++; s.revDue = s.rev < REVIEW_DAYS.length ? Date.now() + REVIEW_DAYS[s.rev] * DAY - EARLY : 0; }
+      } else {
+        s.queue = s.queue.filter(x => x !== id);
+        if (ok) s.done[id] = true;
+        else s.queue.splice(Math.min(2, s.queue.length), 0, id);
+      }
+      save();
+      renderGram(true);
+      renderWeek();
+      renderHeader();
+      if (ok) {
+        const t = ++G.token;
+        setTimeout(() => { if (G.token === t && G.phase === 'answered') gNext(); }, gItem(id).key === 'be' || gItem(id).key === 'ing' ? 800 : 1300);
+      }
+    }
+    function gPick(i) {
+      if (G.phase !== 'ask' || !G.opts[i]) return;
+      const it = gItem(G.id);
+      G.pick = i;
+      gAnswer(G.opts[i].toLowerCase() === gRight(it).toLowerCase(), G.opts[i], false);
+    }
+    function gPlace(k) { if (G.phase !== 'ask' || !G.pool.includes(k)) return; G.pool = G.pool.filter(x => x !== k); G.placed.push(k); renderGram(); }
+    function gUnplace(pos) { if (G.phase !== 'ask') return; const k = G.placed[pos]; if (k === undefined) return; G.placed.splice(pos, 1); G.pool.push(k); renderGram(); }
+    function gCheckTiles(dontKnow) { if (G.phase !== 'ask' || (!dontKnow && G.pool.length)) return; const it = gItem(G.id); gAnswer(!dontKnow && gTilesOk(it, G.placed), dontKnow ? '' : G.placed.map(k => it.data.t[k]).join(' '), !!dontKnow); }
+    function gWrite(dontKnow) {
+      if (G.phase !== 'ask') return;
+      const inp = $('g-in'), ans = dontKnow ? '' : (inp ? inp.value : '');
+      if (!dontKnow && !ans.trim()) { if (inp) inp.focus(); return; }
+      gAnswer(!dontKnow && gWriteOk(gItem(G.id).data[1], ans, gItem(G.id).data[0]), ans, dontKnow);
+    }
+    // Hilfe vor der Lösung: beim Bauen das erste Wort, beim Schreiben «am / is / are»
+    function gHint() {
+      if (G.phase !== 'ask' || G.hint) return;
+      const it = gItem(G.id);
+      if (it.key === 'build') { G.pool = G.pool.concat(G.placed); G.placed = [0]; G.pool = G.pool.filter(x => x !== 0); }
+      const val = $('g-in') ? $('g-in').value : '';
+      G.hint = true;
+      renderGram(true);
+      if ($('g-in')) $('g-in').value = val;
+    }
+    function gNext() {
+      if (G.phase !== 'answered') return;
+      G.token++;
+      if (G.answers % ETAPPE_N === 0 && G.etappe !== G.answers && (G.review || GS().queue.length)) { G.etappe = G.answers; G.phase = 'etappe'; renderGram(true); return; }
+      gNew();
+      renderGram(true);
+    }
+    function gContinue() {
+      const s = GS();
+      if (G.phase === 'stageDone') { s.stage++; s.queue = []; if (s.stage >= G_STAGES.length && !s.revDue) s.revDue = Date.now() + REVIEW_DAYS[0] * DAY - EARLY; save(); }
+      if (!['stageDone', 'etappe', 'pause'].includes(G.phase)) return;
+      gNew();
+      renderGram(true);
+    }
+    function gPause() { if (G.phase !== 'etappe') return; G.phase = 'pause'; renderGram(true); }
+    function gSentence(it, fill) {
+      // Lücke hervorheben oder mit der Lösung füllen
+      const s = it.data[0];
+      const gap = fill ? `<b class="text-emerald-800">${esc(fill)}</b>` : '<span class="inline-block min-w-[3.5rem] border-b-2 border-sky-500 align-bottom">&nbsp;</span>';
+      return esc(s).replace('___', gap);
+    }
+    function renderGram(keepFocus) {
+      const s = GS(), total = TASKS.gram.max, done = TASKS.gram.score();
+      const pct = Math.round(done / total * 100);
+      const stageTxt = s.stage >= G_STAGES.length ? '🏆 alle Stufen geschafft' : `Stufe ${s.stage + 1} von ${G_STAGES.length}`;
+      $('gram-progress').innerHTML = `
+        <div class="flex justify-between items-end text-sm font-bold text-slate-700 mb-1 gap-2"><span>Fortschritt: ${pct} %</span><span class="text-xs font-semibold text-slate-500">${stageTxt}</span></div>
+        <div class="h-4 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-gradient-to-r from-sky-400 to-sky-600 transition-all" style="width:${pct}%"></div></div>
+        <div class="mt-2 flex gap-1.5">${G_STAGES.map((st, k) => `<span class="flex-1 text-center text-[11px] font-bold rounded-lg py-1 ${k < s.stage ? 'bg-emerald-100 text-emerald-800' : k === s.stage ? 'bg-sky-100 text-sky-800 ring-1 ring-sky-300' : 'bg-slate-100 text-slate-400'}">${k < s.stage ? '⭐' : k + 1}</span>`).join('')}</div>`;
+      const box = $('body-gram');
+      const card = (icon, title, text, buttons) => `<div class="rounded-2xl border-2 border-sky-300 bg-sky-50 p-5 text-center space-y-2 pop"><div class="text-4xl">${icon}</div><div class="text-lg font-black text-slate-900">${title}</div><div class="text-sm text-slate-700">${text}</div>${buttons}</div>`;
+      const nextBtn = label => `<button type="button" id="g-next" onclick="gContinue()" class="mt-1 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">${label}</button>`;
+      if (G.phase === 'stageDone') {
+        const nxt = G_STAGES[s.stage + 1];
+        box.innerHTML = card('⭐', `Stufe ${s.stage + 1} geschafft!`, nxt ? `Als Nächstes: ${nxt.label}.` : 'Das war die letzte Stufe.', nextBtn(nxt ? 'Weiter zur nächsten Stufe →' : 'Fertig →'));
+      } else if (G.phase === 'etappe') {
+        box.innerHTML = card('🎉', 'Etappe geschafft!', `${G.answers} Antworten, davon ${G.right} richtig.`,
+          `<div class="grid grid-cols-2 gap-2 pt-1"><button type="button" onclick="gPause()" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700">Für heute fertig</button><button type="button" id="g-next" onclick="gContinue()" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">Weiter üben →</button></div>`);
+      } else if (G.phase === 'pause') {
+        box.innerHTML = card('👍', 'Super gemacht!', 'Dein Fortschritt ist gespeichert. Komm morgen wieder.', nextBtn('Doch weiter üben'));
+      } else if (G.phase === 'done') {
+        const more = s.rev < REVIEW_DAYS.length;
+        box.innerHTML = card('🏆', 'Grammatik-Pfad geschafft!', more ? 'Du kannst Pläne mit am / is / are + Verb-ing bilden. In den nächsten Tagen kommen 4 Sätze zum Wiederholen.' : 'Du kannst Pläne mit am / is / are + Verb-ing bilden. Auch die Wiederholungen sind geschafft.', '');
+      } else {
+        const it = gItem(G.id), st = G_STAGES[it.stage], right = gRight(it);
+        let html = `
+          <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2 gap-2"><span>${G.review ? '🔁 Wiederholen: Selber schreiben' : `Stufe ${it.stage + 1}: ${st.label}`}</span><span class="shrink-0">${G.streak >= 3 ? '🔥 ' + G.streak : ''}</span></div>
+          ${G.review ? '' : `<div class="mb-2 text-xs text-slate-600" lang="en"><span class="font-bold" lang="de">Beispiel:</span> ${st.example}</div>`}`;
+        if (st.type === 'mc') {
+          html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4 text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' ? right : '')}</div>
+            <div class="mt-3 grid grid-cols-3 gap-2">${G.opts.map((o, i) => {
+              let cls = 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50';
+              if (G.phase === 'answered') cls = o.toLowerCase() === right.toLowerCase() ? 'bg-emerald-100 border-emerald-500 text-emerald-900' : i === G.pick ? 'bg-amber-50 border-amber-400 text-amber-900' : 'bg-white border-slate-200 text-slate-400';
+              return `<button type="button" onclick="gPick(${i})" ${G.phase !== 'ask' ? 'disabled' : ''} lang="en" class="min-h-[3.25rem] px-2 py-2.5 rounded-xl border-2 text-base font-bold wrap-any transition ${cls}">${esc(o)}</button>`;
+            }).join('')}</div>`;
+        } else if (st.type === 'tiles') {
+          const words = it.data.t;
+          html += `<div class="text-sm font-semibold text-slate-700 mb-1">Tipp die Wörter in der richtigen Reihenfolge an:</div>
+            <div class="min-h-[3.5rem] rounded-xl border-2 border-dashed ${G.phase === 'answered' ? (G.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50') : 'border-sky-300 bg-sky-50/60'} p-2 flex flex-wrap gap-2" lang="en">
+              ${G.placed.map((k, pos) => `<button type="button" onclick="gUnplace(${pos})" ${G.phase !== 'ask' ? 'disabled' : ''} class="px-3 py-2 rounded-lg bg-sky-600 text-white text-base font-bold">${esc(pos === 0 ? cap(words[k]) : words[k])}</button>`).join('') || '<span class="text-sm text-slate-400 p-1.5">Hier entsteht dein Satz.</span>'}${G.placed.length && !G.pool.length ? `<span class="self-center text-lg font-black text-slate-700">${it.data.q ? '?' : '.'}</span>` : ''}
+            </div>
+            <div class="mt-2 flex flex-wrap gap-2" lang="en">${G.pool.map(k => `<button type="button" onclick="gPlace(${k})" ${G.phase !== 'ask' ? 'disabled' : ''} class="px-3 py-2 rounded-lg bg-white border-2 border-slate-300 text-base font-bold text-slate-800 hover:bg-slate-50">${esc(words[k])}</button>`).join('')}</div>`;
+          if (G.phase === 'ask') html += `
+            <div class="mt-3 space-y-2">
+              ${G.hint ? '<div class="text-sm font-bold text-sky-800">💡 Das erste Wort steht schon da.</div>' : '<button type="button" onclick="gHint()" class="text-sm font-bold text-sky-700 underline">💡 Hilfe: erstes Wort</button>'}
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="gCheckTiles(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 Weiss ich nicht</button>
+                <button type="button" onclick="gCheckTiles()" ${G.pool.length ? 'disabled' : ''} class="px-3 py-3 rounded-xl text-sm font-bold text-white ${G.pool.length ? 'bg-slate-300' : 'bg-emerald-600 hover:bg-emerald-700'}">✓ Prüfen</button>
+              </div>
+            </div>`;
+        } else {
+          html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4 text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' ? right : '')}</div>`;
+          if (G.phase === 'ask') html += `
+            <div class="mt-3 space-y-2">
+              <input id="g-in" type="text" placeholder="am / is / are + Verb-ing …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="en"
+                onkeydown="if(event.key==='Enter'){event.preventDefault();gWrite(false);}"
+                class="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-3 text-lg font-semibold text-slate-800">
+              ${G.hint ? `<div class="text-sm font-bold text-sky-800">💡 Beginnt mit «${esc(right.split(' ')[0])} …»</div>` : '<button type="button" onclick="gHint()" class="text-sm font-bold text-sky-700 underline">💡 Hilfe: erstes Wort</button>'}
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="gWrite(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 Weiss ich nicht</button>
+                <button type="button" onclick="gWrite(false)" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">✓ Prüfen</button>
+              </div>
+            </div>`;
+        }
+        if (G.phase === 'answered') {
+          const full = st.type === 'tiles' ? right : it.data[0].replace('___', right).replace(/\s*\(.*?\)/, '');
+          html += `
+            <div class="feedback-box mt-3 rounded-2xl border-2 ${G.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-3 space-y-1.5 pop">
+              <div class="text-base font-black ${G.ok ? 'text-emerald-800' : 'text-amber-900'}">${G.ok ? (G.streak >= 5 && G.streak % 5 === 0 ? `🔥 ${G.streak} richtig hintereinander!` : G.praise) : (G.dontKnow ? 'So heisst es:' : 'Noch nicht ganz. Richtig ist:')}</div>
+              <div class="flex items-center gap-2 flex-wrap"><span class="text-base font-bold text-slate-900 wrap-any" lang="en">${esc(full)}</span>${sayBtn(full)}</div>
+              ${!G.ok && G.ans && st.type !== 'mc' ? `<div class="text-xs text-slate-600 wrap-any">Deine Antwort: <span class="font-semibold">${esc(G.ans)}</span></div>` : ''}
+              ${!G.ok ? '<div class="text-xs text-slate-600">Kein Problem: Der Satz kommt gleich nochmals.</div>' : ''}
+            </div>
+            <button type="button" id="g-next" onclick="gNext()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">Weiter →</button>`;
+        }
+        box.innerHTML = html;
+      }
+      if (keepFocus) {
+        const f = G.phase === 'ask' ? $('g-in') : $('g-next');
+        if (f) f.focus({ preventScroll: true });
+      }
+    }
+    function openTheoryG() {
+      const d = $('theory-g');
+      d.open = true;
+      setTimeout(() => d.scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
+    }
+    function backToTaskG() { $('task-gram').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+    // ==========================================================
     // TIPP, THEORIE, NOCHMALS ÜBEN
     // ==========================================================
     let BACK = 'pfad';
@@ -898,6 +1257,16 @@
         renderParts();
       }
       if (id === 'test') { STATE.tests[STATE.part] = newTest(STATE.part); save(); renderTest(); }
+      if (id === 'gram') {
+        let ok = true;
+        try { ok = window.confirm('Grammatik-Pfad von vorne beginnen? Dein Fortschritt in der Grammatik wird gelöscht.'); } catch (e) {}
+        if (!ok) return;
+        STATE.gram = null;
+        G.streak = 0;
+        gNew();
+        save();
+        renderGram();
+      }
     }
     function renderAll() {
       P().queue = shuffle(P().queue);   // bei jedem Laden neu mischen
@@ -907,10 +1276,14 @@
       renderParts();
       renderPfad();
       renderTest();
+      if (GS().queue.length) GS().queue = shuffle(GS().queue);   // bei jedem Laden neu mischen
+      if (!G.id || G.phase === 'done' || G.phase === 'stageDone') gNew();
+      renderGram();
+      switchTab(STATE.tab);
       save();
     }
 
-    Object.assign(window, { setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, continuePfad, pausePfad, giveHint, openTest, testInput, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak });
+    Object.assign(window, { setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, continuePfad, pausePfad, giveHint, openTest, testInput, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak, switchTab, gPick, gPlace, gUnplace, gCheckTiles, gWrite, gHint, gNext, gContinue, gPause, openTheoryG, backToTaskG });
 
     // Start sobald das HTML da ist
     document.addEventListener('DOMContentLoaded', function () {
