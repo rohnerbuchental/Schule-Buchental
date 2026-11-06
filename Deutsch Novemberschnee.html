@@ -25,9 +25,26 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .animate-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+    /* Sprachwechsel: feste Texte stehen doppelt (data-l="de" / data-l="es") */
+    html[lang="es"] [data-l="de"], html:not([lang="es"]) [data-l="es"] { display: none !important; }
+    html:not([lang="es"]) .lang-btn[data-setlang="de"], html[lang="es"] .lang-btn[data-setlang="es"] { background: #fff; color: #0f172a; }
   </style>
+  <script>
+    // Sprache sofort setzen (gilt für alle Seiten des Lernportals), damit nichts kurz auf Deutsch aufblitzt
+    try { if (localStorage.getItem('lernportal_lang') === 'es') document.documentElement.lang = 'es'; } catch (e) {}
+  </script>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-cyan-700 selection:text-white">
+
+  <!-- Sprache: Deutsch | Español -->
+  <div class="bg-slate-950 text-white">
+    <div class="max-w-5xl mx-auto px-4 pt-2 pb-1 flex justify-end">
+      <div class="inline-flex rounded-full bg-white/10 border border-white/15 p-0.5 text-xs font-bold" role="group" aria-label="Sprache · Idioma">
+        <button type="button" data-setlang="de" onclick="setLang('de')" lang="de" class="lang-btn px-3 py-1 rounded-full text-white/80">Deutsch</button>
+        <button type="button" data-setlang="es" onclick="setLang('es')" lang="es" class="lang-btn px-3 py-1 rounded-full text-white/80">Español</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ============================================================== -->
   <!-- HEADER -->
@@ -38,29 +55,21 @@
         <span class="text-2xl sm:text-3xl p-1.5 sm:p-2 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10">❄️</span>
         <div>
           <div class="flex flex-wrap items-center gap-2">
-            <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-200 border border-cyan-400/30">Lektüre Novemberschnee</span>
-            <span class="text-[10px] font-medium bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Speichert alle Antworten automatisch">
+            <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-200 border border-cyan-400/30"><span data-l="de">Lektüre</span><span data-l="es" lang="es">Lectura</span> Novemberschnee</span>
+            <span data-l="de" class="text-[10px] font-medium bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Speichert alle Antworten automatisch">
               💾 Auto-Save
             </span>
-            <span class="text-[10px] font-medium bg-sky-500/20 text-sky-200 border border-sky-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Zufällige Mischung">
+            <span data-l="es" lang="es" class="text-[10px] font-medium bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Guarda todas las respuestas automáticamente">
+              💾 Guardado automático
+            </span>
+            <span data-l="de" class="text-[10px] font-medium bg-sky-500/20 text-sky-200 border border-sky-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Zufällige Mischung">
               🔀 Zufall
             </span>
+            <span data-l="es" lang="es" class="text-[10px] font-medium bg-sky-500/20 text-sky-200 border border-sky-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Orden mezclado al azar">
+              🔀 Al azar
+            </span>
           </div>
-          <h1 class="text-base sm:text-lg font-bold leading-tight mt-0.5">Novemberschnee · Interaktiver Trainingshub</h1>
-        </div>
-      </div>
-
-      <!-- Quick Stats & Stopwatch -->
-      <div class="flex flex-wrap items-center gap-2">
-        <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl border border-white/20 text-xs shadow-inner">
-          <span class="text-amber-300 font-semibold">⏱️ Lernzeit:</span>
-          <span id="timer-display" class="font-mono-code font-bold text-white bg-black/40 px-2 py-0.5 rounded-lg tracking-wider text-xs">00:00</span>
-          <button onclick="toggleTimer()" id="timer-toggle-btn" class="px-2 py-0.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-bold transition">
-            ▶️ Start
-          </button>
-          <button onclick="resetTimer()" class="px-1.5 py-0.5 rounded-lg bg-white/15 hover:bg-rose-500/40 text-white transition text-xs">
-            ↺
-          </button>
+          <h1 class="text-base sm:text-lg font-bold leading-tight mt-0.5">Novemberschnee · <span data-l="de">Interaktiver Trainingshub</span><span data-l="es" lang="es">Centro de práctica interactivo</span></h1>
         </div>
       </div>
     </div>
@@ -68,16 +77,16 @@
     <!-- Navigation Bar (4 FOKUSSIERTE ÜBUNGS-TABS) -->
     <nav class="max-w-5xl mx-auto px-4 flex gap-1.5 overflow-x-auto border-t border-white/10 py-2 text-xs sm:text-sm font-medium">
       <button onclick="switchTab('chrono')" id="tab-btn-chrono" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm">
-        <span>⏱️</span> 1. Handlung & Chronologie
+        <span>⏱️</span> <span data-l="de">1. Handlung & Chronologie</span><span data-l="es" lang="es">1. Trama y cronología</span>
       </button>
       <button onclick="switchTab('figures')" id="tab-btn-figures" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>👥</span> 2. Figuren & Gedanken
+        <span>👥</span> <span data-l="de">2. Figuren & Gedanken</span><span data-l="es" lang="es">2. Personajes y pensamientos</span>
       </button>
       <button onclick="switchTab('genre')" id="tab-btn-genre" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>🔍</span> 3. Aufbau & Thriller
+        <span>🔍</span> <span data-l="de">3. Aufbau & Thriller</span><span data-l="es" lang="es">3. Estructura y thriller</span>
       </button>
       <button onclick="switchTab('opinion')" id="tab-btn-opinion" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>⚖️</span> 4. Urteil, Nothilfe & Epilog
+        <span>⚖️</span> <span data-l="de">4. Urteil, Nothilfe & Epilog</span><span data-l="es" lang="es">4. Juicio, ayuda y epílogo</span>
       </button>
     </nav>
   </header>
@@ -92,9 +101,12 @@
     <!-- ============================================================== -->
     <section id="view-chrono" class="tab-view space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">⏱️ Stationen der Flucht & Handlungslogik</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">⏱️ <span data-l="de">Stationen der Flucht & Handlungslogik</span><span data-l="es" lang="es">Estaciones de la huida y lógica de la trama</span></h2>
+        <p data-l="de" class="text-xs sm:text-sm text-slate-600 mt-0.5">
           Die Reihenfolge wird bei jedem Laden <strong>zufällig gewürfelt</strong>. Lies genau und bestimme die Position (1–5).
+        </p>
+        <p data-l="es" lang="es" class="text-xs sm:text-sm text-slate-600 mt-0.5">
+          El orden se <strong>sortea al azar</strong> cada vez que abres la página. Lee con atención y decide la posición (1–5).
         </p>
       </div>
 
@@ -102,14 +114,14 @@
       <div data-task="a1" class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
         <div class="border-b border-slate-100 pb-2 flex items-start justify-between gap-3">
           <div>
-            <span class="text-xs font-bold text-sky-800 uppercase tracking-wider">Aufgabe 1</span>
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Chronologie der Flucht (Stationen 1 bis 5)</h3>
+            <span class="text-xs font-bold text-sky-800 uppercase tracking-wider"><span data-l="de">Aufgabe 1</span><span data-l="es" lang="es">Tarea 1</span></span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Chronologie der Flucht (Stationen 1 bis 5)</span><span data-l="es" lang="es">Cronología de la huida (estaciones 1 a 5)</span></h3>
           </div>
           <span data-max="a1" class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800"></span>
         </div>
 
         <div class="bg-sky-50 border-l-4 border-sky-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Was du tun musst:</strong> Wähle rechts die Zahl <strong>1</strong> für das erste Ereignis bis zur <strong>5</strong> für das späteste.
+          👉 <span data-l="de"><strong>Was du tun musst:</strong> Wähle rechts die Zahl <strong>1</strong> für das erste Ereignis bis zur <strong>5</strong> für das späteste.</span><span data-l="es" lang="es"><strong>Lo que tienes que hacer:</strong> Elige al lado el número <strong>1</strong> para el primer hecho, hasta el <strong>5</strong> para el último.</span>
         </div>
 
         <div class="space-y-2.5 pt-1" id="chrono-escape-list"></div>
@@ -121,27 +133,27 @@
       <div data-task="a2" class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-5">
         <div class="border-b border-slate-100 pb-2 flex items-start justify-between gap-3">
           <div>
-            <span class="text-xs font-bold text-indigo-800 uppercase tracking-wider">Aufgabe 2</span>
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Handlung vor und nach der Tat ordnen</h3>
+            <span class="text-xs font-bold text-indigo-800 uppercase tracking-wider"><span data-l="de">Aufgabe 2</span><span data-l="es" lang="es">Tarea 2</span></span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Handlung vor und nach der Tat ordnen</span><span data-l="es" lang="es">Ordenar la trama antes y después del delito</span></h3>
           </div>
           <span data-max="a2" class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800"></span>
         </div>
 
         <div class="bg-indigo-50 border-l-4 border-indigo-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Was du tun musst:</strong> Ordne in beiden Teilen die Sätze. Wähle <strong>1</strong> für das erste Ereignis bis <strong>5</strong> für das späteste.
+          👉 <span data-l="de"><strong>Was du tun musst:</strong> Ordne in beiden Teilen die Sätze. Wähle <strong>1</strong> für das erste Ereignis bis <strong>5</strong> für das späteste.</span><span data-l="es" lang="es"><strong>Lo que tienes que hacer:</strong> Ordena las frases en las dos partes. Elige <strong>1</strong> para el primer hecho, hasta el <strong>5</strong> para el último.</span>
         </div>
 
         <div id="a2-parts" class="space-y-5">
           <div data-part="ca" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
             <h4 class="font-bold text-xs sm:text-sm text-slate-800 border-b border-slate-200 pb-2">
-              <b data-letter></b> Vor und während der Tat (Reihenfolge 1 bis 5)
+              <b data-letter></b> <span data-l="de">Vor und während der Tat (Reihenfolge 1 bis 5)</span><span data-l="es" lang="es">Antes y durante el delito (orden 1 a 5)</span>
             </h4>
             <div class="space-y-2" id="chrono-partA-list"></div>
           </div>
 
           <div data-part="cb" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
             <h4 class="font-bold text-xs sm:text-sm text-slate-800 border-b border-slate-200 pb-2">
-              <b data-letter></b> Flucht und Versteck (Reihenfolge 1 bis 5)
+              <b data-letter></b> <span data-l="de">Flucht und Versteck (Reihenfolge 1 bis 5)</span><span data-l="es" lang="es">Huida y escondite (orden 1 a 5)</span>
             </h4>
             <div class="space-y-2" id="chrono-partB-list"></div>
           </div>
@@ -156,9 +168,12 @@
     <!-- ============================================================== -->
     <section id="view-figures" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">👥 Die Figuren: Lina, Tom & Jurij</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">👥 <span data-l="de">Die Figuren: Lina, Tom & Jurij</span><span data-l="es" lang="es">Los personajes: Lina, Tom y Jurij</span></h2>
+        <p data-l="de" class="text-xs sm:text-sm text-slate-600 mt-0.5">
           Wer denkt was? Und welche familiären Traumata stecken hinter den Jugendlichen?
+        </p>
+        <p data-l="es" lang="es" class="text-xs sm:text-sm text-slate-600 mt-0.5">
+          ¿Quién piensa qué? ¿Y qué heridas de la familia hay detrás de estos jóvenes?
         </p>
       </div>
 
@@ -166,14 +181,14 @@
       <div data-task="a3" class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
         <div class="border-b border-slate-100 pb-2 flex items-start justify-between gap-3">
           <div>
-            <span class="text-xs font-bold text-indigo-800 uppercase tracking-wider">Aufgabe 3</span>
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Gedankenblasen zuordnen («Wer denkt was?»)</h3>
+            <span class="text-xs font-bold text-indigo-800 uppercase tracking-wider"><span data-l="de">Aufgabe 3</span><span data-l="es" lang="es">Tarea 3</span></span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Gedankenblasen zuordnen («Wer denkt was?»)</span><span data-l="es" lang="es">Asignar los globos de pensamiento («¿Quién piensa qué?»)</span></h3>
           </div>
           <span data-max="a3" class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800"></span>
         </div>
 
         <div class="bg-indigo-50 border-l-4 border-indigo-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Was du tun musst:</strong> Lies das Zitat und wähle die passende Figur aus: <strong>Lina</strong>, <strong>Tom</strong> oder <strong>Jurij</strong>.
+          👉 <span data-l="de"><strong>Was du tun musst:</strong> Lies das Zitat und wähle die passende Figur aus: <strong>Lina</strong>, <strong>Tom</strong> oder <strong>Jurij</strong>.</span><span data-l="es" lang="es"><strong>Lo que tienes que hacer:</strong> Lee la cita y elige el personaje que corresponde: <strong>Lina</strong>, <strong>Tom</strong> o <strong>Jurij</strong>.</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1" id="thought-bubbles-grid"></div>
@@ -184,26 +199,35 @@
       <!-- Theorie: Familiäre Verhältnisse -->
       <div id="theory-figures" class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
         <div class="border-b border-slate-100 pb-2">
-          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">📖 Theorie · Fakten-Check</span>
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Die familiären Verhältnisse zu Hause</h3>
+          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">📖 <span data-l="de">Theorie · Fakten-Check</span><span data-l="es" lang="es">Teoría · Comprobar los hechos</span></span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Die familiären Verhältnisse zu Hause</span><span data-l="es" lang="es">La situación familiar en casa</span></h3>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs sm:text-sm">
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <span class="font-bold text-slate-900 block mb-1">Linas Familie:</span>
-            <p class="text-slate-600 leading-relaxed">
+            <span class="font-bold text-slate-900 block mb-1"><span data-l="de">Linas Familie:</span><span data-l="es" lang="es">La familia de Lina:</span></span>
+            <p data-l="de" class="text-slate-600 leading-relaxed">
               Ihr Vater ist <strong>arbeitslos und Alkoholiker</strong>. Zu Hause herrscht eine traurige, bedrückende Atmosphäre; Lina fühlt sich innerlich einsam und alleingelassen.
             </p>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <span class="font-bold text-slate-900 block mb-1">Jurijs Familie:</span>
-            <p class="text-slate-600 leading-relaxed">
-              Kommt ursprünglich aus <strong>Kasachstan</strong>. Sein Vater schlug ihn regelmässig brutal. Jurij hasst seine Eltern und sucht den gefährlichen Kick beim Autoklauen.
+            <p data-l="es" lang="es" class="text-slate-600 leading-relaxed">
+              Su padre está <strong>sin trabajo y es alcohólico</strong>. En casa el ambiente es triste y pesado; por dentro, Lina se siente sola y abandonada.
             </p>
           </div>
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <span class="font-bold text-slate-900 block mb-1">Toms Familie:</span>
-            <p class="text-slate-600 leading-relaxed">
+            <span class="font-bold text-slate-900 block mb-1"><span data-l="de">Jurijs Familie:</span><span data-l="es" lang="es">La familia de Jurij:</span></span>
+            <p data-l="de" class="text-slate-600 leading-relaxed">
+              Kommt ursprünglich aus <strong>Kasachstan</strong>. Sein Vater schlug ihn regelmässig brutal. Jurij hasst seine Eltern und sucht den gefährlichen Kick beim Autoklauen.
+            </p>
+            <p data-l="es" lang="es" class="text-slate-600 leading-relaxed">
+              Su familia viene de <strong>Kazajistán</strong>. Su padre le pegaba a menudo y con mucha violencia. Jurij odia a sus padres y busca la emoción peligrosa de robar autos.
+            </p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="font-bold text-slate-900 block mb-1"><span data-l="de">Toms Familie:</span><span data-l="es" lang="es">La familia de Tom:</span></span>
+            <p data-l="de" class="text-slate-600 leading-relaxed">
               Wurde von seinem Vater früher jahrelang <strong>mit dem Ledergürtel verprügelt</strong>, bis er körperlich stärker als der Vater wurde. Tom hasst seine Eltern zutiefst.
+            </p>
+            <p data-l="es" lang="es" class="text-slate-600 leading-relaxed">
+              Durante años, su padre le <strong>pegó con el cinturón de cuero</strong>, hasta que Tom fue más fuerte que él. Tom odia profundamente a sus padres.
             </p>
           </div>
         </div>
@@ -215,9 +239,12 @@
     <!-- ============================================================== -->
     <section id="view-genre" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">🔍 Buchaufbau & Merkmale eines Thrillers</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">🔍 <span data-l="de">Buchaufbau & Merkmale eines Thrillers</span><span data-l="es" lang="es">Estructura del libro y características de un thriller</span></h2>
+        <p data-l="de" class="text-xs sm:text-sm text-slate-600 mt-0.5">
           Warum ist Novemberschnee kein klassischer Detektivkrimi? Und wie schreibt man eine vollständige 2-Punkte-Antwort?
+        </p>
+        <p data-l="es" lang="es" class="text-xs sm:text-sm text-slate-600 mt-0.5">
+          ¿Por qué «Novemberschnee» no es una novela policíaca clásica con detective? ¿Y cómo se escribe una respuesta completa de 2 puntos?
         </p>
       </div>
 
@@ -227,36 +254,43 @@
           <span class="text-xl">📖</span>
           <div>
             <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-200 text-amber-900">
-              Schreib-Tipp gegen halbe Punkte
+              <span data-l="de">Schreib-Tipp gegen halbe Punkte</span><span data-l="es" lang="es">Consejo de escritura contra los medios puntos</span>
             </span>
-            <h3 class="text-sm sm:text-base font-bold text-slate-900 mt-0.5">Die «2-Punkte-Formel» für vollständige Antworten</h3>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 mt-0.5"><span data-l="de">Die «2-Punkte-Formel» für vollständige Antworten</span><span data-l="es" lang="es">La «fórmula de 2 puntos» para respuestas completas</span></h3>
           </div>
         </div>
 
-        <p class="text-xs text-slate-700 leading-relaxed">
+        <p data-l="de" class="text-xs text-slate-700 leading-relaxed">
           Am Test schreiben Schüler oft nur 3 Wörter hin (z. B. <em>«Wegen Autos klauen»</em>) und bekommen dafür <strong>nur 0.5 von 2 Punkten</strong>. Schau dir an, wie aus einer halben Antwort die vollen 2 Punkte werden:
+        </p>
+        <p data-l="es" lang="es" class="text-xs text-slate-700 leading-relaxed">
+          En el examen, muchos alumnos escriben solo 3 palabras (por ejemplo, <em>«Por robar autos»</em>) y reciben <strong>solo 0.5 de 2 puntos</strong>. Mira cómo una respuesta a medias se convierte en los 2 puntos completos:
         </p>
 
         <!-- Vorher-Nachher Klick-Box -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-xs">
-          <div class="p-3 rounded-xl bg-white border border-rose-200 space-y-1">
-            <div class="font-bold text-rose-700 flex flex-wrap items-center justify-between gap-1">
-              <span>❌ Typische Schülerantwort (0.5 P.):</span>
-              <span class="text-[10px] bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded">Unvollständig</span>
+          <div class="p-3 rounded-xl bg-white border border-amber-300 space-y-1">
+            <div class="font-bold text-amber-800 flex flex-wrap items-center justify-between gap-1">
+              <span>✏️ <span data-l="de">Typische Schülerantwort (0.5 P.):</span><span data-l="es" lang="es">Respuesta típica de un alumno (0.5 p.):</span></span>
+              <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded"><span data-l="de">Unvollständig</span><span data-l="es" lang="es">Incompleta</span></span>
             </div>
-            <p class="italic text-slate-600">«Weil Jurij mit geklauten Autos herumgefahren ist.»</p>
+            <p data-l="de" class="italic text-slate-600">«Weil Jurij mit geklauten Autos herumgefahren ist.»</p>
+            <p data-l="es" lang="es" class="italic text-slate-600">«Porque Jurij andaba por ahí con autos robados.»</p>
             <div class="text-[11px] text-slate-500 pt-1 border-t border-slate-100">
-              ⚠️ <strong>Warum fehlt hier der Punkt?</strong> Es fehlt die Begründung, warum Lina das überhaupt gestört hat!
+              ⚠️ <span data-l="de"><strong>Warum fehlt hier der Punkt?</strong> Es fehlt die Begründung, warum Lina das überhaupt gestört hat!</span><span data-l="es" lang="es"><strong>¿Por qué falta aquí un punto?</strong> Falta la justificación: ¿por qué le molestaba eso a Lina?</span>
             </div>
           </div>
 
           <div class="p-3 rounded-xl bg-white border border-emerald-300 space-y-1">
             <div class="font-bold text-emerald-800 flex flex-wrap items-center justify-between gap-1">
-              <span>✅ Volle 2-Punkte-Antwort (2.0 P.):</span>
-              <span class="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">2 / 2 Punkte</span>
+              <span>✅ <span data-l="de">Volle 2-Punkte-Antwort (2.0 P.):</span><span data-l="es" lang="es">Respuesta completa de 2 puntos (2.0 p.):</span></span>
+              <span class="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded"><span data-l="de">2 / 2 Punkte</span><span data-l="es" lang="es">2 / 2 puntos</span></span>
             </div>
-            <p class="text-slate-800 font-medium">
+            <p data-l="de" class="text-slate-800 font-medium">
               «Jurij klaute Autos <span class="text-blue-700 font-bold">(1 P. Fakt)</span>, <strong>weil</strong> er ständig den Kick suchte und Lina nicht mit jemandem zusammen sein wollte, der leichtsinnig sein Leben aufs Spiel setzt <span class="text-emerald-700 font-bold">(1 P. Begründung)</span>.»
+            </p>
+            <p data-l="es" lang="es" class="text-slate-800 font-medium">
+              «Jurij robaba autos <span class="text-blue-700 font-bold">(1 p. hecho)</span>, <strong>porque</strong> siempre buscaba emociones fuertes, y Lina no quería estar con alguien que pone su vida en peligro sin pensar <span class="text-emerald-700 font-bold">(1 p. justificación)</span>.»
             </p>
           </div>
         </div>
@@ -266,14 +300,14 @@
       <div data-task="a4" class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
         <div class="border-b border-slate-100 pb-2 flex items-start justify-between gap-3">
           <div>
-            <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider">Aufgabe 4 · Schreibaufgabe Thriller</span>
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Warum gehört «Novemberschnee» zur Gattung Thriller?</h3>
+            <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider"><span data-l="de">Aufgabe 4 · Schreibaufgabe Thriller</span><span data-l="es" lang="es">Tarea 4 · Escribir sobre el thriller</span></span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Warum gehört «Novemberschnee» zur Gattung Thriller?</span><span data-l="es" lang="es">¿Por qué «Novemberschnee» es un thriller?</span></h3>
           </div>
-          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">Übung ohne Punkte</span>
+          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700"><span data-l="de">Übung ohne Punkte</span><span data-l="es" lang="es">Práctica sin puntos</span></span>
         </div>
 
         <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Was du tun musst:</strong> Beantworte beide Fragen in je 1–2 Sätzen.
+          👉 <span data-l="de"><strong>Was du tun musst:</strong> Beantworte beide Fragen in je 1–2 Sätzen.</span><span data-l="es" lang="es"><strong>Lo que tienes que hacer:</strong> Responde cada una de las dos preguntas con 1–2 frases.</span>
         </div>
 
         <div id="open-a4" class="space-y-4 pt-1"></div>
@@ -287,9 +321,12 @@
     <!-- ============================================================== -->
     <section id="view-opinion" class="tab-view hidden space-y-6 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">⚖️ Urteilsbildung, Schweizer Nothilfe & der Epilog</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">⚖️ <span data-l="de">Urteilsbildung, Schweizer Nothilfe & der Epilog</span><span data-l="es" lang="es">Formarse una opinión, ayuda en Suiza y el epílogo</span></h2>
+        <p data-l="de" class="text-xs sm:text-sm text-slate-600 mt-0.5">
           Linas Mitschuld beurteilen, Schweizer Hilfsstellen kennen und das dunkle Geheimnis des Endes lüften.
+        </p>
+        <p data-l="es" lang="es" class="text-xs sm:text-sm text-slate-600 mt-0.5">
+          Valorar la parte de culpa de Lina, conocer los servicios de ayuda de Suiza y descubrir el oscuro secreto del final.
         </p>
       </div>
 
@@ -299,30 +336,39 @@
           <span class="text-xl">🕵️‍♀️</span>
           <div>
             <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-200 border border-cyan-400/30">
-              📖 Hintergrundwissen Epilog
+              📖 <span data-l="de">Hintergrundwissen Epilog</span><span data-l="es" lang="es">Saber más sobre el epílogo</span>
             </span>
-            <h3 class="text-base sm:text-lg font-bold mt-1">Das Geheimnis um den Epilog: Ist Lina wirklich unschuldig?</h3>
+            <h3 class="text-base sm:text-lg font-bold mt-1"><span data-l="de">Das Geheimnis um den Epilog: Ist Lina wirklich unschuldig?</span><span data-l="es" lang="es">El secreto del epílogo: ¿es Lina de verdad inocente?</span></h3>
           </div>
         </div>
 
-        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <p data-l="de" class="text-xs sm:text-sm text-slate-300 leading-relaxed">
           Am Ende des Buches (S. 124/125) sagt die Polizei, dass an Jurijs Leiche <strong>keinerlei Kampfspuren</strong> gefunden wurden und er aus nächster Nähe erschossen wurde. Den Roman kann man auf zwei völlig verschiedene Arten deuten:
+        </p>
+        <p data-l="es" lang="es" class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          Al final del libro (p. 124/125), la policía dice que en el cuerpo de Jurij <strong>no se encontró ninguna señal de pelea</strong> y que le dispararon desde muy cerca. La novela se puede entender de dos maneras muy distintas:
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1 text-xs">
           <!-- Theorie A -->
           <div class="p-3.5 rounded-xl bg-white/10 border border-white/15 space-y-1.5">
-            <span class="text-sky-300 font-bold block text-sm">Theorie A: Lina als verängstigtes Opfer</span>
-            <p class="text-slate-300 leading-relaxed">
+            <span class="text-sky-300 font-bold block text-sm"><span data-l="de">Theorie A: Lina als verängstigtes Opfer</span><span data-l="es" lang="es">Teoría A: Lina, una víctima con miedo</span></span>
+            <p data-l="de" class="text-slate-300 leading-relaxed">
               Tom war ein gewalttätiger Psychopath, der durch die Prügel seines Vaters geprägt war. Er hat die Situation an sich gerissen, Lina mit der Waffe bedroht und Jurij eiskalt ermordet. Lina war in Panik und konnte nicht mehr fliehen.
+            </p>
+            <p data-l="es" lang="es" class="text-slate-300 leading-relaxed">
+              Tom era un psicópata violento, marcado por las palizas de su padre. Tomó el control de la situación, amenazó a Lina con el arma y mató a Jurij a sangre fría. Lina tenía pánico y ya no podía huir.
             </p>
           </div>
 
           <!-- Theorie B -->
           <div class="p-3.5 rounded-xl bg-white/10 border border-white/15 space-y-1.5">
-            <span class="text-rose-300 font-bold block text-sm">Theorie B: Lina als eiskalte Mörderin</span>
-            <p class="text-slate-300 leading-relaxed">
+            <span class="text-rose-300 font-bold block text-sm"><span data-l="de">Theorie B: Lina als eiskalte Mörderin</span><span data-l="es" lang="es">Teoría B: Lina, una asesina fría</span></span>
+            <p data-l="de" class="text-slate-300 leading-relaxed">
               Lina ist gar nicht unschuldig! Sie hat beide Jungs gegeneinander ausgespielt. Ihr Bericht an den Anwalt ist eine einzige Lüge: Sie wartete stundenlang mit dem Arzt, bis Tom verblutet war – so sind beide Zeugen tot und sie kann die ganze Schuld auf sie schieben!
+            </p>
+            <p data-l="es" lang="es" class="text-slate-300 leading-relaxed">
+              ¡Lina no es nada inocente! Puso a los dos chicos uno contra el otro. Lo que le cuenta al abogado es todo mentira: esperó horas para llamar al médico, hasta que Tom murió desangrado. Así los dos testigos están muertos, ¡y ella les puede echar toda la culpa a ellos!
             </p>
           </div>
         </div>
@@ -332,14 +378,14 @@
       <div data-task="a5" class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
         <div class="border-b border-slate-100 pb-2 flex items-start justify-between gap-3">
           <div>
-            <span class="text-xs font-bold text-purple-800 uppercase tracking-wider">Aufgabe 5 · Urteilsbildung</span>
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Linas Verhalten: Entlastend oder Belastend?</h3>
+            <span class="text-xs font-bold text-purple-800 uppercase tracking-wider"><span data-l="de">Aufgabe 5 · Urteilsbildung</span><span data-l="es" lang="es">Tarea 5 · Formarse una opinión</span></span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Linas Verhalten: Entlastend oder Belastend?</span><span data-l="es" lang="es">Lo que hace Lina: ¿a favor o en contra de ella?</span></h3>
           </div>
           <span data-max="a5" class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800"></span>
         </div>
 
         <div class="bg-purple-50 border-l-4 border-purple-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Was du tun musst:</strong> Bestimme für alle 6 Situationen, ob sie Lina <strong>🛡️ entlasten</strong> (wenig Schuld) oder <strong>⚠️ belasten</strong> (klare Mitschuld).
+          👉 <span data-l="de"><strong>Was du tun musst:</strong> Bestimme für alle 6 Situationen, ob sie Lina <strong>🛡️ entlasten</strong> (wenig Schuld) oder <strong>⚠️ belasten</strong> (klare Mitschuld).</span><span data-l="es" lang="es"><strong>Lo que tienes que hacer:</strong> Decide para las 6 situaciones si hablan <strong>🛡️ a favor de Lina</strong> (poca culpa) o <strong>⚠️ en contra de Lina</strong> (una parte clara de la culpa).</span>
         </div>
 
         <div class="space-y-2.5 pt-1" id="mitschuld-sorting-list"></div>
@@ -351,14 +397,14 @@
       <div data-task="a6" class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
         <div class="border-b border-slate-100 pb-2 flex items-start justify-between gap-3">
           <div>
-            <span class="text-xs font-bold text-purple-800 uppercase tracking-wider">Aufgabe 6 · Deine Meinung</span>
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Ist Lina mitschuldig? Begründe deine Meinung.</h3>
+            <span class="text-xs font-bold text-purple-800 uppercase tracking-wider"><span data-l="de">Aufgabe 6 · Deine Meinung</span><span data-l="es" lang="es">Tarea 6 · Tu opinión</span></span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Ist Lina mitschuldig? Begründe deine Meinung.</span><span data-l="es" lang="es">¿Tiene Lina parte de la culpa? Justifica tu opinión.</span></h3>
           </div>
-          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">Übung ohne Punkte</span>
+          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700"><span data-l="de">Übung ohne Punkte</span><span data-l="es" lang="es">Práctica sin puntos</span></span>
         </div>
 
         <div class="bg-purple-50 border-l-4 border-purple-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Was du tun musst:</strong> Schreib 3–5 Sätze. Nutze die 2-Punkte-Formel: zuerst ein Fakt aus dem Buch, dann eine Begründung.
+          👉 <span data-l="de"><strong>Was du tun musst:</strong> Schreib 3–5 Sätze. Nutze die 2-Punkte-Formel: zuerst ein Fakt aus dem Buch, dann eine Begründung.</span><span data-l="es" lang="es"><strong>Lo que tienes que hacer:</strong> Escribe 3–5 frases. Usa la fórmula de 2 puntos: primero un hecho del libro, después una justificación.</span>
         </div>
 
         <div id="open-a6" class="space-y-4"></div>
@@ -370,14 +416,14 @@
       <div data-task="a7" class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4">
         <div class="border-b border-slate-100 pb-2 flex items-start justify-between gap-3">
           <div>
-            <span class="text-xs font-bold text-blue-800 uppercase tracking-wider">Aufgabe 7 · Schweizer Hilfsangebote</span>
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Welche Stelle hilft in welcher Situation? (Schweiz)</h3>
+            <span class="text-xs font-bold text-blue-800 uppercase tracking-wider"><span data-l="de">Aufgabe 7 · Schweizer Hilfsangebote</span><span data-l="es" lang="es">Tarea 7 · Servicios de ayuda en Suiza</span></span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Welche Stelle hilft in welcher Situation? (Schweiz)</span><span data-l="es" lang="es">¿Qué servicio ayuda en cada situación? (Suiza)</span></h3>
           </div>
           <span data-max="a7" class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800"></span>
         </div>
 
         <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Was du tun musst:</strong> Ordne den 4 Situationen die richtige offizielle Schweizer Stelle zu!
+          👉 <span data-l="de"><strong>Was du tun musst:</strong> Ordne den 4 Situationen die richtige offizielle Schweizer Stelle zu!</span><span data-l="es" lang="es"><strong>Lo que tienes que hacer:</strong> ¡Elige para las 4 situaciones el servicio oficial suizo que corresponde!</span>
         </div>
 
         <div class="space-y-2.5 pt-1" id="scenario-matching-list"></div>
@@ -389,37 +435,42 @@
       <div data-task="a8" class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
         <div class="border-b border-slate-100 pb-2 flex items-start justify-between gap-3">
           <div>
-            <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider">Aufgabe 8 · Testabruf</span>
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Nenne 3 offizielle Schweizer Hilfsangebote ausserhalb der Schule</h3>
+            <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider"><span data-l="de">Aufgabe 8 · Testabruf</span><span data-l="es" lang="es">Tarea 8 · Recordar para el examen</span></span>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Nenne 3 offizielle Schweizer Hilfsangebote ausserhalb der Schule</span><span data-l="es" lang="es">Nombra 3 servicios de ayuda oficiales de Suiza fuera de la escuela</span></h3>
           </div>
-          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">Übung ohne Punkte</span>
+          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700"><span data-l="de">Übung ohne Punkte</span><span data-l="es" lang="es">Práctica sin puntos</span></span>
         </div>
 
-        <p class="text-xs text-slate-600">
+        <p data-l="de" class="text-xs text-slate-600">
           Tippe drei Stellen aus dem Kopf ein. Trenne sie mit Kommas.
+        </p>
+        <p data-l="es" lang="es" class="text-xs text-slate-600">
+          Escribe de memoria tres servicios. Sepáralos con comas.
         </p>
 
         <input type="text" id="input-active-swiss-help" data-open="swiss_help" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-emerald-500" placeholder="Tippe hier drei Stellen ein …" oninput="checkActiveSwissHelpInput()">
 
         <div class="text-[11px] text-slate-500 flex items-center justify-between gap-2 pt-1">
-          <span>Erkannte Stellen:</span>
+          <span><span data-l="de">Erkannte Stellen:</span><span data-l="es" lang="es">Servicios reconocidos:</span></span>
           <span id="swiss-help-count" class="font-bold text-emerald-700 font-mono-code">0 / 3 genannt</span>
         </div>
         <div id="swiss-help-badges" class="flex flex-wrap gap-1.5 min-h-[26px]"></div>
 
-        <p class="text-[11px] text-slate-500">Weisst du nicht weiter? Geh Schritt für Schritt: 1 → 2.</p>
+        <p class="text-[11px] text-slate-500"><span data-l="de">Weisst du nicht weiter? Geh Schritt für Schritt: 1 → 2.</span><span data-l="es" lang="es">¿No sabes cómo seguir? Ve paso a paso: 1 → 2.</span></p>
         <div class="flex flex-wrap gap-1.5">
-          <button type="button" onclick="toggleBox('tip','swiss_help')" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">1 · 💡 Tipp</button>
+          <button type="button" onclick="toggleBox('tip','swiss_help')" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">1 · 💡 <span data-l="de">Tipp</span><span data-l="es" lang="es">Pista</span></button>
           <button type="button" onclick="toggleSolution('swiss_help')" id="solbtn-swiss_help" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border bg-emerald-50 border-emerald-300 text-emerald-900 hover:bg-emerald-100">2 · 👀 Musterlösung zeigen</button>
         </div>
         <div id="tip-swiss_help" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-          Denk an Aufgabe 7: Welche Stellen kamen dort vor? Überlege auch, welche Telefonnummer du in der Schweiz wählst, wenn du in Gefahr bist. Und wohin kannst du dich wenden, wenn du einfach mit jemandem reden möchtest?
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 <span data-l="de">Tipp</span><span data-l="es" lang="es">Pista</span></div>
+          <span data-l="de">Denk an Aufgabe 7: Welche Stellen kamen dort vor? Überlege auch, welche Telefonnummer du in der Schweiz wählst, wenn du in Gefahr bist. Und wohin kannst du dich wenden, wenn du einfach mit jemandem reden möchtest?</span>
+          <span data-l="es" lang="es">Piensa en la tarea 7: ¿qué servicios aparecían ahí? Piensa también qué número de teléfono marcas en Suiza cuando estás en peligro. ¿Y a quién puedes acudir si simplemente quieres hablar con alguien?</span>
         </div>
         <div id="sol-swiss_help" class="hidden rounded-lg border border-emerald-300 bg-emerald-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 mb-1">Musterlösung</div>
-          <p>Drei davon reichen:</p>
-          <ul class="list-disc pl-5 space-y-0.5 mt-1">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 mb-1"><span data-l="de">Musterlösung</span><span data-l="es" lang="es">Respuesta modelo</span></div>
+          <p data-l="de">Drei davon reichen:</p>
+          <p data-l="es" lang="es">Con tres de estos es suficiente:</p>
+          <ul data-l="de" class="list-disc pl-5 space-y-0.5 mt-1">
             <li><b>Notruf 147 (Pro Juventute):</b> reden, auch anonym per SMS oder Chat</li>
             <li><b>KESB (Kindes- und Erwachsenenschutzbehörde):</b> Schutz durch eine Behörde, z.B. bei Gewalt zu Hause</li>
             <li><b>Schlupfhuus / Notunterkunft:</b> ein sicheres Bett, wenn man nicht nach Hause kann</li>
@@ -427,6 +478,15 @@
             <li><b>Opferhilfe Schweiz</b></li>
             <li><b>Dargebotene Hand (Telefon 143)</b></li>
             <li><b>Jugendberatungsstelle</b></li>
+          </ul>
+          <ul data-l="es" lang="es" class="list-disc pl-5 space-y-0.5 mt-1">
+            <li><b>147 (Pro Juventute):</b> para hablar, también de forma anónima por SMS o chat</li>
+            <li><b>KESB (autoridad suiza que protege a niños y adultos):</b> protección de una autoridad, por ejemplo cuando hay violencia en casa</li>
+            <li><b>Schlupfhuus / albergue de emergencia:</b> una cama segura cuando no puedes volver a casa</li>
+            <li><b>Policía (número de emergencia 117):</b> en caso de peligro, por ejemplo si alguien amenaza con un arma</li>
+            <li><b>Opferhilfe Schweiz</b> (ayuda a las víctimas)</li>
+            <li><b>Dargebotene Hand (teléfono 143):</b> alguien te escucha por teléfono</li>
+            <li><b>Jugendberatungsstelle</b> (centro de orientación para jóvenes)</li>
           </ul>
         </div>
 
@@ -440,8 +500,8 @@
   <div id="toast" class="fixed bottom-5 right-5 left-5 sm:left-auto z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-700 pointer-events-none text-xs sm:text-sm">
     <span id="toast-icon">✨</span>
     <div>
-      <div id="toast-title" class="font-bold">Mitteilung</div>
-      <div id="toast-msg" class="text-slate-300 text-xs">Details</div>
+      <div id="toast-title" class="font-bold"><span data-l="de">Mitteilung</span><span data-l="es" lang="es">Aviso</span></div>
+      <div id="toast-msg" class="text-slate-300 text-xs"><span data-l="de">Details</span><span data-l="es" lang="es">Detalles</span></div>
     </div>
   </div>
 
@@ -450,97 +510,118 @@
   <!-- ============================================================== -->
   <script>
     // ==============================================================
+    // SPRACHE (Deutsch | Español). Gespeichert für alle Seiten unter «lernportal_lang».
+    // Feste Texte stehen im HTML doppelt (data-l="de" / data-l="es"), Texte aus dem Skript mit tr('Deutsch', 'Español').
+    // Daten: Feld «es» bzw. «…Es» neben dem deutschen Feld. Die Lösungswerte sind in beiden Sprachen gleich.
+    // ==============================================================
+    const LANG_KEY = 'lernportal_lang';
+    let LANG = 'de';
+    try { LANG = localStorage.getItem(LANG_KEY) === 'es' ? 'es' : 'de'; } catch (e) {}
+    const tr = (de, es) => LANG === 'es' ? es : de;
+    const loc = (o, f) => (LANG === 'es' && o[f + 'Es'] != null) ? o[f + 'Es'] : o[f];   // Feld in der gewählten Sprache
+    const itemText = (it) => (LANG === 'es' && it.es) ? it.es : it.text;
+    const TITLE = { de: 'Novemberschnee · Trainingshub (Jürgen Banscherus)', es: 'Novemberschnee · Centro de práctica (Jürgen Banscherus)' };
+
+    // ==============================================================
     // DATEN (Lösungen der Lehrperson)
     // ==============================================================
     // Aufgabe 1: Fluchtstationen (1-5)
     const ESCAPE_STATIONS_A = [
-      { id: "es_1", text: "Der Bankangestellte missversteht Toms Verhalten; die drei flüchten Hals über Kopf auf ihren Fahrrädern.", correct: 1 },
-      { id: "es_2", text: "Jurij verletzt sich bei einem Sturz schwer am Knie; die Gruppe stiehlt einen alten Opel Kadett.", correct: 2 },
-      { id: "es_3", text: "Das Fluchtauto wird in einem Weiher versenkt, um Spuren zu verwischen.", correct: 3 },
-      { id: "es_4", text: "Die Gruppe erreicht das verlassene Ausflugslokal im Wald, wo die Situation psychisch eskaliert.", correct: 4 },
-      { id: "es_5", text: "Lina trennt sich kurz von den Jungs, um an einer Raststätte Essen zu kaufen und zu telefonieren.", correct: 5 }
+      { id: "es_1", text: "Der Bankangestellte missversteht Toms Verhalten; die drei flüchten Hals über Kopf auf ihren Fahrrädern.", es: "El empleado del banco entiende mal lo que hace Tom; los tres huyen a toda prisa en sus bicicletas.", correct: 1 },
+      { id: "es_2", text: "Jurij verletzt sich bei einem Sturz schwer am Knie; die Gruppe stiehlt einen alten Opel Kadett.", es: "Jurij se lesiona gravemente la rodilla al caerse; el grupo roba un viejo Opel Kadett.", correct: 2 },
+      { id: "es_3", text: "Das Fluchtauto wird in einem Weiher versenkt, um Spuren zu verwischen.", es: "Hunden el auto de la huida en un estanque para borrar las huellas.", correct: 3 },
+      { id: "es_4", text: "Die Gruppe erreicht das verlassene Ausflugslokal im Wald, wo die Situation psychisch eskaliert.", es: "El grupo llega al restaurante abandonado en el bosque, donde la tensión entre ellos estalla.", correct: 4 },
+      { id: "es_5", text: "Lina trennt sich kurz von den Jungs, um an einer Raststätte Essen zu kaufen und zu telefonieren.", es: "Lina se separa un rato de los chicos para comprar comida y llamar por teléfono en un área de servicio.", correct: 5 }
     ];
 
     // Aufgabe 2: zwei Teile
     const CHRONO_PART_A = [
-      { id: "ca_1", text: "Wegen schlechten Wetters und Langeweile treffen sich die drei im Steinbruch.", correct: 1 },
-      { id: "ca_2", text: "Sie planen als reines «Spiel» im Kopf einen Banküberfall auf die Sparkasse.", correct: 2 },
-      { id: "ca_3", text: "Sie kaufen Spielzeugpistolen und Skimasken, um den Überfall zu üben.", correct: 3 },
-      { id: "ca_4", text: "Tom geht allein in die Sparkasse, während Lina und Jurij draussen warten.", correct: 4 },
-      { id: "ca_5", text: "Durch ein Niesen rutscht Toms Maske herunter; der Angestellte schiebt ihm geschockt Geld zu.", correct: 5 }
+      { id: "ca_1", text: "Wegen schlechten Wetters und Langeweile treffen sich die drei im Steinbruch.", es: "Por el mal tiempo y el aburrimiento, los tres se encuentran en la cantera.", correct: 1 },
+      { id: "ca_2", text: "Sie planen als reines «Spiel» im Kopf einen Banküberfall auf die Sparkasse.", es: "Como un simple «juego» en la cabeza, planean un atraco a la caja de ahorros.", correct: 2 },
+      { id: "ca_3", text: "Sie kaufen Spielzeugpistolen und Skimasken, um den Überfall zu üben.", es: "Compran pistolas de juguete y pasamontañas para practicar el atraco.", correct: 3 },
+      { id: "ca_4", text: "Tom geht allein in die Sparkasse, während Lina und Jurij draussen warten.", es: "Tom entra solo en la caja de ahorros, mientras Lina y Jurij esperan afuera.", correct: 4 },
+      { id: "ca_5", text: "Durch ein Niesen rutscht Toms Maske herunter; der Angestellte schiebt ihm geschockt Geld zu.", es: "Por un estornudo, a Tom se le baja la máscara; el empleado, en shock, le pasa dinero.", correct: 5 }
     ];
 
     const CHRONO_PART_B = [
-      { id: "cb_1", text: "Die drei rasen auf Fahrrädern davon und beschliessen, gemeinsam weiterzufliehen.", correct: 1 },
-      { id: "cb_2", text: "Weil Jurij mit dem Velo stürzt, klaut er ein Auto für die weitere Flucht.", correct: 2 },
-      { id: "cb_3", text: "Sie versenken den Wagen im See und fliehen zu Fuss in den verlassenen Waldgasthof.", correct: 3 },
-      { id: "cb_4", text: "Tom bedroht Lina mit der echten Pistole und zwischen Tom und Jurij kommt es zum tödlichen Schuss.", correct: 4 },
-      { id: "cb_5", text: "Lina holt endlich einen Arzt ins Versteck, doch Tom stirbt auf dem Weg ins Spital.", correct: 5 }
+      { id: "cb_1", text: "Die drei rasen auf Fahrrädern davon und beschliessen, gemeinsam weiterzufliehen.", es: "Los tres se van a toda velocidad en bicicleta y deciden seguir huyendo juntos.", correct: 1 },
+      { id: "cb_2", text: "Weil Jurij mit dem Velo stürzt, klaut er ein Auto für die weitere Flucht.", es: "Como Jurij se cae de la bicicleta, roba un auto para seguir huyendo.", correct: 2 },
+      { id: "cb_3", text: "Sie versenken den Wagen im See und fliehen zu Fuss in den verlassenen Waldgasthof.", es: "Hunden el auto en el lago y huyen a pie a la posada abandonada del bosque.", correct: 3 },
+      { id: "cb_4", text: "Tom bedroht Lina mit der echten Pistole und zwischen Tom und Jurij kommt es zum tödlichen Schuss.", es: "Tom amenaza a Lina con la pistola de verdad, y entre Tom y Jurij sale el disparo mortal.", correct: 4 },
+      { id: "cb_5", text: "Lina holt endlich einen Arzt ins Versteck, doch Tom stirbt auf dem Weg ins Spital.", es: "Por fin Lina trae a un médico al escondite, pero Tom muere camino al hospital.", correct: 5 }
     ];
 
     // Aufgabe 3: 9 Gedankenblasen
     const THOUGHT_BUBBLES = [
-      { id: "tb_1", text: "«Du bist ein Arschloch, Tom!»", person: "Lina" },
-      { id: "tb_2", text: "«Ich habe solche Schmerzen. Das war alles ein grosser Fehler.»", person: "Jurij" },
-      { id: "tb_3", text: "«Er hat ihn umgebracht. Das war kein Unfall.»", person: "Lina" },
-      { id: "tb_4", text: "«Diese Idioten! Ich nehme mir das Geld und haue mit Lina ab.»", person: "Tom" },
-      { id: "tb_5", text: "«Ich muss meine Eltern anrufen. Ich wollte das alles nicht.»", person: "Lina" },
-      { id: "tb_6", text: "«Ich will das Geld nicht.»", person: "Lina" },
-      { id: "tb_7", text: "«Warum habe ich vorher nicht gemerkt, wie sie sind?»", person: "Lina" },
-      { id: "tb_8", text: "«Es war ein Unfall. Ich habe ihn nicht umbringen wollen.»", person: "Tom" },
-      { id: "tb_9", text: "«Du hasst mich!»", person: "Tom" }
+      { id: "tb_1", text: "«Du bist ein Arschloch, Tom!»", es: "«¡Eres un imbécil, Tom!»", person: "Lina" },
+      { id: "tb_2", text: "«Ich habe solche Schmerzen. Das war alles ein grosser Fehler.»", es: "«Me duele muchísimo. Todo esto fue un gran error.»", person: "Jurij" },
+      { id: "tb_3", text: "«Er hat ihn umgebracht. Das war kein Unfall.»", es: "«Lo mató. No fue un accidente.»", person: "Lina" },
+      { id: "tb_4", text: "«Diese Idioten! Ich nehme mir das Geld und haue mit Lina ab.»", es: "«¡Qué idiotas! Me llevo el dinero y me escapo con Lina.»", person: "Tom" },
+      { id: "tb_5", text: "«Ich muss meine Eltern anrufen. Ich wollte das alles nicht.»", es: "«Tengo que llamar a mis padres. Yo no quería nada de esto.»", person: "Lina" },
+      { id: "tb_6", text: "«Ich will das Geld nicht.»", es: "«No quiero el dinero.»", person: "Lina" },
+      { id: "tb_7", text: "«Warum habe ich vorher nicht gemerkt, wie sie sind?»", es: "«¿Por qué no me di cuenta antes de cómo son?»", person: "Lina" },
+      { id: "tb_8", text: "«Es war ein Unfall. Ich habe ihn nicht umbringen wollen.»", es: "«Fue un accidente. Yo no quería matarlo.»", person: "Tom" },
+      { id: "tb_9", text: "«Du hasst mich!»", es: "«¡Tú me odias!»", person: "Tom" }
     ];
 
     // Aufgabe 5: Linas Mitschuld
     const MITSCHULD_ITEMS = [
-      { id: "ms_1", text: "Lina war während des Raubs draussen und hat die Bank nicht betreten.", correct: "entlastend" },
-      { id: "ms_2", text: "Als Tom mit der Beute herausrennt, steigt Lina aufs Velo und flieht mit ihm.", correct: "belastend" },
-      { id: "ms_3", text: "Im Waldgasthof wird Lina von Tom mit der Waffe bedroht und darf nicht gehen.", correct: "entlastend" },
-      { id: "ms_4", text: "An der Autobahn-Raststätte ist Lina ganz allein an einer Telefonzelle, ruft aber nicht die Polizei.", correct: "belastend" },
-      { id: "ms_5", text: "Lina wollte den Überfall im Steinbruch von Anfang an nur als harmloses Gedankenspiel.", correct: "entlastend" },
-      { id: "ms_6", text: "Lina wartet viele Stunden, bis sie für den schwer verletzten Tom endlich einen Arzt holt.", correct: "belastend" }
+      { id: "ms_1", text: "Lina war während des Raubs draussen und hat die Bank nicht betreten.", es: "Durante el robo, Lina estaba afuera y no entró en el banco.", correct: "entlastend" },
+      { id: "ms_2", text: "Als Tom mit der Beute herausrennt, steigt Lina aufs Velo und flieht mit ihm.", es: "Cuando Tom sale corriendo con el botín, Lina se sube a la bicicleta y huye con él.", correct: "belastend" },
+      { id: "ms_3", text: "Im Waldgasthof wird Lina von Tom mit der Waffe bedroht und darf nicht gehen.", es: "En la posada del bosque, Tom amenaza a Lina con el arma y no la deja irse.", correct: "entlastend" },
+      { id: "ms_4", text: "An der Autobahn-Raststätte ist Lina ganz allein an einer Telefonzelle, ruft aber nicht die Polizei.", es: "En el área de servicio de la autopista, Lina está completamente sola en una cabina telefónica, pero no llama a la policía.", correct: "belastend" },
+      { id: "ms_5", text: "Lina wollte den Überfall im Steinbruch von Anfang an nur als harmloses Gedankenspiel.", es: "Desde el principio, en la cantera, Lina quería el atraco solo como un juego mental sin peligro.", correct: "entlastend" },
+      { id: "ms_6", text: "Lina wartet viele Stunden, bis sie für den schwer verletzten Tom endlich einen Arzt holt.", es: "Lina espera muchas horas hasta que por fin trae a un médico para Tom, que está gravemente herido.", correct: "belastend" }
     ];
 
     // Aufgabe 7: Schweizer Notfall-Szenarien
     const SWISS_SCENARIOS = [
-      { id: "sc_1", text: "Ein Jugendlicher fühlt sich einsam, hat grosse Sorgen und möchte anonym per SMS oder Chat reden.", correct: "147" },
-      { id: "sc_2", text: "Ein Kind wird zu Hause vom Vater regelmässig mit dem Gürtel geschlagen und braucht behördlichen Schutz.", correct: "KESB" },
-      { id: "sc_3", text: "Ein Jugendlicher wird mitten in der Nacht aus dem Haus geworfen und braucht sofort ein sicheres Bett zum Schlafen.", correct: "Schlupfhuus" },
-      { id: "sc_4", text: "Jemand bedroht dich und andere Personen mit einer echten Schusswaffe.", correct: "117" }
+      { id: "sc_1", text: "Ein Jugendlicher fühlt sich einsam, hat grosse Sorgen und möchte anonym per SMS oder Chat reden.", es: "Un joven se siente solo, tiene grandes preocupaciones y quiere hablar de forma anónima por SMS o chat.", correct: "147" },
+      { id: "sc_2", text: "Ein Kind wird zu Hause vom Vater regelmässig mit dem Gürtel geschlagen und braucht behördlichen Schutz.", es: "En casa, el padre le pega a un niño con el cinturón muy a menudo. El niño necesita la protección de una autoridad.", correct: "KESB" },
+      { id: "sc_3", text: "Ein Jugendlicher wird mitten in der Nacht aus dem Haus geworfen und braucht sofort ein sicheres Bett zum Schlafen.", es: "A un joven lo echan de casa en plena noche y necesita enseguida una cama segura para dormir.", correct: "Schlupfhuus" },
+      { id: "sc_4", text: "Jemand bedroht dich und andere Personen mit einer echten Schusswaffe.", es: "Alguien te amenaza a ti y a otras personas con un arma de fuego de verdad.", correct: "117" }
     ];
 
     // Listen mit Auswahlmenü. Speicher-Schlüssel und Format (Objekt id → Wert) wie bisher, damit nichts verloren geht.
     const POS = 'pos';   // Auswahl = Platznummern 1, 2, 3 … (werden nicht gemischt)
     const GROUPS = {
       esc: { data: ESCAPE_STATIONS_A, sol: 'correct', store: 'ns_chrono',    list: 'chrono-escape-list',     layout: 'card',   opts: POS },
-      ca:  { data: CHRONO_PART_A,     sol: 'correct', store: 'ns_chrono_pa', list: 'chrono-partA-list',      layout: 'small',  opts: POS, name: 'Vor und während der Tat' },
-      cb:  { data: CHRONO_PART_B,     sol: 'correct', store: 'ns_chrono_pb', list: 'chrono-partB-list',      layout: 'small',  opts: POS, name: 'Flucht und Versteck' },
-      tb:  { data: THOUGHT_BUBBLES,   sol: 'person',  store: 'ns_thoughts',  list: 'thought-bubbles-grid',   layout: 'bubble', placeholder: '-- wählen --',
+      ca:  { data: CHRONO_PART_A,     sol: 'correct', store: 'ns_chrono_pa', list: 'chrono-partA-list',      layout: 'small',  opts: POS, name: 'Vor und während der Tat', nameEs: 'Antes y durante el delito' },
+      cb:  { data: CHRONO_PART_B,     sol: 'correct', store: 'ns_chrono_pb', list: 'chrono-partB-list',      layout: 'small',  opts: POS, name: 'Flucht und Versteck', nameEs: 'Huida y escondite' },
+      tb:  { data: THOUGHT_BUBBLES,   sol: 'person',  store: 'ns_thoughts',  list: 'thought-bubbles-grid',   layout: 'bubble', placeholder: '-- wählen --', placeholderEs: '-- elegir --',
              opts: [['Lina', 'Lina'], ['Tom', 'Tom'], ['Jurij', 'Jurij']] },
-      ms:  { data: MITSCHULD_ITEMS,   sol: 'correct', store: 'ns_mitschuld', list: 'mitschuld-sorting-list', layout: 'numbered', placeholder: '-- Beurteilen --',
+      // opts: [Wert, Deutsch, Spanisch] – der Wert (und damit die Lösung) ist in beiden Sprachen gleich
+      ms:  { data: MITSCHULD_ITEMS,   sol: 'correct', store: 'ns_mitschuld', list: 'mitschuld-sorting-list', layout: 'numbered', placeholder: '-- Beurteilen --', placeholderEs: '-- Valorar --',
              badge: 'bg-purple-100 text-purple-700', ring: 'focus:ring-purple-500', w: 'sm:w-44',
-             opts: [['entlastend', '🛡️ Entlastend'], ['belastend', '⚠️ Belastend']] },
-      sc:  { data: SWISS_SCENARIOS,   sol: 'correct', store: 'ns_scenarios', list: 'scenario-matching-list', layout: 'numbered', placeholder: '-- Stelle wählen --',
+             opts: [['entlastend', '🛡️ Entlastend', '🛡️ A favor de Lina'], ['belastend', '⚠️ Belastend', '⚠️ En contra de Lina']] },
+      sc:  { data: SWISS_SCENARIOS,   sol: 'correct', store: 'ns_scenarios', list: 'scenario-matching-list', layout: 'numbered', placeholder: '-- Stelle wählen --', placeholderEs: '-- Elegir servicio --',
              badge: 'bg-blue-100 text-blue-700', ring: 'focus:ring-blue-500', w: 'sm:w-56',
-             opts: [['147', 'Notruf 147 (Pro Juventute)'], ['KESB', 'KESB (Schutzbehörde)'], ['Schlupfhuus', 'Schlupfhuus / Notunterkunft'], ['117', 'Polizei (Notruf 117)']] }
+             opts: [['147', 'Notruf 147 (Pro Juventute)', '147 (Pro Juventute): línea de ayuda'], ['KESB', 'KESB (Schutzbehörde)', 'KESB (autoridad de protección)'], ['Schlupfhuus', 'Schlupfhuus / Notunterkunft', 'Schlupfhuus / albergue de emergencia'], ['117', 'Polizei (Notruf 117)', 'Policía (117)']] }
     };
 
     // Aufgaben mit Punkten. parts = Teile, deren Reihenfolge gemischt wird (Buchstaben a, b werden gesetzt).
     const DEFS = {
       a1: { nr: 1, groups: ['esc'], btn: 'bg-sky-600 hover:bg-sky-700',
-        tip: 'Such zuerst den Satz, der direkt nach dem Überfall passiert. Frag dich dann bei jedem Satz: Was muss vorher schon passiert sein, damit das möglich ist? Wie im Alltag: Einen Platten am Velo kannst du erst flicken, wenn der Reifen kaputt ist.' },
+        tip: 'Such zuerst den Satz, der direkt nach dem Überfall passiert. Frag dich dann bei jedem Satz: Was muss vorher schon passiert sein, damit das möglich ist? Wie im Alltag: Einen Platten am Velo kannst du erst flicken, wenn der Reifen kaputt ist.',
+        tipEs: 'Busca primero la frase que pasa justo después del atraco. Después pregúntate en cada frase: ¿qué tiene que haber pasado antes para que esto sea posible? Como en la vida diaria: solo puedes arreglar la rueda de la bicicleta cuando ya está rota.' },
       a2: { nr: 2, groups: ['ca', 'cb'], parts: 'a2-parts', btn: 'bg-indigo-600 hover:bg-indigo-700',
-        tip: 'Stell dir die Geschichte wie eine Kette vor: Jedes Ereignis ist die Folge vom Ereignis davor. Frag dich bei jedem Satz: Was ist der Grund, was ist die Folge? Der Grund kommt immer zuerst. Wie beim Kochen: Zuerst kaufst du ein, dann kochst du, dann isst du.' },
+        tip: 'Stell dir die Geschichte wie eine Kette vor: Jedes Ereignis ist die Folge vom Ereignis davor. Frag dich bei jedem Satz: Was ist der Grund, was ist die Folge? Der Grund kommt immer zuerst. Wie beim Kochen: Zuerst kaufst du ein, dann kochst du, dann isst du.',
+        tipEs: 'Imagina la historia como una cadena: cada hecho es la consecuencia del hecho anterior. Pregúntate en cada frase: ¿cuál es la causa y cuál es la consecuencia? La causa siempre va primero. Como al cocinar: primero compras, después cocinas y después comes.' },
       a3: { nr: 3, groups: ['tb'], theory: 'theory-figures', btn: 'bg-indigo-600 hover:bg-indigo-700',
-        tip: 'Lies jedes Zitat und frag dich: Welches Gefühl steckt darin? Angst, Wut, Schmerz oder Reue? Denk dann an das, was den dreien passiert: Wer ist verletzt? Wer will das Geld? Wer möchte am liebsten nach Hause? Achte auch darauf, ob jemand über sich selbst spricht («ich») oder über einen anderen («er»).' },
+        tip: 'Lies jedes Zitat und frag dich: Welches Gefühl steckt darin? Angst, Wut, Schmerz oder Reue? Denk dann an das, was den dreien passiert: Wer ist verletzt? Wer will das Geld? Wer möchte am liebsten nach Hause? Achte auch darauf, ob jemand über sich selbst spricht («ich») oder über einen anderen («er»).',
+        tipEs: 'Lee cada cita y pregúntate: ¿qué sentimiento hay en ella? ¿Miedo, rabia, dolor o arrepentimiento? Después piensa en lo que les pasa a los tres: ¿quién está herido? ¿Quién quiere el dinero? ¿Quién quiere volver a casa? Fíjate también si alguien habla de sí mismo («yo») o de otra persona («él»).' },
       a5: { nr: 5, groups: ['ms'], theory: 'theory-epilog', btn: 'bg-purple-600 hover:bg-purple-700',
-        tip: 'Frag dich bei jeder Situation: Konnte Lina hier frei entscheiden? Hatte sie die Möglichkeit, etwas Richtiges zu tun, und hat es nicht gemacht? Oder war sie gezwungen, oder wollte sie nichts Böses? Wie im Alltag: Wenn dich jemand festhält, kannst du nichts dafür, dass du zu spät kommst. Wenn du absichtlich trödelst, schon.' },
+        tip: 'Frag dich bei jeder Situation: Konnte Lina hier frei entscheiden? Hatte sie die Möglichkeit, etwas Richtiges zu tun, und hat es nicht gemacht? Oder war sie gezwungen, oder wollte sie nichts Böses? Wie im Alltag: Wenn dich jemand festhält, kannst du nichts dafür, dass du zu spät kommst. Wenn du absichtlich trödelst, schon.',
+        tipEs: 'Pregúntate en cada situación: ¿podía Lina decidir libremente? ¿Tenía la posibilidad de hacer algo correcto y no lo hizo? ¿O estaba obligada, o no quería hacer nada malo? Como en la vida diaria: si alguien te sujeta, no es tu culpa llegar tarde. Si vas lento a propósito, sí.' },
       a7: { nr: 7, groups: ['sc'], btn: 'bg-blue-600 hover:bg-blue-700',
-        tip: 'Lies genau, was die Person braucht: Jemanden zum Reden? Einen Schlafplatz? Schutz durch eine Behörde? Oder ist es lebensgefährlich, und es muss sofort jemand kommen? Jede Stelle hat ihre eigene Aufgabe. Wie beim Arzt: Mit Zahnweh gehst du nicht zum Augenarzt.' }
+        tip: 'Lies genau, was die Person braucht: Jemanden zum Reden? Einen Schlafplatz? Schutz durch eine Behörde? Oder ist es lebensgefährlich, und es muss sofort jemand kommen? Jede Stelle hat ihre eigene Aufgabe. Wie beim Arzt: Mit Zahnweh gehst du nicht zum Augenarzt.',
+        tipEs: 'Lee bien qué necesita la persona: ¿alguien con quien hablar? ¿Un lugar para dormir? ¿La protección de una autoridad? ¿O hay peligro de muerte y alguien tiene que venir enseguida? Cada servicio tiene su propia tarea. Como con los médicos: con dolor de muelas no vas al médico de los ojos.' }
     };
 
     // Offene Textfragen mit Hilfe-Treppe: Tipp (mit Wortkasten) → Satzanfänge → Antwort prüfen (Schlüsselwörter) → Musterlösung.
     // keys: [Anzeige-Text, [Wortteile]] – Wortteile kleingeschrieben, ä=ae, ö=oe, ü=ue, Eszett=ss
+    // keysEs: gleich viele Punkte auf Spanisch, Wortteile ohne Akzente (á=a, ñ=n). Ein Punkt zählt, wenn ein deutscher
+    // ODER ein spanischer Wortteil im Text steht (der Text bleibt beim Sprachwechsel stehen, darum tolerant).
     const OPEN = {
       thriller_taeter: {
         q: 'Wann erfahren wir im Buch, wer die Bank überfällt?',
@@ -549,7 +630,14 @@
         starters: 'Die Täter sind …\nDas erfahren wir …',
         keys: [['der Zeitpunkt: von Anfang an bekannt', ['anfang', 'beginn', 'sofort', 'bekannt', 'weiss', 'nicht geheim', 'erste']],
                ['die Täter: Lina, Tom und Jurij', ['lina', 'tom', 'jurij', 'taeter', 'die drei', 'sie selbst']]],
-        sol: '<p>Die Täter (Lina, Tom und Jurij) und die Tat sind dem Leser <b>von Anfang an bekannt</b>.</p>'
+        sol: '<p>Die Täter (Lina, Tom und Jurij) und die Tat sind dem Leser <b>von Anfang an bekannt</b>.</p>',
+        qEs: '¿Cuándo sabemos en el libro quién asalta el banco?',
+        tipEs: 'Piensa en una novela policíaca clásica: ahí muchas veces no sabes hasta el final quién es el culpable. ¿Pasa lo mismo en «Novemberschnee»? Pregúntate: ¿desde cuándo sabes, al leer, quién participa en el atraco?',
+        wordsEs: ['culpables', 'lector', 'atraco al banco', 'principio', 'final', 'se sabe', 'secreto'],
+        startersEs: 'Los culpables son …\nEsto lo sabemos …',
+        keysEs: [['el momento: se sabe desde el principio', ['principio', 'inicio', 'comienzo', 'empieza', 'enseguida', 'se sabe', 'sabemos', 'conocid', 'no es secreto', 'no hay secreto', 'primera']],
+                 ['los culpables: Lina, Tom y Jurij', ['lina', 'tom', 'jurij', 'culpables', 'los tres', 'ellos mismos', 'atracador', 'ladrones']]],
+        solEs: '<p>Los culpables (Lina, Tom y Jurij) y el delito <b>se conocen desde el principio</b>: el lector lo sabe desde el comienzo.</p>'
       },
       thriller_detektiv: {
         q: 'Gibt es im Buch einen Detektiv, der den Fall aufklärt?',
@@ -558,7 +646,14 @@
         starters: 'Im Buch gibt es …\nDie Geschichte erzählt …',
         keys: [['kein Detektiv und keine Polizei klärt den Fall auf', ['kein', 'niemand', 'nein']],
                ['Lina erzählt selbst, aus Sicht der Täterin', ['lina', 'sicht', 'ich-form', 'ich form', 'ich-perspektive', 'ich-erzaehl', 'taeterin', 'selbst']]],
-        sol: '<p>Es gibt <b>keinen Detektiv oder Polizisten</b>, der den Fall aufdeckt. Stattdessen erzählt <b>Lina als Täterin</b> die Geschichte selbst aus ihrer Sicht.</p>'
+        sol: '<p>Es gibt <b>keinen Detektiv oder Polizisten</b>, der den Fall aufdeckt. Stattdessen erzählt <b>Lina als Täterin</b> die Geschichte selbst aus ihrer Sicht.</p>',
+        qEs: '¿Hay en el libro un detective que resuelve el caso?',
+        tipEs: 'En muchas novelas policíacas, una detective o un comisario resuelve el caso. ¿Es así también aquí? Pregúntate también: ¿quién cuenta la historia? ¿A través de los ojos de quién vives todo?',
+        wordsEs: ['detective', 'policía', 'investigador', 'cuenta', 'punto de vista', 'primera persona', 'resolver'],
+        startersEs: 'En el libro hay …\nLa historia la cuenta …',
+        keysEs: [['ningún detective ni la policía resuelve el caso', ['ningun', 'nadie', 'no hay', 'no existe', 'no aparece', 'tampoco']],
+                 ['Lina, una de las culpables, cuenta la historia ella misma', ['lina', 'punto de vista', 'perspectiva', 'primera persona', 'narra', 'cuenta', 'ella misma', 'culpable']]],
+        solEs: '<p><b>No hay ningún detective ni policía</b> que descubra el caso. En cambio, <b>Lina, una de las culpables,</b> cuenta ella misma la historia desde su punto de vista.</p>'
       },
       urteil_lina: {
         q: 'Ist Lina mitschuldig? Schreib deine Meinung und begründe sie mit Situationen aus dem Buch.',
@@ -576,6 +671,21 @@
             <li>mindestens eine Situation aus dem Buch als Fakt</li>
             <li>eine Begründung: Warum spricht diese Situation für oder gegen Lina?</li>
             <li>wenn möglich auch die andere Seite («Andererseits …»)</li>
+          </ul>`,
+        qEs: '¿Tiene Lina parte de la culpa? Escribe tu opinión y justifícala con situaciones del libro.',
+        tipEs: 'Aquí no hay respuesta correcta o incorrecta. Lo importante es que justifiques tu opinión. La tarea 5 te ayuda: ¿qué situaciones hablan en contra de Lina y cuáles a favor? Imagina que eres jueza o juez: primero escuchas a las dos partes y después decides.',
+        wordsEs: ['culpable', 'no es culpable', 'porque', 'área de servicio', 'cabina telefónica', 'médico', 'amenazada', 'arma', 'juego mental', 'por otro lado'],
+        startersEs: 'Creo que Lina …\nUn ejemplo del libro: …\nEsto muestra que …\nPor otro lado, …',
+        keysEs: [['tu opinión: tiene parte de la culpa o no', ['culpa', 'responsab', 'inocente']],
+                 ['una situación que habla en contra de Lina', ['telefon', 'policia', 'area de servicio', 'gasolinera', 'medico', 'doctor', 'horas', 'bici', 'huy', 'huida', 'escap', 'botin']],
+                 ['una situación que habla a favor de Lina', ['afuera', 'no entro', 'amenaz', 'arma', 'pistola', 'juego', 'obligad', 'forzad', 'no podia irse', 'no la dej']]],
+        solEs: `<p><b>Respuesta de ejemplo:</b> Creo que Lina tiene parte de la culpa. En el área de servicio de la autopista estaba completamente sola en una cabina telefónica. Pero no llamó a la policía. Esto muestra que podría haber parado la huida. Además, esperó muchas horas hasta que trajo a un médico para Tom, que estaba gravemente herido. Por otro lado, Tom la amenazó con el arma en la posada del bosque y no la dejaba irse. Por eso la culpa no es solo de ella.</p>
+          <p class="mt-2"><b>Una buena respuesta tiene:</b></p>
+          <ul class="list-disc pl-5 space-y-0.5">
+            <li>tu opinión en una frase clara (tiene parte de la culpa o no)</li>
+            <li>por lo menos una situación del libro como hecho</li>
+            <li>una justificación: ¿por qué esta situación habla a favor o en contra de Lina?</li>
+            <li>si puedes, también el otro lado («Por otro lado …»)</li>
           </ul>`
       }
     };
@@ -610,7 +720,9 @@
     }
 
     const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    const normText = (s) => String(s || '').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/\u00df/g, 'ss');
+    // Kleinschreibung, ä=ae, ö=oe, ü=ue, Eszett=ss; danach Akzente weg (Spanisch: á=a, é=e, ñ=n)
+    const normText = (s) => String(s || '').normalize('NFC').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/\u00df/g, 'ss')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
     // ==============================================================
     // SPEICHERN
@@ -631,13 +743,6 @@
         const saved = JSON.parse(localStorage.getItem(OPEN_KEY) || 'null');
         if (saved && typeof saved === 'object') OPEN_ANS = saved;
       } catch (e) { OPEN_ANS = {}; }
-      try {
-        const tm = localStorage.getItem('ns_timer_seconds');
-        if (tm) {
-          timerSeconds = parseInt(tm, 10) || 0;
-          updateTimerDisplay();
-        }
-      } catch (e) {}
     }
     function persistGroup(g) {
       try { localStorage.setItem(GROUPS[g].store, JSON.stringify(ANS[g])); } catch (e) {}
@@ -706,8 +811,8 @@
       const saved = String(ANS[g][it.id] || '');
       const opts = cfg.opts === POS ? cfg.data.map((_, i) => [String(i + 1), String(i + 1)]) : cfg.opts;
       return `<select id="sel-${g}-${it.id}" data-group="${g}" data-id="${it.id}" ${cfg.opts === POS ? 'data-noshuffle' : ''} class="${cls}">
-          <option value="">${cfg.placeholder || '--'}</option>
-          ${opts.map(([v, t]) => `<option value="${esc(v)}" ${saved === v ? 'selected' : ''}>${t}</option>`).join('')}
+          <option value="">${loc(cfg, 'placeholder') || '--'}</option>
+          ${opts.map(([v, t, tEs]) => `<option value="${esc(v)}" ${saved === v ? 'selected' : ''}>${LANG === 'es' && tEs ? tEs : t}</option>`).join('')}
         </select>`;
     }
 
@@ -716,23 +821,23 @@
       if (cfg.layout === 'card') return `
         <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition" id="${rid}">
           <div class="flex items-center gap-2.5 flex-1 text-xs sm:text-sm text-slate-800">
-            <span>${it.text}</span>
+            <span>${itemText(it)}</span>
           </div>
           <div class="sm:w-28 shrink-0 flex items-center gap-2">
-            <span class="text-xs text-slate-400">Position:</span>
+            <span class="text-xs text-slate-400">${tr('Position:', 'Posición:')}</span>
             ${selectHTML(g, it, 'w-full bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-sky-500')}
           </div>
         </div>`;
       if (cfg.layout === 'small') return `
         <div class="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between gap-2 transition" id="${rid}">
-          <span class="text-xs text-slate-800 flex-1 leading-snug">${it.text}</span>
+          <span class="text-xs text-slate-800 flex-1 leading-snug">${itemText(it)}</span>
           ${selectHTML(g, it, 'shrink-0 bg-slate-50 border border-slate-300 rounded-md px-2 py-1 text-xs font-bold')}
         </div>`;
       if (cfg.layout === 'bubble') return `
         <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between gap-3 transition" id="${rid}">
-          <div class="text-xs sm:text-sm font-semibold text-slate-800 italic leading-relaxed">${it.text}</div>
+          <div class="text-xs sm:text-sm font-semibold text-slate-800 italic leading-relaxed">${itemText(it)}</div>
           <div class="pt-2 border-t border-slate-200/80 flex items-center justify-between gap-2">
-            <span class="text-[11px] text-slate-500 font-bold">Wer denkt das?</span>
+            <span class="text-[11px] text-slate-500 font-bold">${tr('Wer denkt das?', '¿Quién lo piensa?')}</span>
             ${selectHTML(g, it, 'bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-indigo-500')}
           </div>
         </div>`;
@@ -740,7 +845,7 @@
         <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition" id="${rid}">
           <div class="flex items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
             <span class="w-5 h-5 rounded-full ${cfg.badge} flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
-            <span class="leading-snug">${it.text}</span>
+            <span class="leading-snug">${itemText(it)}</span>
           </div>
           <div class="${cfg.w} shrink-0">
             ${selectHTML(g, it, `w-full bg-white border border-slate-300 rounded-lg px-2 py-1.5 text-xs font-bold text-slate-800 focus:ring-2 ${cfg.ring}`)}
@@ -774,33 +879,41 @@
     function footerHTML(id) {
       const d = DEFS[id] || OPEN_TASKS[id];
       const small = 'px-2.5 py-2 rounded-xl text-xs font-bold border';
-      const theory = d.theory ? `<button type="button" onclick="openTheory('${d.theory}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>` : '';
-      const retry = `<button type="button" onclick="retryTask('${id}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>`;
+      const theory = d.theory ? `<button type="button" onclick="openTheory('${d.theory}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 ${tr('Theorie', 'Teoría')}</button>` : '';
+      const retry = `<button type="button" onclick="retryTask('${id}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 ${tr('Nochmals üben', 'Practicar otra vez')}</button>`;
       if (!TASKS[id]) return `<div class="pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2">${theory}${retry}</div>`;
       return `
         <div id="tip-${id}" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${d.tip}
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 ${tr('Tipp', 'Pista')}</div>${loc(d, 'tip')}
         </div>
         <div class="pt-3 border-t border-slate-100 space-y-2">
           <div class="flex flex-wrap items-center gap-2">
-            <button type="button" onclick="checkTask('${id}')" class="px-4 py-2 rounded-xl ${d.btn} text-white text-xs sm:text-sm font-bold shadow-sm transition">✓ Aufgabe ${d.nr} prüfen</button>
-            <button type="button" onclick="toggleBox('tip','${id}')" class="${small} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>
+            <button type="button" onclick="checkTask('${id}')" class="px-4 py-2 rounded-xl ${d.btn} text-white text-xs sm:text-sm font-bold shadow-sm transition">✓ ${tr(`Aufgabe ${d.nr} prüfen`, `Comprobar la tarea ${d.nr}`)}</button>
+            <button type="button" onclick="toggleBox('tip','${id}')" class="${small} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 ${tr('Tipp', 'Pista')}</button>
             ${theory}${retry}
-            <button type="button" onclick="toggleSol('${id}')" id="solbtn-${id}" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">👀 Lösung zeigen</button>
+            <button type="button" onclick="toggleSol('${id}')" id="solbtn-${id}" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${solBtnText(id)}</button>
           </div>
           <div id="fb-${id}" class="text-xs font-semibold"></div>
         </div>`;
     }
 
-    // Zeile grün (richtig) oder rot (falsch) färben
+    // Zeile grün (richtig) oder gelb (noch nicht ganz) färben
     function markRow(el, ok) {
-      el.classList.remove('bg-slate-50', 'bg-white', 'border-slate-200', 'bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
-      el.classList.add(ok ? 'bg-emerald-50' : 'bg-rose-50', ok ? 'border-emerald-300' : 'border-rose-300');
+      el.classList.remove('bg-slate-50', 'bg-white', 'border-slate-200', 'bg-emerald-50', 'border-emerald-300', 'bg-amber-50', 'border-amber-300');
+      el.classList.add(ok ? 'bg-emerald-50' : 'bg-amber-50', ok ? 'border-emerald-300' : 'border-amber-300');
     }
 
+    const CHECKED = {};   // Aufgabe schon geprüft? (Ergebnis bleibt beim Sprachwechsel stehen)
     function checkTask(id) {
       const d = DEFS[id];
       if (SOL_SHOWN[id]) toggleSol(id);
+      CHECKED[id] = true;
+      showCheck(id);
+      const pts = TASKS[id].score(), max = TASKS[id].max;
+      showToast(tr(`Aufgabe ${d.nr}`, `Tarea ${d.nr}`), tr(`${pts} von ${max} Punkten.`, `${pts} de ${max} puntos.`));
+    }
+    function showCheck(id) {
+      const d = DEFS[id];
       d.groups.forEach(g => GROUPS[g].data.forEach(it => {
         const el = document.getElementById(`${g}-item-${it.id}`);
         if (el) markRow(el, itemOk(g, it));
@@ -809,21 +922,26 @@
       const fb = document.getElementById('fb-' + id);
       if (fb) {
         const parts = d.groups.length > 1
-          ? ' (' + (PART_ORDER[id] || d.groups).map(g => `${GROUPS[g].name}: ${groupScore(g)}/${GROUPS[g].data.length}`).join(' · ') + ')'
+          ? ' (' + (PART_ORDER[id] || d.groups).map(g => `${loc(GROUPS[g], 'name')}: ${groupScore(g)}/${GROUPS[g].data.length}`).join(' · ') + ')'
           : '';
         fb.textContent = pts === max
-          ? `🌟 ${pts}/${max} Punkte: Alles richtig! Mit «🔀 Nochmals üben» kannst du die Aufgabe neu gemischt wiederholen.`
-          : `${pts}/${max} Punkte${parts}. Rot = noch falsch. Brauchst du Hilfe? Drück auf «💡 Tipp».`;
-        fb.className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-rose-700';
+          ? tr(`🌟 ${pts}/${max} Punkte: Alles richtig! Mit «🔀 Nochmals üben» kannst du die Aufgabe neu gemischt wiederholen.`,
+               `🌟 ${pts}/${max} puntos: ¡Todo correcto! Con «🔀 Practicar otra vez» puedes repetir la tarea mezclada de nuevo.`)
+          : tr(`${pts}/${max} Punkte${parts}. Gelb = noch nicht ganz. Brauchst du Hilfe? Drück auf «💡 Tipp».`,
+               `${pts}/${max} puntos${parts}. Amarillo = todavía no del todo. No pasa nada. ¿Necesitas ayuda? Toca «💡 Pista».`);
+        fb.className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-amber-800';
       }
-      showToast(`Aufgabe ${d.nr}`, `${pts} von ${max} Punkten.`);
     }
 
     // Lösung einblenden (Felder gesperrt) oder wieder die eigenen Antworten zeigen
     const SOL_SHOWN = {};
+    const solBtnText = (id) => SOL_SHOWN[id] ? '🙈 ' + tr('Lösung verstecken', 'Ocultar la solución') : '👀 ' + tr('Lösung zeigen', 'Ver la solución');
     function toggleSol(id) {
-      const show = !SOL_SHOWN[id];
-      SOL_SHOWN[id] = show;
+      SOL_SHOWN[id] = !SOL_SHOWN[id];
+      applySol(id);
+    }
+    function applySol(id) {
+      const show = !!SOL_SHOWN[id];
       DEFS[id].groups.forEach(g => GROUPS[g].data.forEach(it => {
         const sel = document.getElementById(`sel-${g}-${it.id}`);
         if (!sel) return;
@@ -831,7 +949,7 @@
         sel.disabled = show;
       }));
       const btn = document.getElementById('solbtn-' + id);
-      if (btn) btn.textContent = show ? '🙈 Lösung verstecken' : '👀 Lösung zeigen';
+      if (btn) btn.textContent = solBtnText(id);
     }
 
     // ==============================================================
@@ -840,26 +958,27 @@
     function openItemHTML(k, label) {
       const h = OPEN[k];
       const btn = 'px-2.5 py-1.5 rounded-lg text-xs font-bold border';
-      const words = h.words ? shuffleArray(h.words) : [];
+      const hw = loc(h, 'words');
+      const words = hw ? shuffleArray(hw) : [];
       return `
         <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-          <label for="open-${k}" class="text-xs sm:text-sm font-bold text-slate-900 block">${label}${h.q}</label>
-          <textarea id="open-${k}" data-open="${k}" rows="${h.rows || 3}" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500" placeholder="Deine Antwort in eigenen Worten …">${esc(OPEN_ANS[k] || '')}</textarea>
-          <p class="text-[11px] text-slate-500">Weisst du nicht weiter? Geh Schritt für Schritt: 1 → 2 → 3 → 4.</p>
+          <label for="open-${k}" class="text-xs sm:text-sm font-bold text-slate-900 block">${label}${loc(h, 'q')}</label>
+          <textarea id="open-${k}" data-open="${k}" rows="${h.rows || 3}" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500" placeholder="${tr('Deine Antwort in eigenen Worten …', 'Tu respuesta con tus propias palabras …')}">${esc(OPEN_ANS[k] || '')}</textarea>
+          <p class="text-[11px] text-slate-500">${tr('Weisst du nicht weiter? Geh Schritt für Schritt: 1 → 2 → 3 → 4.', '¿No sabes cómo seguir? Ve paso a paso: 1 → 2 → 3 → 4.')}</p>
           <div class="flex flex-wrap gap-1.5">
-            <button type="button" onclick="toggleBox('tip','${k}')" class="${btn} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">1 · 💡 Tipp</button>
-            <button type="button" onclick="insertStarters('${k}')" class="${btn} bg-sky-50 border-sky-300 text-sky-900 hover:bg-sky-100">2 · ✏️ Satzanfänge</button>
-            <button type="button" onclick="checkText('${k}')" class="${btn} bg-violet-50 border-violet-300 text-violet-900 hover:bg-violet-100">3 · 🔍 Antwort prüfen</button>
-            <button type="button" onclick="toggleSolution('${k}')" id="solbtn-${k}" class="${btn} bg-emerald-50 border-emerald-300 text-emerald-900 hover:bg-emerald-100">4 · 👀 Musterlösung zeigen</button>
+            <button type="button" onclick="toggleBox('tip','${k}')" class="${btn} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">1 · 💡 ${tr('Tipp', 'Pista')}</button>
+            <button type="button" onclick="insertStarters('${k}')" class="${btn} bg-sky-50 border-sky-300 text-sky-900 hover:bg-sky-100">2 · ✏️ ${tr('Satzanfänge', 'Comienzos de frase')}</button>
+            <button type="button" onclick="checkText('${k}')" class="${btn} bg-violet-50 border-violet-300 text-violet-900 hover:bg-violet-100">3 · 🔍 ${tr('Antwort prüfen', 'Revisar la respuesta')}</button>
+            <button type="button" onclick="toggleSolution('${k}')" id="solbtn-${k}" class="${btn} bg-emerald-50 border-emerald-300 text-emerald-900 hover:bg-emerald-100">${modelBtnText(k, false)}</button>
           </div>
           <div id="tip-${k}" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${h.tip}
-            ${words.length ? `<div class="mt-2 text-[11px] font-bold text-yellow-800">Diese Wörter helfen dir:</div>
+            <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 ${tr('Tipp', 'Pista')}</div>${loc(h, 'tip')}
+            ${words.length ? `<div class="mt-2 text-[11px] font-bold text-yellow-800">${tr('Diese Wörter helfen dir:', 'Estas palabras te ayudan:')}</div>
             <div class="flex flex-wrap gap-1 mt-1">${words.map(w => `<span class="px-2 py-0.5 rounded-full bg-white border border-yellow-300 text-xs font-semibold">${w}</span>`).join(' ')}</div>` : ''}
           </div>
           <div id="chk-${k}" class="hidden rounded-lg border border-violet-300 bg-violet-50 p-3 text-sm text-slate-800"></div>
           <div id="sol-${k}" class="hidden rounded-lg border border-emerald-300 bg-emerald-50 p-3 text-sm text-slate-800 leading-relaxed">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 mb-1">Musterlösung</div>${h.sol}
+            <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 mb-1">${tr('Musterlösung', 'Respuesta modelo')}</div>${loc(h, 'sol')}
           </div>
         </div>`;
     }
@@ -884,36 +1003,43 @@
     }
     function insertStarters(k) {
       const h = OPEN[k], ta = document.getElementById('open-' + k);
-      if (!h || !h.starters || !ta) return;
-      const first = h.starters.split('\n')[0].split('…')[0].trim();
+      const st = h && loc(h, 'starters');
+      if (!st || !ta) return;
+      const first = st.split('\n')[0].split('…')[0].trim();
       if (ta.value.includes(first)) { ta.focus(); return; }
-      ta.value = ta.value.trim() ? ta.value.replace(/\s+$/, '') + '\n' + h.starters : h.starters;
-      ta.rows = Math.max(ta.rows, h.starters.split('\n').length + 2);
+      ta.value = ta.value.trim() ? ta.value.replace(/\s+$/, '') + '\n' + st : st;
+      ta.rows = Math.max(ta.rows, st.split('\n').length + 2);
       saveOpen(k, ta.value);
       ta.focus();
-      showToast('✏️ Satzanfänge eingefügt', 'Schreib bei den Punkten … weiter.');
+      showToast(tr('✏️ Satzanfänge eingefügt', '✏️ Comienzos de frase añadidos'), tr('Schreib bei den Punkten … weiter.', 'Sigue escribiendo donde están los puntos …'));
     }
     // Sucht die wichtigen Punkte im Text (die eingefügten Satzanfänge zählen nicht mit)
     function checkText(k) {
       const h = OPEN[k], box = document.getElementById('chk-' + k);
       if (!h || !h.keys || !box) return;
       let text = OPEN_ANS[k] || '';
-      if (h.starters) h.starters.split('\n').forEach(line => {
+      // eingefügte Satzanfänge (beider Sprachen) zählen nicht mit
+      [h.starters, h.startersEs].filter(Boolean).forEach(st => st.split('\n').forEach(line => {
         const pre = line.split('…')[0].trim();
         if (pre) text = text.split(pre).join(' ');
-      });
+      }));
       text = normText(text.replace(/…/g, ' '));
       if (text.replace(/[^a-z0-9]/g, '').length < 5) {
-        box.innerHTML = '<p class="font-semibold text-amber-800">Schreib zuerst eine Antwort ins Feld. Tipp und Satzanfänge helfen dir dabei.</p>';
+        box.innerHTML = `<p class="font-semibold text-amber-800">${tr('Schreib zuerst eine Antwort ins Feld. Tipp und Satzanfänge helfen dir dabei.', 'Primero escribe una respuesta en el campo. La pista y los comienzos de frase te ayudan.')}</p>`;
         box.classList.remove('hidden');
         return;
       }
-      const res = h.keys.map(([label, parts]) => ({ label, ok: parts.some(p => text.includes(p)) }));
+      // Ein Punkt zählt, wenn ein deutscher oder ein spanischer Wortteil vorkommt; angezeigt wird die gewählte Sprache
+      const res = h.keys.map(([label, parts], i) => {
+        const es = h.keysEs && h.keysEs[i];
+        const all = es ? parts.concat(es[1]) : parts;
+        return { label: LANG === 'es' && es ? es[0] : label, ok: all.some(p => text.includes(p)) };
+      });
       const n = res.filter(r => r.ok).length;
       box.innerHTML = `
-        <p class="font-bold ${n === res.length ? 'text-emerald-700' : 'text-amber-800'}">${n === res.length ? '🌟 Super! Alle wichtigen Punkte sind drin.' : `Du hast ${n} von ${res.length} wichtigen Punkten.`}</p>
-        <ul class="mt-1 space-y-0.5">${res.map(r => `<li>${r.ok ? '✅' : '❌'} ${r.label}</li>`).join('')}</ul>
-        <p class="text-[11px] text-slate-500 mt-1">Der Computer sucht nur nach wichtigen Wörtern. Vergleiche danach trotzdem mit der Musterlösung.</p>`;
+        <p class="font-bold ${n === res.length ? 'text-emerald-700' : 'text-amber-800'}">${n === res.length ? tr('🌟 Super! Alle wichtigen Punkte sind drin.', '🌟 ¡Genial! Están todos los puntos importantes.') : tr(`Du hast ${n} von ${res.length} wichtigen Punkten.`, `Tienes ${n} de ${res.length} puntos importantes.`)}</p>
+        <ul class="mt-1 space-y-0.5">${res.map(r => `<li>${r.ok ? '✅' : '✏️'} ${r.label}</li>`).join('')}</ul>
+        <p class="text-[11px] text-slate-500 mt-1">${tr('Der Computer sucht nur nach wichtigen Wörtern. Vergleiche danach trotzdem mit der Musterlösung.', 'El programa solo busca palabras importantes. Después compara igual con la respuesta modelo.')}</p>`;
       box.classList.remove('hidden');
     }
     function toggleSolution(k) {
@@ -921,7 +1047,12 @@
       if (!box) return;
       const show = box.classList.contains('hidden');
       box.classList.toggle('hidden', !show);
-      if (btn) btn.textContent = show ? btn.textContent.replace('👀', '🙈').replace('zeigen', 'verstecken') : btn.textContent.replace('🙈', '👀').replace('verstecken', 'zeigen');
+      if (btn) btn.textContent = modelBtnText(k, show);
+    }
+    // Knopf «Musterlösung zeigen / verstecken» (Stufe 4 der Hilfe-Treppe, bei Aufgabe 8 Stufe 2)
+    function modelBtnText(k, shown) {
+      const step = k === 'swiss_help' ? 2 : 4;
+      return `${step} · ` + (shown ? '🙈 ' + tr('Musterlösung verstecken', 'Ocultar la respuesta modelo') : '👀 ' + tr('Musterlösung zeigen', 'Ver la respuesta modelo'));
     }
 
     // Aufgabe 8: erkennt Schweizer Hilfsstellen im Text
@@ -931,21 +1062,22 @@
       const countEl = document.getElementById('swiss-help-count');
       if (!input || !badgesBox) return;
 
-      const txt = input.value.toLowerCase();
+      const txt = normText(input.value);
+      const has = (...w) => w.some(x => txt.includes(x));
       const detected = [];
 
-      if (txt.includes('147') || txt.includes('pro juventute')) detected.push('Notruf 147 (Pro Juventute)');
-      if (txt.includes('kesb') || txt.includes('kindesschutz')) detected.push('KESB');
-      if (txt.includes('polizei') || txt.includes('117')) detected.push('Polizei (117)');
-      if (txt.includes('schlupfhuus') || txt.includes('notunterkunft') || txt.includes('krisenintervention')) detected.push('Schlupfhuus');
-      if (txt.includes('opferhilfe')) detected.push('Opferhilfe Schweiz');
-      if (txt.includes('143') || txt.includes('dargebotene')) detected.push('Dargebotene Hand (143)');
-      if (txt.includes('jugendberatung') || txt.includes('jugenddienst')) detected.push('Jugendberatungsstelle');
+      if (has('147', 'pro juventute')) detected.push(tr('Notruf 147 (Pro Juventute)', '147 (Pro Juventute)'));
+      if (has('kesb', 'kindesschutz', 'proteccion de menores', 'proteccion infantil', 'proteccion de ninos')) detected.push('KESB');
+      if (has('polizei', '117', 'policia')) detected.push(tr('Polizei (117)', 'Policía (117)'));
+      if (has('schlupfhuus', 'notunterkunft', 'krisenintervention', 'albergue', 'refugio', 'centro de acogida')) detected.push('Schlupfhuus');
+      if (has('opferhilfe', 'ayuda a las victimas', 'ayuda a victimas', 'victimas')) detected.push('Opferhilfe Schweiz');
+      if (has('143', 'dargebotene', 'mano tendida')) detected.push('Dargebotene Hand (143)');
+      if (has('jugendberatung', 'jugenddienst', 'orientacion juvenil', 'orientacion para jovenes', 'centro juvenil')) detected.push('Jugendberatungsstelle');
 
-      if (countEl) countEl.innerText = `${detected.length} / 3 genannt`;
+      if (countEl) countEl.innerText = tr(`${detected.length} / 3 genannt`, `${detected.length} / 3 nombrados`);
 
       if (detected.length === 0) {
-        badgesBox.innerHTML = '<span class="text-xs text-slate-400 italic">Noch keine offizielle Schweizer Stelle erkannt...</span>';
+        badgesBox.innerHTML = `<span class="text-xs text-slate-400 italic">${tr('Noch keine offizielle Schweizer Stelle erkannt...', 'Todavía no se reconoce ningún servicio oficial suizo…')}</span>`;
       } else {
         badgesBox.innerHTML = detected.map(d => `<span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-900 font-bold border border-emerald-300 text-xs flex items-center gap-1">✓ ${d}</span>`).join('');
       }
@@ -959,8 +1091,9 @@
       if (DEFS[id]) {
         DEFS[id].groups.forEach(g => { ANS[g] = {}; persistGroup(g); });
         SOL_SHOWN[id] = false;
+        CHECKED[id] = false;
         const btn = document.getElementById('solbtn-' + id);
-        if (btn) btn.textContent = '👀 Lösung zeigen';
+        if (btn) btn.textContent = solBtnText(id);
         const fb = document.getElementById('fb-' + id);
         if (fb) { fb.textContent = ''; fb.className = 'text-xs font-semibold'; }
         const tip = document.getElementById('tip-' + id);
@@ -972,7 +1105,7 @@
           delete OPEN_ANS[k];
           ['tip', 'chk', 'sol'].forEach(p => { const b = document.getElementById(`${p}-${k}`); if (b) b.classList.add('hidden'); });
           const sb = document.getElementById('solbtn-' + k);
-          if (sb) sb.textContent = sb.textContent.replace('🙈', '👀').replace('verstecken', 'zeigen');
+          if (sb) sb.textContent = modelBtnText(k, false);
         });
         persistOpen();
         shuffleTask(id);
@@ -981,7 +1114,7 @@
       const host = document.querySelector(`[data-task="${id}"]`);
       if (host) host.scrollIntoView({ behavior: 'smooth', block: 'start' });
       const nr = (DEFS[id] || OPEN_TASKS[id]).nr;
-      showToast('🔀 Neu gemischt', `Aufgabe ${nr} ist leer und neu gemischt. Viel Erfolg!`);
+      showToast(tr('🔀 Neu gemischt', '🔀 Mezclado de nuevo'), tr(`Aufgabe ${nr} ist leer und neu gemischt. Viel Erfolg!`, `La tarea ${nr} está vacía y mezclada de nuevo. ¡Mucha suerte!`));
     }
 
     // Springt zur passenden Theorie-Box (auch in einem anderen Reiter)
@@ -1012,63 +1145,6 @@
         activeView.classList.remove('hidden');
         activeBtn.className = "tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm";
       }
-    }
-
-    // ==============================================================
-    // STOPPUHR
-    // ==============================================================
-    let timerSeconds = 0;
-    let timerInterval = null;
-    let timerRunning = false;
-
-    function formatTime(totalSec) {
-      const mins = Math.floor(totalSec / 60);
-      const secs = totalSec % 60;
-      const pad = (n) => String(n).padStart(2, '0');
-      if (mins >= 60) {
-        const hrs = Math.floor(mins / 60);
-        const remMins = mins % 60;
-        return `${pad(hrs)}:${pad(remMins)}:${pad(secs)}`;
-      }
-      return `${pad(mins)}:${pad(secs)}`;
-    }
-
-    function updateTimerDisplay() {
-      const el = document.getElementById('timer-display');
-      if (el) el.innerText = formatTime(timerSeconds);
-    }
-
-    function toggleTimer() {
-      const btn = document.getElementById('timer-toggle-btn');
-      if (timerRunning) {
-        clearInterval(timerInterval);
-        timerRunning = false;
-        if (btn) btn.innerHTML = '▶️ Start';
-        try { localStorage.setItem('ns_timer_seconds', timerSeconds); } catch (e) {}
-        showToast("⏱️ Pausiert", `Lernzeit: ${formatTime(timerSeconds)}`);
-      } else {
-        timerRunning = true;
-        if (btn) btn.innerHTML = '⏸️ Pause';
-        timerInterval = setInterval(() => {
-          timerSeconds++;
-          updateTimerDisplay();
-          if (timerSeconds % 5 === 0) {
-            try { localStorage.setItem('ns_timer_seconds', timerSeconds); } catch (e) {}
-          }
-        }, 1000);
-        showToast("⏱️ Gestartet", "Lernzeit wird gezählt.");
-      }
-    }
-
-    function resetTimer() {
-      clearInterval(timerInterval);
-      timerRunning = false;
-      timerSeconds = 0;
-      updateTimerDisplay();
-      try { localStorage.removeItem('ns_timer_seconds'); } catch (e) {}
-      const btn = document.getElementById('timer-toggle-btn');
-      if (btn) btn.innerHTML = '▶️ Start';
-      showToast("⏱️ Zurückgesetzt", "Uhr steht auf 00:00.");
     }
 
     let toastTimeout = null;
@@ -1104,19 +1180,53 @@
       });
     }
 
-    Object.assign(window, { switchTab, checkTask, toggleSol, retryTask, openTheory, toggleBox, insertStarters, checkText, toggleSolution, checkActiveSwissHelpInput, toggleTimer, resetTimer });
+    // Alles zeichnen, was aus dem Skript kommt (beim Start und nach dem Sprachwechsel)
+    function renderAll() {
+      document.querySelectorAll('[data-max]').forEach(el => {
+        const t = TASKS[el.dataset.max];
+        if (t) el.textContent = `${t.max} ${tr('P.', 'p.')}`;
+      });
+      document.querySelectorAll('[data-footer]').forEach(el => { el.innerHTML = footerHTML(el.dataset.footer); });
+      Object.keys(DEFS).forEach(renderTask);
+      Object.keys(OPEN_TASKS).forEach(renderOpenTask);
+    }
+    // Feste Texte, die nicht doppelt im HTML stehen können (Titel, placeholder, Knöpfe mit Zustand)
+    function applyLang() {
+      document.documentElement.lang = LANG;
+      document.title = TITLE[LANG];
+      document.querySelectorAll('.lang-btn').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setlang === LANG)));
+      const input = document.getElementById('input-active-swiss-help');
+      if (input) input.placeholder = tr('Tippe hier drei Stellen ein …', 'Escribe aquí tres servicios …');
+      const sb = document.getElementById('solbtn-swiss_help'), sol = document.getElementById('sol-swiss_help');
+      if (sb) sb.textContent = modelBtnText('swiss_help', !!sol && !sol.classList.contains('hidden'));
+    }
+    // Umschalter Deutsch | Español: alles neu zeichnen, Antworten und offene Hilfen bleiben
+    function setLang(l) {
+      LANG = l === 'es' ? 'es' : 'de';
+      try { localStorage.setItem(LANG_KEY, LANG); } catch (e) {}
+      const open = [...document.querySelectorAll('[id^="tip-"], [id^="chk-"], [id^="sol-"]')].filter(b => !b.classList.contains('hidden')).map(b => b.id);
+      renderAll();
+      open.forEach(id => { const b = document.getElementById(id); if (b) b.classList.remove('hidden'); });
+      Object.keys(OPEN).forEach(k => {
+        if (open.includes('chk-' + k)) checkText(k);
+        const sb = document.getElementById('solbtn-' + k);
+        if (sb) sb.textContent = modelBtnText(k, open.includes('sol-' + k));
+      });
+      Object.keys(DEFS).forEach(id => {
+        if (CHECKED[id]) showCheck(id);
+        if (SOL_SHOWN[id]) applySol(id);
+      });
+      applyLang();
+    }
+
+    Object.assign(window, { setLang, switchTab, checkTask, toggleSol, retryTask, openTheory, toggleBox, insertStarters, checkText, toggleSolution, checkActiveSwissHelpInput });
 
     // Start sobald das HTML da ist (wartet nicht auf Tailwind/Schriften)
     function boot() {
       loadSavedState();
       initShuffledData();
-      document.querySelectorAll('[data-max]').forEach(el => {
-        const t = TASKS[el.dataset.max];
-        if (t) el.textContent = `${t.max} P.`;
-      });
-      document.querySelectorAll('[data-footer]').forEach(el => { el.innerHTML = footerHTML(el.dataset.footer); });
-      Object.keys(DEFS).forEach(renderTask);
-      Object.keys(OPEN_TASKS).forEach(renderOpenTask);
+      renderAll();
+      applyLang();
       initEvents();
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
