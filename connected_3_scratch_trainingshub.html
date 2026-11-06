@@ -86,7 +86,7 @@
       border-radius: 999px; padding: 5px 10px; min-width: 30px; text-align: center;
       font-size: 12px; font-weight: 500; border: 1px solid rgba(0,0,0,0.12);
     }
-    .sb-num.sb-wrong { background: #fff1f2; color: #be123c; font-weight: 800; box-shadow: 0 0 0 2px #facc15; }
+    .sb-num.sb-wrong { background: #fef9c3; color: #854d0e; font-weight: 800; box-shadow: 0 0 0 2px #facc15; }
     .sb-rep {
       display: inline-flex; align-items: center; gap: 6px;
       background: var(--c); color: #fff; border-radius: 999px; padding: 5px 10px;
@@ -177,20 +177,6 @@
             </span>
           </div>
           <h1 class="text-base sm:text-lg font-bold leading-tight mt-0.5"><span data-l="de">Abheben mit Algorithmen · Scratch Trainingshub</span><span data-l="es" lang="es">Despegar con algoritmos · Práctica de Scratch</span></h1>
-        </div>
-      </div>
-
-      <!-- Quick Stats & Stopwatch -->
-      <div class="flex flex-wrap items-center gap-2">
-        <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl border border-white/20 text-xs shadow-inner">
-          <span class="text-amber-300 font-semibold"><span data-l="de">⏱️ Zeit:</span><span data-l="es" lang="es">⏱️ Tiempo:</span></span>
-          <span id="timer-display" class="font-mono-code font-bold text-white bg-black/40 px-2 py-0.5 rounded-lg tracking-wider text-xs">00:00</span>
-          <button onclick="toggleTimer()" id="timer-toggle-btn" class="px-2 py-0.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-bold transition">
-            <span data-l="de">▶️ Start</span><span data-l="es" lang="es">▶️ Iniciar</span>
-          </button>
-          <button onclick="resetTimer()" class="px-1.5 py-0.5 rounded-lg bg-white/15 hover:bg-rose-500/40 text-white transition text-xs">
-            ↺
-          </button>
         </div>
       </div>
     </div>
@@ -552,7 +538,7 @@
     <!-- ============================================================== -->
     <section id="view-custom" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <span class="text-xs font-bold text-rose-600 uppercase tracking-wider"><span data-l="de">Lernziele 5 & 6 · MI.2.2.h</span><span data-l="es" lang="es">Objetivos 5 y 6 · MI.2.2.h</span></span>
+        <span class="text-xs font-bold text-pink-600 uppercase tracking-wider"><span data-l="de">Lernziele 5 & 6 · MI.2.2.h</span><span data-l="es" lang="es">Objetivos 5 y 6 · MI.2.2.h</span></span>
         <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">🧩 Eigene Blöcke (Unterprogramme) & Bugfixing</span><span data-l="es" lang="es">🧩 Bloques propios (subprogramas) y corregir errores</span></h2>
         <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="de">
           Eigene pinke Blöcke machen den Code sauber und übersichtlich. Finde ausserdem Logikfehler!
@@ -563,8 +549,8 @@
       </div>
 
       <!-- Theorie zum Aufklappen (Ziel des Knopfs «📖 Theorie») -->
-      <details id="theory-custom" class="bg-white rounded-2xl p-4 shadow-sm border border-rose-200">
-        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-rose-800 cursor-pointer select-none"><span data-l="de">📖 Theorie: Eigene Blöcke und Fehlersuche</span><span data-l="es" lang="es">📖 Teoría: bloques propios y buscar errores</span><span class="text-xs font-semibold text-slate-400"><span data-l="de">antippen</span><span data-l="es" lang="es">toca</span></span></summary>
+      <details id="theory-custom" class="bg-white rounded-2xl p-4 shadow-sm border border-pink-200">
+        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-pink-800 cursor-pointer select-none"><span data-l="de">📖 Theorie: Eigene Blöcke und Fehlersuche</span><span data-l="es" lang="es">📖 Teoría: bloques propios y buscar errores</span><span class="text-xs font-semibold text-slate-400"><span data-l="de">antippen</span><span data-l="es" lang="es">toca</span></span></summary>
         <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
           <p data-l="de"><b>Eigener Block (Unterprogramm):</b> Mehrere Befehle bekommen zusammen einen Namen. Mit dem pinken Block <b>«Definiere …»</b> legst du fest, was der Block tut. Danach brauchst du nur noch den Namen.</p>
           <p data-l="es" lang="es"><b>Bloque propio (subprograma):</b> varios comandos reciben juntos un nombre. Con el bloque rosa <b>«definir …»</b> decides lo que hace el bloque. Después solo necesitas el nombre.</p>
@@ -637,7 +623,7 @@
           <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 8: Bugfixing – Finde den Programmierfehler! (<span data-max="a8"></span> Punkte)</span><span data-l="es" lang="es">Tarea 8: corregir errores – ¡encuentra el error del programa! (<span data-max="a8"></span> puntos)</span></h3>
         </div>
 
-        <div class="bg-rose-50 border-l-4 border-rose-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+        <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
           <span data-l="de">👉 <strong>Der Fehler:</strong> Ein Schüler will, dass seine Drohne sanft zum Boden landet.  
           Aber sein Skript spinnt: <strong>Die Drohne schiesst immer höher in den Himmel, statt nach unten zu sinken!</strong></span><span data-l="es" lang="es">👉 <strong>El error:</strong> un alumno quiere que su dron aterrice suavemente en el suelo.
           Pero su programa hace algo raro: <strong>¡el dron sube cada vez más alto en el cielo, en vez de bajar!</strong></span>
@@ -660,7 +646,7 @@
                 <div class="sb-c-bottom"></div>
               </div>
             </div>
-            <div class="sm:mt-[104px] text-xs font-black text-rose-600"><span class="hidden sm:inline"><span data-l="de">◄ Hier steckt der Fehler!</span><span data-l="es" lang="es">◄ ¡Aquí está el error!</span></span><span class="sm:hidden"><span data-l="de">▲ Der Fehler steckt in der gelb markierten Zahl.</span><span data-l="es" lang="es">▲ El error está en el número marcado en amarillo.</span></span></div>
+            <div class="sm:mt-[104px] text-xs font-black text-amber-700"><span class="hidden sm:inline"><span data-l="de">◄ Hier steckt der Fehler!</span><span data-l="es" lang="es">◄ ¡Aquí está el error!</span></span><span class="sm:hidden"><span data-l="de">▲ Der Fehler steckt in der gelb markierten Zahl.</span><span data-l="es" lang="es">▲ El error está en el número marcado en amarillo.</span></span></div>
           </div>
         </div>
 
@@ -794,14 +780,14 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-100">
           <div>
             <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
-              <span data-l="de">Prüfungsmodus · <span class="js-max-pts">30</span> Punkte · Real-Niveau</span><span data-l="es" lang="es">Modo examen · <span class="js-max-pts">30</span> puntos · nivel Real</span>
+              <span data-l="de">Übungstest · <span class="js-max-pts">30</span> Punkte · Real-Niveau</span><span data-l="es" lang="es">Examen de práctica · <span class="js-max-pts">30</span> puntos · nivel Real</span>
             </span>
             <h2 class="text-lg sm:text-xl font-black text-slate-800 mt-1"><span data-l="de">📝 Vollständige Test-Simulation</span><span data-l="es" lang="es">📝 Simulacro de examen completo</span></h2>
             <p class="text-xs text-slate-600 mt-0.5" data-l="de">
-              Simuliert exakt den bevorstehenden Papiertest. Schweizer Bestehensgrenze: 60 % (<span class="js-pass-pts">18</span> Punkte = Note 4.0).
+              Nur zum Üben: Niemand ausser dir sieht das Ergebnis. Die Aufgaben sind wie im Papiertest. Schweizer Bestehensgrenze: 60 % (<span class="js-pass-pts">18</span> Punkte = Note 4.0).
             </p>
             <p class="text-xs text-slate-600 mt-0.5" data-l="es" lang="es">
-              Simula exactamente el próximo examen en papel. Límite suizo para aprobar: 60 % (<span class="js-pass-pts">18</span> puntos = nota 4.0).
+              Solo para practicar: nadie más que tú ve el resultado. Las tareas son como en el examen en papel. Límite suizo para aprobar: 60 % (<span class="js-pass-pts">18</span> puntos = nota 4.0).
             </p>
           </div>
           <div class="text-right shrink-0">
@@ -959,11 +945,7 @@
       try {
         const saved = localStorage.getItem('scratch_hub_answers');
         if (saved) STATE.answers = JSON.parse(saved) || {};
-        const tm = localStorage.getItem('scratch_hub_timer');
-        if (tm) {
-          timerSeconds = parseInt(tm, 10) || 0;
-          updateTimerDisplay();
-        }
+        localStorage.removeItem('scratch_hub_timer');   // frühere Stoppuhr (entfernt, kein Zeitdruck): alten Wert löschen
       } catch (e) {}
     }
 
@@ -1061,6 +1043,7 @@
     }
 
     function reshuffleBasics() {
+      document.querySelectorAll('#view-basics [id^="sol-"]').forEach(el => { el.classList.add('hidden'); el.innerHTML = ''; });
       dispA1a = shuffleArray(BASICS_A1A);
       dispA1b = shuffleArray(BASICS_A1B);
       dispFlow = shuffleArray(FLOW_CMDS);
@@ -1269,8 +1252,8 @@
       const rBox = document.getElementById('opts-a5-reasons');
       if (rBox) {
         rBox.innerHTML = dispReasons.map(r => `
-          <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-rose-50 transition text-xs sm:text-sm">
-            <input type="checkbox" id="chk-${r.id}" ${STATE.answers[`r_${r.id}`] === true ? 'checked' : ''} onchange="saveAnswer('r_${r.id}', this.checked)" class="w-4 h-4 text-rose-600 rounded">
+          <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-pink-50 transition text-xs sm:text-sm">
+            <input type="checkbox" id="chk-${r.id}" ${STATE.answers[`r_${r.id}`] === true ? 'checked' : ''} onchange="saveAnswer('r_${r.id}', this.checked)" class="w-4 h-4 text-pink-600 rounded">
             <span>${both(r.text, r.es)}</span>
           </label>`).join('');
       }
@@ -1315,7 +1298,7 @@
             </div>
             <div class="sm:w-44 shrink-0 flex items-center gap-2">
               <span class="text-xs text-slate-400">${both('Lampe:', 'Lámpara:')}</span>
-              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💡 AN (Voll)', es: '💡 ENCENDIDA (plena)' }, { v: 'GEDIMMT', t: '🌙 GEDIMMT', es: '🌙 TENUE' }, { v: 'AUS', t: '❌ AUS', es: '❌ APAGADA' }], 'w-full')}
+              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💡 AN (Voll)', es: '💡 ENCENDIDA (plena)' }, { v: 'GEDIMMT', t: '🌙 GEDIMMT', es: '🌙 TENUE' }, { v: 'AUS', t: '⚫ AUS', es: '⚫ APAGADA' }], 'w-full')}
             </div>
           </div>`).join('');
       }
@@ -1332,13 +1315,14 @@
             </div>
             <div class="sm:w-48 shrink-0 flex items-center gap-2">
               <span class="text-xs text-slate-400">${both('Sprenger:', 'Aspersor:')}</span>
-              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💦 AN (lang)', es: '💦 ENCENDIDO (largo)' }, { v: 'KURZ', t: '💧 KURZ', es: '💧 CORTO' }, { v: 'AUS', t: '❌ AUS', es: '❌ APAGADO' }], 'w-full')}
+              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💦 AN (lang)', es: '💦 ENCENDIDO (largo)' }, { v: 'KURZ', t: '💧 KURZ', es: '💧 CORTO' }, { v: 'AUS', t: '⚫ AUS', es: '⚫ APAGADO' }], 'w-full')}
             </div>
           </div>`).join('');
       }
     }
 
     function reshuffleLogic() {
+      document.querySelectorAll('#view-logic [id^="sol-"]').forEach(el => { el.classList.add('hidden'); el.innerHTML = ''; });
       dispAndOr = shuffleArray(ANDOR_ROWS);
       dispSmart = shuffleArray(SMARTHOME_ROWS);
       dispGarden = shuffleArray(GARDEN_ROWS);
@@ -1372,12 +1356,12 @@
       return p;
     }
 
-    // Karten grün/rot färben
+    // Karten färben: grün = richtig, gelb = noch nicht ganz (angstfrei: Gelb statt Rot)
     function markCard(id, ok) {
       const el = document.getElementById(id);
       if (!el) return;
-      el.classList.remove('bg-slate-50', 'border-slate-200', 'bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
-      el.classList.add(ok ? 'bg-emerald-50' : 'bg-rose-50', ok ? 'border-emerald-300' : 'border-rose-300');
+      el.classList.remove('bg-slate-50', 'border-slate-200', 'bg-emerald-50', 'border-emerald-300', 'bg-amber-50', 'border-amber-300');
+      el.classList.add(ok ? 'bg-emerald-50' : 'bg-amber-50', ok ? 'border-emerald-300' : 'border-amber-300');
     }
 
     // Rückmeldung in beiden Sprachen (die CSS-Regel zeigt die gewählte), damit sie beim Umschalten stimmt
@@ -1388,8 +1372,8 @@
         fb.innerHTML = pts === max
           ? both(`🌟 ${pts}/${max} Punkte: ${perfectMsg} Mit «🔀 Nochmals üben» kannst du sie neu gemischt wiederholen.`,
                  `🌟 ${pts}/${max} puntos: ${perfectEs} Con «🔀 Practicar otra vez» puedes repetirla mezclada de nuevo.`)
-          : both(`${pts}/${max} Punkte. Rot = noch falsch. Brauchst du Hilfe? Drück auf «💡 Tipp».`,
-                 `${pts}/${max} puntos. Rojo = todavía no del todo. No pasa nada. ¿Necesitas ayuda? Toca «💡 Pista».`);
+          : both(`${pts}/${max} Punkte. Gelb = noch nicht ganz. Das ist okay: Mit «🔀 Nochmals üben» kommt die Aufgabe nochmals. Brauchst du Hilfe? Drück auf «💡 Tipp».`,
+                 `${pts}/${max} puntos. Amarillo = todavía no del todo. No pasa nada: con «🔀 Practicar otra vez» la tarea vuelve. ¿Necesitas ayuda? Toca «💡 Pista».`);
         fb.className = pts === max ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
       }
       showToast(tr(`Aufgabe ${TASK_UI[task].nr}`, `Tarea ${TASK_UI[task].nr}`), tr(`${pts} von ${max} Punkten erreicht.`, `Lograste ${pts} de ${max} puntos.`));
@@ -1406,8 +1390,8 @@
         const rect = document.getElementById('flow-rect-' + sl);
         if (!rect) return;
         const ok = A('flow_' + sl) === FLOW_SOLUTION[sl];
-        rect.setAttribute('fill', ok ? '#d1fae5' : '#ffe4e6');
-        rect.setAttribute('stroke', ok ? '#059669' : '#e11d48');
+        rect.setAttribute('fill', ok ? '#d1fae5' : '#fef9c3');
+        rect.setAttribute('stroke', ok ? '#059669' : '#eab308');
         rect.setAttribute('stroke-dasharray', '');
       });
       markCard('card-a2-3', A('sel-a2-3') === 'right');
@@ -1503,8 +1487,8 @@
         nr: '5', check: checkCustomA5, render: renderA5, theory: 'theory-custom',
         keys: () => ['a5_1', ...CUSTOM_REASONS.map(r => 'r_' + r.id)],
         mix: () => { dispReasons = shuffleArray(CUSTOM_REASONS); },
-        tip: 'Lies den pinken Block wie eine kleine Geschichte: Wird y grösser oder kleiner? Fliegt die Drohne also höher oder tiefer? Wann hört sie auf? Bei den Gründen denk an eine Rezeptkarte für Pizzateig. Du schreibst sie einmal und brauchst sie für jede Pizza wieder. Was ist daran praktisch? Achtung: Ein falsches Kreuz gibt Abzug.',
-        tipEs: 'Lee el bloque rosa como una pequeña historia: ¿la y se hace más grande o más pequeña? Entonces, ¿el dron vuela más alto o más bajo? ¿Cuándo se detiene? Para las razones, piensa en una tarjeta con la receta de la masa de pizza. La escribes una vez y la vuelves a usar para cada pizza. ¿Qué tiene eso de práctico? Atención: una marca equivocada resta un punto.'
+        tip: 'Lies den pinken Block wie eine kleine Geschichte: Wird y grösser oder kleiner? Fliegt die Drohne also höher oder tiefer? Wann hört sie auf? Bei den Gründen denk an eine Rezeptkarte für Pizzateig. Du schreibst sie einmal und brauchst sie für jede Pizza wieder. Was ist daran praktisch? Kreuze nur an, was wirklich stimmt: Ein Kreuz zu viel kostet einen Punkt.',
+        tipEs: 'Lee el bloque rosa como una pequeña historia: ¿la y se hace más grande o más pequeña? Entonces, ¿el dron vuela más alto o más bajo? ¿Cuándo se detiene? Para las razones, piensa en una tarjeta con la receta de la masa de pizza. La escribes una vez y la vuelves a usar para cada pizza. ¿Qué tiene eso de práctico? Marca solo lo que de verdad es correcto: una marca de más resta un punto.'
       },
       a8: {
         nr: '8', check: checkCustomA8, render: bindAll(['sel-a8-1', 'sel-a8-2']), theory: 'theory-custom',
@@ -1539,7 +1523,7 @@
     const TAB_BTN = {
       basics: 'bg-sky-600 hover:bg-sky-700',
       loops: 'bg-amber-600 hover:bg-amber-700',
-      custom: 'bg-rose-600 hover:bg-rose-700',
+      custom: 'bg-pink-600 hover:bg-pink-700',
       logic: 'bg-emerald-600 hover:bg-emerald-700'
     };
 
@@ -1560,9 +1544,42 @@
             <button type="button" onclick="toggleTip('${id}')" class="${small} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">${both('💡 Tipp', '💡 Pista')}</button>
             ${u.theory ? `<button type="button" onclick="openTheory('${u.theory}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${both('📖 Theorie', '📖 Teoría')}</button>` : ''}
             <button type="button" onclick="retryTask('${id}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${both('🔀 Nochmals üben', '🔀 Practicar otra vez')}</button>
+            <button type="button" onclick="showSolution('${id}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${both('🤷 Weiss ich nicht', '🤷 No lo sé')}</button>
           </div>
           <div id="fb-${id}" class="text-xs font-semibold"></div>
+          <div id="sol-${id}" class="hidden rounded-lg border border-emerald-300 bg-emerald-50 p-3 text-xs sm:text-sm text-slate-800 leading-relaxed"></div>
         </div>`;
+    }
+
+    // «🤷 Weiss ich nicht»: zeigt die Lösung (angstfrei, kostet nichts). Danach mit «🔀 Nochmals üben» selber lösen.
+    // Text in beiden Sprachen, die CSS-Regel zeigt die gewählte.
+    const q = (t) => `«${t}»`;
+    const LAMP = { AN: ['💡 AN', '💡 ENCENDIDA'], GEDIMMT: ['🌙 GEDIMMT', '🌙 TENUE'], AUS: ['⚫ AUS', '⚫ APAGADA'] };
+    const SPRINKLER = { AN: ['💦 AN (lang)', '💦 ENCENDIDO (largo)'], KURZ: ['💧 KURZ', '💧 CORTO'], AUS: ['⚫ AUS', '⚫ APAGADO'] };
+    const SOLUTION = {
+      a1: () => [BASICS_A1A, BASICS_A1B].map((list, i) => { const c = list.find(o => o.correct); return [`${['Algorithmus', 'Echter Algorithmus'][i]}: ${q(c.text)}`, `${['Algoritmo', 'Algoritmo de verdad'][i]}: ${q(c.es)}`]; }),
+      a2: () => [...FLOW_SLOTS.map((sl, i) => { const c = FLOW_CMDS.find(x => x.id === FLOW_SOLUTION[sl]); return [`Feld ${i + 1}: ${q(c.text)}`, `Campo ${i + 1}: ${q(c.es)}`]; }),
+        ['Raute ◇: Dort wird eine Ja/Nein-Entscheidung getroffen.', 'Rombo ◇: allí se toma una decisión de sí o no.']],
+      a3: () => [['Der blaue Befehl wird 4-mal wiederholt.', 'El comando azul se repite 4 veces.'], ['Total: 40 Schritte (4 × 10).', 'Total: 40 pasos (4 × 10).']],
+      a4: () => [['Schleife: «wiederhole bis &lt;wird Boden berührt?&gt;». Sie hört genau beim Boden auf.', 'Bucle: «repetir hasta que &lt;¿tocando suelo?&gt;». Se detiene justo en el suelo.'],
+        ['Nach unten: «ändere y um ( -1 )». Minus bei y heisst nach unten.', 'Hacia abajo: «sumar a y ( -1 )». Un menos en la y significa hacia abajo.']],
+      a6: () => [['1. wiederhole 4 mal · 2. gehe 50er-Schritt · 3. drehe dich ↻ um 90 Grad', '1. repetir 4 · 2. mover 50 pasos · 3. girar ↻ 90 grados']],
+      a5: () => [['Name: «abheben». y wird immer grösser, bis y = 200: Die Drohne steigt.', 'Nombre: «despegar». La y se hace cada vez más grande hasta y = 200: el dron sube.'],
+        ...CUSTOM_REASONS.filter(r => r.correct).map(r => [`Grund: ${q(r.text)}`, `Razón: ${q(r.es)}`])],
+      a8: () => [['Dort steht eine positive Zahl (+5) statt einer Minuszahl.', 'Allí hay un número positivo (+5) en vez de un número negativo.'],
+        ['Richtig ist: «ändere y um ( -1 )».', 'Lo correcto es: «sumar a y ( -1 )».']],
+      a7a: () => dispAndOr.map((r, i) => [`${i + 1}. ${r.before} <b>${r.correct}</b> ${r.after}`, `${i + 1}. ${r.es[0]} <b>${r.correct === 'und' ? 'y' : 'o'}</b> ${r.es[1]}`]),
+      a7b: () => dispSmart.map((r, i) => [`${i + 1}. ${r.light} · ${r.sensor} · ${r.time} → <b>${LAMP[r.correct][0]}</b>`, `${i + 1}. ${r.es[0]} · ${r.es[1]} · ${r.es[2]} → <b>${LAMP[r.correct][1]}</b>`]),
+      a7c: () => dispGarden.map((r, i) => [`${i + 1}. ${r.soil} · ${r.weather} · ${r.time} → <b>${SPRINKLER[r.correct][0]}</b>`, `${i + 1}. ${r.es[0]} · ${r.es[1]} · ${r.es[2]} → <b>${SPRINKLER[r.correct][1]}</b>`])
+    };
+    function showSolution(id) {
+      const box = document.getElementById('sol-' + id);
+      if (!box || !SOLUTION[id]) return;
+      box.innerHTML = `
+        <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-800 mb-1">${both('✔ So ist es richtig', '✔ Así es correcto')}</div>
+        <ul class="space-y-1">${SOLUTION[id]().map(([de, es]) => `<li>${both(de, es)}</li>`).join('')}</ul>
+        <div class="mt-2 text-slate-600">${both('Das ist okay. Schau es in Ruhe an. Dann löse die Aufgabe mit «🔀 Nochmals üben» selber.', 'No pasa nada. Míralo con calma. Después resuelve la tarea tú con «🔀 Practicar otra vez».')}</div>`;
+      box.classList.remove('hidden');
     }
 
     function checkTask(id) {
@@ -1601,11 +1618,11 @@
       });
     }
 
-    // Grün/Rot-Färbung entfernen
+    // Grün/Gelb-Färbung entfernen
     function clearMarks(root) {
-      root.querySelectorAll('.bg-emerald-50.border-emerald-300, .bg-rose-50.border-rose-300').forEach(el => {
+      root.querySelectorAll('.bg-emerald-50.border-emerald-300, .bg-amber-50.border-amber-300').forEach(el => {
         if (el.id === 'exam-result-banner') return;
-        el.classList.remove('bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
+        el.classList.remove('bg-emerald-50', 'border-emerald-300', 'bg-amber-50', 'border-amber-300');
         el.classList.add('bg-slate-50', 'border-slate-200');
       });
     }
@@ -1625,6 +1642,8 @@
       if (fb) { fb.textContent = ''; fb.className = 'text-xs font-semibold'; }
       const tip = document.getElementById('tip-' + id);
       if (tip) tip.classList.add('hidden');
+      const sol = document.getElementById('sol-' + id);
+      if (sol) { sol.classList.add('hidden'); sol.innerHTML = ''; }
       host.scrollIntoView({ behavior: 'smooth', block: 'start' });
       showToast(tr('🔀 Neu gemischt', '🔀 Mezclado de nuevo'), tr(`Aufgabe ${u.nr} ist leer und neu gemischt. Viel Erfolg!`, `La tarea ${u.nr} está vacía y mezclada de nuevo. ¡Mucho éxito!`));
     }
@@ -1650,8 +1669,8 @@
         ratingTitle = both("Erreicht / Bestanden 👍 (Grundkompetenzen erfüllt)", "Alcanzado / Aprobado 👍 (competencias básicas cumplidas)");
         ratingClass = "bg-amber-50 border-amber-300 text-amber-950"; badgeColor = "bg-amber-600 text-white";
       } else {
-        ratingTitle = both("Nicht erreicht ⚠️ (Nochmals vertiefen & üben)", "Todavía no alcanzado ⚠️ (repasa y practica otra vez)");
-        ratingClass = "bg-rose-50 border-rose-300 text-rose-950"; badgeColor = "bg-rose-600 text-white";
+        ratingTitle = both("Noch nicht erreicht 💪 (Nochmals vertiefen & üben)", "Todavía no alcanzado 💪 (repasa y practica otra vez)");
+        ratingClass = "bg-yellow-50 border-yellow-300 text-yellow-950"; badgeColor = "bg-yellow-400 text-yellow-950";
       }
 
       const banner = document.getElementById('exam-result-banner');
@@ -1661,7 +1680,7 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10">
             <div>
               <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full ${badgeColor}">
-                ${passed ? both('Bestanden', 'Aprobado') : both('Nicht bestanden', 'Todavía no aprobado')}
+                ${passed ? both('Bestanden', 'Aprobado') : both('Noch nicht bestanden', 'Todavía no aprobado')}
               </span>
               <h3 class="text-xl sm:text-2xl font-black mt-2">${ratingTitle}</h3>
               <p class="text-xs sm:text-sm mt-1 opacity-90">${both(`Bestehensgrenze: 60 % (ab ${PASS_POINTS} P. = Note 4.0).`, `Límite para aprobar: 60 % (desde ${PASS_POINTS} p. = nota 4.0).`)}</p>
@@ -1700,58 +1719,9 @@
       // Farben und Rückmeldungen zurücksetzen
       clearMarks(document);
       document.querySelectorAll('[id^="fb-"]').forEach(el => { el.innerHTML = ''; el.className = 'text-xs font-semibold'; });
+      document.querySelectorAll('[id^="sol-"]').forEach(el => { el.classList.add('hidden'); el.innerHTML = ''; });
       renderAll();
       showToast(tr("Zurückgesetzt", "Borrado"), tr("Alle Antworten wurden geleert.", "Se borraron todas las respuestas."));
-    }
-
-    // ==============================================================
-    // STOPPUHR
-    // ==============================================================
-    let timerSeconds = 0;
-    let timerInterval = null;
-    let timerRunning = false;
-
-    function formatTime(totalSec) {
-      const pad = (n) => String(n).padStart(2, '0');
-      return `${pad(Math.floor(totalSec / 60))}:${pad(totalSec % 60)}`;
-    }
-
-    function updateTimerDisplay() {
-      const el = document.getElementById('timer-display');
-      if (el) el.innerText = formatTime(timerSeconds);
-    }
-
-    function toggleTimer() {
-      const btn = document.getElementById('timer-toggle-btn');
-      if (timerRunning) {
-        clearInterval(timerInterval);
-        timerRunning = false;
-        if (btn) btn.innerHTML = both('▶️ Start', '▶️ Iniciar');
-        try { localStorage.setItem('scratch_hub_timer', timerSeconds); } catch (e) {}
-        showToast(tr("⏱️ Pausiert", "⏱️ En pausa"), tr(`Lernzeit: ${formatTime(timerSeconds)}`, `Tiempo de estudio: ${formatTime(timerSeconds)}`));
-      } else {
-        timerRunning = true;
-        if (btn) btn.innerHTML = both('⏸️ Pause', '⏸️ Pausa');
-        timerInterval = setInterval(() => {
-          timerSeconds++;
-          updateTimerDisplay();
-          if (timerSeconds % 5 === 0) {
-            try { localStorage.setItem('scratch_hub_timer', timerSeconds); } catch (e) {}
-          }
-        }, 1000);
-        showToast(tr("⏱️ Gestartet", "⏱️ Iniciado"), tr("Lernzeit wird gezählt.", "Se cuenta el tiempo de estudio."));
-      }
-    }
-
-    function resetTimer() {
-      clearInterval(timerInterval);
-      timerRunning = false;
-      timerSeconds = 0;
-      updateTimerDisplay();
-      try { localStorage.removeItem('scratch_hub_timer'); } catch (e) {}
-      const btn = document.getElementById('timer-toggle-btn');
-      if (btn) btn.innerHTML = both('▶️ Start', '▶️ Iniciar');
-      showToast(tr("⏱️ Zurückgesetzt", "⏱️ Reiniciado"), tr("Uhr steht auf 00:00.", "El reloj está en 00:00."));
     }
 
     let toastTimeout = null;
@@ -1776,10 +1746,10 @@
     // ==============================================================
     Object.assign(window, {
       switchTab, saveAnswer, reshuffleBasics, reshuffleLogic,
-      checkTask, toggleTip, openTheory, retryTask,
+      checkTask, toggleTip, openTheory, retryTask, showSolution,
       checkBasicsA1, checkBasicsA2, checkLoopsA3, checkLoopsA4, checkSquareSort,
       checkCustomA5, checkCustomA8, checkLogicAndOr, checkLogicA7, checkLogicGarden,
-      handleFlowSlotClick, evaluateFullExam, resetAllHubData, toggleTimer, resetTimer, setLang
+      handleFlowSlotClick, evaluateFullExam, resetAllHubData, setLang
     });
 
     // Texte ohne <span>: <option> und SVG-<text> (data-es), Attribute title / aria-label (data-es-…)
