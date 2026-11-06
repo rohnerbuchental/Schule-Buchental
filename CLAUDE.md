@@ -14,7 +14,7 @@ Alles andere liegt in der **privaten Ablage** (siehe unten).
 | `connected_3_scratch_trainingshub.html` | Informatik, Connected 3 «Abheben mit Algorithmen» (Scratch) |
 | `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» |
 | `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 |
-| `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter-Lernpfad, Grammatik-Pfad present continuous) |
+| `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter-Lernpfad, Grammatik-Pfade present continuous und Adverbien) |
 | `RZG Vulkane Erdbeben Tsunamis.html` | RZG, Dynamik der Erde, Test 2 (Vulkane, Erdbeben, Tsunamis) |
 
 Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer Seite nur ihren Abschnitt lesen. Die didaktischen Grundsätze mit Quellen stehen in `docs/didaktik.md`.
