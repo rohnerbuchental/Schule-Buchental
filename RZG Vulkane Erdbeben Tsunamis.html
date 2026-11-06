@@ -63,10 +63,10 @@
         <span>🌋</span> <span data-l="de">1. Vulkane entstehen</span><span data-l="es" lang="es">1. Cómo se forman los volcanes</span>
       </button>
       <button onclick="switchTab('ausbruch')" id="tab-btn-ausbruch" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>💥</span> <span data-l="de">2. Ausbruch & inaktiv</span><span data-l="es" lang="es">2. Erupción e inactividad</span>
+        <span>💥</span> <span data-l="de">2. Ausbruch & inaktiv</span><span data-l="es" lang="es">2. Erupción <span lang="de">(Ausbruch)</span> e inactividad</span>
       </button>
       <button onclick="switchTab('erdbeben')" id="tab-btn-erdbeben" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>📈</span> <span data-l="de">3. Erdbeben</span><span data-l="es" lang="es">3. Terremotos</span>
+        <span>📈</span> <span data-l="de">3. Erdbeben</span><span data-l="es" lang="es">3. Terremotos <span lang="de">(Erdbeben)</span></span>
       </button>
       <button onclick="switchTab('tsunami')" id="tab-btn-tsunami" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
         <span>🌊</span> <span data-l="de">4. Tsunamis</span><span data-l="es" lang="es">4. Tsunamis</span>
@@ -89,7 +89,7 @@
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
         <h2 class="text-lg font-black text-slate-900"><span data-l="de">🌋 Wie entstehen Vulkane?</span><span data-l="es" lang="es">🌋 ¿Cómo se forman los volcanes?</span></h2>
         <p class="text-xs text-slate-500 mt-1" data-l="de">LZ1: Die Entstehung von Vulkanen erklären. · LZ2: Schildvulkane und Schichtvulkane unterscheiden.</p>
-        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ1: Explicar cómo se forman los volcanes. · LZ2: Distinguir los volcanes en escudo y los estratovolcanes.</p>
+        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ1: Explicar cómo se forman los volcanes. · LZ2: Distinguir los volcanes en escudo <span lang="de">(Schildvulkane)</span> y los estratovolcanes <span lang="de">(Schichtvulkane)</span>.</p>
         <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
           <summary class="text-sm font-bold text-orange-800"><span data-l="de">📖 Theorie lesen (antippen)</span><span data-l="es" lang="es">📖 Leer la teoría (toca aquí)</span></summary>
           <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="de">
@@ -110,19 +110,19 @@
             </div>
           </div>
           <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="es" lang="es">
-            <p>Los volcanes se forman cuando roca líquida (<b>magma</b>) sube desde el interior de la Tierra y llega a la superficie. Casi siempre pasa donde se mueven las placas tectónicas.</p>
+            <p>Los volcanes se forman cuando roca líquida (<b>magma</b>) sube desde el interior de la Tierra y llega a la superficie. Casi siempre pasa donde se mueven las placas tectónicas <span lang="de">(Erdplatten)</span>.</p>
             <ul class="list-disc pl-5 space-y-1">
-              <li><b>Las placas se separan:</b> Se abre una grieta. El magma caliente sube y se enfría como corteza nueva. Ejemplo: Islandia.</li>
+              <li><b>Las placas se separan:</b> Se abre una grieta. El magma caliente sube y se enfría como corteza <span lang="de">(Kruste)</span> nueva. Ejemplo: Islandia.</li>
               <li><b>Las placas chocan:</b> La placa más pesada se mete debajo de la más ligera. En la profundidad, la roca se derrite. El magma es más ligero y sube. Ejemplo: Mount St. Helens (EE. UU.).</li>
               <li><b>Punto caliente (hotspot):</b> Un magma muy caliente sube y atraviesa la placa como un soplete. Ejemplo: Hawái.</li>
             </ul>
-            <p>Alrededor de la placa del Pacífico están los volcanes más activos del mundo. Esa zona se llama <b>«Ring of Fire»</b> (Anillo de Fuego del Pacífico). Allí, las placas oceánicas se hunden debajo de otras placas. La roca se derrite y el magma sube.</p>
+            <p>Alrededor de la placa del Pacífico están los volcanes más activos del mundo. Esa zona se llama <b>«Ring of Fire»</b> (Anillo de Fuego del Pacífico). Allí, las placas oceánicas <span lang="de">(Ozeanplatten)</span> se hunden debajo de otras placas. La roca se derrite y el magma sube.</p>
             <div class="grid sm:grid-cols-2 gap-2 pt-1">
               <div class="bg-white rounded-lg border border-orange-200 p-2.5">
-                <b>Estratovolcán (volcán de capas)</b><br>alto y en forma de cono · magma viscoso (espeso) · erupción explosiva · en cada erupción se depositan, una tras otra, capas de ceniza/roca y de lava solidificada, por eso tiene capas · p. ej. Vesubio, Etna, Fuji
+                <b>Estratovolcán o volcán de capas <span lang="de">(Schichtvulkan)</span></b><br>alto y en forma de cono · magma viscoso, espeso <span lang="de">(zähflüssig)</span> · erupción explosiva · en cada erupción se depositan, una tras otra, capas de ceniza/roca y de lava solidificada <span lang="de">(erstarrte Lava)</span>, por eso tiene capas · p. ej. Vesubio, Etna, Fuji
               </div>
               <div class="bg-white rounded-lg border border-orange-200 p-2.5">
-                <b>Volcán en escudo</b><br>plano y ancho como un escudo tendido en el suelo · magma fluido (líquido) · erupción tranquila, la lava fluye · muchas capas finas de lava · p. ej. Mauna Loa (Hawái)
+                <b>Volcán en escudo <span lang="de">(Schildvulkan)</span></b><br>plano y ancho como un escudo tendido en el suelo · magma fluido, líquido <span lang="de">(dünnflüssig)</span> · erupción tranquila, la lava fluye · muchas capas finas de lava · p. ej. Mauna Loa (Hawái)
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
         <h2 class="text-lg font-black text-slate-900"><span data-l="de">💥 Warum bricht ein Vulkan aus?</span><span data-l="es" lang="es">💥 ¿Por qué entra en erupción un volcán?</span></h2>
         <p class="text-xs text-slate-500 mt-1" data-l="de">LZ3: Vulkanausbrüche erklären. · Zusatz aus dem Dossier: Wann ist ein Vulkan inaktiv?</p>
-        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ3: Explicar las erupciones volcánicas. · Extra del dosier: ¿Cuándo está inactivo un volcán?</p>
+        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ3: Explicar las erupciones volcánicas <span lang="de">(Vulkanausbrüche)</span>. · Extra del dosier: ¿Cuándo está inactivo un volcán?</p>
         <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
           <summary class="text-sm font-bold text-orange-800"><span data-l="de">📖 Theorie lesen (antippen)</span><span data-l="es" lang="es">📖 Leer la teoría (toca aquí)</span></summary>
           <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="de">
@@ -159,11 +159,11 @@
             </ul>
           </div>
           <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="es" lang="es">
-            <p><b>Estratovolcán:</b> El magma es viscoso (espeso). Los gases casi no pueden salir. En la chimenea (el conducto del volcán) se acumula una presión enorme. Cuando la presión es más fuerte que el tapón de roca, hay una erupción explosiva: salen volando ceniza, piedras (piroclastos) y lava.</p>
-            <p><b>Volcán en escudo:</b> La lava es fluida (líquida) y muy caliente. Los gases salen fácilmente, por eso casi no hay presión. La lava sale tranquila del cráter y se extiende lejos.</p>
-            <p>Un volcán está <b>inactivo («dormido»)</b> cuando ya no llega magma nuevo y baja la presión en la cámara magmática. Razones:</p>
+            <p><b>Estratovolcán <span lang="de">(Schichtvulkan)</span>:</b> El magma es viscoso, espeso <span lang="de">(zähflüssig)</span>. Los gases casi no pueden salir. En la chimenea <span lang="de">(Schlot)</span>, el conducto del volcán, se acumula una presión <span lang="de">(Druck)</span> enorme. Cuando la presión es más fuerte que el tapón de roca, hay una erupción explosiva <span lang="de">(explosiver Ausbruch)</span>: salen volando ceniza, piedras (piroclastos) y lava.</p>
+            <p><b>Volcán en escudo <span lang="de">(Schildvulkan)</span>:</b> La lava es fluida, líquida <span lang="de">(dünnflüssig)</span> y muy caliente. Los gases salen fácilmente, por eso casi no hay presión. La lava sale tranquila del cráter <span lang="de">(Krater)</span> y se extiende lejos.</p>
+            <p>Un volcán está <b>inactivo («dormido»)</b> cuando ya no llega magma nuevo y baja la presión en la cámara magmática <span lang="de">(Magmakammer)</span>. Razones:</p>
             <ul class="list-disc pl-5 space-y-1">
-              <li>La placa sigue moviéndose. El volcán se aleja del punto caliente y ya no recibe magma. Sobre el punto caliente se forma un volcán nuevo.</li>
+              <li>La placa sigue moviéndose. El volcán se aleja del punto caliente <span lang="de">(Hotspot)</span> y ya no recibe magma. Sobre el punto caliente se forma un volcán nuevo.</li>
               <li>La cámara magmática se vacía: el magma se enfría, se pone sólido y tapa la chimenea.</li>
             </ul>
           </div>
@@ -187,7 +187,7 @@
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
         <h2 class="text-lg font-black text-slate-900"><span data-l="de">📈 Erdbeben und Richterskala</span><span data-l="es" lang="es">📈 Terremotos y escala de Richter</span></h2>
         <p class="text-xs text-slate-500 mt-1" data-l="de">LZ4: Erdbeben verstehen, messen und berechnen.</p>
-        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ4: Entender, medir y calcular terremotos.</p>
+        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ4: Entender, medir y calcular terremotos <span lang="de">(Erdbeben)</span>.</p>
         <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
           <summary class="text-sm font-bold text-orange-800"><span data-l="de">📖 Theorie lesen (antippen)</span><span data-l="es" lang="es">📖 Leer la teoría (toca aquí)</span></summary>
           <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="de">
@@ -209,10 +209,10 @@
             <p><b>Verhalten bei einem Erdbeben:</b> Im Haus unter einen stabilen Tisch kriechen und festhalten. Weg von Fenstern, Glas und schweren Schränken. Keinen Lift benutzen. Im Freien auf einen freien Platz gehen, weg von Mauern, Balkonen und Strommasten. Im Auto am Strassenrand anhalten (nicht auf Brücken) und sitzen bleiben.</p>
           </div>
           <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="es" lang="es">
-            <p><b>Cómo se forma:</b> Los terremotos (sismos) pasan sobre todo en los bordes de las placas. Dos placas se enganchan. Se acumula una tensión enorme. De repente la roca se rompe y la tensión se libera de golpe: la Tierra tiembla. El lugar en la profundidad donde empieza el terremoto se llama <b>foco (hipocentro)</b>. Ejemplo: la falla de San Andrés (EE. UU.); allí dos placas se deslizan de lado, una junto a la otra.</p>
-            <p><b>Medir:</b> El aparato de medición se llama <b>sismógrafo</b>. Su registro (la línea en zigzag) se llama <b>sismograma</b>. La fuerza se indica en la <b>escala de Richter</b>. El terremoto más fuerte jamás medido tuvo magnitud 9.5 (Chile, 1960). En Suiza fue el terremoto de Basilea en 1356 (aprox. 6 a 6.5).</p>
+            <p><b>Cómo se forma:</b> Los terremotos o sismos <span lang="de">(Erdbeben)</span> pasan sobre todo en los bordes de las placas <span lang="de">(Plattengrenzen)</span>. Dos placas se enganchan. Se acumula una tensión <span lang="de">(Spannung)</span> enorme. De repente la roca se rompe y la tensión se libera de golpe: la Tierra tiembla. El lugar en la profundidad donde empieza el terremoto se llama <b>foco o hipocentro</b> <span lang="de">(Erdbebenherd)</span>. Ejemplo: la falla de San Andrés <span lang="de">(San-Andreas-Verwerfung)</span> (EE. UU.); allí dos placas se deslizan de lado, una junto a la otra.</p>
+            <p><b>Medir:</b> El aparato de medición se llama <b>sismógrafo</b> <span lang="de">(Seismograph)</span>. Su registro (la línea en zigzag) se llama <b>sismograma</b> <span lang="de">(Seismogramm)</span>. La fuerza se indica en la <b>escala de Richter</b> <span lang="de">(Richterskala)</span>. El terremoto más fuerte jamás medido tuvo magnitud <span lang="de">(Stärke)</span> 9.5 (Chile, 1960). En Suiza fue el terremoto de Basilea en 1356 (aprox. 6 a 6.5).</p>
             <div class="bg-white rounded-lg border border-orange-200 p-2.5">
-              <b>Regla para calcular:</b> 1 grado más = la amplitud en el sismograma <b>× 10</b> y la energía <b>× 32</b>.<br>
+              <b>Regla para calcular:</b> 1 grado <span lang="de">(Stufe)</span> más = la amplitud <span lang="de">(Ausschlag)</span> en el sismograma <b>× 10</b> y la energía <b>× 32</b>.<br>
               Ejemplo: magnitud 5 en vez de 3 = 2 grados → amplitud 10 × 10 = 100 veces, energía 32 × 32 = 1024 veces mayor.
             </div>
             <p><b>Grados de la escala de Richter:</b></p>
@@ -249,7 +249,7 @@
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
         <h2 class="text-lg font-black text-slate-900"><span data-l="de">🌊 Wie entsteht ein Tsunami?</span><span data-l="es" lang="es">🌊 ¿Cómo se forma un tsunami?</span></h2>
         <p class="text-xs text-slate-500 mt-1" data-l="de">LZ5: Tsunamis und Meereswellen vergleichen.</p>
-        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ5: Comparar los tsunamis con las olas normales del mar.</p>
+        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ5: Comparar los tsunamis con las olas normales del mar <span lang="de">(Meereswellen)</span>.</p>
         <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
           <summary class="text-sm font-bold text-orange-800"><span data-l="de">📖 Theorie lesen (antippen)</span><span data-l="es" lang="es">📖 Leer la teoría (toca aquí)</span></summary>
           <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">
@@ -281,12 +281,12 @@
             </div>
             <div class="space-y-2" data-l="es" lang="es">
             <ol class="list-decimal pl-5 space-y-1">
-              <li>Un terremoto submarino empuja de golpe hacia arriba el fondo del mar y, con él, toda el agua que hay encima.</li>
+              <li>Un terremoto submarino <span lang="de">(Seebeben)</span> empuja de golpe hacia arriba el fondo del mar y, con él, toda el agua que hay encima.</li>
               <li>En mar abierto la ola es baja (aprox. 1 m), pero muy rápida (hasta 800 km/h).</li>
               <li>En la costa poco profunda la ola se frena, el agua se amontona y sube de 10 a 30 m. En bahías estrechas sube todavía más, porque el agua no tiene espacio para salir hacia los lados.</li>
             </ol>
-            <p><b>Señal de alerta en la playa:</b> El mar se retira de repente muy lejos. Entonces aléjate enseguida de la playa, avisa a otras personas y busca un lugar alto: una colina o los pisos altos de un edificio sólido de hormigón. ¡Queda muy poco tiempo!</p>
-            <p><b>Ola normal:</b> la produce el viento. Solo se mueve la capa de agua de arriba. Longitud de onda hasta aprox. 400 m, más bien lenta.<br>
+            <p><b>Señal de alerta <span lang="de">(Warnzeichen)</span> en la playa:</b> El mar se retira de repente muy lejos. Entonces aléjate enseguida de la playa, avisa a otras personas y busca un lugar alto: una colina o los pisos altos de un edificio sólido de hormigón. ¡Queda muy poco tiempo!</p>
+            <p><b>Ola normal <span lang="de">(normale Welle)</span>:</b> la produce el viento. Solo se mueve la capa de agua de arriba. Longitud de onda <span lang="de">(Wellenlänge)</span> hasta aprox. 400 m, más bien lenta.<br>
             <b>Tsunami:</b> lo produce un terremoto submarino. Se mueve toda el agua, desde el fondo del mar hasta la superficie. Longitud de onda hasta 1000 km, muy rápido.</p>
             </div>
           </div>
@@ -535,7 +535,7 @@
           ['<b>Schildvulkan:</b> Die Lava ist ', G.a4_5, '. Die Gase entweichen leicht. Die Lava strömt ruhig und ', G.a4_6, ' aus dem Krater.']
         ], parasEs: [
           ['<b>Estratovolcán:</b> El magma es ', G.a4_1, '. Los ', G.a4_2, ' casi no pueden salir. Por eso, en la chimenea sube la ', G.a4_3, '. La erupción es ', G.a4_4, '.'],
-          ['<b>Volcán en escudo:</b> El magma es ', G.a4_5, '. Los gases salen fácilmente. La lava sale del cráter tranquila, ', G.a4_6, '.']
+          ['<b>Volcán en escudo:</b> El magma (la lava) es ', G.a4_5, '. Los gases salen fácilmente. La lava sale del cráter tranquila, ', G.a4_6, '.']
         ] }
       ] },
       a5: { title: ['Ablauf eines explosiven Ausbruchs', 'Una erupción explosiva, paso a paso'], intro: ['Bringe die Schritte beim Schichtvulkan in die richtige Reihenfolge (1 = zuerst).', 'Ordena los pasos del estratovolcán (1 = primero).'],
@@ -728,14 +728,14 @@
             <li><b>Hotspots:</b> Mitten auf einer Platte steigt besonders heisses Magma als Strahl auf und brennt sich durch die Kruste (z.B. Hawaii).</li>
           </ul>`, `
           <ul class="list-disc pl-5 space-y-1">
-            <li><b>Las placas se separan:</b> Se abre una grieta. El magma caliente sube y se enfría como corteza nueva (p. ej. Islandia, dorsal mesoatlántica).</li>
-            <li><b>Las placas chocan:</b> La placa oceánica, más pesada, se hunde debajo de la placa más ligera. En la profundidad, la roca se derrite por la presión y el calor. El magma es más ligero y sube (p. ej. Mount St. Helens, Japón, los Andes).</li>
+            <li><b>Las placas se separan:</b> Se abre una grieta. El magma caliente sube y se enfría como corteza (Kruste) nueva (p. ej. Islandia, dorsal mesoatlántica).</li>
+            <li><b>Las placas chocan:</b> La placa oceánica (Ozeanplatte), más pesada, se hunde debajo de la placa más ligera. En la profundidad, la roca se derrite por la presión y el calor. El magma es más ligero y sube (p. ej. Mount St. Helens, Japón, los Andes).</li>
             <li><b>Puntos calientes (hotspots):</b> En medio de una placa sube un chorro de magma muy caliente y atraviesa la corteza (p. ej. Hawái).</li>
           </ul>`] },
         { id: 'l1_hotspot', q: ['Ich kann erklären, was ein Hotspot ist und wie dadurch Inselketten wie Hawaii mitten auf einer Platte entstehen.', 'Puedo explicar qué es un punto caliente (hotspot) y cómo se forman así cadenas de islas como Hawái en medio de una placa.'], sol: [`
           <p>Ein Hotspot ist ein <b>fester, besonders heisser Punkt</b> im Erdmantel. Von dort steigt ein pilzförmiger <b>Magmastrahl</b> auf und brennt sich wie ein Schweissbrenner durch die Platte. So entsteht ein Vulkan.</p>
           <p class="mt-1">Die Platte bewegt sich weiter, der Hotspot bleibt am gleichen Ort. Der alte Vulkan wird vom Magma abgeschnitten und erlischt. Über dem Hotspot entsteht ein neuer Vulkan. So entsteht eine <b>Kette von Inseln</b>: Je weiter weg vom Hotspot, desto älter die Insel. Nur die jüngste Insel hat noch aktive Vulkane.</p>`, `
-          <p>Un punto caliente es un <b>lugar fijo y muy caliente</b> en el manto terrestre. Desde allí sube un <b>chorro de magma</b> en forma de hongo y atraviesa la placa como un soplete. Así se forma un volcán.</p>
+          <p>Un punto caliente es un <b>lugar fijo y muy caliente</b> en el manto terrestre (Erdmantel). Desde allí sube un <b>chorro de magma</b> (Magmastrahl) en forma de hongo y atraviesa la placa como un soplete. Así se forma un volcán.</p>
           <p class="mt-1">La placa sigue moviéndose, pero el punto caliente se queda en el mismo lugar. El volcán viejo se queda sin magma y se apaga. Sobre el punto caliente se forma un volcán nuevo. Así se forma una <b>cadena de islas</b>: cuanto más lejos del punto caliente, más vieja es la isla. Solo la isla más joven tiene todavía volcanes activos.</p>`] },
         { id: 'l1_ring', q: ['Ich kann erklären, was der «Ring of Fire» ist und warum dort besonders viele Vulkane liegen.', 'Puedo explicar qué es el «Ring of Fire» y por qué allí hay tantos volcanes.'], sol: [`
           <p>Der «Ring of Fire» (Pazifischer Feuerring) ist ein Gürtel von Vulkanen <b>rund um den Pazifischen Ozean</b>. Dort liegen die meisten aktiven Vulkane der Welt.</p>
@@ -743,7 +743,7 @@
           <p>El «Ring of Fire» (Anillo de Fuego del Pacífico) es un cinturón de volcanes <b>alrededor del océano Pacífico</b>. Allí están la mayoría de los volcanes activos del mundo.</p>
           <p class="mt-1">Razón: alrededor de la placa del Pacífico chocan placas. La placa oceánica, que es pesada, se hunde debajo de otras placas. En la profundidad la roca se derrite y el magma sube. Por eso allí hay muchísimos volcanes y también muchos terremotos.</p>`] }
       ] },
-      { tab: 'entstehung', lz: ['LZ2: Schildvulkane und Schichtvulkane unterscheiden', 'LZ2: Distinguir los volcanes en escudo y los estratovolcanes'], items: [
+      { tab: 'entstehung', lz: ['LZ2: Schildvulkane und Schichtvulkane unterscheiden', 'LZ2: Distinguir los volcanes en escudo (Schildvulkane) y los estratovolcanes (Schichtvulkane)'], items: [
         { id: 'l2_form', q: ['Ich kann Schicht- und Schildvulkane an ihrer Form erkennen. Skizziere beide Vulkantypen.', 'Puedo reconocer los estratovolcanes y los volcanes en escudo por su forma. Dibuja los dos tipos de volcán.'], sketch: true, sol: () => `
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="text-center"><b>${tr('Schichtvulkan', 'Estratovolcán')}</b>${SVG_STRATO()}<p class="text-xs">${tr('steil, hoch, kegelförmig', 'empinado, alto, en forma de cono')}</p></div>
@@ -755,41 +755,41 @@
             <li><b>Schildvulkan:</b> dünnflüssiges Magma (ca. 1000 bis 1200 °C). Gase können leicht entweichen, geringer Druck.</li>
           </ul>`, `
           <ul class="list-disc pl-5 space-y-1">
-            <li><b>Estratovolcán:</b> magma viscoso y espeso (aprox. 700 a 1000 °C). Muchos gases se quedan en el magma, mucha presión.</li>
-            <li><b>Volcán en escudo:</b> magma fluido, muy líquido (aprox. 1000 a 1200 °C). Los gases salen fácilmente, poca presión.</li>
+            <li><b>Estratovolcán:</b> magma viscoso y espeso (zähflüssig; aprox. 700 a 1000 °C). Muchos gases se quedan en el magma, mucha presión.</li>
+            <li><b>Volcán en escudo:</b> magma fluido, muy líquido (dünnflüssig; aprox. 1000 a 1200 °C). Los gases salen fácilmente, poca presión.</li>
           </ul>`] },
-        { id: 'l2_schichten', q: ['Ich kann erklären, warum ein Schichtvulkan aus abwechselnden Schichten von erstarrter Lava und Asche/Gestein aufgebaut ist.', 'Puedo explicar por qué un estratovolcán está formado por capas de lava solidificada y de ceniza/roca, una tras otra.'], sol: [`
+        { id: 'l2_schichten', q: ['Ich kann erklären, warum ein Schichtvulkan aus abwechselnden Schichten von erstarrter Lava und Asche/Gestein aufgebaut ist.', 'Puedo explicar por qué un estratovolcán está formado por capas de lava solidificada (erstarrte Lava) y de ceniza/roca, una tras otra.'], sol: [`
           <p>Ein Schichtvulkan bricht immer wieder aus, mal <b>explosiv</b>, mal mit <b>Lavaströmen</b>. Bei einer Explosion fallen Asche und Gesteinsbrocken auf den Berg. Bei einem Lavastrom fliesst Lava über den Hang und erstarrt. So lagern sich über lange Zeit <b>abwechselnd Schichten</b> aus Asche/Gestein und erstarrter Lava ab. Der Vulkan wächst Schicht für Schicht in die Höhe.</p>`, `
-          <p>Un estratovolcán entra en erupción una y otra vez: a veces de forma <b>explosiva</b>, a veces con <b>ríos de lava</b>. En una explosión caen ceniza y trozos de roca sobre la montaña. En un río de lava, la lava baja por la ladera y se solidifica. Así, durante mucho tiempo, se depositan <b>capas, una tras otra</b>, de ceniza/roca y de lava solidificada. El volcán crece capa por capa.</p>`] }
+          <p>Un estratovolcán entra en erupción una y otra vez: a veces de forma <b>explosiva</b>, a veces con <b>ríos de lava</b> (Lavaströme). En una explosión caen ceniza y trozos de roca sobre la montaña. En un río de lava, la lava baja por la ladera y se solidifica. Así, durante mucho tiempo, se depositan <b>capas, una tras otra</b>, de ceniza/roca y de lava solidificada. El volcán crece capa por capa.</p>`] }
       ] },
-      { tab: 'ausbruch', lz: ['LZ3: Vulkanausbrüche', 'LZ3: Erupciones volcánicas'], items: [
-        { id: 'l3_schicht', q: ['Ich kann in eigenen Worten erklären, wie ein Schichtvulkan ausbricht.', 'Puedo explicar con mis propias palabras cómo entra en erupción un estratovolcán.'], sol: [`
+      { tab: 'ausbruch', lz: ['LZ3: Vulkanausbrüche', 'LZ3: Erupciones volcánicas (Vulkanausbrüche)'], items: [
+        { id: 'l3_schicht', q: ['Ich kann in eigenen Worten erklären, wie ein Schichtvulkan ausbricht.', 'Puedo explicar con mis propias palabras cómo entra en erupción un estratovolcán (Schichtvulkan).'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li>Das Magma ist <b>zähflüssig</b>.</li>
             <li>Die <b>Gase</b> können nur schwer entweichen. Im Schlot baut sich ein enormer <b>Druck</b> auf.</li>
             <li>Wird der Druck stärker als der Pfropfen aus Gestein, gibt es einen <b>explosiven Ausbruch</b>: Asche, Gesteinsbrocken (Pyroklastika) und Lava werden mit grosser Wucht herausgeschleudert.</li>
           </ul>`, `
           <ul class="list-disc pl-5 space-y-1">
-            <li>El magma es <b>viscoso</b> (espeso).</li>
-            <li>Los <b>gases</b> casi no pueden salir. En la chimenea se acumula una <b>presión</b> enorme.</li>
-            <li>Cuando la presión es más fuerte que el tapón de roca, hay una <b>erupción explosiva</b>: la ceniza, los trozos de roca (piroclastos) y la lava salen disparados con mucha fuerza.</li>
+            <li>El magma es <b>viscoso</b>, espeso (zähflüssig).</li>
+            <li>Los <b>gases</b> casi no pueden salir. En la chimenea (Schlot) se acumula una <b>presión</b> (Druck) enorme.</li>
+            <li>Cuando la presión es más fuerte que el tapón de roca, hay una <b>erupción explosiva</b> (explosiver Ausbruch): la ceniza, los trozos de roca (piroclastos) y la lava salen disparados con mucha fuerza.</li>
           </ul>`] },
-        { id: 'l3_schild', q: ['Ich kann in eigenen Worten erklären, wie ein Schildvulkan ausbricht.', 'Puedo explicar con mis propias palabras cómo entra en erupción un volcán en escudo.'], sol: [`
+        { id: 'l3_schild', q: ['Ich kann in eigenen Worten erklären, wie ein Schildvulkan ausbricht.', 'Puedo explicar con mis propias palabras cómo entra en erupción un volcán en escudo (Schildvulkan).'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li>Das Magma bzw. die Lava ist sehr <b>dünnflüssig</b> und heiss.</li>
             <li>Die <b>Gase</b> können leicht entweichen. Darum baut sich kaum <b>Druck</b> auf.</li>
             <li>Der Ausbruch ist ruhig und <b>fliessend</b>: Die Lava strömt gleichmässig aus dem Krater und breitet sich weit aus, bevor sie erstarrt.</li>
           </ul>`, `
           <ul class="list-disc pl-5 space-y-1">
-            <li>El magma (la lava) es muy <b>fluido</b> (líquido) y caliente.</li>
+            <li>El magma (la lava) es muy <b>fluido</b>, líquido (dünnflüssig) y caliente.</li>
             <li>Los <b>gases</b> salen fácilmente. Por eso casi no se acumula <b>presión</b>.</li>
-            <li>La erupción es tranquila y la lava sale <b>fluyendo</b>: sale del cráter de forma pareja y se extiende lejos antes de solidificarse.</li>
+            <li>La erupción es tranquila y la lava sale <b>fluyendo</b> (fliessend): sale del cráter (Krater) de forma pareja y se extiende lejos antes de solidificarse.</li>
           </ul>`] }
       ] },
-      { tab: 'erdbeben', lz: ['LZ4: Erdbeben verstehen, messen und berechnen', 'LZ4: Entender, medir y calcular terremotos'], items: [
-        { id: 'l4_entstehung', q: ['Ich kann erklären, wie Erdbeben durch das Verhaken und plötzliche Brechen von Erdplatten entstehen.', 'Puedo explicar cómo se forman los terremotos cuando las placas se enganchan y de repente se rompen.'], sol: [`
+      { tab: 'erdbeben', lz: ['LZ4: Erdbeben verstehen, messen und berechnen', 'LZ4: Entender, medir y calcular terremotos (Erdbeben)'], items: [
+        { id: 'l4_entstehung', q: ['Ich kann erklären, wie Erdbeben durch das Verhaken und plötzliche Brechen von Erdplatten entstehen.', 'Puedo explicar cómo se forman los terremotos cuando las placas (Erdplatten) se enganchan y de repente se rompen.'], sol: [`
           <p>Die Erdplatten bewegen sich. An den Plattengrenzen <b>verhaken</b> sie sich. Die Platten drücken weiter, darum baut sich eine riesige <b>Spannung</b> im Gestein auf. Irgendwann ist die Spannung zu gross: Das Gestein <b>bricht plötzlich</b>. Diese Stelle in der Tiefe heisst <b>Erdbebenherd</b>. Die Energie wird schlagartig frei und breitet sich als Erschütterung aus: Die Erde bebt.</p>`, `
-          <p>Las placas tectónicas se mueven. En los bordes de las placas se <b>enganchan</b>. Las placas siguen empujando, por eso se acumula una <b>tensión</b> enorme en la roca. En algún momento la tensión es demasiado grande: la roca <b>se rompe de repente</b>. Ese lugar en la profundidad se llama <b>foco (hipocentro)</b>. La energía se libera de golpe y se extiende como una sacudida: la Tierra tiembla.</p>`] },
+          <p>Las placas tectónicas se mueven. En los bordes de las placas (Plattengrenzen) se <b>enganchan</b>. Las placas siguen empujando, por eso se acumula una <b>tensión</b> (Spannung) enorme en la roca. En algún momento la tensión es demasiado grande: la roca <b>se rompe de repente</b>. Ese lugar en la profundidad se llama <b>foco o hipocentro</b> (Erdbebenherd). La energía se libera de golpe y se extiende como una sacudida: la Tierra tiembla.</p>`] },
         { id: 'l4_messen', q: ['Ich kann die Messgeräte und die gängige Skala benennen.', 'Puedo nombrar los aparatos de medición y la escala más usada.'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li><b>Seismograph:</b> das Messgerät für Erdbeben.</li>
@@ -797,16 +797,16 @@
             <li><b>Richter-Skala:</b> die gängige Skala für die Stärke eines Erdbebens.</li>
           </ul>`, `
           <ul class="list-disc pl-5 space-y-1">
-            <li><b>Sismógrafo:</b> el aparato que mide los terremotos.</li>
-            <li><b>Sismograma:</b> el registro (la línea en zigzag) del sismógrafo.</li>
-            <li><b>Escala de Richter:</b> la escala más usada para la fuerza de un terremoto.</li>
+            <li><b>Sismógrafo</b> (Seismograph)<b>:</b> el aparato que mide los terremotos.</li>
+            <li><b>Sismograma</b> (Seismogramm)<b>:</b> el registro (la línea en zigzag) del sismógrafo.</li>
+            <li><b>Escala de Richter</b> (Richterskala)<b>:</b> la escala más usada para la fuerza de un terremoto.</li>
           </ul>`] },
-        { id: 'l4_rechnen', q: ['Ich kann den Unterschied zwischen dem Ausschlag im Seismogramm und der freigesetzten Energie erklären und einfache Rechnungen dazu durchführen.', 'Puedo explicar la diferencia entre la amplitud en el sismograma y la energía liberada, y hacer cálculos sencillos.'], sol: [`
+        { id: 'l4_rechnen', q: ['Ich kann den Unterschied zwischen dem Ausschlag im Seismogramm und der freigesetzten Energie erklären und einfache Rechnungen dazu durchführen.', 'Puedo explicar la diferencia entre la amplitud (Ausschlag) en el sismograma y la energía liberada, y hacer cálculos sencillos.'], sol: [`
           <p>Pro Stufe auf der Richter-Skala wird der <b>Ausschlag im Seismogramm 10-mal</b> grösser, die <b>freigesetzte Energie 32-mal</b> grösser.</p>
           <p class="mt-1"><b>Beispiel Stärke 6 gegen Stärke 3:</b> 3 Stufen Unterschied.<br>Ausschlag: 10 × 10 × 10 = 1000-mal grösser.<br>Energie: 32 × 32 × 32 = 32 768-mal grösser.</p>`, `
           <p>Por cada grado en la escala de Richter, la <b>amplitud en el sismograma es 10 veces</b> mayor y la <b>energía liberada es 32 veces</b> mayor.</p>
           <p class="mt-1"><b>Ejemplo magnitud 6 contra magnitud 3:</b> 3 grados de diferencia.<br>Amplitud: 10 × 10 × 10 = 1000 veces mayor.<br>Energía: 32 × 32 × 32 = 32 768 veces mayor.</p>`] },
-        { id: 'l4_stufen', q: ['Ich kann beschreiben, welche Zerstörungen bestimmte Werte auf der Richter-Skala anrichten. Fasse alle Stufen kurz zusammen.', 'Puedo describir qué destrucción causa cada valor de la escala de Richter. Resume todos los grados.'], sol: [`
+        { id: 'l4_stufen', q: ['Ich kann beschreiben, welche Zerstörungen bestimmte Werte auf der Richter-Skala anrichten. Fasse alle Stufen kurz zusammen.', 'Puedo describir qué destrucción causa cada valor de la escala de Richter. Resume todos los grados (Stufen).'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li><b>unter 3:</b> kaum spürbar, nur Messgeräte zeichnen es auf.</li>
             <li><b>3 bis 4:</b> viele spüren es, Geschirr klirrt, Gegenstände wackeln, kaum Schäden.</li>
@@ -837,17 +837,17 @@
             <li><b>En el auto:</b> Para al lado de la calle (no en puentes ni debajo de pasos elevados) y quédate sentado en el auto.</li>
           </ul>`] }
       ] },
-      { tab: 'tsunami', lz: ['LZ5: Tsunamis und Meereswellen vergleichen', 'LZ5: Comparar los tsunamis con las olas normales del mar'], items: [
+      { tab: 'tsunami', lz: ['LZ5: Tsunamis und Meereswellen vergleichen', 'LZ5: Comparar los tsunamis con las olas normales del mar (Meereswellen)'], items: [
         { id: 'l5_ausloeser', q: ['Ich kann erklären, wie ein Tsunami ausgelöst wird.', 'Puedo explicar qué provoca un tsunami.'], sol: [`
           <p>Ein <b>Seebeben</b> am Meeresgrund hebt den Meeresboden ruckartig an. Dadurch wird das <b>ganze Wasser darüber</b>, vom Meeresgrund bis zur Oberfläche, schlagartig nach oben gestossen. Es entsteht eine riesige Welle, die sich in alle Richtungen ausbreitet.</p>`, `
-          <p>Un <b>terremoto submarino</b> en el fondo del mar levanta el fondo de golpe. Así, <b>toda el agua que hay encima</b>, desde el fondo hasta la superficie, es empujada de golpe hacia arriba. Se forma una ola enorme que se extiende en todas las direcciones.</p>`] },
+          <p>Un <b>terremoto submarino</b> (Seebeben) en el fondo del mar levanta el fondo de golpe. Así, <b>toda el agua que hay encima</b>, desde el fondo hasta la superficie, es empujada de golpe hacia arriba. Se forma una ola enorme que se extiende en todas las direcciones.</p>`] },
         { id: 'l5_tabelle', q: ['Ich kann den Unterschied zwischen einer normalen windbedingten Meereswelle und einem Tsunami in einer Tabelle beschreiben.', 'Puedo describir en una tabla la diferencia entre una ola normal del mar (producida por el viento) y un tsunami.'], sol: () => tabelleL5() },
         { id: 'l5_kueste', q: ['Ich kann erklären, warum ein Tsunami auf offenem Meer kaum auffällt, sich aber an flachen Küsten und in engen Buchten extrem hoch auftürmt.', 'Puedo explicar por qué un tsunami casi no se nota en mar abierto, pero en las costas poco profundas y en las bahías estrechas sube muchísimo.'], sol: [`
           <p><b>Offenes Meer:</b> Das Meer ist sehr tief. Die Energie verteilt sich auf das ganze Wasser. Die Welle ist nur ca. 1 m hoch und sehr lang. Ein Schiff merkt fast nichts.</p>
           <p class="mt-1"><b>Küste:</b> Im flachen Wasser wird die Welle vom Boden <b>abgebremst</b>. Das Wasser von hinten schiebt nach, staut sich und <b>türmt sich auf</b> (10 bis 30 m). In <b>engen Buchten</b> wird das Wasser zusätzlich zusammengedrängt und hat keinen Platz zum Ausweichen. Darum wird die Welle dort noch höher.</p>`, `
           <p><b>Mar abierto:</b> El mar es muy profundo. La energía se reparte en toda el agua. La ola mide solo aprox. 1 m de alto y es muy larga. Un barco casi no nota nada.</p>
           <p class="mt-1"><b>Costa:</b> En el agua poco profunda, el fondo <b>frena</b> la ola. El agua de atrás sigue empujando, se amontona y <b>sube muy alto</b> (10 a 30 m). En las <b>bahías estrechas</b> el agua además se aprieta y no tiene espacio para salir hacia los lados. Por eso allí la ola es todavía más alta.</p>`] },
-        { id: 'l5_strand', q: ['Ich kann das entscheidende Naturanzeichen am Strand vor dem Eintreffen der Welle nennen und das richtige Verhalten beschreiben.', 'Puedo nombrar la señal natural más importante en la playa antes de que llegue la ola y describir qué hay que hacer.'], sol: [`
+        { id: 'l5_strand', q: ['Ich kann das entscheidende Naturanzeichen am Strand vor dem Eintreffen der Welle nennen und das richtige Verhalten beschreiben.', 'Puedo nombrar la señal natural (Naturanzeichen) más importante en la playa antes de que llegue la ola y describir qué hay que hacer.'], sol: [`
           <p><b>Anzeichen:</b> Das Meer <b>zieht sich plötzlich weit zurück</b>, der Meeresboden liegt trocken. (Oft spürt man vorher auch ein Erdbeben.)</p>
           <p class="mt-1"><b>Verhalten:</b> Sofort weg vom Strand. Andere warnen. Einen hohen Ort suchen: einen Hügel oder die oberen Stockwerke eines stabilen Betongebäudes. Nicht zurückgehen, bis Entwarnung kommt. Es bleibt nur wenig Zeit!</p>`, `
           <p><b>Señal:</b> El mar <b>se retira de repente muy lejos</b> y el fondo del mar queda seco. (Muchas veces antes también se siente un terremoto.)</p>
@@ -862,7 +862,7 @@
       const rows = [
         [tr('Entstehung', 'Cómo se forma'), tr('durch Wind', 'por el viento'), tr('durch ein Seebeben', 'por un terremoto submarino')],
         [tr('Bewegung des Wassers', 'Movimiento del agua'), tr('nur die oberste Wasserschicht', 'solo la capa de agua de arriba'), tr('das ganze Wasser vom Grund bis oben', 'toda el agua, desde el fondo hasta arriba')],
-        [tr('Wellenlänge', 'Longitud de onda'), tr('bis ca. 400 m', 'hasta aprox. 400 m'), tr('bis 1000 km', 'hasta 1000 km')],
+        [tr('Wellenlänge', 'Longitud de onda (Wellenlänge)'), tr('bis ca. 400 m', 'hasta aprox. 400 m'), tr('bis 1000 km', 'hasta 1000 km')],
         [tr('Geschwindigkeit', 'Velocidad'), tr('eher langsam', 'más bien lenta'), tr('sehr schnell (bis 800 km/h)', 'muy rápido (hasta 800 km/h)')]
       ];
       return `

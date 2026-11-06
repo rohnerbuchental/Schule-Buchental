@@ -77,16 +77,16 @@
     <!-- Navigation Bar (4 FOKUSSIERTE ÜBUNGS-TABS) -->
     <nav class="max-w-5xl mx-auto px-4 flex gap-1.5 overflow-x-auto border-t border-white/10 py-2 text-xs sm:text-sm font-medium">
       <button onclick="switchTab('chrono')" id="tab-btn-chrono" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm">
-        <span>⏱️</span> <span data-l="de">1. Handlung & Chronologie</span><span data-l="es" lang="es">1. Trama y cronología</span>
+        <span>⏱️</span> <span data-l="de">1. Handlung & Chronologie</span><span data-l="es" lang="es">1. Trama <span lang="de">(Handlung)</span> y cronología</span>
       </button>
       <button onclick="switchTab('figures')" id="tab-btn-figures" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>👥</span> <span data-l="de">2. Figuren & Gedanken</span><span data-l="es" lang="es">2. Personajes y pensamientos</span>
+        <span>👥</span> <span data-l="de">2. Figuren & Gedanken</span><span data-l="es" lang="es">2. Personajes <span lang="de">(Figuren)</span> y pensamientos</span>
       </button>
       <button onclick="switchTab('genre')" id="tab-btn-genre" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>🔍</span> <span data-l="de">3. Aufbau & Thriller</span><span data-l="es" lang="es">3. Estructura y thriller</span>
+        <span>🔍</span> <span data-l="de">3. Aufbau & Thriller</span><span data-l="es" lang="es">3. Estructura <span lang="de">(Aufbau)</span> y thriller</span>
       </button>
       <button onclick="switchTab('opinion')" id="tab-btn-opinion" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>⚖️</span> <span data-l="de">4. Urteil, Nothilfe & Epilog</span><span data-l="es" lang="es">4. Juicio, ayuda y epílogo</span>
+        <span>⚖️</span> <span data-l="de">4. Urteil, Nothilfe & Epilog</span><span data-l="es" lang="es">4. Juicio <span lang="de">(Urteil)</span>, ayuda y epílogo</span>
       </button>
     </nav>
   </header>
@@ -168,7 +168,7 @@
     <!-- ============================================================== -->
     <section id="view-figures" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">👥 <span data-l="de">Die Figuren: Lina, Tom & Jurij</span><span data-l="es" lang="es">Los personajes: Lina, Tom y Jurij</span></h2>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">👥 <span data-l="de">Die Figuren: Lina, Tom & Jurij</span><span data-l="es" lang="es">Los personajes <span lang="de">(Figuren)</span>: Lina, Tom y Jurij</span></h2>
         <p data-l="de" class="text-xs sm:text-sm text-slate-600 mt-0.5">
           Wer denkt was? Und welche familiären Traumata stecken hinter den Jugendlichen?
         </p>
@@ -188,7 +188,7 @@
         </div>
 
         <div class="bg-indigo-50 border-l-4 border-indigo-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <span data-l="de"><strong>Was du tun musst:</strong> Lies das Zitat und wähle die passende Figur aus: <strong>Lina</strong>, <strong>Tom</strong> oder <strong>Jurij</strong>.</span><span data-l="es" lang="es"><strong>Lo que tienes que hacer:</strong> Lee la cita y elige el personaje que corresponde: <strong>Lina</strong>, <strong>Tom</strong> o <strong>Jurij</strong>.</span>
+          👉 <span data-l="de"><strong>Was du tun musst:</strong> Lies das Zitat und wähle die passende Figur aus: <strong>Lina</strong>, <strong>Tom</strong> oder <strong>Jurij</strong>.</span><span data-l="es" lang="es"><strong>Lo que tienes que hacer:</strong> Lee la cita <span lang="de">(Zitat)</span> y elige el personaje <span lang="de">(Figur)</span> que corresponde: <strong>Lina</strong>, <strong>Tom</strong> o <strong>Jurij</strong>.</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1" id="thought-bubbles-grid"></div>
@@ -218,7 +218,7 @@
               Kommt ursprünglich aus <strong>Kasachstan</strong>. Sein Vater schlug ihn regelmässig brutal. Jurij hasst seine Eltern und sucht den gefährlichen Kick beim Autoklauen.
             </p>
             <p data-l="es" lang="es" class="text-slate-600 leading-relaxed">
-              Su familia viene de <strong>Kazajistán</strong>. Su padre le pegaba a menudo y con mucha violencia. Jurij odia a sus padres y busca la emoción peligrosa de robar autos.
+              Viene de <strong>Kazajistán</strong>. Su padre le pegaba a menudo y con mucha violencia. Jurij odia a sus padres y busca la emoción peligrosa de robar autos.
             </p>
           </div>
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
@@ -239,12 +239,12 @@
     <!-- ============================================================== -->
     <section id="view-genre" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">🔍 <span data-l="de">Buchaufbau & Merkmale eines Thrillers</span><span data-l="es" lang="es">Estructura del libro y características de un thriller</span></h2>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">🔍 <span data-l="de">Buchaufbau & Merkmale eines Thrillers</span><span data-l="es" lang="es">Estructura del libro <span lang="de">(Buchaufbau)</span> y características <span lang="de">(Merkmale)</span> de un thriller</span></h2>
         <p data-l="de" class="text-xs sm:text-sm text-slate-600 mt-0.5">
           Warum ist Novemberschnee kein klassischer Detektivkrimi? Und wie schreibt man eine vollständige 2-Punkte-Antwort?
         </p>
         <p data-l="es" lang="es" class="text-xs sm:text-sm text-slate-600 mt-0.5">
-          ¿Por qué «Novemberschnee» no es una novela policíaca clásica con detective? ¿Y cómo se escribe una respuesta completa de 2 puntos?
+          ¿Por qué «Novemberschnee» no es una novela policíaca clásica con detective <span lang="de">(Detektivkrimi)</span>? ¿Y cómo se escribe una respuesta completa de 2 puntos?
         </p>
       </div>
 
@@ -277,7 +277,7 @@
             <p data-l="de" class="italic text-slate-600">«Weil Jurij mit geklauten Autos herumgefahren ist.»</p>
             <p data-l="es" lang="es" class="italic text-slate-600">«Porque Jurij andaba por ahí con autos robados.»</p>
             <div class="text-[11px] text-slate-500 pt-1 border-t border-slate-100">
-              ⚠️ <span data-l="de"><strong>Warum fehlt hier der Punkt?</strong> Es fehlt die Begründung, warum Lina das überhaupt gestört hat!</span><span data-l="es" lang="es"><strong>¿Por qué falta aquí un punto?</strong> Falta la justificación: ¿por qué le molestaba eso a Lina?</span>
+              ⚠️ <span data-l="de"><strong>Warum fehlt hier der Punkt?</strong> Es fehlt die Begründung, warum Lina das überhaupt gestört hat!</span><span data-l="es" lang="es"><strong>¿Por qué falta aquí un punto?</strong> Falta la justificación <span lang="de">(Begründung)</span>: ¿por qué le molestaba eso a Lina?</span>
             </div>
           </div>
 
@@ -301,7 +301,7 @@
         <div class="border-b border-slate-100 pb-2 flex items-start justify-between gap-3">
           <div>
             <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider"><span data-l="de">Aufgabe 4 · Schreibaufgabe Thriller</span><span data-l="es" lang="es">Tarea 4 · Escribir sobre el thriller</span></span>
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Warum gehört «Novemberschnee» zur Gattung Thriller?</span><span data-l="es" lang="es">¿Por qué «Novemberschnee» es un thriller?</span></h3>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Warum gehört «Novemberschnee» zur Gattung Thriller?</span><span data-l="es" lang="es">¿Por qué «Novemberschnee» es del género <span lang="de">(Gattung)</span> thriller?</span></h3>
           </div>
           <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700"><span data-l="de">Übung ohne Punkte</span><span data-l="es" lang="es">Práctica sin puntos</span></span>
         </div>
@@ -321,12 +321,12 @@
     <!-- ============================================================== -->
     <section id="view-opinion" class="tab-view hidden space-y-6 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">⚖️ <span data-l="de">Urteilsbildung, Schweizer Nothilfe & der Epilog</span><span data-l="es" lang="es">Formarse una opinión, ayuda en Suiza y el epílogo</span></h2>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800">⚖️ <span data-l="de">Urteilsbildung, Schweizer Nothilfe & der Epilog</span><span data-l="es" lang="es">Formarse una opinión <span lang="de">(Urteilsbildung)</span>, ayuda en Suiza <span lang="de">(Nothilfe)</span> y el epílogo</span></h2>
         <p data-l="de" class="text-xs sm:text-sm text-slate-600 mt-0.5">
           Linas Mitschuld beurteilen, Schweizer Hilfsstellen kennen und das dunkle Geheimnis des Endes lüften.
         </p>
         <p data-l="es" lang="es" class="text-xs sm:text-sm text-slate-600 mt-0.5">
-          Valorar la parte de culpa de Lina, conocer los servicios de ayuda de Suiza y descubrir el oscuro secreto del final.
+          Valorar la parte de culpa <span lang="de">(Mitschuld)</span> de Lina, conocer los servicios de ayuda de Suiza y descubrir el oscuro secreto del final.
         </p>
       </div>
 
@@ -379,7 +379,7 @@
         <div class="border-b border-slate-100 pb-2 flex items-start justify-between gap-3">
           <div>
             <span class="text-xs font-bold text-purple-800 uppercase tracking-wider"><span data-l="de">Aufgabe 5 · Urteilsbildung</span><span data-l="es" lang="es">Tarea 5 · Formarse una opinión</span></span>
-            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Linas Verhalten: Entlastend oder Belastend?</span><span data-l="es" lang="es">Lo que hace Lina: ¿a favor o en contra de ella?</span></h3>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Linas Verhalten: Entlastend oder Belastend?</span><span data-l="es" lang="es">Lo que hace Lina: ¿a favor <span lang="de">(entlastend)</span> o en contra <span lang="de">(belastend)</span> de ella?</span></h3>
           </div>
           <span data-max="a5" class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800"></span>
         </div>
@@ -485,7 +485,7 @@
             <li><b>Schlupfhuus / albergue de emergencia:</b> una cama segura cuando no puedes volver a casa</li>
             <li><b>Policía (número de emergencia 117):</b> en caso de peligro, por ejemplo si alguien amenaza con un arma</li>
             <li><b>Opferhilfe Schweiz</b> (ayuda a las víctimas)</li>
-            <li><b>Dargebotene Hand (teléfono 143):</b> alguien te escucha por teléfono</li>
+            <li><b>Dargebotene Hand (teléfono 143)</b></li>
             <li><b>Jugendberatungsstelle</b> (centro de orientación para jóvenes)</li>
           </ul>
         </div>
@@ -928,7 +928,7 @@
           ? tr(`🌟 ${pts}/${max} Punkte: Alles richtig! Mit «🔀 Nochmals üben» kannst du die Aufgabe neu gemischt wiederholen.`,
                `🌟 ${pts}/${max} puntos: ¡Todo correcto! Con «🔀 Practicar otra vez» puedes repetir la tarea mezclada de nuevo.`)
           : tr(`${pts}/${max} Punkte${parts}. Gelb = noch nicht ganz. Brauchst du Hilfe? Drück auf «💡 Tipp».`,
-               `${pts}/${max} puntos${parts}. Amarillo = todavía no del todo. No pasa nada. ¿Necesitas ayuda? Toca «💡 Pista».`);
+               `${pts}/${max} puntos${parts}. Amarillo = todavía no del todo. ¿Necesitas ayuda? Toca «💡 Pista».`);
         fb.className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-amber-800';
       }
     }
