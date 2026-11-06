@@ -20,12 +20,12 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - Sätze und die Wörter in `[ … / … ]` werden gemischt. Tipps auf Deutsch, Beispiele auf Englisch.
 
 ## Englisch-Hub Unit 2: Besonderheiten
-- **Wunsch Lehrperson: einfach, nicht überladen.** Die Seite übt genau das, was im Wörtertest kommt: Deutsch → Englisch und Englisch → Deutsch. Keine weiteren Spiele dazubauen.
-- Aufbau: 1 Teil wählen (Teil 1 = Language Companion S. 12, 26 Wörter; Teil 2 = S. 13 inkl. Focus, 30 Wörter) · 2 Üben (ein Wort nach dem anderen, 10 pro Runde, Richtung wählbar, falsche Wörter kommen am Schluss nochmals) · 3 Wörtertest (10 × Deutsch → Englisch, 10 × Englisch → Deutsch, Note).
-- Spiel-Elemente nur leicht: Fortschrittsbalken «Das kannst du schon» pro Richtung (letzte Antwort richtig), Serie 🔥, Medaille am Rundenende und beim Test.
-- Wörter in `WORD_TEXT` (eine Zeile «englisch | deutsch»). `EXTRA`: weitere englische Schreibweisen (`alt`), Zusatz zur Frage (`hint`), `noType` = langer Ausdruck, nur Englisch → Deutsch. `SAME`: gleiche Bedeutung, beide richtig. `FAMILY`: im Test nie in Teil A und B zugleich. `DE_ALT`: weitere richtige deutsche Antworten; dazu Knopf «meine Antwort bedeutet dasselbe» bei Englisch → Deutsch.
+- **Wunsch Lehrperson: einfach, nicht überladen, schnell zum Ziel.** Im Wörtertest kommt Deutsch → Englisch und Englisch → Deutsch. Die Seite hat nur 2 Aufgaben: Lernpfad und Wörtertest. Keine weiteren Spiele dazubauen.
+- Teil 1 = Language Companion S. 12 (26 Wörter), Teil 2 = S. 13 inkl. Focus (30 Wörter).
+- **Lernpfad** (wie Quizlet «Lernen»): Jedes Wort hat 4 Stufen: 1 Englisch → Deutsch auswählen, 2 Deutsch → Englisch auswählen, 3 Englisch → Deutsch schreiben, 4 Deutsch → Englisch schreiben. Richtig = eine Stufe höher, falsch = kommt nach 2 anderen Wörtern nochmals. Immer nur 7 Wörter gleichzeitig (`ACTIVE_N`); gemeistert ⭐ = alle Stufen. Lange Ausdrücke (`noType`) ohne Stufe 4. Richtig bei Auswahl = automatisch weiter. Ohne Fehler 104 Antworten für Teil 1 (ca. 10 Minuten).
+- Auswahl-Ablenker: nie aus `SAME` (ähnliche Bedeutung) oder `FAMILY` (Wortfamilie). Schreiben: `SAME_TYPE` gilt gegenseitig als richtig, `DE_ALT` = weitere richtige deutsche Antworten, dazu Knopf «meine Antwort bedeutet dasselbe».
 - Prüfung: Gross/Klein egal, ä = ae = a, ß = ss, Artikel und «to» am Anfang egal.
-- Gespeichert unter `ow2u2_words` (Teil, Richtung, «kann ich» pro Wort, beste Test-Medaille, Test-Antworten). Der Stand gilt nur auf dem Gerät und im Browser, wo geübt wurde.
+- Gespeichert unter `ow2u2_lernpfad` (Teil, Stufe pro Wort, aktive Wörter, beste Test-Medaille, Test-Antworten). Der Stand gilt nur auf dem Gerät und im Browser, wo geübt wurde. «Nochmals üben» beim Lernpfad fragt vorher nach.
 
 ## RZG-Hub: Besonderheiten
 - Grundlagen: Dossier «Dynamik der Erde» mit Lösungen der Lehrperson und Blatt «Lernziele Dynamik der Erde Teil 2» (Ich-kann-Checkliste, LZ1 bis LZ5) mit Musterlösungen, die sich aufs Dossier stützen.

@@ -29,7 +29,7 @@
         <div class="text-[11px] font-bold tracking-wider uppercase text-emerald-200">Open World 2 · Unit 2</div>
         <h1 class="text-lg sm:text-xl font-bold leading-tight">Wörter lernen</h1>
       </div>
-      <div class="shrink-0 bg-white/10 px-2.5 py-1 rounded-xl border border-white/15 text-xs font-bold" title="Wörter, die du schon kannst (beide Richtungen zusammen)">
+      <div class="shrink-0 bg-white/10 px-2.5 py-1 rounded-xl border border-white/15 text-xs font-bold" title="Gemeisterte Wörter">
         ⭐ <span id="header-known">0</span>
       </div>
     </div>
@@ -37,38 +37,31 @@
 
   <main class="max-w-3xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-5">
 
-    <!-- Schritt 1: Teil wählen und Fortschritt -->
-    <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
-      <div>
-        <h2 class="text-lg font-bold text-slate-900">1 · Welche Wörter?</h2>
-        <p class="text-sm text-slate-600">Die Wörter stehen im Language Companion.</p>
-      </div>
+    <!-- Teil wählen -->
+    <section class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
+      <div class="text-sm font-bold text-slate-700 mb-2">Welche Wörter? <span class="font-normal text-slate-500">(Language Companion)</span></div>
       <div class="grid grid-cols-2 gap-2">
-        <button type="button" id="part-btn-t1" onclick="setPart('t1')" class="part-btn"></button>
-        <button type="button" id="part-btn-t2" onclick="setPart('t2')" class="part-btn"></button>
-      </div>
-      <div class="space-y-2">
-        <div class="text-sm font-bold text-slate-700">Das kannst du schon:</div>
-        <div id="progress" class="space-y-2"></div>
+        <button type="button" id="part-btn-t1" onclick="setPart('t1')"></button>
+        <button type="button" id="part-btn-t2" onclick="setPart('t2')"></button>
       </div>
     </section>
 
-    <!-- Aufgabe 1: Üben, ein Wort nach dem anderen | FS1E.5.B.1.c, FS1E.5.B.2.c -->
-    <section id="task-ueben" data-task="ueben" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
+    <!-- Aufgabe 1: Lernpfad – alle Wörter, bis jedes sitzt | FS1E.5.B.1.c, FS1E.5.B.2.c -->
+    <section id="task-pfad" data-task="pfad" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
       <div>
-        <h2 class="text-lg font-bold text-slate-900">2 · Üben</h2>
-        <p class="text-sm text-slate-600">Ein Wort nach dem anderen. 10 Wörter pro Runde.</p>
+        <h2 class="text-lg font-bold text-slate-900">1 · Lernpfad</h2>
+        <p class="text-sm text-slate-600">Jedes Wort geht durch 4 Stufen. Dann ist es gemeistert ⭐</p>
       </div>
-      <div class="grid grid-cols-2 gap-2" id="dir-btns"></div>
-      <div id="body-ueben"></div>
-      <div id="tip-ueben" class="hidden rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
+      <div id="pfad-progress"></div>
+      <div id="body-pfad"></div>
+      <div id="tip-pfad" class="hidden rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
         <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-        Sag das Wort zuerst laut. Weisst du es nicht? Dann drück «Weiss ich nicht». Das Wort kommt am Schluss der Runde nochmals. Wie beim Velofahren: Du übst, bis es sitzt.
+        Sag jedes Wort laut, bevor du antwortest. Falsch ist nicht schlimm: Das Wort kommt gleich nochmals – so lange, bis es sitzt. Lieber jeden Tag 10 Minuten als einmal eine Stunde. Dein Fortschritt bleibt gespeichert.
       </div>
       <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
-        <button type="button" onclick="toggleTip('ueben')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900">💡 Tipp</button>
-        <button type="button" onclick="openTheory('ueben')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">📖 Theorie</button>
-        <button type="button" onclick="retryTask('ueben')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">🔀 Nochmals üben</button>
+        <button type="button" onclick="toggleTip('pfad')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900">💡 Tipp</button>
+        <button type="button" onclick="openTheory('pfad')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">📖 Theorie</button>
+        <button type="button" onclick="retryTask('pfad')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">🔀 Nochmals üben</button>
       </div>
     </section>
 
@@ -76,7 +69,7 @@
     <section id="task-test" data-task="test" class="bg-white rounded-2xl p-5 shadow-sm border-2 border-amber-300 space-y-4">
       <div class="flex items-start justify-between gap-3">
         <div class="min-w-0">
-          <h2 class="text-lg font-bold text-slate-900">3 · Wörtertest</h2>
+          <h2 class="text-lg font-bold text-slate-900">2 · Wörtertest</h2>
           <p class="text-sm text-slate-600">Wie in der Prüfung. Füll alles aus und drück auf «Test prüfen».</p>
         </div>
         <span class="shrink-0 text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800"><span id="test-max">–</span> P.</span>
@@ -101,10 +94,9 @@
     <details id="theory" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
       <summary class="text-base font-bold text-slate-900 cursor-pointer">📖 Theorie: So lernst du Wörter</summary>
       <ul class="mt-3 space-y-1.5 text-sm text-slate-700 leading-relaxed list-disc pl-5">
+        <li><b>Die 4 Stufen:</b> 1 Englisch → Deutsch auswählen · 2 Deutsch → Englisch auswählen · 3 Englisch → Deutsch schreiben · 4 Deutsch → Englisch schreiben. Zuerst erkennen, dann selber wissen.</li>
         <li><b>Laut sprechen:</b> Sag jedes Wort laut. Drück auf 🔊 und sprich nach.</li>
-        <li><b>Beide Richtungen:</b> Übe Deutsch → Englisch <b>und</b> Englisch → Deutsch. Beides kommt im Test.</li>
-        <li><b>Oft und kurz:</b> 3× pro Woche 10 Minuten bringt mehr als 1× eine Stunde.</li>
-        <li><b>Schwierige Wörter:</b> 3× richtig aufschreiben. Mach dir ein Bild im Kopf.</li>
+        <li><b>Oft und kurz:</b> Jeden Tag 10 Minuten bringt mehr als einmal eine Stunde.</li>
         <li><b>So prüft die Seite:</b> Gross- und Kleinschreibung sind egal. «ae» gilt wie «ä». Bei Englisch → Deutsch zählt jede Bedeutung aus der Wortliste.</li>
       </ul>
       <button type="button" onclick="backToTask()" class="mt-3 px-3 py-1.5 rounded-lg text-xs font-bold border bg-white border-slate-300 text-slate-700">↩ Zurück zur Aufgabe</button>
@@ -183,7 +175,7 @@
     };
 
     // Deutsch → Englisch: weitere richtige Schreibweisen (alt), Zusatz zur Frage (hint).
-    // noType = langer Ausdruck: kommt nur in Richtung Englisch → Deutsch.
+    // noType = langer Ausdruck: wird nie auf Englisch geschrieben (nur ausgewählt).
     const EXTRA = {
       'bagpipes': { alt: ['bagpipe'] },
       'prize': { hint: 'beim Gewinnen' },
@@ -197,10 +189,12 @@
       'require': { hint: 'nicht «need»' },
       'space': { hint: 'freier Platz' }
     };
-    // Gleiche deutsche Bedeutung: beim Schreiben gelten beide als richtig
-    const SAME = [['throw', 'toss'], ['brilliant', 'fantastic'], ['strange', 'weird'], ['quite', 'rather']];
-    // Wortfamilien: im Test nie in Teil A und Teil B zugleich (verrät sonst die Schreibweise)
-    const FAMILY = [['brilliant', 'brilliantly'], ['entertaining', 'entertainment'], ['corner', 'in the top left-hand corner'], ['at the top', 'in the top left-hand corner']];
+    // Gleiche deutsche Bedeutung: beim Schreiben gelten beide als richtig, nie zusammen in einer Auswahl
+    const SAME = [['throw', 'toss'], ['brilliant', 'fantastic', 'amazing', 'wonderful', 'brilliantly'], ['strange', 'weird', 'unusual'], ['quite', 'rather'], ['finishing point', 'hit the target']];
+    // Wortfamilien: nie zusammen in einer Auswahl, im Test nie in Teil A und Teil B zugleich
+    const FAMILY = [['brilliant', 'brilliantly'], ['entertaining', 'entertainment'], ['corner', 'in the top left-hand corner'], ['at the top', 'in the top left-hand corner'], ['knock down / knock over', 'hit the target'], ['attend', 'be game']];
+    // Beim Schreiben wirklich gleichwertig (Deutsch → Englisch)
+    const SAME_TYPE = [['throw', 'toss'], ['brilliant', 'fantastic'], ['strange', 'weird'], ['quite', 'rather']];
     // Englisch → Deutsch: weitere richtige deutsche Antworten (zusätzlich zu allen Bedeutungen aus der Liste)
     const DE_ALT = {
       'bagpipes': ['Dudelsäcke'],
@@ -248,17 +242,20 @@
     // ==========================================================
     // EINSTELLUNGEN
     // ==========================================================
-    const ROUND_N = 10;               // Wörter pro Übungsrunde
+    const ACTIVE_N = 7;               // so viele Wörter sind im Lernpfad gleichzeitig dran
     const TEST_A = 10, TEST_B = 10;   // Test: Deutsch → Englisch, Englisch → Deutsch
+    const STAGES = [
+      { dir: 'en2de', type: 'mc', label: 'Englisch → Deutsch auswählen' },
+      { dir: 'de2en', type: 'mc', label: 'Deutsch → Englisch auswählen' },
+      { dir: 'en2de', type: 'write', label: 'Englisch → Deutsch schreiben' },
+      { dir: 'de2en', type: 'write', label: 'Deutsch → Englisch schreiben' }
+    ];
     const MEDALS = [
       { min: 0.9, icon: '🥇', name: 'Gold' },
       { min: 0.75, icon: '🥈', name: 'Silber' },
       { min: 0.6, icon: '🥉', name: 'Bronze' }
     ];
-    const DIRS = {
-      de2en: { label: 'Deutsch → Englisch', ask: 'Deutsch', answer: 'Englisch' },
-      en2de: { label: 'Englisch → Deutsch', ask: 'Englisch', answer: 'Deutsch' }
-    };
+    const ANSWER_LANG = { de2en: 'Englisch', en2de: 'Deutsch' };
 
     // ==========================================================
     // DATEN AUFBEREITEN
@@ -275,13 +272,9 @@
     const BY_ID = {}, BY_EN = {};
     WORDS.forEach(w => { BY_ID[w.id] = w; BY_EN[w.en] = w; });
     const groupIds = list => list.map(g => g.map(en => BY_EN[en]).filter(Boolean).map(w => w.id));
-    const SAME_IDS = groupIds(SAME), FAMILY_IDS = groupIds(FAMILY);
+    const SAME_IDS = groupIds(SAME), FAMILY_IDS = groupIds(FAMILY), TYPE_IDS = groupIds(SAME_TYPE);
     const related = (w, groups) => [...new Set(groups.filter(g => g.includes(w.id)).flat())].filter(id => id !== w.id);
     const partWords = (part = STATE.part) => WORDS.filter(w => w.part === part);
-    // Deutsch → Englisch ohne lange Ausdrücke (noType)
-    const dirWords = (dir, part = STATE.part) => partWords(part).filter(w => dir === 'en2de' || !w.noType);
-    // «auch richtig» bei Deutsch → Englisch (gleiche deutsche Bedeutung)
-    const alsoText = w => { const r = related(w, SAME_IDS).map(id => BY_ID[id].en); return r.length ? `<span class="text-xs font-semibold text-slate-600">auch richtig: ${r.map(esc).join(', ')}</span>` : ''; };
 
     // ==========================================================
     // HILFSFUNKTIONEN
@@ -294,6 +287,8 @@
     const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const fmt = p => String(Math.round(p * 10) / 10);
     const medalOf = (pts, max) => MEDALS.find(m => max && pts / max >= m.min - 1e-9) || null;
+    const askText = (w, dir) => dir === 'de2en' ? w.de : w.en;
+    const answerText = (w, dir) => dir === 'de2en' ? w.en : w.de;
 
     // Englisch prüfen: Gross/Klein, Akzente, Apostroph, Bindestrich und «to»/«the» am Anfang egal
     function normEn(s) {
@@ -305,7 +300,7 @@
       const u = normEn(input);
       if (!u) return false;
       const forms = [w.en, ...w.alt];
-      related(w, SAME_IDS).forEach(id => forms.push(BY_ID[id].en, ...BY_ID[id].alt));
+      related(w, TYPE_IDS).forEach(id => forms.push(BY_ID[id].en, ...BY_ID[id].alt));
       return forms.map(normEn).includes(u);
     }
     // Deutsch prüfen: Gross/Klein egal, ä = ae = a, ß = ss, Artikel am Anfang egal
@@ -328,40 +323,33 @@
       return deForms(w).some(f => normDe(f, false) === normDe(input, false) || normDe(f, true) === normDe(input, true));
     }
     const isOk = (w, dir, input) => dir === 'de2en' ? enOk(w, input) : deOk(w, input);
-    const askText = (w, dir) => dir === 'de2en' ? w.de : w.en;
-    const answerText = (w, dir) => dir === 'de2en' ? w.en : w.de;
+    // «auch richtig» bei Deutsch → Englisch
+    const alsoText = w => { const r = related(w, TYPE_IDS).map(id => BY_ID[id].en); return r.length ? `<span class="text-xs font-semibold text-slate-600">auch richtig: ${r.map(esc).join(', ')}</span>` : ''; };
 
     // ==========================================================
     // SPEICHERN (jeder Zugriff in try/catch)
     // ==========================================================
-    const SAVE_KEY = 'ow2u2_words';
-    const STATE = { part: 't1', dir: 'de2en', known: {}, medal: {}, tests: {} };
+    const SAVE_KEY = 'ow2u2_lernpfad';
+    const STATE = { part: 't1', path: {}, medal: {}, tests: {} };
     function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(STATE)); } catch (e) {} }
     function load() {
       try {
         const s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
         if (!s || typeof s !== 'object') return;
         if (PARTS[s.part]) STATE.part = s.part;
-        if (DIRS[s.dir]) STATE.dir = s.dir;
-        if (s.known && typeof s.known === 'object') STATE.known = s.known;
+        if (s.path && typeof s.path === 'object') STATE.path = s.path;
         if (s.medal && typeof s.medal === 'object') STATE.medal = s.medal;
         if (s.tests && typeof s.tests === 'object') STATE.tests = s.tests;
       } catch (e) {}
     }
-    // «Kann ich»: die letzte Antwort in dieser Richtung war richtig
-    function setKnown(id, dir, ok) {
-      STATE.known[id] = STATE.known[id] || {};
-      STATE.known[id][dir] = ok ? 1 : 0;
-    }
-    const isKnown = (id, dir) => !!(STATE.known[id] && STATE.known[id][dir]);
 
     // ==========================================================
-    // BEWERTUNG: eine Stelle für die Übungsrunde und den Wörtertest
+    // BEWERTUNG: eine Stelle für den Lernpfad und den Wörtertest
     // ==========================================================
     const TASKS = {
-      ueben: {
-        get max() { return ROUND.ids.length; },
-        score() { return ROUND.ids.filter(id => ROUND.first[id] === 1).length; }
+      pfad: {
+        get max() { return partWords().length; },
+        score() { return partWords().filter(w => isMastered(w)).length; }
       },
       test: {
         get max() { return T().a.length + T().b.length; },
@@ -388,166 +376,214 @@
         window.speechSynthesis.speak(u);
       } catch (e) {}
     }
-    const sayBtn = (text, big) => `<button type="button" class="say-btn shrink-0 inline-flex items-center justify-center rounded-lg border border-emerald-300 bg-white ${big ? 'w-10 h-10 text-lg' : 'w-7 h-7 text-sm'}" data-say="${esc(text)}" onclick="speak(this.dataset.say)" aria-label="Anhören">🔊</button>`;
+    const sayBtn = (text, big) => `<button type="button" class="say-btn shrink-0 inline-flex items-center justify-center rounded-lg border border-emerald-300 bg-white ${big ? 'w-10 h-10 text-lg' : 'w-7 h-7 text-sm'}" data-say="${esc(text)}" onclick="event.stopPropagation();speak(this.dataset.say)" aria-label="Anhören">🔊</button>`;
 
     // ==========================================================
-    // TEIL, RICHTUNG, FORTSCHRITT
+    // TEIL WÄHLEN
     // ==========================================================
     function setPart(part) {
       if (!PARTS[part] || part === STATE.part) return;
       STATE.part = part;
       save();
-      newRound();
       renderAll();
     }
-    function setDir(dir) {
-      if (!DIRS[dir] || dir === STATE.dir) return;
-      STATE.dir = dir;
-      save();
-      newRound();
-      renderUeben();
-    }
-    function renderTop() {
+    function renderParts() {
       Object.keys(PARTS).forEach(p => {
-        const on = p === STATE.part, n = partWords(p).length;
+        const on = p === STATE.part, words = partWords(p);
+        const done = words.filter(w => isMastered(w, p)).length;
         const b = $('part-btn-' + p);
-        b.innerHTML = `<span class="block text-base font-black">${PARTS[p].label}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}">${PARTS[p].page} · ${n} Wörter</span>`;
-        b.className = 'part-btn px-3 py-3 rounded-xl border-2 text-center transition ' + (on ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50');
+        b.innerHTML = `<span class="block text-base font-black">${PARTS[p].label}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}">${PARTS[p].page} · ⭐ ${done}/${words.length}</span>`;
+        b.className = 'px-3 py-2.5 rounded-xl border-2 text-center transition ' + (on ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50');
         b.setAttribute('aria-pressed', on);
       });
-      let total = 0, all = 0;
-      $('progress').innerHTML = Object.entries(DIRS).map(([dir, d]) => {
-        const words = dirWords(dir);
-        const n = words.filter(w => isKnown(w.id, dir)).length;
-        total += n; all += words.length;
-        const pct = Math.round(n / words.length * 100);
-        return `<div>
-            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1"><span>${d.label}</span><span>${n} von ${words.length}${n === words.length ? ' 🎉' : ''}</span></div>
-            <div class="h-3 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-emerald-500 transition-all" style="width:${pct}%"></div></div>
-          </div>`;
-      }).join('');
-      $('header-known').textContent = `${total} / ${all}`;
+      $('header-known').textContent = `${TASKS.pfad.score()} / ${TASKS.pfad.max}`;
     }
 
     // ==========================================================
-    // AUFGABE 1: ÜBEN (ein Wort nach dem anderen)
+    // AUFGABE 1: LERNPFAD
+    // Jedes Wort hat eine Stufe (0–4). Richtig = eine Stufe höher. Falsch = gleiche Stufe, kommt bald wieder.
+    // Immer nur ACTIVE_N Wörter gleichzeitig. Gemeistert = alle Stufen geschafft.
     // ==========================================================
-    const ROUND = { ids: [], queue: [], first: {}, phase: 'ask', last: null, streak: 0, best: 0, extra: {} };
-    function newRound() {
-      const dir = STATE.dir;
-      const pool = dirWords(dir);
-      // Zuerst die Wörter, die man noch nicht kann
-      const todo = shuffle(pool.filter(w => !isKnown(w.id, dir)));
-      const done = shuffle(pool.filter(w => isKnown(w.id, dir)));
-      const ids = todo.concat(done).slice(0, ROUND_N).map(w => w.id);
-      Object.assign(ROUND, { ids, queue: shuffle(ids), first: {}, phase: 'ask', last: null, streak: 0, best: 0, extra: {} });
+    const maxLevel = w => w.noType ? 3 : 4;      // lange Ausdrücke: ohne «Deutsch → Englisch schreiben»
+    function P(part = STATE.part) {
+      const p = STATE.path[part];
+      if (!p || typeof p !== 'object' || !p.level || !Array.isArray(p.queue)) STATE.path[part] = { level: {}, queue: [] };
+      return STATE.path[part];
     }
-    function answerWord(dontKnow) {
-      if (ROUND.phase !== 'ask' || !ROUND.queue.length) return;
-      const id = ROUND.queue[0], w = BY_ID[id], dir = STATE.dir;
-      const inp = $('ueben-in');
-      const ans = dontKnow ? '' : (inp ? inp.value : '');
+    const levelOf = (w, part = w.part) => Math.max(0, Math.min(maxLevel(w), Number(P(part).level[w.id]) || 0));
+    const isMastered = (w, part = w.part) => levelOf(w, part) >= maxLevel(w);
+    function refill(part = STATE.part) {
+      const p = P(part);
+      p.queue = p.queue.filter(id => BY_ID[id] && BY_ID[id].part === part && !isMastered(BY_ID[id], part));
+      p.queue = [...new Set(p.queue)];
+      const waiting = partWords(part).filter(w => !isMastered(w, part) && !p.queue.includes(w.id));
+      // angefangene Wörter zuerst, dann neue
+      const started = shuffle(waiting.filter(w => levelOf(w, part) > 0)), fresh = shuffle(waiting.filter(w => levelOf(w, part) === 0));
+      for (const w of started.concat(fresh)) { if (p.queue.length >= ACTIVE_N) break; p.queue.push(w.id); }
+    }
+    // Aktuelle Frage (wird nicht gespeichert, beim Laden neu gemischt)
+    const Q = { id: null, stage: 0, opts: [], phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1, token: 0 };
+    let STREAK = 0;
+    function mcOptions(w, dir) {
+      const block = new Set([w.id, ...related(w, SAME_IDS), ...related(w, FAMILY_IDS)]);
+      const text = x => dir === 'en2de' ? x.de : x.en;
+      const seen = new Set([text(w)]);
+      const others = [];
+      for (const x of shuffle(partWords(w.part))) {
+        if (others.length >= 3) break;
+        if (block.has(x.id) || seen.has(text(x))) continue;
+        seen.add(text(x));
+        others.push(text(x));
+      }
+      return shuffle([text(w), ...others]);
+    }
+    function newQuestion() {
+      refill();
+      const p = P();
+      if (!p.queue.length) { Q.id = null; Q.phase = 'done'; return; }
+      // Rotieren, damit nicht zweimal hintereinander dasselbe Wort kommt
+      const w = BY_ID[p.queue[0]];
+      const stage = Math.min(levelOf(w), STAGES.length - 1);
+      Object.assign(Q, { id: w.id, stage, phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1 });
+      Q.opts = STAGES[stage].type === 'mc' ? mcOptions(w, STAGES[stage].dir) : [];
+    }
+    // Wort nach der Antwort einreihen
+    function placeWord(id, ok) {
+      const p = P(), w = BY_ID[id];
+      p.queue = p.queue.filter(x => x !== id);
+      if (isMastered(w)) { refill(); return; }
+      if (ok) p.queue.push(id);                                  // ans Ende
+      else p.queue.splice(Math.min(2, p.queue.length), 0, id);   // nach 2 anderen Wörtern nochmals
+    }
+    function answer(ok, ans, dontKnow) {
+      const w = BY_ID[Q.id], p = P();
+      const before = levelOf(w);
+      if (ok) p.level[w.id] = before + 1;
+      Object.assign(Q, { phase: 'answered', ok, ans, dontKnow, mastered: ok && isMastered(w) });
+      STREAK = ok ? STREAK + 1 : 0;
+      placeWord(w.id, ok);
+      save();
+      renderPfad(true);
+      renderParts();
+      // Richtig: automatisch weiter (Auswahl schneller als Schreiben)
+      if (ok) {
+        const t = ++Q.token;
+        setTimeout(() => { if (Q.token === t && Q.phase === 'answered') nextQuestion(); }, Q.mastered ? 1400 : (STAGES[Q.stage].type === 'mc' ? 700 : 1100));
+      }
+    }
+    function pickOption(i) {
+      if (Q.phase !== 'ask' || !Q.opts[i]) return;
+      const w = BY_ID[Q.id], dir = STAGES[Q.stage].dir;
+      Q.pick = i;
+      answer(Q.opts[i] === (dir === 'en2de' ? w.de : w.en), Q.opts[i], false);
+    }
+    function submitWrite(dontKnow) {
+      if (Q.phase !== 'ask') return;
+      const inp = $('pfad-in'), ans = dontKnow ? '' : (inp ? inp.value : '');
       if (!dontKnow && !ans.trim()) { if (inp) inp.focus(); return; }
-      const ok = !dontKnow && isOk(w, dir, ans);
-      if (!(id in ROUND.first)) { ROUND.first[id] = ok ? 1 : 0; setKnown(id, dir, ok); }
-      if (!ok && !ROUND.extra[id]) { ROUND.queue.push(id); ROUND.extra[id] = true; }   // kommt am Schluss nochmals
-      ROUND.streak = ok ? ROUND.streak + 1 : 0;
-      ROUND.best = Math.max(ROUND.best, ROUND.streak);
-      ROUND.last = { id, ok, ans, dontKnow };
-      ROUND.phase = 'answered';
+      answer(!dontKnow && isOk(BY_ID[Q.id], STAGES[Q.stage].dir, ans), ans, dontKnow);
+    }
+    // Englisch → Deutsch geschrieben: eigene Antwort meint dasselbe
+    function overrideAnswer() {
+      if (Q.phase !== 'answered' || Q.ok || Q.dontKnow || STAGES[Q.stage].dir !== 'en2de' || STAGES[Q.stage].type !== 'write') return;
+      const w = BY_ID[Q.id], p = P();
+      p.level[w.id] = levelOf(w) + 1;
+      Q.ok = true;
+      Q.mastered = isMastered(w);
+      STREAK++;
+      placeWord(w.id, true);
       save();
-      renderUeben(true);
-      renderTop();
+      renderPfad(true);
+      renderParts();
     }
-    // Englisch → Deutsch: Die eigene Antwort meint dasselbe (z.B. ein anderes deutsches Wort)
-    function overrideWord() {
-      const L = ROUND.last;
-      if (!L || L.ok || L.dontKnow || STATE.dir !== 'en2de') return;
-      L.ok = true;
-      if (ROUND.first[L.id] === 0) { ROUND.first[L.id] = 1; setKnown(L.id, 'en2de', true); }
-      const k = ROUND.queue.lastIndexOf(L.id);
-      if (k > 0) ROUND.queue.splice(k, 1);
-      ROUND.extra[L.id] = false;
-      ROUND.streak++;
-      ROUND.best = Math.max(ROUND.best, ROUND.streak);
-      save();
-      renderUeben(true);
-      renderTop();
+    function nextQuestion() {
+      if (Q.phase !== 'answered') return;
+      Q.token++;
+      newQuestion();
+      renderPfad(true);
     }
-    function nextWord() {
-      if (ROUND.phase !== 'answered') return;
-      ROUND.queue.shift();
-      ROUND.phase = ROUND.queue.length ? 'ask' : 'done';
-      renderUeben(true);
-    }
-    function renderUeben(keepFocus) {
-      $('dir-btns').innerHTML = Object.entries(DIRS).map(([dir, d]) => {
-        const on = dir === STATE.dir;
-        return `<button type="button" onclick="setDir('${dir}')" aria-pressed="${on}" class="px-2 py-2 rounded-xl border-2 text-xs sm:text-sm font-bold transition ${on ? 'bg-sky-600 border-sky-600 text-white' : 'bg-white border-slate-300 text-slate-700 hover:bg-slate-50'}">${d.label}</button>`;
-      }).join('');
-      const box = $('body-ueben');
-      const dir = STATE.dir, d = DIRS[dir];
-      if (ROUND.phase === 'done') {
-        const pts = TASKS.ueben.score(), max = TASKS.ueben.max, m = medalOf(pts, max);
+    function renderPfad(keepFocus) {
+      const words = partWords(), done = words.filter(w => isMastered(w)).length;
+      const inWork = P().queue.length, waiting = words.length - done - inWork;
+      $('pfad-progress').innerHTML = `
+        <div class="flex justify-between items-end text-sm font-bold text-slate-700 mb-1">
+          <span>⭐ Gemeistert: ${done} von ${words.length}</span>
+          <span class="text-xs font-semibold text-slate-500">${done < words.length ? `in Arbeit ${inWork} · noch ${Math.max(0, waiting)}` : '🏆'}</span>
+        </div>
+        <div class="h-4 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all" style="width:${Math.round(done / words.length * 100)}%"></div></div>`;
+      const box = $('body-pfad');
+      if (Q.phase === 'done') {
         box.innerHTML = `
           <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-2 pop">
-            <div class="text-4xl">${m ? m.icon : '💪'}</div>
-            <div class="text-lg font-black text-slate-900">Runde fertig!</div>
-            <div class="text-sm text-slate-700">Beim ersten Mal richtig: <b>${pts} von ${max}</b></div>
-            ${ROUND.best >= 3 ? `<div class="text-sm text-slate-700">Längste Serie: 🔥 ${ROUND.best}</div>` : ''}
-            <button type="button" id="next-btn" onclick="retryTask('ueben')" class="mt-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">▶ Neue Runde</button>
+            <div class="text-5xl">🏆</div>
+            <div class="text-lg font-black text-slate-900">Alle ${words.length} Wörter gemeistert!</div>
+            <div class="text-sm text-slate-700">Super! Mach jetzt den Wörtertest wie in der Prüfung.</div>
+            <button type="button" onclick="document.getElementById('task-test').scrollIntoView({behavior:'smooth'})" class="mt-1 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">Zum Wörtertest ↓</button>
           </div>`;
-        if (keepFocus) $('next-btn').focus();
         return;
       }
-      const id = ROUND.queue[0], w = BY_ID[id];
-      const answered = Object.keys(ROUND.first).length;
-      const again = ROUND.extra[id] && ROUND.queue.indexOf(id) === 0 && answered === ROUND.ids.length && ROUND.phase === 'ask';
-      const hint = dir === 'de2en' && w.hint ? ` <span class="text-sm font-medium text-slate-500">(${esc(w.hint)})</span>` : '';
-      const nr = Math.min(answered + (ROUND.phase === 'ask' && !(id in ROUND.first) ? 1 : 0), ROUND.ids.length);
+      const w = BY_ID[Q.id], st = STAGES[Q.stage], lvl = levelOf(w), max = maxLevel(w);
+      const dots = Array.from({ length: max }, (_, k) => `<span class="inline-block w-2.5 h-2.5 rounded-full ${k < lvl ? 'bg-emerald-500' : k === Q.stage && Q.phase === 'ask' ? 'bg-sky-400' : 'bg-slate-200'}"></span>`).join('');
+      const hint = st.dir === 'de2en' && w.hint ? ` <span class="text-sm font-medium text-slate-500">(${esc(w.hint)})</span>` : '';
       let html = `
-        <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2">
-          <span>${again || (id in ROUND.first && ROUND.phase === 'ask') ? 'Nochmals' : `Wort ${nr} von ${ROUND.ids.length}`}</span>
-          <span>${ROUND.streak >= 2 ? '🔥 ' + ROUND.streak + ' richtig' : ''}</span>
+        <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2 gap-2">
+          <span class="flex items-center gap-1.5">Stufe ${Q.stage + 1}: ${st.label} <span class="flex gap-1 ml-1">${dots}</span></span>
+          <span class="shrink-0">${STREAK >= 3 ? '🔥 ' + STREAK : ''}</span>
         </div>
-        <div class="rounded-2xl border-2 ${dir === 'de2en' ? 'border-amber-300 bg-amber-50' : 'border-emerald-300 bg-emerald-50'} p-5 text-center space-y-2">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">${d.ask}</div>
+        <div class="rounded-2xl border-2 ${st.dir === 'de2en' ? 'border-amber-300 bg-amber-50' : 'border-emerald-300 bg-emerald-50'} p-5 text-center">
           <div class="flex items-center justify-center gap-2">
-            <span class="text-2xl sm:text-3xl font-black text-slate-900 wrap-any" lang="${dir === 'de2en' ? 'de' : 'en'}">${esc(askText(w, dir))}${hint}</span>
-            ${dir === 'en2de' ? sayBtn(w.en, true) : ''}
+            <span class="text-2xl sm:text-3xl font-black text-slate-900 wrap-any" lang="${st.dir === 'de2en' ? 'de' : 'en'}">${esc(askText(w, st.dir))}${hint}</span>
+            ${st.dir === 'en2de' ? sayBtn(w.en, true) : ''}
           </div>
         </div>`;
-      if (ROUND.phase === 'ask') {
+      const right = answerText(w, st.dir);
+      if (st.type === 'mc') {
+        html += `<div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">${Q.opts.map((o, i) => {
+          let cls = 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50';
+          if (Q.phase === 'answered') {
+            if (o === right) cls = 'bg-emerald-100 border-emerald-500 text-emerald-900';
+            else if (i === Q.pick) cls = 'bg-rose-100 border-rose-400 text-rose-900';
+            else cls = 'bg-white border-slate-200 text-slate-400';
+          }
+          return `<button type="button" onclick="pickOption(${i})" ${Q.phase !== 'ask' ? 'disabled' : ''} lang="${st.dir === 'de2en' ? 'en' : 'de'}" class="w-full min-h-[3.25rem] px-3 py-2.5 rounded-xl border-2 text-base font-bold text-left wrap-any transition ${cls}">${esc(o)}</button>`;
+        }).join('')}</div>`;
+      } else if (Q.phase === 'ask') {
         html += `
           <div class="mt-3 space-y-2">
-            <input id="ueben-in" type="text" placeholder="auf ${d.answer} …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${dir === 'de2en' ? 'en' : 'de'}"
-              onkeydown="if(event.key==='Enter'){event.preventDefault();answerWord(false);}"
+            <input id="pfad-in" type="text" placeholder="auf ${ANSWER_LANG[st.dir]} schreiben …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${st.dir === 'de2en' ? 'en' : 'de'}"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();submitWrite(false);}"
               class="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-3 text-lg font-semibold text-slate-800">
             <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="answerWord(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 Weiss ich nicht</button>
-              <button type="button" onclick="answerWord(false)" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">✓ Prüfen</button>
+              <button type="button" onclick="submitWrite(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 Weiss ich nicht</button>
+              <button type="button" onclick="submitWrite(false)" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">✓ Prüfen</button>
             </div>
           </div>`;
-      } else {
-        const L = ROUND.last;
+      }
+      if (Q.phase === 'answered') {
+        const write = st.type === 'write';
         html += `
-          <div class="mt-3 rounded-2xl border-2 ${L.ok ? 'border-emerald-400 bg-emerald-50' : 'border-rose-300 bg-rose-50'} p-4 space-y-2 pop">
-            <div class="text-base font-black ${L.ok ? 'text-emerald-800' : 'text-rose-800'}">${L.ok ? '✔ Richtig!' : (L.dontKnow ? 'So heisst es:' : '✖ Leider falsch. Richtig ist:')}</div>
+          <div class="mt-3 rounded-2xl border-2 ${Q.ok ? 'border-emerald-400 bg-emerald-50' : 'border-rose-300 bg-rose-50'} p-3 space-y-1.5 pop">
+            <div class="text-base font-black ${Q.ok ? 'text-emerald-800' : 'text-rose-800'}">${Q.mastered ? '⭐ Gemeistert!' : Q.ok ? '✔ Richtig!' : (Q.dontKnow ? 'So heisst es:' : '✖ Richtig ist:')}</div>
             <div class="flex items-center gap-2 flex-wrap">
-              <span class="text-xl font-black text-slate-900 wrap-any">${esc(answerText(w, dir))}</span>${dir === 'de2en' ? sayBtn(w.en) + alsoText(w) : ''}
+              <span class="text-lg font-black text-slate-900 wrap-any">${esc(right)}</span>${st.dir === 'de2en' ? sayBtn(w.en) + (write ? alsoText(w) : '') : ''}
             </div>
-            ${!L.ok && !L.dontKnow ? `<div class="text-xs text-slate-600 wrap-any">Deine Antwort: <span class="font-semibold">${esc(L.ans)}</span>. Das Wort kommt am Schluss nochmals.</div>` : ''}
-            ${L.dontKnow ? '<div class="text-xs text-slate-600">Das Wort kommt am Schluss nochmals.</div>' : ''}
-            ${!L.ok && !L.dontKnow && dir === 'en2de' ? `<button type="button" onclick="overrideWord()" class="text-xs font-bold underline text-slate-600 text-left">Meine Antwort bedeutet dasselbe → zählt als richtig</button>` : ''}
+            ${!Q.ok && write && !Q.dontKnow ? `<div class="text-xs text-slate-600 wrap-any">Deine Antwort: <span class="font-semibold">${esc(Q.ans)}</span></div>` : ''}
+            ${!Q.ok ? '<div class="text-xs text-slate-600">Kein Problem: Das Wort kommt gleich nochmals.</div>' : ''}
+            ${!Q.ok && write && !Q.dontKnow && st.dir === 'en2de' ? `<button type="button" onclick="overrideAnswer()" class="text-xs font-bold underline text-slate-600 text-left">Meine Antwort bedeutet dasselbe → zählt als richtig</button>` : ''}
           </div>
-          <button type="button" id="next-btn" onclick="nextWord()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">Weiter →</button>`;
+          <button type="button" id="next-btn" onclick="nextQuestion()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">Weiter →</button>`;
       }
       box.innerHTML = html;
       if (keepFocus) {
-        const f = ROUND.phase === 'ask' ? $('ueben-in') : $('next-btn');
+        const f = Q.phase === 'ask' ? $('pfad-in') : $('next-btn');
         if (f) f.focus({ preventScroll: true });
       }
     }
+    // Tasten 1–4 für die Auswahl, Enter für «Weiter»
+    document.addEventListener('keydown', e => {
+      if (e.target && e.target.tagName === 'INPUT') return;
+      if (Q.phase === 'ask' && Q.opts.length && /^[1-4]$/.test(e.key)) pickOption(Number(e.key) - 1);
+    });
 
     // ==========================================================
     // AUFGABE 2: WÖRTERTEST (Teil A: Deutsch → Englisch, Teil B: Englisch → Deutsch)
@@ -560,7 +596,7 @@
         if (a.length >= TEST_A) break;
         if (block.has(w.id)) continue;
         a.push(w);
-        [w.id, ...related(w, SAME_IDS), ...related(w, FAMILY_IDS)].forEach(id => block.add(id));
+        [w.id, ...related(w, TYPE_IDS), ...related(w, FAMILY_IDS)].forEach(id => block.add(id));
       }
       const b = shuffle(words.filter(w => !block.has(w.id))).slice(0, TEST_B);
       return { a: a.map(w => ({ w: w.id, ans: '' })), b: b.map(w => ({ w: w.id, ans: '', same: false })), checked: false, warned: false };
@@ -585,10 +621,8 @@
       const t = T(), it = t.b.find(x => x.w === id);
       if (!t.checked || !it || it.same || !String(it.ans).trim()) return;
       it.same = true;
-      setKnown(id, 'en2de', true);
       save();
       renderTest();
-      renderTop();
     }
     function checkTest() {
       const t = T();
@@ -596,14 +630,11 @@
       const empty = [...t.a, ...t.b].filter(it => !it.ans.trim()).length;
       if (empty && !t.warned) { t.warned = true; save(); renderTest(); return; }
       t.checked = true;
-      t.a.forEach(it => setKnown(it.w, 'de2en', enOk(BY_ID[it.w], it.ans)));
-      t.b.forEach(it => setKnown(it.w, 'en2de', testBOk(it)));
       const m = medalOf(TASKS.test.score(), TASKS.test.max);
       const old = MEDALS.findIndex(x => x.name === STATE.medal[STATE.part]);
       if (m && (old < 0 || MEDALS.indexOf(m) < old)) STATE.medal[STATE.part] = m.name;
       save();
       renderTest();
-      renderTop();
       $('fb-test').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
     function testRow(key, it, num, t) {
@@ -625,7 +656,7 @@
               <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                 <span class="text-sm font-bold text-slate-800 wrap-any" lang="${key === 'a' ? 'de' : 'en'}">${esc(askText(w, dir))}${hint}</span>
                 <input type="text" value="${esc(it.ans)}" ${t.checked ? 'disabled' : ''} oninput="testInput('${key}','${it.w}',this.value)" onkeydown="testEnter(event,this)"
-                  placeholder="auf ${DIRS[dir].answer} …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${key === 'a' ? 'en' : 'de'}"
+                  placeholder="auf ${ANSWER_LANG[dir]} …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${key === 'a' ? 'en' : 'de'}"
                   class="test-in min-w-0 flex-1 basis-40 bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm font-semibold text-slate-800">
               </div>
               ${fb}
@@ -674,7 +705,7 @@
     // ==========================================================
     // TIPP, THEORIE, NOCHMALS ÜBEN
     // ==========================================================
-    let BACK = 'ueben';
+    let BACK = 'pfad';
     function toggleTip(id) { $('tip-' + id).classList.toggle('hidden'); }
     function openTheory(from) {
       BACK = from;
@@ -685,26 +716,38 @@
     function backToTask() { $('task-' + BACK).scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     // Leert nur diese Aufgabe und mischt neu
     function retryTask(id) {
-      if (id === 'ueben') { newRound(); renderUeben(true); }
+      if (id === 'pfad') {
+        let ok = true;
+        try { ok = window.confirm(`Lernpfad ${PARTS[STATE.part].label} von vorne beginnen? Deine Sterne in ${PARTS[STATE.part].label} werden gelöscht.`); } catch (e) {}
+        if (!ok) return;
+        STATE.path[STATE.part] = { level: {}, queue: [] };
+        STREAK = 0;
+        save();
+        newQuestion();
+        renderPfad();
+        renderParts();
+      }
       if (id === 'test') { STATE.tests[STATE.part] = newTest(STATE.part); save(); renderTest(); }
     }
     function renderAll() {
+      P().queue = shuffle(P().queue);   // bei jedem Laden neu mischen
       ensureTest(STATE.part);
-      renderTop();
-      renderUeben();
+      STREAK = 0;
+      newQuestion();
+      renderParts();
+      renderPfad();
       renderTest();
+      save();
     }
 
-    Object.assign(window, { setPart, setDir, answerWord, overrideWord, nextWord, testInput, testSame, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak });
+    Object.assign(window, { setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, testInput, testSame, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak });
 
     // Start sobald das HTML da ist
     document.addEventListener('DOMContentLoaded', function () {
       load();
       if (!TTS_OK) document.body.classList.add('no-tts');
       try { if (TTS_OK) window.speechSynthesis.getVoices(); } catch (e) {}
-      newRound();
       renderAll();
-      save();
     });
   </script>
 </body>
