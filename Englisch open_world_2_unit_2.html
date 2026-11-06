@@ -134,8 +134,8 @@
       </ul>
       <ul class="mt-3 space-y-1.5 text-sm text-slate-700 leading-relaxed list-disc pl-5" data-l="es" lang="es">
         <li><b>Los 4 niveles:</b> 1 elegir inglés → español · 2 elegir español → inglés · 3 escribir inglés → español · 4 escribir español → inglés. Primero reconocer, después saberlo sin ayuda.</li>
-        <li><b>Hablar en voz alta:</b> Di cada palabra en voz alta. Pulsa 🔊 y repite.</li>
-        <li><b>A menudo y poco rato:</b> 10 minutos cada día sirven más que una hora de una vez. Por eso las palabras que ya dominas vuelven un momento después de 1 y de 3 días.</li>
+        <li><b>Hablar en voz alta:</b> Di cada palabra en voz alta. Toca 🔊 y repite.</li>
+        <li><b>A menudo y poco rato:</b> 10 minutos cada día sirven más que una hora de una vez. Por eso las palabras que ya dominas vuelven brevemente después de 1 día y otra vez después de 3 días.</li>
         <li><b>Los errores son parte del aprendizaje:</b> Quien busca una respuesta y después ve la solución aprende más que solo leyendo.</li>
         <li><b>En inglés cuentan las mayúsculas:</b> En inglés casi todo se escribe en minúscula (bagpipes), excepto los nombres (Highland Games).</li>
         <li><b>Así corrige la página:</b> En español, los acentos no cuentan (á = a). En inglés → español vale cada significado de la lista. Masculino y femenino valen los dos (pesado/a).</li>
@@ -415,31 +415,31 @@
       'amazing': ['impresionante', 'sorprendente', 'genial', 'fantástico/a'],
       'arrangement': ['plan', 'compromiso', 'arreglo'],
       'attend': ['asistir', 'ir a', 'participar', 'estar presente'],
-      'be game': ['dispuesto/a', 'animarse', 'apuntarse', 'estar listo/a', 'estar preparado/a'],
+      'be game': ['dispuesto/a', 'animarse', 'apuntarse', 'estar listo/a', 'listo/a', 'estar preparado/a'],
       'brilliantly': ['brillantemente', 'genial', 'muy bien', 'estupendamente', 'de maravilla'],
       'complicated': ['difícil'],
       'fantastic': ['genial', 'estupendo/a', 'increíble'],
       'have fun': ['pasarlo bien', 'pasarla bien', 'pasar un buen rato', 'disfrutar'],
       'hill': ['cerro', 'loma'],
-      'noon': ['las doce', 'medio día', 'doce del mediodía'],
+      'noon': ['las doce', 'las 12', 'medio día', 'doce del mediodía', '12 del mediodía'],
       'strange': ['raro/a', 'curioso/a'],
       'weird': ['extraño/a', 'curioso/a'],
       'wonderful': ['estupendo/a', 'genial', 'precioso/a', 'fantástico/a'],
-      'at the bottom': ['debajo', 'en la parte de abajo', 'abajo del todo', 'al fondo'],
+      'at the bottom': ['debajo', 'en la parte de abajo', 'abajo del todo'],
       'at the top': ['encima', 'en la parte de arriba', 'arriba del todo'],
       'be allowed to': ['tener permiso para', 'estar permitido', 'permitido'],
       'entertaining': ['divertido/a', 'ameno/a'],
       'entertainment': ['diversión', 'ocio', 'espectáculo'],
       'equipment': ['equipamiento'],
-      "find one's way (to)": ['encontrar el camino a', 'encontrar el camino hacia', 'orientarse', 'llegar'],
-      'finishing point': ['llegada', 'final', 'punto final', 'fin'],
-      'foreground': ['delante', 'parte delantera'],
+      "find one's way (to)": ['encontrar el camino a', 'encontrar el camino hacia', 'orientarse'],
+      'finishing point': ['llegada', 'final', 'fin'],
+      'foreground': ['el primer plano'],
       'in the top left-hand corner': ['arriba izquierda', 'a la izquierda arriba', 'en la esquina superior izquierda', 'esquina superior izquierda', 'en la esquina de arriba a la izquierda'],
       'knock down / knock over': ['tumbar', 'volcar', 'tirar al suelo', 'golpear'],
       'nowadays': ['hoy', 'actualmente', 'en la actualidad'],
       'right-hand': ['derecha', 'de la derecha', 'a la derecha'],
       'starting point': ['salida', 'inicio', 'comienzo', 'principio', 'punto de inicio'],
-      'take place': ['celebrarse', 'realizarse', 'ocurrir', 'pasar', 'suceder'],
+      'take place': ['celebrarse', 'realizarse', 'ocurrir', 'suceder'],
       'tell someone the way': ['indicar el camino', 'explicar el camino', 'decir el camino', 'mostrar el camino', 'indicarle el camino a alguien', 'explicarle el camino a alguien', 'decirle el camino a alguien'],
       'tie': ['amarrar', 'anudar'],
       'unusual': ['poco habitual', 'especial', 'fuera de lo común', 'insólito/a', 'extraordinario/a'],
@@ -447,7 +447,7 @@
       'winner': ['vencedor/a', 'campeón', 'campeona'],
       'attitude': ['postura'],
       'hit the target': ['acertar', 'dar en el objetivo', 'atinar'],
-      'quite': ['muy', 'del todo', 'totalmente'],
+      'quite': ['del todo', 'totalmente'],
       'rather': ['algo', 'un poco'],
       'really': ['en serio', 'verdaderamente'],
       'require': ['exigir', 'hacer falta'],
@@ -580,7 +580,7 @@
       const raw = String(input || '').trim();
       if (!raw) return false;
       if (esOne(w, raw)) return true;
-      const pieces = raw.split(/\s*(?:,|;|\/|\by\b|\bo\b)\s*/).filter(Boolean);
+      const pieces = raw.split(/\s*(?:,|;|\/(?!a\b)|\by\b|\bo\b)\s*/).filter(Boolean);   // «asombroso/a» nicht trennen
       return pieces.length > 1 && pieces.every(x => esOne(w, x));
     }
     // Muttersprache-Seite: Deutsch oder Spanisch, je nach Umschalter
@@ -979,7 +979,7 @@
             <div class="text-5xl">🏆</div>
             <div class="text-lg font-black text-slate-900">${tr(`Alle ${words.length} Wörter gemeistert!`, `¡Dominas las ${words.length} palabras!`)}</div>
             <div class="text-sm text-slate-700">${tr('Super! Mach jetzt den Wörtertest wie in der Prüfung.', '¡Genial! Ahora haz la prueba de vocabulario como en el examen.')}</div>
-            ${reviewsLeft() ? `<div class="text-sm text-slate-700">${tr('🔁 In den nächsten Tagen kommen die Wörter kurz zum Wiederholen. So bleiben sie im Kopf.', '🔁 En los próximos días las palabras vuelven un momento para repasar. Así se quedan en la cabeza.')}</div>` : ''}
+            ${reviewsLeft() ? `<div class="text-sm text-slate-700">${tr('🔁 In den nächsten Tagen kommen die Wörter kurz zum Wiederholen. So bleiben sie im Kopf.', '🔁 En los próximos días las palabras vuelven brevemente para repasar. Así se quedan en la cabeza.')}</div>` : ''}
             <button type="button" onclick="document.getElementById('task-test').scrollIntoView({behavior:'smooth'})" class="mt-1 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('Zum Wörtertest ↓', 'A la prueba ↓')}</button>
           </div>`;
         return;
@@ -1054,7 +1054,9 @@
     // ==========================================================
     // AUFGABE 2: WÖRTERTEST (Teil A: Deutsch → Englisch, Teil B: Englisch → Deutsch)
     // ==========================================================
-    const T = () => STATE.tests[STATE.part];
+    // Jede Sprache hat ihren eigenen Test (sonst würden deutsche Antworten nach dem Umschalten spanisch bewertet)
+    const tKey = (part = STATE.part) => ES() ? part + '_es' : part;
+    const T = () => STATE.tests[tKey()];
     function newTest(part) {
       const words = partWords(part);
       const a = [], block = new Set();
@@ -1074,8 +1076,8 @@
     }
     // Gespeicherten Test behalten, aber bei jedem Laden neu mischen
     function ensureTest(part) {
-      const old = STATE.tests[part];
-      STATE.tests[part] = validTest(old, part) ? { ...old, a: shuffle(old.a), b: shuffle(old.b) } : newTest(part);
+      const k = tKey(part), old = STATE.tests[k];
+      STATE.tests[k] = validTest(old, part) ? { ...old, a: shuffle(old.a), b: shuffle(old.b) } : newTest(part);
     }
     function testInput(key, id, val) {
       const t = T();
@@ -1165,7 +1167,7 @@
       const fb = $('fb-test');
       if (!t.checked) {
         const empty = [...t.a, ...t.b].filter(it => !it.ans.trim()).length;
-        fb.innerHTML = t.warned && empty ? `<div class="text-sm font-bold text-amber-700">${tr(`Noch ${empty} leer. Füll alles aus oder drück nochmals auf «Test prüfen».`, `Faltan ${empty}. Rellena todo o pulsa otra vez «Corregir la prueba».`)}</div>` : '';
+        fb.innerHTML = t.warned && empty ? `<div class="text-sm font-bold text-amber-700">${tr(`Noch ${empty} leer. Füll alles aus oder drück nochmals auf «Test prüfen».`, `Faltan ${empty}. Completa todo o toca otra vez «Corregir la prueba».`)}</div>` : '';
         return;
       }
       const pts = TASKS.test.score(), max = TASKS.test.max, m = medalOf(pts, max);
@@ -1174,7 +1176,7 @@
       fb.innerHTML = `
         <div class="rounded-2xl border-2 ${pass ? 'border-emerald-300 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-4 space-y-1 pop">
           <div class="text-lg font-black text-slate-900">${m ? m.icon + ' ' : ''}${fmt(pts)} ${tr('von', 'de')} ${max} ${tr('Punkten · Note', 'puntos · Nota')} ${grade.toFixed(1)}</div>
-          <div class="text-sm ${pass ? 'text-emerald-800' : 'text-amber-900'}">${pass ? tr('✅ Bestanden', '✅ Aprobado') : tr('Noch nicht ganz. Übe die gelben Wörter im Lernpfad, dann klappt es.', 'Todavía no del todo. Practica las palabras amarillas en la ruta de aprendizaje y lo conseguirás.')} (${tr('bestanden ab', 'aprobado desde')} ${passPoints(max)} ${tr('Punkten', 'puntos')})</div>
+          <div class="text-sm ${pass ? 'text-emerald-800' : 'text-amber-900'}">${pass ? tr('✅ Bestanden', '✅ Aprobado') : tr('Noch nicht ganz. Übe die gelben Wörter im Lernpfad, dann klappt es.', 'Todavía no del todo. Practica las palabras amarillas en la ruta de aprendizaje y lo conseguirás.')} (${tr('bestanden ab', 'para aprobar hacen falta')} ${passPoints(max)} ${tr('Punkten', 'puntos')})</div>
           ${best ? `<div class="text-xs text-slate-600">${tr('Deine beste Medaille in', 'Tu mejor medalla en la')} ${ES() ? PARTS[STATE.part].label.toLowerCase() : PARTS[STATE.part].label}: ${best.icon} ${medalName(best)}</div>` : ''}
           <div class="text-xs text-slate-600">${tr('Gelb = noch üben. Mit «🔀 Nochmals üben» bekommst du einen neuen Test.', 'Amarillo = practicar más. Con «🔀 Practicar otra vez» recibes una prueba nueva.')}</div>
         </div>`;
@@ -1199,6 +1201,10 @@
       document.title = TITLE[LANG];
       document.querySelectorAll('.lang-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.setlang === LANG));
       if (Q.phase === 'ask' && Q.id && STAGES[Q.stage].type === 'mc') Q.opts = mcOptions(BY_ID[Q.id], STAGES[Q.stage].dir);
+      if (Q.praise) Q.praise = praise();
+      if (G.praise) G.praise = praise();
+      ensureTest(STATE.part);
+      save();
       renderParts();
       renderPfad();
       renderTest();
@@ -1529,7 +1535,7 @@
         renderPfad();
         renderParts();
       }
-      if (id === 'test') { STATE.tests[STATE.part] = newTest(STATE.part); save(); renderTest(); }
+      if (id === 'test') { STATE.tests[tKey()] = newTest(STATE.part); save(); renderTest(); }
       if (id === 'gram') {
         let ok = true;
         try { ok = window.confirm(tr('Grammatik-Pfad von vorne beginnen? Dein Fortschritt in der Grammatik wird gelöscht.', '¿Empezar la ruta de gramática desde el principio? Se borra tu progreso en gramática.')); } catch (e) {}
