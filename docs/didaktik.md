@@ -69,6 +69,8 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 
 **So setzt es das Portal um (Grammatik-Pfad Unit 2, present continuous):** zuerst kurze Regel mit Beispiel, dann 4 Stufen: auswählen (am / is / are), auswählen (Verb + ing), Satz aus Bausteinen bauen, selber schreiben. Zu jeder Stufe ein vorgemachtes Beispiel, das in keiner Aufgabe vorkommt; die Hilfe wird von Stufe zu Stufe kleiner (Renkl & Atkinson, 2003). Erst verstehen und erkennen, dann selber bilden: Beides wirkt (Shintani, 2015). Wiederholung nach 1 und 3 Tagen wie bei den Wörtern.
 
+**Adverbien (Grammatik-Pfad Unit 2, Thema «Adverbien», 6.11.2026):** Zuerst nur auswählen, ob der Satz ein Adjektiv oder ein Adverb braucht. Entscheiden muss man über die Bedeutung (beschreibt es eine Person oder Sache, oder wie jemand etwas tut?). So lenkt die Übung den Blick genau auf die Form, die man sonst überliest (strukturierter Input, VanPatten & Cadierno, 1993). Bei schwächeren Lernenden wirkt Input-Üben mit kurzer Regel eher stärker als sofortiges Schreiben; selber bilden kommt darum erst in Stufe 2 (Shintani, 2015). Dann very / quite / not very mit einem Balken (Punkte von 10), damit die Bedeutung sichtbar ist. Nur -ly und good → well, keine Sonderfälle (Cognitive Load).
+
 ## 4 Erstsprache als Hilfe (Sprachwechsel Spanisch)
 
 Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spanisch umschalten (Wunsch Lehrperson, 6.11.2026).
@@ -126,5 +128,6 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - Spada, N., & Tomita, Y. (2010). Interactions between type of instruction and type of language feature: A meta-analysis. *Language Learning, 60*(2), 263–308.
 - Sweller, J. (1988). Cognitive load during problem solving: Effects on learning. *Cognitive Science, 12*(2), 257–285. https://doi.org/10.1207/s15516709cog1202_4
 - Sweller, J., van Merriënboer, J. J. G., & Paas, F. G. W. C. (1998). Cognitive architecture and instructional design. *Educational Psychology Review, 10*(3), 251–296.
+- VanPatten, B., & Cadierno, T. (1993). Explicit instruction and input processing. *Studies in Second Language Acquisition, 15*(2), 225–243. https://doi.org/10.1017/S0272263100011979
 - Webb, S. (2009). The effects of receptive and productive learning of word pairs on vocabulary knowledge. *RELC Journal, 40*(3), 360–376.
 - Yanagisawa, A., Webb, S., & Uchihara, T. (2020). How do different forms of glossing contribute to L2 vocabulary learning from reading? A meta-regression analysis. *Studies in Second Language Acquisition, 42*(2), 411–438. https://doi.org/10.1017/S0272263119000688
