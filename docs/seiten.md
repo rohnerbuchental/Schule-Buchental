@@ -22,6 +22,7 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - Feste Texte stehen im HTML doppelt: `<span data-l="de">…</span><span data-l="es" lang="es">…</span>`. Eine CSS-Regel blendet die andere Sprache aus.
 - Texte aus dem Skript: `tr('Deutsch', 'Español')`. Nach dem Umschalten zeichnet `setLang` alles neu; der Fortschritt bleibt gleich.
 - Spanisch einfach und neutral (tú, keine Wörter nur aus Spanien oder nur aus Lateinamerika), mit «¡…!» und «¿…?».
+- Deutsche Fachwörter stehen im Spanischen einmal in Klammern (Theorie, Lernziele), weil die Tests deutsch sind. Beispiel: «estratovolcán <span lang="de">(Schichtvulkan)</span>»; in JS-Strings nur der Text in Klammern. Nur beim ersten Vorkommen pro Abschnitt, nie in Antworten, Auswahlmenüs oder Rückmeldungen. `tools/spanisch_check.py` überspringt diese Klammern.
 
 ## Scratch-Hub: Besonderheiten
 - Scratch-Blöcke nur mit den `.sb-*`-Klassen bauen (Scratch-3-Look: `.sb`, `.sb-hat`, `.sb-c`, `.sb-bool`, `.sb-num`, Farben `.sb-motion` usw.). Texte wie im deutschen Scratch 3 («gehe 10er-Schritt», «wiederhole 4 mal»). Keinen «Ende»-Block, den gibt es in Scratch nicht.

@@ -184,16 +184,16 @@
     <!-- Navigation Bar (5 strukturierte Tabs) -->
     <nav class="max-w-5xl mx-auto px-4 flex gap-1.5 overflow-x-auto border-t border-white/10 py-2 text-xs sm:text-sm font-medium">
       <button onclick="switchTab('basics')" id="tab-btn-basics" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm">
-        <span>📜</span> <span data-l="de">1. Algorithmus & Diagramm</span><span data-l="es" lang="es">1. Algoritmo y diagrama</span>
+        <span>📜</span> <span data-l="de">1. Algorithmus & Diagramm</span><span data-l="es" lang="es">1. Algoritmo y diagrama <span lang="de">(Ablaufdiagramm)</span></span>
       </button>
       <button onclick="switchTab('loops')" id="tab-btn-loops" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>🔄</span> <span data-l="de">2. Schleifen & Quadrat</span><span data-l="es" lang="es">2. Bucles y cuadrado</span>
+        <span>🔄</span> <span data-l="de">2. Schleifen & Quadrat</span><span data-l="es" lang="es">2. Bucles <span lang="de">(Schleifen)</span> y cuadrado</span>
       </button>
       <button onclick="switchTab('custom')" id="tab-btn-custom" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>🧩</span> <span data-l="de">3. Eigene Blöcke & Bugfix</span><span data-l="es" lang="es">3. Bloques propios y errores</span>
+        <span>🧩</span> <span data-l="de">3. Eigene Blöcke & Bugfix</span><span data-l="es" lang="es">3. Bloques propios <span lang="de">(eigene Blöcke)</span> y errores</span>
       </button>
       <button onclick="switchTab('logic')" id="tab-btn-logic" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>💡</span> <span data-l="de">4. Smarthome & UND/ODER</span><span data-l="es" lang="es">4. Casa inteligente: Y/O</span>
+        <span>💡</span> <span data-l="de">4. Smarthome & UND/ODER</span><span data-l="es" lang="es">4. Casa inteligente: Y/O <span lang="de">(UND/ODER)</span></span>
       </button>
       <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/30">
         <span>📝</span> <span data-l="de">5. Test-Simulation (</span><span data-l="es" lang="es">5. Simulacro de examen (</span><span class="js-max-pts">30</span> <span data-l="de">P.)</span><span data-l="es" lang="es">p.)</span>
@@ -213,12 +213,12 @@
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <span class="text-xs font-bold text-sky-700 uppercase tracking-wider"><span data-l="de">Lernziele 1 & 2 · MI.2.2.h · MI.2.2.g</span><span data-l="es" lang="es">Objetivos 1 y 2 · MI.2.2.h · MI.2.2.g</span></span>
-          <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">📜 Was ist ein Algorithmus? & Ablaufdiagramme lesen</span><span data-l="es" lang="es">📜 ¿Qué es un algoritmo? · Leer diagramas de flujo</span></h2>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">📜 Was ist ein Algorithmus? & Ablaufdiagramme lesen</span><span data-l="es" lang="es">📜 ¿Qué es un algoritmo <span lang="de">(Algorithmus)</span>? · Leer diagramas de flujo <span lang="de">(Ablaufdiagramme)</span></span></h2>
           <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="de">
             Lerne den Unterschied zwischen genauen Anleitungen und losen Listen und verstehe Entscheidungs-Rauten.
           </p>
           <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="es" lang="es">
-            Aprende la diferencia entre instrucciones exactas y listas sueltas, y entiende los rombos de decisión.
+            Aprende la diferencia entre instrucciones exactas y listas sueltas, y entiende los rombos de decisión <span lang="de">(Entscheidungs-Rauten)</span>.
           </p>
         </div>
         <button onclick="reshuffleBasics()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1 border border-slate-300 self-start sm:self-auto shrink-0">
@@ -231,13 +231,13 @@
         <summary class="flex items-center justify-between gap-2 text-sm font-bold text-sky-800 cursor-pointer select-none"><span data-l="de">📖 Theorie: Algorithmus und Ablaufdiagramm</span><span data-l="es" lang="es">📖 Teoría: algoritmo y diagrama de flujo</span><span class="text-xs font-semibold text-slate-400"><span data-l="de">antippen</span><span data-l="es" lang="es">toca</span></span></summary>
         <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
           <p data-l="de"><b>Algorithmus:</b> eine genaue Anleitung, Schritt für Schritt. Jeder Schritt ist klar, die Reihenfolge stimmt, und am Ende ist die Aufgabe gelöst. Wie ein Rezept.</p>
-          <p data-l="es" lang="es"><b>Algoritmo:</b> unas instrucciones exactas, paso a paso. Cada paso está claro, el orden es correcto y al final la tarea está resuelta. Como una receta.</p>
+          <p data-l="es" lang="es"><b>Algoritmo <span lang="de">(Algorithmus)</span>:</b> unas instrucciones exactas, paso a paso. Cada paso está claro, el orden es correcto y al final la tarea está resuelta. Como una receta.</p>
           <p data-l="de"><b>Ablaufdiagramm:</b> zeigt einen Algorithmus als Bild. Die Pfeile zeigen, wie es weitergeht.</p>
-          <p data-l="es" lang="es"><b>Diagrama de flujo:</b> muestra un algoritmo como dibujo. Las flechas muestran cómo sigue.</p>
+          <p data-l="es" lang="es"><b>Diagrama de flujo <span lang="de">(Ablaufdiagramm)</span>:</b> muestra un algoritmo como dibujo. Las flechas muestran cómo sigue.</p>
           <ul class="space-y-1.5">
             <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><rect x="2" y="3" width="36" height="18" rx="9" fill="#10b981"/></svg><span data-l="de">Start oder Ende</span><span data-l="es" lang="es">inicio o final</span></li>
-            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><rect x="2" y="3" width="36" height="18" rx="3" fill="#fff" stroke="#0ea5e9" stroke-width="2"/></svg><span data-l="de">ein Befehl: etwas tun</span><span data-l="es" lang="es">un comando: hacer algo</span></li>
-            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><polygon points="20,1 38,12 20,23 2,12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/></svg><span data-l="de">eine Frage mit zwei Ausgängen: JA und NEIN</span><span data-l="es" lang="es">una pregunta con dos salidas: SÍ y NO</span></li>
+            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><rect x="2" y="3" width="36" height="18" rx="3" fill="#fff" stroke="#0ea5e9" stroke-width="2"/></svg><span data-l="de">ein Befehl: etwas tun</span><span data-l="es" lang="es">un comando <span lang="de">(Befehl)</span>: hacer algo</span></li>
+            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><polygon points="20,1 38,12 20,23 2,12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/></svg><span data-l="de">eine Frage mit zwei Ausgängen: JA und NEIN</span><span data-l="es" lang="es">un rombo <span lang="de">(Raute)</span>: una pregunta con dos salidas, SÍ y NO</span></li>
           </ul>
         </div>
       </details>
@@ -377,7 +377,7 @@
     <section id="view-loops" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
         <span class="text-xs font-bold text-amber-600 uppercase tracking-wider"><span data-l="de">Lernziele 3 & 4 · MI.2.2.g</span><span data-l="es" lang="es">Objetivos 3 y 4 · MI.2.2.g</span></span>
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">🔄 Schleifen (Loops) & Schrittweiten steuern</span><span data-l="es" lang="es">🔄 Bucles (loops) y controlar los pasos</span></h2>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">🔄 Schleifen (Loops) & Schrittweiten steuern</span><span data-l="es" lang="es">🔄 Bucles o loops <span lang="de">(Schleifen)</span> y controlar los pasos</span></h2>
         <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="de">
           Wie oft wiederholt Scratch einen Befehl? Und wie baut man ein Quadrat mit 4 Ecken?
         </p>
@@ -391,7 +391,7 @@
         <summary class="flex items-center justify-between gap-2 text-sm font-bold text-amber-800 cursor-pointer select-none"><span data-l="de">📖 Theorie: Schleifen und Quadrat</span><span data-l="es" lang="es">📖 Teoría: bucles y cuadrado</span><span class="text-xs font-semibold text-slate-400"><span data-l="de">antippen</span><span data-l="es" lang="es">toca</span></span></summary>
         <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
           <p data-l="de"><b>Schleife:</b> Alles, was in der orangen Klammer liegt, wird wiederholt.</p>
-          <p data-l="es" lang="es"><b>Bucle:</b> todo lo que está dentro de la «C» naranja se repite.</p>
+          <p data-l="es" lang="es"><b>Bucle <span lang="de">(Schleife)</span>:</b> todo lo que está dentro de la «C» naranja se repite.</p>
           <div class="sb-area inline-block max-w-full">
             <div class="sb-script">
               <div class="sb-c sb-control">
@@ -404,7 +404,7 @@
             </div>
           </div>
           <p data-l="de">Rechnen: <b>Wiederholungen × Schritte</b>. Hier: 3 × 5 = 15 Schritte.</p>
-          <p data-l="es" lang="es">Cálculo: <b>repeticiones × pasos</b>. Aquí: 3 × 5 = 15 pasos.</p>
+          <p data-l="es" lang="es">Cálculo: <b>repeticiones <span lang="de">(Wiederholungen)</span> × pasos</b>. Aquí: 3 × 5 = 15 pasos.</p>
           <ul class="list-disc pl-5 space-y-1" data-l="de">
             <li><b>wiederhole … mal:</b> genau so oft, dann ist Schluss.</li>
             <li><b>wiederhole bis &lt; … &gt;:</b> so lange, bis die Bedingung stimmt. Dann hört die Schleife von selbst auf.</li>
@@ -412,7 +412,7 @@
           </ul>
           <ul class="list-disc pl-5 space-y-1" data-l="es" lang="es">
             <li><b>repetir …:</b> justo ese número de veces, y se acaba.</li>
-            <li><b>repetir hasta que &lt; … &gt;:</b> hasta que la condición se cumple. Entonces el bucle se detiene solo.</li>
+            <li><b>repetir hasta que &lt; … &gt;:</b> hasta que la condición <span lang="de">(Bedingung)</span> se cumple. Entonces el bucle se detiene solo.</li>
             <li><b>por siempre:</b> nunca se detiene.</li>
           </ul>
           <p data-l="de"><b>Richtung:</b> x geht nach links und rechts, y nach oben und unten. Ein Plus bei y heisst nach oben, ein Minus heisst nach unten.</p>
@@ -539,12 +539,12 @@
     <section id="view-custom" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
         <span class="text-xs font-bold text-pink-600 uppercase tracking-wider"><span data-l="de">Lernziele 5 & 6 · MI.2.2.h</span><span data-l="es" lang="es">Objetivos 5 y 6 · MI.2.2.h</span></span>
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">🧩 Eigene Blöcke (Unterprogramme) & Bugfixing</span><span data-l="es" lang="es">🧩 Bloques propios (subprogramas) y corregir errores</span></h2>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">🧩 Eigene Blöcke (Unterprogramme) & Bugfixing</span><span data-l="es" lang="es">🧩 Bloques propios o subprogramas <span lang="de">(Unterprogramme)</span> y corregir errores <span lang="de">(Bugfixing)</span></span></h2>
         <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="de">
           Eigene pinke Blöcke machen den Code sauber und übersichtlich. Finde ausserdem Logikfehler!
         </p>
         <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="es" lang="es">
-          Los bloques propios de color rosa hacen que el código quede limpio y claro. ¡Además, encuentra errores de lógica!
+          Los bloques propios de color rosa hacen que el código quede limpio y claro. ¡Además, encuentra errores de lógica <span lang="de">(Logikfehler)</span>!
         </p>
       </div>
 
@@ -553,11 +553,11 @@
         <summary class="flex items-center justify-between gap-2 text-sm font-bold text-pink-800 cursor-pointer select-none"><span data-l="de">📖 Theorie: Eigene Blöcke und Fehlersuche</span><span data-l="es" lang="es">📖 Teoría: bloques propios y buscar errores</span><span class="text-xs font-semibold text-slate-400"><span data-l="de">antippen</span><span data-l="es" lang="es">toca</span></span></summary>
         <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
           <p data-l="de"><b>Eigener Block (Unterprogramm):</b> Mehrere Befehle bekommen zusammen einen Namen. Mit dem pinken Block <b>«Definiere …»</b> legst du fest, was der Block tut. Danach brauchst du nur noch den Namen.</p>
-          <p data-l="es" lang="es"><b>Bloque propio (subprograma):</b> varios comandos reciben juntos un nombre. Con el bloque rosa <b>«definir …»</b> decides lo que hace el bloque. Después solo necesitas el nombre.</p>
+          <p data-l="es" lang="es"><b>Bloque propio o subprograma <span lang="de">(eigener Block, Unterprogramm)</span>:</b> varios comandos reciben juntos un nombre. Con el bloque rosa <b>«definir …»</b> decides lo que hace el bloque. Después solo necesitas el nombre.</p>
           <p data-l="de">Das ist wie eine Rezeptkarte: einmal schreiben, immer wieder brauchen. Das Programm wird kürzer und übersichtlicher, und eine Änderung machst du nur an einer Stelle.</p>
           <p data-l="es" lang="es">Es como una tarjeta de receta: la escribes una vez y la usas siempre. El programa queda más corto y más claro, y un cambio lo haces en un solo lugar.</p>
           <p data-l="de"><b>Fehlersuche (Bugfixing) in 4 Schritten:</b></p>
-          <p data-l="es" lang="es"><b>Buscar errores (bugfixing) en 4 pasos:</b></p>
+          <p data-l="es" lang="es"><b>Buscar errores o bugfixing <span lang="de">(Fehlersuche)</span> en 4 pasos:</b></p>
           <ol class="list-decimal pl-5 space-y-1" data-l="de">
             <li>Was <b>soll</b> passieren?</li>
             <li>Was passiert <b>wirklich</b>?</li>
@@ -683,12 +683,12 @@
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider"><span data-l="de">Lernziele 7 & 8 · MI.2.1.i</span><span data-l="es" lang="es">Objetivos 7 y 8 · MI.2.1.i</span></span>
-          <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">💡 Logik mit UND und ODER</span><span data-l="es" lang="es">💡 Lógica con «y» y «o»</span></h2>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">💡 Logik mit UND und ODER</span><span data-l="es" lang="es">💡 Lógica con «y» y «o» <span lang="de">(UND, ODER)</span></span></h2>
           <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="de">
             Bedingungen verbinden: Wie steuert man ein Smarthome-Licht oder einen Rasensprenger?
           </p>
           <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="es" lang="es">
-            Unir condiciones: ¿cómo se controla la luz de una casa inteligente o un aspersor de jardín?
+            Unir condiciones <span lang="de">(Bedingungen)</span>: ¿cómo se controla la luz de una casa inteligente o un aspersor de jardín?
           </p>
         </div>
         <button onclick="reshuffleLogic()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1 border border-slate-300 self-start sm:self-auto shrink-0">
@@ -707,11 +707,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="theory-andor">
           <div class="sb-area flex items-center gap-3">
             <span class="sb-bool sb-operators" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,.28))"><span class="sb-empty-bool"></span> <span data-l="de">und</span><span data-l="es" lang="es">y</span> <span class="sb-empty-bool"></span></span>
-            <span class="text-xs text-slate-700"><span data-l="de"><strong>und</strong> = <strong>beide</strong> Bedingungen müssen stimmen.</span><span data-l="es" lang="es"><strong>y</strong> = <strong>las dos</strong> condiciones tienen que cumplirse.</span></span>
+            <span class="text-xs text-slate-700"><span data-l="de"><strong>und</strong> = <strong>beide</strong> Bedingungen müssen stimmen.</span><span data-l="es" lang="es"><strong>y</strong> <span lang="de">(und)</span> = <strong>las dos</strong> condiciones <span lang="de">(Bedingungen)</span> tienen que cumplirse.</span></span>
           </div>
           <div class="sb-area flex items-center gap-3">
             <span class="sb-bool sb-operators" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,.28))"><span class="sb-empty-bool"></span> <span data-l="de">oder</span><span data-l="es" lang="es">o</span> <span class="sb-empty-bool"></span></span>
-            <span class="text-xs text-slate-700"><span data-l="de"><strong>oder</strong> = <strong>mindestens eine</strong> Bedingung muss stimmen.</span><span data-l="es" lang="es"><strong>o</strong> = <strong>por lo menos una</strong> condición tiene que cumplirse.</span></span>
+            <span class="text-xs text-slate-700"><span data-l="de"><strong>oder</strong> = <strong>mindestens eine</strong> Bedingung muss stimmen.</span><span data-l="es" lang="es"><strong>o</strong> <span lang="de">(oder)</span> = <strong>por lo menos una</strong> condición tiene que cumplirse.</span></span>
           </div>
         </div>
 

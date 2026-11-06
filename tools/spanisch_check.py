@@ -12,7 +12,9 @@ Was es macht:
    - Name steht im Deutschen, fehlt aber im Spanischen desselben Paars,
    - gross geschriebenes Wort im Spanischen, das einem Namen ähnlich ist (z.B. Yuri statt Jurij).
 3. Rechtschreibung: Wörter im Spanischen, die das Wörterbuch nicht kennt (ohne Wörter, die auch im Deutschen stehen,
-   z.B. englische Wörter, Namen, Scratch-Blöcke). Das ist nur eine Liste zum Anschauen: Das Wörterbuch kennt
+   z.B. englische Wörter, Namen, Scratch-Blöcke). Deutsche Fachwörter in Klammern (lang="de" oder Klammer, deren Wörter
+   alle auch im Deutschen der Seite und sonst nicht im Spanischen stehen, und die nicht genau so im Deutschen
+   in Klammern steht) werden nicht geprüft. Das ist nur eine Liste zum Anschauen: Das Wörterbuch kennt
    viele Formen nicht (pregúntate, dominada). Entscheiden muss der Mensch bzw. der Agent.
 Ändert nichts.
 """
@@ -69,7 +71,8 @@ class Pairs(HTMLParser):
             self.stack[-1]['text'].append(' ')
         if tag in self.VOID:
             return
-        self.stack.append({'tag': tag, 'l': a.get('data-l'), 'en': a.get('lang') == 'en', 'text': []})
+        # lang="en" (englische Wörter) und lang="de" (deutsches Fachwort in Klammern) nicht als Spanisch prüfen
+        self.stack.append({'tag': tag, 'l': a.get('data-l'), 'en': a.get('lang') in ('en', 'de'), 'text': []})
 
     def handle_endtag(self, tag):
         if tag in ('script', 'style'):
@@ -167,6 +170,20 @@ def check(path):
     de_all = ' '.join(d for d, _, _ in pairs)
     es_all = ' '.join(e for _, e, _ in pairs) + ' ' + ' '.join(solo)
     de_words = set(words(de_all))
+    # Deutsche Fachwörter in Klammern im Spanischen, z.B. «estratovolcán (Schichtvulkan)», «Basilea (Basel)»:
+    # Klammer weglassen, wenn alle Wörter darin auch im Deutschen der Seite stehen und keines im Spanischen
+    # ausserhalb von Klammern vorkommt (sonst ist es ein Name wie «Ring of Fire»; in JS-Strings ohne lang="de").
+    de_low = {w.lower() for w in de_words}
+    PAR = re.compile(r"\(([^()]*)\)")
+    es_out = {w.lower() for w in words(PAR.sub(' ', es_all))}
+    de_par = {g.strip() for g in PAR.findall(de_all)}      # gleiche Klammer im Deutschen = Name, z.B. «(Pro Juventute)»
+
+    def strip_de(t):
+        return PAR.sub(lambda m: ' ' if words(m.group(1)) and m.group(1).strip() not in de_par and all(
+            w.lower() in de_low and w.lower() not in es_out for w in words(m.group(1))) else m.group(0), t)
+    pairs = [(d, strip_de(e), ln) for d, e, ln in pairs]
+    solo = [strip_de(s) for s in solo]
+    es_all = ' '.join(e for _, e, _ in pairs) + ' ' + ' '.join(solo)
     # Namen: gross, kein spanisches Wort, auf der Seite in beiden Sprachen
     # Name = im Spanischen mitten im Satz gross, steht auch im Deutschen, kein spanisches Wort
     all_words = set(words(de_all + ' ' + es_all))
