@@ -325,16 +325,18 @@
     <section id="view-exam" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-gradient-to-br from-white to-amber-50/50 rounded-2xl p-5 shadow-sm border border-amber-200">
         <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
-          <span data-l="de">Prüfungsmodus · <span class="js-max-pts">–</span> Punkte</span><span data-l="es" lang="es">Modo prueba · <span class="js-max-pts">–</span> puntos</span>
+          <span data-l="de">Probetest zum Üben · <span class="js-max-pts">–</span> Punkte</span><span data-l="es" lang="es">Prueba para practicar · <span class="js-max-pts">–</span> puntos</span>
         </span>
         <h2 class="text-lg sm:text-xl font-black text-slate-800 mt-2"><span data-l="de">📝 Test-Simulation</span><span data-l="es" lang="es">📝 Prueba de práctica</span></h2>
         <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="de">
           Löse zuerst alle Aufgaben in den Reitern 1 bis 4. Hier werden alle Punkte zusammengezählt.
           Bestanden ab 60 % (<span class="js-pass-pts">–</span> Punkte = Note 4.0).
+          Das ist nur eine Übung: Niemand ausser dir sieht das Ergebnis.
         </p>
         <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="es" lang="es">
           Primero resuelve todas las tareas de las pestañas 1 a 4. Aquí se suman todos los puntos.
-          Apruebas desde el 60 % (<span class="js-pass-pts">–</span> puntos = nota 4.0). Es solo práctica.
+          Apruebas desde el 60 % (<span class="js-pass-pts">–</span> puntos = nota 4.0).
+          Es solo práctica: nadie más que tú ve el resultado.
         </p>
         <div id="exam-result-banner" class="hidden mt-4 p-4 rounded-xl border"></div>
       </div>
@@ -1069,7 +1071,7 @@
       const n = res.filter(r => r.ok).length;
       box.innerHTML = `
         <p class="font-bold ${n === res.length ? 'text-emerald-700' : 'text-amber-800'}">${n === res.length ? tr('🌟 Super! Alle wichtigen Punkte sind drin.', '🌟 ¡Súper! Están todos los puntos importantes.') : tr(`Du hast ${n} von ${res.length} wichtigen Punkten.`, `Tienes ${n} de ${res.length} puntos importantes.`)}</p>
-        <ul class="mt-1 space-y-0.5">${res.map(r => `<li>${r.ok ? '✅' : '❌'} ${r.label}</li>`).join('')}</ul>
+        <ul class="mt-1 space-y-0.5">${res.map(r => `<li>${r.ok ? '✅' : '✏️'} ${r.label}</li>`).join('')}</ul>
         <p class="text-[11px] text-slate-500 mt-1">${tr('Der Computer sucht nur nach wichtigen Wörtern. Vergleiche danach trotzdem mit der Musterlösung.', 'El programa solo busca palabras importantes. Después compara igual con la respuesta modelo.')}</p>`;
       box.classList.remove('hidden');
     }
@@ -1230,6 +1232,7 @@
     // DARSTELLUNG
     // ==============================================================
     const CARD = 'bg-slate-50 border border-slate-200';
+    const DUNNO = '?';   // Wert für «Weiss ich nicht» (nie richtig, kostet aber nichts)
     let DISPLAY = {};   // gemischte Reihenfolgen
     const CHECKED = new Set();   // Aufgaben, die schon geprüft wurden (Farben bleiben beim Sprachwechsel)
 
@@ -1301,7 +1304,12 @@
           <label class="flex items-start gap-2 p-2 rounded-lg hover:bg-white cursor-pointer text-sm text-slate-700">
             <input type="radio" name="${b.key}" value="${esc(o.v)}" data-key="${b.key}" class="mt-0.5 accent-orange-600" ${A(b.key) === o.v ? 'checked' : ''}>
             <span>${T(o.t)}</span></label>`).join('');
-        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b._label || ''}${T(b.q)}</p>${opts}</div>`;
+        // «Weiss ich nicht» steht immer zuletzt (wird nicht gemischt) und zählt wie keine Antwort
+        const dunno = `
+          <label class="flex items-start gap-2 p-2 rounded-lg hover:bg-white cursor-pointer text-sm text-slate-500 italic">
+            <input type="radio" name="${b.key}" value="${DUNNO}" data-key="${b.key}" class="mt-0.5 accent-orange-600" ${A(b.key) === DUNNO ? 'checked' : ''}>
+            <span>${tr('🤷 Weiss ich nicht', '🤷 No lo sé')}</span></label>`;
+        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b._label || ''}${T(b.q)}</p>${opts}${dunno}</div>`;
       }
 
       if (b.type === 'checks') {
@@ -1312,7 +1320,7 @@
             <span>${T(o.t)}</span></label>`;
         }).join('');
         return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b._label || ''}${T(b.q)}</p>${opts}
-          <p class="text-[11px] text-slate-500 px-2">${tr('Achtung: Eine falsche Antwort gibt einen Punkt Abzug.', 'Ojo: cada respuesta marcada que no es correcta resta un punto.')}</p></div>`;
+          <p class="text-[11px] text-slate-500 px-2">${tr('Gut zu wissen: Jedes Kreuz, das nicht stimmt, zieht einen Punkt ab.', 'Bueno saberlo: cada marca que no es correcta resta un punto.')}</p></div>`;
       }
 
       if (b.type === 'num') {
@@ -1455,12 +1463,12 @@
     }
     function renderAll() { Object.keys(DEFS).forEach(renderTask); renderBlatt(); }
 
-    // Karten grün/rot färben
+    // Karten färben: grün = richtig, gelb = noch nicht ganz (angstfrei, kein Rot)
     function markCard(id, ok) {
       const el = document.getElementById(id);
       if (!el) return;
-      el.classList.remove('bg-slate-50', 'border-slate-200', 'bg-emerald-50', 'border-emerald-400', 'bg-rose-50', 'border-rose-400');
-      el.classList.add(ok ? 'bg-emerald-50' : 'bg-rose-50', ok ? 'border-emerald-400' : 'border-rose-400');
+      el.classList.remove('bg-slate-50', 'border-slate-200', 'bg-emerald-50', 'border-emerald-400', 'bg-amber-50', 'border-amber-400');
+      el.classList.add(ok ? 'bg-emerald-50' : 'bg-amber-50', ok ? 'border-emerald-400' : 'border-amber-400');
     }
 
     function checkTask(id, quiet) {
@@ -1470,11 +1478,14 @@
         else blockItems(b).forEach(it => markCard(`card-${it.key}`, itemOk(b, it)));
       });
       const pts = TASKS[id].score(), max = TASKS[id].max;
+      // «Weiss ich nicht» gewählt: Tipp gleich öffnen (Hilfe vor Lösung)
+      const dunno = DEFS[id].blocks.some(b => b.type === 'mc' && A(b.key) === DUNNO);
+      if (dunno && DEFS[id].tip) { const t = document.getElementById(`tip-${id}`); if (t) t.classList.remove('hidden'); }
       const fb = document.getElementById(`fb-${id}`);
       if (fb) {
         fb.textContent = pts === max
           ? tr(`🌟 ${pts}/${max} Punkte: Alles richtig! Mit «🔀 Nochmals üben» kannst du sie neu gemischt wiederholen.`, `🌟 ${pts}/${max} puntos: ¡Todo correcto! Con «🔀 Practicar otra vez» puedes repetirla en otro orden.`)
-          : tr(`${pts}/${max} Punkte. Rot = noch falsch.`, `${pts}/${max} puntos. Rojo = todavía no del todo. No pasa nada.`) + (DEFS[id].tip ? tr(' Brauchst du Hilfe? Drück auf «💡 Tipp».', ' ¿Necesitas ayuda? Toca «💡 Pista».') : '');
+          : tr(`${pts}/${max} Punkte. Gelb = noch nicht ganz. Kein Problem, versuch es nochmals.`, `${pts}/${max} puntos. Amarillo = todavía no del todo. No pasa nada, inténtalo otra vez.`) + (DEFS[id].tip ? (dunno ? tr(' Der Tipp unten hilft dir weiter.', ' La pista de abajo te ayuda.') : tr(' Brauchst du Hilfe? Drück auf «💡 Tipp».', ' ¿Necesitas ayuda? Toca «💡 Pista».')) : '');
         fb.className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-amber-700';
       }
       if (!quiet) showToast(`${tr('Aufgabe', 'Tarea')} ${DEFS[id].nr}`, tr(`${pts} von ${max} Punkten.`, `${pts} de ${max} puntos.`));
@@ -1511,7 +1522,7 @@
       if (pct >= 90)      { title = tr('Sehr gut ⭐', 'Muy bien ⭐'); cls = 'bg-sky-50 border-sky-300 text-sky-950'; badge = 'bg-sky-600'; }
       else if (pct >= 75) { title = tr('Gut 👏', 'Bien 👏'); cls = 'bg-emerald-50 border-emerald-300 text-emerald-950'; badge = 'bg-emerald-600'; }
       else if (passed)    { title = tr('Bestanden 👍', 'Aprobado 👍'); cls = 'bg-amber-50 border-amber-300 text-amber-950'; badge = 'bg-amber-600'; }
-      else                { title = tr('Noch nicht erreicht ⚠️ Nochmals üben!', 'Todavía no lo lograste ⚠️ ¡Practica otra vez!'); cls = 'bg-rose-50 border-rose-300 text-rose-950'; badge = 'bg-rose-600'; }
+      else                { title = tr('Noch nicht erreicht 💪 Nochmals üben!', 'Todavía no alcanzado 💪 ¡Practica otra vez!'); cls = 'bg-yellow-50 border-yellow-300 text-yellow-950'; badge = 'bg-yellow-600'; }
 
       const rows = EXAM_TASKS.map(([id, t]) => {
         const p = t.score();
@@ -1522,7 +1533,7 @@
       const banner = document.getElementById('exam-result-banner');
       banner.className = `mt-4 p-4 sm:p-5 rounded-2xl border shadow-sm ${cls} block animate-fade-in`;
       banner.innerHTML = `
-        <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full text-white ${badge}">${passed ? tr('Bestanden', 'Aprobado') : tr('Nicht bestanden', 'Todavía no aprobado')}</span>
+        <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full text-white ${badge}">${passed ? tr('Bestanden', 'Aprobado') : tr('Noch nicht bestanden', 'Todavía no aprobado')}</span>
         <h3 class="text-xl font-black mt-2">${title}</h3>
         <div class="flex flex-wrap gap-3 mt-3">
           <div class="bg-white/80 rounded-xl border border-black/10 px-3 py-2 text-center"><div class="text-[10px] font-bold text-slate-500 uppercase">${tr('Punkte', 'Puntos')}</div><div class="text-2xl font-black">${score} <span class="text-xs text-slate-500 font-normal">/ ${MAX_POINTS}</span></div></div>
