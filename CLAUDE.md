@@ -14,9 +14,10 @@ Alles andere liegt in der **privaten Ablage** (siehe unten).
 | `connected_3_scratch_trainingshub.html` | Informatik, Connected 3 «Abheben mit Algorithmen» (Scratch) |
 | `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» |
 | `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 |
+| `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter lernen) |
 | `RZG Vulkane Erdbeben Tsunamis.html` | RZG, Dynamik der Erde, Test 2 (Vulkane, Erdbeben, Tsunamis) |
 
-Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer Seite nur ihren Abschnitt lesen.
+Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer Seite nur ihren Abschnitt lesen. Die didaktischen Grundsätze mit Quellen stehen in `docs/didaktik.md`.
 
 ## Regeln für alle Seiten (immer einhalten)
 - **Sprache:** Deutsch (Schweiz), immer «ss» statt «ß». Einfache Sätze für Schüler.
@@ -30,6 +31,10 @@ Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer S
 - **Noten:** Schweizer Skala. Note = Punkte ÷ Total × 5 + 1, gerundet auf 0.1. Bestanden ab 60 % (Note 4.0).
 - **Technik:** Eine Datei pro Seite, Tailwind über `cdn.tailwindcss.com`, Schrift Inter (Google Fonts). Keine weiteren Abhängigkeiten.
 - **Niveau:** Vor neuen Aufgaben das Niveau-Profil des Fachs in der privaten Ablage lesen (`Niveau-Profil.md`).
+- **Nicht überladen (Wunsch Lehrperson):** Wenige, klare Aufgaben, die genau das üben, was im Test kommt. Lieber eine einfache Seite als viele Spiele. Spiel-Elemente nur leicht (Fortschritt, Medaille).
+- **Angstfrei (Wunsch Lehrperson, sehr wichtig):** Kein Zeitdruck, keine Rangliste, Fehler kosten nichts (Aufgabe kommt nochmals), «Weiss ich nicht» erlaubt. Sprache «Noch nicht ganz» statt «Falsch», Gelb statt Rot. Probetests sind Übung.
+- **Begründet mit Quellen (Wunsch Lehrperson):** Jede Übungsform folgt `docs/didaktik.md` (Abrufen üben, verteiltes Üben, sofortige Rückmeldung, erst erkennen dann selber bilden, wenig auf einmal). Eine neue Übungsform nur mit Quelle; die Begründung dort nachtragen. Der Lehrperson bei neuen Aufgaben kurz sagen, welches Prinzip dahinter steht.
+- **Für Lernende, die schnell aufgeben (Wunsch Lehrperson):** Vor jeder neuen Aufgabe recherchieren (WebSearch), welche Übungsform für dieses Lernziel bei schwächeren Lernenden am besten belegt ist, und die Checkliste in `docs/didaktik.md` (Abschnitt 1b) abarbeiten: leichter Einstieg, kleine Etappen, sichtbarer Fortschritt, Hilfe vor Lösung, eine Sache auf einen Blick, etwa 80 % Erfolg beim Üben.
 
 ## Private Ablage (alles, was nicht öffentlich sein darf)
 - Privates Repo `rohnerbuchental/Schule-Buchental-Material`, geklont nach `/home/user/schule-buchental-material` (bei Bedarf mit `add_repo` verbinden, dann `register_repo_root`).

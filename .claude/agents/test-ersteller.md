@@ -28,7 +28,8 @@ Du erstellst Papiertests für Sek-Schülerinnen und -Schüler der Schule Buchent
 - Punkte rechtsbündig mit Tabstopp (`TabStopType.RIGHT`), nicht mit `PositionalTab`.
 - Fragen mit `keepNext`, damit Frage und Schreiblinien zusammenbleiben.
 - Bilder als SVG zeichnen und mit Playwright als PNG rendern (`deviceScaleFactor: 2`), dann mit `ImageRun` einfügen.
-- Kontrolle: mit LibreOffice in PDF umwandeln, mit `pdftoppm` Bilder machen und jede Seite ansehen. `grep "ß"` im `word/document.xml` muss leer sein.
+- PDF immer mit `python3 tools/docx_zu_pdf.py <Datei.docx>` erstellen (nicht direkt mit LibreOffice): Auf dem Server fehlt die Schrift Wingdings, sonst werden die Smileys der Selbsteinschätzung zu «J K L».
+- Kontrolle: mit `tools/docx_zu_pdf.py` in PDF umwandeln, mit `pdftoppm` Bilder machen und jede Seite ansehen. `grep "ß"` im `word/document.xml` muss leer sein.
 
 ## Abschluss
 Lass vor dem Melden `niveau-pruefer` (Niveau, Luft) und `loesungs-pruefer` (gleiche Lage) laufen, oder melde der Hauptsitzung, dass sie das tun soll.
