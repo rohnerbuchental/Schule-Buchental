@@ -2,6 +2,18 @@
 
 Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/seiten.md`).
 
+## Spanisch: Stand pro Seite
+Übersetzt wird erst, wenn die Lehrperson die deutsche Fassung freigegeben hat (Regel in `CLAUDE.md`).
+
+| Seite | Deutsch freigegeben | Spanisch |
+|---|---|---|
+| `index.html` | noch fragen | – |
+| `connected_3_scratch_trainingshub.html` | noch fragen | – |
+| `Deutsch Novemberschnee.html` | noch fragen | – |
+| `Englisch open_world_2_unit_1.html` | noch fragen | – |
+| `Englisch open_world_2_unit_2.html` | Lernpfad: noch fragen; Grammatik: nein (Pull Request #13 wartet) | – |
+| `RZG Vulkane Erdbeben Tsunamis.html` | noch fragen | – |
+
 ## Scratch-Hub: Besonderheiten
 - Scratch-Blöcke nur mit den `.sb-*`-Klassen bauen (Scratch-3-Look: `.sb`, `.sb-hat`, `.sb-c`, `.sb-bool`, `.sb-num`, Farben `.sb-motion` usw.). Texte wie im deutschen Scratch 3 («gehe 10er-Schritt», «wiederhole 4 mal»). Keinen «Ende»-Block, den gibt es in Scratch nicht.
 - Aufgabe 2 ist ein SVG-Ablaufdiagramm mit Drag & Drop (Felder `fs1`–`fs3`).
