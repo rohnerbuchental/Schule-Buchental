@@ -56,7 +56,7 @@
       <div id="body-pfad"></div>
       <div id="tip-pfad" class="hidden rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
         <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-        Sag jedes Wort laut, bevor du antwortest. Falsch ist nicht schlimm: Das Wort kommt gleich nochmals – so lange, bis es sitzt. Lieber jeden Tag 10 Minuten als einmal eine Stunde. Dein Fortschritt bleibt gespeichert.
+        Sag jedes Wort laut, bevor du antwortest. Falsch ist nicht schlimm: Das Wort kommt gleich nochmals – so lange, bis es sitzt. Lieber jeden Tag 10 Minuten als einmal eine Stunde. Dein Fortschritt bleibt auf diesem Gerät gespeichert.
       </div>
       <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
         <button type="button" onclick="toggleTip('pfad')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900">💡 Tipp</button>
@@ -189,10 +189,10 @@
       'require': { hint: 'nicht «need»' },
       'space': { hint: 'freier Platz' }
     };
-    // Gleiche deutsche Bedeutung: beim Schreiben gelten beide als richtig, nie zusammen in einer Auswahl
-    const SAME = [['throw', 'toss'], ['brilliant', 'fantastic', 'amazing', 'wonderful', 'brilliantly'], ['strange', 'weird', 'unusual'], ['quite', 'rather'], ['finishing point', 'hit the target']];
+    // Ähnliche deutsche Bedeutung: nie zusammen in einer Auswahl (beim Schreiben gilt SAME_TYPE)
+    const SAME = [['throw', 'toss'], ['brilliant', 'fantastic', 'amazing', 'wonderful', 'brilliantly'], ['strange', 'weird', 'unusual'], ['quite', 'rather'], ['finishing point', 'hit the target'], ['complicated', 'heavy']];
     // Wortfamilien: nie zusammen in einer Auswahl, im Test nie in Teil A und Teil B zugleich
-    const FAMILY = [['brilliant', 'brilliantly'], ['entertaining', 'entertainment'], ['corner', 'in the top left-hand corner'], ['at the top', 'in the top left-hand corner'], ['knock down / knock over', 'hit the target'], ['attend', 'be game']];
+    const FAMILY = [['brilliant', 'brilliantly'], ['entertaining', 'entertainment'], ['corner', 'in the top left-hand corner'], ['at the top', 'in the top left-hand corner'], ['knock down / knock over', 'hit the target'], ['attend', 'be game'], ['starting point', 'finishing point'], ['at the top', 'at the bottom'], ['right-hand', 'in the top left-hand corner']];
     // Beim Schreiben wirklich gleichwertig (Deutsch → Englisch)
     const SAME_TYPE = [['throw', 'toss'], ['brilliant', 'fantastic'], ['strange', 'weird'], ['quite', 'rather']];
     // Englisch → Deutsch: weitere richtige deutsche Antworten (zusätzlich zu allen Bedeutungen aus der Liste)
@@ -220,7 +220,7 @@
       'be allowed to': ['erlaubt sein'],
       'entertaining': ['unterhaltend', 'lustig'],
       'equipment': ['Material'],
-      "find one's way (to)": ['den Weg finden', 'Weg finden', 'hinfinden'],
+      "find one's way (to)": ['den Weg finden', 'den Weg finden zu', 'Weg finden', 'hinfinden'],
       'finishing point': ['Ziel', 'Endpunkt', 'Ende'],
       'in the top left-hand corner': ['oben links', 'links oben', 'links oben in der Ecke', 'oben links in der Ecke', 'in der Ecke oben links'],
       'knock down / knock over': ['umstossen', 'umschmeissen', 'umhauen'],
@@ -318,9 +318,16 @@
       });
       return out.concat(DE_ALT[w.en] || []);
     }
-    function deOk(w, input) {
-      if (!String(input || '').trim()) return false;
+    function deOne(w, input) {
       return deForms(w).some(f => normDe(f, false) === normDe(input, false) || normDe(f, true) === normDe(input, true));
+    }
+    // Mehrere Bedeutungen («Wettbewerb, Wettkampf») sind richtig, wenn jede einzelne stimmt
+    function deOk(w, input) {
+      const raw = String(input || '').trim();
+      if (!raw) return false;
+      if (deOne(w, raw)) return true;
+      const pieces = raw.split(/\s*(?:,|;|\/|\bund\b|\boder\b)\s*/).filter(Boolean);
+      return pieces.length > 1 && pieces.every(x => deOne(w, x));
     }
     const isOk = (w, dir, input) => dir === 'de2en' ? enOk(w, input) : deOk(w, input);
     // «auch richtig» bei Deutsch → Englisch
@@ -599,9 +606,9 @@
         [w.id, ...related(w, TYPE_IDS), ...related(w, FAMILY_IDS)].forEach(id => block.add(id));
       }
       const b = shuffle(words.filter(w => !block.has(w.id))).slice(0, TEST_B);
-      return { a: a.map(w => ({ w: w.id, ans: '' })), b: b.map(w => ({ w: w.id, ans: '', same: false })), checked: false, warned: false };
+      return { a: a.map(w => ({ w: w.id, ans: '' })), b: b.map(w => ({ w: w.id, ans: '' })), checked: false, warned: false };
     }
-    const testBOk = it => !!it.same || deOk(BY_ID[it.w], it.ans);
+    const testBOk = it => deOk(BY_ID[it.w], it.ans);
     function validTest(t, part) {
       const ok = list => Array.isArray(list) && list.length > 0 && list.every(it => it && BY_ID[it.w] && BY_ID[it.w].part === part && typeof it.ans === 'string');
       return t && ok(t.a) && ok(t.b);
@@ -616,13 +623,6 @@
       if (t.checked) return;
       const it = t[key].find(x => x.w === id);
       if (it) { it.ans = val; save(); }
-    }
-    function testSame(id) {
-      const t = T(), it = t.b.find(x => x.w === id);
-      if (!t.checked || !it || it.same || !String(it.ans).trim()) return;
-      it.same = true;
-      save();
-      renderTest();
     }
     function checkTest() {
       const t = T();
@@ -646,7 +646,6 @@
           <span>${ok ? '✔' : '✖ Richtig:'}</span>
           ${ok ? '' : `<span class="font-black text-slate-900 wrap-any">${esc(answerText(w, dir))}</span>`}
           ${key === 'a' ? sayBtn(w.en) + (ok ? '' : alsoText(w)) : ''}
-          ${!ok && key === 'b' && it.ans.trim() ? `<button type="button" onclick="testSame('${it.w}')" class="underline text-slate-600 font-bold text-left">meine Antwort bedeutet dasselbe</button>` : ''}
         </div>`;
       return `
         <div class="p-3 rounded-xl border ${!t.checked ? 'bg-slate-50 border-slate-200' : ok ? 'bg-emerald-50 border-emerald-300' : 'bg-rose-50 border-rose-300'}">
@@ -740,7 +739,7 @@
       save();
     }
 
-    Object.assign(window, { setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, testInput, testSame, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak });
+    Object.assign(window, { setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, testInput, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak });
 
     // Start sobald das HTML da ist
     document.addEventListener('DOMContentLoaded', function () {
