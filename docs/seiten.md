@@ -19,6 +19,16 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - `TASKS` hat einen Eintrag pro 5er-Block (Übungen, total 210) und pro Probetest-Teil A/B/C (30 P., bestanden ab 18). Probetest-Teile kann man einzeln prüfen (von der Lehrperson gewünscht); die Lösung zeigt erst «Prüfung abgeben».
 - Sätze und die Wörter in `[ … / … ]` werden gemischt. Tipps auf Deutsch, Beispiele auf Englisch.
 
+## Englisch-Hub Unit 2: Besonderheiten
+- Vorerst nur Reiter «Wörter-Training». Grammatik später als eigener Reiter anhängen (`<section id="view-…" class="tab-view hidden">` + Knopf `switchTab('…')` in der `nav`), `TASKS` um neue Einträge erweitern.
+- Wörter im Script in `WORD_TEXT` (eine Zeile «englisch | deutsch», Teil 1 = Keywords + Highland Games, 26 Wörter; Teil 2 = Village fête + Focus, 30 Wörter). `EXTRA`: weitere richtige Schreibweisen (`alt`) und kleine Zusätze beim Schreiben (`hint`). `SAME`: gleiche deutsche Bedeutung, beim Schreiben beide richtig (throw/toss, brilliant/fantastic, strange/weird, quite/rather). `CLASH`: nie in derselben Zuordnen-Runde. `FAMILY` (brilliant/brilliantly, entertaining/entertainment, corner/in the top left-hand corner) und `stems` in `EXTRA` («fête»): Im Probe-Wörtertest zeigt Teil B kein Wort aus der Familie eines Teil-A-Worts.
+- Lückensätze in `SENTENCES`: selbst geschrieben (Urheberrecht, Repo ist öffentlich), keine Sätze aus dem Lehrmittel. Pro Wort mind. ein Satz, je 6 Ablenker aus dem gleichen Teil, die grammatisch nicht passen; pro Runde werden 3 gezeigt. Neue Sätze: jede Lücke mit allen Ablenkern durchprobieren.
+- Auswahl oben: Teil 1 (Standard) / Teil 2 / Alle Wörter. Alle Disziplinen nutzen die Auswahl.
+- 5 Disziplinen mit Medaille (🥇 ab 90 %, 🥈 ab 75 %, 🥉 ab 60 %), beste Medaille pro Disziplin und Teil im Medaillenspiegel. Karteikarten (Caber Toss) sind Selbsteinschätzung und zählen nicht in `TASKS`. `TASKS`: Tug of War (12 P., jeder Fehler −1, Bestzeit mit +5 s pro Fehler), Hammer Throw (10 P., «Erster Buchstabe» = ½ P.), Highland Dancing (8 P.), Probe-Wörtertest (20 P., Note, bestanden ab 12).
+- Probe-Wörtertest: Kein Wort aus Teil A (schreiben) kommt in Teil B vor (weder als Lücke, Ablenker noch im Satz), damit nichts die Schreibweise verrät.
+- Quizlet-Links in `QUIZLET` ganz oben im Script; leer = Box ausgeblendet. 🔊 mit `speechSynthesis` (en-GB), ausgeblendet ohne Unterstützung.
+- Gespeichert unter `ow2u2_state` (Teil, Medaillen, Bestzeiten, laufende Runden pro Teil).
+
 ## RZG-Hub: Besonderheiten
 - Grundlagen: Dossier «Dynamik der Erde» mit Lösungen der Lehrperson und Blatt «Lernziele Dynamik der Erde Teil 2» (Ich-kann-Checkliste, LZ1 bis LZ5) mit Musterlösungen, die sich aufs Dossier stützen.
 - Die Seite deckt nur Teil 2 ab: Vulkan-Entstehung, Schild-/Schichtvulkan, Ausbruch, Erdbeben, Richterskala, Energie rechnen (×10 Ausschlag / ×32 Energie), Tsunamis. Teil 1 (Aufbau der Erde, Plattentektonik) war schon Test 1, nicht einbauen.
