@@ -108,7 +108,8 @@
         <li><b>Laut sprechen:</b> Sag jedes Wort laut. Drück auf 🔊 und sprich nach.</li>
         <li><b>Oft und kurz:</b> Jeden Tag 10 Minuten bringt mehr als einmal eine Stunde. Darum kommen gemeisterte Wörter nach 1 und nach 3 Tagen nochmals kurz dran.</li>
         <li><b>Fehler gehören dazu:</b> Wer eine Antwort sucht und dann die Lösung sieht, lernt mehr als beim blossen Lesen.</li>
-        <li><b>So prüft die Seite:</b> Gross- und Kleinschreibung sind egal. «ae» gilt wie «ä». Bei Englisch → Deutsch zählt jede Bedeutung aus der Wortliste.</li>
+        <li><b>Gross- und Kleinschreibung zählt:</b> Im Deutschen schreibt man Nomen gross (Dudelsack), im Englischen fast alles klein (bagpipes), ausser Namen (Highland Games).</li>
+        <li><b>So prüft die Seite:</b> «ae» gilt wie «ä». Bei Englisch → Deutsch zählt jede Bedeutung aus der Wortliste.</li>
       </ul>
       <button type="button" onclick="backToTask()" class="mt-3 px-3 py-1.5 rounded-lg text-xs font-bold border bg-white border-slate-300 text-slate-700">↩ Zurück zur Aufgabe</button>
     </details>
@@ -353,24 +354,28 @@
     const askText = (w, dir) => dir === 'de2en' ? w.de : w.en;
     const answerText = (w, dir) => dir === 'de2en' ? w.en : w.de;
 
-    // Englisch prüfen: Gross/Klein, Akzente, Apostroph, Bindestrich und «to»/«the» am Anfang egal
-    function normEn(s) {
-      return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-        .replace(/[’‘´`']/g, '').replace(/\(.*?\)/g, ' ').replace(/[-‐–]/g, ' ').replace(/[.,!?;:]/g, ' ')
+    // Englisch prüfen: Gross/Klein zählt (Wunsch Lehrperson). Akzente, Apostroph, Bindestrich und «to»/«the» am Anfang egal.
+    // loose = ohne Gross/Klein: nur um «Fast! Gross-/Kleinschreibung» anzuzeigen
+    function normEn(s, loose) {
+      let t = String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (loose) t = t.toLowerCase();
+      return t.replace(/[’‘´`']/g, '').replace(/\(.*?\)/g, ' ').replace(/[-‐–]/g, ' ').replace(/[.,!?;:]/g, ' ')
         .replace(/\s+/g, ' ').trim().replace(/^(to|the|a|an) /, '');
     }
-    function enOk(w, input) {
-      const u = normEn(input);
+    function enOk(w, input, loose) {
+      const u = normEn(input, loose);
       if (!u) return false;
       const forms = [w.en, ...w.alt];
       related(w, TYPE_IDS).forEach(id => forms.push(BY_ID[id].en, ...BY_ID[id].alt));
-      return forms.map(normEn).includes(u);
+      return forms.map(f => normEn(f, loose)).includes(u);
     }
-    // Deutsch prüfen: Gross/Klein egal, ä = ae = a, ß = ss, Artikel am Anfang egal
-    function normDe(s, plain) {
-      let t = String(s || '').toLowerCase().replace(/ß/g, 'ss');
-      t = plain ? t.replace(/ä/g, 'a').replace(/ö/g, 'o').replace(/ü/g, 'u') : t.replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue');
-      return t.replace(/[.,!?;:«»"]/g, ' ').replace(/\s+/g, ' ').trim().replace(/^(der|die|das|ein|eine|einen) /, '');
+    // Deutsch prüfen: Gross/Klein zählt (Nomen gross), ä = ae = a, ß = ss, Artikel am Anfang egal
+    function normDe(s, plain, loose) {
+      let t = String(s || '').replace(/ß/g, 'ss');
+      if (loose) t = t.toLowerCase();
+      t = plain ? t.replace(/ä/g, 'a').replace(/ö/g, 'o').replace(/ü/g, 'u').replace(/Ä/g, 'A').replace(/Ö/g, 'O').replace(/Ü/g, 'U')
+        : t.replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/Ä/g, 'Ae').replace(/Ö/g, 'Oe').replace(/Ü/g, 'Ue');
+      return t.replace(/[.,!?;:«»"]/g, ' ').replace(/\s+/g, ' ').trim().replace(/^(der|die|das|ein|eine|einen) /i, '');
     }
     function deForms(w) {
       const out = [];
@@ -381,18 +386,21 @@
       });
       return out.concat(DE_ALT[w.en] || []);
     }
-    function deOne(w, input) {
-      return deForms(w).some(f => normDe(f, false) === normDe(input, false) || normDe(f, true) === normDe(input, true));
+    function deOne(w, input, loose) {
+      return deForms(w).some(f => normDe(f, false, loose) === normDe(input, false, loose) || normDe(f, true, loose) === normDe(input, true, loose));
     }
     // Mehrere Bedeutungen («Wettbewerb, Wettkampf») sind richtig, wenn jede einzelne stimmt
-    function deOk(w, input) {
+    function deOk(w, input, loose) {
       const raw = String(input || '').trim();
       if (!raw) return false;
-      if (deOne(w, raw)) return true;
+      if (deOne(w, raw, loose)) return true;
       const pieces = raw.split(/\s*(?:,|;|\/|\bund\b|\boder\b)\s*/).filter(Boolean);
-      return pieces.length > 1 && pieces.every(x => deOne(w, x));
+      return pieces.length > 1 && pieces.every(x => deOne(w, x, loose));
     }
-    const isOk = (w, dir, input) => dir === 'de2en' ? enOk(w, input) : deOk(w, input);
+    const isOk = (w, dir, input, loose) => dir === 'de2en' ? enOk(w, input, loose) : deOk(w, input, loose);
+    // Nur die Gross-/Kleinschreibung stimmt nicht
+    const caseOnly = (w, dir, input) => !isOk(w, dir, input) && isOk(w, dir, input, true);
+    const caseTip = dir => dir === 'en2de' ? 'Im Deutschen schreibt man Nomen gross.' : 'Im Englischen schreibt man fast alles klein, ausser Namen.';
     // «auch richtig» bei Deutsch → Englisch
     const alsoText = w => { const r = related(w, TYPE_IDS).map(id => BY_ID[id].en); return r.length ? `<span class="text-xs font-semibold text-slate-600">auch richtig: ${r.map(esc).join(', ')}</span>` : ''; };
 
@@ -616,10 +624,10 @@
         if (isMastered(w)) schedule(w);
       }
     }
-    function answer(ok, ans, dontKnow) {
+    function answer(ok, ans, dontKnow, caseErr) {
       const w = BY_ID[Q.id];
       applyResult(w, ok);
-      Object.assign(Q, { phase: 'answered', ok, ans, dontKnow, mastered: ok && !Q.review && isMastered(w) });
+      Object.assign(Q, { phase: 'answered', ok, ans, dontKnow, caseErr: !!caseErr, mastered: ok && !Q.review && isMastered(w) });
       STREAK = ok ? STREAK + 1 : 0;
       SESSION.answers++;
       if (ok) SESSION.right++;
@@ -647,7 +655,8 @@
       if (Q.phase !== 'ask') return;
       const inp = $('pfad-in'), ans = dontKnow ? '' : (inp ? inp.value : '');
       if (!dontKnow && !ans.trim()) { if (inp) inp.focus(); return; }
-      answer(!dontKnow && isOk(BY_ID[Q.id], STAGES[Q.stage].dir, ans), ans, dontKnow);
+      const w = BY_ID[Q.id], dir = STAGES[Q.stage].dir;
+      answer(!dontKnow && isOk(w, dir, ans), ans, dontKnow, !dontKnow && caseOnly(w, dir, ans));
     }
     // Englisch → Deutsch geschrieben: eigene Antwort meint dasselbe
     function overrideAnswer() {
@@ -781,7 +790,7 @@
       }
       if (Q.phase === 'answered') {
         const write = st.type === 'write';
-        const title = Q.mastered ? `⭐ Gemeistert! «${esc(w.en)}» kommt in deine Sammlung.` : Q.ok ? (Q.review ? '✔ Sitzt noch!' : (STREAK >= 5 && STREAK % 5 === 0 ? `🔥 ${STREAK} richtig hintereinander!` : (Q.praise || '✔ Richtig!'))) : (Q.dontKnow ? 'So heisst es:' : 'Noch nicht ganz. Richtig ist:');
+        const title = Q.mastered ? `⭐ Gemeistert! «${esc(w.en)}» kommt in deine Sammlung.` : Q.ok ? (Q.review ? '✔ Sitzt noch!' : (STREAK >= 5 && STREAK % 5 === 0 ? `🔥 ${STREAK} richtig hintereinander!` : (Q.praise || '✔ Richtig!'))) : (Q.dontKnow ? 'So heisst es:' : Q.caseErr ? 'Fast! Nur die Gross- und Kleinschreibung stimmt noch nicht:' : 'Noch nicht ganz. Richtig ist:');
         const calm = Q.review ? 'Vergessen ist normal. Du übst es gleich nochmals.' : 'Kein Problem: Das Wort kommt gleich nochmals.';
         html += `
           <div class="feedback-box mt-3 rounded-2xl border-2 ${Q.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-3 space-y-1.5 pop">
@@ -790,8 +799,9 @@
               <span class="text-lg font-black text-slate-900 wrap-any">${esc(right)}</span>${st.dir === 'de2en' ? sayBtn(w.en) + (write ? alsoText(w) : '') : ''}
             </div>
             ${!Q.ok && write && !Q.dontKnow ? `<div class="text-xs text-slate-600 wrap-any">Deine Antwort: <span class="font-semibold">${esc(Q.ans)}</span></div>` : ''}
+            ${!Q.ok && Q.caseErr ? `<div class="text-xs font-semibold text-amber-900">${caseTip(st.dir)}</div>` : ''}
             ${!Q.ok ? `<div class="text-xs text-slate-600">${calm}</div>` : ''}
-            ${!Q.ok && write && !Q.dontKnow && st.dir === 'en2de' ? `<button type="button" onclick="overrideAnswer()" class="text-xs font-bold underline text-slate-600 text-left">Meine Antwort bedeutet dasselbe → zählt als richtig</button>` : ''}
+            ${!Q.ok && write && !Q.dontKnow && !Q.caseErr && st.dir === 'en2de' ? `<button type="button" onclick="overrideAnswer()" class="text-xs font-bold underline text-slate-600 text-left">Meine Antwort bedeutet dasselbe → zählt als richtig</button>` : ''}
           </div>
           <button type="button" id="next-btn" onclick="nextQuestion()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">Weiter →</button>`;
       }
@@ -858,7 +868,7 @@
       const hint = key === 'a' && w.hint ? ` <span class="text-xs font-medium text-slate-500">(${esc(w.hint)})</span>` : '';
       const fb = !t.checked ? '' : `
         <div class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold ${ok ? 'text-emerald-800' : 'text-amber-900'}">
-          <span>${ok ? '✔' : 'Richtig wäre:'}</span>
+          <span>${ok ? '✔' : caseOnly(w, dir, it.ans) ? 'Fast! Gross-/Kleinschreibung. Richtig:' : 'Richtig wäre:'}</span>
           ${ok ? '' : `<span class="font-black text-slate-900 wrap-any">${esc(answerText(w, dir))}</span>`}
           ${key === 'a' ? sayBtn(w.en) + (ok ? '' : alsoText(w)) : ''}
         </div>`;
@@ -1030,7 +1040,7 @@
     }
     function gNew() {
       const s = GS();
-      G.hint = false; G.pick = -1; G.ans = ''; G.ok = false; G.dontKnow = false; G.placed = []; G.pool = [];
+      G.hint = false; G.pick = -1; G.ans = ''; G.ok = false; G.dontKnow = false; G.caseErr = false; G.placed = []; G.pool = [];
       // Wiederholung an späteren Tagen: 4 Sätze schreiben
       if (gReviewDue()) {
         if (!s.revQueue.length) s.revQueue = shuffle(G_ITEMS.write.map((_, i) => 'write' + i)).slice(0, 4);
@@ -1053,15 +1063,15 @@
     const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
     const gRight = it => it.key === 'be' ? (it.data[0].startsWith('___') ? cap(it.data[1]) : it.data[1])
       : it.key === 'ing' ? it.data[1][0] : it.key === 'write' ? it.data[1] : cap(it.data.t.join(' ')) + (it.data.q ? '?' : '.');
-    // Schreiben: «am meeting» oder «'m meeting», Gross/Klein und Leerzeichen egal
-    function gWriteOk(answer, input, sentence) {
-      const n = x => String(x || '').toLowerCase().replace(/[’‘´`]/g, "'").replace(/[.!?,;:]+/g, ' ').replace(/\s+/g, ' ').trim();
+    // Schreiben: «am meeting» oder «'m meeting». Gross/Klein zählt (loose = nur für den Hinweis «Fast!»), Leerzeichen egal
+    function gWriteOk(answer, input, sentence, loose) {
+      const n = x => { const t = String(x || '').replace(/[’‘´`]/g, "'").replace(/[.!?,;:]+/g, ' ').replace(/\s+/g, ' ').trim(); return loose ? t.toLowerCase() : t; };
       let u = n(input);
       const a = n(answer);
       if (!u) return false;
       // Subjekt aus dem Satz darf mitgeschrieben werden: «I'm meeting», «Lea's visiting», «I am meeting»
       const subj = n(String(sentence || '').split('___')[0]);
-      if (subj && u.startsWith(subj)) u = u.slice(subj.length).trim();
+      if (subj && u.toLowerCase().startsWith(subj.toLowerCase())) u = u.slice(subj.length).trim();
       const short = a.replace(/^am /, "'m ").replace(/^is /, "'s ").replace(/^are /, "'re ");
       return u === a || u === short;
     }
@@ -1110,7 +1120,9 @@
       if (G.phase !== 'ask') return;
       const inp = $('g-in'), ans = dontKnow ? '' : (inp ? inp.value : '');
       if (!dontKnow && !ans.trim()) { if (inp) inp.focus(); return; }
-      gAnswer(!dontKnow && gWriteOk(gItem(G.id).data[1], ans, gItem(G.id).data[0]), ans, dontKnow);
+      const d = gItem(G.id).data, ok = !dontKnow && gWriteOk(d[1], ans, d[0]);
+      G.caseErr = !ok && !dontKnow && gWriteOk(d[1], ans, d[0], true);
+      gAnswer(ok, ans, dontKnow);
     }
     // Hilfe vor der Lösung: beim Bauen das erste Wort, beim Schreiben «am / is / are»
     function gHint() {
@@ -1210,7 +1222,7 @@
           const full = st.type === 'tiles' ? right : it.data[0].replace('___', right).replace(/\s*\(.*?\)/, '');
           html += `
             <div class="feedback-box mt-3 rounded-2xl border-2 ${G.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-3 space-y-1.5 pop">
-              <div class="text-base font-black ${G.ok ? 'text-emerald-800' : 'text-amber-900'}">${G.ok ? (G.streak >= 5 && G.streak % 5 === 0 ? `🔥 ${G.streak} richtig hintereinander!` : G.praise) : (G.dontKnow ? 'So heisst es:' : 'Noch nicht ganz. Richtig ist:')}</div>
+              <div class="text-base font-black ${G.ok ? 'text-emerald-800' : 'text-amber-900'}">${G.ok ? (G.streak >= 5 && G.streak % 5 === 0 ? `🔥 ${G.streak} richtig hintereinander!` : G.praise) : (G.dontKnow ? 'So heisst es:' : G.caseErr ? 'Fast! Nur die Gross- und Kleinschreibung stimmt noch nicht:' : 'Noch nicht ganz. Richtig ist:')}</div>
               <div class="flex items-center gap-2 flex-wrap"><span class="text-base font-bold text-slate-900 wrap-any" lang="en">${esc(full)}</span>${sayBtn(full)}</div>
               ${!G.ok && G.ans && st.type !== 'mc' ? `<div class="text-xs text-slate-600 wrap-any">Deine Antwort: <span class="font-semibold">${esc(G.ans)}</span></div>` : ''}
               ${!G.ok ? '<div class="text-xs text-slate-600">Kein Problem: Der Satz kommt gleich nochmals.</div>' : ''}
