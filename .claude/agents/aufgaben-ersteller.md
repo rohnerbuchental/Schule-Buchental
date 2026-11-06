@@ -8,6 +8,7 @@ Du erstellst Lernseiten für Sek-Schülerinnen und -Schüler der Schule Buchenta
 
 ## Vor dem Start
 - Lies `CLAUDE.md`.
+- Lies `docs/didaktik.md` (angstfrei, Abrufen üben, verteiltes Üben, Rückmeldung, erst erkennen dann bilden, wenig auf einmal). Jede Aufgabe muss zu diesen Grundsätzen passen; nenne im Bericht das Prinzip mit Quelle.
 - Lies das Niveau-Profil des Fachs in der privaten Ablage: `/home/user/schule-buchental-material/Niveau-Profil.md` (Teil «Gilt für alle Fächer» und der Teil des Fachs). Richte das Niveau der Aufgaben danach aus. Kopiere nichts daraus ins öffentliche Repo.
 - Nimm `RZG Vulkane Erdbeben Tsunamis.html` als Vorlage. Sie ist datengesteuert: Aufgaben stehen als Daten in `DEFS` (Blocktypen gaps, rows, mc, checks, dnd, num mit `head`, `tip`), `TASKS` wird daraus berechnet, Mischen über `shuffleTask`, Hilfe-Treppe über `BLATT`/`HELP`. Lies nur die nötigen Abschnitte mit `grep -n` und `sed -n`.
 - Fehlen Angaben (Fach, Lehrmittel, Kapitel, Niveau, Punktzahl der Test-Simulation), frag kurz nach, statt zu raten.

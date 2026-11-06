@@ -17,7 +17,7 @@ Alles andere liegt in der **privaten Ablage** (siehe unten).
 | `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter lernen) |
 | `RZG Vulkane Erdbeben Tsunamis.html` | RZG, Dynamik der Erde, Test 2 (Vulkane, Erdbeben, Tsunamis) |
 
-Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer Seite nur ihren Abschnitt lesen.
+Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer Seite nur ihren Abschnitt lesen. Die didaktischen Grundsätze mit Quellen stehen in `docs/didaktik.md`.
 
 ## Regeln für alle Seiten (immer einhalten)
 - **Sprache:** Deutsch (Schweiz), immer «ss» statt «ß». Einfache Sätze für Schüler.
@@ -32,6 +32,8 @@ Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer S
 - **Technik:** Eine Datei pro Seite, Tailwind über `cdn.tailwindcss.com`, Schrift Inter (Google Fonts). Keine weiteren Abhängigkeiten.
 - **Niveau:** Vor neuen Aufgaben das Niveau-Profil des Fachs in der privaten Ablage lesen (`Niveau-Profil.md`).
 - **Nicht überladen (Wunsch Lehrperson):** Wenige, klare Aufgaben, die genau das üben, was im Test kommt. Lieber eine einfache Seite als viele Spiele. Spiel-Elemente nur leicht (Fortschritt, Medaille).
+- **Angstfrei (Wunsch Lehrperson, sehr wichtig):** Kein Zeitdruck, keine Rangliste, Fehler kosten nichts (Aufgabe kommt nochmals), «Weiss ich nicht» erlaubt. Sprache «Noch nicht ganz» statt «Falsch», Gelb statt Rot. Probetests sind Übung.
+- **Begründet mit Quellen (Wunsch Lehrperson):** Jede Übungsform folgt `docs/didaktik.md` (Abrufen üben, verteiltes Üben, sofortige Rückmeldung, erst erkennen dann selber bilden, wenig auf einmal). Eine neue Übungsform nur mit Quelle; die Begründung dort nachtragen. Der Lehrperson bei neuen Aufgaben kurz sagen, welches Prinzip dahinter steht.
 
 ## Private Ablage (alles, was nicht öffentlich sein darf)
 - Privates Repo `rohnerbuchental/Schule-Buchental-Material`, geklont nach `/home/user/schule-buchental-material` (bei Bedarf mit `add_repo` verbinden, dann `register_repo_root`).
