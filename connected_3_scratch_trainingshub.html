@@ -86,7 +86,7 @@
       border-radius: 999px; padding: 5px 10px; min-width: 30px; text-align: center;
       font-size: 12px; font-weight: 500; border: 1px solid rgba(0,0,0,0.12);
     }
-    .sb-num.sb-wrong { background: #fff1f2; color: #be123c; font-weight: 800; box-shadow: 0 0 0 2px #facc15; }
+    .sb-num.sb-wrong { background: #fef9c3; color: #854d0e; font-weight: 800; box-shadow: 0 0 0 2px #facc15; }
     .sb-rep {
       display: inline-flex; align-items: center; gap: 6px;
       background: var(--c); color: #fff; border-radius: 999px; padding: 5px 10px;
@@ -138,9 +138,28 @@
     /* Beim Springen zu einer Aufgabe nicht unter dem festen Kopf verschwinden */
     [data-task] { scroll-margin-top: 13rem; }
     @media (min-width: 640px) { [data-task] { scroll-margin-top: 11rem; } }
+    /* Sprachwechsel: feste Texte stehen doppelt (data-l="de" / data-l="es") */
+    html[lang="es"] [data-l="de"], html:not([lang="es"]) [data-l="es"] { display: none !important; }
+    html:not([lang="es"]) .lang-btn[data-setlang="de"], html[lang="es"] .lang-btn[data-setlang="es"] { background: #fff; color: #0f172a; }
+    /* Spanisch: Abstand oben wie auf Deutsch, wenn der versteckte deutsche Block an erster Stelle steht (space-y-…) */
+    html[lang="es"] [data-l="de"]:first-child + [data-l="es"] { margin-top: 0; }
   </style>
+  <script>
+    // Sprache sofort setzen (gilt für alle Seiten des Lernportals), damit nichts kurz auf Deutsch aufblitzt
+    try { if (localStorage.getItem('lernportal_lang') === 'es') document.documentElement.lang = 'es'; } catch (e) {}
+  </script>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-sky-600 selection:text-white">
+
+  <!-- Sprache: Deutsch | Español -->
+  <div class="bg-gradient-to-r from-sky-950 via-indigo-950 to-slate-950 text-white">
+    <div class="max-w-5xl mx-auto px-4 pt-2 pb-1 flex justify-end">
+      <div class="inline-flex rounded-full bg-white/10 border border-white/15 p-0.5 text-xs font-bold" role="group" aria-label="Sprache · Idioma">
+        <button type="button" data-setlang="de" onclick="setLang('de')" lang="de" class="lang-btn px-3 py-1 rounded-full text-white/80">Deutsch</button>
+        <button type="button" data-setlang="es" onclick="setLang('es')" lang="es" class="lang-btn px-3 py-1 rounded-full text-white/80">Español</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Header -->
   <header class="bg-gradient-to-r from-sky-900 via-indigo-950 to-slate-900 text-white shadow-lg sticky top-0 z-40 border-b border-sky-800/50">
@@ -149,29 +168,15 @@
         <span class="text-2xl sm:text-3xl p-1.5 sm:p-2 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/10 shadow-inner">🚁</span>
         <div>
           <div class="flex items-center gap-2">
-            <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-sky-400/20 text-sky-200 border border-sky-400/30">Connected 3 · Kapitel 3</span>
-            <span class="text-[10px] font-medium bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Speichert alle Antworten automatisch">
-              💾 Auto-Save
+            <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-sky-400/20 text-sky-200 border border-sky-400/30"><span data-l="de">Connected 3 · Kapitel 3</span><span data-l="es" lang="es">Connected 3 · Capítulo 3</span></span>
+            <span class="text-[10px] font-medium bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Speichert alle Antworten automatisch" data-es-title="Guarda todas las respuestas automáticamente">
+              <span data-l="de">💾 Auto-Save</span><span data-l="es" lang="es">💾 Autoguardado</span>
             </span>
-            <span class="text-[10px] font-medium bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Zufällige Mischung">
-              🔀 Zufall
+            <span class="text-[10px] font-medium bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 px-1.5 py-0.5 rounded-md flex items-center gap-1" title="Zufällige Mischung" data-es-title="Mezcla al azar">
+              <span data-l="de">🔀 Zufall</span><span data-l="es" lang="es">🔀 Al azar</span>
             </span>
           </div>
-          <h1 class="text-base sm:text-lg font-bold leading-tight mt-0.5">Abheben mit Algorithmen · Scratch Trainingshub</h1>
-        </div>
-      </div>
-
-      <!-- Quick Stats & Stopwatch -->
-      <div class="flex flex-wrap items-center gap-2">
-        <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl border border-white/20 text-xs shadow-inner">
-          <span class="text-amber-300 font-semibold">⏱️ Zeit:</span>
-          <span id="timer-display" class="font-mono-code font-bold text-white bg-black/40 px-2 py-0.5 rounded-lg tracking-wider text-xs">00:00</span>
-          <button onclick="toggleTimer()" id="timer-toggle-btn" class="px-2 py-0.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-bold transition">
-            ▶️ Start
-          </button>
-          <button onclick="resetTimer()" class="px-1.5 py-0.5 rounded-lg bg-white/15 hover:bg-rose-500/40 text-white transition text-xs">
-            ↺
-          </button>
+          <h1 class="text-base sm:text-lg font-bold leading-tight mt-0.5"><span data-l="de">Abheben mit Algorithmen · Scratch Trainingshub</span><span data-l="es" lang="es">Despegar con algoritmos · Práctica de Scratch</span></h1>
         </div>
       </div>
     </div>
@@ -179,19 +184,19 @@
     <!-- Navigation Bar (5 strukturierte Tabs) -->
     <nav class="max-w-5xl mx-auto px-4 flex gap-1.5 overflow-x-auto border-t border-white/10 py-2 text-xs sm:text-sm font-medium">
       <button onclick="switchTab('basics')" id="tab-btn-basics" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm">
-        <span>📜</span> 1. Algorithmus & Diagramm
+        <span>📜</span> <span data-l="de">1. Algorithmus & Diagramm</span><span data-l="es" lang="es">1. Algoritmo y diagrama</span>
       </button>
       <button onclick="switchTab('loops')" id="tab-btn-loops" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>🔄</span> 2. Schleifen & Quadrat
+        <span>🔄</span> <span data-l="de">2. Schleifen & Quadrat</span><span data-l="es" lang="es">2. Bucles y cuadrado</span>
       </button>
       <button onclick="switchTab('custom')" id="tab-btn-custom" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>🧩</span> 3. Eigene Blöcke & Bugfix
+        <span>🧩</span> <span data-l="de">3. Eigene Blöcke & Bugfix</span><span data-l="es" lang="es">3. Bloques propios y errores</span>
       </button>
       <button onclick="switchTab('logic')" id="tab-btn-logic" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>💡</span> 4. Smarthome & UND/ODER
+        <span>💡</span> <span data-l="de">4. Smarthome & UND/ODER</span><span data-l="es" lang="es">4. Casa inteligente: Y/O</span>
       </button>
       <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/30">
-        <span>📝</span> 5. Test-Simulation (<span class="js-max-pts">30</span> P.)
+        <span>📝</span> <span data-l="de">5. Test-Simulation (</span><span data-l="es" lang="es">5. Simulacro de examen (</span><span class="js-max-pts">30</span> <span data-l="de">P.)</span><span data-l="es" lang="es">p.)</span>
       </button>
     </nav>
   </header>
@@ -207,27 +212,32 @@
     <section id="view-basics" class="tab-view space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <span class="text-xs font-bold text-sky-700 uppercase tracking-wider">Lernziele 1 & 2 · MI.2.2.h · MI.2.2.g</span>
-          <h2 class="text-lg sm:text-xl font-bold text-slate-800">📜 Was ist ein Algorithmus? & Ablaufdiagramme lesen</h2>
-          <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+          <span class="text-xs font-bold text-sky-700 uppercase tracking-wider"><span data-l="de">Lernziele 1 & 2 · MI.2.2.h · MI.2.2.g</span><span data-l="es" lang="es">Objetivos 1 y 2 · MI.2.2.h · MI.2.2.g</span></span>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">📜 Was ist ein Algorithmus? & Ablaufdiagramme lesen</span><span data-l="es" lang="es">📜 ¿Qué es un algoritmo? · Leer diagramas de flujo</span></h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="de">
             Lerne den Unterschied zwischen genauen Anleitungen und losen Listen und verstehe Entscheidungs-Rauten.
+          </p>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="es" lang="es">
+            Aprende la diferencia entre instrucciones exactas y listas sueltas, y entiende los rombos de decisión.
           </p>
         </div>
         <button onclick="reshuffleBasics()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1 border border-slate-300 self-start sm:self-auto shrink-0">
-          <span>🔀</span> Optionen neu mischen
+          <span>🔀</span> <span data-l="de">Optionen neu mischen</span><span data-l="es" lang="es">Mezclar las opciones de nuevo</span>
         </button>
       </div>
 
       <!-- Theorie zum Aufklappen (Ziel des Knopfs «📖 Theorie») -->
       <details id="theory-basics" class="bg-white rounded-2xl p-4 shadow-sm border border-sky-200">
-        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-sky-800 cursor-pointer select-none"><span>📖 Theorie: Algorithmus und Ablaufdiagramm</span><span class="text-xs font-semibold text-slate-400">antippen</span></summary>
+        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-sky-800 cursor-pointer select-none"><span data-l="de">📖 Theorie: Algorithmus und Ablaufdiagramm</span><span data-l="es" lang="es">📖 Teoría: algoritmo y diagrama de flujo</span><span class="text-xs font-semibold text-slate-400"><span data-l="de">antippen</span><span data-l="es" lang="es">toca</span></span></summary>
         <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
-          <p><b>Algorithmus:</b> eine genaue Anleitung, Schritt für Schritt. Jeder Schritt ist klar, die Reihenfolge stimmt, und am Ende ist die Aufgabe gelöst. Wie ein Rezept.</p>
-          <p><b>Ablaufdiagramm:</b> zeigt einen Algorithmus als Bild. Die Pfeile zeigen, wie es weitergeht.</p>
+          <p data-l="de"><b>Algorithmus:</b> eine genaue Anleitung, Schritt für Schritt. Jeder Schritt ist klar, die Reihenfolge stimmt, und am Ende ist die Aufgabe gelöst. Wie ein Rezept.</p>
+          <p data-l="es" lang="es"><b>Algoritmo:</b> unas instrucciones exactas, paso a paso. Cada paso está claro, el orden es correcto y al final la tarea está resuelta. Como una receta.</p>
+          <p data-l="de"><b>Ablaufdiagramm:</b> zeigt einen Algorithmus als Bild. Die Pfeile zeigen, wie es weitergeht.</p>
+          <p data-l="es" lang="es"><b>Diagrama de flujo:</b> muestra un algoritmo como dibujo. Las flechas muestran cómo sigue.</p>
           <ul class="space-y-1.5">
-            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><rect x="2" y="3" width="36" height="18" rx="9" fill="#10b981"/></svg><span>Start oder Ende</span></li>
-            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><rect x="2" y="3" width="36" height="18" rx="3" fill="#fff" stroke="#0ea5e9" stroke-width="2"/></svg><span>ein Befehl: etwas tun</span></li>
-            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><polygon points="20,1 38,12 20,23 2,12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/></svg><span>eine Frage mit zwei Ausgängen: JA und NEIN</span></li>
+            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><rect x="2" y="3" width="36" height="18" rx="9" fill="#10b981"/></svg><span data-l="de">Start oder Ende</span><span data-l="es" lang="es">inicio o final</span></li>
+            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><rect x="2" y="3" width="36" height="18" rx="3" fill="#fff" stroke="#0ea5e9" stroke-width="2"/></svg><span data-l="de">ein Befehl: etwas tun</span><span data-l="es" lang="es">un comando: hacer algo</span></li>
+            <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><polygon points="20,1 38,12 20,23 2,12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/></svg><span data-l="de">eine Frage mit zwei Ausgängen: JA und NEIN</span><span data-l="es" lang="es">una pregunta con dos salidas: SÍ y NO</span></li>
           </ul>
         </div>
       </details>
@@ -235,22 +245,22 @@
       <!-- Aufgabe 1: Der Begriff «Algorithmus» | MI.2.2.h -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a1">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 1: Der Begriff «Algorithmus» (<span data-max="a1"></span> Punkte)</h3>
-          <span class="text-xs font-semibold text-slate-400">Multiple Choice</span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 1: Der Begriff «Algorithmus» (<span data-max="a1"></span> Punkte)</span><span data-l="es" lang="es">Tarea 1: la palabra «algoritmo» (<span data-max="a1"></span> puntos)</span></h3>
+          <span class="text-xs font-semibold text-slate-400"><span data-l="de">Multiple Choice</span><span data-l="es" lang="es">Opción múltiple</span></span>
         </div>
 
         <!-- Teilfragen: Reihenfolge wird gemischt, Buchstaben setzt die Seite -->
         <div class="space-y-4 pt-1" data-parts="a1">
           <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a1a" data-part>
             <span class="text-xs sm:text-sm font-bold text-slate-900 block">
-              <span class="js-label"></span>Was beschreibt am besten, was ein Algorithmus ist? (1 P.)
+              <span class="js-label"></span><span data-l="de">Was beschreibt am besten, was ein Algorithmus ist? (1 P.)</span><span data-l="es" lang="es">¿Qué describe mejor lo que es un algoritmo? (1 p.)</span>
             </span>
             <div class="space-y-1.5" id="opts-a1a"></div>
           </div>
 
           <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a1b" data-part>
             <span class="text-xs sm:text-sm font-bold text-slate-900 block">
-              <span class="js-label"></span>Welches Beispiel aus dem Alltag ist ein echter Algorithmus? (1 P.)
+              <span class="js-label"></span><span data-l="de">Welches Beispiel aus dem Alltag ist ein echter Algorithmus? (1 P.)</span><span data-l="es" lang="es">¿Qué ejemplo de la vida diaria es un algoritmo de verdad? (1 p.)</span>
             </span>
             <div class="space-y-1.5" id="opts-a1b"></div>
           </div>
@@ -262,19 +272,21 @@
       <!-- Aufgabe 2: Ablaufdiagramm der Postdrohne | MI.2.2.g -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a2">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 2: Ablaufdiagramm der Postdrohne (<span data-max="a2"></span> Punkte)</h3>
-          <span class="text-xs font-semibold text-slate-400 whitespace-nowrap">Drag &amp; Drop</span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 2: Ablaufdiagramm der Postdrohne (<span data-max="a2"></span> Punkte)</span><span data-l="es" lang="es">Tarea 2: diagrama de flujo del dron de correo (<span data-max="a2"></span> puntos)</span></h3>
+          <span class="text-xs font-semibold text-slate-400 whitespace-nowrap"><span data-l="de">Drag &amp; Drop</span><span data-l="es" lang="es">Arrastrar y soltar</span></span>
         </div>
 
         <div class="bg-sky-50 border-l-4 border-sky-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium space-y-1">
-          <p>👉 <strong>Situation:</strong> Eine Postdrohne soll ein Paket ausliefern. Sie steigt zuerst auf, fliegt dann so lange vorwärts, bis sie am Ziel ist, und landet dort.</p>
-          <p class="text-sky-900">🖱️ <strong>Ziehe</strong> die richtigen Befehle in die Felder 1–3. Auf dem Tablet: Befehl <strong>antippen</strong>, dann aufs Feld <strong>tippen</strong>. Ein Feld nochmals antippen = Befehl zurücklegen. Achtung: 2 Befehle passen nicht!</p>
+          <p data-l="de">👉 <strong>Situation:</strong> Eine Postdrohne soll ein Paket ausliefern. Sie steigt zuerst auf, fliegt dann so lange vorwärts, bis sie am Ziel ist, und landet dort.</p>
+          <p data-l="es" lang="es">👉 <strong>Situación:</strong> un dron de correo tiene que entregar un paquete. Primero sube, después vuela hacia adelante hasta que llega al destino, y allí aterriza.</p>
+          <p class="text-sky-900" data-l="de">🖱️ <strong>Ziehe</strong> die richtigen Befehle in die Felder 1–3. Auf dem Tablet: Befehl <strong>antippen</strong>, dann aufs Feld <strong>tippen</strong>. Ein Feld nochmals antippen = Befehl zurücklegen. Achtung: 2 Befehle passen nicht!</p>
+          <p class="text-sky-900" data-l="es" lang="es">🖱️ <strong>Arrastra</strong> los comandos correctos a los campos 1–3. En la tableta: <strong>toca</strong> un comando y después <strong>toca</strong> el campo. Si vuelves a tocar un campo, el comando regresa. ¡Atención: 2 comandos no sirven!</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-4 items-start" id="card-a2-flow">
           <!-- Diagramm -->
           <div class="rounded-xl border border-slate-200 bg-slate-50 p-1 sm:p-3">
-            <svg viewBox="0 0 470 496" class="w-full max-w-xl mx-auto h-auto block" font-family="Inter, sans-serif" role="img" aria-label="Ablaufdiagramm der Postdrohne">
+            <svg viewBox="0 0 470 496" class="w-full max-w-xl mx-auto h-auto block" font-family="Inter, sans-serif" role="img" aria-label="Ablaufdiagramm der Postdrohne" data-es-aria-label="Diagrama de flujo del dron de correo">
               <defs>
                 <marker id="flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                   <path d="M0 0 L10 5 L0 10 z" fill="#475569"/>
@@ -286,72 +298,72 @@
 
               <!-- START -->
               <rect x="75" y="6" width="110" height="42" rx="21" fill="#10b981"/>
-              <text x="130" y="33" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">START</text>
+              <text x="130" y="33" text-anchor="middle" fill="#fff" font-size="16" font-weight="800" data-es="INICIO">START</text>
               <line x1="130" y1="48" x2="130" y2="82" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
 
               <!-- FELD 1 -->
               <g class="flow-slot" data-slot="fs1" onclick="handleFlowSlotClick('fs1')">
                 <rect id="flow-rect-fs1" x="40" y="86" width="180" height="62" rx="10" fill="#ffffff" stroke="#0ea5e9" stroke-width="2.5" stroke-dasharray="7 4"/>
-                <text x="50" y="101" fill="#0369a1" font-size="11" font-weight="800">FELD 1</text>
+                <text x="50" y="101" fill="#0369a1" font-size="11" font-weight="800" data-es="CAMPO 1">FELD 1</text>
                 <text id="flow-txt-fs1" data-cx="130" data-cy="123" x="130" y="128" text-anchor="middle" fill="#94a3b8" font-size="15" font-weight="700">hierher ziehen …</text>
               </g>
               <line x1="130" y1="148" x2="130" y2="186" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
 
               <!-- RAUTE -->
               <polygon points="130,190 218,246 130,302 42,246" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
-              <text x="130" y="242" text-anchor="middle" fill="#78350f" font-size="15" font-weight="800">Ist das Ziel</text>
-              <text x="130" y="261" text-anchor="middle" fill="#78350f" font-size="15" font-weight="800">erreicht?</text>
+              <text x="130" y="242" text-anchor="middle" fill="#78350f" font-size="15" font-weight="800" data-es="¿Llegó al">Ist das Ziel</text>
+              <text x="130" y="261" text-anchor="middle" fill="#78350f" font-size="15" font-weight="800" data-es="destino?">erreicht?</text>
 
               <!-- NEIN-Pfad -->
               <line x1="218" y1="246" x2="276" y2="246" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
-              <text x="247" y="236" text-anchor="middle" fill="#e11d48" font-size="13" font-weight="800">NEIN</text>
+              <text x="247" y="236" text-anchor="middle" fill="#e11d48" font-size="13" font-weight="800" data-es="NO">NEIN</text>
 
               <!-- FELD 2 -->
               <g class="flow-slot" data-slot="fs2" onclick="handleFlowSlotClick('fs2')">
                 <rect id="flow-rect-fs2" x="282" y="215" width="180" height="62" rx="10" fill="#ffffff" stroke="#0ea5e9" stroke-width="2.5" stroke-dasharray="7 4"/>
-                <text x="292" y="230" fill="#0369a1" font-size="11" font-weight="800">FELD 2</text>
+                <text x="292" y="230" fill="#0369a1" font-size="11" font-weight="800" data-es="CAMPO 2">FELD 2</text>
                 <text id="flow-txt-fs2" data-cx="372" data-cy="252" x="372" y="257" text-anchor="middle" fill="#94a3b8" font-size="15" font-weight="700">hierher ziehen …</text>
               </g>
 
               <!-- Schleife zurück zur Frage -->
               <path d="M 372 215 V 167 H 136" fill="none" stroke="#d97706" stroke-width="2.5" stroke-dasharray="6 3" marker-end="url(#flow-arrow-amber)"/>
-              <rect x="176" y="153" width="160" height="28" rx="14" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
-              <text x="256" y="172" text-anchor="middle" fill="#92400e" font-size="14" font-weight="800">↺ zurück zur Frage</text>
+              <rect id="flow-back-rect" x="176" y="153" width="160" height="28" rx="14" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+              <text x="256" y="172" text-anchor="middle" fill="#92400e" font-size="14" font-weight="800" data-es="↺ volver a la pregunta">↺ zurück zur Frage</text>
 
               <!-- JA-Pfad -->
               <line x1="130" y1="302" x2="130" y2="340" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
-              <text x="142" y="326" fill="#059669" font-size="13" font-weight="800">JA</text>
+              <text x="142" y="326" fill="#059669" font-size="13" font-weight="800" data-es="SÍ">JA</text>
 
               <!-- FELD 3 -->
               <g class="flow-slot" data-slot="fs3" onclick="handleFlowSlotClick('fs3')">
                 <rect id="flow-rect-fs3" x="40" y="344" width="180" height="62" rx="10" fill="#ffffff" stroke="#0ea5e9" stroke-width="2.5" stroke-dasharray="7 4"/>
-                <text x="50" y="359" fill="#0369a1" font-size="11" font-weight="800">FELD 3</text>
+                <text x="50" y="359" fill="#0369a1" font-size="11" font-weight="800" data-es="CAMPO 3">FELD 3</text>
                 <text id="flow-txt-fs3" data-cx="130" data-cy="381" x="130" y="386" text-anchor="middle" fill="#94a3b8" font-size="15" font-weight="700">hierher ziehen …</text>
               </g>
               <line x1="130" y1="406" x2="130" y2="444" stroke="#475569" stroke-width="2.5" marker-end="url(#flow-arrow)"/>
 
               <!-- STOPP -->
               <rect x="75" y="448" width="110" height="42" rx="21" fill="#f43f5e"/>
-              <text x="130" y="475" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">STOPP</text>
+              <text x="130" y="475" text-anchor="middle" fill="#fff" font-size="16" font-weight="800" data-es="FIN">STOPP</text>
             </svg>
           </div>
 
           <!-- Befehls-Ablage -->
           <div class="order-first lg:order-none lg:sticky lg:top-32 rounded-xl border-2 border-dashed border-sky-200 bg-sky-50/50 p-3 space-y-2">
-            <div class="text-xs font-bold text-sky-900 uppercase tracking-wide">🧰 Befehle</div>
+            <div class="text-xs font-bold text-sky-900 uppercase tracking-wide"><span data-l="de">🧰 Befehle</span><span data-l="es" lang="es">🧰 Comandos</span></div>
             <div id="flow-bank" class="flex flex-wrap lg:flex-col gap-2"></div>
-            <div id="flow-bank-empty" class="hidden text-xs text-slate-500 italic">Alle Felder belegt. Tippe auf ein Feld, um einen Befehl zurückzulegen.</div>
+            <div id="flow-bank-empty" class="hidden text-xs text-slate-500 italic"><span data-l="de">Alle Felder belegt. Tippe auf ein Feld, um einen Befehl zurückzulegen.</span><span data-l="es" lang="es">Todos los campos están ocupados. Toca un campo para devolver un comando.</span></div>
           </div>
         </div>
 
         <!-- Zusatzfrage Raute -->
         <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs sm:text-sm" id="card-a2-3">
-          <span class="font-medium text-slate-800">Warum ist in der Mitte eine <strong>Raute ◇</strong> gezeichnet und kein Rechteck? (1 P.)</span>
+          <span class="font-medium text-slate-800"><span data-l="de">Warum ist in der Mitte eine <strong>Raute ◇</strong> gezeichnet und kein Rechteck? (1 P.)</span><span data-l="es" lang="es">¿Por qué en el centro hay un <strong>rombo ◇</strong> y no un rectángulo? (1 p.)</span></span>
           <select id="sel-a2-3" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold sm:w-72">
-            <option value="">-- wählen --</option>
-            <option value="right">Weil dort eine Ja/Nein-Entscheidung getroffen wird</option>
-            <option value="wrong1">Weil die Drohne dort schneller fliegen soll</option>
-            <option value="wrong2">Weil dort der Akku geladen wird</option>
+            <option value="" data-es="-- elige --">-- wählen --</option>
+            <option value="right" data-es="Porque allí se toma una decisión de sí o no">Weil dort eine Ja/Nein-Entscheidung getroffen wird</option>
+            <option value="wrong1" data-es="Porque allí el dron tiene que volar más rápido">Weil die Drohne dort schneller fliegen soll</option>
+            <option value="wrong2" data-es="Porque allí se carga la batería">Weil dort der Akku geladen wird</option>
           </select>
         </div>
 
@@ -364,58 +376,70 @@
     <!-- ============================================================== -->
     <section id="view-loops" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Lernziele 3 & 4 · MI.2.2.g</span>
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">🔄 Schleifen (Loops) & Schrittweiten steuern</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+        <span class="text-xs font-bold text-amber-600 uppercase tracking-wider"><span data-l="de">Lernziele 3 & 4 · MI.2.2.g</span><span data-l="es" lang="es">Objetivos 3 y 4 · MI.2.2.g</span></span>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">🔄 Schleifen (Loops) & Schrittweiten steuern</span><span data-l="es" lang="es">🔄 Bucles (loops) y controlar los pasos</span></h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="de">
           Wie oft wiederholt Scratch einen Befehl? Und wie baut man ein Quadrat mit 4 Ecken?
+        </p>
+        <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="es" lang="es">
+          ¿Cuántas veces repite Scratch un comando? ¿Y cómo se construye un cuadrado con 4 esquinas?
         </p>
       </div>
 
       <!-- Theorie zum Aufklappen (Ziel des Knopfs «📖 Theorie») -->
       <details id="theory-loops" class="bg-white rounded-2xl p-4 shadow-sm border border-amber-200">
-        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-amber-800 cursor-pointer select-none"><span>📖 Theorie: Schleifen und Quadrat</span><span class="text-xs font-semibold text-slate-400">antippen</span></summary>
+        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-amber-800 cursor-pointer select-none"><span data-l="de">📖 Theorie: Schleifen und Quadrat</span><span data-l="es" lang="es">📖 Teoría: bucles y cuadrado</span><span class="text-xs font-semibold text-slate-400"><span data-l="de">antippen</span><span data-l="es" lang="es">toca</span></span></summary>
         <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
-          <p><b>Schleife:</b> Alles, was in der orangen Klammer liegt, wird wiederholt.</p>
+          <p data-l="de"><b>Schleife:</b> Alles, was in der orangen Klammer liegt, wird wiederholt.</p>
+          <p data-l="es" lang="es"><b>Bucle:</b> todo lo que está dentro de la «C» naranja se repite.</p>
           <div class="sb-area inline-block max-w-full">
             <div class="sb-script">
               <div class="sb-c sb-control">
-                <div class="sb-c-top">wiederhole <span class="sb-num">3</span> mal</div>
+                <div class="sb-c-top"><span data-l="de">wiederhole</span><span data-l="es" lang="es">repetir</span> <span class="sb-num">3</span> <span data-l="de">mal</span></div>
                 <div class="sb-c-mouth"><div class="sb-c-arm"></div>
-                  <div class="sb-c-inner"><div class="sb sb-motion">gehe <span class="sb-num">5</span> er-Schritt</div></div>
+                  <div class="sb-c-inner"><div class="sb sb-motion"><span data-l="de">gehe</span><span data-l="es" lang="es">mover</span> <span class="sb-num">5</span> <span data-l="de">er-Schritt</span><span data-l="es" lang="es">pasos</span></div></div>
                 </div>
                 <div class="sb-c-bottom"><span></span></div>
               </div>
             </div>
           </div>
-          <p>Rechnen: <b>Wiederholungen × Schritte</b>. Hier: 3 × 5 = 15 Schritte.</p>
-          <ul class="list-disc pl-5 space-y-1">
+          <p data-l="de">Rechnen: <b>Wiederholungen × Schritte</b>. Hier: 3 × 5 = 15 Schritte.</p>
+          <p data-l="es" lang="es">Cálculo: <b>repeticiones × pasos</b>. Aquí: 3 × 5 = 15 pasos.</p>
+          <ul class="list-disc pl-5 space-y-1" data-l="de">
             <li><b>wiederhole … mal:</b> genau so oft, dann ist Schluss.</li>
             <li><b>wiederhole bis &lt; … &gt;:</b> so lange, bis die Bedingung stimmt. Dann hört die Schleife von selbst auf.</li>
             <li><b>wiederhole fortlaufend:</b> hört nie auf.</li>
           </ul>
-          <p><b>Richtung:</b> x geht nach links und rechts, y nach oben und unten. Ein Plus bei y heisst nach oben, ein Minus heisst nach unten.</p>
-          <p><b>Quadrat:</b> 4 gleiche Seiten und 4 Ecken mit je 90 Grad. 4 × 90 Grad = 360 Grad, also einmal ganz herum.</p>
+          <ul class="list-disc pl-5 space-y-1" data-l="es" lang="es">
+            <li><b>repetir …:</b> justo ese número de veces, y se acaba.</li>
+            <li><b>repetir hasta que &lt; … &gt;:</b> hasta que la condición se cumple. Entonces el bucle se detiene solo.</li>
+            <li><b>por siempre:</b> nunca se detiene.</li>
+          </ul>
+          <p data-l="de"><b>Richtung:</b> x geht nach links und rechts, y nach oben und unten. Ein Plus bei y heisst nach oben, ein Minus heisst nach unten.</p>
+          <p data-l="es" lang="es"><b>Dirección:</b> la <b>x</b> va a la izquierda o a la derecha. La <b>y</b> va hacia arriba o hacia abajo. Un más en la <b>y</b> significa hacia arriba; un menos, hacia abajo.</p>
+          <p data-l="de"><b>Quadrat:</b> 4 gleiche Seiten und 4 Ecken mit je 90 Grad. 4 × 90 Grad = 360 Grad, also einmal ganz herum.</p>
+          <p data-l="es" lang="es"><b>Cuadrado:</b> 4 lados iguales y 4 esquinas de 90 grados cada una. 4 × 90 grados = 360 grados, o sea, una vuelta completa.</p>
         </div>
       </details>
 
       <!-- Aufgabe 3: Schleifen und Schritte berechnen | MI.2.2.g -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a3">
         <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 3: Schleifen und Schritte berechnen (<span data-max="a3"></span> Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 3: Schleifen und Schritte berechnen (<span data-max="a3"></span> Punkte)</span><span data-l="es" lang="es">Tarea 3: calcular bucles y pasos (<span data-max="a3"></span> puntos)</span></h3>
         </div>
 
-        <p class="text-xs sm:text-sm text-slate-700">Die Drohne führt folgenden Scratch-Code aus:</p>
+        <p class="text-xs sm:text-sm text-slate-700"><span data-l="de">Die Drohne führt folgenden Scratch-Code aus:</span><span data-l="es" lang="es">El dron ejecuta este código de Scratch:</span></p>
 
         <!-- Scratch Block Darstellung -->
         <div class="sb-area inline-block">
           <div class="sb-script">
-            <div class="sb sb-hat sb-events">Wenn <span class="sb-flag">⚑</span> angeklickt wird</div>
+            <div class="sb sb-hat sb-events"><span data-l="de">Wenn</span><span data-l="es" lang="es">al hacer clic en</span> <span class="sb-flag">⚑</span> <span data-l="de">angeklickt wird</span></div>
             <div class="sb-c sb-control">
-              <div class="sb-c-top">wiederhole <span class="sb-num">4</span> mal</div>
+              <div class="sb-c-top"><span data-l="de">wiederhole</span><span data-l="es" lang="es">repetir</span> <span class="sb-num">4</span> <span data-l="de">mal</span></div>
               <div class="sb-c-mouth"><div class="sb-c-arm"></div>
                 <div class="sb-c-inner">
-                  <div class="sb sb-motion">gehe <span class="sb-num">10</span> er-Schritt</div>
-                  <div class="sb sb-control">warte <span class="sb-num">1</span> Sekunden</div>
+                  <div class="sb sb-motion"><span data-l="de">gehe</span><span data-l="es" lang="es">mover</span> <span class="sb-num">10</span> <span data-l="de">er-Schritt</span><span data-l="es" lang="es">pasos</span></div>
+                  <div class="sb sb-control"><span data-l="de">warte</span><span data-l="es" lang="es">esperar</span> <span class="sb-num">1</span> <span data-l="de">Sekunden</span><span data-l="es" lang="es">segundos</span></div>
                 </div>
               </div>
               <div class="sb-c-bottom"><span></span></div>
@@ -425,23 +449,23 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs sm:text-sm" data-parts="a3">
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a3-1" data-part>
-            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Wie oft wird der blaue Befehl wiederholt?</span>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span><span data-l="de">Wie oft wird der blaue Befehl wiederholt?</span><span data-l="es" lang="es">¿Cuántas veces se repite el comando azul?</span></span>
             <select id="sel-a3-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
-              <option value="">-- wählen --</option>
-              <option value="1">1 mal</option>
-              <option value="4">4 mal</option>
-              <option value="10">10 mal</option>
-              <option value="40">40 mal</option>
+              <option value="" data-es="-- elige --">-- wählen --</option>
+              <option value="1" data-es="1 vez">1 mal</option>
+              <option value="4" data-es="4 veces">4 mal</option>
+              <option value="10" data-es="10 veces">10 mal</option>
+              <option value="40" data-es="40 veces">40 mal</option>
             </select>
           </div>
 
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a3-2" data-part>
-            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Wie viele Schritte ist die Drohne am Ende insgesamt geflogen?</span>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span><span data-l="de">Wie viele Schritte ist die Drohne am Ende insgesamt geflogen?</span><span data-l="es" lang="es">Al final, ¿cuántos pasos vuela el dron en total?</span></span>
             <select id="sel-a3-2" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
-              <option value="">-- wählen --</option>
-              <option value="10">10 Schritte</option>
-              <option value="14">14 Schritte (4 + 10)</option>
-              <option value="40">40 Schritte (4 × 10)</option>
+              <option value="" data-es="-- elige --">-- wählen --</option>
+              <option value="10" data-es="10 pasos">10 Schritte</option>
+              <option value="14" data-es="14 pasos (4 + 10)">14 Schritte (4 + 10)</option>
+              <option value="40" data-es="40 pasos (4 × 10)">40 Schritte (4 × 10)</option>
             </select>
           </div>
         </div>
@@ -452,31 +476,31 @@
       <!-- Aufgabe 4: Die richtige Schleife zum Landen wählen | MI.2.2.g -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a4">
         <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 4: Die richtige Schleife zum Landen wählen (<span data-max="a4"></span> Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 4: Die richtige Schleife zum Landen wählen (<span data-max="a4"></span> Punkte)</span><span data-l="es" lang="es">Tarea 4: elegir el bucle correcto para aterrizar (<span data-max="a4"></span> puntos)</span></h3>
         </div>
 
         <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Aufgabe:</strong> Die Drohne ist in der Luft. Sie soll so lange langsam nach unten sinken, <strong>bis sie den Boden berührt</strong>.
+          <span data-l="de">👉 <strong>Aufgabe:</strong> Die Drohne ist in der Luft. Sie soll so lange langsam nach unten sinken, <strong>bis sie den Boden berührt</strong>.</span><span data-l="es" lang="es">👉 <strong>Tarea:</strong> el dron está en el aire. Tiene que bajar despacio <strong>hasta que toque el suelo</strong>.</span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs sm:text-sm" data-parts="a4">
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a4-1" data-part>
-            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Welcher Schleifen-Block ist dafür perfekt?</span>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span><span data-l="de">Welcher Schleifen-Block ist dafür perfekt?</span><span data-l="es" lang="es">¿Qué bloque de bucle es perfecto para esto?</span></span>
             <select id="sel-a4-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
-              <option value="">-- wählen --</option>
-              <option value="fortlaufend">wiederhole fortlaufend</option>
-              <option value="bis">wiederhole bis &lt;wird Boden berührt?&gt;</option>
-              <option value="falls">falls &lt;wird Boden berührt?&gt;, dann</option>
+              <option value="" data-es="-- elige --">-- wählen --</option>
+              <option value="fortlaufend" data-es="por siempre">wiederhole fortlaufend</option>
+              <option value="bis" data-es="repetir hasta que &lt;¿tocando suelo?&gt;">wiederhole bis &lt;wird Boden berührt?&gt;</option>
+              <option value="falls" data-es="si &lt;¿tocando suelo?&gt; entonces">falls &lt;wird Boden berührt?&gt;, dann</option>
             </select>
           </div>
 
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a4-2" data-part>
-            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Welcher y-Wert lässt die Drohne nach UNTEN sinken?</span>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span><span data-l="de">Welcher y-Wert lässt die Drohne nach UNTEN sinken?</span><span data-l="es" lang="es">¿Qué valor de y hace BAJAR al dron?</span></span>
             <select id="sel-a4-2" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
-              <option value="">-- wählen --</option>
-              <option value="y10">ändere y um ( 10 )</option>
-              <option value="yminus1">ändere y um ( -1 )</option>
-              <option value="x10">ändere x um ( 10 )</option>
+              <option value="" data-es="-- elige --">-- wählen --</option>
+              <option value="y10" data-es="sumar a y ( 10 )">ändere y um ( 10 )</option>
+              <option value="yminus1" data-es="sumar a y ( -1 )">ändere y um ( -1 )</option>
+              <option value="x10" data-es="sumar a x ( 10 )">ändere x um ( 10 )</option>
             </select>
           </div>
         </div>
@@ -487,19 +511,20 @@
       <!-- Aufgabe 6: Ein Quadrat fliegen | MI.2.2.g -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a6">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 6: Ein Quadrat fliegen (<span data-max="a6"></span> Punkte)</h3>
-          <span class="text-xs font-semibold text-slate-400">Reihenfolge 1–3</span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 6: Ein Quadrat fliegen (<span data-max="a6"></span> Punkte)</span><span data-l="es" lang="es">Tarea 6: volar un cuadrado (<span data-max="a6"></span> puntos)</span></h3>
+          <span class="text-xs font-semibold text-slate-400"><span data-l="de">Reihenfolge 1–3</span><span data-l="es" lang="es">Orden 1–3</span></span>
         </div>
 
         <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Plan:</strong> Die Drohne soll ein Quadrat abfliegen: 50 Schritte vorwärts, um 90 Grad drehen, das Ganze 4-mal.  
-          Bringe die 3 Bausteine in die richtige Reihenfolge (Zahlen 1, 2, 3):
+          <span data-l="de">👉 <strong>Plan:</strong> Die Drohne soll ein Quadrat abfliegen: 50 Schritte vorwärts, um 90 Grad drehen, das Ganze 4-mal.  
+          Bringe die 3 Bausteine in die richtige Reihenfolge (Zahlen 1, 2, 3):</span><span data-l="es" lang="es">👉 <strong>Plan:</strong> el dron tiene que volar un cuadrado: 50 pasos hacia adelante, girar 90 grados, y todo eso 4 veces.
+          Pon los 3 bloques en el orden correcto (números 1, 2, 3):</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1 items-start">
           <div class="space-y-2.5" id="square-sort-list"></div>
           <div class="space-y-1.5">
-            <div class="text-xs font-bold text-slate-500 uppercase tracking-wide">👀 So sieht dein Skript in Scratch aus:</div>
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-wide"><span data-l="de">👀 So sieht dein Skript in Scratch aus:</span><span data-l="es" lang="es">👀 Así se ve tu programa en Scratch:</span></div>
             <div class="sb-area min-h-[140px]" id="square-preview"></div>
           </div>
         </div>
@@ -513,25 +538,37 @@
     <!-- ============================================================== -->
     <section id="view-custom" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">Lernziele 5 & 6 · MI.2.2.h</span>
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">🧩 Eigene Blöcke (Unterprogramme) & Bugfixing</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+        <span class="text-xs font-bold text-pink-600 uppercase tracking-wider"><span data-l="de">Lernziele 5 & 6 · MI.2.2.h</span><span data-l="es" lang="es">Objetivos 5 y 6 · MI.2.2.h</span></span>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">🧩 Eigene Blöcke (Unterprogramme) & Bugfixing</span><span data-l="es" lang="es">🧩 Bloques propios (subprogramas) y corregir errores</span></h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="de">
           Eigene pinke Blöcke machen den Code sauber und übersichtlich. Finde ausserdem Logikfehler!
+        </p>
+        <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="es" lang="es">
+          Los bloques propios de color rosa hacen que el código quede limpio y claro. ¡Además, encuentra errores de lógica!
         </p>
       </div>
 
       <!-- Theorie zum Aufklappen (Ziel des Knopfs «📖 Theorie») -->
-      <details id="theory-custom" class="bg-white rounded-2xl p-4 shadow-sm border border-rose-200">
-        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-rose-800 cursor-pointer select-none"><span>📖 Theorie: Eigene Blöcke und Fehlersuche</span><span class="text-xs font-semibold text-slate-400">antippen</span></summary>
+      <details id="theory-custom" class="bg-white rounded-2xl p-4 shadow-sm border border-pink-200">
+        <summary class="flex items-center justify-between gap-2 text-sm font-bold text-pink-800 cursor-pointer select-none"><span data-l="de">📖 Theorie: Eigene Blöcke und Fehlersuche</span><span data-l="es" lang="es">📖 Teoría: bloques propios y buscar errores</span><span class="text-xs font-semibold text-slate-400"><span data-l="de">antippen</span><span data-l="es" lang="es">toca</span></span></summary>
         <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
-          <p><b>Eigener Block (Unterprogramm):</b> Mehrere Befehle bekommen zusammen einen Namen. Mit dem pinken Block <b>«Definiere …»</b> legst du fest, was der Block tut. Danach brauchst du nur noch den Namen.</p>
-          <p>Das ist wie eine Rezeptkarte: einmal schreiben, immer wieder brauchen. Das Programm wird kürzer und übersichtlicher, und eine Änderung machst du nur an einer Stelle.</p>
-          <p><b>Fehlersuche (Bugfixing) in 4 Schritten:</b></p>
-          <ol class="list-decimal pl-5 space-y-1">
+          <p data-l="de"><b>Eigener Block (Unterprogramm):</b> Mehrere Befehle bekommen zusammen einen Namen. Mit dem pinken Block <b>«Definiere …»</b> legst du fest, was der Block tut. Danach brauchst du nur noch den Namen.</p>
+          <p data-l="es" lang="es"><b>Bloque propio (subprograma):</b> varios comandos reciben juntos un nombre. Con el bloque rosa <b>«definir …»</b> decides lo que hace el bloque. Después solo necesitas el nombre.</p>
+          <p data-l="de">Das ist wie eine Rezeptkarte: einmal schreiben, immer wieder brauchen. Das Programm wird kürzer und übersichtlicher, und eine Änderung machst du nur an einer Stelle.</p>
+          <p data-l="es" lang="es">Es como una tarjeta de receta: la escribes una vez y la usas siempre. El programa queda más corto y más claro, y un cambio lo haces en un solo lugar.</p>
+          <p data-l="de"><b>Fehlersuche (Bugfixing) in 4 Schritten:</b></p>
+          <p data-l="es" lang="es"><b>Buscar errores (bugfixing) en 4 pasos:</b></p>
+          <ol class="list-decimal pl-5 space-y-1" data-l="de">
             <li>Was <b>soll</b> passieren?</li>
             <li>Was passiert <b>wirklich</b>?</li>
             <li>Geh das Skript Block für Block durch. Achte auf Zahlen, Plus und Minus und die Reihenfolge.</li>
             <li>Ändere eine Sache und teste nochmals.</li>
+          </ol>
+          <ol class="list-decimal pl-5 space-y-1" data-l="es" lang="es">
+            <li>¿Qué <b>debería</b> pasar?</li>
+            <li>¿Qué pasa <b>de verdad</b>?</li>
+            <li>Revisa el programa bloque por bloque. Fíjate en los números, en el más y el menos, y en el orden.</li>
+            <li>Cambia una sola cosa y prueba otra vez.</li>
           </ol>
         </div>
       </details>
@@ -539,19 +576,19 @@
       <!-- Aufgabe 5: Unterprogramme verstehen | MI.2.2.h -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a5">
         <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 5: Unterprogramme verstehen (<span data-max="a5"></span> Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 5: Unterprogramme verstehen (<span data-max="a5"></span> Punkte)</span><span data-l="es" lang="es">Tarea 5: entender los subprogramas (<span data-max="a5"></span> puntos)</span></h3>
         </div>
 
         <div class="sb-area inline-block">
           <div class="sb-script">
-            <div class="sb sb-hat sb-define sb-myblocks">Definiere <span class="sb-rep" style="--c:#FF4D6A">???</span></div>
+            <div class="sb sb-hat sb-define sb-myblocks"><span data-l="de">Definiere</span><span data-l="es" lang="es">definir</span> <span class="sb-rep" style="--c:#FF4D6A">???</span></div>
             <div class="sb-c sb-control">
-              <div class="sb-c-top">wiederhole bis
-                <span class="sb-bool sb-operators"><span class="sb-rep sb-motion">y-Position</span> = <span class="sb-num">200</span></span>
+              <div class="sb-c-top"><span data-l="de">wiederhole bis</span><span data-l="es" lang="es">repetir hasta que</span>
+                <span class="sb-bool sb-operators"><span class="sb-rep sb-motion"><span data-l="de">y-Position</span><span data-l="es" lang="es">posición en y</span></span> = <span class="sb-num">200</span></span>
               </div>
               <div class="sb-c-mouth"><div class="sb-c-arm"></div>
                 <div class="sb-c-inner">
-                  <div class="sb sb-motion">ändere y um <span class="sb-num">1</span></div>
+                  <div class="sb sb-motion"><span data-l="de">ändere y um</span><span data-l="es" lang="es">sumar a y</span> <span class="sb-num">1</span></div>
                 </div>
               </div>
               <div class="sb-c-bottom"></div>
@@ -562,17 +599,17 @@
         <!-- Teilfragen: Reihenfolge wird gemischt, Buchstaben setzt die Seite -->
         <div class="space-y-4 pt-1 text-xs sm:text-sm" data-parts="a5">
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a5-1" data-part>
-            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Welcher Name passt am besten für diesen Block? (Was macht die Drohne hier?) (1 P.)</span>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span><span data-l="de">Welcher Name passt am besten für diesen Block? (Was macht die Drohne hier?) (1 P.)</span><span data-l="es" lang="es">¿Qué nombre le queda mejor a este bloque? (¿Qué hace el dron aquí?) (1 p.)</span></span>
             <select id="sel-a5-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
-              <option value="">-- wählen --</option>
-              <option value="abheben">abheben</option>
-              <option value="drehen">im Kreis drehen</option>
-              <option value="abwerfen">Paket abwerfen</option>
+              <option value="" data-es="-- elige --">-- wählen --</option>
+              <option value="abheben" data-es="despegar">abheben</option>
+              <option value="drehen" data-es="girar en círculo">im Kreis drehen</option>
+              <option value="abwerfen" data-es="soltar el paquete">Paket abwerfen</option>
             </select>
           </div>
 
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a5-2" data-part>
-            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Warum nutzt man eigene Blöcke (Unterprogramme)? (Wähle die ZWEI richtigen Gründe!) (2 P.)</span>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span><span data-l="de">Warum nutzt man eigene Blöcke (Unterprogramme)? (Wähle die ZWEI richtigen Gründe!) (2 P.)</span><span data-l="es" lang="es">¿Por qué se usan bloques propios (subprogramas)? (¡Elige las DOS razones correctas!) (2 p.)</span></span>
             <div class="space-y-1.5" id="opts-a5-reasons"></div>
           </div>
         </div>
@@ -583,53 +620,54 @@
       <!-- Aufgabe 8: Bugfixing – Finde den Programmierfehler | MI.2.2.h -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a8">
         <div class="border-b border-slate-100 pb-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 8: Bugfixing – Finde den Programmierfehler! (<span data-max="a8"></span> Punkte)</h3>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 8: Bugfixing – Finde den Programmierfehler! (<span data-max="a8"></span> Punkte)</span><span data-l="es" lang="es">Tarea 8: corregir errores – ¡encuentra el error del programa! (<span data-max="a8"></span> puntos)</span></h3>
         </div>
 
-        <div class="bg-rose-50 border-l-4 border-rose-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          👉 <strong>Der Fehler:</strong> Ein Schüler will, dass seine Drohne sanft zum Boden landet.  
-          Aber sein Skript spinnt: <strong>Die Drohne schiesst immer höher in den Himmel, statt nach unten zu sinken!</strong>
+        <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
+          <span data-l="de">👉 <strong>Der Fehler:</strong> Ein Schüler will, dass seine Drohne sanft zum Boden landet.  
+          Aber sein Skript spinnt: <strong>Die Drohne schiesst immer höher in den Himmel, statt nach unten zu sinken!</strong></span><span data-l="es" lang="es">👉 <strong>El error:</strong> un alumno quiere que su dron aterrice suavemente en el suelo.
+          Pero su programa hace algo raro: <strong>¡el dron sube cada vez más alto en el cielo, en vez de bajar!</strong></span>
         </div>
 
         <!-- Fehlerhafter Code -->
         <div class="sb-area inline-block">
           <div class="flex flex-wrap items-start gap-x-3 gap-y-2">
             <div class="sb-script">
-              <div class="sb sb-hat sb-define sb-myblocks">Definiere <span class="sb-rep" style="--c:#FF4D6A">Landen</span></div>
+              <div class="sb sb-hat sb-define sb-myblocks"><span data-l="de">Definiere</span><span data-l="es" lang="es">definir</span> <span class="sb-rep" style="--c:#FF4D6A"><span data-l="de">Landen</span><span data-l="es" lang="es">Aterrizar</span></span></div>
               <div class="sb-c sb-control">
-                <div class="sb-c-top">wiederhole bis
-                  <span class="sb-bool sb-sensing">wird <span class="sb-rep" style="--c:#47A8D1">Boden ▾</span> berührt?</span>
+                <div class="sb-c-top"><span data-l="de">wiederhole bis</span><span data-l="es" lang="es">repetir hasta que</span>
+                  <span class="sb-bool sb-sensing"><span data-l="de">wird</span><span data-l="es" lang="es">¿tocando</span> <span class="sb-rep" style="--c:#47A8D1"><span data-l="de">Boden ▾</span><span data-l="es" lang="es">suelo ▾</span></span> <span data-l="de">berührt?</span><span data-l="es" lang="es">?</span></span>
                 </div>
                 <div class="sb-c-mouth"><div class="sb-c-arm"></div>
                   <div class="sb-c-inner">
-                    <div class="sb sb-motion">ändere y um <span class="sb-num sb-wrong">5</span></div>
+                    <div class="sb sb-motion"><span data-l="de">ändere y um</span><span data-l="es" lang="es">sumar a y</span> <span class="sb-num sb-wrong">5</span></div>
                   </div>
                 </div>
                 <div class="sb-c-bottom"></div>
               </div>
             </div>
-            <div class="sm:mt-[104px] text-xs font-black text-rose-600"><span class="hidden sm:inline">◄ Hier steckt der Fehler!</span><span class="sm:hidden">▲ Der Fehler steckt in der gelb markierten Zahl.</span></div>
+            <div class="sm:mt-[104px] text-xs font-black text-amber-700"><span class="hidden sm:inline"><span data-l="de">◄ Hier steckt der Fehler!</span><span data-l="es" lang="es">◄ ¡Aquí está el error!</span></span><span class="sm:hidden"><span data-l="de">▲ Der Fehler steckt in der gelb markierten Zahl.</span><span data-l="es" lang="es">▲ El error está en el número marcado en amarillo.</span></span></div>
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs sm:text-sm" data-parts="a8">
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a8-1" data-part>
-            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Warum fliegt die Drohne nach oben statt zum Boden?</span>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span><span data-l="de">Warum fliegt die Drohne nach oben statt zum Boden?</span><span data-l="es" lang="es">¿Por qué el dron vuela hacia arriba en vez de ir al suelo?</span></span>
             <select id="sel-a8-1" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
-              <option value="">-- wählen --</option>
-              <option value="right">Weil dort eine positive Zahl (+5) steht statt einer Minuszahl</option>
-              <option value="wrong1">Weil das Wort «Landen» falsch geschrieben ist</option>
-              <option value="wrong2">Weil man statt «y» die Taste Leertaste drücken muss</option>
+              <option value="" data-es="-- elige --">-- wählen --</option>
+              <option value="right" data-es="Porque allí hay un número positivo (+5) en vez de un número negativo">Weil dort eine positive Zahl (+5) steht statt einer Minuszahl</option>
+              <option value="wrong1" data-es="Porque la palabra «Aterrizar» está mal escrita">Weil das Wort «Landen» falsch geschrieben ist</option>
+              <option value="wrong2" data-es="Porque en vez de «y» hay que usar la barra espaciadora">Weil man statt «y» die Taste Leertaste drücken muss</option>
             </select>
           </div>
 
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5" id="card-a8-2" data-part>
-            <span class="font-bold text-slate-800 block"><span class="js-label"></span>Was muss man eintragen, damit sie nach unten sinkt?</span>
+            <span class="font-bold text-slate-800 block"><span class="js-label"></span><span data-l="de">Was muss man eintragen, damit sie nach unten sinkt?</span><span data-l="es" lang="es">¿Qué hay que poner para que baje?</span></span>
             <select id="sel-a8-2" class="w-full bg-white border border-slate-300 rounded-lg p-2 font-bold">
-              <option value="">-- Zahl wählen --</option>
-              <option value="10">ändere y um ( 10 )</option>
-              <option value="0">ändere y um ( 0 )</option>
-              <option value="-1">ändere y um ( -1 )</option>
+              <option value="" data-es="-- elige un número --">-- Zahl wählen --</option>
+              <option value="10" data-es="sumar a y ( 10 )">ändere y um ( 10 )</option>
+              <option value="0" data-es="sumar a y ( 0 )">ändere y um ( 0 )</option>
+              <option value="-1" data-es="sumar a y ( -1 )">ändere y um ( -1 )</option>
             </select>
           </div>
         </div>
@@ -644,37 +682,40 @@
     <section id="view-logic" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Lernziele 7 & 8 · MI.2.1.i</span>
-          <h2 class="text-lg sm:text-xl font-bold text-slate-800">💡 Logik mit UND und ODER</h2>
-          <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+          <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider"><span data-l="de">Lernziele 7 & 8 · MI.2.1.i</span><span data-l="es" lang="es">Objetivos 7 y 8 · MI.2.1.i</span></span>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-800"><span data-l="de">💡 Logik mit UND und ODER</span><span data-l="es" lang="es">💡 Lógica con «y» y «o»</span></h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="de">
             Bedingungen verbinden: Wie steuert man ein Smarthome-Licht oder einen Rasensprenger?
+          </p>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5" data-l="es" lang="es">
+            Unir condiciones: ¿cómo se controla la luz de una casa inteligente o un aspersor de jardín?
           </p>
         </div>
         <button onclick="reshuffleLogic()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1 border border-slate-300 self-start sm:self-auto shrink-0">
-          <span>🔀</span> Aufgaben neu mischen
+          <span>🔀</span> <span data-l="de">Aufgaben neu mischen</span><span data-l="es" lang="es">Mezclar las tareas de nuevo</span>
         </button>
       </div>
 
       <!-- Aufgabe 7a: UND oder ODER? (leicht) | MI.2.1.i -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a7a">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7a: UND oder ODER? (<span data-max="a7a"></span> Punkte)</h3>
-          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 whitespace-nowrap">🟢 leicht</span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 7a: UND oder ODER? (<span data-max="a7a"></span> Punkte)</span><span data-l="es" lang="es">Tarea 7a: ¿«y» u «o»? (<span data-max="a7a"></span> puntos)</span></h3>
+          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 whitespace-nowrap"><span data-l="de">🟢 leicht</span><span data-l="es" lang="es">🟢 fácil</span></span>
         </div>
 
         <!-- Erklärung und / oder: Ziel des Knopfs «📖 Theorie» in 7a, 7b, 7c -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="theory-andor">
           <div class="sb-area flex items-center gap-3">
-            <span class="sb-bool sb-operators" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,.28))"><span class="sb-empty-bool"></span> und <span class="sb-empty-bool"></span></span>
-            <span class="text-xs text-slate-700"><strong>und</strong> = <strong>beide</strong> Bedingungen müssen stimmen.</span>
+            <span class="sb-bool sb-operators" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,.28))"><span class="sb-empty-bool"></span> <span data-l="de">und</span><span data-l="es" lang="es">y</span> <span class="sb-empty-bool"></span></span>
+            <span class="text-xs text-slate-700"><span data-l="de"><strong>und</strong> = <strong>beide</strong> Bedingungen müssen stimmen.</span><span data-l="es" lang="es"><strong>y</strong> = <strong>las dos</strong> condiciones tienen que cumplirse.</span></span>
           </div>
           <div class="sb-area flex items-center gap-3">
-            <span class="sb-bool sb-operators" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,.28))"><span class="sb-empty-bool"></span> oder <span class="sb-empty-bool"></span></span>
-            <span class="text-xs text-slate-700"><strong>oder</strong> = <strong>mindestens eine</strong> Bedingung muss stimmen.</span>
+            <span class="sb-bool sb-operators" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,.28))"><span class="sb-empty-bool"></span> <span data-l="de">oder</span><span data-l="es" lang="es">o</span> <span class="sb-empty-bool"></span></span>
+            <span class="text-xs text-slate-700"><span data-l="de"><strong>oder</strong> = <strong>mindestens eine</strong> Bedingung muss stimmen.</span><span data-l="es" lang="es"><strong>o</strong> = <strong>por lo menos una</strong> condición tiene que cumplirse.</span></span>
           </div>
         </div>
 
-        <p class="text-xs sm:text-sm text-slate-700">Welches Wort gehört in die Lücke? Wähle <strong>und</strong> oder <strong>oder</strong>:</p>
+        <p class="text-xs sm:text-sm text-slate-700"><span data-l="de">Welches Wort gehört in die Lücke? Wähle <strong>und</strong> oder <strong>oder</strong>:</span><span data-l="es" lang="es">¿Qué palabra va en el hueco? Elige <strong>y</strong> u <strong>o</strong>:</span></p>
         <div class="space-y-2" id="andor-list"></div>
 
         <div data-tools="a7a"></div>
@@ -683,16 +724,20 @@
       <!-- Aufgabe 7b: Smarthome Lichtsteuerung (mittel) | MI.2.1.i -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a7b">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7b: Smarthome Lichtsteuerung (<span data-max="a7b"></span> Punkte)</h3>
-          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 whitespace-nowrap">🟡 mittel</span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 7b: Smarthome Lichtsteuerung (<span data-max="a7b"></span> Punkte)</span><span data-l="es" lang="es">Tarea 7b: control de la luz en una casa inteligente (<span data-max="a7b"></span> puntos)</span></h3>
+          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 whitespace-nowrap"><span data-l="de">🟡 mittel</span><span data-l="es" lang="es">🟡 medio</span></span>
         </div>
 
         <!-- Regeln -->
         <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm space-y-1">
-          <div class="font-bold text-emerald-950">📋 Die 3 Regeln für die automatische Zimmerlampe:</div>
-          <p>1. <strong>Licht AN:</strong> Wenn es <strong>dunkel</strong> ist <strong>UND</strong> eine <strong>Bewegung</strong> erkannt wird.</p>
-          <p>2. <strong>Licht GEDIMMT:</strong> Wenn es tagsüber hell ist, aber wegen Regen/Gewitter düster wird <strong>UND</strong> eine Bewegung da ist.</p>
-          <p>3. <strong>Licht AUS:</strong> Sobald <strong>KEINE Bewegung</strong> da ist!</p>
+          <div class="font-bold text-emerald-950" data-l="de">📋 Die 3 Regeln für die automatische Zimmerlampe:</div>
+          <div class="font-bold text-emerald-950" data-l="es" lang="es">📋 Las 3 reglas para la lámpara automática de la habitación:</div>
+          <p data-l="de">1. <strong>Licht AN:</strong> Wenn es <strong>dunkel</strong> ist <strong>UND</strong> eine <strong>Bewegung</strong> erkannt wird.</p>
+          <p data-l="es" lang="es">1. <strong>Luz ENCENDIDA:</strong> si está <strong>oscuro</strong> <strong>Y</strong> se detecta un <strong>movimiento</strong>.</p>
+          <p data-l="de">2. <strong>Licht GEDIMMT:</strong> Wenn es tagsüber hell ist, aber wegen Regen/Gewitter düster wird <strong>UND</strong> eine Bewegung da ist.</p>
+          <p data-l="es" lang="es">2. <strong>Luz TENUE:</strong> si de día hay luz, pero se pone oscuro por la lluvia o una tormenta <strong>Y</strong> hay movimiento.</p>
+          <p data-l="de">3. <strong>Licht AUS:</strong> Sobald <strong>KEINE Bewegung</strong> da ist!</p>
+          <p data-l="es" lang="es">3. <strong>Luz APAGADA:</strong> ¡en cuanto <strong>NO hay movimiento</strong>!</p>
         </div>
 
         <!-- Entscheidungstabelle (Zufällig gemischt) -->
@@ -704,16 +749,20 @@
       <!-- Aufgabe 7c: Smarte Gartenbewässerung (mittel) | MI.2.1.i -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a7c">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
-          <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aufgabe 7c: Smarte Gartenbewässerung (<span data-max="a7c"></span> Punkte)</h3>
-          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 whitespace-nowrap">🟡 mittel</span>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 7c: Smarte Gartenbewässerung (<span data-max="a7c"></span> Punkte)</span><span data-l="es" lang="es">Tarea 7c: riego inteligente del jardín (<span data-max="a7c"></span> puntos)</span></h3>
+          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 whitespace-nowrap"><span data-l="de">🟡 mittel</span><span data-l="es" lang="es">🟡 medio</span></span>
         </div>
 
         <!-- Regeln -->
         <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm space-y-1">
-          <div class="font-bold text-emerald-950">📋 Die 3 Regeln für den automatischen Rasensprenger:</div>
-          <p>1. <strong>Sprenger AUS:</strong> Wenn der Boden <strong>feucht</strong> ist <strong>ODER</strong> es <strong>regnet</strong>. (Diese Regel gilt immer zuerst!)</p>
-          <p>2. <strong>Sprenger AN (lang):</strong> Wenn der Boden <strong>trocken</strong> ist <strong>UND</strong> es <strong>Abend</strong> ist.</p>
-          <p>3. <strong>Sprenger KURZ:</strong> Wenn der Boden <strong>trocken</strong> ist <strong>UND</strong> es <strong>Mittag</strong> ist (in der Hitze verdunstet viel Wasser).</p>
+          <div class="font-bold text-emerald-950" data-l="de">📋 Die 3 Regeln für den automatischen Rasensprenger:</div>
+          <div class="font-bold text-emerald-950" data-l="es" lang="es">📋 Las 3 reglas para el aspersor automático del jardín:</div>
+          <p data-l="de">1. <strong>Sprenger AUS:</strong> Wenn der Boden <strong>feucht</strong> ist <strong>ODER</strong> es <strong>regnet</strong>. (Diese Regel gilt immer zuerst!)</p>
+          <p data-l="es" lang="es">1. <strong>Aspersor APAGADO:</strong> si el suelo está <strong>húmedo</strong> <strong>O</strong> si <strong>llueve</strong>. (¡Esta regla siempre va primero!)</p>
+          <p data-l="de">2. <strong>Sprenger AN (lang):</strong> Wenn der Boden <strong>trocken</strong> ist <strong>UND</strong> es <strong>Abend</strong> ist.</p>
+          <p data-l="es" lang="es">2. <strong>Aspersor ENCENDIDO (largo):</strong> si el suelo está <strong>seco</strong> <strong>Y</strong> es el <strong>atardecer</strong>.</p>
+          <p data-l="de">3. <strong>Sprenger KURZ:</strong> Wenn der Boden <strong>trocken</strong> ist <strong>UND</strong> es <strong>Mittag</strong> ist (in der Hitze verdunstet viel Wasser).</p>
+          <p data-l="es" lang="es">3. <strong>Aspersor CORTO:</strong> si el suelo está <strong>seco</strong> <strong>Y</strong> es <strong>mediodía</strong> (con el calor se evapora mucha agua).</p>
         </div>
 
         <!-- Entscheidungstabelle (Zufällig gemischt) -->
@@ -731,16 +780,19 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-100">
           <div>
             <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
-              Prüfungsmodus · <span class="js-max-pts">30</span> Punkte · Real-Niveau
+              <span data-l="de">Übungstest · <span class="js-max-pts">30</span> Punkte · Real-Niveau</span><span data-l="es" lang="es">Examen de práctica · <span class="js-max-pts">30</span> puntos · nivel Real</span>
             </span>
-            <h2 class="text-lg sm:text-xl font-black text-slate-800 mt-1">📝 Vollständige Test-Simulation</h2>
-            <p class="text-xs text-slate-600 mt-0.5">
-              Simuliert exakt den bevorstehenden Papiertest. Schweizer Bestehensgrenze: 60 % (<span class="js-pass-pts">18</span> Punkte = Note 4.0).
+            <h2 class="text-lg sm:text-xl font-black text-slate-800 mt-1"><span data-l="de">📝 Vollständige Test-Simulation</span><span data-l="es" lang="es">📝 Simulacro de examen completo</span></h2>
+            <p class="text-xs text-slate-600 mt-0.5" data-l="de">
+              Nur zum Üben: Niemand ausser dir sieht das Ergebnis. Die Aufgaben sind wie im Papiertest. Schweizer Bestehensgrenze: 60 % (<span class="js-pass-pts">18</span> Punkte = Note 4.0).
+            </p>
+            <p class="text-xs text-slate-600 mt-0.5" data-l="es" lang="es">
+              Solo para practicar: nadie más que tú ve el resultado. Las tareas son como en el examen en papel. Límite suizo para aprobar: 60 % (<span class="js-pass-pts">18</span> puntos = nota 4.0).
             </p>
           </div>
           <div class="text-right shrink-0">
-            <span class="text-xs text-slate-500 block">Bestehen ab:</span>
-            <span class="text-sm font-extrabold text-amber-700"><span class="js-pass-pts">18</span> / <span class="js-max-pts">30</span> P. (60%)</span>
+            <span class="text-xs text-slate-500 block"><span data-l="de">Bestehen ab:</span><span data-l="es" lang="es">Apruebas desde:</span></span>
+            <span class="text-sm font-extrabold text-amber-700"><span class="js-pass-pts">18</span> / <span class="js-max-pts">30</span><span data-l="de"> P. (60%)</span><span data-l="es" lang="es"> p. (60%)</span></span>
           </div>
         </div>
 
@@ -749,15 +801,18 @@
       </div>
 
       <div class="p-4 bg-white rounded-2xl border border-slate-200 text-center space-y-3">
-        <p class="text-xs sm:text-sm text-slate-600">
+        <p class="text-xs sm:text-sm text-slate-600" data-l="de">
           Klicke auf den Button, um alle in den Reitern 1 bis 4 gelösten Aufgaben zusammenzurechnen und deine Testnote zu sehen!
+        </p>
+        <p class="text-xs sm:text-sm text-slate-600" data-l="es" lang="es">
+          ¡Toca el botón para sumar todas las tareas que resolviste en las pestañas 1 a 4 y ver tu nota del examen!
         </p>
         <div class="flex flex-wrap items-center justify-center gap-3">
           <button onclick="evaluateFullExam()" class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow transition flex items-center gap-2">
-            <span>🚀</span> Test jetzt auswerten & Note berechnen
+            <span>🚀</span> <span data-l="de">Test jetzt auswerten & Note berechnen</span><span data-l="es" lang="es">Corregir el examen y calcular la nota</span>
           </button>
           <button onclick="resetAllHubData()" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 font-semibold text-xs transition">
-            Alles zurücksetzen
+            <span data-l="de">Alles zurücksetzen</span><span data-l="es" lang="es">Borrar todo</span>
           </button>
         </div>
       </div>
@@ -769,8 +824,8 @@
   <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-700 pointer-events-none text-xs sm:text-sm">
     <span id="toast-icon">✨</span>
     <div>
-      <div id="toast-title" class="font-bold">Mitteilung</div>
-      <div id="toast-msg" class="text-slate-300 text-xs">Details</div>
+      <div id="toast-title" class="font-bold"><span data-l="de">Mitteilung</span><span data-l="es" lang="es">Aviso</span></div>
+      <div id="toast-msg" class="text-slate-300 text-xs"><span data-l="de">Details</span><span data-l="es" lang="es">Detalles</span></div>
     </div>
   </div>
 
@@ -779,27 +834,41 @@
   <!-- ============================================================== -->
   <script>
     // ==============================================================
+    // SPRACHE (Deutsch | Español). Gespeichert für alle Seiten unter «lernportal_lang».
+    // Feste Texte stehen im HTML doppelt (data-l). Texte aus dem Skript: tr('Deutsch', 'Español')
+    // oder both() (beide Sprachen ins HTML, die CSS-Regel blendet eine aus).
+    // Wo keine <span> gehen (<option>, SVG-<text>): data-es="…" bzw. data-es-title / data-es-aria-label.
+    // Bewertet wird nur über IDs/Werte, nie über Texte: Umschalten ändert keine Punkte.
+    // ==============================================================
+    const LANG_KEY = 'lernportal_lang';
+    let LANG = 'de';
+    try { LANG = localStorage.getItem(LANG_KEY) === 'es' ? 'es' : 'de'; } catch (e) {}
+    const tr = (de, es) => LANG === 'es' ? es : de;
+    const both = (de, es) => `<span data-l="de">${de}</span><span data-l="es" lang="es">${es}</span>`;
+    const TITLE = { de: 'Connected 3 · Abheben mit Algorithmen (Scratch Trainingshub)', es: 'Connected 3 · Despegar con algoritmos (práctica de Scratch)' };
+
+    // ==============================================================
     // DATEN
     // ==============================================================
     // A1: Begriff Algorithmus
     const BASICS_A1A = [
-      { id: "opt_chip", text: "Ein Speicherchip in der Drohne.", correct: false },
-      { id: "opt_rule", text: "Eine genaue Schritt-für-Schritt-Anleitung zur Lösung eines Problems.", correct: true },
-      { id: "opt_rand", text: "Ein zufälliges Durcheinander von Zahlen.", correct: false }
+      { id: "opt_chip", text: "Ein Speicherchip in der Drohne.", es: "Un chip de memoria en el dron.", correct: false },
+      { id: "opt_rule", text: "Eine genaue Schritt-für-Schritt-Anleitung zur Lösung eines Problems.", es: "Unas instrucciones exactas, paso a paso, para resolver un problema.", correct: true },
+      { id: "opt_rand", text: "Ein zufälliges Durcheinander von Zahlen.", es: "Un desorden de números al azar.", correct: false }
     ];
     const BASICS_A1B = [
-      { id: "opt_recipe", text: "Ein Backrezept mit genauen Mengenangaben und Schritten («Zuerst..., danach...»).", correct: true },
-      { id: "opt_diary", text: "Ein Tagebucheintrag über das Wochenende.", correct: false },
-      { id: "opt_list", text: "Eine Einkaufsliste mit 5 Früchten.", correct: false }
+      { id: "opt_recipe", text: "Ein Backrezept mit genauen Mengenangaben und Schritten («Zuerst..., danach...»).", es: "Una receta de pastel con cantidades exactas y pasos («Primero..., después...»).", correct: true },
+      { id: "opt_diary", text: "Ein Tagebucheintrag über das Wochenende.", es: "Una entrada de diario sobre el fin de semana.", correct: false },
+      { id: "opt_list", text: "Eine Einkaufsliste mit 5 Früchten.", es: "Una lista de compras con 5 frutas.", correct: false }
     ];
 
     // A2: Ablaufdiagramm (Drag & Drop)
     const FLOW_CMDS = [
-      { id: "c_up",   text: "Steige auf 20 m" },
-      { id: "c_fwd",  text: "Fliege 10 m vorwärts" },
-      { id: "c_land", text: "Lande & öffne den Paket-Haken" },
-      { id: "c_back", text: "Fliege 10 m rückwärts" },
-      { id: "c_open", text: "Öffne den Haken in der Luft" }
+      { id: "c_up",   text: "Steige auf 20 m", es: "Sube a 20 m" },
+      { id: "c_fwd",  text: "Fliege 10 m vorwärts", es: "Vuela 10 m hacia adelante" },
+      { id: "c_land", text: "Lande & öffne den Paket-Haken", es: "Aterriza y abre el gancho del paquete" },
+      { id: "c_back", text: "Fliege 10 m rückwärts", es: "Vuela 10 m hacia atrás" },
+      { id: "c_open", text: "Öffne den Haken in der Luft", es: "Abre el gancho en el aire" }
     ];
     const FLOW_SOLUTION = { fs1: "c_up", fs2: "c_fwd", fs3: "c_land" };
     const FLOW_SLOTS = Object.keys(FLOW_SOLUTION);
@@ -813,34 +882,34 @@
 
     // A5: Gründe für eigene Blöcke
     const CUSTOM_REASONS = [
-      { id: "r1", text: "Der Code wird übersichtlicher und man muss lange Befehle nicht mehrfach bauen.", correct: true },
-      { id: "r2", text: "Die Drohne fliegt mit eigenen Blöcken doppelt so schnell.", correct: false },
-      { id: "r3", text: "Wenn man etwas verbessern will, korrigiert man den Fehler nur an einer Stelle im Unterprogramm.", correct: true },
-      { id: "r4", text: "Scratch braucht mit eigenen Blöcken kein Internet mehr.", correct: false }
+      { id: "r1", text: "Der Code wird übersichtlicher und man muss lange Befehle nicht mehrfach bauen.", es: "El código queda más claro y no hay que construir varias veces los comandos largos.", correct: true },
+      { id: "r2", text: "Die Drohne fliegt mit eigenen Blöcken doppelt so schnell.", es: "Con bloques propios, el dron vuela el doble de rápido.", correct: false },
+      { id: "r3", text: "Wenn man etwas verbessern will, korrigiert man den Fehler nur an einer Stelle im Unterprogramm.", es: "Si quieres mejorar algo, corriges el error en un solo lugar: en el subprograma.", correct: true },
+      { id: "r4", text: "Scratch braucht mit eigenen Blöcken kein Internet mehr.", es: "Con bloques propios, Scratch ya no necesita internet.", correct: false }
     ];
 
     // A7a: UND / ODER (leicht)
     const ANDOR_ROWS = [
-      { id: "ao_1", before: "Die Drohne darf nur starten, wenn der Akku voll ist", after: "das Wetter gut ist.", correct: "und" },
-      { id: "ao_2", before: "Die Alarmanlage piepst, wenn die Tür", after: "das Fenster geöffnet wird.", correct: "oder" },
-      { id: "ao_3", before: "Du kommst ins Kino, wenn du ein Ticket hast", after: "pünktlich da bist.", correct: "und" },
-      { id: "ao_4", before: "Die Schulglocke läutet um 10:00 Uhr", after: "um 12:00 Uhr.", correct: "oder" }
+      { id: "ao_1", before: "Die Drohne darf nur starten, wenn der Akku voll ist", after: "das Wetter gut ist.", es: ["El dron solo puede despegar si la batería está llena", "hace buen tiempo."], correct: "und" },
+      { id: "ao_2", before: "Die Alarmanlage piepst, wenn die Tür", after: "das Fenster geöffnet wird.", es: ["La alarma pita si se abre la puerta", "la ventana."], correct: "oder" },
+      { id: "ao_3", before: "Du kommst ins Kino, wenn du ein Ticket hast", after: "pünktlich da bist.", es: ["Puedes entrar al cine si tienes una entrada", "llegas a tiempo."], correct: "und" },
+      { id: "ao_4", before: "Die Schulglocke läutet um 10:00 Uhr", after: "um 12:00 Uhr.", es: ["El timbre de la escuela suena a las 10:00", "a las 12:00."], correct: "oder" }
     ];
 
     // A7b: Smarthome
     const SMARTHOME_ROWS = [
-      { id: "sh_1", light: "Raum ist dunkel", sensor: "Bewegung erkannt", time: "23:00 Uhr (Nacht)", correct: "AN" },
-      { id: "sh_2", light: "Raum ist dunkel", sensor: "Keine Bewegung", time: "02:00 Uhr (Nacht)", correct: "AUS" },
-      { id: "sh_3", light: "Raum ist hell", sensor: "Keine Bewegung", time: "14:00 Uhr (Tag)", correct: "AUS" },
-      { id: "sh_4", light: "Raum ist dunkel (Gewitter)", sensor: "Bewegung erkannt", time: "11:00 Uhr (Tag)", correct: "GEDIMMT" }
+      { id: "sh_1", light: "Raum ist dunkel", sensor: "Bewegung erkannt", time: "23:00 Uhr (Nacht)", es: ["La habitación está oscura", "Movimiento detectado", "23:00 (noche)"], correct: "AN" },
+      { id: "sh_2", light: "Raum ist dunkel", sensor: "Keine Bewegung", time: "02:00 Uhr (Nacht)", es: ["La habitación está oscura", "Sin movimiento", "02:00 (noche)"], correct: "AUS" },
+      { id: "sh_3", light: "Raum ist hell", sensor: "Keine Bewegung", time: "14:00 Uhr (Tag)", es: ["La habitación está clara", "Sin movimiento", "14:00 (día)"], correct: "AUS" },
+      { id: "sh_4", light: "Raum ist dunkel (Gewitter)", sensor: "Bewegung erkannt", time: "11:00 Uhr (Tag)", es: ["La habitación está oscura (tormenta)", "Movimiento detectado", "11:00 (día)"], correct: "GEDIMMT" }
     ];
 
     // A7c: Gartenbewässerung (Regel "AUS" hat Vorrang)
     const GARDEN_ROWS = [
-      { id: "gd_1", soil: "Boden trocken", weather: "Sonne", time: "19:00 Uhr (Abend)", correct: "AN" },
-      { id: "gd_2", soil: "Boden trocken", weather: "Sonne", time: "12:00 Uhr (Mittag)", correct: "KURZ" },
-      { id: "gd_3", soil: "Boden feucht", weather: "Sonne", time: "19:00 Uhr (Abend)", correct: "AUS" },
-      { id: "gd_4", soil: "Boden trocken", weather: "Regen", time: "19:00 Uhr (Abend)", correct: "AUS" }
+      { id: "gd_1", soil: "Boden trocken", weather: "Sonne", time: "19:00 Uhr (Abend)", es: ["Suelo seco", "Sol", "19:00 (atardecer)"], correct: "AN" },
+      { id: "gd_2", soil: "Boden trocken", weather: "Sonne", time: "12:00 Uhr (Mittag)", es: ["Suelo seco", "Sol", "12:00 (mediodía)"], correct: "KURZ" },
+      { id: "gd_3", soil: "Boden feucht", weather: "Sonne", time: "19:00 Uhr (Abend)", es: ["Suelo húmedo", "Sol", "19:00 (atardecer)"], correct: "AUS" },
+      { id: "gd_4", soil: "Boden trocken", weather: "Regen", time: "19:00 Uhr (Abend)", es: ["Suelo seco", "Lluvia", "19:00 (atardecer)"], correct: "AUS" }
     ];
 
     // Fisher-Yates Shuffle
@@ -876,11 +945,7 @@
       try {
         const saved = localStorage.getItem('scratch_hub_answers');
         if (saved) STATE.answers = JSON.parse(saved) || {};
-        const tm = localStorage.getItem('scratch_hub_timer');
-        if (tm) {
-          timerSeconds = parseInt(tm, 10) || 0;
-          updateTimerDisplay();
-        }
+        localStorage.removeItem('scratch_hub_timer');   // frühere Stoppuhr (entfernt, kein Zeitdruck): alten Wert löschen
       } catch (e) {}
     }
 
@@ -935,15 +1000,15 @@
     // SCRATCH-BLOCK BAUSTEINE (HTML)
     // ==============================================================
     const SB = {
-      flag: () => `<div class="sb sb-hat sb-events">Wenn <span class="sb-flag">⚑</span> angeklickt wird</div>`,
+      flag: () => `<div class="sb sb-hat sb-events">${both('Wenn', 'al hacer clic en')} <span class="sb-flag">⚑</span> <span data-l="de">angeklickt wird</span></div>`,
       loop: (inner = '') => `
         <div class="sb-c sb-control">
-          <div class="sb-c-top">wiederhole <span class="sb-num">4</span> mal</div>
+          <div class="sb-c-top">${both('wiederhole', 'repetir')} <span class="sb-num">4</span> <span data-l="de">mal</span></div>
           <div class="sb-c-mouth"><div class="sb-c-arm"></div><div class="sb-c-inner">${inner}</div></div>
           <div class="sb-c-bottom"></div>
         </div>`,
-      move: () => `<div class="sb sb-motion">gehe <span class="sb-num">50</span> er-Schritt</div>`,
-      turn: () => `<div class="sb sb-motion">drehe dich <span style="font-size:15px">↻</span> um <span class="sb-num">90</span> Grad</div>`
+      move: () => `<div class="sb sb-motion">${both('gehe', 'mover')} <span class="sb-num">50</span> ${both('er-Schritt', 'pasos')}</div>`,
+      turn: () => `<div class="sb sb-motion">${both('drehe dich', 'girar')} <span style="font-size:15px">↻</span> <span data-l="de">um</span> <span class="sb-num">90</span> ${both('Grad', 'grados')}</div>`
     };
     function squareBlockHTML(id, inner) {
       if (id === 'sq_loop') return SB.loop(inner);
@@ -958,7 +1023,7 @@
       return list.map(opt => `
         <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer ${hover} transition text-xs sm:text-sm">
           <input type="radio" name="${name}" value="${opt.id}" ${STATE.answers[key] === opt.id ? 'checked' : ''} onchange="saveAnswer('${key}', this.value)" class="w-4 h-4 text-sky-600 focus:ring-sky-500">
-          <span>${opt.text}</span>
+          <span>${both(opt.text, opt.es)}</span>
         </label>`).join('');
     }
 
@@ -978,13 +1043,14 @@
     }
 
     function reshuffleBasics() {
+      document.querySelectorAll('#view-basics [id^="sol-"]').forEach(el => { el.classList.add('hidden'); el.innerHTML = ''; });
       dispA1a = shuffleArray(BASICS_A1A);
       dispA1b = shuffleArray(BASICS_A1B);
       dispFlow = shuffleArray(FLOW_CMDS);
       shuffleParts('a1');
       renderBasicsTab();
       shuffleSelects(document.getElementById('view-basics'));
-      showToast("🔀 Neu gemischt", "Alle Antworten und Befehle in diesem Teil wurden neu gemischt!");
+      showToast(tr("🔀 Neu gemischt", "🔀 Mezclado de nuevo"), tr("Alle Antworten und Befehle in diesem Teil wurden neu gemischt!", "¡Todas las respuestas y los comandos de esta parte se mezclaron de nuevo!"));
     }
 
     // ---------- A2: Ablaufdiagramm Drag & Drop ----------
@@ -1001,7 +1067,7 @@
       const free = dispFlow.filter(c => !flowSlotOf(c.id));
       bank.innerHTML = free.map(c => `
         <div class="flow-chip ${flowSelected === c.id ? 'is-selected' : ''}" data-cmd="${c.id}" role="button" tabindex="0">
-          <span class="text-sky-400">⠿</span><span>${c.text}</span>
+          <span class="text-sky-400">⠿</span><span>${both(c.text, c.es)}</span>
         </div>`).join('');
       document.getElementById('flow-bank-empty').classList.toggle('hidden', free.length > 0);
 
@@ -1011,13 +1077,13 @@
         const txt = document.getElementById('flow-txt-' + sl);
         if (!rect || !txt) return;
         if (cmd) {
-          setSvgLines(txt, cmd.text);
+          setSvgLines(txt, tr(cmd.text, cmd.es));
           txt.setAttribute('fill', '#0c4a6e');
           rect.setAttribute('fill', '#e0f2fe');
           rect.setAttribute('stroke', '#0284c7');
           rect.setAttribute('stroke-dasharray', '');
         } else {
-          setSvgLines(txt, flowSelected ? 'hier antippen ✓' : 'hierher ziehen …');
+          setSvgLines(txt, flowSelected ? tr('hier antippen ✓', 'toca aquí ✓') : tr('hierher ziehen …', 'arrastra aquí …'));
           txt.setAttribute('fill', flowSelected ? '#0284c7' : '#94a3b8');
           rect.setAttribute('fill', '#ffffff');
           rect.setAttribute('stroke', '#0ea5e9');
@@ -1143,7 +1209,7 @@
             <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3" id="card-${b.id}">
               <div class="sb-script">${squareBlockHTML(b.id, '')}</div>
               <div class="flex items-center gap-2 shrink-0">
-                <span class="text-xs font-semibold text-slate-500 hidden sm:inline">Platz:</span>
+                <span class="text-xs font-semibold text-slate-500 hidden sm:inline">${both('Platz:', 'Lugar:')}</span>
                 <select id="sel-sq-${b.id}" data-noshuffle onchange="saveAnswer('sq_${b.id}', this.value)" class="bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold w-16">
                   <option value="">--</option>
                   <option value="1" ${saved === '1' ? 'selected' : ''}>1.</option>
@@ -1173,7 +1239,7 @@
         return squareBlockHTML(first.id) + build(rest);
       };
       box.innerHTML = `<div class="sb-script">${SB.flag()}${build(ordered)}</div>` +
-        (ordered.length ? '' : `<p class="text-xs text-slate-400 mt-3">Wähle bei den Blöcken die Plätze 1–3 aus.</p>`);
+        (ordered.length ? '' : `<p class="text-xs text-slate-400 mt-3">${both('Wähle bei den Blöcken die Plätze 1–3 aus.', 'Elige los lugares 1–3 en los bloques.')}</p>`);
     }
 
     // ---------- Tab 3 ----------
@@ -1186,9 +1252,9 @@
       const rBox = document.getElementById('opts-a5-reasons');
       if (rBox) {
         rBox.innerHTML = dispReasons.map(r => `
-          <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-rose-50 transition text-xs sm:text-sm">
-            <input type="checkbox" id="chk-${r.id}" ${STATE.answers[`r_${r.id}`] === true ? 'checked' : ''} onchange="saveAnswer('r_${r.id}', this.checked)" class="w-4 h-4 text-rose-600 rounded">
-            <span>${r.text}</span>
+          <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:bg-pink-50 transition text-xs sm:text-sm">
+            <input type="checkbox" id="chk-${r.id}" ${STATE.answers[`r_${r.id}`] === true ? 'checked' : ''} onchange="saveAnswer('r_${r.id}', this.checked)" class="w-4 h-4 text-pink-600 rounded">
+            <span>${both(r.text, r.es)}</span>
           </label>`).join('');
       }
     }
@@ -1197,8 +1263,8 @@
     function selectHTML(id, key, options, extraClass = '') {
       const saved = STATE.answers[key] || '';
       return `<select id="${id}" onchange="saveAnswer('${key}', this.value)" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 ${extraClass}">
-        <option value="">-- wählen --</option>
-        ${shuffleArray(options).map(o => `<option value="${o.v}" ${saved === o.v ? 'selected' : ''}>${o.t}</option>`).join('')}
+        <option value="" data-de="-- wählen --" data-es="-- elige --">${tr('-- wählen --', '-- elige --')}</option>
+        ${shuffleArray(options).map(o => `<option value="${o.v}" data-de="${o.t}" data-es="${o.es}" ${saved === o.v ? 'selected' : ''}>${tr(o.t, o.es)}</option>`).join('')}
       </select>`;
     }
 
@@ -1214,9 +1280,9 @@
         ao.innerHTML = dispAndOr.map((row, idx) => `
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-xs sm:text-sm text-slate-800" id="card-${row.id}">
             <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
-            <span>${row.before}</span>
-            ${selectHTML('sel-' + row.id, row.id, [{ v: 'und', t: 'und' }, { v: 'oder', t: 'oder' }], 'w-28')}
-            <span>${row.after}</span>
+            <span>${both(row.before, row.es[0])}</span>
+            ${selectHTML('sel-' + row.id, row.id, [{ v: 'und', t: 'und', es: 'y' }, { v: 'oder', t: 'oder', es: 'o' }], 'w-28')}
+            <span>${both(row.after, row.es[1])}</span>
           </div>`).join('');
       }
     }
@@ -1228,11 +1294,11 @@
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5" id="card-${row.id}">
             <div class="flex items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
               <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
-              <span>${row.light} · <strong>${row.sensor}</strong> · (${row.time})</span>
+              <span>${both(`${row.light} · <strong>${row.sensor}</strong> · (${row.time})`, `${row.es[0]} · <strong>${row.es[1]}</strong> · (${row.es[2]})`)}</span>
             </div>
             <div class="sm:w-44 shrink-0 flex items-center gap-2">
-              <span class="text-xs text-slate-400">Lampe:</span>
-              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💡 AN (Voll)' }, { v: 'GEDIMMT', t: '🌙 GEDIMMT' }, { v: 'AUS', t: '❌ AUS' }], 'w-full')}
+              <span class="text-xs text-slate-400">${both('Lampe:', 'Lámpara:')}</span>
+              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💡 AN (Voll)', es: '💡 ENCENDIDA (plena)' }, { v: 'GEDIMMT', t: '🌙 GEDIMMT', es: '🌙 TENUE' }, { v: 'AUS', t: '⚫ AUS', es: '⚫ APAGADA' }], 'w-full')}
             </div>
           </div>`).join('');
       }
@@ -1245,23 +1311,24 @@
           <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5" id="card-${row.id}">
             <div class="flex items-center gap-2 flex-1 text-xs sm:text-sm text-slate-800">
               <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
-              <span>${row.soil} · <strong>${row.weather}</strong> · (${row.time})</span>
+              <span>${both(`${row.soil} · <strong>${row.weather}</strong> · (${row.time})`, `${row.es[0]} · <strong>${row.es[1]}</strong> · (${row.es[2]})`)}</span>
             </div>
             <div class="sm:w-48 shrink-0 flex items-center gap-2">
-              <span class="text-xs text-slate-400">Sprenger:</span>
-              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💦 AN (lang)' }, { v: 'KURZ', t: '💧 KURZ' }, { v: 'AUS', t: '❌ AUS' }], 'w-full')}
+              <span class="text-xs text-slate-400">${both('Sprenger:', 'Aspersor:')}</span>
+              ${selectHTML('sel-' + row.id, row.id, [{ v: 'AN', t: '💦 AN (lang)', es: '💦 ENCENDIDO (largo)' }, { v: 'KURZ', t: '💧 KURZ', es: '💧 CORTO' }, { v: 'AUS', t: '⚫ AUS', es: '⚫ APAGADO' }], 'w-full')}
             </div>
           </div>`).join('');
       }
     }
 
     function reshuffleLogic() {
+      document.querySelectorAll('#view-logic [id^="sol-"]').forEach(el => { el.classList.add('hidden'); el.innerHTML = ''; });
       dispAndOr = shuffleArray(ANDOR_ROWS);
       dispSmart = shuffleArray(SMARTHOME_ROWS);
       dispGarden = shuffleArray(GARDEN_ROWS);
       renderLogicTab();
       shuffleSelects(document.getElementById('view-logic'));
-      showToast("🔀 Neu gemischt", "Alle Zeilen und Antworten der Logik-Aufgaben wurden neu gemischt!");
+      showToast(tr("🔀 Neu gemischt", "🔀 Mezclado de nuevo"), tr("Alle Zeilen und Antworten der Logik-Aufgaben wurden neu gemischt!", "¡Todas las filas y respuestas de las tareas de lógica se mezclaron de nuevo!"));
     }
 
     // ==============================================================
@@ -1289,30 +1356,33 @@
       return p;
     }
 
-    // Karten grün/rot färben
+    // Karten färben: grün = richtig, gelb = noch nicht ganz (angstfrei: Gelb statt Rot)
     function markCard(id, ok) {
       const el = document.getElementById(id);
       if (!el) return;
-      el.classList.remove('bg-slate-50', 'border-slate-200', 'bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
-      el.classList.add(ok ? 'bg-emerald-50' : 'bg-rose-50', ok ? 'border-emerald-300' : 'border-rose-300');
+      el.classList.remove('bg-slate-50', 'border-slate-200', 'bg-emerald-50', 'border-emerald-300', 'bg-amber-50', 'border-amber-300');
+      el.classList.add(ok ? 'bg-emerald-50' : 'bg-amber-50', ok ? 'border-emerald-300' : 'border-amber-300');
     }
 
-    function feedback(task, perfectMsg) {
+    // Rückmeldung in beiden Sprachen (die CSS-Regel zeigt die gewählte), damit sie beim Umschalten stimmt
+    function feedback(task, perfectMsg, perfectEs) {
       const pts = TASKS[task].score(), max = TASKS[task].max;
       const fb = document.getElementById('fb-' + task);
       if (fb) {
-        fb.textContent = pts === max
-          ? `🌟 ${pts}/${max} Punkte: ${perfectMsg} Mit «🔀 Nochmals üben» kannst du sie neu gemischt wiederholen.`
-          : `${pts}/${max} Punkte. Rot = noch falsch. Brauchst du Hilfe? Drück auf «💡 Tipp».`;
+        fb.innerHTML = pts === max
+          ? both(`🌟 ${pts}/${max} Punkte: ${perfectMsg} Mit «🔀 Nochmals üben» kannst du sie neu gemischt wiederholen.`,
+                 `🌟 ${pts}/${max} puntos: ${perfectEs} Con «🔀 Practicar otra vez» puedes repetirla mezclada de nuevo.`)
+          : both(`${pts}/${max} Punkte. Gelb = noch nicht ganz. Das ist okay: Mit «🔀 Nochmals üben» kommt die Aufgabe nochmals. Brauchst du Hilfe? Drück auf «💡 Tipp».`,
+                 `${pts}/${max} puntos. Amarillo = todavía no del todo. No pasa nada: con «🔀 Practicar otra vez» la tarea vuelve. ¿Necesitas ayuda? Toca «💡 Pista».`);
         fb.className = pts === max ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
       }
-      showToast(`Aufgabe ${TASK_UI[task].nr}`, `${pts} von ${max} Punkten erreicht.`);
+      showToast(tr(`Aufgabe ${TASK_UI[task].nr}`, `Tarea ${TASK_UI[task].nr}`), tr(`${pts} von ${max} Punkten erreicht.`, `Lograste ${pts} de ${max} puntos.`));
     }
 
     function checkBasicsA1() {
       markCard('card-a1a', A('a1a') === 'opt_rule');
       markCard('card-a1b', A('a1b') === 'opt_recipe');
-      feedback('a1', 'Alles richtig!');
+      feedback('a1', 'Alles richtig!', '¡Todo correcto!');
     }
 
     function checkBasicsA2() {
@@ -1320,56 +1390,56 @@
         const rect = document.getElementById('flow-rect-' + sl);
         if (!rect) return;
         const ok = A('flow_' + sl) === FLOW_SOLUTION[sl];
-        rect.setAttribute('fill', ok ? '#d1fae5' : '#ffe4e6');
-        rect.setAttribute('stroke', ok ? '#059669' : '#e11d48');
+        rect.setAttribute('fill', ok ? '#d1fae5' : '#fef9c3');
+        rect.setAttribute('stroke', ok ? '#059669' : '#eab308');
         rect.setAttribute('stroke-dasharray', '');
       });
       markCard('card-a2-3', A('sel-a2-3') === 'right');
-      feedback('a2', 'Diagramm perfekt verstanden!');
+      feedback('a2', 'Diagramm perfekt verstanden!', '¡Entendiste el diagrama perfectamente!');
     }
 
     function checkLoopsA3() {
       markCard('card-a3-1', A('sel-a3-1') === '4');
       markCard('card-a3-2', A('sel-a3-2') === '40');
-      feedback('a3', 'Perfekt gerechnet!');
+      feedback('a3', 'Perfekt gerechnet!', '¡Cálculo perfecto!');
     }
 
     function checkLoopsA4() {
       markCard('card-a4-1', A('sel-a4-1') === 'bis');
       markCard('card-a4-2', A('sel-a4-2') === 'yminus1');
-      feedback('a4', 'Drohne landet sicher!');
+      feedback('a4', 'Drohne landet sicher!', '¡El dron aterriza seguro!');
     }
 
     function checkSquareSort() {
       SQUARE_BLOCKS.forEach(b => markCard(`card-${b.id}`, parseInt(A(`sq_${b.id}`), 10) === b.correct));
-      feedback('a6', 'Perfektes Quadrat!');
+      feedback('a6', 'Perfektes Quadrat!', '¡Cuadrado perfecto!');
     }
 
     function checkCustomA5() {
       markCard('card-a5-1', A('a5_1') === 'abheben');
       markCard('card-a5-2', reasonPoints() === 2);
-      feedback('a5', 'Unterprogramme verstanden!');
+      feedback('a5', 'Unterprogramme verstanden!', '¡Entendiste los subprogramas!');
     }
 
     function checkCustomA8() {
       markCard('card-a8-1', A('sel-a8-1') === 'right');
       markCard('card-a8-2', A('sel-a8-2') === '-1');
-      feedback('a8', 'Bug erfolgreich behoben!');
+      feedback('a8', 'Bug erfolgreich behoben!', '¡Error corregido con éxito!');
     }
 
     function checkLogicAndOr() {
       ANDOR_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
-      feedback('a7a', 'Die Logik-Wörter sitzen!');
+      feedback('a7a', 'Die Logik-Wörter sitzen!', '¡Ya dominas las palabras de lógica!');
     }
 
     function checkLogicA7() {
       SMARTHOME_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
-      feedback('a7b', 'Das Smarthome schaltet perfekt!');
+      feedback('a7b', 'Das Smarthome schaltet perfekt!', '¡La casa inteligente funciona perfecto!');
     }
 
     function checkLogicGarden() {
       GARDEN_ROWS.forEach(r => markCard(`card-${r.id}`, A(r.id) === r.correct));
-      feedback('a7c', 'Der Rasen ist perfekt gegossen!');
+      feedback('a7c', 'Der Rasen ist perfekt gegossen!', '¡El césped está regado perfecto!');
     }
 
     // ==============================================================
@@ -1384,58 +1454,68 @@
         nr: '1', check: checkBasicsA1, render: renderA1, theory: 'theory-basics',
         keys: () => ['a1a', 'a1b'],
         mix: () => { dispA1a = shuffleArray(BASICS_A1A); dispA1b = shuffleArray(BASICS_A1B); },
-        tip: 'Stell dir vor, du erklärst einem Roboter, wie er ein Sandwich macht. Der Roboter denkt nicht selber mit. Frag dich bei jeder Antwort: Könnte der Roboter damit eine Aufgabe lösen, ohne nachzufragen? Weiss er, was zuerst kommt und was danach?'
+        tip: 'Stell dir vor, du erklärst einem Roboter, wie er ein Sandwich macht. Der Roboter denkt nicht selber mit. Frag dich bei jeder Antwort: Könnte der Roboter damit eine Aufgabe lösen, ohne nachzufragen? Weiss er, was zuerst kommt und was danach?',
+        tipEs: 'Imagina que le explicas a un robot cómo hacer un sándwich. El robot no piensa por sí mismo. En cada respuesta, pregúntate: ¿podría el robot resolver una tarea con esto, sin preguntar nada? ¿Sabe qué va primero y qué va después?'
       },
       a2: {
         nr: '2', check: checkBasicsA2, render: renderA2, theory: 'theory-basics',
         keys: () => [...FLOW_SLOTS.map(sl => 'flow_' + sl), 'sel-a2-3'],
         mix: () => { dispFlow = shuffleArray(FLOW_CMDS); flowSelected = null; },
-        tip: 'Lies die Situation oben nochmals langsam. Frag dich: Was macht die Drohne ganz am Anfang? Was macht sie immer wieder, solange sie noch nicht am Ziel ist? Folge mit dem Finger dem Pfeil NEIN: Wohin führt er? Bei der Raute: Wie viele Pfeile gehen aus ihr hinaus, und was steht daran? Achtung: Zwei Befehle bleiben übrig.'
+        tip: 'Lies die Situation oben nochmals langsam. Frag dich: Was macht die Drohne ganz am Anfang? Was macht sie immer wieder, solange sie noch nicht am Ziel ist? Folge mit dem Finger dem Pfeil NEIN: Wohin führt er? Bei der Raute: Wie viele Pfeile gehen aus ihr hinaus, und was steht daran? Achtung: Zwei Befehle bleiben übrig.',
+        tipEs: 'Vuelve a leer despacio la situación de arriba. Pregúntate: ¿qué hace el dron al principio? ¿Qué hace una y otra vez mientras todavía no llega al destino? Sigue con el dedo la flecha NO: ¿adónde lleva? En el rombo: ¿cuántas flechas salen de él y qué dice en ellas? Atención: sobran dos comandos.'
       },
       a3: {
         nr: '3', check: checkLoopsA3, render: bindAll(['sel-a3-1', 'sel-a3-2']), theory: 'theory-loops',
         keys: () => ['sel-a3-1', 'sel-a3-2'],
-        tip: 'Denk an eine Treppe: Du gehst 3-mal hintereinander je 5 Stufen hoch. Wie viele Stufen sind das zusammen? Schau dann ins Skript: Welcher Block ist wie eine Klammer um die anderen? Welche Zahl gehört zum Fliegen? Der Warte-Block macht nur eine Pause, er bewegt nichts.'
+        tip: 'Denk an eine Treppe: Du gehst 3-mal hintereinander je 5 Stufen hoch. Wie viele Stufen sind das zusammen? Schau dann ins Skript: Welcher Block ist wie eine Klammer um die anderen? Welche Zahl gehört zum Fliegen? Der Warte-Block macht nur eine Pause, er bewegt nichts.',
+        tipEs: 'Piensa en una escalera: subes 3 veces seguidas 5 escalones cada vez. ¿Cuántos escalones son en total? Después mira el programa: ¿qué bloque es como una pinza alrededor de los otros? ¿Qué número tiene que ver con volar? El bloque «esperar» solo hace una pausa, no mueve nada.'
       },
       a4: {
         nr: '4', check: checkLoopsA4, render: bindAll(['sel-a4-1', 'sel-a4-2']), theory: 'theory-loops',
         keys: () => ['sel-a4-1', 'sel-a4-2'],
-        tip: 'Überlege bei jedem Block: Hört er irgendwann von selbst auf? Hört er genau im richtigen Moment auf? Oder prüft er nur ein einziges Mal? Für die Richtung denk an einen Lift: Was passiert mit der Stockwerk-Zahl, wenn er nach unten fährt? Und denk daran: x geht nach links und rechts, y nach oben und unten.'
+        tip: 'Überlege bei jedem Block: Hört er irgendwann von selbst auf? Hört er genau im richtigen Moment auf? Oder prüft er nur ein einziges Mal? Für die Richtung denk an einen Lift: Was passiert mit der Stockwerk-Zahl, wenn er nach unten fährt? Und denk daran: x geht nach links und rechts, y nach oben und unten.',
+        tipEs: 'En cada bloque, piensa: ¿se detiene solo en algún momento? ¿Se detiene justo en el momento correcto? ¿O revisa una sola vez? Para la dirección, piensa en un ascensor: ¿qué pasa con el número del piso cuando baja? Y recuerda: la x va a la izquierda o a la derecha; la y va hacia arriba o hacia abajo.'
       },
       a6: {
         nr: '6', check: checkSquareSort, render: renderSquare, theory: 'theory-loops',
         keys: () => SQUARE_BLOCKS.map(b => 'sq_' + b.id),
         mix: () => { dispSquare = shuffleArray(SQUARE_BLOCKS); },
-        tip: 'Der orange Block ist wie eine Schachtel: Alles, was in der Schachtel liegt, wird 4-mal gemacht. Schau in die Vorschau: Liegen alle Befehle in der Schachtel, die sich wiederholen sollen? Lies den Plan nochmals Wort für Wort und achte darauf, in welcher Reihenfolge er Fliegen und Drehen nennt.'
+        tip: 'Der orange Block ist wie eine Schachtel: Alles, was in der Schachtel liegt, wird 4-mal gemacht. Schau in die Vorschau: Liegen alle Befehle in der Schachtel, die sich wiederholen sollen? Lies den Plan nochmals Wort für Wort und achte darauf, in welcher Reihenfolge er Fliegen und Drehen nennt.',
+        tipEs: 'El bloque naranja es como una caja: todo lo que está dentro de la caja se hace 4 veces. Mira la vista previa: ¿están dentro de la caja todos los comandos que se tienen que repetir? Vuelve a leer el plan palabra por palabra y fíjate en qué orden nombra volar y girar.'
       },
       a5: {
         nr: '5', check: checkCustomA5, render: renderA5, theory: 'theory-custom',
         keys: () => ['a5_1', ...CUSTOM_REASONS.map(r => 'r_' + r.id)],
         mix: () => { dispReasons = shuffleArray(CUSTOM_REASONS); },
-        tip: 'Lies den pinken Block wie eine kleine Geschichte: Wird y grösser oder kleiner? Fliegt die Drohne also höher oder tiefer? Wann hört sie auf? Bei den Gründen denk an eine Rezeptkarte für Pizzateig. Du schreibst sie einmal und brauchst sie für jede Pizza wieder. Was ist daran praktisch? Achtung: Ein falsches Kreuz gibt Abzug.'
+        tip: 'Lies den pinken Block wie eine kleine Geschichte: Wird y grösser oder kleiner? Fliegt die Drohne also höher oder tiefer? Wann hört sie auf? Bei den Gründen denk an eine Rezeptkarte für Pizzateig. Du schreibst sie einmal und brauchst sie für jede Pizza wieder. Was ist daran praktisch? Kreuze nur an, was wirklich stimmt: Ein Kreuz zu viel kostet einen Punkt.',
+        tipEs: 'Lee el bloque rosa como una pequeña historia: ¿la y se hace más grande o más pequeña? Entonces, ¿el dron vuela más alto o más bajo? ¿Cuándo se detiene? Para las razones, piensa en una tarjeta con la receta de la masa de pizza. La escribes una vez y la vuelves a usar para cada pizza. ¿Qué tiene eso de práctico? Marca solo lo que de verdad es correcto: una marca de más resta un punto.'
       },
       a8: {
         nr: '8', check: checkCustomA8, render: bindAll(['sel-a8-1', 'sel-a8-2']), theory: 'theory-custom',
         keys: () => ['sel-a8-1', 'sel-a8-2'],
-        tip: 'Sei ein Detektiv: Der Pfeil zeigt dir, wo der Fehler steckt. Was bedeutet diese Zahl für die Richtung? Denk an einen Lift: Was muss mit der Stockwerk-Zahl passieren, damit er nach unten fährt?'
+        tip: 'Sei ein Detektiv: Der Pfeil zeigt dir, wo der Fehler steckt. Was bedeutet diese Zahl für die Richtung? Denk an einen Lift: Was muss mit der Stockwerk-Zahl passieren, damit er nach unten fährt?',
+        tipEs: 'Sé detective: la flecha te muestra dónde está el error. ¿Qué significa este número para la dirección? Piensa en un ascensor: ¿qué tiene que pasar con el número del piso para que baje?'
       },
       a7a: {
         nr: '7a', check: checkLogicAndOr, render: renderAndOr, theory: 'theory-andor',
         keys: () => ANDOR_ROWS.map(r => r.id),
         mix: () => { dispAndOr = shuffleArray(ANDOR_ROWS); },
-        tip: 'Mach bei jedem Satz die Probe: Muss beides gleichzeitig stimmen? Oder reicht schon eines davon? Denk an deinen Alltag: Wann brauchst du zwei Sachen zusammen, und wann genügt eine? Frag dich auch: Kann beides überhaupt gleichzeitig passieren?'
+        tip: 'Mach bei jedem Satz die Probe: Muss beides gleichzeitig stimmen? Oder reicht schon eines davon? Denk an deinen Alltag: Wann brauchst du zwei Sachen zusammen, und wann genügt eine? Frag dich auch: Kann beides überhaupt gleichzeitig passieren?',
+        tipEs: 'En cada frase, haz la prueba: ¿tienen que cumplirse las dos cosas a la vez? ¿O basta con una de ellas? Piensa en tu vida diaria: ¿cuándo necesitas dos cosas juntas y cuándo basta con una? Pregúntate también: ¿pueden pasar las dos cosas a la vez?'
       },
       a7b: {
         nr: '7b', check: checkLogicA7, render: renderSmart, theory: 'theory-andor',
         keys: () => SMARTHOME_ROWS.map(r => r.id),
         mix: () => { dispSmart = shuffleArray(SMARTHOME_ROWS); },
-        tip: 'Geh jede Zeile durch, als wärst du die Lampe. Schau zuerst: Ist eine Bewegung da? Dann: Ist es richtig Nacht, oder ist es am Tag nur düster? Vergleiche erst danach mit den 3 Regeln. Bei «UND» müssen beide Teile stimmen.'
+        tip: 'Geh jede Zeile durch, als wärst du die Lampe. Schau zuerst: Ist eine Bewegung da? Dann: Ist es richtig Nacht, oder ist es am Tag nur düster? Vergleiche erst danach mit den 3 Regeln. Bei «UND» müssen beide Teile stimmen.',
+        tipEs: 'Revisa cada fila como si fueras la lámpara. Mira primero: ¿hay movimiento? Después: ¿es de noche de verdad, o de día solo está oscuro? Solo después compara con las 3 reglas. Con «Y», las dos partes tienen que cumplirse.'
       },
       a7c: {
         nr: '7c', check: checkLogicGarden, render: renderGarden, theory: 'theory-andor',
         keys: () => GARDEN_ROWS.map(r => r.id),
         mix: () => { dispGarden = shuffleArray(GARDEN_ROWS); },
-        tip: 'Die Regel AUS gilt immer zuerst, wie eine rote Ampel: Dann ist alles andere egal. Prüfe also bei jeder Zeile zuerst: Ist der Boden feucht, oder regnet es? Erst wenn beides nicht stimmt, schaust du auf die Uhrzeit.'
+        tip: 'Die Regel AUS gilt immer zuerst, wie eine rote Ampel: Dann ist alles andere egal. Prüfe also bei jeder Zeile zuerst: Ist der Boden feucht, oder regnet es? Erst wenn beides nicht stimmt, schaust du auf die Uhrzeit.',
+        tipEs: 'La regla APAGADO siempre va primero, como un semáforo en rojo: entonces todo lo demás da igual. Así que en cada fila revisa primero: ¿el suelo está húmedo o llueve? Solo si ninguna de las dos cosas se cumple, miras la hora.'
       }
     };
 
@@ -1443,7 +1523,7 @@
     const TAB_BTN = {
       basics: 'bg-sky-600 hover:bg-sky-700',
       loops: 'bg-amber-600 hover:bg-amber-700',
-      custom: 'bg-rose-600 hover:bg-rose-700',
+      custom: 'bg-pink-600 hover:bg-pink-700',
       logic: 'bg-emerald-600 hover:bg-emerald-700'
     };
 
@@ -1456,17 +1536,50 @@
       const small = 'px-2.5 py-2 rounded-xl text-xs font-bold border transition';
       host.innerHTML = `
         <div id="tip-${id}" class="hidden mb-3 rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-xs sm:text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${u.tip}
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">${both('💡 Tipp', '💡 Pista')}</div>${both(u.tip, u.tipEs)}
         </div>
         <div class="pt-3 border-t border-slate-100 space-y-2">
           <div class="flex flex-wrap items-center gap-2">
-            <button type="button" onclick="checkTask('${id}')" class="px-4 py-2 rounded-xl ${TAB_BTN[tab] || TAB_BTN.basics} text-white text-xs sm:text-sm font-bold transition">✓ Aufgabe ${u.nr} prüfen</button>
-            <button type="button" onclick="toggleTip('${id}')" class="${small} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>
-            ${u.theory ? `<button type="button" onclick="openTheory('${u.theory}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>` : ''}
-            <button type="button" onclick="retryTask('${id}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>
+            <button type="button" onclick="checkTask('${id}')" class="px-4 py-2 rounded-xl ${TAB_BTN[tab] || TAB_BTN.basics} text-white text-xs sm:text-sm font-bold transition">${both(`✓ Aufgabe ${u.nr} prüfen`, `✓ Comprobar la tarea ${u.nr}`)}</button>
+            <button type="button" onclick="toggleTip('${id}')" class="${small} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">${both('💡 Tipp', '💡 Pista')}</button>
+            ${u.theory ? `<button type="button" onclick="openTheory('${u.theory}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${both('📖 Theorie', '📖 Teoría')}</button>` : ''}
+            <button type="button" onclick="retryTask('${id}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${both('🔀 Nochmals üben', '🔀 Practicar otra vez')}</button>
+            <button type="button" onclick="showSolution('${id}')" class="${small} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${both('🤷 Weiss ich nicht', '🤷 No lo sé')}</button>
           </div>
           <div id="fb-${id}" class="text-xs font-semibold"></div>
+          <div id="sol-${id}" class="hidden rounded-lg border border-emerald-300 bg-emerald-50 p-3 text-xs sm:text-sm text-slate-800 leading-relaxed"></div>
         </div>`;
+    }
+
+    // «🤷 Weiss ich nicht»: zeigt die Lösung (angstfrei, kostet nichts). Danach mit «🔀 Nochmals üben» selber lösen.
+    // Text in beiden Sprachen, die CSS-Regel zeigt die gewählte.
+    const q = (t) => `«${t}»`;
+    const LAMP = { AN: ['💡 AN', '💡 ENCENDIDA'], GEDIMMT: ['🌙 GEDIMMT', '🌙 TENUE'], AUS: ['⚫ AUS', '⚫ APAGADA'] };
+    const SPRINKLER = { AN: ['💦 AN (lang)', '💦 ENCENDIDO (largo)'], KURZ: ['💧 KURZ', '💧 CORTO'], AUS: ['⚫ AUS', '⚫ APAGADO'] };
+    const SOLUTION = {
+      a1: () => [BASICS_A1A, BASICS_A1B].map((list, i) => { const c = list.find(o => o.correct); return [`${['Algorithmus', 'Echter Algorithmus'][i]}: ${q(c.text)}`, `${['Algoritmo', 'Algoritmo de verdad'][i]}: ${q(c.es)}`]; }),
+      a2: () => [...FLOW_SLOTS.map((sl, i) => { const c = FLOW_CMDS.find(x => x.id === FLOW_SOLUTION[sl]); return [`Feld ${i + 1}: ${q(c.text)}`, `Campo ${i + 1}: ${q(c.es)}`]; }),
+        ['Raute ◇: Dort wird eine Ja/Nein-Entscheidung getroffen.', 'Rombo ◇: allí se toma una decisión de sí o no.']],
+      a3: () => [['Der blaue Befehl wird 4-mal wiederholt.', 'El comando azul se repite 4 veces.'], ['Total: 40 Schritte (4 × 10).', 'Total: 40 pasos (4 × 10).']],
+      a4: () => [['Schleife: «wiederhole bis &lt;wird Boden berührt?&gt;». Sie hört genau beim Boden auf.', 'Bucle: «repetir hasta que &lt;¿tocando suelo?&gt;». Se detiene justo en el suelo.'],
+        ['Nach unten: «ändere y um ( -1 )». Minus bei y heisst nach unten.', 'Hacia abajo: «sumar a y ( -1 )». Un menos en la y significa hacia abajo.']],
+      a6: () => [['1. wiederhole 4 mal · 2. gehe 50er-Schritt · 3. drehe dich ↻ um 90 Grad', '1. repetir 4 · 2. mover 50 pasos · 3. girar ↻ 90 grados']],
+      a5: () => [['Name: «abheben». y wird immer grösser, bis y = 200: Die Drohne steigt.', 'Nombre: «despegar». La y se hace cada vez más grande hasta y = 200: el dron sube.'],
+        ...CUSTOM_REASONS.filter(r => r.correct).map(r => [`Grund: ${q(r.text)}`, `Razón: ${q(r.es)}`])],
+      a8: () => [['Dort steht eine positive Zahl (+5) statt einer Minuszahl.', 'Allí hay un número positivo (+5) en vez de un número negativo.'],
+        ['Richtig ist: «ändere y um ( -1 )».', 'Lo correcto es: «sumar a y ( -1 )».']],
+      a7a: () => dispAndOr.map((r, i) => [`${i + 1}. ${r.before} <b>${r.correct}</b> ${r.after}`, `${i + 1}. ${r.es[0]} <b>${r.correct === 'und' ? 'y' : 'o'}</b> ${r.es[1]}`]),
+      a7b: () => dispSmart.map((r, i) => [`${i + 1}. ${r.light} · ${r.sensor} · ${r.time} → <b>${LAMP[r.correct][0]}</b>`, `${i + 1}. ${r.es[0]} · ${r.es[1]} · ${r.es[2]} → <b>${LAMP[r.correct][1]}</b>`]),
+      a7c: () => dispGarden.map((r, i) => [`${i + 1}. ${r.soil} · ${r.weather} · ${r.time} → <b>${SPRINKLER[r.correct][0]}</b>`, `${i + 1}. ${r.es[0]} · ${r.es[1]} · ${r.es[2]} → <b>${SPRINKLER[r.correct][1]}</b>`])
+    };
+    function showSolution(id) {
+      const box = document.getElementById('sol-' + id);
+      if (!box || !SOLUTION[id]) return;
+      box.innerHTML = `
+        <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-800 mb-1">${both('✔ So ist es richtig', '✔ Así es correcto')}</div>
+        <ul class="space-y-1">${SOLUTION[id]().map(([de, es]) => `<li>${both(de, es)}</li>`).join('')}</ul>
+        <div class="mt-2 text-slate-600">${both('Das ist okay. Schau es in Ruhe an. Dann löse die Aufgabe mit «🔀 Nochmals üben» selber.', 'No pasa nada. Míralo con calma. Después resuelve la tarea tú con «🔀 Practicar otra vez».')}</div>`;
+      box.classList.remove('hidden');
     }
 
     function checkTask(id) {
@@ -1505,11 +1618,11 @@
       });
     }
 
-    // Grün/Rot-Färbung entfernen
+    // Grün/Gelb-Färbung entfernen
     function clearMarks(root) {
-      root.querySelectorAll('.bg-emerald-50.border-emerald-300, .bg-rose-50.border-rose-300').forEach(el => {
+      root.querySelectorAll('.bg-emerald-50.border-emerald-300, .bg-amber-50.border-amber-300').forEach(el => {
         if (el.id === 'exam-result-banner') return;
-        el.classList.remove('bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
+        el.classList.remove('bg-emerald-50', 'border-emerald-300', 'bg-amber-50', 'border-amber-300');
         el.classList.add('bg-slate-50', 'border-slate-200');
       });
     }
@@ -1529,8 +1642,10 @@
       if (fb) { fb.textContent = ''; fb.className = 'text-xs font-semibold'; }
       const tip = document.getElementById('tip-' + id);
       if (tip) tip.classList.add('hidden');
+      const sol = document.getElementById('sol-' + id);
+      if (sol) { sol.classList.add('hidden'); sol.innerHTML = ''; }
       host.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      showToast('🔀 Neu gemischt', `Aufgabe ${u.nr} ist leer und neu gemischt. Viel Erfolg!`);
+      showToast(tr('🔀 Neu gemischt', '🔀 Mezclado de nuevo'), tr(`Aufgabe ${u.nr} ist leer und neu gemischt. Viel Erfolg!`, `La tarea ${u.nr} está vacía y mezclada de nuevo. ¡Mucho éxito!`));
     }
 
     // ==============================================================
@@ -1542,19 +1657,20 @@
       const grade = Math.round(((score / MAX_POINTS) * 5 + 1) * 10) / 10;
       const passed = score >= PASS_POINTS;
 
+      // Banner in beiden Sprachen (die CSS-Regel zeigt die gewählte)
       let ratingTitle, ratingClass, badgeColor;
       if (pct >= 90) {
-        ratingTitle = "Sehr gut ⭐ (Kompetenzen vollumfänglich erreicht)";
+        ratingTitle = both("Sehr gut ⭐ (Kompetenzen vollumfänglich erreicht)", "Muy bien ⭐ (competencias alcanzadas por completo)");
         ratingClass = "bg-sky-50 border-sky-300 text-sky-950"; badgeColor = "bg-sky-600 text-white";
       } else if (pct >= 75) {
-        ratingTitle = "Gut 👏 (Kompetenzen solide erreicht)";
+        ratingTitle = both("Gut 👏 (Kompetenzen solide erreicht)", "Bien 👏 (competencias alcanzadas con solidez)");
         ratingClass = "bg-emerald-50 border-emerald-300 text-emerald-950"; badgeColor = "bg-emerald-600 text-white";
       } else if (passed) {
-        ratingTitle = "Erreicht / Bestanden 👍 (Grundkompetenzen erfüllt)";
+        ratingTitle = both("Erreicht / Bestanden 👍 (Grundkompetenzen erfüllt)", "Alcanzado / Aprobado 👍 (competencias básicas cumplidas)");
         ratingClass = "bg-amber-50 border-amber-300 text-amber-950"; badgeColor = "bg-amber-600 text-white";
       } else {
-        ratingTitle = "Nicht erreicht ⚠️ (Nochmals vertiefen & üben)";
-        ratingClass = "bg-rose-50 border-rose-300 text-rose-950"; badgeColor = "bg-rose-600 text-white";
+        ratingTitle = both("Noch nicht erreicht 💪 (Nochmals vertiefen & üben)", "Todavía no alcanzado 💪 (repasa y practica otra vez)");
+        ratingClass = "bg-yellow-50 border-yellow-300 text-yellow-950"; badgeColor = "bg-yellow-400 text-yellow-950";
       }
 
       const banner = document.getElementById('exam-result-banner');
@@ -1564,34 +1680,34 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10">
             <div>
               <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full ${badgeColor}">
-                ${passed ? 'Bestanden' : 'Nicht bestanden'}
+                ${passed ? both('Bestanden', 'Aprobado') : both('Noch nicht bestanden', 'Todavía no aprobado')}
               </span>
               <h3 class="text-xl sm:text-2xl font-black mt-2">${ratingTitle}</h3>
-              <p class="text-xs sm:text-sm mt-1 opacity-90">Bestehensgrenze: 60 % (ab ${PASS_POINTS} P. = Note 4.0).</p>
+              <p class="text-xs sm:text-sm mt-1 opacity-90">${both(`Bestehensgrenze: 60 % (ab ${PASS_POINTS} P. = Note 4.0).`, `Límite para aprobar: 60 % (desde ${PASS_POINTS} p. = nota 4.0).`)}</p>
             </div>
             <div class="flex items-center gap-4 bg-white/80 p-3 rounded-xl border border-black/10 self-start sm:self-auto">
               <div class="text-center px-2">
-                <div class="text-[10px] font-bold text-slate-500 uppercase">Punkte</div>
+                <div class="text-[10px] font-bold text-slate-500 uppercase">${both('Punkte', 'Puntos')}</div>
                 <div class="text-2xl font-black">${score} <span class="text-xs text-slate-500 font-normal">/ ${MAX_POINTS}</span></div>
               </div>
               <div class="h-8 w-px bg-slate-300"></div>
               <div class="text-center px-2">
-                <div class="text-[10px] font-bold text-slate-500 uppercase">Prozent</div>
+                <div class="text-[10px] font-bold text-slate-500 uppercase">${both('Prozent', 'Porcentaje')}</div>
                 <div class="text-2xl font-black">${pct}%</div>
               </div>
               <div class="h-8 w-px bg-slate-300"></div>
               <div class="text-center px-2">
-                <div class="text-[10px] font-bold text-slate-500 uppercase">Note</div>
+                <div class="text-[10px] font-bold text-slate-500 uppercase">${both('Note', 'Nota')}</div>
                 <div class="text-2xl font-black text-blue-700">${grade.toFixed(1)}</div>
               </div>
             </div>
           </div>
           <div class="pt-3 text-xs sm:text-sm text-slate-700">
-            <strong>Hinweis für den Papiertest:</strong> Genau diese Aufgabentypen kommen im Test auf Papier dran. Wenn du hier mehr als ${Math.ceil(MAX_POINTS * 0.65)} Punkte hast, bist du bestens vorbereitet!
+            ${both(`<strong>Hinweis für den Papiertest:</strong> Genau diese Aufgabentypen kommen im Test auf Papier dran. Wenn du hier mehr als ${Math.ceil(MAX_POINTS * 0.65)} Punkte hast, bist du bestens vorbereitet!`, `<strong>Aviso para el examen en papel:</strong> en el examen en papel salen justo estos tipos de tareas. Si aquí tienes más de ${Math.ceil(MAX_POINTS * 0.65)} puntos, ¡tienes muy buena preparación!`)}
           </div>`;
         banner.scrollIntoView({ behavior: 'smooth' });
       }
-      showToast("Auswertung fertig!", `${score} von ${MAX_POINTS} Punkten (${pct}%, Note ${grade.toFixed(1)}).`);
+      showToast(tr("Auswertung fertig!", "¡Corrección lista!"), tr(`${score} von ${MAX_POINTS} Punkten (${pct}%, Note ${grade.toFixed(1)}).`, `${score} de ${MAX_POINTS} puntos (${pct}%, nota ${grade.toFixed(1)}).`));
     }
 
     function resetAllHubData() {
@@ -1603,58 +1719,9 @@
       // Farben und Rückmeldungen zurücksetzen
       clearMarks(document);
       document.querySelectorAll('[id^="fb-"]').forEach(el => { el.innerHTML = ''; el.className = 'text-xs font-semibold'; });
+      document.querySelectorAll('[id^="sol-"]').forEach(el => { el.classList.add('hidden'); el.innerHTML = ''; });
       renderAll();
-      showToast("Zurückgesetzt", "Alle Antworten wurden geleert.");
-    }
-
-    // ==============================================================
-    // STOPPUHR
-    // ==============================================================
-    let timerSeconds = 0;
-    let timerInterval = null;
-    let timerRunning = false;
-
-    function formatTime(totalSec) {
-      const pad = (n) => String(n).padStart(2, '0');
-      return `${pad(Math.floor(totalSec / 60))}:${pad(totalSec % 60)}`;
-    }
-
-    function updateTimerDisplay() {
-      const el = document.getElementById('timer-display');
-      if (el) el.innerText = formatTime(timerSeconds);
-    }
-
-    function toggleTimer() {
-      const btn = document.getElementById('timer-toggle-btn');
-      if (timerRunning) {
-        clearInterval(timerInterval);
-        timerRunning = false;
-        if (btn) btn.innerHTML = '▶️ Start';
-        try { localStorage.setItem('scratch_hub_timer', timerSeconds); } catch (e) {}
-        showToast("⏱️ Pausiert", `Lernzeit: ${formatTime(timerSeconds)}`);
-      } else {
-        timerRunning = true;
-        if (btn) btn.innerHTML = '⏸️ Pause';
-        timerInterval = setInterval(() => {
-          timerSeconds++;
-          updateTimerDisplay();
-          if (timerSeconds % 5 === 0) {
-            try { localStorage.setItem('scratch_hub_timer', timerSeconds); } catch (e) {}
-          }
-        }, 1000);
-        showToast("⏱️ Gestartet", "Lernzeit wird gezählt.");
-      }
-    }
-
-    function resetTimer() {
-      clearInterval(timerInterval);
-      timerRunning = false;
-      timerSeconds = 0;
-      updateTimerDisplay();
-      try { localStorage.removeItem('scratch_hub_timer'); } catch (e) {}
-      const btn = document.getElementById('timer-toggle-btn');
-      if (btn) btn.innerHTML = '▶️ Start';
-      showToast("⏱️ Zurückgesetzt", "Uhr steht auf 00:00.");
+      showToast(tr("Zurückgesetzt", "Borrado"), tr("Alle Antworten wurden geleert.", "Se borraron todas las respuestas."));
     }
 
     let toastTimeout = null;
@@ -1679,11 +1746,42 @@
     // ==============================================================
     Object.assign(window, {
       switchTab, saveAnswer, reshuffleBasics, reshuffleLogic,
-      checkTask, toggleTip, openTheory, retryTask,
+      checkTask, toggleTip, openTheory, retryTask, showSolution,
       checkBasicsA1, checkBasicsA2, checkLoopsA3, checkLoopsA4, checkSquareSort,
       checkCustomA5, checkCustomA8, checkLogicAndOr, checkLogicA7, checkLogicGarden,
-      handleFlowSlotClick, evaluateFullExam, resetAllHubData, toggleTimer, resetTimer
+      handleFlowSlotClick, evaluateFullExam, resetAllHubData, setLang
     });
+
+    // Texte ohne <span>: <option> und SVG-<text> (data-es), Attribute title / aria-label (data-es-…)
+    function applyLangAttrs(root) {
+      (root || document).querySelectorAll('[data-es]').forEach(el => {
+        if (el.dataset.de === undefined) el.dataset.de = el.textContent;
+        el.textContent = LANG === 'es' ? el.dataset.es : el.dataset.de;
+      });
+      ['title', 'aria-label'].forEach(attr => {
+        (root || document).querySelectorAll(`[data-es-${attr}]`).forEach(el => {
+          if (!el.hasAttribute('data-de-' + attr)) el.setAttribute('data-de-' + attr, el.getAttribute(attr) || '');
+          el.setAttribute(attr, el.getAttribute((LANG === 'es' ? 'data-es-' : 'data-de-') + attr));
+        });
+      });
+      // «↺ volver a la pregunta» ist länger: Schild im Diagramm etwas breiter (Deutsch bleibt wie vorher)
+      const back = document.getElementById('flow-back-rect');
+      if (back) { back.setAttribute('x', LANG === 'es' ? 151 : 176); back.setAttribute('width', LANG === 'es' ? 210 : 160); }
+    }
+
+    // Sprache anwenden: html lang, Titel, Umschalter, Texte ohne <span>, SVG-Felder neu zeichnen
+    function applyLang() {
+      document.documentElement.lang = LANG;
+      document.title = TITLE[LANG];
+      document.querySelectorAll('.lang-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.setlang === LANG));
+      applyLangAttrs(document);
+      renderFlow();
+    }
+    function setLang(l) {
+      LANG = l === 'es' ? 'es' : 'de';
+      try { localStorage.setItem(LANG_KEY, LANG); } catch (e) {}
+      applyLang();
+    }
 
     function renderAll() {
       renderBasicsTab();
@@ -1703,6 +1801,7 @@
       renderAll();
       shuffleSelects(document);
       initFlowDnD();
+      applyLang();
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
     else boot();

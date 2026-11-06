@@ -24,9 +24,26 @@
     /* Sprungziele nicht unter dem fixierten Kopf verstecken */
     [data-task], #exam-results-banner, #spick-grammar details { scroll-margin-top: 15rem; }
     @media (min-width: 640px) { [data-task], #exam-results-banner, #spick-grammar details { scroll-margin-top: 8rem; } }
+    /* Sprachwechsel: feste Texte stehen doppelt (data-l="de" / data-l="es") */
+    html[lang="es"] [data-l="de"], html:not([lang="es"]) [data-l="es"] { display: none !important; }
+    html:not([lang="es"]) .lang-btn[data-setlang="de"], html[lang="es"] .lang-btn[data-setlang="es"] { background: #fff; color: #0f172a; }
   </style>
+  <script>
+    // Sprache sofort setzen (gilt für alle Seiten des Lernportals), damit nichts kurz auf Deutsch aufblitzt
+    try { if (localStorage.getItem('lernportal_lang') === 'es') document.documentElement.lang = 'es'; } catch (e) {}
+  </script>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Sprache: Deutsch | Español -->
+  <div class="bg-blue-950 text-white">
+    <div class="max-w-6xl mx-auto px-4 pt-2 pb-1 flex justify-end">
+      <div class="inline-flex rounded-full bg-white/10 border border-white/15 p-0.5 text-xs font-bold" role="group" aria-label="Sprache · Idioma">
+        <button type="button" data-setlang="de" onclick="setLang('de')" lang="de" class="lang-btn px-3 py-1 rounded-full text-white/80">Deutsch</button>
+        <button type="button" data-setlang="es" onclick="setLang('es')" lang="es" class="lang-btn px-3 py-1 rounded-full text-white/80">Español</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Header -->
   <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-sky-800 text-white shadow-lg sticky top-0 z-40">
@@ -42,23 +59,11 @@
         </div>
       </div>
 
-      <!-- Quick Stats & Stopwatch -->
+      <!-- Fortschritt -->
       <div class="flex flex-wrap items-center gap-2">
-        <!-- Stoppuhr Widget -->
-        <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl border border-white/20 text-xs shadow-inner">
-          <span class="text-amber-300 flex items-center gap-1 font-semibold">⏱️ <span class="hidden sm:inline">Zeit:</span></span>
-          <span id="timer-display" class="font-mono-code font-bold text-white bg-black/30 px-2 py-0.5 rounded-lg tracking-wider text-xs sm:text-sm">00:00</span>
-          <button onclick="toggleTimer()" id="timer-toggle-btn" class="px-2 py-0.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-bold transition flex items-center gap-1" title="Starten / Pausieren">
-            ▶️ Start
-          </button>
-          <button onclick="resetTimer()" class="px-1.5 py-0.5 rounded-lg bg-white/15 hover:bg-rose-500/40 text-white transition text-xs" title="Auf 0 zurücksetzen">
-            ↺ 0
-          </button>
-        </div>
-
         <!-- Übungsfortschritt -->
         <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl border border-white/15 text-xs font-medium">
-          <span class="text-sky-300">Fortschritt:</span>
+          <span class="text-sky-300"><span data-l="de">Fortschritt:</span><span data-l="es" lang="es">Progreso:</span></span>
           <span id="header-stat" class="font-bold text-white font-mono-code bg-white/20 px-2 py-0.5 rounded-lg">–</span>
         </div>
       </div>
@@ -73,13 +78,13 @@
         <span>🔮</span> 2. Future with «will»
       </button>
       <button onclick="switchTab('conjunctions')" id="tab-btn-conjunctions" class="tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-sky-100 hover:bg-white/10">
-        <span>🔗</span> 3. Konjunktionen
+        <span>🔗</span> <span data-l="de">3. Konjunktionen</span><span data-l="es" lang="es">3. Conjunciones</span>
       </button>
       <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/40">
-        <span>📝</span> <span>Probeprüfung (<span class="js-max-pts">–</span> P.)</span>
+        <span>📝</span> <span><span data-l="de">Probeprüfung</span><span data-l="es" lang="es">Examen de prueba</span> (<span class="js-max-pts">–</span> <span data-l="de">P.</span><span data-l="es" lang="es">p.</span>)</span>
       </button>
       <button onclick="switchTab('voci')" id="tab-btn-voci" class="tab-btn px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-sky-100 hover:bg-white/10">
-        <span>📖</span> Spickzettel
+        <span>📖</span> <span data-l="de">Spickzettel</span><span data-l="es" lang="es">Resumen</span>
       </button>
     </nav>
   </header>
@@ -95,22 +100,25 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div>
             <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200 mb-1">
-              LZ 1 · Lehrplan 21: FS1E.5.D.1
+              <span><span data-l="de">LZ 1</span><span data-l="es" lang="es">Objetivo 1</span> · Lehrplan 21: FS1E.5.D.1</span>
             </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">🏷️ Question Tags (Bestätigungsfragen)</h2>
-            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">🏷️ Question Tags (<span data-l="de">Bestätigungsfragen</span><span data-l="es" lang="es">preguntas de confirmación</span>)</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="de">
               Regel: Satz positiv (+) ➔ Tag negativ (–) | Satz negativ (–) ➔ Tag positiv (+). Immer Personalpronomen verwenden!
+            </p>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="es" lang="es">
+              Regla: frase positiva (+) ➔ tag negativo (–) | frase negativa (–) ➔ tag positivo (+). ¡Usa siempre un pronombre personal!
             </p>
           </div>
 
           <!-- Level Switcher -->
           <div class="flex flex-wrap items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
-            <span class="text-slate-500 pl-2">Niveau:</span>
+            <span class="text-slate-500 pl-2"><span data-l="de">Niveau:</span><span data-l="es" lang="es">Nivel:</span></span>
             <button onclick="selectLevel('tags', 1)" id="lvl-btn-tags-1" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white shadow-sm transition">
-              Niveau 1 (Auswahl)
+              <span data-l="de">Niveau 1 (Auswahl)</span><span data-l="es" lang="es">Nivel 1 (elegir)</span>
             </button>
             <button onclick="selectLevel('tags', 2)" id="lvl-btn-tags-2" class="px-3 py-1.5 rounded-lg text-slate-600 hover:bg-white transition">
-              Niveau 2 (Testformat: Freie Eingabe)
+              <span data-l="de">Niveau 2 (Testformat: Freie Eingabe)</span><span data-l="es" lang="es">Nivel 2 (formato de examen: escribir)</span>
             </button>
           </div>
         </div>
@@ -118,10 +126,10 @@
         <!-- Pagination Bar (Blocks 1-6) -->
         <div class="mt-4 flex flex-wrap items-center justify-between gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm">
           <div class="flex items-center gap-1.5 font-medium text-slate-600">
-            <span>Aufgabenblöcke:</span>
+            <span><span data-l="de">Aufgabenblöcke:</span><span data-l="es" lang="es">Bloques:</span></span>
             <div id="block-pills-tags" class="flex gap-1"></div>
           </div>
-          <div class="text-xs text-slate-500 font-medium">Lösungen können pro 5er-Block eingesehen werden.</div>
+          <div class="text-xs text-slate-500 font-medium"><span data-l="de">Lösungen können pro 5er-Block eingesehen werden.</span><span data-l="es" lang="es">Puedes ver las soluciones de cada bloque de 5.</span></div>
         </div>
       </div>
 
@@ -139,22 +147,25 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div>
             <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 border border-indigo-200 mb-1">
-              LZ 2 & LZ 3 · Lehrplan 21: FS1E.5.D.1 / D.2
+              <span><span data-l="de">LZ 2 & LZ 3</span><span data-l="es" lang="es">Objetivos 2 y 3</span> · Lehrplan 21: FS1E.5.D.1 / D.2</span>
             </div>
             <h2 class="text-xl sm:text-2xl font-bold text-slate-800">🔮 Future with «will» (+ / – / ?)</h2>
-            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="de">
               Positiv: <code class="font-mono-code text-indigo-600 font-bold">will + Infinitiv</code> · Negativ: <code class="font-mono-code text-rose-600 font-bold">won't + Infinitiv</code> · Frage: <code class="font-mono-code text-blue-600 font-bold">Will + Subjekt + Infinitiv?</code>
+            </p>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="es" lang="es">
+              Positivo: <code class="font-mono-code text-indigo-600 font-bold">will + infinitivo</code> · Negativo: <code class="font-mono-code text-rose-600 font-bold">won't + infinitivo</code> · Pregunta: <code class="font-mono-code text-blue-600 font-bold">Will + sujeto + infinitivo?</code>
             </p>
           </div>
 
           <!-- Level Switcher -->
           <div class="flex flex-wrap items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
-            <span class="text-slate-500 pl-2">Niveau:</span>
+            <span class="text-slate-500 pl-2"><span data-l="de">Niveau:</span><span data-l="es" lang="es">Nivel:</span></span>
             <button onclick="selectLevel('will', 1)" id="lvl-btn-will-1" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-sm transition">
-              Niveau 1 (Auswahl)
+              <span data-l="de">Niveau 1 (Auswahl)</span><span data-l="es" lang="es">Nivel 1 (elegir)</span>
             </button>
             <button onclick="selectLevel('will', 2)" id="lvl-btn-will-2" class="px-3 py-1.5 rounded-lg text-slate-600 hover:bg-white transition">
-              Niveau 2 (Testformat: Lückentext)
+              <span data-l="de">Niveau 2 (Testformat: Lückentext)</span><span data-l="es" lang="es">Nivel 2 (formato de examen: completar)</span>
             </button>
           </div>
         </div>
@@ -162,10 +173,10 @@
         <!-- Pagination Bar -->
         <div class="mt-4 flex flex-wrap items-center justify-between gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm">
           <div class="flex items-center gap-1.5 font-medium text-slate-600">
-            <span>Aufgabenblöcke:</span>
+            <span><span data-l="de">Aufgabenblöcke:</span><span data-l="es" lang="es">Bloques:</span></span>
             <div id="block-pills-will" class="flex gap-1"></div>
           </div>
-          <div class="text-xs text-slate-500 font-medium">Lösungen können pro 5er-Block eingesehen werden.</div>
+          <div class="text-xs text-slate-500 font-medium"><span data-l="de">Lösungen können pro 5er-Block eingesehen werden.</span><span data-l="es" lang="es">Puedes ver las soluciones de cada bloque de 5.</span></div>
         </div>
       </div>
 
@@ -182,25 +193,28 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div>
             <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 mb-1">
-              LZ 4 · Lehrplan 21: FS1E.5.D.1
+              <span><span data-l="de">LZ 4</span><span data-l="es" lang="es">Objetivo 4</span> · Lehrplan 21: FS1E.5.D.1</span>
             </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">🔗 Conjunctions (5 Bindewörter)</h2>
-            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">🔗 Conjunctions (<span data-l="de">5 Bindewörter</span><span data-l="es" lang="es">5 conectores</span>)</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="de">
               <span class="font-bold text-emerald-700">so</span> (deshalb) · <span class="font-bold text-emerald-700">so ... that</span> (so ... dass) · <span class="font-bold text-emerald-700">in order to</span> (um zu + Infinitiv) · <span class="font-bold text-emerald-700">because</span> (weil) · <span class="font-bold text-emerald-700">(either) ... or</span> (entweder ... oder / oder)
+            </p>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="es" lang="es">
+              <span class="font-bold text-emerald-700" lang="en">so</span> (por eso) · <span class="font-bold text-emerald-700" lang="en">so ... that</span> (tan ... que) · <span class="font-bold text-emerald-700" lang="en">in order to</span> (para + infinitivo) · <span class="font-bold text-emerald-700" lang="en">because</span> (porque) · <span class="font-bold text-emerald-700" lang="en">(either) ... or</span> (o ... o / o)
             </p>
           </div>
 
           <!-- Level Switcher -->
           <div class="flex flex-wrap items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold">
-            <span class="text-slate-500 pl-2">Niveau:</span>
+            <span class="text-slate-500 pl-2"><span data-l="de">Niveau:</span><span data-l="es" lang="es">Nivel:</span></span>
             <button onclick="selectLevel('conj', 1)" id="lvl-btn-conj-1" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white shadow-sm transition">
-              Niv. 1 (Auswahl)
+              <span data-l="de">Niv. 1 (Auswahl)</span><span data-l="es" lang="es">Niv. 1 (elegir)</span>
             </button>
             <button onclick="selectLevel('conj', 2)" id="lvl-btn-conj-2" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-white transition">
-              Niv. 2 (Lückentext)
+              <span data-l="de">Niv. 2 (Lückentext)</span><span data-l="es" lang="es">Niv. 2 (completar)</span>
             </button>
             <button onclick="selectLevel('conj', 3)" id="lvl-btn-conj-3" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-white transition">
-              Niv. 3 (Satzbau)
+              <span data-l="de">Niv. 3 (Satzbau)</span><span data-l="es" lang="es">Niv. 3 (unir frases)</span>
             </button>
           </div>
         </div>
@@ -208,10 +222,10 @@
         <!-- Pagination Bar -->
         <div class="mt-4 flex flex-wrap items-center justify-between gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm">
           <div class="flex items-center gap-1.5 font-medium text-slate-600">
-            <span>Aufgabenblöcke:</span>
+            <span><span data-l="de">Aufgabenblöcke:</span><span data-l="es" lang="es">Bloques:</span></span>
             <div id="block-pills-conj" class="flex gap-1"></div>
           </div>
-          <div class="text-xs text-slate-500 font-medium">Lösungen können pro 5er-Block eingesehen werden.</div>
+          <div class="text-xs text-slate-500 font-medium"><span data-l="de">Lösungen können pro 5er-Block eingesehen werden.</span><span data-l="es" lang="es">Puedes ver las soluciones de cada bloque de 5.</span></div>
         </div>
       </div>
 
@@ -229,16 +243,21 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-amber-100">
           <div>
             <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300 mb-1">
-              <span>Testmodus · <span class="js-exam-items">–</span> Aufgaben · <span class="js-max-pts">–</span> Punkte · Schweizer Notenskala</span>
+              <span data-l="de">Testmodus · <span class="js-exam-items">–</span> Aufgaben · <span class="js-max-pts">–</span> Punkte · Schweizer Notenskala</span><span data-l="es" lang="es">Modo examen · <span class="js-exam-items">–</span> preguntas · <span class="js-max-pts">–</span> puntos · escala de notas suiza</span>
             </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📝 Probeprüfung: Unit 1 Grammatik</h2>
-            <p class="text-xs sm:text-sm text-slate-600 mt-1">
-              <span data-items="exam_tags">–</span> Question Tags + <span data-items="exam_will">–</span> Future with «will» + <span data-items="exam_conj">–</span> Konjunktionen. Richtig = 1 Punkt, Falsch = 0 Punkte.
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📝 <span data-l="de">Probeprüfung: Unit 1 Grammatik</span><span data-l="es" lang="es">Examen de prueba: Unit 1 gramática</span></h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="de">
+              <span data-items="exam_tags">–</span> Question Tags + <span data-items="exam_will">–</span> Future with «will» + <span data-items="exam_conj">–</span> Konjunktionen. Richtig = 1 Punkt, noch nicht ganz = 0 Punkte.
+            </p>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="es" lang="es">
+              <span data-items="exam_tags">–</span> Question Tags + <span data-items="exam_will">–</span> Future with «will» + <span data-items="exam_conj">–</span> conjunciones. Respuesta correcta = 1 punto; si no, 0 puntos.
             </p>
           </div>
           <div class="md:text-right">
-            <div class="text-xs text-slate-600 font-medium">Bestehensgrenze: <strong>60%</strong> (<span class="js-pass-pts">–</span> P. = Note 4.0)</div>
-            <div class="text-xs font-semibold text-emerald-700">75% = Gut (<span class="js-good-pts">–</span> P.) · 90% = Sehr gut (<span class="js-top-pts">–</span> P.)</div>
+            <div class="text-xs text-slate-600 font-medium" data-l="de">Bestehensgrenze: <strong>60%</strong> (<span class="js-pass-pts">–</span> P. = Note 4.0)</div>
+            <div class="text-xs text-slate-600 font-medium" data-l="es" lang="es">Para aprobar: <strong>60 %</strong> (<span class="js-pass-pts">–</span> p. = nota 4.0)</div>
+            <div class="text-xs font-semibold text-emerald-700" data-l="de">75% = Gut (<span class="js-good-pts">–</span> P.) · 90% = Sehr gut (<span class="js-top-pts">–</span> P.)</div>
+            <div class="text-xs font-semibold text-emerald-700" data-l="es" lang="es">75 % = Bien (<span class="js-good-pts">–</span> p.) · 90 % = Muy bien (<span class="js-top-pts">–</span> p.)</div>
           </div>
         </div>
 
@@ -253,9 +272,9 @@
           <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-slate-100 pb-2">
             <h3 class="font-bold text-slate-800 flex items-center gap-2 text-base sm:text-lg">
               <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-xs font-bold">A</span>
-              <span>Teil 1: Question Tags (<span data-items="exam_tags">–</span> Aufgaben · <span data-max="exam_tags">–</span> Punkte)</span>
+              <span data-l="de">Teil 1: Question Tags (<span data-items="exam_tags">–</span> Aufgaben · <span data-max="exam_tags">–</span> Punkte)</span><span data-l="es" lang="es">Parte 1: Question Tags (<span data-items="exam_tags">–</span> preguntas · <span data-max="exam_tags">–</span> puntos)</span>
             </h3>
-            <span class="text-xs text-slate-500">Freie Eingabe: Hilfsverb + Pronomen (z.B. <code class="font-mono-code text-blue-700">isn't she</code>)</span>
+            <span class="text-xs text-slate-500" data-l="de">Freie Eingabe: Hilfsverb + Pronomen (z.B. <code class="font-mono-code text-blue-700">isn't she</code>)</span><span class="text-xs text-slate-500" data-l="es" lang="es">Escribe: verbo auxiliar + pronombre (p. ej. <code class="font-mono-code text-blue-700" lang="en">isn't she</code>)</span>
           </div>
           <div id="exam-list-tags" class="space-y-3"></div>
         </div>
@@ -265,9 +284,9 @@
           <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-slate-100 pb-2">
             <h3 class="font-bold text-slate-800 flex items-center gap-2 text-base sm:text-lg">
               <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center text-xs font-bold">B</span>
-              <span>Teil 2: Future with «will» (<span data-items="exam_will">–</span> Aufgaben · <span data-max="exam_will">–</span> Punkte)</span>
+              <span data-l="de">Teil 2: Future with «will» (<span data-items="exam_will">–</span> Aufgaben · <span data-max="exam_will">–</span> Punkte)</span><span data-l="es" lang="es">Parte 2: Future with «will» (<span data-items="exam_will">–</span> preguntas · <span data-max="exam_will">–</span> puntos)</span>
             </h3>
-            <span class="text-xs text-slate-500">Formen bilden (+ / – / ?) im Testformat</span>
+            <span class="text-xs text-slate-500"><span data-l="de">Formen bilden (+ / – / ?) im Testformat</span><span data-l="es" lang="es">Escribe las formas (+ / – / ?) como en el examen</span></span>
           </div>
           <div id="exam-list-will" class="space-y-3"></div>
         </div>
@@ -277,7 +296,7 @@
           <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-slate-100 pb-2">
             <h3 class="font-bold text-slate-800 flex items-center gap-2 text-base sm:text-lg">
               <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold">C</span>
-              <span>Teil 3: Konjunktionen (<span data-items="exam_conj">–</span> Aufgaben · <span data-max="exam_conj">–</span> Punkte)</span>
+              <span data-l="de">Teil 3: Konjunktionen (<span data-items="exam_conj">–</span> Aufgaben · <span data-max="exam_conj">–</span> Punkte)</span><span data-l="es" lang="es">Parte 3: Conjunciones (<span data-items="exam_conj">–</span> preguntas · <span data-max="exam_conj">–</span> puntos)</span>
             </h3>
             <span class="text-xs text-slate-500">so, so ... that, in order to, because, (either) ... or</span>
           </div>
@@ -287,14 +306,14 @@
         <!-- Submit Bar -->
         <div class="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="text-xs text-slate-500">
-            Klicke auf «Prüfung abgeben», um die Note und detaillierte Fehler-Tipps zu erhalten.
+            <span data-l="de">Klicke auf «Prüfung abgeben», um die Note und detaillierte Fehler-Tipps zu erhalten.</span><span data-l="es" lang="es">Toca «Entregar el examen» para ver tu nota y pistas sobre los errores.</span>
           </div>
           <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
             <button onclick="resetExam()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 text-sm font-semibold transition w-full sm:w-auto">
-              🔀 Test leeren & neu mischen
+              <span data-l="de">🔀 Test leeren & neu mischen</span><span data-l="es" lang="es">🔀 Vaciar el examen y mezclar de nuevo</span>
             </button>
             <button onclick="submitExam()" id="exam-submit-btn" class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold shadow-md transition w-full sm:w-auto flex items-center justify-center gap-2">
-              <span>🚀</span> Prüfung abgeben & auswerten
+              <span>🚀</span> <span data-l="de">Prüfung abgeben & auswerten</span><span data-l="es" lang="es">Entregar el examen y ver la nota</span>
             </button>
           </div>
         </div>
@@ -308,10 +327,11 @@
       <!-- Grammatik-Spickzettel: Inhalt kommt aus THEORY (gleicher Text wie beim Knopf «📖 Theorie») -->
       <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
         <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-100 text-sky-800 border border-sky-200 mb-1">
-          LZ 1 bis LZ 4 · Grammatik
+          <span data-l="de">LZ 1 bis LZ 4 · Grammatik</span><span data-l="es" lang="es">Objetivos 1 a 4 · Gramática</span>
         </div>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📖 Grammatik-Spickzettel</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mt-1">Die Regeln zu Question Tags, «will» und Konjunktionen. Antippen zum Öffnen.</p>
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📖 <span data-l="de">Grammatik-Spickzettel</span><span data-l="es" lang="es">Resumen de gramática</span></h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="de">Die Regeln zu Question Tags, «will» und Konjunktionen. Antippen zum Öffnen.</p>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="es" lang="es">Las reglas de Question Tags, «will» y conjunciones. Toca para abrir.</p>
         <div id="spick-grammar" class="mt-4 space-y-3"></div>
       </div>
 
@@ -319,19 +339,22 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div>
             <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-100 text-purple-800 border border-purple-200 mb-1">
-              LZ 5 · Open World 2 · Unit 1
+              <span><span data-l="de">LZ 5</span><span data-l="es" lang="es">Objetivo 5</span> · Open World 2 · Unit 1</span>
             </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📖 Voci-Spickzettel (<span id="voci-count">–</span> Wörter)</h2>
-            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">📖 <span data-l="de">Voci-Spickzettel (<span class="js-voci-count">–</span> Wörter)</span><span data-l="es" lang="es">Resumen de vocabulario (<span class="js-voci-count">–</span> palabras)</span></h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="de">
               Wortschatz aus den beiden Vokabeltests rund um Flughafen, Fliegen, Wettbewerb und Pioniere.
+            </p>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="es" lang="es">
+              Las palabras de las dos pruebas de vocabulario: aeropuerto, volar, concursos y pioneros.
             </p>
           </div>
 
           <!-- Search & Filter -->
           <div class="flex flex-wrap items-center gap-2">
-            <input type="text" id="voci-search" placeholder="Wort suchen (DE/EN)..." class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs sm:text-sm focus:ring-2 focus:ring-purple-500 w-48 sm:w-56" oninput="renderVocabulary()">
+            <input type="text" id="voci-search" placeholder="Wort suchen (DE/EN)..." data-ph-es="Buscar palabra (ES/EN)..." class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs sm:text-sm focus:ring-2 focus:ring-purple-500 w-48 sm:w-56" oninput="renderVocabulary()">
             <div class="flex rounded-xl bg-slate-100 p-1 border border-slate-200 text-xs font-semibold">
-              <button onclick="filterVoci('all')" id="voci-btn-all" class="px-2.5 py-1 rounded-lg bg-purple-600 text-white shadow-sm">Alle</button>
+              <button onclick="filterVoci('all')" id="voci-btn-all" class="px-2.5 py-1 rounded-lg bg-purple-600 text-white shadow-sm"><span data-l="de">Alle</span><span data-l="es" lang="es">Todas</span></button>
               <button onclick="filterVoci('part1')" id="voci-btn-part1" class="px-2.5 py-1 rounded-lg text-slate-600 hover:bg-white">Part 1</button>
               <button onclick="filterVoci('part2')" id="voci-btn-part2" class="px-2.5 py-1 rounded-lg text-slate-600 hover:bg-white">Part 2</button>
             </div>
@@ -348,72 +371,107 @@
   <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-700 pointer-events-none text-xs sm:text-sm">
     <span id="toast-icon">✨</span>
     <div>
-      <div id="toast-title" class="font-bold">Mitteilung</div>
-      <div id="toast-msg" class="text-slate-300 text-xs">Details</div>
+      <div id="toast-title" class="font-bold"><span data-l="de">Mitteilung</span><span data-l="es" lang="es">Aviso</span></div>
+      <div id="toast-msg" class="text-slate-300 text-xs"><span data-l="de">Details</span><span data-l="es" lang="es">Detalles</span></div>
     </div>
   </div>
 
   <!-- JavaScript Application Logic -->
   <script>
     // ==========================================================
+    // SPRACHE (Deutsch | Español). Gespeichert für alle Seiten unter «lernportal_lang».
+    // Feste Texte stehen im HTML doppelt (data-l), Texte aus dem Skript mit tr('Deutsch', 'Español').
+    // Texte in Daten: { de: …, es: … }, ausgelesen mit pick(). Englisch bleibt Englisch.
+    // Alle Antworten sind englisch: Bewertung und Speicher sind für beide Sprachen gleich.
+    // ==========================================================
+    const LANG_KEY = 'lernportal_lang';
+    let LANG = 'de';
+    try { LANG = localStorage.getItem(LANG_KEY) === 'es' ? 'es' : 'de'; } catch (e) {}
+    const ES = () => LANG === 'es';
+    const tr = (de, es) => ES() ? es : de;
+    const pick = x => (x && typeof x === 'object' && 'de' in x) ? x[LANG] : x;
+    const TITLE = { de: 'Open World 2 · Unit 1: Airport & Flying · Grammar & Exam Hub', es: 'Open World 2 · Unit 1: Airport & Flying · Grammar & Exam Hub' };
+
+    // Regel-Zeilen («rule») der Sätze: Englisches in «…» bleibt, deutsche Wörter werden spanisch
+    const RULE_ES = [
+      ['Present Simple «has» (Vollverb)', 'Present Simple «has» (verbo normal)'],
+      ['because + Grund', 'because + razón'], ['because + Ursache', 'because + causa'],
+      ['so = Folge', 'so = consecuencia'], ['so = Konsequenz', 'so = consecuencia'],
+      ['Vor Infinitiv', 'Antes del infinitivo'], ['reiner Infinitiv', 'infinitivo sin «to»'], ['Infinitiv', 'infinitivo'],
+      ['Verneinung', 'Negación'], ['negativ', 'negativo'], ['positiv', 'positivo'], ['Frage', 'Pregunta'],
+      ['Folge', 'Consecuencia'], ['Konsequenz', 'Consecuencia'], ['Begründung', 'Razón'], ['Grund', 'Razón'],
+      ['Ursache', 'Causa'], ['Nebensatz', 'frase con sujeto y verbo'], ['Vollverb', 'Verbo normal'],
+      ['3. Person', '3.ª persona'], ['Mehrzahl', 'Plural'], ['Vorhersage', 'Predicción'], ['Paar', 'Pareja'],
+      ['(weil)', '(porque)'], ['(deshalb)', '(por eso)'], ['(um zu)', '(para)'], ['deshalb', 'por eso']
+    ];
+    function ruleText(r) {
+      if (!ES()) return r;
+      return String(r).split(/(«[^»]*»)/).map(part => {
+        if (part.startsWith('«')) return part;
+        RULE_ES.forEach(([de, es]) => { part = part.split(de).join(es); });
+        return part;
+      }).join('');
+    }
+
+    // ==========================================================
     // WORTSCHATZ (OPEN WORLD 2 UNIT 1), Anzahl wird gezählt
     // ==========================================================
     const VOCABULARY = [
       // Part 1
-      { en: "airport", de: "Flughafen", part: 1 },
-      { en: "airplane", de: "Flugzeug", part: 1 },
-      { en: "so-called", de: "sogenannt", part: 1 },
-      { en: "passion", de: "Leidenschaft", part: 1 },
-      { en: "challenge", de: "Herausforderung", part: 1 },
-      { en: "prediction", de: "Vorhersage, Prognose", part: 1 },
-      { en: "announcement", de: "Durchsage, Ankündigung", part: 1 },
-      { en: "passionate", de: "leidenschaftlich", part: 1 },
-      { en: "passenger", de: "Passagier/-in, Fluggast", part: 1 },
-      { en: "wax", de: "Wachs", part: 1 },
-      { en: "soft", de: "weich, sanft", part: 1 },
-      { en: "competition", de: "Wettbewerb, Wettkampf", part: 1 },
-      { en: "spontaneous", de: "spontan", part: 1 },
-      { en: "all-rounder", de: "vielseitiges Talent, Alleskönner/-in", part: 1 },
-      { en: "crash", de: "verunglücken, abstürzen", part: 1 },
-      { en: "feather", de: "Feder", part: 1 },
-      { en: "melt", de: "schmelzen", part: 1 },
-      { en: "pioneer", de: "Pionier/-in", part: 1 },
-      { en: "aircraft", de: "Luftfahrzeug, Flugzeug", part: 1 },
-      { en: "engine", de: "Motor, Triebwerk", part: 1 },
-      { en: "flight", de: "Flug", part: 1 },
-      { en: "wing", de: "Flügel, Gebäudeflügel", part: 1 },
-      { en: "pilot", de: "Pilot/-in", part: 1 },
-      { en: "engineer", de: "Ingenieur/-in", part: 1 },
-      { en: "successful", de: "erfolgreich", part: 1 },
-      { en: "get excited", de: "ganz aufgeregt werden, sich begeistern", part: 1 },
+      { en: "airport", de: "Flughafen", es: "aeropuerto", part: 1 },
+      { en: "airplane", de: "Flugzeug", es: "avión", part: 1 },
+      { en: "so-called", de: "sogenannt", es: "llamado/a, supuesto/a", part: 1 },
+      { en: "passion", de: "Leidenschaft", es: "pasión", part: 1 },
+      { en: "challenge", de: "Herausforderung", es: "reto, desafío", part: 1 },
+      { en: "prediction", de: "Vorhersage, Prognose", es: "predicción, pronóstico", part: 1 },
+      { en: "announcement", de: "Durchsage, Ankündigung", es: "anuncio, aviso", part: 1 },
+      { en: "passionate", de: "leidenschaftlich", es: "apasionado/a", part: 1 },
+      { en: "passenger", de: "Passagier/-in, Fluggast", es: "pasajero/a", part: 1 },
+      { en: "wax", de: "Wachs", es: "cera", part: 1 },
+      { en: "soft", de: "weich, sanft", es: "blando/a, suave", part: 1 },
+      { en: "competition", de: "Wettbewerb, Wettkampf", es: "concurso, competición", part: 1 },
+      { en: "spontaneous", de: "spontan", es: "espontáneo/a", part: 1 },
+      { en: "all-rounder", de: "vielseitiges Talent, Alleskönner/-in", es: "persona que sabe hacer de todo", part: 1 },
+      { en: "crash", de: "verunglücken, abstürzen", es: "estrellarse, tener un accidente", part: 1 },
+      { en: "feather", de: "Feder", es: "pluma", part: 1 },
+      { en: "melt", de: "schmelzen", es: "derretirse", part: 1 },
+      { en: "pioneer", de: "Pionier/-in", es: "pionero/a", part: 1 },
+      { en: "aircraft", de: "Luftfahrzeug, Flugzeug", es: "aeronave, avión", part: 1 },
+      { en: "engine", de: "Motor, Triebwerk", es: "motor", part: 1 },
+      { en: "flight", de: "Flug", es: "vuelo", part: 1 },
+      { en: "wing", de: "Flügel, Gebäudeflügel", es: "ala (de un avión o de un edificio)", part: 1 },
+      { en: "pilot", de: "Pilot/-in", es: "piloto", part: 1 },
+      { en: "engineer", de: "Ingenieur/-in", es: "ingeniero/a", part: 1 },
+      { en: "successful", de: "erfolgreich", es: "exitoso/a, con éxito", part: 1 },
+      { en: "get excited", de: "ganz aufgeregt werden, sich begeistern", es: "emocionarse, entusiasmarse", part: 1 },
 
       // Part 2
-      { en: "search engine", de: "Suchmaschine", part: 2 },
-      { en: "calculate", de: "berechnen", part: 2 },
-      { en: "boarding time", de: "Einsteigezeit, Boarding-Zeit", part: 2 },
-      { en: "result", de: "Ergebnis, Resultat", part: 2 },
-      { en: "be late", de: "zu spät sein, sich verspäten", part: 2 },
-      { en: "during", de: "während", part: 2 },
-      { en: "on behalf of", de: "im Namen von, im Auftrag von", part: 2 },
-      { en: "miss", de: "verpassen", part: 2 },
-      { en: "pleasant", de: "angenehm", part: 2 },
-      { en: "update", de: "Aktualisierung, Neuestes", part: 2 },
-      { en: "gate", de: "Flugsteig, Gate", part: 2 },
-      { en: "check-in desk", de: "Check-in-Schalter", part: 2 },
-      { en: "latest", de: "späteste(r, s), neuste(r, s)", part: 2 },
-      { en: "throw", de: "werfen", part: 2 },
-      { en: "proceed", de: "hier: (weiter)gehen", part: 2 },
-      { en: "luggage", de: "Gepäck", part: 2 },
-      { en: "search term", de: "Suchbegriff", part: 2 },
-      { en: "takeoff", de: "Abflug, Abheben des Flugzeugs", part: 2 },
-      { en: "economy class", de: "Touristenklasse, Economy", part: 2 },
-      { en: "departure", de: "Abflug, Abfahrt", part: 2 },
-      { en: "boarding pass", de: "Bordkarte", part: 2 },
-      { en: "cancel", de: "absagen, annullieren", part: 2 },
-      { en: "score", de: "Punktestand, Spielstand", part: 2 },
-      { en: "referee", de: "Schiedsrichter/-in", part: 2 },
-      { en: "throw (n.)", de: "Wurf", part: 2 },
-      { en: "measure", de: "(ab)messen", part: 2 }
+      { en: "search engine", de: "Suchmaschine", es: "buscador (en internet)", part: 2 },
+      { en: "calculate", de: "berechnen", es: "calcular", part: 2 },
+      { en: "boarding time", de: "Einsteigezeit, Boarding-Zeit", es: "hora de embarque", part: 2 },
+      { en: "result", de: "Ergebnis, Resultat", es: "resultado", part: 2 },
+      { en: "be late", de: "zu spät sein, sich verspäten", es: "llegar tarde, retrasarse", part: 2 },
+      { en: "during", de: "während", es: "durante", part: 2 },
+      { en: "on behalf of", de: "im Namen von, im Auftrag von", es: "en nombre de", part: 2 },
+      { en: "miss", de: "verpassen", es: "perder (un vuelo, un bus)", part: 2 },
+      { en: "pleasant", de: "angenehm", es: "agradable", part: 2 },
+      { en: "update", de: "Aktualisierung, Neuestes", es: "actualización, lo más nuevo", part: 2 },
+      { en: "gate", de: "Flugsteig, Gate", es: "puerta de embarque", part: 2 },
+      { en: "check-in desk", de: "Check-in-Schalter", es: "mostrador de check-in", part: 2 },
+      { en: "latest", de: "späteste(r, s), neuste(r, s)", es: "último/a, más reciente", part: 2 },
+      { en: "throw", de: "werfen", es: "lanzar, tirar", part: 2 },
+      { en: "proceed", de: "hier: (weiter)gehen", es: "aquí: ir (a), seguir", part: 2 },
+      { en: "luggage", de: "Gepäck", es: "equipaje", part: 2 },
+      { en: "search term", de: "Suchbegriff", es: "término de búsqueda", part: 2 },
+      { en: "takeoff", de: "Abflug, Abheben des Flugzeugs", es: "despegue", part: 2 },
+      { en: "economy class", de: "Touristenklasse, Economy", es: "clase turista, clase económica", part: 2 },
+      { en: "departure", de: "Abflug, Abfahrt", es: "salida", part: 2 },
+      { en: "boarding pass", de: "Bordkarte", es: "tarjeta de embarque", part: 2 },
+      { en: "cancel", de: "absagen, annullieren", es: "cancelar, anular", part: 2 },
+      { en: "score", de: "Punktestand, Spielstand", es: "puntuación, marcador", part: 2 },
+      { en: "referee", de: "Schiedsrichter/-in", es: "árbitro/a", part: 2 },
+      { en: "throw (n.)", de: "Wurf", es: "lanzamiento, tiro", part: 2 },
+      { en: "measure", de: "(ab)messen", es: "medir", part: 2 }
     ];
 
     // ==========================================================
@@ -762,22 +820,35 @@
     // Lehrplan-Code steht auch im Aufgaben-Kommentar im HTML (bei den Containern).
     // Tipps: Leitfragen und Regel-Erinnerung, verraten nie die Lösung.
     // ==========================================================
-    const TIP_TAGS = `
+    const TIP_TAGS = { de: `
       <p>Ein Question Tag ist wie ein Echo, das umgekehrt zurückkommt. Frag dich der Reihe nach:</p>
       <ol class="list-decimal pl-5 space-y-0.5 mt-1">
         <li>Ist der Satz <b>positiv</b>? Oder steht schon ein <b>not / n't</b> drin? Das Echo macht es umgekehrt.</li>
         <li>Welches <b>Hilfsverb</b> steht im Satz (z.B. <i>is, are, was, can, will, must, have</i>)? Steht keines da, brauchst du eine Form von <b>do</b>. Welche Zeit hat der Satz: heute oder gestern?</li>
         <li>Wer ist gemeint? Am Schluss steht immer ein <b>Pronomen</b> (<i>I, you, he, she, it, we, they</i>), nie ein Name.</li>
-      </ol>`;
-    const TIP_WILL = `
+      </ol>`, es: `
+      <p>Un question tag es como un eco que vuelve al revés. Pregúntate en este orden:</p>
+      <ol class="list-decimal pl-5 space-y-0.5 mt-1">
+        <li>¿La frase es <b>positiva</b>? ¿O ya tiene un <b>not / n't</b>? El eco lo hace al revés.</li>
+        <li>¿Qué <b>verbo auxiliar</b> hay en la frase (p. ej. <i>is, are, was, can, will, must, have</i>)? Si no hay ninguno, necesitas una forma de <b>do</b>. ¿En qué tiempo está la frase: hoy o ayer?</li>
+        <li>¿De quién se habla? Al final siempre va un <b>pronombre</b> (<i>I, you, he, she, it, we, they</i>), nunca un nombre.</li>
+      </ol>` };
+    const TIP_WILL = { de: `
       <p>Schau zuerst auf das Zeichen in der Klammer:</p>
       <ul class="list-disc pl-5 space-y-0.5 mt-1">
         <li><b>(+)</b> Aussage: Was wird in der Zukunft passieren?</li>
         <li><b>(–)</b> Verneinung: Was wird <i>nicht</i> passieren? Welche Kurzform von <i>will not</i> kennst du?</li>
         <li><b>(?)</b> Frage: Welches Wort steht bei einer Frage ganz vorne? Wo steht dann die Person?</li>
       </ul>
-      <p class="mt-1">Prüfe am Schluss das Verb nach <b>will</b>: Hat es ein <i>-s, -ed, -ing</i> oder ein <i>to</i>? Wie im Deutschen: «Ich werde gehen», nicht «Ich werde gehst».</p>`;
-    const TIP_CONJ = `
+      <p class="mt-1">Prüfe am Schluss das Verb nach <b>will</b>: Hat es ein <i>-s, -ed, -ing</i> oder ein <i>to</i>? Wie im Deutschen: «Ich werde gehen», nicht «Ich werde gehst».</p>`, es: `
+      <p>Mira primero el signo entre paréntesis:</p>
+      <ul class="list-disc pl-5 space-y-0.5 mt-1">
+        <li><b>(+)</b> Afirmación: ¿Qué va a pasar en el futuro?</li>
+        <li><b>(–)</b> Negación: ¿Qué <i>no</i> va a pasar? ¿Qué forma corta de <i>will not</i> conoces?</li>
+        <li><b>(?)</b> Pregunta: ¿Qué palabra va al principio de una pregunta? ¿Dónde va entonces la persona?</li>
+      </ul>
+      <p class="mt-1">Al final revisa el verbo después de <b>will</b>: ¿tiene <i>-s, -ed, -ing</i> o un <i>to</i>? Como en español: «voy a ir», no «voy a vas».</p>` };
+    const TIP_CONJ = { de: `
       <p>Übersetze den Satz im Kopf auf Deutsch. Was gehört in die Lücke?</p>
       <ul class="list-disc pl-5 space-y-0.5 mt-1">
         <li>ein <b>Grund</b> («weil …»)?</li>
@@ -785,30 +856,43 @@
         <li>ein <b>Ziel</b> («um … zu …»)?</li>
         <li>eine <b>Auswahl</b> («entweder … oder …»)?</li>
       </ul>
-      <p class="mt-1">Schau auch auf die Nachbarn der Lücke: Kommt gleich danach ein Verb in der Grundform? Steht weiter hinten <i>that</i> oder <i>or</i>? Manche Bindewörter haben einen Partner im Satz.</p>`;
+      <p class="mt-1">Schau auch auf die Nachbarn der Lücke: Kommt gleich danach ein Verb in der Grundform? Steht weiter hinten <i>that</i> oder <i>or</i>? Manche Bindewörter haben einen Partner im Satz.</p>`, es: `
+      <p>Traduce la frase al español en tu cabeza. ¿Qué va en el hueco?</p>
+      <ul class="list-disc pl-5 space-y-0.5 mt-1">
+        <li>¿una <b>razón</b> («porque …»)?</li>
+        <li>¿una <b>consecuencia</b> («por eso …»)?</li>
+        <li>¿un <b>objetivo</b> («para …»)?</li>
+        <li>¿una <b>elección</b> («o … o …»)?</li>
+      </ul>
+      <p class="mt-1">Mira también las palabras al lado del hueco: ¿viene justo después un verbo en forma base? ¿Hay más adelante un <i>that</i> o un <i>or</i>? Algunos conectores tienen una pareja en la frase.</p>` };
+    // Tipp + kurzer Zusatz, in beiden Sprachen
+    const tipPlus = (tip, de, es) => ({ de: tip.de + `<p class="mt-1">${de}</p>`, es: tip.es + `<p class="mt-1">${es}</p>` });
+    const ADD_TWO = ['Du schreibst zwei Wörter. Das Fragezeichen kannst du weglassen.', 'Escribes dos palabras. No hace falta escribir el signo de interrogación.'];
+    const ADD_WILL = ['Schreib alles, was an Stelle der Klammer steht. Bei einer Frage gehört auch die Person dazu.', 'Escribe todo lo que va en lugar del paréntesis. En una pregunta, la persona también va.'];
+    const ADD_BRACKET = ['Die Antwort steht in der eckigen Klammer. Probier jedes Wort im Kopf aus.', 'La respuesta está entre los corchetes. Prueba cada palabra en tu cabeza.'];
 
     const LEVELS = {
-      tags_1: { nr: 1, cat: 'tags', title: 'Question Tags · Niveau 1 (Auswahl)', code: 'FS1E.5.D.1.c',
-        intro: 'Wähle im Menü den passenden Question Tag.',
-        tip: TIP_TAGS + `<p class="mt-1">Streiche zuerst die Antworten, die sicher nicht passen.</p>` },
-      tags_2: { nr: 2, cat: 'tags', title: 'Question Tags · Niveau 2 (freie Eingabe)', code: 'FS1E.5.D.1.d',
-        intro: 'Schreib den passenden Question Tag ins Feld: Hilfsverb + Pronomen.',
-        tip: TIP_TAGS + `<p class="mt-1">Du schreibst zwei Wörter. Das Fragezeichen kannst du weglassen.</p>` },
-      will_1: { nr: 3, cat: 'will', title: 'Future with «will» · Niveau 1 (Auswahl)', code: 'FS1E.5.D.2.b',
-        intro: 'Wähle die richtige Form mit «will». (+) = Aussage, (–) = Verneinung, (?) = Frage.',
+      tags_1: { nr: 1, cat: 'tags', title: { de: 'Question Tags · Niveau 1 (Auswahl)', es: 'Question Tags · Nivel 1 (elegir)' }, code: 'FS1E.5.D.1.c',
+        intro: { de: 'Wähle im Menü den passenden Question Tag.', es: 'Elige en el menú el question tag correcto.' },
+        tip: tipPlus(TIP_TAGS, 'Streiche zuerst die Antworten, die sicher nicht passen.', 'Primero descarta las respuestas que seguro no sirven.') },
+      tags_2: { nr: 2, cat: 'tags', title: { de: 'Question Tags · Niveau 2 (freie Eingabe)', es: 'Question Tags · Nivel 2 (escribir)' }, code: 'FS1E.5.D.1.d',
+        intro: { de: 'Schreib den passenden Question Tag ins Feld: Hilfsverb + Pronomen.', es: 'Escribe el question tag correcto en el campo: verbo auxiliar + pronombre.' },
+        tip: tipPlus(TIP_TAGS, ...ADD_TWO) },
+      will_1: { nr: 3, cat: 'will', title: { de: 'Future with «will» · Niveau 1 (Auswahl)', es: 'Future with «will» · Nivel 1 (elegir)' }, code: 'FS1E.5.D.2.b',
+        intro: { de: 'Wähle die richtige Form mit «will». (+) = Aussage, (–) = Verneinung, (?) = Frage.', es: 'Elige la forma correcta con «will». (+) = afirmación, (–) = negación, (?) = pregunta.' },
         tip: TIP_WILL },
-      will_2: { nr: 4, cat: 'will', title: 'Future with «will» · Niveau 2 (Lückentext)', code: 'FS1E.5.D.1.c',
-        intro: 'Schreib die richtige Form mit «will» ins Feld. (+) = Aussage, (–) = Verneinung, (?) = Frage.',
-        tip: TIP_WILL + `<p class="mt-1">Schreib alles, was an Stelle der Klammer steht. Bei einer Frage gehört auch die Person dazu.</p>` },
-      conj_1: { nr: 5, cat: 'conj', title: 'Konjunktionen · Niveau 1 (Auswahl)', code: 'FS1E.5.D.1.c',
-        intro: 'Wähle das passende Bindewort für die Lücke (…).',
+      will_2: { nr: 4, cat: 'will', title: { de: 'Future with «will» · Niveau 2 (Lückentext)', es: 'Future with «will» · Nivel 2 (completar)' }, code: 'FS1E.5.D.1.c',
+        intro: { de: 'Schreib die richtige Form mit «will» ins Feld. (+) = Aussage, (–) = Verneinung, (?) = Frage.', es: 'Escribe en el campo la forma correcta con «will». (+) = afirmación, (–) = negación, (?) = pregunta.' },
+        tip: tipPlus(TIP_WILL, ...ADD_WILL) },
+      conj_1: { nr: 5, cat: 'conj', title: { de: 'Konjunktionen · Niveau 1 (Auswahl)', es: 'Conjunciones · Nivel 1 (elegir)' }, code: 'FS1E.5.D.1.c',
+        intro: { de: 'Wähle das passende Bindewort für die Lücke (…).', es: 'Elige el conector correcto para el hueco (…).' },
         tip: TIP_CONJ },
-      conj_2: { nr: 6, cat: 'conj', title: 'Konjunktionen · Niveau 2 (Lückentext)', code: 'FS1E.5.D.1.d',
-        intro: 'Schreib das passende Bindewort aus der Klammer ins Feld.',
-        tip: TIP_CONJ + `<p class="mt-1">Die Antwort steht in der eckigen Klammer. Probier jedes Wort im Kopf aus.</p>` },
-      conj_3: { nr: 7, cat: 'conj', title: 'Konjunktionen · Niveau 3 (Satzbau)', code: 'FS1E.5.D.1.d',
-        intro: 'Verbinde die zwei Sätze. Schreib nur das fehlende Bindewort ins Feld.',
-        tip: `
+      conj_2: { nr: 6, cat: 'conj', title: { de: 'Konjunktionen · Niveau 2 (Lückentext)', es: 'Conjunciones · Nivel 2 (completar)' }, code: 'FS1E.5.D.1.d',
+        intro: { de: 'Schreib das passende Bindewort aus der Klammer ins Feld.', es: 'Escribe en el campo el conector correcto de los corchetes.' },
+        tip: tipPlus(TIP_CONJ, ...ADD_BRACKET) },
+      conj_3: { nr: 7, cat: 'conj', title: { de: 'Konjunktionen · Niveau 3 (Satzbau)', es: 'Conjunciones · Nivel 3 (unir frases)' }, code: 'FS1E.5.D.1.d',
+        intro: { de: 'Verbinde die zwei Sätze. Schreib nur das fehlende Bindewort ins Feld.', es: 'Une las dos frases. Escribe en el campo solo el conector que falta.' },
+        tip: { de: `
           <p>Lies zuerst die zwei kurzen Sätze. Wie hängen sie zusammen?</p>
           <ul class="list-disc pl-5 space-y-0.5 mt-1">
             <li>Ist der zweite Satz der <b>Grund</b> für den ersten?</li>
@@ -816,27 +900,35 @@
             <li>Will jemand etwas <b>erreichen</b> (ein Ziel)?</li>
             <li>Gibt es <b>zwei Möglichkeiten</b> zur Auswahl?</li>
           </ul>
-          <p class="mt-1">Steht ein Bindewort in Klammern, hilft es dir. Schau, welcher Teil davon bei den Punkten … noch fehlt. Schreib nur dieses Wort, nicht den ganzen Satz.</p>` }
+          <p class="mt-1">Steht ein Bindewort in Klammern, hilft es dir. Schau, welcher Teil davon bei den Punkten … noch fehlt. Schreib nur dieses Wort, nicht den ganzen Satz.</p>`, es: `
+          <p>Lee primero las dos frases cortas. ¿Cómo se relacionan?</p>
+          <ul class="list-disc pl-5 space-y-0.5 mt-1">
+            <li>¿La segunda frase es la <b>razón</b> de la primera?</li>
+            <li>¿O es la <b>consecuencia</b>?</li>
+            <li>¿Alguien quiere <b>conseguir</b> algo (un objetivo)?</li>
+            <li>¿Hay <b>dos posibilidades</b> para elegir?</li>
+          </ul>
+          <p class="mt-1">Si hay un conector entre paréntesis, te ayuda. Mira qué parte falta todavía en los puntos … Escribe solo esa palabra, no toda la frase.</p>` } }
     };
 
     // Probeprüfung: drei Teile, je eine Aufgabe
     const EXAM_PARTS = {
       tags: { nr: 8, letter: 'A', label: '🏷️ Question Tags', code: 'FS1E.5.D.1.d', bar: 'bg-blue-600',
-        placeholder: 'Hilfsverb + Pronomen', input: 'w-full sm:w-48 focus:ring-blue-500',
-        tip: TIP_TAGS + `<p class="mt-1">Du schreibst zwei Wörter. Das Fragezeichen kannst du weglassen.</p>` },
+        placeholder: { de: 'Hilfsverb + Pronomen', es: 'auxiliar + pronombre' }, input: 'w-full sm:w-48 focus:ring-blue-500',
+        tip: tipPlus(TIP_TAGS, ...ADD_TWO) },
       will: { nr: 9, letter: 'B', label: '🔮 Future with «will»', code: 'FS1E.5.D.1.c', bar: 'bg-indigo-600',
-        placeholder: "will / won't Form", input: 'w-full sm:w-48 focus:ring-indigo-500',
-        tip: TIP_WILL + `<p class="mt-1">Schreib alles, was an Stelle der Klammer steht. Bei einer Frage gehört auch die Person dazu.</p>` },
-      conj: { nr: 10, letter: 'C', label: '🔗 Konjunktionen', code: 'FS1E.5.D.1.d', bar: 'bg-emerald-600',
-        placeholder: 'Bindewort', input: 'w-full sm:w-36 focus:ring-emerald-500',
-        tip: TIP_CONJ + `<p class="mt-1">Die Antwort steht in der eckigen Klammer. Probier jedes Wort im Kopf aus.</p>` }
+        placeholder: { de: "will / won't Form", es: "forma con will / won't" }, input: 'w-full sm:w-48 focus:ring-indigo-500',
+        tip: tipPlus(TIP_WILL, ...ADD_WILL) },
+      conj: { nr: 10, letter: 'C', label: { de: '🔗 Konjunktionen', es: '🔗 Conjunciones' }, code: 'FS1E.5.D.1.d', bar: 'bg-emerald-600',
+        placeholder: { de: 'Bindewort', es: 'conector' }, input: 'w-full sm:w-36 focus:ring-emerald-500',
+        tip: tipPlus(TIP_CONJ, ...ADD_BRACKET) }
     };
 
     // ==========================================================
     // THEORIE (für den Knopf «📖 Theorie» und den Spickzettel)
     // ==========================================================
     const THEORY = {
-      tags: { title: 'Question Tags', html: `
+      tags: { title: 'Question Tags', html: { de: `
         <p><b>Question Tags</b> sind kurze Fragen am Satzende. Auf Deutsch sagst du «…, oder?» oder «…, nicht wahr?».</p>
         <ul class="list-disc pl-5 space-y-1 mt-1">
           <li><b>Satz positiv (+) → Tag negativ (–):</b> <i>Lisa is funny, isn't she?</i></li>
@@ -844,8 +936,16 @@
           <li><b>Hilfsverb aus dem Satz nehmen:</b> <i>is, are, was, were, can, must, will, have</i> → <i>isn't, aren't, wasn't, weren't, can't, mustn't, won't, haven't</i>.</li>
           <li><b>Kein Hilfsverb im Satz?</b> Dann <i>do / does / did</i>: <i>You like dogs, don't you?</i> · <i>Sam likes dogs, doesn't he?</i> · <i>They liked the film, didn't they?</i></li>
           <li><b>Am Schluss immer ein Pronomen</b> (<i>I, you, he, she, it, we, they</i>), nie ein Name: <i>My bike is new, isn't it?</i></li>
-        </ul>` },
-      will: { title: 'Future with «will»', html: `
+        </ul>`, es: `
+        <p>Los <b>question tags</b> son preguntas cortas al final de la frase. En español dices «…, ¿verdad?» o «…, ¿no?».</p>
+        <ul class="list-disc pl-5 space-y-1 mt-1">
+          <li><b>Frase positiva (+) → tag negativo (–):</b> <i lang="en">Lisa is funny, isn't she?</i></li>
+          <li><b>Frase negativa (–) → tag positivo (+):</b> <i lang="en">Lisa isn't funny, is she?</i></li>
+          <li><b>Toma el verbo auxiliar de la frase:</b> <i lang="en">is, are, was, were, can, must, will, have</i> → <i lang="en">isn't, aren't, wasn't, weren't, can't, mustn't, won't, haven't</i>.</li>
+          <li><b>¿No hay verbo auxiliar en la frase?</b> Entonces usa <i lang="en">do / does / did</i>: <i lang="en">You like dogs, don't you?</i> · <i lang="en">Sam likes dogs, doesn't he?</i> · <i lang="en">They liked the film, didn't they?</i></li>
+          <li><b>Al final siempre va un pronombre</b> (<i lang="en">I, you, he, she, it, we, they</i>), nunca un nombre: <i lang="en">My bike is new, isn't it?</i></li>
+        </ul>` } },
+      will: { title: 'Future with «will»', html: { de: `
         <p>Mit <b>will</b> sprichst du über die Zukunft: Vorhersagen, Versprechen und spontane Entscheide. Im Deutschen heisst das «werden».</p>
         <div class="overflow-x-auto mt-1">
           <table class="text-xs sm:text-sm border border-slate-200 bg-white rounded">
@@ -858,8 +958,21 @@
           <li>Nach <i>will / won't</i> kommt die <b>Grundform</b>: <i>will read</i>, nicht <i>will reads / will reading / will to read</i>.</li>
           <li><i>will</i> ist für alle Personen gleich: <i>I will, she will, they will</i> (kein -s).</li>
           <li>Vergleich Deutsch: «Ich werde morgen <u>lesen</u>.» Im Englischen steht das Verb direkt nach will: <i>I will <u>read</u> tomorrow.</i></li>
-        </ul>` },
-      conj: { title: 'Konjunktionen (Bindewörter)', html: `
+        </ul>`, es: `
+        <p>Con <b>will</b> hablas del futuro: predicciones, promesas y decisiones espontáneas. En español es como «leeré» o «voy a leer».</p>
+        <div class="overflow-x-auto mt-1">
+          <table class="text-xs sm:text-sm border border-slate-200 bg-white rounded">
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold">(+)</td><td class="p-1.5">persona + <b>will</b> + verbo</td><td class="p-1.5"><i lang="en">I will (I'll) read.</i></td></tr>
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold">(–)</td><td class="p-1.5">persona + <b>won't</b> + verbo</td><td class="p-1.5"><i lang="en">I won't (will not) read.</i></td></tr>
+            <tr><td class="p-1.5 font-bold">(?)</td><td class="p-1.5"><b>Will</b> + persona + verbo …?</td><td class="p-1.5"><i lang="en">Will you read?</i></td></tr>
+          </table>
+        </div>
+        <ul class="list-disc pl-5 space-y-1 mt-2">
+          <li>Después de <i>will / won't</i> va la <b>forma base</b>: <i lang="en">will read</i>, no <i lang="en">will reads / will reading / will to read</i>.</li>
+          <li><i>will</i> es igual para todas las personas: <i lang="en">I will, she will, they will</i> (sin -s).</li>
+          <li>Comparación con el español: en español el verbo cambia («yo <u>leeré</u>», «ella <u>leerá</u>»). En inglés no: después de will, el verbo siempre es igual: <i lang="en">I will <u>read</u>. She will <u>read</u>.</i></li>
+        </ul>` } },
+      conj: { title: { de: 'Konjunktionen (Bindewörter)', es: 'Conjunciones (conectores)' }, html: { de: `
         <div class="overflow-x-auto">
           <table class="text-xs sm:text-sm border border-slate-200 bg-white rounded">
             <tr class="border-b border-slate-200"><td class="p-1.5 font-bold">because</td><td class="p-1.5">weil (Grund)</td><td class="p-1.5"><i>I stayed at home because I was ill.</i></td></tr>
@@ -868,7 +981,16 @@
             <tr class="border-b border-slate-200"><td class="p-1.5 font-bold">in order to</td><td class="p-1.5">um … zu (Ziel) + Grundform</td><td class="p-1.5"><i>I got up early in order to see the sunrise.</i></td></tr>
             <tr><td class="p-1.5 font-bold">(either) … or</td><td class="p-1.5">entweder … oder (Auswahl)</td><td class="p-1.5"><i>We can watch either a film or a match.</i></td></tr>
           </table>
-        </div>` }
+        </div>`, es: `
+        <div class="overflow-x-auto">
+          <table class="text-xs sm:text-sm border border-slate-200 bg-white rounded">
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold" lang="en">because</td><td class="p-1.5">porque (razón)</td><td class="p-1.5"><i lang="en">I stayed at home because I was ill.</i></td></tr>
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold" lang="en">so</td><td class="p-1.5">por eso (consecuencia)</td><td class="p-1.5"><i lang="en">I was hungry, so I made a sandwich.</i></td></tr>
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold" lang="en">so … that</td><td class="p-1.5">tan … que</td><td class="p-1.5"><i lang="en">The pizza was so big that we shared it.</i></td></tr>
+            <tr class="border-b border-slate-200"><td class="p-1.5 font-bold" lang="en">in order to</td><td class="p-1.5">para (objetivo) + forma base</td><td class="p-1.5"><i lang="en">I got up early in order to see the sunrise.</i></td></tr>
+            <tr><td class="p-1.5 font-bold" lang="en">(either) … or</td><td class="p-1.5">o … o (elección)</td><td class="p-1.5"><i lang="en">We can watch either a film or a match.</i></td></tr>
+          </table>
+        </div>` } }
     };
 
     // ==========================================================
@@ -908,14 +1030,14 @@
       const fullSentence = sentenceText.toLowerCase();
 
       if (!u) {
-        return "⚠️ Du hast noch nichts eingetippt.";
+        return tr("⚠️ Du hast noch nichts eingetippt.", "⚠️ Todavía no has escrito nada.");
       }
 
       // 1. QUESTION TAGS
       if (category === 'tags') {
         // Nomen statt Pronomen verwendet
         if (/\b(the|pilot|engineer|aircraft|referee|tom|sarah|plane|passenger|passengers|desk)\b/.test(u)) {
-          return "💡 <strong>Tipp:</strong> Verwende keine Namen wie <em>pilot</em> oder <em>Tom</em>. Nimm immer nur <strong>he, she, it, they, we</strong> oder <strong>you</strong>!";
+          return tr("💡 <strong>Tipp:</strong> Verwende keine Namen wie <em>pilot</em> oder <em>Tom</em>. Nimm immer nur <strong>he, she, it, they, we</strong> oder <strong>you</strong>!", "💡 <strong>Pista:</strong> No uses nombres como <em>pilot</em> o <em>Tom</em>. ¡Usa siempre solo <strong>he, she, it, they, we</strong> o <strong>you</strong>!");
         }
 
         const isNegativeSentence = /\b(isn't|aren't|wasn't|weren't|won't|can't|don't|doesn't|didn't|haven't|hasn't|nobody|never)\b/.test(fullSentence);
@@ -923,75 +1045,75 @@
 
         // Positiv / Negativ verwechselt
         if (!isNegativeSentence && !userProvidedNegative) {
-          return "💡 <strong>Tipp:</strong> Der Satz ist positiv (+) ➔ Dein Anhängsel muss ein <strong>n't</strong> haben (z.B. <em>isn't he?</em> oder <em>don't you?</em>).";
+          return tr("💡 <strong>Tipp:</strong> Der Satz ist positiv (+) ➔ Dein Anhängsel muss ein <strong>n't</strong> haben (z.B. <em>isn't he?</em> oder <em>don't you?</em>).", "💡 <strong>Pista:</strong> La frase es positiva (+) ➔ tu tag necesita un <strong>n't</strong> (p. ej. <em>isn't he?</em> o <em>don't you?</em>).");
         }
         if (isNegativeSentence && userProvidedNegative) {
-          return "💡 <strong>Tipp:</strong> Im Satz steht schon ein <em>not / n't</em> (–) ➔ Dein Anhängsel darf <strong>kein n't</strong> haben (z.B. <em>is he?</em> oder <em>do you?</em>).";
+          return tr("💡 <strong>Tipp:</strong> Im Satz steht schon ein <em>not / n't</em> (–) ➔ Dein Anhängsel darf <strong>kein n't</strong> haben (z.B. <em>is he?</em> oder <em>do you?</em>).", "💡 <strong>Pista:</strong> La frase ya tiene un <em>not / n't</em> (–) ➔ tu tag va <strong>sin n't</strong> (p. ej. <em>is he?</em> o <em>do you?</em>).");
         }
 
         // Falsches Hilfsverb: is/are statt do/does/did bei normalen Verben
         if (/\b(is|isn't|are|aren't)\b/.test(u) && /\b(do|don't|does|doesn't|did|didn't)\b/.test(c)) {
-          return "💡 <strong>Tipp:</strong> Bei normalen Verben (wie <em>play, live, arrive</em>) brauchst du <strong>don't, doesn't</strong> oder <strong>didn't</strong> (nicht <em>isn't/aren't</em>)!";
+          return tr("💡 <strong>Tipp:</strong> Bei normalen Verben (wie <em>play, live, arrive</em>) brauchst du <strong>don't, doesn't</strong> oder <strong>didn't</strong> (nicht <em>isn't/aren't</em>)!", "💡 <strong>Pista:</strong> ¡Con verbos normales (como <em>play, live, arrive</em>) necesitas <strong>don't, doesn't</strong> o <strong>didn't</strong> (no <em>isn't/aren't</em>)!");
         }
         // Falsches Hilfsverb: do/does statt dem echten Hilfsverb
         if (/\b(do|don't|does|doesn't)\b/.test(u) && /\b(is|isn't|are|aren't|was|weren't|can|won't)\b/.test(c)) {
-          return "💡 <strong>Tipp:</strong> Schaue in den Satz: Nimm genau das Hilfsverb, das schon da steht (z.B. <em>is, are, can, will</em>).";
+          return tr("💡 <strong>Tipp:</strong> Schaue in den Satz: Nimm genau das Hilfsverb, das schon da steht (z.B. <em>is, are, can, will</em>).", "💡 <strong>Pista:</strong> Mira la frase: usa exactamente el verbo auxiliar que ya está (p. ej. <em>is, are, can, will</em>).");
         }
 
-        return "💡 <strong>Tipp:</strong> Überprüfe das Hilfsverb und überlege, ob ein <strong>n't</strong> fehlt oder weg muss.";
+        return tr("💡 <strong>Tipp:</strong> Überprüfe das Hilfsverb und überlege, ob ein <strong>n't</strong> fehlt oder weg muss.", "💡 <strong>Pista:</strong> Revisa el verbo auxiliar y piensa si falta un <strong>n't</strong> o si sobra.");
       }
 
       // 2. FUTURE WITH WILL
       if (category === 'will') {
         // Verb verändert (-ing, -s, -ed)
         if (/will\s+[a-z]+(ing|ed|s)\b/.test(u) || /won't\s+[a-z]+(ing|ed|s)\b/.test(u)) {
-          return "💡 <strong>Tipp:</strong> Nach <em>will</em> oder <em>won't</em> schreibst du das Verb ganz normal (kein <em>-s</em> und kein <em>-ing</em> anhängen)!";
+          return tr("💡 <strong>Tipp:</strong> Nach <em>will</em> oder <em>won't</em> schreibst du das Verb ganz normal (kein <em>-s</em> und kein <em>-ing</em> anhängen)!", "💡 <strong>Pista:</strong> ¡Después de <em>will</em> o <em>won't</em> escribes el verbo normal (sin <em>-s</em> y sin <em>-ing</em>)!");
         }
 
         // Verneinung vergessen
         if (sentenceText.includes('–') || sentenceText.includes('not')) {
           if (!u.includes("won't") && !u.includes("will not")) {
-            return "💡 <strong>Tipp:</strong> Das Zeichen (–) heisst verneinen. Verwende: <strong>won't + Verb</strong>.";
+            return tr("💡 <strong>Tipp:</strong> Das Zeichen (–) heisst verneinen. Verwende: <strong>won't + Verb</strong>.", "💡 <strong>Pista:</strong> El signo (–) significa negar. Usa: <strong>won't + verbo</strong>.");
           }
         }
 
         // Frage falsch begonnen
         if (sentenceText.includes('?')) {
           if (!u.startsWith('will')) {
-            return "💡 <strong>Tipp:</strong> Eine Zukunfts-Frage beginnt immer mit <strong>Will</strong> (z.B. <em>Will you help?</em>).";
+            return tr("💡 <strong>Tipp:</strong> Eine Zukunfts-Frage beginnt immer mit <strong>Will</strong> (z.B. <em>Will you help?</em>).", "💡 <strong>Pista:</strong> Una pregunta en futuro siempre empieza con <strong>Will</strong> (p. ej. <em>Will you help?</em>).");
           }
         }
 
         // "to" fälschlicherweise eingebaut
         if (u.includes('to ')) {
-          return "💡 <strong>Tipp:</strong> Kein <em>to</em> dazwischen schreiben (z.B. einfach <em>will go</em>, nicht <em>will to go</em>).";
+          return tr("💡 <strong>Tipp:</strong> Kein <em>to</em> dazwischen schreiben (z.B. einfach <em>will go</em>, nicht <em>will to go</em>).", "💡 <strong>Pista:</strong> No escribas <em>to</em> en medio (p. ej. simplemente <em>will go</em>, no <em>will to go</em>).");
         }
 
-        return "💡 <strong>Tipp:</strong> Merke: (+) = <em>will + Verb</em> · (–) = <em>won't + Verb</em> · (?) = <em>Will you / he ...?</em>";
+        return tr("💡 <strong>Tipp:</strong> Merke: (+) = <em>will + Verb</em> · (–) = <em>won't + Verb</em> · (?) = <em>Will you / he ...?</em>", "💡 <strong>Pista:</strong> Recuerda: (+) = <em>will + verbo</em> · (–) = <em>won't + verbo</em> · (?) = <em>Will you / he ...?</em>");
       }
 
       // 3. CONJUNCTIONS
       if (category === 'conj') {
         if (c.includes('in order to') && u.includes('because')) {
-          return "💡 <strong>Tipp:</strong> <strong>in order to</strong> = um ... zu (steht direkt vor einem Verb, z.B. <em>in order to catch</em>).";
+          return tr("💡 <strong>Tipp:</strong> <strong>in order to</strong> = um ... zu (steht direkt vor einem Verb, z.B. <em>in order to catch</em>).", "💡 <strong>Pista:</strong> <strong>in order to</strong> = para (va justo antes de un verbo, p. ej. <em>in order to catch</em>).");
         }
         if (c.includes('because') && u.includes('in order to')) {
-          return "💡 <strong>Tipp:</strong> <strong>because</strong> = weil (erklärt den Grund, warum etwas passiert).";
+          return tr("💡 <strong>Tipp:</strong> <strong>because</strong> = weil (erklärt den Grund, warum etwas passiert).", "💡 <strong>Pista:</strong> <strong>because</strong> = porque (explica la razón por la que pasa algo).");
         }
         if (c.includes('so') && u.includes('because')) {
-          return "💡 <strong>Tipp:</strong> <strong>so</strong> = deshalb / also (zeigt die Folge: Es regnete, <em>deshalb</em> blieben wir daheim).";
+          return tr("💡 <strong>Tipp:</strong> <strong>so</strong> = deshalb / also (zeigt die Folge: Es regnete, <em>deshalb</em> blieben wir daheim).", "💡 <strong>Pista:</strong> <strong>so</strong> = por eso / así que (muestra la consecuencia: Llovía, <em>por eso</em> nos quedamos en casa).");
         }
         if (c.includes('so') && (sentenceText.includes('that') || u.includes('that'))) {
-          return "💡 <strong>Tipp:</strong> Wenn hinten <em>that</em> steht, gehört vorne <strong>so</strong> hin (<em>so hot that</em> = so heiss, dass).";
+          return tr("💡 <strong>Tipp:</strong> Wenn hinten <em>that</em> steht, gehört vorne <strong>so</strong> hin (<em>so hot that</em> = so heiss, dass).", "💡 <strong>Pista:</strong> Si más adelante hay <em>that</em>, delante va <strong>so</strong> (<em>so hot that</em> = tan caliente que).");
         }
         if (c.includes('either') && !u.includes('either')) {
-          return "💡 <strong>Tipp:</strong> Wenn im Satz <em>or</em> (oder) vorkommt, gehört davor meistens <strong>either</strong> (<em>either ... or</em> = entweder ... oder).";
+          return tr("💡 <strong>Tipp:</strong> Wenn im Satz <em>or</em> (oder) vorkommt, gehört davor meistens <strong>either</strong> (<em>either ... or</em> = entweder ... oder).", "💡 <strong>Pista:</strong> Si en la frase aparece <em>or</em> (o), delante va casi siempre <strong>either</strong> (<em>either ... or</em> = o ... o).");
         }
 
-        return "💡 <strong>Tipp:</strong> Übersetze: <em>because</em> (weil), <em>so</em> (deshalb), <em>in order to</em> (um zu), <em>either ... or</em> (entweder ... oder).";
+        return tr("💡 <strong>Tipp:</strong> Übersetze: <em>because</em> (weil), <em>so</em> (deshalb), <em>in order to</em> (um zu), <em>either ... or</em> (entweder ... oder).", "💡 <strong>Pista:</strong> Traduce: <em>because</em> (porque), <em>so</em> (por eso), <em>in order to</em> (para), <em>either ... or</em> (o ... o).");
       }
 
-      return "💡 Schau dir das Wort und die Schreibweise nochmals an.";
+      return tr("💡 Schau dir das Wort und die Schreibweise nochmals an.", "💡 Mira otra vez la palabra y cómo se escribe.");
     }
 
     // ==========================================================
@@ -1172,20 +1294,20 @@
     const BTN_SMALL = 'px-2.5 py-2 rounded-xl text-xs font-bold border transition';
     function tipBox(id, tip) {
       return `<div id="tip-${id}" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${tip}</div>`;
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">${tr('💡 Tipp', '💡 Pista')}</div>${pick(tip)}</div>`;
     }
     function theoryBox(id, cat) {
       return `<div id="theory-${id}" class="hidden rounded-lg border border-sky-200 bg-sky-50/70 p-3 text-sm text-slate-700 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-sky-800 mb-1">📖 Theorie: ${THEORY[cat].title}</div>
-          ${THEORY[cat].html}
-          <button type="button" onclick="openSpick('${cat}')" class="mt-2 px-2.5 py-1.5 rounded-lg text-xs font-bold border bg-white border-sky-300 text-sky-800 hover:bg-sky-100">Zum ganzen Spickzettel →</button>
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-sky-800 mb-1">${tr('📖 Theorie', '📖 Teoría')}: ${pick(THEORY[cat].title)}</div>
+          ${pick(THEORY[cat].html)}
+          <button type="button" onclick="openSpick('${cat}')" class="mt-2 px-2.5 py-1.5 rounded-lg text-xs font-bold border bg-white border-sky-300 text-sky-800 hover:bg-sky-100">${tr('Zum ganzen Spickzettel →', 'Ver todo el resumen →')}</button>
         </div>`;
     }
     function taskButtons(id) {
       return `
-              <button type="button" onclick="toggleBox('tip','${id}')" class="${BTN_SMALL} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>
-              <button type="button" onclick="openTheory('${id}')" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
-              <button type="button" onclick="retryTask('${id}')" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>`;
+              <button type="button" onclick="toggleBox('tip','${id}')" class="${BTN_SMALL} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">${tr('💡 Tipp', '💡 Pista')}</button>
+              <button type="button" onclick="openTheory('${id}')" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${tr('📖 Theorie', '📖 Teoría')}</button>
+              <button type="button" onclick="retryTask('${id}')" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${tr('🔀 Nochmals üben', '🔀 Practicar otra vez')}</button>`;
     }
     function toggleBox(prefix, id) {
       const box = document.getElementById(`${prefix}-${id}`);
@@ -1207,8 +1329,8 @@
       if (!box) return;
       box.innerHTML = Object.entries(THEORY).map(([cat, th]) => `
         <details id="spick-${cat}" class="rounded-xl border border-sky-200 bg-sky-50/60 p-3">
-          <summary class="text-sm font-bold text-sky-900 cursor-pointer">📖 ${th.title}</summary>
-          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">${th.html}</div>
+          <summary class="text-sm font-bold text-sky-900 cursor-pointer">📖 ${pick(th.title)}</summary>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">${pick(th.html)}</div>
         </details>`).join('');
     }
 
@@ -1254,10 +1376,10 @@
         <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 space-y-4" data-task="${id}">
           <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
             <div class="min-w-0">
-              <h3 class="text-sm sm:text-base font-black text-slate-900">${lv.title} · Block ${currentBlockIndex + 1} von ${totalBlocks}</h3>
-              <p class="text-xs sm:text-sm text-slate-600 mt-0.5">${lv.intro}</p>
+              <h3 class="text-sm sm:text-base font-black text-slate-900">${pick(lv.title)} · ${tr(`Block ${currentBlockIndex + 1} von ${totalBlocks}`, `Bloque ${currentBlockIndex + 1} de ${totalBlocks}`)}</h3>
+              <p class="text-xs sm:text-sm text-slate-600 mt-0.5">${pick(lv.intro)}</p>
             </div>
-            <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800">${t.max} P.</span>
+            <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800">${t.max} ${tr('P.', 'p.')}</span>
           </div>
           <div class="space-y-3.5">
       `;
@@ -1280,13 +1402,13 @@
         if (item.type === 'dropdown') {
           html += `
             <select id="input-${item.id}" onchange="saveAns('${item.id}', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500">
-              <option value="">-- wählen --</option>
+              <option value="">${tr('-- wählen --', '-- elegir --')}</option>
               ${OPTION_ORDER[item.id].map(opt => `<option value="${opt}" ${savedVal === opt ? 'selected' : ''}>${opt}</option>`).join('')}
             </select>
           `;
         } else {
           html += `
-            <input type="text" id="input-${item.id}" value="${escAttr(savedVal)}" oninput="saveAns('${item.id}', this.value)" placeholder="Deine Antwort..." autocomplete="off" autocapitalize="off" spellcheck="false" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500" />
+            <input type="text" id="input-${item.id}" value="${escAttr(savedVal)}" oninput="saveAns('${item.id}', this.value)" placeholder="${tr('Deine Antwort...', 'Tu respuesta...')}" autocomplete="off" autocapitalize="off" spellcheck="false" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500" />
           `;
         }
 
@@ -1306,17 +1428,17 @@
           <div class="pt-3 border-t border-slate-100 space-y-3">
             <div class="flex flex-wrap items-center gap-2">
               <button onclick="checkBlock('${sectionKey}')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-sm transition flex items-center gap-1.5">
-                <span>✓</span> Block ${currentBlockIndex + 1} prüfen
+                <span>✓</span> ${tr(`Block ${currentBlockIndex + 1} prüfen`, `Comprobar el bloque ${currentBlockIndex + 1}`)}
               </button>
               ${taskButtons(id)}
               <button onclick="toggleSolution('${sectionKey}')" id="btn-sol-${sectionKey}" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">
-                👀 Lösungen anzeigen
+                ${tr('👀 Lösungen anzeigen', '👀 Ver las soluciones')}
               </button>
             </div>
             <div id="fb-${id}" class="text-xs font-semibold"></div>
             <div class="flex flex-wrap items-center justify-end gap-2">
-              ${currentBlockIndex > 0 ? `<button onclick="goToBlock('${sectionKey}', ${currentBlockIndex - 1})" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-100">← Vorherige 5</button>` : ''}
-              ${currentBlockIndex < totalBlocks - 1 ? `<button onclick="goToBlock('${sectionKey}', ${currentBlockIndex + 1})" class="px-3 py-1.5 rounded-lg bg-slate-800 text-white text-xs font-semibold hover:bg-slate-900">Nächste 5 →</button>` : ''}
+              ${currentBlockIndex > 0 ? `<button onclick="goToBlock('${sectionKey}', ${currentBlockIndex - 1})" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-100">${tr('← Vorherige 5', '← 5 anteriores')}</button>` : ''}
+              ${currentBlockIndex < totalBlocks - 1 ? `<button onclick="goToBlock('${sectionKey}', ${currentBlockIndex + 1})" class="px-3 py-1.5 rounded-lg bg-slate-800 text-white text-xs font-semibold hover:bg-slate-900">${tr('Nächste 5 →', '5 siguientes →')}</button>` : ''}
             </div>
           </div>
         </div>
@@ -1331,8 +1453,10 @@
       const fb = document.getElementById(`fb-${id}`);
       if (fb) {
         fb.textContent = pts === max
-          ? `🌟 ${pts}/${max} Punkte: Alles richtig! Mit «🔀 Nochmals üben» kannst du neu gemischt wiederholen.`
-          : `${pts}/${max} Punkte. Rot = noch falsch. Brauchst du Hilfe? Drück auf «💡 Tipp» oder «📖 Theorie».`;
+          ? tr(`🌟 ${pts}/${max} Punkte: Alles richtig! Mit «🔀 Nochmals üben» kannst du neu gemischt wiederholen.`,
+               `🌟 ${pts}/${max} puntos: ¡Todo correcto! Con «🔀 Practicar otra vez» puedes repetir en otro orden.`)
+          : tr(`${pts}/${max} Punkte. Gelb = noch nicht ganz. Brauchst du Hilfe? Drück auf «💡 Tipp» oder «📖 Theorie».`,
+               `${pts}/${max} puntos. Amarillo = todavía no del todo. ¿Necesitas ayuda? Toca «💡 Pista» o «📖 Teoría».`);
         fb.className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-amber-700';
       }
       return pts;
@@ -1340,6 +1464,14 @@
 
     // Einen 5er-Block prüfen (mit Fehler-Diagnose)
     function checkBlock(sectionKey) {
+      const { pts, max } = markBlock(sectionKey);
+      showToast(
+        pts === max ? tr("🌟 Perfekt!", "🌟 ¡Perfecto!") : (pts >= Math.ceil(max * 0.6) ? tr("👍 Gut gemacht!", "👍 ¡Bien hecho!") : tr("💪 Weiter üben!", "💪 ¡Sigue practicando!")),
+        tr(`Du hast ${pts} von ${max} Punkten in diesem Block.`, `Tienes ${pts} de ${max} puntos en este bloque.`)
+      );
+    }
+    // Sätze eines Blocks färben und Rückmeldung zeigen (ohne Toast)
+    function markBlock(sectionKey) {
       const id = currentTaskId(sectionKey);
       const t = TASKS[id];
 
@@ -1352,15 +1484,15 @@
           if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-300 transition";
           if (fbEl) {
             fbEl.className = "text-xs font-semibold text-emerald-800 block mt-2 pt-2 border-t border-emerald-200";
-            fbEl.innerHTML = `✅ <strong>Richtig!</strong> ${item.rule}`;
+            fbEl.innerHTML = `✅ <strong>${tr('Richtig!', '¡Correcto!')}</strong> ${ruleText(item.rule)}`;
           }
         } else {
-          if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-rose-50/70 border border-rose-300 transition";
+          if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-amber-50/70 border border-amber-300 transition";
           const diagHint = getDiagnosticFeedback(t.cat, item.sentence, userRaw, acceptedAnswers(item)[0]);
           if (fbEl) {
-            fbEl.className = "text-xs text-rose-800 block mt-2 pt-2 border-t border-rose-200 space-y-1.5";
+            fbEl.className = "text-xs text-amber-900 block mt-2 pt-2 border-t border-amber-200 space-y-1.5";
             fbEl.innerHTML = `
-              <div class="font-bold text-rose-700">❌ Leider noch nicht richtig.</div>
+              <div class="font-bold text-amber-800">${tr('✏️ Noch nicht ganz.', '✏️ Todavía no del todo.')}</div>
               <div class="text-slate-800 bg-amber-50/90 p-2.5 rounded-lg border border-amber-200/80 font-medium">${diagHint}</div>
             `;
           }
@@ -1369,17 +1501,14 @@
 
       const pts = setTaskFeedback(id), max = t.max;
       updateOverallStats();
-      showToast(
-        pts === max ? "🌟 Perfekt!" : (pts >= Math.ceil(max * 0.6) ? "👍 Gut gemacht!" : "💪 Weiter üben!"),
-        `Du hast ${pts} von ${max} Punkten in diesem Block.`
-      );
+      return { pts, max };
     }
 
     // Lösungen im Block ein- und ausblenden
     function toggleSolution(sectionKey) {
       const t = TASKS[currentTaskId(sectionKey)];
       const btn = document.getElementById(`btn-sol-${sectionKey}`);
-      const isShowing = btn && btn.innerText.includes("ausblenden");
+      const isShowing = !!btn && btn.dataset.shown === '1';
 
       t.items.forEach(item => {
         const fbEl = document.getElementById(`feedback-${item.id}`);
@@ -1389,12 +1518,13 @@
           fbEl.classList.add('hidden');
         } else {
           fbEl.className = "text-xs font-medium text-slate-700 block mt-2 pt-2 border-t border-slate-200 bg-amber-50/60 p-2 rounded";
-          fbEl.innerHTML = `👀 <strong>Musterlösung:</strong> <span class="font-mono-code font-bold text-blue-700">${acceptedAnswers(item).join(' / ')}</span> · ${item.rule}`;
+          fbEl.innerHTML = `👀 <strong>${tr('Musterlösung:', 'Solución:')}</strong> <span class="font-mono-code font-bold text-blue-700">${acceptedAnswers(item).join(' / ')}</span> · ${ruleText(item.rule)}`;
         }
       });
 
       if (btn) {
-        btn.innerText = isShowing ? "👀 Lösungen anzeigen" : "🙈 Lösungen ausblenden";
+        btn.dataset.shown = isShowing ? '0' : '1';
+        btn.innerText = isShowing ? tr("👀 Lösungen anzeigen", "👀 Ver las soluciones") : tr("🙈 Lösungen ausblenden", "🙈 Ocultar las soluciones");
       }
     }
 
@@ -1414,7 +1544,7 @@
       updateOverallStats();
       const host = document.querySelector(`[data-task="${id}"]`);
       if (host) host.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      showToast('🔀 Neu gemischt', 'Die Aufgabe ist leer und neu gemischt. Viel Erfolg!');
+      showToast(tr('🔀 Neu gemischt', '🔀 Mezclado otra vez'), tr('Die Aufgabe ist leer und neu gemischt. Viel Erfolg!', 'La tarea está vacía y en otro orden. ¡Mucha suerte!'));
     }
     // alter Name, falls noch irgendwo verwendet
     function resetBlock(sectionKey) { retryTask(currentTaskId(sectionKey)); }
@@ -1431,7 +1561,7 @@
             <div class="flex items-center justify-between gap-2 flex-wrap">
               <span class="text-xs font-bold text-slate-500 w-7 shrink-0">${p.letter}${i + 1}.</span>
               <span class="flex-1 min-w-0 break-words text-sm font-medium text-slate-800">${sentenceOf(item)}</span>
-              <input type="text" id="input-${item.id}" value="${escAttr(STATE.examAnswers[item.id] || '')}" placeholder="${p.placeholder}" autocomplete="off" autocapitalize="off" spellcheck="false" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold ${p.input} focus:ring-2 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
+              <input type="text" id="input-${item.id}" value="${escAttr(STATE.examAnswers[item.id] || '')}" placeholder="${pick(p.placeholder)}" autocomplete="off" autocapitalize="off" spellcheck="false" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold ${p.input} focus:ring-2 focus:outline-none" oninput="saveExamAns('${item.id}', this.value)">
             </div>
             <div id="exam-fb-${item.id}" class="hidden text-xs mt-2 pt-2 border-t border-slate-200"></div>
           </div>
@@ -1440,7 +1570,7 @@
           ${theoryBox(id, cat)}
           <div class="pt-1 space-y-2">
             <div class="flex flex-wrap items-center gap-2">
-              <button onclick="checkExamPart('${cat}')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs sm:text-sm font-bold shadow-sm transition">✓ Teil ${p.letter} prüfen</button>
+              <button onclick="checkExamPart('${cat}')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs sm:text-sm font-bold shadow-sm transition">${tr(`✓ Teil ${p.letter} prüfen`, `✓ Comprobar la parte ${p.letter}`)}</button>
               ${taskButtons(id)}
             </div>
             <div id="fb-${id}" class="text-xs font-semibold"></div>
@@ -1459,17 +1589,17 @@
         if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-300 transition";
         if (fbEl) {
           fbEl.className = "text-xs font-semibold text-emerald-800 block mt-2 pt-2 border-t border-emerald-200";
-          fbEl.innerHTML = reveal ? `✅ <strong>1/1 Punkt:</strong> Richtig gelöst!` : `✅ <strong>Richtig!</strong>`;
+          fbEl.innerHTML = reveal ? tr(`✅ <strong>1/1 Punkt:</strong> Richtig gelöst!`, `✅ <strong>1/1 punto:</strong> ¡Correcto!`) : `✅ <strong>${tr('Richtig!', '¡Correcto!')}</strong>`;
         }
       } else {
-        if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-rose-50/70 border border-rose-300 transition";
+        if (itemEl) itemEl.className = "p-3.5 rounded-xl bg-amber-50/70 border border-amber-300 transition";
         const diagHint = getDiagnosticFeedback(t.cat, item.s, userRaw, item.c);
         if (fbEl) {
-          fbEl.className = "text-xs text-rose-800 block mt-2 pt-2 border-t border-rose-200 space-y-1.5";
+          fbEl.className = "text-xs text-amber-900 block mt-2 pt-2 border-t border-amber-200 space-y-1.5";
           fbEl.innerHTML = `
             <div>${reveal
-              ? `❌ <strong>0/1 Punkt</strong> · Richtige Lösung: <span class="font-mono-code font-bold text-slate-900 bg-white px-1.5 py-0.5 rounded border border-rose-200">${item.c}</span>`
-              : `❌ <strong>Noch nicht richtig.</strong>`}</div>
+              ? `✏️ <strong>${tr('0/1 Punkt', '0/1 puntos')}</strong> · ${tr('Richtige Lösung:', 'Solución:')} <span class="font-mono-code font-bold text-slate-900 bg-white px-1.5 py-0.5 rounded border border-amber-200">${item.c}</span>`
+              : `✏️ <strong>${tr('Noch nicht ganz.', 'Todavía no del todo.')}</strong>`}</div>
             <div class="text-slate-800 bg-amber-50/90 p-2.5 rounded-lg border border-amber-200/80 font-medium">${diagHint}</div>
           `;
         }
@@ -1481,7 +1611,7 @@
       const id = `exam_${cat}`, t = TASKS[id];
       t.items.forEach(item => markExamItem(t, item, false));
       const pts = setTaskFeedback(id);
-      showToast(`Teil ${EXAM_PARTS[cat].letter}`, `${pts} von ${t.max} Punkten.`);
+      showToast(tr(`Teil ${EXAM_PARTS[cat].letter}`, `Parte ${EXAM_PARTS[cat].letter}`), tr(`${pts} von ${t.max} Punkten.`, `${pts} de ${t.max} puntos.`));
     }
 
     // Ganze Probeprüfung abgeben und mit Schweizer Note auswerten
@@ -1491,7 +1621,16 @@
         t.items.forEach(item => markExamItem(t, item, true));
         setTaskFeedback(id);
       });
+      const r = renderExamBanner();
+      const banner = document.getElementById('exam-results-banner');
+      if (banner) banner.scrollIntoView({ behavior: 'smooth' });
+      showToast(tr("Prüfung ausgewertet!", "¡Examen corregido!"),
+        tr(`Ergebnis: ${r.totalScore} von ${MAX_POINTS} Punkten (${r.pct}%, Note ${r.swissGrade.toFixed(1)}).`,
+           `Resultado: ${r.totalScore} de ${MAX_POINTS} puntos (${r.pct} %, nota ${r.swissGrade.toFixed(1)}).`));
+    }
 
+    // Ergebnis-Kasten der Probeprüfung (Punkte aus EXAM_TASKS)
+    function renderExamBanner() {
       const totalScore = EXAM_TASKS.reduce((s, [, t]) => s + t.score(), 0);
       const pct = Math.round((totalScore / MAX_POINTS) * 100);
       const swissGrade = gradeOf(totalScore, MAX_POINTS);
@@ -1502,24 +1641,23 @@
       let badgeColor = "";
 
       if (totalScore >= TOP_POINTS) {
-        ratingTitle = "Sehr gut ⭐ (Kompetenz vollumfänglich und sicher erreicht)";
+        ratingTitle = tr("Sehr gut ⭐ (Kompetenz vollumfänglich und sicher erreicht)", "Muy bien ⭐ (competencia alcanzada por completo y con seguridad)");
         ratingClass = "bg-sky-50 border-sky-300 text-sky-950";
         badgeColor = "bg-sky-600 text-white";
       } else if (totalScore >= GOOD_POINTS) {
-        ratingTitle = "Gut 👏 (Kompetenz gut und solide erreicht)";
+        ratingTitle = tr("Gut 👏 (Kompetenz gut und solide erreicht)", "Bien 👏 (competencia alcanzada de forma sólida)");
         ratingClass = "bg-emerald-50 border-emerald-300 text-emerald-950";
         badgeColor = "bg-emerald-600 text-white";
       } else if (passed) {
-        ratingTitle = "Erreicht / Bestanden 👍 (Grundkompetenzen erfüllt)";
+        ratingTitle = tr("Erreicht / Bestanden 👍 (Grundkompetenzen erfüllt)", "Alcanzado / aprobado 👍 (competencias básicas cumplidas)");
         ratingClass = "bg-amber-50 border-amber-300 text-amber-950";
         badgeColor = "bg-amber-600 text-white";
       } else {
-        ratingTitle = "Nicht erreicht ⚠️ (Nochmals vertiefen & gezielt üben)";
-        ratingClass = "bg-rose-50 border-rose-300 text-rose-950";
-        badgeColor = "bg-rose-600 text-white";
+        ratingTitle = tr("Noch nicht erreicht 💪 (Nochmals vertiefen & gezielt üben)", "Todavía no alcanzado 💪 (repasa y practica lo que falta)");
+        ratingClass = "bg-yellow-50 border-yellow-300 text-yellow-950";
+        badgeColor = "bg-yellow-400 text-yellow-950";
       }
 
-      const timerInfo = timerSeconds > 0 ? `· ⏱️ Gestoppte Zeit: <strong>${formatTime(timerSeconds)}</strong>` : '';
 
       // Aufteilung nach Teilen (aus EXAM_TASKS)
       const parts = EXAM_TASKS.map(([id, t]) => {
@@ -1527,8 +1665,8 @@
         return `
             <div class="bg-white/80 p-3 rounded-xl border border-black/5" data-part="${id}">
               <div class="font-bold flex items-center justify-between gap-2">
-                <span>${part.label}</span>
-                <span class="font-mono-code shrink-0 ${p >= Math.ceil(t.max * 0.6) ? 'text-emerald-700 font-extrabold' : 'text-rose-700'}">${p} / ${t.max} Pkt.</span>
+                <span>${pick(part.label)}</span>
+                <span class="font-mono-code shrink-0 ${p >= Math.ceil(t.max * 0.6) ? 'text-emerald-700 font-extrabold' : 'text-amber-700'}">${p} / ${t.max} ${tr('Pkt.', 'p.')}</span>
               </div>
               <div class="w-full bg-slate-200 h-2 rounded-full mt-2 overflow-hidden">
                 <div class="${part.bar} h-full rounded-full" style="width: ${(p / t.max) * 100}%"></div>
@@ -1543,24 +1681,24 @@
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-black/10">
             <div>
               <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full ${badgeColor}">
-                ${passed ? 'Bestanden' : 'Nicht bestanden'}
+                ${passed ? tr('Bestanden', 'Aprobado') : tr('Noch nicht bestanden', 'Todavía no aprobado')}
               </span>
               <h3 class="text-xl sm:text-2xl font-black mt-2">${ratingTitle}</h3>
-              <p class="text-xs sm:text-sm mt-1 opacity-90">Auswertung nach Schweizer Notenskala ${timerInfo}.</p>
+              <p class="text-xs sm:text-sm mt-1 opacity-90">${tr('Auswertung nach Schweizer Notenskala', 'Nota según la escala suiza')}.</p>
             </div>
             <div class="flex flex-wrap items-center gap-3 sm:gap-4 bg-white/80 p-3 rounded-xl border border-black/10 self-start md:self-auto">
               <div class="text-center px-2">
-                <div class="text-[11px] font-bold text-slate-500 uppercase">Punkte</div>
+                <div class="text-[11px] font-bold text-slate-500 uppercase">${tr('Punkte', 'Puntos')}</div>
                 <div class="text-2xl font-black" id="exam-total">${totalScore} <span class="text-xs text-slate-500 font-normal">/ ${MAX_POINTS}</span></div>
               </div>
               <div class="h-8 w-px bg-slate-300"></div>
               <div class="text-center px-2">
-                <div class="text-[11px] font-bold text-slate-500 uppercase">Prozent</div>
+                <div class="text-[11px] font-bold text-slate-500 uppercase">${tr('Prozent', 'Porcentaje')}</div>
                 <div class="text-2xl font-black">${pct}%</div>
               </div>
               <div class="h-8 w-px bg-slate-300"></div>
               <div class="text-center px-2">
-                <div class="text-[11px] font-bold text-slate-500 uppercase">Note</div>
+                <div class="text-[11px] font-bold text-slate-500 uppercase">${tr('Note', 'Nota')}</div>
                 <div class="text-2xl font-black text-blue-700" id="exam-grade">${swissGrade.toFixed(1)}</div>
               </div>
             </div>
@@ -1568,10 +1706,8 @@
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-4 text-xs sm:text-sm">${parts}</div>
         `;
-        banner.scrollIntoView({ behavior: 'smooth' });
       }
-
-      showToast("Prüfung ausgewertet!", `Ergebnis: ${totalScore} von ${MAX_POINTS} Punkten (${pct}%, Note ${swissGrade.toFixed(1)}).`);
+      return { totalScore, pct, swissGrade };
     }
 
     function hideExamBanner() {
@@ -1590,7 +1726,7 @@
       hideExamBanner();
       EXAM_TASKS.forEach(([id]) => shuffleTask(id));
       renderExam();
-      showToast("Test zurückgesetzt", "Alle Eingaben der Probeprüfung sind leer und neu gemischt.");
+      showToast(tr("Test zurückgesetzt", "Examen reiniciado"), tr("Alle Eingaben der Probeprüfung sind leer und neu gemischt.", "Todas las respuestas del examen de prueba están vacías y en otro orden."));
     }
 
     // ==========================================================
@@ -1623,11 +1759,15 @@
       if (STATE.vociFilter === 'part2') filtered = filtered.filter(v => v.part === 2);
 
       if (searchVal) {
-        filtered = filtered.filter(v => v.en.toLowerCase().includes(searchVal) || v.de.toLowerCase().includes(searchVal));
+        // Spanisch: Akzente beim Suchen egal (avion = avión)
+        const fold = x => x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        filtered = ES()
+          ? filtered.filter(v => fold(v.en).includes(fold(searchVal)) || fold(v.es).includes(fold(searchVal)))
+          : filtered.filter(v => v.en.toLowerCase().includes(searchVal) || v.de.toLowerCase().includes(searchVal));
       }
 
       if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-xs sm:text-sm">Keine Vokabeln gefunden.</div>`;
+        grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-xs sm:text-sm">${tr('Keine Vokabeln gefunden.', 'No se encontraron palabras.')}</div>`;
         return;
       }
 
@@ -1635,7 +1775,7 @@
         <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3 text-xs sm:text-sm">
           <div>
             <div class="font-bold text-slate-800">${v.en}</div>
-            <div class="text-slate-500">${v.de}</div>
+            <div class="text-slate-500" lang="${LANG}">${tr(v.de, v.es)}</div>
           </div>
           <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${v.part === 1 ? 'bg-sky-100 text-sky-800' : 'bg-indigo-100 text-indigo-800'}">
             Part ${v.part}
@@ -1650,58 +1790,6 @@
         s + t.items.filter(it => String(STATE.userAnswers[it.id] || '').trim() !== '').length, 0);
       const el = document.getElementById('header-stat');
       if (el) el.innerText = `${answeredCount} / ${PRACTICE_ITEMS}`;
-    }
-
-    // ==========================================================
-    // STOPWATCH TIMER (START / PAUSE / RESET)
-    // ==========================================================
-    let timerSeconds = 0;
-    let timerInterval = null;
-    let timerRunning = false;
-
-    function formatTime(totalSec) {
-      const mins = Math.floor(totalSec / 60);
-      const secs = totalSec % 60;
-      const pad = (n) => String(n).padStart(2, '0');
-      if (mins >= 60) {
-        const hrs = Math.floor(mins / 60);
-        const remMins = mins % 60;
-        return `${pad(hrs)}:${pad(remMins)}:${pad(secs)}`;
-      }
-      return `${pad(mins)}:${pad(secs)}`;
-    }
-
-    function updateTimerDisplay() {
-      const el = document.getElementById('timer-display');
-      if (el) el.innerText = formatTime(timerSeconds);
-    }
-
-    function toggleTimer() {
-      const btn = document.getElementById('timer-toggle-btn');
-      if (timerRunning) {
-        clearInterval(timerInterval);
-        timerRunning = false;
-        if (btn) btn.innerHTML = '▶️ Start';
-        showToast("⏱️ Stoppuhr pausiert", `Bisherige Lernzeit: ${formatTime(timerSeconds)}`);
-      } else {
-        timerRunning = true;
-        if (btn) btn.innerHTML = '⏸️ Pause';
-        timerInterval = setInterval(() => {
-          timerSeconds++;
-          updateTimerDisplay();
-        }, 1000);
-        showToast("⏱️ Stoppuhr gestartet", "Lernzeit wird gezählt.");
-      }
-    }
-
-    function resetTimer() {
-      clearInterval(timerInterval);
-      timerRunning = false;
-      timerSeconds = 0;
-      updateTimerDisplay();
-      const btn = document.getElementById('timer-toggle-btn');
-      if (btn) btn.innerHTML = '▶️ Start';
-      showToast("⏱️ Stoppuhr zurückgesetzt", "Zeit wieder auf 00:00 gestellt.");
     }
 
     // Toast Notification Helper
@@ -1725,12 +1813,59 @@
     }
 
     // ==========================================================
+    // SPRACHWECHSEL: alles Dynamische neu zeichnen, Antworten und Punkte bleiben gleich
+    // ==========================================================
+    // title / placeholder aus dem HTML (data-title-es, data-ph-es)
+    function applyLangAttrs() {
+      document.querySelectorAll('[data-title-es]').forEach(el => {
+        if (el.dataset.titleDe === undefined) el.dataset.titleDe = el.getAttribute('title') || '';
+        el.setAttribute('title', tr(el.dataset.titleDe, el.dataset.titleEs));
+      });
+      document.querySelectorAll('[data-ph-es]').forEach(el => {
+        if (el.dataset.phDe === undefined) el.dataset.phDe = el.getAttribute('placeholder') || '';
+        el.setAttribute('placeholder', tr(el.dataset.phDe, el.dataset.phEs));
+      });
+      document.querySelectorAll('.lang-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.setlang === LANG));
+      document.documentElement.lang = LANG;
+      document.title = TITLE[LANG];
+    }
+    function setLang(l) {
+      LANG = l === 'es' ? 'es' : 'de';
+      try { localStorage.setItem(LANG_KEY, LANG); } catch (e) {}
+      // Was ist gerade sichtbar? (geprüft, Lösungen offen, Tipp/Theorie offen, Spickzettel offen)
+      const sections = ['tags', 'will', 'conj'].map(cat => `${cat}_${STATE.levels[cat]}`);
+      const hasText = id => { const el = document.getElementById(id); return !!(el && el.textContent.trim()); };
+      const checked = sections.filter(sk => hasText(`fb-${currentTaskId(sk)}`));
+      const solShown = sections.filter(sk => { const b = document.getElementById(`btn-sol-${sk}`); return !!(b && b.dataset.shown === '1'); });
+      const examChecked = Object.keys(EXAM_PARTS).filter(cat => hasText(`fb-exam_${cat}`));
+      const openBoxes = [...document.querySelectorAll('[id^="tip-"], [id^="theory-"]')].filter(el => !el.classList.contains('hidden')).map(el => el.id);
+      const openSpicks = [...document.querySelectorAll('#spick-grammar details')].filter(d => d.open).map(d => d.id);
+
+      applyLangAttrs();
+      sections.forEach(sk => renderSection(sk));
+      checked.forEach(sk => markBlock(sk));
+      solShown.forEach(sk => toggleSolution(sk));
+      renderExam();
+      if (STATE.examSubmitted) {
+        EXAM_TASKS.forEach(([id, t]) => { t.items.forEach(item => markExamItem(t, item, true)); setTaskFeedback(id); });
+        renderExamBanner();
+      } else {
+        examChecked.forEach(cat => { const id = `exam_${cat}`, t = TASKS[id]; t.items.forEach(item => markExamItem(t, item, false)); setTaskFeedback(id); });
+      }
+      openBoxes.forEach(id => { const el = document.getElementById(id); if (el) el.classList.remove('hidden'); });
+      renderSpick();
+      openSpicks.forEach(id => { const d = document.getElementById(id); if (d) d.open = true; });
+      renderVocabulary();
+      updateOverallStats();
+    }
+
+    // ==========================================================
     // EXPOSE ALL FUNCTIONS EXPLICITLY TO WINDOW FOR INLINE ONCLICK
     // ==========================================================
     Object.assign(window, {
-      switchTab, selectLevel, goToBlock, checkBlock, toggleSolution, resetBlock, retryTask,
+      setLang, switchTab, selectLevel, goToBlock, checkBlock, toggleSolution, resetBlock, retryTask,
       saveAns, filterVoci, renderVocabulary, saveExamAns, submitExam, resetExam, checkExamPart,
-      toggleBox, openTheory, openSpick, showToast, toggleTimer, resetTimer
+      toggleBox, openTheory, openSpick, showToast
     });
 
     // Start sobald das HTML da ist (wartet nicht auf Tailwind/Schriften)
@@ -1745,8 +1880,8 @@
       document.querySelectorAll('.js-exam-items').forEach(el => el.textContent = EXAM_ITEMS);
       document.querySelectorAll('[data-max]').forEach(el => el.textContent = TASKS[el.dataset.max].max);
       document.querySelectorAll('[data-items]').forEach(el => el.textContent = TASKS[el.dataset.items].items.length);
-      const vc = document.getElementById('voci-count');
-      if (vc) vc.textContent = VOCABULARY.length;
+      document.querySelectorAll('.js-voci-count').forEach(el => el.textContent = VOCABULARY.length);
+      applyLangAttrs();
       renderSection('tags_1');
       renderSection('will_1');
       renderSection('conj_1');
