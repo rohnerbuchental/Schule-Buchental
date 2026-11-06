@@ -7,12 +7,14 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 
 | Seite | Deutsch freigegeben | Spanisch |
 |---|---|---|
-| `index.html` | ja (6.11.2026) | fertig (6.11.2026); Kacheln noch nicht übersetzter Seiten zeigen «🕒 pronto en español» |
-| `connected_3_scratch_trainingshub.html` | ja (6.11.2026) | offen |
-| `Deutsch Novemberschnee.html` | ja (6.11.2026) | offen. Entscheid: **alles** spanisch (auch Antworten und Musterlösungen) |
-| `Englisch open_world_2_unit_1.html` | ja (6.11.2026) | offen |
+| `index.html` | ja (6.11.2026) | fertig (6.11.2026). Kachel «Vocabulary und Grammatik lernen» zuoberst, Informatik an zweiter Stelle (Wunsch Lehrperson) |
+| `connected_3_scratch_trainingshub.html` | ja (6.11.2026) | fertig (6.11.2026). Blocktexte wie Scratch 3 Spanisch («mover (10) pasos», «sumar a y», «posición en y»). `<option>`, SVG-Text und Attribute über `data-es…` und `applyLangAttrs()` |
+| `Deutsch Novemberschnee.html` | ja (6.11.2026) | fertig (6.11.2026). **Alles** spanisch, auch Zitate und Musterlösungen. Offene Antworten: ein Speicher, «Antwort prüfen» erkennt deutsche und spanische Schlüsselwörter |
+| `Englisch open_world_2_unit_1.html` | ja (6.11.2026) | fertig (6.11.2026). Antworten sind Englisch (gleich in beiden Sprachen); Voci-Spickzettel Englisch–Spanisch |
 | `Englisch open_world_2_unit_2.html` | ja, Lernpfad und Grammatik (6.11.2026) | fertig (6.11.2026). Entscheid: Wörter **Englisch–Spanisch** |
-| `RZG Vulkane Erdbeben Tsunamis.html` | ja (6.11.2026) | offen |
+| `RZG Vulkane Erdbeben Tsunamis.html` | ja (6.11.2026) | fertig (6.11.2026). Gespeichert werden die deutschen Werte, Spanisch ist nur Anzeige. Lernziel-Blatt: Freitext pro Sprache (`blatt_<id>` / `blatt_es_<id>`) |
+
+**Angstfrei nachgezogen (Wunsch Lehrperson 6.11.2026), alle Seiten:** gelb statt rot bei falschen Antworten, «Noch nicht ganz» / «Noch nicht erreicht 💪», ✏️ statt ❌, Stoppuhren entfernt (Scratch, Novemberschnee, Unit 1), Test-Simulationen heissen «Übungstest» / «Probetest zum Üben». Neu «🤷 Weiss ich nicht»: RZG bei Einfachauswahl (zählt wie leer, öffnet den Tipp), Scratch bei jeder Aufgabe (zeigt die Lösung, kostet nichts). Rot bleibt nur, wo es keine Rückmeldung ist (Lava, «NEIN»/«STOPP» im Ablaufdiagramm, Theorie B Novemberschnee, «won't» in Unit 1).
 
 **So ist der Sprachwechsel gebaut (auf jeder Seite gleich):**
 - Umschalter «Deutsch | Español» ganz oben rechts (`.lang-btn`, `setLang('de' | 'es')`). Die Wahl gilt für alle Seiten: `localStorage`-Schlüssel `lernportal_lang` (`'de'` oder `'es'`).
