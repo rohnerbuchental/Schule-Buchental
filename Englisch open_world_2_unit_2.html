@@ -682,7 +682,7 @@
     // SPEICHERN (jeder Zugriff in try/catch)
     // ==========================================================
     const SAVE_KEY = 'ow2u2_lernpfad';
-    const STATE = { part: 't1', tab: 'woerter', path: {}, medal: {}, tests: {}, testOpen: {}, days: [], gram: null, gramAdv: null, gtopic: 'pc' };
+    const STATE = { part: 't1', tab: 'woerter', path: {}, medal: {}, tests: {}, testOpen: {}, days: [], gram: null, gramAdv: null, gtopic: 'pc', pathSplit: true };
     function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(STATE)); } catch (e) {} }
     function load() {
       try {
@@ -691,6 +691,13 @@
         if (PARTS[s.part]) STATE.part = s.part;
         if (s.path && typeof s.path === 'object') STATE.path = s.path;
         if (s.medal && typeof s.medal === 'object') STATE.medal = s.medal;
+        // Früher war der Fortschritt für beide Sprachen gleich: einmal für Spanisch kopieren, damit nichts verloren geht
+        if (!s.pathSplit) {
+          Object.keys(PARTS).forEach(k => {
+            if (STATE.path[k] && !STATE.path[k + '_es']) STATE.path[k + '_es'] = JSON.parse(JSON.stringify(STATE.path[k]));
+            if (STATE.medal[k] && !STATE.medal[k + '_es']) STATE.medal[k + '_es'] = STATE.medal[k];
+          });
+        }
         if (s.tests && typeof s.tests === 'object') STATE.tests = s.tests;
         if (s.testOpen && typeof s.testOpen === 'object') STATE.testOpen = s.testOpen;
         if (Array.isArray(s.days)) STATE.days = s.days.filter(d => typeof d === 'string').slice(-60);
@@ -772,11 +779,13 @@
     const REVIEW_DAYS = [1, 3];
     const DAY = 864e5, EARLY = 4 * 36e5;          // «morgen» = schon nach 20 Stunden
     const maxLevel = w => w.noType ? 3 : 4;      // lange Ausdrücke: ohne «Deutsch → Englisch schreiben»
+    // Fortschritt pro Sprache getrennt: zuerst Englisch–Spanisch, danach Englisch–Deutsch lernen (Wunsch Lehrperson 6.11.2026)
+    const pKey = (part = STATE.part) => ES() ? part + '_es' : part;
     function P(part = STATE.part) {
-      const p = STATE.path[part];
-      if (!p || typeof p !== 'object' || !p.level || !Array.isArray(p.queue)) STATE.path[part] = { level: {}, queue: [], rev: {} };
-      if (!STATE.path[part].rev || typeof STATE.path[part].rev !== 'object') STATE.path[part].rev = {};
-      return STATE.path[part];
+      const k = pKey(part), p = STATE.path[k];
+      if (!p || typeof p !== 'object' || !p.level || !Array.isArray(p.queue)) STATE.path[k] = { level: {}, queue: [], rev: {} };
+      if (!STATE.path[k].rev || typeof STATE.path[k].rev !== 'object') STATE.path[k].rev = {};
+      return STATE.path[k];
     }
     const levelOf = (w, part = w.part) => Math.max(0, Math.min(maxLevel(w), Number(P(part).level[w.id]) || 0));
     const isMastered = (w, part = w.part) => levelOf(w, part) >= maxLevel(w);
@@ -1025,6 +1034,7 @@
             <div class="text-sm text-slate-700">${tr('Super! Mach jetzt den Wörtertest wie in der Prüfung.', '¡Genial! Ahora haz la prueba de vocabulario como en el examen.')}</div>
             ${reviewsLeft() ? `<div class="text-sm text-slate-700">${tr('🔁 In den nächsten Tagen kommen die Wörter kurz zum Wiederholen. So bleiben sie im Kopf.', '🔁 En los próximos días las palabras vuelven brevemente para repasar. Así se quedan en la cabeza.')}</div>` : ''}
             <button type="button" onclick="document.getElementById('task-test').scrollIntoView({behavior:'smooth'})" class="mt-1 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('Zum Wörtertest ↓', 'A la prueba ↓')}</button>
+            ${ES() ? `<div class="mt-2 rounded-xl border border-sky-200 bg-white p-3 text-sm text-slate-700 text-left">👉 <b>Siguiente paso:</b> la prueba en clase es en alemán. Aprende ahora las mismas palabras en inglés y alemán: cambia arriba a «Deutsch». Tus estrellas en español se quedan guardadas.</div>` : ''}
           </div>`;
         return;
       }
@@ -1136,8 +1146,8 @@
       if (empty && !t.warned) { t.warned = true; save(); renderTest(); return; }
       t.checked = true;
       const m = medalOf(TASKS.test.score(), TASKS.test.max);
-      const old = MEDALS.findIndex(x => x.name === STATE.medal[STATE.part]);
-      if (m && (old < 0 || MEDALS.indexOf(m) < old)) STATE.medal[STATE.part] = m.name;
+      const old = MEDALS.findIndex(x => x.name === STATE.medal[tKey()]);
+      if (m && (old < 0 || MEDALS.indexOf(m) < old)) STATE.medal[tKey()] = m.name;
       save();
       renderTest();
       $('fb-test').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1216,7 +1226,7 @@
       }
       const pts = TASKS.test.score(), max = TASKS.test.max, m = medalOf(pts, max);
       const grade = gradeOf(pts, max), pass = pts >= passPoints(max);
-      const best = MEDALS.find(x => x.name === STATE.medal[STATE.part]);
+      const best = MEDALS.find(x => x.name === STATE.medal[tKey()]);
       fb.innerHTML = `
         <div class="rounded-2xl border-2 ${pass ? 'border-emerald-300 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-4 space-y-1 pop">
           <div class="text-lg font-black text-slate-900">${m ? m.icon + ' ' : ''}${fmt(pts)} ${tr('von', 'de')} ${max} ${tr('Punkten · Note', 'puntos · Nota')} ${grade.toFixed(1)}</div>
@@ -1244,7 +1254,7 @@
       document.documentElement.lang = LANG;
       document.title = TITLE[LANG];
       document.querySelectorAll('.lang-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.setlang === LANG));
-      if (Q.phase === 'ask' && Q.id && STAGES[Q.stage].type === 'mc') Q.opts = mcOptions(BY_ID[Q.id], STAGES[Q.stage].dir);
+      newQuestion();   // jede Sprache hat ihren eigenen Lernpfad
       if (Q.praise) Q.praise = praise();
       if (G.praise) G.praise = praise();
       ensureTest(STATE.part);
@@ -1657,7 +1667,7 @@
         const pl = PARTS[STATE.part].label;
         try { ok = window.confirm(tr(`Lernpfad ${pl} von vorne beginnen? Deine Sterne in ${pl} werden gelöscht.`, `¿Empezar la ruta de la ${pl.toLowerCase()} desde el principio? Se borran tus estrellas de la ${pl.toLowerCase()}.`)); } catch (e) {}
         if (!ok) return;
-        STATE.path[STATE.part] = { level: {}, queue: [], rev: {} };
+        STATE.path[pKey()] = { level: {}, queue: [], rev: {} };
         STREAK = 0;
         save();
         newQuestion();
