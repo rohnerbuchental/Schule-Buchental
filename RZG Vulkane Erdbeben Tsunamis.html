@@ -23,42 +23,59 @@
     details > summary::-webkit-details-marker { display: none; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
     .animate-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+    /* Sprachwechsel: feste Texte stehen doppelt (data-l="de" / data-l="es") */
+    html[lang="es"] [data-l="de"], html:not([lang="es"]) [data-l="es"] { display: none !important; }
+    html:not([lang="es"]) .lang-btn[data-setlang="de"], html[lang="es"] .lang-btn[data-setlang="es"] { background: #fff; color: #0f172a; }
   </style>
+  <script>
+    // Sprache sofort setzen (gilt für alle Seiten des Lernportals), damit nichts kurz auf Deutsch aufblitzt
+    try { if (localStorage.getItem('lernportal_lang') === 'es') document.documentElement.lang = 'es'; } catch (e) {}
+  </script>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-orange-600 selection:text-white">
+
+  <!-- Sprache: Deutsch | Español -->
+  <div class="bg-orange-950 text-white">
+    <div class="max-w-5xl mx-auto px-4 pt-2 pb-1 flex justify-end">
+      <div class="inline-flex rounded-full bg-white/10 border border-white/15 p-0.5 text-xs font-bold" role="group" aria-label="Sprache · Idioma">
+        <button type="button" data-setlang="de" onclick="setLang('de')" lang="de" class="lang-btn px-3 py-1 rounded-full text-white/80">Deutsch</button>
+        <button type="button" data-setlang="es" onclick="setLang('es')" lang="es" class="lang-btn px-3 py-1 rounded-full text-white/80">Español</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Header -->
   <header class="bg-gradient-to-r from-orange-900 via-red-950 to-slate-900 text-white shadow-lg sticky top-0 z-40 border-b border-orange-800/50">
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center gap-3">
-      <a href="index.html" class="text-2xl sm:text-3xl p-1.5 sm:p-2 bg-white/10 rounded-2xl border border-white/10 shadow-inner" title="Zur Startseite">🌋</a>
+      <a href="index.html" class="text-2xl sm:text-3xl p-1.5 sm:p-2 bg-white/10 rounded-2xl border border-white/10 shadow-inner" title="Zur Startseite" data-es-title="A la página de inicio">🌋</a>
       <div class="min-w-0">
         <div class="flex flex-wrap items-center gap-1.5">
-          <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-orange-400/20 text-orange-200 border border-orange-400/30">RZG · Dynamik der Erde · Test 2</span>
-          <span class="text-[10px] font-medium bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 px-1.5 py-0.5 rounded-md">💾 Auto-Save</span>
-          <span class="text-[10px] font-medium bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 px-1.5 py-0.5 rounded-md">🔀 Zufall</span>
+          <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-orange-400/20 text-orange-200 border border-orange-400/30"><span data-l="de">RZG · Dynamik der Erde · Test 2</span><span data-l="es" lang="es">RZG · Dinámica de la Tierra · Prueba 2</span></span>
+          <span class="text-[10px] font-medium bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 px-1.5 py-0.5 rounded-md"><span data-l="de">💾 Auto-Save</span><span data-l="es" lang="es">💾 Se guarda solo</span></span>
+          <span class="text-[10px] font-medium bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 px-1.5 py-0.5 rounded-md"><span data-l="de">🔀 Zufall</span><span data-l="es" lang="es">🔀 Al azar</span></span>
         </div>
-        <h1 class="text-base sm:text-lg font-bold leading-tight mt-0.5">Vulkane, Erdbeben und Tsunamis</h1>
+        <h1 class="text-base sm:text-lg font-bold leading-tight mt-0.5"><span data-l="de">Vulkane, Erdbeben und Tsunamis</span><span data-l="es" lang="es">Volcanes, terremotos y tsunamis</span></h1>
       </div>
     </div>
 
     <nav class="max-w-5xl mx-auto px-4 flex gap-1.5 overflow-x-auto border-t border-white/10 py-2 text-xs sm:text-sm font-medium">
       <button onclick="switchTab('entstehung')" id="tab-btn-entstehung" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-slate-900 font-bold shadow-sm">
-        <span>🌋</span> 1. Vulkane entstehen
+        <span>🌋</span> <span data-l="de">1. Vulkane entstehen</span><span data-l="es" lang="es">1. Cómo se forman los volcanes</span>
       </button>
       <button onclick="switchTab('ausbruch')" id="tab-btn-ausbruch" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>💥</span> 2. Ausbruch & inaktiv
+        <span>💥</span> <span data-l="de">2. Ausbruch & inaktiv</span><span data-l="es" lang="es">2. Erupción e inactividad</span>
       </button>
       <button onclick="switchTab('erdbeben')" id="tab-btn-erdbeben" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>📈</span> 3. Erdbeben
+        <span>📈</span> <span data-l="de">3. Erdbeben</span><span data-l="es" lang="es">3. Terremotos</span>
       </button>
       <button onclick="switchTab('tsunami')" id="tab-btn-tsunami" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>🌊</span> 4. Tsunamis
+        <span>🌊</span> <span data-l="de">4. Tsunamis</span><span data-l="es" lang="es">4. Tsunamis</span>
       </button>
       <button onclick="switchTab('blatt')" id="tab-btn-blatt" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-slate-200 hover:bg-white/10">
-        <span>📋</span> 5. Lernziel-Blatt
+        <span>📋</span> <span data-l="de">5. Lernziel-Blatt</span><span data-l="es" lang="es">5. Hoja de objetivos</span>
       </button>
       <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-amber-200 bg-amber-500/20 hover:bg-amber-500/30 font-bold border border-amber-300/30">
-        <span>📝</span> 6. Test-Simulation (<span class="js-max-pts">–</span> P.)
+        <span>📝</span> <span data-l="de">6. Test-Simulation (<span class="js-max-pts">–</span> P.)</span><span data-l="es" lang="es">6. Prueba de práctica (<span class="js-max-pts">–</span> pts.)</span>
       </button>
     </nav>
   </header>
@@ -70,11 +87,12 @@
     <!-- ============================================================== -->
     <section id="view-entstehung" class="tab-view space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg font-black text-slate-900">🌋 Wie entstehen Vulkane?</h2>
-        <p class="text-xs text-slate-500 mt-1">LZ1: Die Entstehung von Vulkanen erklären. · LZ2: Schildvulkane und Schichtvulkane unterscheiden.</p>
+        <h2 class="text-lg font-black text-slate-900"><span data-l="de">🌋 Wie entstehen Vulkane?</span><span data-l="es" lang="es">🌋 ¿Cómo se forman los volcanes?</span></h2>
+        <p class="text-xs text-slate-500 mt-1" data-l="de">LZ1: Die Entstehung von Vulkanen erklären. · LZ2: Schildvulkane und Schichtvulkane unterscheiden.</p>
+        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ1: Explicar cómo se forman los volcanes. · LZ2: Distinguir los volcanes en escudo y los estratovolcanes.</p>
         <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
-          <summary class="text-sm font-bold text-orange-800">📖 Theorie lesen (antippen)</summary>
-          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">
+          <summary class="text-sm font-bold text-orange-800"><span data-l="de">📖 Theorie lesen (antippen)</span><span data-l="es" lang="es">📖 Leer la teoría (toca aquí)</span></summary>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="de">
             <p>Vulkane entstehen, wenn flüssiges Gestein (<b>Magma</b>) aus dem Erdinneren aufsteigt und an die Erdoberfläche gelangt. Das passiert meist dort, wo sich die Erdplatten bewegen.</p>
             <ul class="list-disc pl-5 space-y-1">
               <li><b>Platten driften auseinander:</b> Es entsteht ein Riss. Heisses Magma steigt auf und kühlt als neue Kruste ab. Beispiel: Island.</li>
@@ -88,6 +106,23 @@
               </div>
               <div class="bg-white rounded-lg border border-orange-200 p-2.5">
                 <b>Schildvulkan</b><br>flach und breit wie ein liegender Schild · dünnflüssiges Magma · ruhiger, fliessender Ausbruch · viele dünne Lavaschichten · z.B. Mauna Loa (Hawaii)
+              </div>
+            </div>
+          </div>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="es" lang="es">
+            <p>Los volcanes se forman cuando roca líquida (<b>magma</b>) sube desde el interior de la Tierra y llega a la superficie. Casi siempre pasa donde se mueven las placas tectónicas.</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><b>Las placas se separan:</b> Se abre una grieta. El magma caliente sube y se enfría como corteza nueva. Ejemplo: Islandia.</li>
+              <li><b>Las placas chocan:</b> La placa más pesada se mete debajo de la más ligera. En la profundidad, la roca se derrite. El magma es más ligero y sube. Ejemplo: Mount St. Helens (EE. UU.).</li>
+              <li><b>Punto caliente (hotspot):</b> Un magma muy caliente sube y atraviesa la placa como un soplete. Ejemplo: Hawái.</li>
+            </ul>
+            <p>Alrededor de la placa del Pacífico están los volcanes más activos del mundo. Esa zona se llama <b>«Ring of Fire»</b> (Anillo de Fuego del Pacífico). Allí, las placas oceánicas se hunden debajo de otras placas. La roca se derrite y el magma sube.</p>
+            <div class="grid sm:grid-cols-2 gap-2 pt-1">
+              <div class="bg-white rounded-lg border border-orange-200 p-2.5">
+                <b>Estratovolcán (volcán de capas)</b><br>alto y en forma de cono · magma viscoso (espeso) · erupción explosiva · en cada erupción se depositan, una tras otra, capas de ceniza/roca y de lava solidificada, por eso tiene capas · p. ej. Vesubio, Etna, Fuji
+              </div>
+              <div class="bg-white rounded-lg border border-orange-200 p-2.5">
+                <b>Volcán en escudo</b><br>plano y ancho como un escudo tendido en el suelo · magma fluido (líquido) · erupción tranquila, la lava fluye · muchas capas finas de lava · p. ej. Mauna Loa (Hawái)
               </div>
             </div>
           </div>
@@ -109,17 +144,27 @@
     <!-- ============================================================== -->
     <section id="view-ausbruch" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg font-black text-slate-900">💥 Warum bricht ein Vulkan aus?</h2>
-        <p class="text-xs text-slate-500 mt-1">LZ3: Vulkanausbrüche erklären. · Zusatz aus dem Dossier: Wann ist ein Vulkan inaktiv?</p>
+        <h2 class="text-lg font-black text-slate-900"><span data-l="de">💥 Warum bricht ein Vulkan aus?</span><span data-l="es" lang="es">💥 ¿Por qué entra en erupción un volcán?</span></h2>
+        <p class="text-xs text-slate-500 mt-1" data-l="de">LZ3: Vulkanausbrüche erklären. · Zusatz aus dem Dossier: Wann ist ein Vulkan inaktiv?</p>
+        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ3: Explicar las erupciones volcánicas. · Extra del dosier: ¿Cuándo está inactivo un volcán?</p>
         <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
-          <summary class="text-sm font-bold text-orange-800">📖 Theorie lesen (antippen)</summary>
-          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">
+          <summary class="text-sm font-bold text-orange-800"><span data-l="de">📖 Theorie lesen (antippen)</span><span data-l="es" lang="es">📖 Leer la teoría (toca aquí)</span></summary>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="de">
             <p><b>Schichtvulkan:</b> Das Magma ist zähflüssig. Die Gase können nur schwer entweichen. Im Schlot baut sich ein enormer Druck auf. Wird der Druck stärker als der Pfropfen aus Gestein, gibt es einen explosiven Ausbruch: Asche, Steine (Pyroklastika) und Lava fliegen heraus.</p>
             <p><b>Schildvulkan:</b> Die Lava ist dünnflüssig und sehr heiss. Die Gase entweichen leicht, darum gibt es kaum Druck. Die Lava fliesst ruhig aus dem Krater und breitet sich weit aus.</p>
             <p><b>Inaktiv («schlafend»)</b> ist ein Vulkan, wenn kein Magma mehr nachkommt und der Druck in der Magmakammer sinkt. Gründe:</p>
             <ul class="list-disc pl-5 space-y-1">
               <li>Die Platte bewegt sich weiter. Der Vulkan wandert vom Hotspot weg und bekommt kein Magma mehr. Am Hotspot entsteht ein neuer Vulkan.</li>
               <li>Die Magmakammer ist leer: Das Magma kühlt ab, wird fest und der Schlot verstopft.</li>
+            </ul>
+          </div>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="es" lang="es">
+            <p><b>Estratovolcán:</b> El magma es viscoso (espeso). Los gases casi no pueden salir. En la chimenea (el conducto del volcán) se acumula una presión enorme. Cuando la presión es más fuerte que el tapón de roca, hay una erupción explosiva: salen volando ceniza, piedras (piroclastos) y lava.</p>
+            <p><b>Volcán en escudo:</b> La lava es fluida (líquida) y muy caliente. Los gases salen fácilmente, por eso casi no hay presión. La lava sale tranquila del cráter y se extiende lejos.</p>
+            <p>Un volcán está <b>inactivo («dormido»)</b> cuando ya no llega magma nuevo y baja la presión en la cámara magmática. Razones:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>La placa sigue moviéndose. El volcán se aleja del punto caliente y ya no recibe magma. Sobre el punto caliente se forma un volcán nuevo.</li>
+              <li>La cámara magmática se vacía: el magma se enfría, se pone sólido y tapa la chimenea.</li>
             </ul>
           </div>
         </details>
@@ -140,11 +185,12 @@
     <!-- ============================================================== -->
     <section id="view-erdbeben" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg font-black text-slate-900">📈 Erdbeben und Richterskala</h2>
-        <p class="text-xs text-slate-500 mt-1">LZ4: Erdbeben verstehen, messen und berechnen.</p>
+        <h2 class="text-lg font-black text-slate-900"><span data-l="de">📈 Erdbeben und Richterskala</span><span data-l="es" lang="es">📈 Terremotos y escala de Richter</span></h2>
+        <p class="text-xs text-slate-500 mt-1" data-l="de">LZ4: Erdbeben verstehen, messen und berechnen.</p>
+        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ4: Entender, medir y calcular terremotos.</p>
         <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
-          <summary class="text-sm font-bold text-orange-800">📖 Theorie lesen (antippen)</summary>
-          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">
+          <summary class="text-sm font-bold text-orange-800"><span data-l="de">📖 Theorie lesen (antippen)</span><span data-l="es" lang="es">📖 Leer la teoría (toca aquí)</span></summary>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="de">
             <p><b>Entstehung:</b> Erdbeben gibt es vor allem an den Plattengrenzen. Zwei Platten verhaken sich. Es baut sich eine riesige Spannung auf. Plötzlich bricht das Gestein und die Spannung entlädt sich schlagartig: Die Erde bebt. Die Stelle in der Tiefe, wo das Beben beginnt, heisst <b>Erdbebenherd</b>. Beispiel: San-Andreas-Verwerfung (USA), dort gleiten zwei Platten seitlich aneinander vorbei.</p>
             <p><b>Messen:</b> Das Messgerät heisst <b>Seismograph</b>. Seine Aufzeichnung (die Zickzack-Kurve) heisst <b>Seismogramm</b>. Die Stärke gibt man auf der <b>Richterskala</b> an. Das stärkste je gemessene Beben hatte Stärke 9.5 (Chile, 1960). In der Schweiz war es das Beben von Basel 1356 (ca. 6 bis 6.5).</p>
             <div class="bg-white rounded-lg border border-orange-200 p-2.5">
@@ -161,6 +207,24 @@
               <li><b>8 und mehr:</b> totale Zerstörung über Hunderte von Kilometern.</li>
             </ul>
             <p><b>Verhalten bei einem Erdbeben:</b> Im Haus unter einen stabilen Tisch kriechen und festhalten. Weg von Fenstern, Glas und schweren Schränken. Keinen Lift benutzen. Im Freien auf einen freien Platz gehen, weg von Mauern, Balkonen und Strommasten. Im Auto am Strassenrand anhalten (nicht auf Brücken) und sitzen bleiben.</p>
+          </div>
+          <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed" data-l="es" lang="es">
+            <p><b>Cómo se forma:</b> Los terremotos (sismos) pasan sobre todo en los bordes de las placas. Dos placas se enganchan. Se acumula una tensión enorme. De repente la roca se rompe y la tensión se libera de golpe: la Tierra tiembla. El lugar en la profundidad donde empieza el terremoto se llama <b>foco (hipocentro)</b>. Ejemplo: la falla de San Andrés (EE. UU.); allí dos placas se deslizan de lado, una junto a la otra.</p>
+            <p><b>Medir:</b> El aparato de medición se llama <b>sismógrafo</b>. Su registro (la línea en zigzag) se llama <b>sismograma</b>. La fuerza se indica en la <b>escala de Richter</b>. El terremoto más fuerte jamás medido tuvo magnitud 9.5 (Chile, 1960). En Suiza fue el terremoto de Basilea en 1356 (aprox. 6 a 6.5).</p>
+            <div class="bg-white rounded-lg border border-orange-200 p-2.5">
+              <b>Regla para calcular:</b> 1 grado más = la amplitud en el sismograma <b>× 10</b> y la energía <b>× 32</b>.<br>
+              Ejemplo: magnitud 5 en vez de 3 = 2 grados → amplitud 10 × 10 = 100 veces, energía 32 × 32 = 1024 veces mayor.
+            </div>
+            <p><b>Grados de la escala de Richter:</b></p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><b>menos de 3:</b> casi no se siente, solo lo registran los aparatos.</li>
+              <li><b>4:</b> muchas personas lo sienten, los platos vibran y suenan, casi no hay daños.</li>
+              <li><b>5:</b> los muebles se mueven, daños leves en edificios.</li>
+              <li><b>6:</b> grietas y daños en edificios, sobre todo en los mal construidos, en una zona más pequeña.</li>
+              <li><b>7:</b> daños graves en zonas grandes, muchos edificios se derrumban.</li>
+              <li><b>8 o más:</b> destrucción total en cientos de kilómetros.</li>
+            </ul>
+            <p><b>Qué hacer en un terremoto:</b> En casa, métete debajo de una mesa firme y agárrate. Aléjate de ventanas, vidrios y armarios pesados. No uses el ascensor. Afuera, ve a un lugar abierto, lejos de muros, balcones y postes de luz. En auto, para al lado de la calle (no en puentes) y quédate sentado.</p>
           </div>
         </details>
       </div>
@@ -183,24 +247,29 @@
     <!-- ============================================================== -->
     <section id="view-tsunami" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg font-black text-slate-900">🌊 Wie entsteht ein Tsunami?</h2>
-        <p class="text-xs text-slate-500 mt-1">LZ5: Tsunamis und Meereswellen vergleichen.</p>
+        <h2 class="text-lg font-black text-slate-900"><span data-l="de">🌊 Wie entsteht ein Tsunami?</span><span data-l="es" lang="es">🌊 ¿Cómo se forma un tsunami?</span></h2>
+        <p class="text-xs text-slate-500 mt-1" data-l="de">LZ5: Tsunamis und Meereswellen vergleichen.</p>
+        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">LZ5: Comparar los tsunamis con las olas normales del mar.</p>
         <details class="mt-3 rounded-xl border border-orange-200 bg-orange-50/60 p-3">
-          <summary class="text-sm font-bold text-orange-800">📖 Theorie lesen (antippen)</summary>
+          <summary class="text-sm font-bold text-orange-800"><span data-l="de">📖 Theorie lesen (antippen)</span><span data-l="es" lang="es">📖 Leer la teoría (toca aquí)</span></summary>
           <div class="text-sm text-slate-700 space-y-2 mt-2 leading-relaxed">
-            <svg viewBox="0 0 360 150" class="w-full h-auto" role="img" aria-label="Schema: Ein Seebeben erzeugt eine Welle, die an der Küste hoch wird">
+            <svg viewBox="0 0 360 150" class="w-full h-auto" role="img" aria-label="Schema: Ein Seebeben erzeugt eine Welle, die an der Küste hoch wird" data-es-aria="Esquema: un terremoto submarino produce una ola que se vuelve alta en la costa">
               <rect x="0" y="40" width="360" height="110" fill="#bae6fd"/>
               <path d="M0,150 L0,130 L230,125 L330,60 L360,50 L360,150 Z" fill="#a8a29e"/>
               <path d="M330,60 L360,50 L360,40 L330,40 Z" fill="#86efac"/>
               <path d="M70,40 Q85,33 100,40" fill="#38bdf8" stroke="#0369a1" stroke-width="2"/>
               <path d="M262,40 Q285,0 305,40" fill="#38bdf8" stroke="#0369a1" stroke-width="2"/>
               <polygon points="40,128 44,118 48,128 58,128 50,134 53,144 44,138 35,144 38,134 30,128" fill="#ef4444"/>
-              <text x="62" y="140" font-size="11" fill="#7f1d1d" font-weight="700">Seebeben</text>
-              <text x="85" y="28" font-size="10" fill="#0c4a6e" text-anchor="middle">ca. 1 m, sehr schnell</text>
-              <text x="250" y="12" font-size="10" fill="#0c4a6e" text-anchor="end">Küste: 10 bis 30 m</text>
+              <text x="62" y="140" font-size="11" fill="#7f1d1d" font-weight="700" data-l="de">Seebeben</text>
+              <text x="62" y="140" font-size="11" fill="#7f1d1d" font-weight="700" data-l="es" lang="es">Terremoto submarino</text>
+              <text x="85" y="28" font-size="10" fill="#0c4a6e" text-anchor="middle" data-l="de">ca. 1 m, sehr schnell</text>
+              <text x="85" y="28" font-size="10" fill="#0c4a6e" text-anchor="middle" data-l="es" lang="es">aprox. 1 m, muy rápida</text>
+              <text x="250" y="12" font-size="10" fill="#0c4a6e" text-anchor="end" data-l="de">Küste: 10 bis 30 m</text>
+              <text x="250" y="12" font-size="10" fill="#0c4a6e" text-anchor="end" data-l="es" lang="es">Costa: 10 a 30 m</text>
               <path d="M110,60 L200,60" stroke="#0369a1" stroke-width="2" marker-end="url(#arrT)"/>
               <defs><marker id="arrT" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#0369a1"/></marker></defs>
             </svg>
+            <div class="space-y-2" data-l="de">
             <ol class="list-decimal pl-5 space-y-1">
               <li>Ein Seebeben stösst den Meeresboden und damit das ganze Wasser darüber schlagartig nach oben.</li>
               <li>Auf dem offenen Meer ist die Welle flach (ca. 1 m), aber extrem schnell (bis 800 km/h).</li>
@@ -209,6 +278,17 @@
             <p><b>Warnzeichen am Strand:</b> Das Meer zieht sich plötzlich weit zurück. Dann sofort weg vom Strand, andere warnen und einen hohen Ort suchen: einen Hügel oder die oberen Stockwerke eines stabilen Betongebäudes. Es bleibt nur wenig Zeit!</p>
             <p><b>Normale Welle:</b> entsteht durch Wind. Nur die oberste Wasserschicht bewegt sich. Wellenlänge bis ca. 400 m, eher langsam.<br>
             <b>Tsunami:</b> entsteht durch ein Seebeben. Das ganze Wasser vom Meeresgrund bis zur Oberfläche bewegt sich. Wellenlänge bis 1000 km, sehr schnell.</p>
+            </div>
+            <div class="space-y-2" data-l="es" lang="es">
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>Un terremoto submarino empuja de golpe hacia arriba el fondo del mar y, con él, toda el agua que hay encima.</li>
+              <li>En mar abierto la ola es baja (aprox. 1 m), pero muy rápida (hasta 800 km/h).</li>
+              <li>En la costa poco profunda la ola se frena, el agua se amontona y sube de 10 a 30 m. En bahías estrechas sube todavía más, porque el agua no tiene espacio para salir hacia los lados.</li>
+            </ol>
+            <p><b>Señal de alerta en la playa:</b> El mar se retira de repente muy lejos. Entonces aléjate enseguida de la playa, avisa a otras personas y busca un lugar alto: una colina o los pisos altos de un edificio sólido de hormigón. ¡Queda muy poco tiempo!</p>
+            <p><b>Ola normal:</b> la produce el viento. Solo se mueve la capa de agua de arriba. Longitud de onda hasta aprox. 400 m, más bien lenta.<br>
+            <b>Tsunami:</b> lo produce un terremoto submarino. Se mueve toda el agua, desde el fondo del mar hasta la superficie. Longitud de onda hasta 1000 km, muy rápido.</p>
+            </div>
           </div>
         </details>
       </div>
@@ -228,9 +308,11 @@
     <!-- ============================================================== -->
     <section id="view-blatt" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
-        <h2 class="text-lg font-black text-slate-900">📋 Lernziel-Blatt: «Ich kann…»</h2>
-        <p class="text-sm text-slate-600 mt-1">Schreib zu jedem Punkt deine Antwort in eigenen Worten. Vergleiche danach mit der Musterlösung. Setze ein Häkchen, wenn du es kannst.</p>
-        <p class="text-xs text-slate-500 mt-1">Dieser Teil gibt keine Punkte für die Test-Simulation. Deine Texte werden auf diesem Gerät gespeichert.</p>
+        <h2 class="text-lg font-black text-slate-900"><span data-l="de">📋 Lernziel-Blatt: «Ich kann…»</span><span data-l="es" lang="es">📋 Hoja de objetivos: «Puedo…»</span></h2>
+        <p class="text-sm text-slate-600 mt-1" data-l="de">Schreib zu jedem Punkt deine Antwort in eigenen Worten. Vergleiche danach mit der Musterlösung. Setze ein Häkchen, wenn du es kannst.</p>
+        <p class="text-sm text-slate-600 mt-1" data-l="es" lang="es">Escribe en cada punto tu respuesta con tus propias palabras. Después compárala con la respuesta modelo. Marca la casilla cuando ya lo sepas.</p>
+        <p class="text-xs text-slate-500 mt-1" data-l="de">Dieser Teil gibt keine Punkte für die Test-Simulation. Deine Texte werden auf diesem Gerät gespeichert.</p>
+        <p class="text-xs text-slate-500 mt-1" data-l="es" lang="es">Esta parte no da puntos para la prueba de práctica. Tus textos se guardan en este aparato.</p>
         <div id="blatt-progress" class="mt-3 text-sm font-bold text-orange-800"></div>
       </div>
       <!-- Lernziel-Blatt LZ1 bis LZ5 | RZG.1.3.a, RZG.1.3.b, RZG.1.3.c -->
@@ -243,12 +325,16 @@
     <section id="view-exam" class="tab-view hidden space-y-5 animate-fade-in">
       <div class="bg-gradient-to-br from-white to-amber-50/50 rounded-2xl p-5 shadow-sm border border-amber-200">
         <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
-          Prüfungsmodus · <span class="js-max-pts">–</span> Punkte
+          <span data-l="de">Prüfungsmodus · <span class="js-max-pts">–</span> Punkte</span><span data-l="es" lang="es">Modo prueba · <span class="js-max-pts">–</span> puntos</span>
         </span>
-        <h2 class="text-lg sm:text-xl font-black text-slate-800 mt-2">📝 Test-Simulation</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mt-1">
+        <h2 class="text-lg sm:text-xl font-black text-slate-800 mt-2"><span data-l="de">📝 Test-Simulation</span><span data-l="es" lang="es">📝 Prueba de práctica</span></h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="de">
           Löse zuerst alle Aufgaben in den Reitern 1 bis 4. Hier werden alle Punkte zusammengezählt.
           Bestanden ab 60 % (<span class="js-pass-pts">–</span> Punkte = Note 4.0).
+        </p>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1" data-l="es" lang="es">
+          Primero resuelve todas las tareas de las pestañas 1 a 4. Aquí se suman todos los puntos.
+          Apruebas desde el 60 % (<span class="js-pass-pts">–</span> puntos = nota 4.0). Es solo práctica.
         </p>
         <div id="exam-result-banner" class="hidden mt-4 p-4 rounded-xl border"></div>
       </div>
@@ -256,10 +342,10 @@
       <div class="p-4 bg-white rounded-2xl border border-slate-200 text-center space-y-3">
         <div class="flex flex-wrap items-center justify-center gap-3">
           <button onclick="evaluateFullExam()" class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow transition">
-            🚀 Test auswerten und Note berechnen
+            <span data-l="de">🚀 Test auswerten und Note berechnen</span><span data-l="es" lang="es">🚀 Corregir la prueba y calcular la nota</span>
           </button>
           <button onclick="resetAll()" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 font-semibold text-xs transition">
-            Alles zurücksetzen
+            <span data-l="de">Alles zurücksetzen</span><span data-l="es" lang="es">Borrar todo</span>
           </button>
         </div>
       </div>
@@ -267,21 +353,37 @@
   </main>
 
   <footer class="text-center py-6 text-xs text-slate-400 border-t border-slate-200 px-4">
-    <a href="index.html" class="underline">← Zur Startseite</a> · Deine Antworten werden automatisch auf diesem Gerät gespeichert.
+    <span data-l="de"><a href="index.html" class="underline">← Zur Startseite</a> · Deine Antworten werden automatisch auf diesem Gerät gespeichert.</span>
+    <span data-l="es" lang="es"><a href="index.html" class="underline">← A la página de inicio</a> · Tus respuestas se guardan solas en este aparato.</span>
   </footer>
 
   <!-- Toast -->
   <div id="toast" class="fixed bottom-5 right-5 left-5 sm:left-auto z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-slate-700 pointer-events-none text-xs sm:text-sm">
-    <div id="toast-title" class="font-bold">Mitteilung</div>
-    <div id="toast-msg" class="text-slate-300 text-xs">Details</div>
+    <div id="toast-title" class="font-bold"></div>
+    <div id="toast-msg" class="text-slate-300 text-xs"></div>
   </div>
 
   <script>
     // ==============================================================
+    // SPRACHE (Deutsch | Español). Gespeichert für alle Seiten unter «lernportal_lang».
+    // Feste Texte stehen im HTML doppelt (data-l), Texte aus dem Skript mit tr('Deutsch', 'Español').
+    // Texte in den Daten: ['Deutsch', 'Español'] → T(). Gespeicherte Werte und Lösungen (c) bleiben
+    // immer die deutschen Werte; Spanisch ist nur die Anzeige (es: [...], zonesEs, bankEs, parasEs).
+    // So ist die Bewertung in beiden Sprachen genau gleich.
+    // ==============================================================
+    const LANG_KEY = 'lernportal_lang';
+    let LANG = 'de';
+    try { LANG = localStorage.getItem(LANG_KEY) === 'es' ? 'es' : 'de'; } catch (e) {}
+    const ES = () => LANG === 'es';
+    const tr = (de, es) => ES() ? es : de;
+    const T = (x) => typeof x === 'function' ? x() : Array.isArray(x) ? (ES() ? x[1] : x[0]) : (x || '');
+    const TITLE = { de: 'RZG · Vulkane, Erdbeben, Tsunamis (Test 2)', es: 'RZG · Volcanes, terremotos, tsunamis (prueba 2)' };
+
+    // ==============================================================
     // BILDER (SVG)
     // ==============================================================
-    const SVG_STRATO = `
-      <svg viewBox="0 0 200 150" class="w-full h-auto max-w-[220px] mx-auto" role="img" aria-label="Vulkan">
+    const SVG_STRATO = () => `
+      <svg viewBox="0 0 200 150" class="w-full h-auto max-w-[220px] mx-auto" role="img" aria-label="${tr('Vulkan', 'Volcán')}">
         <rect x="0" y="135" width="200" height="15" fill="#a3a3a3"/>
         <polygon points="30,135 90,35 110,35 170,135" fill="#78716c"/>
         <polyline points="50,135 94,60 106,60 150,135" fill="none" stroke="#44403c" stroke-width="3"/>
@@ -289,8 +391,8 @@
         <polygon points="90,35 100,46 110,35" fill="#ef4444"/>
         <circle cx="100" cy="20" r="12" fill="#9ca3af"/><circle cx="84" cy="15" r="9" fill="#9ca3af"/><circle cx="117" cy="13" r="10" fill="#9ca3af"/>
       </svg>`;
-    const SVG_SHIELD = `
-      <svg viewBox="0 0 200 150" class="w-full h-auto max-w-[220px] mx-auto" role="img" aria-label="Vulkan">
+    const SVG_SHIELD = () => `
+      <svg viewBox="0 0 200 150" class="w-full h-auto max-w-[220px] mx-auto" role="img" aria-label="${tr('Vulkan', 'Volcán')}">
         <rect x="0" y="135" width="200" height="15" fill="#a3a3a3"/>
         <path d="M5,135 C40,112 70,100 100,100 C130,100 160,112 195,135 Z" fill="#78716c"/>
         <path d="M30,135 C60,118 80,111 100,111 C120,111 140,118 170,135" fill="none" stroke="#44403c" stroke-width="2"/>
@@ -299,8 +401,8 @@
         <path d="M104,101 C114,108 128,116 146,124" fill="none" stroke="#f97316" stroke-width="3"/>
         <ellipse cx="100" cy="100" rx="9" ry="2.5" fill="#ef4444"/>
       </svg>`;
-    const SVG_HOTSPOT = `
-      <svg viewBox="0 0 360 210" class="w-full h-auto" role="img" aria-label="Inselkette über einem Hotspot">
+    const SVG_HOTSPOT = () => `
+      <svg viewBox="0 0 360 210" class="w-full h-auto" role="img" aria-label="${tr('Inselkette über einem Hotspot', 'Cadena de islas sobre un punto caliente')}">
         <rect x="0" y="60" width="360" height="50" fill="#bae6fd"/>
         <path d="M30,110 Q70,0 110,110 Z" fill="#a8a29e"/>
         <path d="M130,110 Q175,-30 220,110 Z" fill="#a8a29e"/>
@@ -313,18 +415,25 @@
         <text x="70" y="50" font-size="16" font-weight="800" text-anchor="middle" fill="#0f172a">A</text>
         <text x="175" y="35" font-size="16" font-weight="800" text-anchor="middle" fill="#0f172a">B</text>
         <text x="265" y="18" font-size="16" font-weight="800" text-anchor="middle" fill="#0f172a">C</text>
-        <text x="150" y="132" font-size="12" fill="#fff" text-anchor="middle">◀ Bewegung der Platte</text>
-        <text x="262" y="195" font-size="12" font-weight="700" fill="#7f1d1d" text-anchor="end">Hotspot</text>
-        <text x="8" y="175" font-size="11" fill="#7c2d12">Erdmantel</text>
+        <text x="150" y="132" font-size="12" fill="#fff" text-anchor="middle">${tr('◀ Bewegung der Platte', '◀ Movimiento de la placa')}</text>
+        <text x="262" y="195" font-size="12" font-weight="700" fill="#7f1d1d" text-anchor="end">${tr('Hotspot', 'Punto caliente')}</text>
+        <text x="8" y="175" font-size="11" fill="#7c2d12">${tr('Erdmantel', 'Manto')}</text>
       </svg>`;
 
     // ==============================================================
     // AUFGABEN (Inhalt und Lösungen)
     // Blocktypen: gaps (Lückentext), rows (Auswahl pro Zeile), mc (eine Antwort),
     //             checks (mehrere Antworten), dnd (Karten in Gruppen), num (Zahl eintippen)
+    // Werte (opts, c, zones) sind deutsch und werden gespeichert; es/zonesEs/bankEs = spanische Anzeige in gleicher Reihenfolge.
     // ==============================================================
     const ARTEN = ['Platten driften auseinander', 'Platten stossen zusammen', 'Hotspot'];
+    const ARTEN_ES = ['Las placas se separan', 'Las placas chocan', 'Punto caliente (hotspot)'];
     const WORTE_A4 = ['zähflüssig', 'dünnflüssig', 'Gase', 'Druck', 'explosiv', 'fliessend'];
+    const WORTE_A4_ES = ['viscoso', 'fluido', 'gases', 'presión', 'explosiva', 'fluyendo'];
+    const VULKAN = ['Schichtvulkan', 'Schildvulkan'];
+    const VULKAN_ES = ['Estratovolcán', 'Volcán en escudo'];
+    const INSELN = ['Insel A', 'Insel B', 'Insel C'];
+    const INSELN_ES = ['Isla A', 'Isla B', 'Isla C'];
     const RICHTER = [
       'Man spürt es kaum. Nur Messgeräte zeichnen es auf.',
       'Viele Menschen spüren es. Geschirr klirrt, kaum Schäden.',
@@ -332,237 +441,273 @@
       'Schwere Schäden in grossen Gebieten. Viele Gebäude stürzen ein.',
       'Totale Zerstörung über Hunderte von Kilometern.'
     ];
+    const RICHTER_ES = [
+      'Casi no se siente. Solo lo registran los aparatos.',
+      'Muchas personas lo sienten. Los platos vibran y suenan, casi no hay daños.',
+      'Grietas y daños en edificios, en una zona más pequeña.',
+      'Daños graves en zonas grandes. Muchos edificios se derrumban.',
+      'Destrucción total en cientos de kilómetros.'
+    ];
+
+    // Lücken (gaps): einmal definiert, im deutschen und im spanischen Text dieselben Objekte
+    const G = {
+      a1_1: { key: 'a1_1', opts: ['voneinander weg', 'aufeinander zu', 'seitlich aneinander vorbei'], es: ['alejándose una de la otra', 'acercándose una a la otra', 'de lado, una junto a la otra'], c: 'voneinander weg' },
+      a1_2: { key: 'a1_2', opts: ['Magma', 'Meerwasser', 'Eis'], es: ['El magma', 'El agua del mar', 'El hielo'], c: 'Magma' },
+      a1_3: { key: 'a1_3', opts: ['schwerere', 'leichtere'], es: ['más pesada', 'más ligera'], c: 'schwerere' },
+      a1_4: { key: 'a1_4', opts: ['schmilzt', 'gefriert', 'verdunstet'], es: ['se derrite', 'se congela', 'se evapora'], c: 'schmilzt' },
+      a1_5: { key: 'a1_5', opts: ['Hotspot', 'Tiefseegraben', 'Gletscher'], es: ['un punto caliente (hotspot)', 'una fosa oceánica', 'un glaciar'], c: 'Hotspot' },
+      a1_6: { key: 'a1_6', opts: ['Hawaii', 'die Alpen', 'der Mount St. Helens'], es: ['Hawái', 'los Alpes', 'el Mount St. Helens'], c: 'Hawaii' },
+      a4_1: { key: 'a4_1', opts: WORTE_A4, es: WORTE_A4_ES, c: 'zähflüssig' },
+      a4_2: { key: 'a4_2', opts: WORTE_A4, es: WORTE_A4_ES, c: 'Gase' },
+      a4_3: { key: 'a4_3', opts: WORTE_A4, es: WORTE_A4_ES, c: 'Druck' },
+      a4_4: { key: 'a4_4', opts: WORTE_A4, es: WORTE_A4_ES, c: 'explosiv' },
+      a4_5: { key: 'a4_5', opts: WORTE_A4, es: WORTE_A4_ES, c: 'dünnflüssig' },
+      a4_6: { key: 'a4_6', opts: WORTE_A4, es: WORTE_A4_ES, c: 'fliessend' }
+    };
 
     const DEFS = {
-      a1: { title: 'Drei Arten der Vulkan-Entstehung', intro: 'Wähle in jeder Lücke das richtige Wort.',
-        tip: 'Frag dich bei jedem Abschnitt: Was machen die Platten? Gehen sie auseinander, stossen sie zusammen, oder passiert etwas mitten auf einer Platte? Und: Was passiert mit Gestein, wenn es sehr heiss wird?', blocks: [
+      a1: { title: ['Drei Arten der Vulkan-Entstehung', 'Tres formas en que se forman los volcanes'], intro: ['Wähle in jeder Lücke das richtige Wort.', 'Elige en cada espacio la palabra correcta.'],
+        tip: ['Frag dich bei jedem Abschnitt: Was machen die Platten? Gehen sie auseinander, stossen sie zusammen, oder passiert etwas mitten auf einer Platte? Und: Was passiert mit Gestein, wenn es sehr heiss wird?',
+              'Pregúntate en cada párrafo: ¿Qué hacen las placas? ¿Se separan, chocan o pasa algo en medio de una placa? Y también: ¿Qué le pasa a la roca cuando se pone muy caliente?'], blocks: [
         { type: 'gaps', paras: [
-          ['<b>Auseinander:</b> Zwei Platten bewegen sich ', { key: 'a1_1', opts: ['voneinander weg', 'aufeinander zu', 'seitlich aneinander vorbei'], c: 'voneinander weg' },
-           '. Es entsteht ein Riss. Heisses ', { key: 'a1_2', opts: ['Magma', 'Meerwasser', 'Eis'], c: 'Magma' }, ' steigt nach oben und kühlt als neue Kruste ab.'],
-          ['<b>Zusammen:</b> Die ', { key: 'a1_3', opts: ['schwerere', 'leichtere'], c: 'schwerere' },
-           ' Platte schiebt sich unter die andere. In der Tiefe ', { key: 'a1_4', opts: ['schmilzt', 'gefriert', 'verdunstet'], c: 'schmilzt' }, ' das Gestein. Das Magma steigt auf.'],
-          ['<b>Ohne Plattengrenze:</b> Bei einem ', { key: 'a1_5', opts: ['Hotspot', 'Tiefseegraben', 'Gletscher'], c: 'Hotspot' },
-           ' brennt sich heisses Magma wie ein Schweissbrenner durch die Platte. Ein bekanntes Beispiel ist ', { key: 'a1_6', opts: ['Hawaii', 'die Alpen', 'der Mount St. Helens'], c: 'Hawaii' }, '.']
+          ['<b>Auseinander:</b> Zwei Platten bewegen sich ', G.a1_1, '. Es entsteht ein Riss. Heisses ', G.a1_2, ' steigt nach oben und kühlt als neue Kruste ab.'],
+          ['<b>Zusammen:</b> Die ', G.a1_3, ' Platte schiebt sich unter die andere. In der Tiefe ', G.a1_4, ' das Gestein. Das Magma steigt auf.'],
+          ['<b>Ohne Plattengrenze:</b> Bei einem ', G.a1_5, ' brennt sich heisses Magma wie ein Schweissbrenner durch die Platte. Ein bekanntes Beispiel ist ', G.a1_6, '.']
+        ], parasEs: [
+          ['<b>Separación:</b> Dos placas se mueven ', G.a1_1, '. Se abre una grieta. ', G.a1_2, ' caliente sube y se enfría como corteza nueva.'],
+          ['<b>Choque:</b> La placa ', G.a1_3, ' se mete debajo de la otra. En la profundidad, la roca ', G.a1_4, '. El magma sube.'],
+          ['<b>Sin borde de placas:</b> En ', G.a1_5, ', el magma caliente atraviesa la placa como un soplete. Un ejemplo conocido es ', G.a1_6, '.']
         ] }
       ] },
-      a2: { title: 'Beispiele und «Ring of Fire»', intro: '',
-        tip: 'Schau genau, wo der Vulkan liegt: An einer Grenze, wo Platten auseinandergehen? Dort, wo eine Platte unter eine andere taucht? Oder mitten auf einer Platte? Für den «Ring of Fire»: Japan, Indonesien, Chile und die USA haben viele Vulkane. Welcher Ozean liegt zwischen diesen Ländern?', blocks: [
-        { type: 'rows', head: 'Wie ist dieser Vulkan entstanden?', rows: [
-          { key: 'a2_island', label: 'Vulkane auf Island (Mittelatlantischer Rücken)', opts: ARTEN, c: ARTEN[0] },
-          { key: 'a2_hawaii', label: 'Mauna Loa auf Hawaii, mitten in der Pazifischen Platte', opts: ARTEN, c: ARTEN[2] },
-          { key: 'a2_helens', label: 'Mount St. Helens (USA), Ozeanplatte taucht unter Amerika ab', opts: ARTEN, c: ARTEN[1] },
-          { key: 'a2_fuji', label: 'Fujiyama (Japan), am Rand der Pazifischen Platte', opts: ARTEN, c: ARTEN[1] }
+      a2: { title: ['Beispiele und «Ring of Fire»', 'Ejemplos y «Ring of Fire»'], intro: '',
+        tip: ['Schau genau, wo der Vulkan liegt: An einer Grenze, wo Platten auseinandergehen? Dort, wo eine Platte unter eine andere taucht? Oder mitten auf einer Platte? Für den «Ring of Fire»: Japan, Indonesien, Chile und die USA haben viele Vulkane. Welcher Ozean liegt zwischen diesen Ländern?',
+              'Mira bien dónde está el volcán: ¿En un borde donde las placas se separan? ¿Donde una placa se hunde debajo de otra? ¿O en medio de una placa? Para el «Ring of Fire»: Japón, Indonesia, Chile y EE. UU. tienen muchos volcanes. ¿Qué océano está entre estos países?'], blocks: [
+        { type: 'rows', head: ['Wie ist dieser Vulkan entstanden?', '¿Cómo se formó este volcán?'], rows: [
+          { key: 'a2_island', label: ['Vulkane auf Island (Mittelatlantischer Rücken)', 'Volcanes de Islandia (dorsal mesoatlántica)'], opts: ARTEN, es: ARTEN_ES, c: ARTEN[0] },
+          { key: 'a2_hawaii', label: ['Mauna Loa auf Hawaii, mitten in der Pazifischen Platte', 'Mauna Loa en Hawái, en medio de la placa del Pacífico'], opts: ARTEN, es: ARTEN_ES, c: ARTEN[2] },
+          { key: 'a2_helens', label: ['Mount St. Helens (USA), Ozeanplatte taucht unter Amerika ab', 'Mount St. Helens (EE. UU.), una placa oceánica se hunde debajo de América'], opts: ARTEN, es: ARTEN_ES, c: ARTEN[1] },
+          { key: 'a2_fuji', label: ['Fujiyama (Japan), am Rand der Pazifischen Platte', 'Fuji (Japón), en el borde de la placa del Pacífico'], opts: ARTEN, es: ARTEN_ES, c: ARTEN[1] }
         ] },
-        { type: 'mc', key: 'a2_ring', q: 'Wo liegen die meisten aktiven Vulkane der Welt («Ring of Fire»)?', c: 'ring', opts: [
-          { v: 'ring', t: 'Rund um die Pazifische Platte' },
-          { v: 'afrika', t: 'Mitten in Afrika' },
-          { v: 'alpen', t: 'In den Alpen' },
-          { v: 'antarktis', t: 'Rund um die Antarktis' }
+        { type: 'mc', key: 'a2_ring', q: ['Wo liegen die meisten aktiven Vulkane der Welt («Ring of Fire»)?', '¿Dónde están la mayoría de los volcanes activos del mundo («Ring of Fire»)?'], c: 'ring', opts: [
+          { v: 'ring', t: ['Rund um die Pazifische Platte', 'Alrededor de la placa del Pacífico'] },
+          { v: 'afrika', t: ['Mitten in Afrika', 'En medio de África'] },
+          { v: 'alpen', t: ['In den Alpen', 'En los Alpes'] },
+          { v: 'antarktis', t: ['Rund um die Antarktis', 'Alrededor de la Antártida'] }
         ] },
-        { type: 'mc', key: 'a2_ringwarum', q: 'Warum gibt es rund um den Pazifik so viele Vulkane?', c: 'abtauchen', opts: [
-          { v: 'abtauchen', t: 'Dort tauchen Ozeanplatten unter andere Platten ab. Das Gestein schmilzt und Magma steigt auf.' },
-          { v: 'sonne', t: 'Weil die Sonne dort besonders heiss scheint.' },
-          { v: 'tief', t: 'Weil das Meer dort am tiefsten ist.' },
-          { v: 'wasser', t: 'Weil das Meerwasser das Gestein schmelzen lässt.' }
+        { type: 'mc', key: 'a2_ringwarum', q: ['Warum gibt es rund um den Pazifik so viele Vulkane?', '¿Por qué hay tantos volcanes alrededor del Pacífico?'], c: 'abtauchen', opts: [
+          { v: 'abtauchen', t: ['Dort tauchen Ozeanplatten unter andere Platten ab. Das Gestein schmilzt und Magma steigt auf.', 'Allí las placas oceánicas se hunden debajo de otras placas. La roca se derrite y el magma sube.'] },
+          { v: 'sonne', t: ['Weil die Sonne dort besonders heiss scheint.', 'Porque allí el sol calienta muchísimo.'] },
+          { v: 'tief', t: ['Weil das Meer dort am tiefsten ist.', 'Porque allí el mar es más profundo.'] },
+          { v: 'wasser', t: ['Weil das Meerwasser das Gestein schmelzen lässt.', 'Porque el agua del mar derrite la roca.'] }
         ] }
       ] },
-      a3: { title: 'Schild- oder Schichtvulkan?', intro: '',
-        tip: 'Der Name hilft dir: Wie sieht ein Schild aus, der flach am Boden liegt? Und überlege: Ein steiler, hoher Berg entsteht nur, wenn die Lava nicht weit fliessen kann. Ist so eine Lava eher dick oder eher dünn?', blocks: [
-        { type: 'rows', grid: true, head: 'Schau die Form an: Welcher Vulkan ist das?', rows: [
-          { key: 'a3_fig_strato', svg: SVG_STRATO, label: 'Vulkan mit dieser Form:', opts: ['Schichtvulkan', 'Schildvulkan'], c: 'Schichtvulkan' },
-          { key: 'a3_fig_shield', svg: SVG_SHIELD, label: 'Vulkan mit dieser Form:', opts: ['Schichtvulkan', 'Schildvulkan'], c: 'Schildvulkan' }
+      a3: { title: ['Schild- oder Schichtvulkan?', '¿Volcán en escudo o estratovolcán?'], intro: '',
+        tip: ['Der Name hilft dir: Wie sieht ein Schild aus, der flach am Boden liegt? Und überlege: Ein steiler, hoher Berg entsteht nur, wenn die Lava nicht weit fliessen kann. Ist so eine Lava eher dick oder eher dünn?',
+              'El nombre te ayuda: ¿Cómo se ve un escudo tendido en el suelo? Y piensa: una montaña alta y empinada solo se forma si la lava no puede fluir lejos. ¿Esa lava es más bien espesa o más bien líquida?'], blocks: [
+        { type: 'rows', grid: true, head: ['Schau die Form an: Welcher Vulkan ist das?', 'Mira la forma: ¿Qué volcán es?'], rows: [
+          { key: 'a3_fig_strato', svg: SVG_STRATO, label: ['Vulkan mit dieser Form:', 'Volcán con esta forma:'], opts: VULKAN, es: VULKAN_ES, c: 'Schichtvulkan' },
+          { key: 'a3_fig_shield', svg: SVG_SHIELD, label: ['Vulkan mit dieser Form:', 'Volcán con esta forma:'], opts: VULKAN, es: VULKAN_ES, c: 'Schildvulkan' }
         ] },
-        { type: 'dnd', key: 'a3_dnd', head: 'Ordne die Karten der richtigen Gruppe zu.', zones: ['Schichtvulkan', 'Schildvulkan'], cards: [
-          { key: 'a3_k1', t: 'steil und hoch', c: 'Schichtvulkan' },
-          { key: 'a3_k2', t: 'flach und breit', c: 'Schildvulkan' },
-          { key: 'a3_k3', t: 'zähflüssiges Magma', c: 'Schichtvulkan' },
-          { key: 'a3_k4', t: 'dünnflüssiges Magma', c: 'Schildvulkan' },
-          { key: 'a3_k5', t: 'explosiver, heftiger Ausbruch', c: 'Schichtvulkan' },
-          { key: 'a3_k6', t: 'ruhiger, fliessender Ausbruch', c: 'Schildvulkan' },
-          { key: 'a3_k7', t: 'Vesuv und Ätna (Italien)', c: 'Schichtvulkan' },
-          { key: 'a3_k8', t: 'Mauna Loa (Hawaii)', c: 'Schildvulkan' }
+        { type: 'dnd', key: 'a3_dnd', head: ['Ordne die Karten der richtigen Gruppe zu.', 'Pon cada tarjeta en el grupo correcto.'], zones: VULKAN, zonesEs: VULKAN_ES, cards: [
+          { key: 'a3_k1', t: ['steil und hoch', 'empinado y alto'], c: 'Schichtvulkan' },
+          { key: 'a3_k2', t: ['flach und breit', 'plano y ancho'], c: 'Schildvulkan' },
+          { key: 'a3_k3', t: ['zähflüssiges Magma', 'magma viscoso (espeso)'], c: 'Schichtvulkan' },
+          { key: 'a3_k4', t: ['dünnflüssiges Magma', 'magma fluido (líquido)'], c: 'Schildvulkan' },
+          { key: 'a3_k5', t: ['explosiver, heftiger Ausbruch', 'erupción explosiva y violenta'], c: 'Schichtvulkan' },
+          { key: 'a3_k6', t: ['ruhiger, fliessender Ausbruch', 'erupción tranquila, la lava fluye'], c: 'Schildvulkan' },
+          { key: 'a3_k7', t: ['Vesuv und Ätna (Italien)', 'Vesubio y Etna (Italia)'], c: 'Schichtvulkan' },
+          { key: 'a3_k8', t: ['Mauna Loa (Hawaii)', 'Mauna Loa (Hawái)'], c: 'Schildvulkan' }
         ] },
-        { type: 'mc', key: 'a3_schichten', q: 'Warum besteht ein Schichtvulkan aus vielen Schichten?', c: 'wechsel', opts: [
-          { v: 'wechsel', t: 'Bei den Ausbrüchen lagern sich abwechselnd Asche/Gestein und erstarrte Lava ab.' },
-          { v: 'wind', t: 'Der Wind weht jedes Jahr eine neue Schicht Sand auf den Vulkan.' },
-          { v: 'schnee', t: 'Schnee und Eis gefrieren in Schichten auf dem Vulkan.' },
-          { v: 'platte', t: 'Zwei Erdplatten liegen übereinander.' }
+        { type: 'mc', key: 'a3_schichten', q: ['Warum besteht ein Schichtvulkan aus vielen Schichten?', '¿Por qué un estratovolcán tiene muchas capas?'], c: 'wechsel', opts: [
+          { v: 'wechsel', t: ['Bei den Ausbrüchen lagern sich abwechselnd Asche/Gestein und erstarrte Lava ab.', 'En las erupciones se depositan, una tras otra, capas de ceniza/roca y de lava solidificada.'] },
+          { v: 'wind', t: ['Der Wind weht jedes Jahr eine neue Schicht Sand auf den Vulkan.', 'Cada año el viento sopla una capa nueva de arena sobre el volcán.'] },
+          { v: 'schnee', t: ['Schnee und Eis gefrieren in Schichten auf dem Vulkan.', 'La nieve y el hielo se congelan en capas sobre el volcán.'] },
+          { v: 'platte', t: ['Zwei Erdplatten liegen übereinander.', 'Dos placas tectónicas están una encima de la otra.'] }
         ] }
       ] },
-      a4: { title: 'So bricht ein Vulkan aus', intro: 'Setze die Wörter ein. Jedes Wort passt genau einmal.', bank: WORTE_A4,
-        tip: 'Denk an Honig und Wasser. Welches ist zähflüssig, welches dünnflüssig? Überlege dann: Kann Gas leicht aus Honig entweichen? Was passiert mit dem Druck, wenn Gas eingesperrt bleibt?', blocks: [
+      a4: { title: ['So bricht ein Vulkan aus', 'Así entra en erupción un volcán'], intro: ['Setze die Wörter ein. Jedes Wort passt genau einmal.', 'Pon las palabras en los espacios. Cada palabra va exactamente una vez.'], bank: WORTE_A4, bankEs: WORTE_A4_ES,
+        tip: ['Denk an Honig und Wasser. Welches ist zähflüssig, welches dünnflüssig? Überlege dann: Kann Gas leicht aus Honig entweichen? Was passiert mit dem Druck, wenn Gas eingesperrt bleibt?',
+              'Piensa en la miel y el agua. ¿Cuál es viscosa (espesa) y cuál es fluida (líquida)? Después piensa: ¿Puede el gas salir fácilmente de la miel? ¿Qué pasa con la presión si el gas se queda encerrado?'], blocks: [
         { type: 'gaps', paras: [
-          ['<b>Schichtvulkan:</b> Das Magma ist ', { key: 'a4_1', opts: WORTE_A4, c: 'zähflüssig' }, '. Die ', { key: 'a4_2', opts: WORTE_A4, c: 'Gase' },
-           ' können kaum entweichen. Darum steigt im Schlot der ', { key: 'a4_3', opts: WORTE_A4, c: 'Druck' }, '. Der Ausbruch ist ', { key: 'a4_4', opts: WORTE_A4, c: 'explosiv' }, '.'],
-          ['<b>Schildvulkan:</b> Die Lava ist ', { key: 'a4_5', opts: WORTE_A4, c: 'dünnflüssig' }, '. Die Gase entweichen leicht. Die Lava strömt ruhig und ',
-           { key: 'a4_6', opts: WORTE_A4, c: 'fliessend' }, ' aus dem Krater.']
+          ['<b>Schichtvulkan:</b> Das Magma ist ', G.a4_1, '. Die ', G.a4_2, ' können kaum entweichen. Darum steigt im Schlot der ', G.a4_3, '. Der Ausbruch ist ', G.a4_4, '.'],
+          ['<b>Schildvulkan:</b> Die Lava ist ', G.a4_5, '. Die Gase entweichen leicht. Die Lava strömt ruhig und ', G.a4_6, ' aus dem Krater.']
+        ], parasEs: [
+          ['<b>Estratovolcán:</b> El magma es ', G.a4_1, '. Los ', G.a4_2, ' casi no pueden salir. Por eso, en la chimenea sube la ', G.a4_3, '. La erupción es ', G.a4_4, '.'],
+          ['<b>Volcán en escudo:</b> El magma es ', G.a4_5, '. Los gases salen fácilmente. La lava sale del cráter tranquila, ', G.a4_6, '.']
         ] }
       ] },
-      a5: { title: 'Ablauf eines explosiven Ausbruchs', intro: 'Bringe die Schritte beim Schichtvulkan in die richtige Reihenfolge (1 = zuerst).',
-        tip: 'Überlege zuerst: Was muss ganz am Anfang passieren, damit überhaupt Magma im Vulkan ist? Und was passiert ganz am Schluss? Danach ordnest du die Schritte dazwischen.', blocks: [
+      a5: { title: ['Ablauf eines explosiven Ausbruchs', 'Una erupción explosiva, paso a paso'], intro: ['Bringe die Schritte beim Schichtvulkan in die richtige Reihenfolge (1 = zuerst).', 'Ordena los pasos del estratovolcán (1 = primero).'],
+        tip: ['Überlege zuerst: Was muss ganz am Anfang passieren, damit überhaupt Magma im Vulkan ist? Und was passiert ganz am Schluss? Danach ordnest du die Schritte dazwischen.',
+              'Piensa primero: ¿Qué tiene que pasar al principio para que haya magma en el volcán? ¿Y qué pasa al final? Después ordenas los pasos del medio.'], blocks: [
         { type: 'rows', order: true, rows: [
-          { key: 'a5_1', label: 'Magma steigt aus der Tiefe auf und sammelt sich in der Magmakammer.', c: '1' },
-          { key: 'a5_2', label: 'Die Gase bleiben im zähflüssigen Magma gefangen.', c: '2' },
-          { key: 'a5_3', label: 'Der Druck im Schlot wird immer grösser.', c: '3' },
-          { key: 'a5_4', label: 'Der Druck wird stärker als der Pfropfen aus Gestein.', c: '4' },
-          { key: 'a5_5', label: 'Explosion: Asche, Steine und Lava werden herausgeschleudert.', c: '5' }
+          { key: 'a5_1', label: ['Magma steigt aus der Tiefe auf und sammelt sich in der Magmakammer.', 'El magma sube desde la profundidad y se junta en la cámara magmática.'], c: '1' },
+          { key: 'a5_2', label: ['Die Gase bleiben im zähflüssigen Magma gefangen.', 'Los gases se quedan atrapados en el magma viscoso.'], c: '2' },
+          { key: 'a5_3', label: ['Der Druck im Schlot wird immer grösser.', 'La presión en la chimenea es cada vez más grande.'], c: '3' },
+          { key: 'a5_4', label: ['Der Druck wird stärker als der Pfropfen aus Gestein.', 'La presión se vuelve más fuerte que el tapón de roca.'], c: '4' },
+          { key: 'a5_5', label: ['Explosion: Asche, Steine und Lava werden herausgeschleudert.', 'Explosión: salen disparados ceniza, piedras y lava.'], c: '5' }
         ] }
       ] },
-      a6: { title: 'Wann ist ein Vulkan inaktiv?', extra: true, intro: 'Zusatz aus dem Dossier. Diese Aufgabe zählt nicht für die Test-Simulation.',
-        tip: 'Ein Vulkan braucht immer Nachschub von Magma. Bei der Skizze: Die Platte wandert, der Hotspot bleibt am gleichen Ort. Welche Insel ist schon am längsten unterwegs?', blocks: [
-        { type: 'mc', key: 'a6_wann', q: 'Wann gilt ein Vulkan als inaktiv?', c: 'magma', opts: [
-          { v: 'magma', t: 'Wenn kein Magma mehr nachkommt und der Druck in der Magmakammer sinkt.' },
-          { v: 'jahr', t: 'Wenn er ein Jahr lang nicht ausgebrochen ist.' },
-          { v: 'schnee', t: 'Wenn Schnee auf dem Gipfel liegt.' },
-          { v: 'rauch', t: 'Wenn man keinen Rauch mehr sieht.' }
+      a6: { title: ['Wann ist ein Vulkan inaktiv?', '¿Cuándo está inactivo un volcán?'], extra: true, intro: ['Zusatz aus dem Dossier. Diese Aufgabe zählt nicht für die Test-Simulation.', 'Extra del dosier. Esta tarea no cuenta para la prueba de práctica.'],
+        tip: ['Ein Vulkan braucht immer Nachschub von Magma. Bei der Skizze: Die Platte wandert, der Hotspot bleibt am gleichen Ort. Welche Insel ist schon am längsten unterwegs?',
+              'Un volcán siempre necesita magma nuevo. En el dibujo: la placa se mueve, el punto caliente se queda en el mismo lugar. ¿Qué isla lleva más tiempo viajando?'], blocks: [
+        { type: 'mc', key: 'a6_wann', q: ['Wann gilt ein Vulkan als inaktiv?', '¿Cuándo se dice que un volcán está inactivo?'], c: 'magma', opts: [
+          { v: 'magma', t: ['Wenn kein Magma mehr nachkommt und der Druck in der Magmakammer sinkt.', 'Cuando ya no llega magma nuevo y baja la presión en la cámara magmática.'] },
+          { v: 'jahr', t: ['Wenn er ein Jahr lang nicht ausgebrochen ist.', 'Cuando no ha entrado en erupción durante un año.'] },
+          { v: 'schnee', t: ['Wenn Schnee auf dem Gipfel liegt.', 'Cuando hay nieve en la cima.'] },
+          { v: 'rauch', t: ['Wenn man keinen Rauch mehr sieht.', 'Cuando ya no se ve humo.'] }
         ] },
-        { type: 'checks', key: 'a6_gruende', q: 'Warum wird ein Vulkan inaktiv? Kreuze die 2 richtigen Gründe an.', opts: [
-          { id: 'hotspot', t: 'Die Platte bewegt sich weiter. Der Vulkan wandert vom Hotspot weg.', ok: true },
-          { id: 'kammer', t: 'Die Magmakammer kühlt ab, wird fest und der Schlot verstopft.', ok: true },
-          { id: 'regen', t: 'Es regnet zu viel in den Krater.', ok: false },
-          { id: 'heiss', t: 'Die Lava wird zu heiss.', ok: false },
-          { id: 'haeuser', t: 'Menschen bauen Häuser auf den Vulkan.', ok: false }
+        { type: 'checks', key: 'a6_gruende', q: ['Warum wird ein Vulkan inaktiv? Kreuze die 2 richtigen Gründe an.', '¿Por qué un volcán se vuelve inactivo? Marca las 2 razones correctas.'], opts: [
+          { id: 'hotspot', t: ['Die Platte bewegt sich weiter. Der Vulkan wandert vom Hotspot weg.', 'La placa sigue moviéndose. El volcán se aleja del punto caliente.'], ok: true },
+          { id: 'kammer', t: ['Die Magmakammer kühlt ab, wird fest und der Schlot verstopft.', 'La cámara magmática se enfría, se pone sólida y la chimenea se tapa.'], ok: true },
+          { id: 'regen', t: ['Es regnet zu viel in den Krater.', 'Llueve demasiado en el cráter.'], ok: false },
+          { id: 'heiss', t: ['Die Lava wird zu heiss.', 'La lava se pone demasiado caliente.'], ok: false },
+          { id: 'haeuser', t: ['Menschen bauen Häuser auf den Vulkan.', 'Las personas construyen casas sobre el volcán.'], ok: false }
         ] },
-        { type: 'rows', head: 'Die Platte bewegt sich über einen Hotspot. So entsteht eine Inselkette (wie Hawaii).', pre: SVG_HOTSPOT, rows: [
-          { key: 'a6_alt', label: 'Welche Insel ist am ältesten?', opts: ['Insel A', 'Insel B', 'Insel C'], c: 'Insel A' },
-          { key: 'a6_aktiv', label: 'Auf welcher Insel ist der Vulkan noch aktiv?', opts: ['Insel A', 'Insel B', 'Insel C'], c: 'Insel C' }
+        { type: 'rows', head: ['Die Platte bewegt sich über einen Hotspot. So entsteht eine Inselkette (wie Hawaii).', 'La placa se mueve sobre un punto caliente. Así se forma una cadena de islas (como Hawái).'], pre: SVG_HOTSPOT, rows: [
+          { key: 'a6_alt', label: ['Welche Insel ist am ältesten?', '¿Qué isla es la más vieja?'], opts: INSELN, es: INSELN_ES, c: 'Insel A' },
+          { key: 'a6_aktiv', label: ['Auf welcher Insel ist der Vulkan noch aktiv?', '¿En qué isla el volcán todavía está activo?'], opts: INSELN, es: INSELN_ES, c: 'Insel C' }
         ] }
       ] },
-      a7: { title: 'Wie entsteht ein Erdbeben?', intro: '',
-        tip: 'Erdbeben haben mit den Platten zu tun. Drück deine Handflächen fest gegeneinander und schieb: Was passiert nach einer Weile? Bei den Fachwörtern: Lies die Theorie und achte genau auf die Endungen der Wörter.', blocks: [
-        { type: 'mc', key: 'a7_1', q: 'Wie entsteht ein Erdbeben meistens?', c: 'spannung', opts: [
-          { v: 'spannung', t: 'Zwei Platten verhaken sich. Die Spannung wird so gross, bis das Gestein plötzlich bricht.' },
-          { v: 'wind', t: 'Starker Wind drückt auf die Erdoberfläche.' },
-          { v: 'meer', t: 'Das Meer wird zu schwer für den Meeresboden.' },
-          { v: 'regen', t: 'Viel Regen weicht den Boden auf.' }
+      a7: { title: ['Wie entsteht ein Erdbeben?', '¿Cómo se forma un terremoto?'], intro: '',
+        tip: ['Erdbeben haben mit den Platten zu tun. Drück deine Handflächen fest gegeneinander und schieb: Was passiert nach einer Weile? Bei den Fachwörtern: Lies die Theorie und achte genau auf die Endungen der Wörter.',
+              'Los terremotos tienen que ver con las placas. Aprieta fuerte las palmas de las manos una contra otra y empuja: ¿Qué pasa después de un rato? Para las palabras técnicas: lee la teoría y fíjate bien en cómo terminan las palabras.'], blocks: [
+        { type: 'mc', key: 'a7_1', q: ['Wie entsteht ein Erdbeben meistens?', '¿Cómo se forma casi siempre un terremoto?'], c: 'spannung', opts: [
+          { v: 'spannung', t: ['Zwei Platten verhaken sich. Die Spannung wird so gross, bis das Gestein plötzlich bricht.', 'Dos placas se enganchan. La tensión crece tanto que la roca se rompe de repente.'] },
+          { v: 'wind', t: ['Starker Wind drückt auf die Erdoberfläche.', 'Un viento fuerte empuja la superficie de la Tierra.'] },
+          { v: 'meer', t: ['Das Meer wird zu schwer für den Meeresboden.', 'El mar se vuelve demasiado pesado para el fondo del mar.'] },
+          { v: 'regen', t: ['Viel Regen weicht den Boden auf.', 'Mucha lluvia ablanda el suelo.'] }
         ] },
-        { type: 'mc', key: 'a7_2', q: 'Wo gibt es besonders viele Erdbeben?', c: 'grenze', opts: [
-          { v: 'grenze', t: 'An den Plattengrenzen' },
-          { v: 'mitte', t: 'In der Mitte der Platten, weit weg von den Grenzen' },
-          { v: 'wueste', t: 'Nur in Wüsten' },
-          { v: 'pol', t: 'Nur am Nordpol und Südpol' }
+        { type: 'mc', key: 'a7_2', q: ['Wo gibt es besonders viele Erdbeben?', '¿Dónde hay muchos terremotos?'], c: 'grenze', opts: [
+          { v: 'grenze', t: ['An den Plattengrenzen', 'En los bordes de las placas'] },
+          { v: 'mitte', t: ['In der Mitte der Platten, weit weg von den Grenzen', 'En el centro de las placas, lejos de los bordes'] },
+          { v: 'wueste', t: ['Nur in Wüsten', 'Solo en los desiertos'] },
+          { v: 'pol', t: ['Nur am Nordpol und Südpol', 'Solo en el Polo Norte y el Polo Sur'] }
         ] },
-        { type: 'mc', key: 'a7_3', q: 'Bei der San-Andreas-Verwerfung (USA) gibt es oft Erdbeben. Was machen die Platten dort?', c: 'seitlich', opts: [
-          { v: 'seitlich', t: 'Sie gleiten seitlich aneinander vorbei.' },
-          { v: 'weg', t: 'Sie bewegen sich voneinander weg.' },
-          { v: 'still', t: 'Sie stehen völlig still.' }
+        { type: 'mc', key: 'a7_3', q: ['Bei der San-Andreas-Verwerfung (USA) gibt es oft Erdbeben. Was machen die Platten dort?', 'En la falla de San Andrés (EE. UU.) hay terremotos a menudo. ¿Qué hacen allí las placas?'], c: 'seitlich', opts: [
+          { v: 'seitlich', t: ['Sie gleiten seitlich aneinander vorbei.', 'Se deslizan de lado, una junto a la otra.'] },
+          { v: 'weg', t: ['Sie bewegen sich voneinander weg.', 'Se alejan una de la otra.'] },
+          { v: 'still', t: ['Sie stehen völlig still.', 'Están totalmente quietas.'] }
         ] },
-        { type: 'mc', key: 'a7_4', q: 'Mit welchem Gerät misst man Erdbeben?', c: 'seismo', opts: [
-          { v: 'seismo', t: 'Seismograph' },
-          { v: 'baro', t: 'Barometer' },
-          { v: 'thermo', t: 'Thermometer' },
-          { v: 'kompass', t: 'Kompass' }
+        { type: 'mc', key: 'a7_4', q: ['Mit welchem Gerät misst man Erdbeben?', '¿Con qué aparato se miden los terremotos?'], c: 'seismo', opts: [
+          { v: 'seismo', t: ['Seismograph', 'Sismógrafo'] },
+          { v: 'baro', t: ['Barometer', 'Barómetro'] },
+          { v: 'thermo', t: ['Thermometer', 'Termómetro'] },
+          { v: 'kompass', t: ['Kompass', 'Brújula'] }
         ] },
-        { type: 'mc', key: 'a7_herd', q: 'Wie heisst die Stelle in der Tiefe, wo ein Erdbeben beginnt?', c: 'herd', opts: [
-          { v: 'herd', t: 'Erdbebenherd' },
-          { v: 'krater', t: 'Krater' },
-          { v: 'kammer', t: 'Magmakammer' },
-          { v: 'gramm', t: 'Seismogramm' }
+        { type: 'mc', key: 'a7_herd', q: ['Wie heisst die Stelle in der Tiefe, wo ein Erdbeben beginnt?', '¿Cómo se llama el lugar en la profundidad donde empieza un terremoto?'], c: 'herd', opts: [
+          { v: 'herd', t: ['Erdbebenherd', 'Foco (hipocentro)'] },
+          { v: 'krater', t: ['Krater', 'Cráter'] },
+          { v: 'kammer', t: ['Magmakammer', 'Cámara magmática'] },
+          { v: 'gramm', t: ['Seismogramm', 'Sismograma'] }
         ] },
-        { type: 'mc', key: 'a7_gramm', q: 'Was ist ein Seismogramm?', c: 'kurve', opts: [
-          { v: 'kurve', t: 'Die Aufzeichnung (Kurve) des Seismographen' },
-          { v: 'geraet', t: 'Das Messgerät für Erdbeben' },
-          { v: 'skala', t: 'Eine Skala für die Stärke von Vulkanen' },
-          { v: 'karte', t: 'Eine Weltkarte mit allen Plattengrenzen' }
+        { type: 'mc', key: 'a7_gramm', q: ['Was ist ein Seismogramm?', '¿Qué es un sismograma?'], c: 'kurve', opts: [
+          { v: 'kurve', t: ['Die Aufzeichnung (Kurve) des Seismographen', 'El registro (la línea) del sismógrafo'] },
+          { v: 'geraet', t: ['Das Messgerät für Erdbeben', 'El aparato que mide los terremotos'] },
+          { v: 'skala', t: ['Eine Skala für die Stärke von Vulkanen', 'Una escala para la fuerza de los volcanes'] },
+          { v: 'karte', t: ['Eine Weltkarte mit allen Plattengrenzen', 'Un mapa del mundo con todos los bordes de las placas'] }
         ] }
       ] },
-      a8: { title: 'Richterskala und Auswirkungen', intro: '',
-        tip: 'Je höher die Zahl, desto schlimmer. Ordne die Auswirkungen zuerst von schwach bis stark. Die beiden Rekorde stehen in der Theorie.', blocks: [
-        { type: 'mc', key: 'a8_name', q: 'Wie heisst die Skala, mit der man die Stärke von Erdbeben angibt?', c: 'richter', opts: [
-          { v: 'richter', t: 'Richterskala' },
-          { v: 'beaufort', t: 'Beaufort-Skala' },
-          { v: 'celsius', t: 'Celsius-Skala' },
-          { v: 'noten', t: 'Notenskala' }
+      a8: { title: ['Richterskala und Auswirkungen', 'Escala de Richter y sus efectos'], intro: '',
+        tip: ['Je höher die Zahl, desto schlimmer. Ordne die Auswirkungen zuerst von schwach bis stark. Die beiden Rekorde stehen in der Theorie.',
+              'Cuanto más alto el número, peor. Primero ordena los efectos de débil a fuerte. Los dos récords están en la teoría.'], blocks: [
+        { type: 'mc', key: 'a8_name', q: ['Wie heisst die Skala, mit der man die Stärke von Erdbeben angibt?', '¿Cómo se llama la escala que indica la fuerza de los terremotos?'], c: 'richter', opts: [
+          { v: 'richter', t: ['Richterskala', 'Escala de Richter'] },
+          { v: 'beaufort', t: ['Beaufort-Skala', 'Escala de Beaufort'] },
+          { v: 'celsius', t: ['Celsius-Skala', 'Escala Celsius'] },
+          { v: 'noten', t: ['Notenskala', 'Escala de notas'] }
         ] },
-        { type: 'rows', head: 'Was passiert bei welcher Stärke? Ordne zu.', rows: [
-          { key: 'a8_s2', label: 'Stärke 2', opts: RICHTER, c: RICHTER[0] },
-          { key: 'a8_s4', label: 'Stärke 4', opts: RICHTER, c: RICHTER[1] },
-          { key: 'a8_s6', label: 'Stärke 6', opts: RICHTER, c: RICHTER[2] },
-          { key: 'a8_s7', label: 'Stärke 7', opts: RICHTER, c: RICHTER[3] },
-          { key: 'a8_s8', label: 'Stärke 8', opts: RICHTER, c: RICHTER[4] }
+        { type: 'rows', head: ['Was passiert bei welcher Stärke? Ordne zu.', '¿Qué pasa con cada magnitud? Relaciona.'], rows: [
+          { key: 'a8_s2', label: ['Stärke 2', 'Magnitud 2'], opts: RICHTER, es: RICHTER_ES, c: RICHTER[0] },
+          { key: 'a8_s4', label: ['Stärke 4', 'Magnitud 4'], opts: RICHTER, es: RICHTER_ES, c: RICHTER[1] },
+          { key: 'a8_s6', label: ['Stärke 6', 'Magnitud 6'], opts: RICHTER, es: RICHTER_ES, c: RICHTER[2] },
+          { key: 'a8_s7', label: ['Stärke 7', 'Magnitud 7'], opts: RICHTER, es: RICHTER_ES, c: RICHTER[3] },
+          { key: 'a8_s8', label: ['Stärke 8', 'Magnitud 8'], opts: RICHTER, es: RICHTER_ES, c: RICHTER[4] }
         ] },
-        { type: 'mc', key: 'a8_max', q: 'Wie stark war das stärkste je gemessene Erdbeben (Chile, 1960)?', c: '95', opts: [
-          { v: '95', t: 'Stärke 9.5' },
-          { v: '72', t: 'Stärke 7.2' },
-          { v: '12', t: 'Stärke 12' },
-          { v: '20', t: 'Stärke 20' }
+        { type: 'mc', key: 'a8_max', q: ['Wie stark war das stärkste je gemessene Erdbeben (Chile, 1960)?', '¿Qué magnitud tuvo el terremoto más fuerte jamás medido (Chile, 1960)?'], c: '95', opts: [
+          { v: '95', t: ['Stärke 9.5', 'Magnitud 9.5'] },
+          { v: '72', t: ['Stärke 7.2', 'Magnitud 7.2'] },
+          { v: '12', t: ['Stärke 12', 'Magnitud 12'] },
+          { v: '20', t: ['Stärke 20', 'Magnitud 20'] }
         ] },
-        { type: 'mc', key: 'a8_ch', q: 'Wo war 1356 das stärkste bekannte Erdbeben der Schweiz (ca. Stärke 6 bis 6.5)?', c: 'basel', opts: [
-          { v: 'basel', t: 'Basel' },
-          { v: 'stgallen', t: 'St. Gallen' },
-          { v: 'genf', t: 'Genf' },
-          { v: 'chur', t: 'Chur' }
+        { type: 'mc', key: 'a8_ch', q: ['Wo war 1356 das stärkste bekannte Erdbeben der Schweiz (ca. Stärke 6 bis 6.5)?', '¿Dónde fue en 1356 el terremoto más fuerte conocido de Suiza (aprox. magnitud 6 a 6.5)?'], c: 'basel', opts: [
+          { v: 'basel', t: ['Basel', 'Basilea (Basel)'] },
+          { v: 'stgallen', t: ['St. Gallen', 'San Galo (St. Gallen)'] },
+          { v: 'genf', t: ['Genf', 'Ginebra (Genf)'] },
+          { v: 'chur', t: ['Chur', 'Coira (Chur)'] }
         ] }
       ] },
-      a9: { title: 'Energie berechnen', intro: 'Regel: 1 Stufe höher = Ausschlag × 10 und Energie × 32. Tippe die Zahl ein (ohne Taschenrechner geht es auch Schritt für Schritt).',
-        tip: 'Zuerst die Stufen zählen: grosse Zahl minus kleine Zahl. Dann für jede Stufe einmal «× 10» (Ausschlag) oder «× 32» (Energie) rechnen. Beispiel: Stärke 8 statt 6 sind 2 Stufen. Ausschlag: 10 × 10 = 100-mal grösser.', blocks: [
+      a9: { title: ['Energie berechnen', 'Calcular la energía'], intro: ['Regel: 1 Stufe höher = Ausschlag × 10 und Energie × 32. Tippe die Zahl ein (ohne Taschenrechner geht es auch Schritt für Schritt).', 'Regla: 1 grado más = amplitud × 10 y energía × 32. Escribe el número (sin calculadora también se puede, paso a paso).'],
+        tip: ['Zuerst die Stufen zählen: grosse Zahl minus kleine Zahl. Dann für jede Stufe einmal «× 10» (Ausschlag) oder «× 32» (Energie) rechnen. Beispiel: Stärke 8 statt 6 sind 2 Stufen. Ausschlag: 10 × 10 = 100-mal grösser.',
+              'Primero cuenta los grados: número grande menos número pequeño. Después, por cada grado, multiplica una vez «× 10» (amplitud) o «× 32» (energía). Ejemplo: magnitud 8 en vez de 6 son 2 grados. Amplitud: 10 × 10 = 100 veces mayor.'], blocks: [
         { type: 'num', rows: [
-          { key: 'a9_1', label: 'Stärke 5 statt 4: Wie viel Mal mehr <b>Energie</b>?', c: '32' },
-          { key: 'a9_2', label: 'Stärke 6 statt 3: Wie viel Mal grösser ist der <b>Ausschlag</b> im Seismogramm?', c: '1000' },
-          { key: 'a9_3', label: 'Stärke 7 statt 5: Wie viel Mal mehr <b>Energie</b>?', c: '1024' },
-          { key: 'a9_4', label: 'Japan 2011 hatte Stärke 9. Die Atombombe von Hiroshima entsprach etwa Stärke 6. Wie viel Mal mehr <b>Energie</b> hatte das Beben?', c: '32768' }
+          { key: 'a9_1', label: ['Stärke 5 statt 4: Wie viel Mal mehr <b>Energie</b>?', 'Magnitud 5 en vez de 4: ¿Cuántas veces más <b>energía</b>?'], c: '32' },
+          { key: 'a9_2', label: ['Stärke 6 statt 3: Wie viel Mal grösser ist der <b>Ausschlag</b> im Seismogramm?', 'Magnitud 6 en vez de 3: ¿Cuántas veces mayor es la <b>amplitud</b> en el sismograma?'], c: '1000' },
+          { key: 'a9_3', label: ['Stärke 7 statt 5: Wie viel Mal mehr <b>Energie</b>?', 'Magnitud 7 en vez de 5: ¿Cuántas veces más <b>energía</b>?'], c: '1024' },
+          { key: 'a9_4', label: ['Japan 2011 hatte Stärke 9. Die Atombombe von Hiroshima entsprach etwa Stärke 6. Wie viel Mal mehr <b>Energie</b> hatte das Beben?', 'Japón 2011 tuvo magnitud 9. La bomba atómica de Hiroshima equivalía más o menos a magnitud 6. ¿Cuántas veces más <b>energía</b> tuvo el terremoto?'], c: '32768' }
         ] }
       ] },
-      a9b: { title: 'Verhalten bei einem Erdbeben', intro: '',
-        tip: 'Frag dich bei jeder Antwort: Was kann bei einem Beben herunterfallen oder zerbrechen? Wo bist du geschützt? Was passiert mit einem Lift, wenn der Strom ausfällt?', blocks: [
-        { type: 'checks', key: 'a9b_regeln', q: 'Was ist bei einem starken Erdbeben richtig? Kreuze die 3 richtigen an.', opts: [
-          { id: 'tisch', t: 'Im Haus unter einen stabilen Tisch kriechen und sich festhalten.', ok: true },
-          { id: 'fenster', t: 'Sich von Fenstern, Glas und schweren Schränken fernhalten.', ok: true },
-          { id: 'platz', t: 'Im Freien auf einen freien Platz gehen, weg von Mauern und Strommasten.', ok: true },
-          { id: 'lift', t: 'Sofort mit dem Lift nach unten fahren.', ok: false },
-          { id: 'schauen', t: 'Ans Fenster gehen und hinausschauen.', ok: false },
-          { id: 'wand', t: 'Sich im Freien direkt an eine Hauswand stellen.', ok: false }
+      a9b: { title: ['Verhalten bei einem Erdbeben', 'Qué hacer en un terremoto'], intro: '',
+        tip: ['Frag dich bei jeder Antwort: Was kann bei einem Beben herunterfallen oder zerbrechen? Wo bist du geschützt? Was passiert mit einem Lift, wenn der Strom ausfällt?',
+              'Pregúntate en cada respuesta: ¿Qué se puede caer o romper en un terremoto? ¿Dónde estás protegido? ¿Qué pasa con un ascensor si se corta la electricidad?'], blocks: [
+        { type: 'checks', key: 'a9b_regeln', q: ['Was ist bei einem starken Erdbeben richtig? Kreuze die 3 richtigen an.', '¿Qué es correcto en un terremoto fuerte? Marca las 3 respuestas correctas.'], opts: [
+          { id: 'tisch', t: ['Im Haus unter einen stabilen Tisch kriechen und sich festhalten.', 'En casa, meterse debajo de una mesa firme y agarrarse.'], ok: true },
+          { id: 'fenster', t: ['Sich von Fenstern, Glas und schweren Schränken fernhalten.', 'Alejarse de ventanas, vidrios y armarios pesados.'], ok: true },
+          { id: 'platz', t: ['Im Freien auf einen freien Platz gehen, weg von Mauern und Strommasten.', 'Afuera, ir a un lugar abierto, lejos de muros y postes de luz.'], ok: true },
+          { id: 'lift', t: ['Sofort mit dem Lift nach unten fahren.', 'Bajar enseguida en ascensor.'], ok: false },
+          { id: 'schauen', t: ['Ans Fenster gehen und hinausschauen.', 'Ir a la ventana y mirar hacia afuera.'], ok: false },
+          { id: 'wand', t: ['Sich im Freien direkt an eine Hauswand stellen.', 'Afuera, ponerse justo al lado de la pared de una casa.'], ok: false }
         ] }
       ] },
-      a10: { title: 'Entstehung eines Tsunamis', intro: '',
-        tip: 'Ein Tsunami beginnt ganz unten im Meer und endet an der Küste. Überlege: Was ist anders, wenn das Meer tief ist, und was, wenn es flach ist? Denk an Autos auf der Autobahn, die plötzlich bremsen müssen.', blocks: [
-        { type: 'rows', order: true, head: 'Bringe die Schritte in die richtige Reihenfolge (1 = zuerst).', rows: [
-          { key: 'a10_1', label: 'Am Meeresgrund gibt es ein Seebeben.', c: '1' },
-          { key: 'a10_2', label: 'Der Meeresboden stösst das ganze Wasser darüber schlagartig nach oben.', c: '2' },
-          { key: 'a10_3', label: 'Auf dem offenen Meer rast eine flache Welle (ca. 1 m) sehr schnell weiter.', c: '3' },
-          { key: 'a10_4', label: 'An der flachen Küste wird die Welle abgebremst und türmt sich 10 bis 30 m hoch auf.', c: '4' }
+      a10: { title: ['Entstehung eines Tsunamis', 'Cómo se forma un tsunami'], intro: '',
+        tip: ['Ein Tsunami beginnt ganz unten im Meer und endet an der Küste. Überlege: Was ist anders, wenn das Meer tief ist, und was, wenn es flach ist? Denk an Autos auf der Autobahn, die plötzlich bremsen müssen.',
+              'Un tsunami empieza muy abajo en el mar y termina en la costa. Piensa: ¿Qué cambia cuando el mar es profundo y cuando es poco profundo? Piensa en autos en la autopista que de repente tienen que frenar.'], blocks: [
+        { type: 'rows', order: true, head: ['Bringe die Schritte in die richtige Reihenfolge (1 = zuerst).', 'Ordena los pasos (1 = primero).'], rows: [
+          { key: 'a10_1', label: ['Am Meeresgrund gibt es ein Seebeben.', 'En el fondo del mar hay un terremoto submarino.'], c: '1' },
+          { key: 'a10_2', label: ['Der Meeresboden stösst das ganze Wasser darüber schlagartig nach oben.', 'El fondo del mar empuja de golpe hacia arriba toda el agua que hay encima.'], c: '2' },
+          { key: 'a10_3', label: ['Auf dem offenen Meer rast eine flache Welle (ca. 1 m) sehr schnell weiter.', 'En mar abierto, una ola baja (aprox. 1 m) avanza muy rápido.'], c: '3' },
+          { key: 'a10_4', label: ['An der flachen Küste wird die Welle abgebremst und türmt sich 10 bis 30 m hoch auf.', 'En la costa poco profunda, la ola se frena y sube de 10 a 30 m.'], c: '4' }
         ] },
-        { type: 'mc', key: 'a10_schiff', q: 'Warum merkt man auf einem Schiff auf dem offenen Meer kaum etwas vom Tsunami?', c: 'flach', opts: [
-          { v: 'flach', t: 'Weil die Welle dort nur ca. 1 m hoch ist.' },
-          { v: 'langsam', t: 'Weil die Welle dort sehr langsam ist.' },
-          { v: 'keine', t: 'Weil es auf dem offenen Meer noch gar keine Welle gibt.' },
-          { v: 'wind', t: 'Weil der Wind die Welle wegbläst.' }
+        { type: 'mc', key: 'a10_schiff', q: ['Warum merkt man auf einem Schiff auf dem offenen Meer kaum etwas vom Tsunami?', '¿Por qué en un barco en mar abierto casi no se nota el tsunami?'], c: 'flach', opts: [
+          { v: 'flach', t: ['Weil die Welle dort nur ca. 1 m hoch ist.', 'Porque allí la ola mide solo aprox. 1 m de alto.'] },
+          { v: 'langsam', t: ['Weil die Welle dort sehr langsam ist.', 'Porque allí la ola es muy lenta.'] },
+          { v: 'keine', t: ['Weil es auf dem offenen Meer noch gar keine Welle gibt.', 'Porque en mar abierto todavía no hay ninguna ola.'] },
+          { v: 'wind', t: ['Weil der Wind die Welle wegbläst.', 'Porque el viento se lleva la ola.'] }
         ] },
-        { type: 'mc', key: 'a10_kueste', q: 'Warum wird der Tsunami an der Küste und in engen Buchten so hoch?', c: 'stau', opts: [
-          { v: 'stau', t: 'Im flachen Wasser wird die Welle abgebremst. Das Wasser staut sich und türmt sich auf.' },
-          { v: 'wind', t: 'Der Wind an der Küste bläst die Welle hoch.' },
-          { v: 'regen', t: 'An der Küste kommt viel Regenwasser dazu.' },
-          { v: 'schnell', t: 'Die Welle wird an der Küste immer schneller.' }
+        { type: 'mc', key: 'a10_kueste', q: ['Warum wird der Tsunami an der Küste und in engen Buchten so hoch?', '¿Por qué el tsunami se vuelve tan alto en la costa y en las bahías estrechas?'], c: 'stau', opts: [
+          { v: 'stau', t: ['Im flachen Wasser wird die Welle abgebremst. Das Wasser staut sich und türmt sich auf.', 'En el agua poco profunda la ola se frena. El agua se amontona y sube muy alto.'] },
+          { v: 'wind', t: ['Der Wind an der Küste bläst die Welle hoch.', 'El viento de la costa empuja la ola hacia arriba.'] },
+          { v: 'regen', t: ['An der Küste kommt viel Regenwasser dazu.', 'En la costa se suma mucha agua de lluvia.'] },
+          { v: 'schnell', t: ['Die Welle wird an der Küste immer schneller.', 'En la costa la ola va cada vez más rápido.'] }
         ] }
       ] },
-      a11: { title: 'Normale Welle oder Tsunami?', intro: 'Ordne jede Karte der richtigen Gruppe zu.',
-        tip: 'Frag dich bei jeder Karte: Wie entsteht diese Welle, und wie viel Kraft steckt dahinter?', blocks: [
-        { type: 'dnd', key: 'a11_dnd', zones: ['Normale Welle', 'Tsunami'], cards: [
-          { key: 'a11_k1', t: 'entsteht durch Wind', c: 'Normale Welle' },
-          { key: 'a11_k2', t: 'entsteht durch ein Seebeben', c: 'Tsunami' },
-          { key: 'a11_k3', t: 'nur die oberste Wasserschicht bewegt sich', c: 'Normale Welle' },
-          { key: 'a11_k4', t: 'das ganze Wasser vom Grund bis oben bewegt sich', c: 'Tsunami' },
-          { key: 'a11_k5', t: 'Wellenlänge bis ca. 400 m', c: 'Normale Welle' },
-          { key: 'a11_k6', t: 'Wellenlänge bis 1000 km', c: 'Tsunami' },
-          { key: 'a11_k7', t: 'eher langsam', c: 'Normale Welle' },
-          { key: 'a11_k8', t: 'sehr schnell (bis 800 km/h)', c: 'Tsunami' }
+      a11: { title: ['Normale Welle oder Tsunami?', '¿Ola normal o tsunami?'], intro: ['Ordne jede Karte der richtigen Gruppe zu.', 'Pon cada tarjeta en el grupo correcto.'],
+        tip: ['Frag dich bei jeder Karte: Wie entsteht diese Welle, und wie viel Kraft steckt dahinter?', 'Pregúntate en cada tarjeta: ¿Cómo se forma esta ola y cuánta fuerza tiene detrás?'], blocks: [
+        { type: 'dnd', key: 'a11_dnd', zones: ['Normale Welle', 'Tsunami'], zonesEs: ['Ola normal', 'Tsunami'], cards: [
+          { key: 'a11_k1', t: ['entsteht durch Wind', 'se forma por el viento'], c: 'Normale Welle' },
+          { key: 'a11_k2', t: ['entsteht durch ein Seebeben', 'se forma por un terremoto submarino'], c: 'Tsunami' },
+          { key: 'a11_k3', t: ['nur die oberste Wasserschicht bewegt sich', 'solo se mueve la capa de agua de arriba'], c: 'Normale Welle' },
+          { key: 'a11_k4', t: ['das ganze Wasser vom Grund bis oben bewegt sich', 'se mueve toda el agua, desde el fondo hasta arriba'], c: 'Tsunami' },
+          { key: 'a11_k5', t: ['Wellenlänge bis ca. 400 m', 'longitud de onda hasta aprox. 400 m'], c: 'Normale Welle' },
+          { key: 'a11_k6', t: ['Wellenlänge bis 1000 km', 'longitud de onda hasta 1000 km'], c: 'Tsunami' },
+          { key: 'a11_k7', t: ['eher langsam', 'avanza más bien lento'], c: 'Normale Welle' },
+          { key: 'a11_k8', t: ['sehr schnell (bis 800 km/h)', 'avanza muy rápido (hasta 800 km/h)'], c: 'Tsunami' }
         ] }
       ] },
-      a11b: { title: 'Warnzeichen und Verhalten am Strand', intro: '',
-        tip: 'Überlege bei jeder Antwort: Was schützt dich wirklich vor einer riesigen Welle? Was ist zwar spannend, aber gefährlich?', blocks: [
-        { type: 'mc', key: 'a11b_zeichen', q: 'Welches Naturzeichen warnt am Strand vor einem Tsunami?', c: 'zurueck', opts: [
-          { v: 'zurueck', t: 'Das Meer zieht sich plötzlich weit zurück.' },
-          { v: 'regen', t: 'Es beginnt plötzlich stark zu regnen.' },
-          { v: 'wind', t: 'Der Wind dreht plötzlich.' },
-          { v: 'kalt', t: 'Das Wasser wird plötzlich kalt.' }
+      a11b: { title: ['Warnzeichen und Verhalten am Strand', 'Señal de alerta y qué hacer en la playa'], intro: '',
+        tip: ['Überlege bei jeder Antwort: Was schützt dich wirklich vor einer riesigen Welle? Was ist zwar spannend, aber gefährlich?', 'Piensa en cada respuesta: ¿Qué te protege de verdad de una ola gigante? ¿Qué es emocionante, pero peligroso?'], blocks: [
+        { type: 'mc', key: 'a11b_zeichen', q: ['Welches Naturzeichen warnt am Strand vor einem Tsunami?', '¿Qué señal de la naturaleza avisa de un tsunami en la playa?'], c: 'zurueck', opts: [
+          { v: 'zurueck', t: ['Das Meer zieht sich plötzlich weit zurück.', 'El mar se retira de repente muy lejos.'] },
+          { v: 'regen', t: ['Es beginnt plötzlich stark zu regnen.', 'De repente empieza a llover fuerte.'] },
+          { v: 'wind', t: ['Der Wind dreht plötzlich.', 'De repente el viento cambia de dirección.'] },
+          { v: 'kalt', t: ['Das Wasser wird plötzlich kalt.', 'De repente el agua se pone fría.'] }
         ] },
-        { type: 'checks', key: 'a11b_verhalten', q: 'Was machst du bei drohender Gefahr? Kreuze die 3 richtigen an.', opts: [
-          { id: 'weg', t: 'Sofort weg vom Strand gehen.', ok: true },
-          { id: 'hoch', t: 'Einen hohen Ort suchen: einen Hügel oder obere Stockwerke eines stabilen Betongebäudes.', ok: true },
-          { id: 'warnen', t: 'Andere Menschen warnen.', ok: true },
-          { id: 'muscheln', t: 'Zum Wasser gehen und Muscheln sammeln.', ok: false },
-          { id: 'warten', t: 'Warten, bis man die Welle sieht.', ok: false },
-          { id: 'filmen', t: 'Am Strand bleiben und die Welle filmen.', ok: false }
+        { type: 'checks', key: 'a11b_verhalten', q: ['Was machst du bei drohender Gefahr? Kreuze die 3 richtigen an.', '¿Qué haces si hay peligro? Marca las 3 respuestas correctas.'], opts: [
+          { id: 'weg', t: ['Sofort weg vom Strand gehen.', 'Alejarse enseguida de la playa.'], ok: true },
+          { id: 'hoch', t: ['Einen hohen Ort suchen: einen Hügel oder obere Stockwerke eines stabilen Betongebäudes.', 'Buscar un lugar alto: una colina o los pisos altos de un edificio sólido de hormigón.'], ok: true },
+          { id: 'warnen', t: ['Andere Menschen warnen.', 'Avisar a otras personas.'], ok: true },
+          { id: 'muscheln', t: ['Zum Wasser gehen und Muscheln sammeln.', 'Ir al agua y recoger conchas.'], ok: false },
+          { id: 'warten', t: ['Warten, bis man die Welle sieht.', 'Esperar hasta ver la ola.'], ok: false },
+          { id: 'filmen', t: ['Am Strand bleiben und die Welle filmen.', 'Quedarse en la playa y grabar la ola.'], ok: false }
         ] }
       ] }
     };
@@ -573,61 +718,93 @@
     // LERNZIEL-BLATT (Fragen vom Blatt der Lehrperson + Musterlösungen)
     // ==============================================================
     const BLATT = [
-      { tab: 'entstehung', lz: 'LZ1: Die Entstehung von Vulkanen erklären', items: [
-        { id: 'l1_arten', q: 'Ich kann die drei Hauptarten erklären, wie Vulkane entstehen.', sol: `
+      { tab: 'entstehung', lz: ['LZ1: Die Entstehung von Vulkanen erklären', 'LZ1: Explicar cómo se forman los volcanes'], items: [
+        { id: 'l1_arten', q: ['Ich kann die drei Hauptarten erklären, wie Vulkane entstehen.', 'Puedo explicar las tres formas principales en que se forman los volcanes.'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li><b>Platten driften auseinander:</b> Es entsteht ein Riss. Heisses Magma steigt auf und kühlt als neue Kruste ab (z.B. Island, Mittelatlantischer Rücken).</li>
             <li><b>Platten stossen zusammen:</b> Die schwerere Ozeanplatte taucht unter die leichtere Platte ab. In der Tiefe schmilzt das Gestein durch Druck und Hitze. Das Magma ist leichter und steigt auf (z.B. Mount St. Helens, Japan, Anden).</li>
             <li><b>Hotspots:</b> Mitten auf einer Platte steigt besonders heisses Magma als Strahl auf und brennt sich durch die Kruste (z.B. Hawaii).</li>
-          </ul>` },
-        { id: 'l1_hotspot', q: 'Ich kann erklären, was ein Hotspot ist und wie dadurch Inselketten wie Hawaii mitten auf einer Platte entstehen.', sol: `
+          </ul>`, `
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>Las placas se separan:</b> Se abre una grieta. El magma caliente sube y se enfría como corteza nueva (p. ej. Islandia, dorsal mesoatlántica).</li>
+            <li><b>Las placas chocan:</b> La placa oceánica, más pesada, se hunde debajo de la placa más ligera. En la profundidad, la roca se derrite por la presión y el calor. El magma es más ligero y sube (p. ej. Mount St. Helens, Japón, los Andes).</li>
+            <li><b>Puntos calientes (hotspots):</b> En medio de una placa sube un chorro de magma muy caliente y atraviesa la corteza (p. ej. Hawái).</li>
+          </ul>`] },
+        { id: 'l1_hotspot', q: ['Ich kann erklären, was ein Hotspot ist und wie dadurch Inselketten wie Hawaii mitten auf einer Platte entstehen.', 'Puedo explicar qué es un punto caliente (hotspot) y cómo se forman así cadenas de islas como Hawái en medio de una placa.'], sol: [`
           <p>Ein Hotspot ist ein <b>fester, besonders heisser Punkt</b> im Erdmantel. Von dort steigt ein pilzförmiger <b>Magmastrahl</b> auf und brennt sich wie ein Schweissbrenner durch die Platte. So entsteht ein Vulkan.</p>
-          <p class="mt-1">Die Platte bewegt sich weiter, der Hotspot bleibt am gleichen Ort. Der alte Vulkan wird vom Magma abgeschnitten und erlischt. Über dem Hotspot entsteht ein neuer Vulkan. So entsteht eine <b>Kette von Inseln</b>: Je weiter weg vom Hotspot, desto älter die Insel. Nur die jüngste Insel hat noch aktive Vulkane.</p>` },
-        { id: 'l1_ring', q: 'Ich kann erklären, was der «Ring of Fire» ist und warum dort besonders viele Vulkane liegen.', sol: `
+          <p class="mt-1">Die Platte bewegt sich weiter, der Hotspot bleibt am gleichen Ort. Der alte Vulkan wird vom Magma abgeschnitten und erlischt. Über dem Hotspot entsteht ein neuer Vulkan. So entsteht eine <b>Kette von Inseln</b>: Je weiter weg vom Hotspot, desto älter die Insel. Nur die jüngste Insel hat noch aktive Vulkane.</p>`, `
+          <p>Un punto caliente es un <b>lugar fijo y muy caliente</b> en el manto terrestre. Desde allí sube un <b>chorro de magma</b> en forma de hongo y atraviesa la placa como un soplete. Así se forma un volcán.</p>
+          <p class="mt-1">La placa sigue moviéndose, pero el punto caliente se queda en el mismo lugar. El volcán viejo se queda sin magma y se apaga. Sobre el punto caliente se forma un volcán nuevo. Así se forma una <b>cadena de islas</b>: cuanto más lejos del punto caliente, más vieja es la isla. Solo la isla más joven tiene todavía volcanes activos.</p>`] },
+        { id: 'l1_ring', q: ['Ich kann erklären, was der «Ring of Fire» ist und warum dort besonders viele Vulkane liegen.', 'Puedo explicar qué es el «Ring of Fire» y por qué allí hay tantos volcanes.'], sol: [`
           <p>Der «Ring of Fire» (Pazifischer Feuerring) ist ein Gürtel von Vulkanen <b>rund um den Pazifischen Ozean</b>. Dort liegen die meisten aktiven Vulkane der Welt.</p>
-          <p class="mt-1">Grund: Rund um die Pazifische Platte stossen Platten zusammen. Die schwere Ozeanplatte taucht unter andere Platten ab. In der Tiefe schmilzt das Gestein, Magma steigt auf. Darum gibt es dort sehr viele Vulkane und auch viele Erdbeben.</p>` }
+          <p class="mt-1">Grund: Rund um die Pazifische Platte stossen Platten zusammen. Die schwere Ozeanplatte taucht unter andere Platten ab. In der Tiefe schmilzt das Gestein, Magma steigt auf. Darum gibt es dort sehr viele Vulkane und auch viele Erdbeben.</p>`, `
+          <p>El «Ring of Fire» (Anillo de Fuego del Pacífico) es un cinturón de volcanes <b>alrededor del océano Pacífico</b>. Allí están la mayoría de los volcanes activos del mundo.</p>
+          <p class="mt-1">Razón: alrededor de la placa del Pacífico chocan placas. La placa oceánica, que es pesada, se hunde debajo de otras placas. En la profundidad la roca se derrite y el magma sube. Por eso allí hay muchísimos volcanes y también muchos terremotos.</p>`] }
       ] },
-      { tab: 'entstehung', lz: 'LZ2: Schildvulkane und Schichtvulkane unterscheiden', items: [
-        { id: 'l2_form', q: 'Ich kann Schicht- und Schildvulkane an ihrer Form erkennen. Skizziere beide Vulkantypen.', sketch: true, sol: `
+      { tab: 'entstehung', lz: ['LZ2: Schildvulkane und Schichtvulkane unterscheiden', 'LZ2: Distinguir los volcanes en escudo y los estratovolcanes'], items: [
+        { id: 'l2_form', q: ['Ich kann Schicht- und Schildvulkane an ihrer Form erkennen. Skizziere beide Vulkantypen.', 'Puedo reconocer los estratovolcanes y los volcanes en escudo por su forma. Dibuja los dos tipos de volcán.'], sketch: true, sol: () => `
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="text-center"><b>Schichtvulkan</b>${SVG_STRATO}<p class="text-xs">steil, hoch, kegelförmig</p></div>
-            <div class="text-center"><b>Schildvulkan</b>${SVG_SHIELD}<p class="text-xs">flach und breit wie ein liegender Schild</p></div>
+            <div class="text-center"><b>${tr('Schichtvulkan', 'Estratovolcán')}</b>${SVG_STRATO()}<p class="text-xs">${tr('steil, hoch, kegelförmig', 'empinado, alto, en forma de cono')}</p></div>
+            <div class="text-center"><b>${tr('Schildvulkan', 'Volcán en escudo')}</b>${SVG_SHIELD()}<p class="text-xs">${tr('flach und breit wie ein liegender Schild', 'plano y ancho como un escudo tendido en el suelo')}</p></div>
           </div>` },
-        { id: 'l2_magma', q: 'Ich kann die Eigenschaften des Magmas dem jeweiligen Vulkantyp richtig zuordnen.', sol: `
+        { id: 'l2_magma', q: ['Ich kann die Eigenschaften des Magmas dem jeweiligen Vulkantyp richtig zuordnen.', 'Puedo relacionar bien las características del magma con cada tipo de volcán.'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li><b>Schichtvulkan:</b> zähflüssiges Magma (ca. 700 bis 1000 °C). Viele Gase bleiben im Magma, hoher Druck.</li>
             <li><b>Schildvulkan:</b> dünnflüssiges Magma (ca. 1000 bis 1200 °C). Gase können leicht entweichen, geringer Druck.</li>
-          </ul>` },
-        { id: 'l2_schichten', q: 'Ich kann erklären, warum ein Schichtvulkan aus abwechselnden Schichten von erstarrter Lava und Asche/Gestein aufgebaut ist.', sol: `
-          <p>Ein Schichtvulkan bricht immer wieder aus, mal <b>explosiv</b>, mal mit <b>Lavaströmen</b>. Bei einer Explosion fallen Asche und Gesteinsbrocken auf den Berg. Bei einem Lavastrom fliesst Lava über den Hang und erstarrt. So lagern sich über lange Zeit <b>abwechselnd Schichten</b> aus Asche/Gestein und erstarrter Lava ab. Der Vulkan wächst Schicht für Schicht in die Höhe.</p>` }
+          </ul>`, `
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>Estratovolcán:</b> magma viscoso y espeso (aprox. 700 a 1000 °C). Muchos gases se quedan en el magma, mucha presión.</li>
+            <li><b>Volcán en escudo:</b> magma fluido, muy líquido (aprox. 1000 a 1200 °C). Los gases salen fácilmente, poca presión.</li>
+          </ul>`] },
+        { id: 'l2_schichten', q: ['Ich kann erklären, warum ein Schichtvulkan aus abwechselnden Schichten von erstarrter Lava und Asche/Gestein aufgebaut ist.', 'Puedo explicar por qué un estratovolcán está formado por capas de lava solidificada y de ceniza/roca, una tras otra.'], sol: [`
+          <p>Ein Schichtvulkan bricht immer wieder aus, mal <b>explosiv</b>, mal mit <b>Lavaströmen</b>. Bei einer Explosion fallen Asche und Gesteinsbrocken auf den Berg. Bei einem Lavastrom fliesst Lava über den Hang und erstarrt. So lagern sich über lange Zeit <b>abwechselnd Schichten</b> aus Asche/Gestein und erstarrter Lava ab. Der Vulkan wächst Schicht für Schicht in die Höhe.</p>`, `
+          <p>Un estratovolcán entra en erupción una y otra vez: a veces de forma <b>explosiva</b>, a veces con <b>ríos de lava</b>. En una explosión caen ceniza y trozos de roca sobre la montaña. En un río de lava, la lava baja por la ladera y se solidifica. Así, durante mucho tiempo, se depositan <b>capas, una tras otra</b>, de ceniza/roca y de lava solidificada. El volcán crece capa por capa.</p>`] }
       ] },
-      { tab: 'ausbruch', lz: 'LZ3: Vulkanausbrüche', items: [
-        { id: 'l3_schicht', q: 'Ich kann in eigenen Worten erklären, wie ein Schichtvulkan ausbricht.', sol: `
+      { tab: 'ausbruch', lz: ['LZ3: Vulkanausbrüche', 'LZ3: Erupciones volcánicas'], items: [
+        { id: 'l3_schicht', q: ['Ich kann in eigenen Worten erklären, wie ein Schichtvulkan ausbricht.', 'Puedo explicar con mis propias palabras cómo entra en erupción un estratovolcán.'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li>Das Magma ist <b>zähflüssig</b>.</li>
             <li>Die <b>Gase</b> können nur schwer entweichen. Im Schlot baut sich ein enormer <b>Druck</b> auf.</li>
             <li>Wird der Druck stärker als der Pfropfen aus Gestein, gibt es einen <b>explosiven Ausbruch</b>: Asche, Gesteinsbrocken (Pyroklastika) und Lava werden mit grosser Wucht herausgeschleudert.</li>
-          </ul>` },
-        { id: 'l3_schild', q: 'Ich kann in eigenen Worten erklären, wie ein Schildvulkan ausbricht.', sol: `
+          </ul>`, `
+          <ul class="list-disc pl-5 space-y-1">
+            <li>El magma es <b>viscoso</b> (espeso).</li>
+            <li>Los <b>gases</b> casi no pueden salir. En la chimenea se acumula una <b>presión</b> enorme.</li>
+            <li>Cuando la presión es más fuerte que el tapón de roca, hay una <b>erupción explosiva</b>: la ceniza, los trozos de roca (piroclastos) y la lava salen disparados con mucha fuerza.</li>
+          </ul>`] },
+        { id: 'l3_schild', q: ['Ich kann in eigenen Worten erklären, wie ein Schildvulkan ausbricht.', 'Puedo explicar con mis propias palabras cómo entra en erupción un volcán en escudo.'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li>Das Magma bzw. die Lava ist sehr <b>dünnflüssig</b> und heiss.</li>
             <li>Die <b>Gase</b> können leicht entweichen. Darum baut sich kaum <b>Druck</b> auf.</li>
             <li>Der Ausbruch ist ruhig und <b>fliessend</b>: Die Lava strömt gleichmässig aus dem Krater und breitet sich weit aus, bevor sie erstarrt.</li>
-          </ul>` }
+          </ul>`, `
+          <ul class="list-disc pl-5 space-y-1">
+            <li>El magma (la lava) es muy <b>fluido</b> (líquido) y caliente.</li>
+            <li>Los <b>gases</b> salen fácilmente. Por eso casi no se acumula <b>presión</b>.</li>
+            <li>La erupción es tranquila y la lava sale <b>fluyendo</b>: sale del cráter de forma pareja y se extiende lejos antes de solidificarse.</li>
+          </ul>`] }
       ] },
-      { tab: 'erdbeben', lz: 'LZ4: Erdbeben verstehen, messen und berechnen', items: [
-        { id: 'l4_entstehung', q: 'Ich kann erklären, wie Erdbeben durch das Verhaken und plötzliche Brechen von Erdplatten entstehen.', sol: `
-          <p>Die Erdplatten bewegen sich. An den Plattengrenzen <b>verhaken</b> sie sich. Die Platten drücken weiter, darum baut sich eine riesige <b>Spannung</b> im Gestein auf. Irgendwann ist die Spannung zu gross: Das Gestein <b>bricht plötzlich</b>. Diese Stelle in der Tiefe heisst <b>Erdbebenherd</b>. Die Energie wird schlagartig frei und breitet sich als Erschütterung aus: Die Erde bebt.</p>` },
-        { id: 'l4_messen', q: 'Ich kann die Messgeräte und die gängige Skala benennen.', sol: `
+      { tab: 'erdbeben', lz: ['LZ4: Erdbeben verstehen, messen und berechnen', 'LZ4: Entender, medir y calcular terremotos'], items: [
+        { id: 'l4_entstehung', q: ['Ich kann erklären, wie Erdbeben durch das Verhaken und plötzliche Brechen von Erdplatten entstehen.', 'Puedo explicar cómo se forman los terremotos cuando las placas se enganchan y de repente se rompen.'], sol: [`
+          <p>Die Erdplatten bewegen sich. An den Plattengrenzen <b>verhaken</b> sie sich. Die Platten drücken weiter, darum baut sich eine riesige <b>Spannung</b> im Gestein auf. Irgendwann ist die Spannung zu gross: Das Gestein <b>bricht plötzlich</b>. Diese Stelle in der Tiefe heisst <b>Erdbebenherd</b>. Die Energie wird schlagartig frei und breitet sich als Erschütterung aus: Die Erde bebt.</p>`, `
+          <p>Las placas tectónicas se mueven. En los bordes de las placas se <b>enganchan</b>. Las placas siguen empujando, por eso se acumula una <b>tensión</b> enorme en la roca. En algún momento la tensión es demasiado grande: la roca <b>se rompe de repente</b>. Ese lugar en la profundidad se llama <b>foco (hipocentro)</b>. La energía se libera de golpe y se extiende como una sacudida: la Tierra tiembla.</p>`] },
+        { id: 'l4_messen', q: ['Ich kann die Messgeräte und die gängige Skala benennen.', 'Puedo nombrar los aparatos de medición y la escala más usada.'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li><b>Seismograph:</b> das Messgerät für Erdbeben.</li>
             <li><b>Seismogramm:</b> die Aufzeichnung (Zickzack-Kurve) des Seismographen.</li>
             <li><b>Richter-Skala:</b> die gängige Skala für die Stärke eines Erdbebens.</li>
-          </ul>` },
-        { id: 'l4_rechnen', q: 'Ich kann den Unterschied zwischen dem Ausschlag im Seismogramm und der freigesetzten Energie erklären und einfache Rechnungen dazu durchführen.', sol: `
+          </ul>`, `
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>Sismógrafo:</b> el aparato que mide los terremotos.</li>
+            <li><b>Sismograma:</b> el registro (la línea en zigzag) del sismógrafo.</li>
+            <li><b>Escala de Richter:</b> la escala más usada para la fuerza de un terremoto.</li>
+          </ul>`] },
+        { id: 'l4_rechnen', q: ['Ich kann den Unterschied zwischen dem Ausschlag im Seismogramm und der freigesetzten Energie erklären und einfache Rechnungen dazu durchführen.', 'Puedo explicar la diferencia entre la amplitud en el sismograma y la energía liberada, y hacer cálculos sencillos.'], sol: [`
           <p>Pro Stufe auf der Richter-Skala wird der <b>Ausschlag im Seismogramm 10-mal</b> grösser, die <b>freigesetzte Energie 32-mal</b> grösser.</p>
-          <p class="mt-1"><b>Beispiel Stärke 6 gegen Stärke 3:</b> 3 Stufen Unterschied.<br>Ausschlag: 10 × 10 × 10 = 1000-mal grösser.<br>Energie: 32 × 32 × 32 = 32 768-mal grösser.</p>` },
-        { id: 'l4_stufen', q: 'Ich kann beschreiben, welche Zerstörungen bestimmte Werte auf der Richter-Skala anrichten. Fasse alle Stufen kurz zusammen.', sol: `
+          <p class="mt-1"><b>Beispiel Stärke 6 gegen Stärke 3:</b> 3 Stufen Unterschied.<br>Ausschlag: 10 × 10 × 10 = 1000-mal grösser.<br>Energie: 32 × 32 × 32 = 32 768-mal grösser.</p>`, `
+          <p>Por cada grado en la escala de Richter, la <b>amplitud en el sismograma es 10 veces</b> mayor y la <b>energía liberada es 32 veces</b> mayor.</p>
+          <p class="mt-1"><b>Ejemplo magnitud 6 contra magnitud 3:</b> 3 grados de diferencia.<br>Amplitud: 10 × 10 × 10 = 1000 veces mayor.<br>Energía: 32 × 32 × 32 = 32 768 veces mayor.</p>`] },
+        { id: 'l4_stufen', q: ['Ich kann beschreiben, welche Zerstörungen bestimmte Werte auf der Richter-Skala anrichten. Fasse alle Stufen kurz zusammen.', 'Puedo describir qué destrucción causa cada valor de la escala de Richter. Resume todos los grados.'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li><b>unter 3:</b> kaum spürbar, nur Messgeräte zeichnen es auf.</li>
             <li><b>3 bis 4:</b> viele spüren es, Geschirr klirrt, Gegenstände wackeln, kaum Schäden.</li>
@@ -636,150 +813,264 @@
             <li><b>7:</b> schwere Schäden in grossen Gebieten, viele Gebäude stürzen ein.</li>
             <li><b>8 und mehr:</b> totale Zerstörung über Hunderte von Kilometern.</li>
           </ul>
-          <p class="mt-1">Stärkstes gemessenes Erdbeben: 9.5 (Chile, 1960). Stärkstes in der Schweiz: ca. 6 bis 6.5 (Basel, 1356).</p>` },
-        { id: 'l4_verhalten', q: 'Ich kann richtige Verhaltensregeln während eines starken Erdbebens nennen.', sol: `
+          <p class="mt-1">Stärkstes gemessenes Erdbeben: 9.5 (Chile, 1960). Stärkstes in der Schweiz: ca. 6 bis 6.5 (Basel, 1356).</p>`, `
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>menos de 3:</b> casi no se siente, solo lo registran los aparatos.</li>
+            <li><b>3 a 4:</b> muchas personas lo sienten, los platos vibran y suenan, los objetos se mueven, casi no hay daños.</li>
+            <li><b>5:</b> los muebles se mueven, daños leves en edificios.</li>
+            <li><b>6:</b> grietas y daños en edificios, sobre todo en los mal construidos, en una zona más pequeña.</li>
+            <li><b>7:</b> daños graves en zonas grandes, muchos edificios se derrumban.</li>
+            <li><b>8 o más:</b> destrucción total en cientos de kilómetros.</li>
+          </ul>
+          <p class="mt-1">Terremoto más fuerte medido: 9.5 (Chile, 1960). El más fuerte en Suiza: aprox. 6 a 6.5 (Basilea, 1356).</p>`] },
+        { id: 'l4_verhalten', q: ['Ich kann richtige Verhaltensregeln während eines starken Erdbebens nennen.', 'Puedo nombrar las reglas correctas para un terremoto fuerte.'], sol: [`
           <ul class="list-disc pl-5 space-y-1">
             <li><b>Im Gebäude:</b> Unter einen stabilen Tisch kriechen und an den Tischbeinen festhalten. Weg von Fenstern, Glas, Spiegeln und schweren Schränken. Keinen Lift benutzen, nicht panisch ins Treppenhaus rennen.</li>
             <li><b>Im Freien:</b> Auf einen freien Platz gehen. Abstand halten von Hauswänden, Balkonen, Ziegeln, Strommasten und Laternen.</li>
             <li><b>Im Auto:</b> Am Strassenrand anhalten (nicht auf Brücken oder unter Überführungen) und im Auto sitzen bleiben.</li>
-          </ul>` }
+          </ul>`, `
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>Dentro de un edificio:</b> Métete debajo de una mesa firme y agárrate de las patas. Aléjate de ventanas, vidrios, espejos y armarios pesados. No uses el ascensor y no corras con pánico a las escaleras.</li>
+            <li><b>Afuera:</b> Ve a un lugar abierto. Mantén distancia de las paredes de las casas, balcones, tejas, postes de luz y faroles.</li>
+            <li><b>En el auto:</b> Para al lado de la calle (no en puentes ni debajo de pasos elevados) y quédate sentado en el auto.</li>
+          </ul>`] }
       ] },
-      { tab: 'tsunami', lz: 'LZ5: Tsunamis und Meereswellen vergleichen', items: [
-        { id: 'l5_ausloeser', q: 'Ich kann erklären, wie ein Tsunami ausgelöst wird.', sol: `
-          <p>Ein <b>Seebeben</b> am Meeresgrund hebt den Meeresboden ruckartig an. Dadurch wird das <b>ganze Wasser darüber</b>, vom Meeresgrund bis zur Oberfläche, schlagartig nach oben gestossen. Es entsteht eine riesige Welle, die sich in alle Richtungen ausbreitet.</p>` },
-        { id: 'l5_tabelle', q: 'Ich kann den Unterschied zwischen einer normalen windbedingten Meereswelle und einem Tsunami in einer Tabelle beschreiben.', sol: `
-          <div class="overflow-x-auto"><table class="w-full text-xs sm:text-sm border border-slate-300">
-            <thead class="bg-slate-100"><tr><th class="p-1.5 border border-slate-300 text-left"></th><th class="p-1.5 border border-slate-300 text-left">Normale Welle</th><th class="p-1.5 border border-slate-300 text-left">Tsunami</th></tr></thead>
-            <tbody>
-              <tr><td class="p-1.5 border border-slate-300 font-bold">Entstehung</td><td class="p-1.5 border border-slate-300">durch Wind</td><td class="p-1.5 border border-slate-300">durch ein Seebeben</td></tr>
-              <tr><td class="p-1.5 border border-slate-300 font-bold">Bewegung des Wassers</td><td class="p-1.5 border border-slate-300">nur die oberste Wasserschicht</td><td class="p-1.5 border border-slate-300">das ganze Wasser vom Grund bis oben</td></tr>
-              <tr><td class="p-1.5 border border-slate-300 font-bold">Wellenlänge</td><td class="p-1.5 border border-slate-300">bis ca. 400 m</td><td class="p-1.5 border border-slate-300">bis 1000 km</td></tr>
-              <tr><td class="p-1.5 border border-slate-300 font-bold">Geschwindigkeit</td><td class="p-1.5 border border-slate-300">eher langsam</td><td class="p-1.5 border border-slate-300">sehr schnell (bis 800 km/h)</td></tr>
-            </tbody></table></div>` },
-        { id: 'l5_kueste', q: 'Ich kann erklären, warum ein Tsunami auf offenem Meer kaum auffällt, sich aber an flachen Küsten und in engen Buchten extrem hoch auftürmt.', sol: `
+      { tab: 'tsunami', lz: ['LZ5: Tsunamis und Meereswellen vergleichen', 'LZ5: Comparar los tsunamis con las olas normales del mar'], items: [
+        { id: 'l5_ausloeser', q: ['Ich kann erklären, wie ein Tsunami ausgelöst wird.', 'Puedo explicar qué provoca un tsunami.'], sol: [`
+          <p>Ein <b>Seebeben</b> am Meeresgrund hebt den Meeresboden ruckartig an. Dadurch wird das <b>ganze Wasser darüber</b>, vom Meeresgrund bis zur Oberfläche, schlagartig nach oben gestossen. Es entsteht eine riesige Welle, die sich in alle Richtungen ausbreitet.</p>`, `
+          <p>Un <b>terremoto submarino</b> en el fondo del mar levanta el fondo de golpe. Así, <b>toda el agua que hay encima</b>, desde el fondo hasta la superficie, es empujada de golpe hacia arriba. Se forma una ola enorme que se extiende en todas las direcciones.</p>`] },
+        { id: 'l5_tabelle', q: ['Ich kann den Unterschied zwischen einer normalen windbedingten Meereswelle und einem Tsunami in einer Tabelle beschreiben.', 'Puedo describir en una tabla la diferencia entre una ola normal del mar (producida por el viento) y un tsunami.'], sol: () => tabelleL5() },
+        { id: 'l5_kueste', q: ['Ich kann erklären, warum ein Tsunami auf offenem Meer kaum auffällt, sich aber an flachen Küsten und in engen Buchten extrem hoch auftürmt.', 'Puedo explicar por qué un tsunami casi no se nota en mar abierto, pero en las costas poco profundas y en las bahías estrechas sube muchísimo.'], sol: [`
           <p><b>Offenes Meer:</b> Das Meer ist sehr tief. Die Energie verteilt sich auf das ganze Wasser. Die Welle ist nur ca. 1 m hoch und sehr lang. Ein Schiff merkt fast nichts.</p>
-          <p class="mt-1"><b>Küste:</b> Im flachen Wasser wird die Welle vom Boden <b>abgebremst</b>. Das Wasser von hinten schiebt nach, staut sich und <b>türmt sich auf</b> (10 bis 30 m). In <b>engen Buchten</b> wird das Wasser zusätzlich zusammengedrängt und hat keinen Platz zum Ausweichen. Darum wird die Welle dort noch höher.</p>` },
-        { id: 'l5_strand', q: 'Ich kann das entscheidende Naturanzeichen am Strand vor dem Eintreffen der Welle nennen und das richtige Verhalten beschreiben.', sol: `
+          <p class="mt-1"><b>Küste:</b> Im flachen Wasser wird die Welle vom Boden <b>abgebremst</b>. Das Wasser von hinten schiebt nach, staut sich und <b>türmt sich auf</b> (10 bis 30 m). In <b>engen Buchten</b> wird das Wasser zusätzlich zusammengedrängt und hat keinen Platz zum Ausweichen. Darum wird die Welle dort noch höher.</p>`, `
+          <p><b>Mar abierto:</b> El mar es muy profundo. La energía se reparte en toda el agua. La ola mide solo aprox. 1 m de alto y es muy larga. Un barco casi no nota nada.</p>
+          <p class="mt-1"><b>Costa:</b> En el agua poco profunda, el fondo <b>frena</b> la ola. El agua de atrás sigue empujando, se amontona y <b>sube muy alto</b> (10 a 30 m). En las <b>bahías estrechas</b> el agua además se aprieta y no tiene espacio para salir hacia los lados. Por eso allí la ola es todavía más alta.</p>`] },
+        { id: 'l5_strand', q: ['Ich kann das entscheidende Naturanzeichen am Strand vor dem Eintreffen der Welle nennen und das richtige Verhalten beschreiben.', 'Puedo nombrar la señal natural más importante en la playa antes de que llegue la ola y describir qué hay que hacer.'], sol: [`
           <p><b>Anzeichen:</b> Das Meer <b>zieht sich plötzlich weit zurück</b>, der Meeresboden liegt trocken. (Oft spürt man vorher auch ein Erdbeben.)</p>
-          <p class="mt-1"><b>Verhalten:</b> Sofort weg vom Strand. Andere warnen. Einen hohen Ort suchen: einen Hügel oder die oberen Stockwerke eines stabilen Betongebäudes. Nicht zurückgehen, bis Entwarnung kommt. Es bleibt nur wenig Zeit!</p>` }
+          <p class="mt-1"><b>Verhalten:</b> Sofort weg vom Strand. Andere warnen. Einen hohen Ort suchen: einen Hügel oder die oberen Stockwerke eines stabilen Betongebäudes. Nicht zurückgehen, bis Entwarnung kommt. Es bleibt nur wenig Zeit!</p>`, `
+          <p><b>Señal:</b> El mar <b>se retira de repente muy lejos</b> y el fondo del mar queda seco. (Muchas veces antes también se siente un terremoto.)</p>
+          <p class="mt-1"><b>Qué hacer:</b> Aléjate enseguida de la playa. Avisa a otras personas. Busca un lugar alto: una colina o los pisos altos de un edificio sólido de hormigón. No vuelvas hasta que avisen que ya no hay peligro. ¡Queda muy poco tiempo!</p>`] }
       ] }
     ];
     const BLATT_ITEMS = BLATT.flatMap(s => s.items);
 
+    // Musterlösung LZ5: Tabelle normale Welle / Tsunami
+    function tabelleL5() {
+      const c = 'p-1.5 border border-slate-300';
+      const rows = [
+        [tr('Entstehung', 'Cómo se forma'), tr('durch Wind', 'por el viento'), tr('durch ein Seebeben', 'por un terremoto submarino')],
+        [tr('Bewegung des Wassers', 'Movimiento del agua'), tr('nur die oberste Wasserschicht', 'solo la capa de agua de arriba'), tr('das ganze Wasser vom Grund bis oben', 'toda el agua, desde el fondo hasta arriba')],
+        [tr('Wellenlänge', 'Longitud de onda'), tr('bis ca. 400 m', 'hasta aprox. 400 m'), tr('bis 1000 km', 'hasta 1000 km')],
+        [tr('Geschwindigkeit', 'Velocidad'), tr('eher langsam', 'más bien lenta'), tr('sehr schnell (bis 800 km/h)', 'muy rápido (hasta 800 km/h)')]
+      ];
+      return `
+          <div class="overflow-x-auto"><table class="w-full text-xs sm:text-sm border border-slate-300">
+            <thead class="bg-slate-100"><tr><th class="${c} text-left"></th><th class="${c} text-left">${tr('Normale Welle', 'Ola normal')}</th><th class="${c} text-left">Tsunami</th></tr></thead>
+            <tbody>
+              ${rows.map(r => `<tr><td class="${c} font-bold">${r[0]}</td><td class="${c}">${r[1]}</td><td class="${c}">${r[2]}</td></tr>`).join('\n              ')}
+            </tbody></table></div>`;
+    }
+
     // Hilfe-Treppe pro Lernziel: Tipp (mit Wortkasten) → Satzanfänge → Antwort prüfen (Schlüsselwörter) → Musterlösung
     // keys: [Anzeige-Text, [Wortteile]] – Wortteile kleingeschrieben, ä=ae, ö=oe, ü=ue
+    // Spanisch: tipEs, wordsEs, startersEs, keysEs. Wortteile ohne Akzente (á = a, ñ = n); der Text wird mit
+    // Leerzeichen am Anfang und Ende verglichen, darum findet ' alt' «alto/alta», aber nicht «falta».
     const HELP = {
       l1_arten: { tip: 'Es gibt zwei Arten an den Plattengrenzen und eine Art mitten auf einer Platte. Frag dich jedes Mal: Was machen die Platten? Woher kommt das Magma?',
         words: ['auseinander', 'Riss', 'zusammenstossen', 'abtauchen', 'Gestein schmilzt', 'Hotspot', 'Magma steigt auf'],
         starters: '1. Wenn zwei Platten auseinanderdriften, …\n2. Wenn zwei Platten zusammenstossen, …\n3. Bei einem Hotspot …',
         keys: [['Riss / Lücke zwischen den Platten', ['riss', 'luecke', 'spalt']], ['eine Platte taucht ab / schiebt sich darunter', ['abtauch', 'unter', 'schieb']],
-               ['Gestein schmilzt', ['schmilz', 'schmelz', 'geschmolz']], ['Magma steigt auf', ['magma']], ['heisser Punkt (Hotspot)', ['heiss']]] },
+               ['Gestein schmilzt', ['schmilz', 'schmelz', 'geschmolz']], ['Magma steigt auf', ['magma']], ['heisser Punkt (Hotspot)', ['heiss']]],
+        tipEs: 'Hay dos formas en los bordes de las placas y una forma en medio de una placa. Pregúntate cada vez: ¿Qué hacen las placas? ¿De dónde viene el magma?',
+        wordsEs: ['separarse', 'grieta', 'chocar', 'hundirse', 'la roca se derrite', 'punto caliente', 'el magma sube'],
+        startersEs: '1. Cuando dos placas se separan, …\n2. Cuando dos placas chocan, …\n3. En un punto caliente …',
+        keysEs: [['grieta / hueco entre las placas', ['griet', 'hueco', 'abertura', 'fisura', 'raja']], ['una placa se hunde / se mete debajo', ['hund', 'debajo', 'abajo', 'se mete', 'subduc']],
+               ['la roca se derrite', ['derrit', 'derret', 'se funde']], ['el magma sube', ['magma']], ['punto muy caliente (hotspot)', ['calient', 'hotspot']]] },
       l1_hotspot: { tip: 'Schau die Inselketten-Skizze im Reiter 2 an. Was bleibt am gleichen Ort: die Platte oder der Hotspot? Was passiert mit dem alten Vulkan, wenn die Platte weiterwandert?',
         words: ['heisser Punkt', 'Erdmantel', 'Magmastrahl', 'Platte bewegt sich', 'neuer Vulkan', 'erlischt'],
         starters: 'Ein Hotspot ist …\nDie Platte bewegt sich, aber der Hotspot …\nDarum entsteht …\nDer alte Vulkan …',
         keys: [['heisser Punkt', ['heiss']], ['Magma(strahl) steigt auf', ['magma']], ['die Platte bewegt sich', ['beweg', 'wander', 'verschieb', 'schieb']],
-               ['ein neuer Vulkan / eine neue Insel entsteht', ['neu']], ['der alte Vulkan erlischt (kein Magma mehr)', ['erlisch', 'erlosch', 'kein magma', 'inaktiv', 'aus ']]] },
+               ['ein neuer Vulkan / eine neue Insel entsteht', ['neu']], ['der alte Vulkan erlischt (kein Magma mehr)', ['erlisch', 'erlosch', 'kein magma', 'inaktiv', 'aus ']]],
+        tipEs: 'Mira el dibujo de la cadena de islas en la pestaña 2. ¿Qué se queda en el mismo lugar: la placa o el punto caliente? ¿Qué pasa con el volcán viejo cuando la placa sigue moviéndose?',
+        wordsEs: ['lugar muy caliente', 'manto', 'chorro de magma', 'la placa se mueve', 'volcán nuevo', 'se apaga'],
+        startersEs: 'Un punto caliente es …\nLa placa se mueve, pero el punto caliente …\nPor eso se forma …\nEl volcán viejo …',
+        keysEs: [['lugar muy caliente', ['calient']], ['el magma (un chorro) sube', ['magma']], ['la placa se mueve', ['muev', 'movi', 'desplaz', 'avanz']],
+               ['se forma un volcán nuevo / una isla nueva', ['nuev']], ['el volcán viejo se apaga (ya no hay magma)', ['apag', 'extingu', 'inactiv', 'ya no', 'sin magma', 'dormid']]] },
       l1_ring: { tip: 'Der Name sagt es: ein «Ring» aus «Feuer». Um welchen Ozean liegt er? Was passiert dort mit den Platten?',
         words: ['Pazifischer Ozean', 'rund um', 'Ozeanplatte', 'abtauchen', 'Gestein schmilzt', 'Magma'],
         starters: 'Der «Ring of Fire» ist …\nDort gibt es viele Vulkane, weil …',
-        keys: [['rund um den Pazifik', ['pazifi']], ['Platten stossen zusammen / tauchen ab', ['abtauch', 'unter', 'zusammen', 'stoss']], ['Gestein schmilzt / Magma steigt auf', ['schmilz', 'schmelz', 'magma']]] },
+        keys: [['rund um den Pazifik', ['pazifi']], ['Platten stossen zusammen / tauchen ab', ['abtauch', 'unter', 'zusammen', 'stoss']], ['Gestein schmilzt / Magma steigt auf', ['schmilz', 'schmelz', 'magma']]],
+        tipEs: 'El nombre lo dice: un «anillo» de «fuego». ¿Alrededor de qué océano está? ¿Qué pasa allí con las placas?',
+        wordsEs: ['océano Pacífico', 'alrededor de', 'placa oceánica', 'hundirse', 'la roca se derrite', 'magma'],
+        startersEs: 'El «Ring of Fire» es …\nAllí hay muchos volcanes porque …',
+        keysEs: [['alrededor del Pacífico', ['pacific']], ['las placas chocan / se hunden', ['hund', 'debajo', 'choc', 'subduc', 'se mete']], ['la roca se derrite / el magma sube', ['derrit', 'derret', 'se funde', 'magma']]] },
       l2_form: { tip: 'Der Name hilft dir: Wie sieht ein Schild aus, der am Boden liegt? Der andere Vulkan ist das Gegenteil. Schau dir auch die Bilder in der Theorie an.',
-        words: ['steil', 'spitz', 'kegelförmig', 'flach', 'breit'] },
+        words: ['steil', 'spitz', 'kegelförmig', 'flach', 'breit'],
+        tipEs: 'El nombre te ayuda: ¿Cómo se ve un escudo tendido en el suelo? El otro volcán es lo contrario. Mira también los dibujos de la teoría.',
+        wordsEs: ['empinado', 'puntiagudo', 'en forma de cono', 'plano', 'ancho'] },
       l2_magma: { tip: 'Denk an Honig und Wasser: Honig ist zähflüssig, Wasser ist dünnflüssig. Welcher Vulkan hat «Honig-Magma»?',
         words: ['zähflüssig', 'dünnflüssig', 'Gase', 'Druck'],
         starters: 'Beim Schichtvulkan ist das Magma …\nBeim Schildvulkan ist das Magma …',
-        keys: [['zähflüssig', ['zaeh']], ['dünnflüssig', ['duenn']]] },
+        keys: [['zähflüssig', ['zaeh']], ['dünnflüssig', ['duenn']]],
+        tipEs: 'Piensa en la miel y el agua: la miel es viscosa (espesa), el agua es fluida (líquida). ¿Qué volcán tiene «magma de miel»?',
+        wordsEs: ['viscoso', 'fluido', 'gases', 'presión'],
+        startersEs: 'En el estratovolcán, el magma es …\nEn el volcán en escudo, el magma es …',
+        keysEs: [['viscoso (espeso)', ['viscos', 'espes']], ['fluido (líquido)', ['fluid', 'liquid']]] },
       l2_schichten: { tip: 'Ein Schichtvulkan bricht viele Male aus. Was fällt bei einer Explosion auf den Berg? Was fliesst den Hang hinunter und wird hart?',
         words: ['immer wieder', 'Ausbruch', 'Asche', 'Gestein', 'Lava', 'erstarrt', 'abwechselnd'],
         starters: 'Ein Schichtvulkan bricht immer wieder aus. Bei einer Explosion …\nDie Lava …\nSo entstehen …',
-        keys: [['Asche / Gestein', ['asche', 'stein']], ['Lava erstarrt / wird hart', ['erstarr', 'hart', 'fest', 'abkuehl', 'kuehlt']], ['abwechselnd / übereinander', ['abwechselnd', 'wechsel', 'uebereinander', 'nacheinander']]] },
+        keys: [['Asche / Gestein', ['asche', 'stein']], ['Lava erstarrt / wird hart', ['erstarr', 'hart', 'fest', 'abkuehl', 'kuehlt']], ['abwechselnd / übereinander', ['abwechselnd', 'wechsel', 'uebereinander', 'nacheinander']]],
+        tipEs: 'Un estratovolcán entra en erupción muchas veces. ¿Qué cae sobre la montaña en una explosión? ¿Qué baja por la ladera y se pone dura?',
+        wordsEs: ['una y otra vez', 'erupción', 'ceniza', 'roca', 'lava', 'se solidifica', 'una tras otra'],
+        startersEs: 'Un estratovolcán entra en erupción una y otra vez. En una explosión …\nLa lava …\nAsí se forman …',
+        keysEs: [['ceniza / roca', ['ceniza', 'roca', 'piedra']], ['la lava se solidifica / se pone dura', ['solid', 'endurec', 'se pone dur', 'enfri']], ['una tras otra / una encima de otra', ['tras otra', 'alterna', 'encima', 'sobre otra', 'intercal']]] },
       l3_schicht: { tip: 'Stell dir eine geschüttelte Flasche Mineralwasser vor: Das Gas kann nicht raus, der Druck steigt. Was passiert, wenn du sie öffnest?',
         words: ['zähflüssig', 'Gase', 'Druck', 'Pfropfen', 'explosiv', 'Asche', 'Steine'],
         starters: 'Das Magma ist …\nDie Gase können …\nDarum steigt …\nWenn der Druck zu gross wird, …',
-        keys: [['zähflüssig', ['zaeh']], ['Gase', ['gas']], ['Druck', ['druck']], ['explosiv / Explosion', ['explo']]] },
+        keys: [['zähflüssig', ['zaeh']], ['Gase', ['gas']], ['Druck', ['druck']], ['explosiv / Explosion', ['explo']]],
+        tipEs: 'Imagina una botella de agua con gas que alguien agitó: el gas no puede salir y la presión sube. ¿Qué pasa cuando la abres?',
+        wordsEs: ['viscoso', 'gases', 'presión', 'tapón', 'explosiva', 'ceniza', 'piedras'],
+        startersEs: 'El magma es …\nLos gases …\nPor eso sube …\nCuando la presión es demasiado grande, …',
+        keysEs: [['viscoso (espeso)', ['viscos', 'espes']], ['gases', ['gas']], ['presión', ['presion']], ['explosiva / explosión', ['explo']]] },
       l3_schild: { tip: 'Hier ist es wie bei einer offenen Flasche: Das Gas kann einfach entweichen. Gibt es dann viel oder wenig Druck?',
         words: ['dünnflüssig', 'Gase entweichen', 'wenig Druck', 'ruhig', 'fliessend', 'Lava'],
         starters: 'Die Lava ist …\nDie Gase können …\nDarum ist der Ausbruch …',
-        keys: [['dünnflüssig', ['duenn']], ['Gase entweichen', ['gas']], ['wenig / kein Druck', ['druck']], ['ruhig / fliessend', ['fliess', 'ruhig']]] },
+        keys: [['dünnflüssig', ['duenn']], ['Gase entweichen', ['gas']], ['wenig / kein Druck', ['druck']], ['ruhig / fliessend', ['fliess', 'ruhig']]],
+        tipEs: 'Aquí pasa como con una botella abierta: el gas sale sin problema. ¿Hay entonces mucha o poca presión?',
+        wordsEs: ['fluida', 'los gases salen', 'poca presión', 'tranquila', 'fluyendo', 'lava'],
+        startersEs: 'La lava es …\nLos gases …\nPor eso la erupción es …',
+        keysEs: [['fluida (líquida)', ['fluid', 'liquid']], ['los gases salen', ['gas']], ['poca / nada de presión', ['presion']], ['tranquila / fluyendo', ['fluy', 'tranquil', 'calma']]] },
       l4_entstehung: { tip: 'Drück deine Handflächen fest gegeneinander und schieb. Zuerst bewegt sich nichts, dann rutschen sie plötzlich ab. Genau so ist es bei den Platten.',
         words: ['Platten', 'verhaken', 'Spannung', 'bricht plötzlich', 'Erdbebenherd', 'Energie'],
         starters: 'Die Platten bewegen sich und …\nDadurch baut sich …\nPlötzlich …\nDie Stelle, wo das Beben beginnt, heisst …',
         keys: [['die Platten verhaken sich', ['verhak', 'haeng', 'klemm', 'blockier']], ['Spannung baut sich auf', ['spannung']],
-               ['das Gestein bricht plötzlich', ['bricht', 'bruch', 'brech', 'zerreiss', 'ruck', 'rutsch']], ['Erdbebenherd', ['herd']]] },
+               ['das Gestein bricht plötzlich', ['bricht', 'bruch', 'brech', 'zerreiss', 'ruck', 'rutsch']], ['Erdbebenherd', ['herd']]],
+        tipEs: 'Aprieta fuerte las palmas de las manos una contra otra y empuja. Al principio no se mueve nada, después se resbalan de repente. Así pasa con las placas.',
+        wordsEs: ['placas', 'engancharse', 'tensión', 'se rompe de repente', 'foco (hipocentro)', 'energía'],
+        startersEs: 'Las placas se mueven y …\nAsí se acumula …\nDe repente …\nEl lugar donde empieza el terremoto se llama …',
+        keysEs: [['las placas se enganchan', ['enganch', 'atasc', 'bloque', 'atrap']], ['se acumula tensión', ['tension']],
+               ['la roca se rompe de repente', ['romp', 'quiebr', 'fractur', 'desliz', 'resbal', ' rota', ' roto']], ['foco (hipocentro)', ['foco', 'hipocentro']]] },
       l4_messen: { tip: 'Du suchst drei Wörter: ein Gerät, eine Aufzeichnung und eine Skala. Die beiden ersten beginnen gleich und unterscheiden sich nur am Ende. Die Skala ist nach einem Forscher benannt.',
         words: ['Seismograph', 'Seismogramm', 'Richter-Skala'],
         starters: 'Das Messgerät heisst …\nDie Aufzeichnung heisst …\nDie Skala heisst …',
-        keys: [['Seismograph', ['seismograph', 'seismograf']], ['Seismogramm', ['seismogramm']], ['Richter-Skala', ['richter']]] },
+        keys: [['Seismograph', ['seismograph', 'seismograf']], ['Seismogramm', ['seismogramm']], ['Richter-Skala', ['richter']]],
+        tipEs: 'Buscas tres palabras: un aparato, un registro y una escala. Las dos primeras empiezan igual y solo cambian al final. La escala lleva el nombre de un científico.',
+        wordsEs: ['sismógrafo', 'sismograma', 'escala de Richter'],
+        startersEs: 'El aparato de medición se llama …\nEl registro se llama …\nLa escala se llama …',
+        keysEs: [['sismógrafo', ['sismograf', 'seismograf']], ['sismograma', ['sismogram', 'seismogram']], ['escala de Richter', ['richter']]] },
       l4_rechnen: { tip: 'Merke dir zwei Zahlen: 10 und 32. Pro Stufe: Ausschlag mal 10, Energie mal 32. Zähle zuerst die Stufen (grosse Zahl minus kleine Zahl). Dann so oft mal 10 bzw. mal 32 rechnen.',
         words: ['Ausschlag', '× 10', 'Energie', '× 32', 'Stufen'],
         starters: 'Pro Stufe wird der Ausschlag …-mal grösser.\nPro Stufe wird die Energie …-mal grösser.\nBeispiel Stärke 6 gegen 3: Das sind … Stufen. Ausschlag: … Energie: …',
-        keys: [['Ausschlag mal 10', ['10', 'zehn']], ['Energie mal 32', ['32']], ['Beispiel richtig: 1000-mal Ausschlag', ['1000', '1 000', "1'000", '1.000']], ['Beispiel richtig: 32 768-mal Energie', ['32768', '32 768', "32'768", '32.768']]] },
+        keys: [['Ausschlag mal 10', ['10', 'zehn']], ['Energie mal 32', ['32']], ['Beispiel richtig: 1000-mal Ausschlag', ['1000', '1 000', "1'000", '1.000']], ['Beispiel richtig: 32 768-mal Energie', ['32768', '32 768', "32'768", '32.768']]],
+        tipEs: 'Recuerda dos números: 10 y 32. Por cada grado: amplitud por 10, energía por 32. Primero cuenta los grados (número grande menos número pequeño). Después multiplica esas veces por 10 o por 32.',
+        wordsEs: ['amplitud', '× 10', 'energía', '× 32', 'grados'],
+        startersEs: 'Por cada grado, la amplitud es … veces mayor.\nPor cada grado, la energía es … veces mayor.\nEjemplo magnitud 6 contra 3: son … grados. Amplitud: … Energía: …',
+        keysEs: [['amplitud por 10', ['10', 'diez']], ['energía por 32', ['32', 'treinta y dos']], ['ejemplo correcto: amplitud 1000 veces', ['1000', '1 000', "1'000", '1.000', ' mil ']], ['ejemplo correcto: energía 32 768 veces', ['32768', '32 768', "32'768", '32.768']]] },
       l4_stufen: { tip: 'Geh von klein nach gross: Was merkt man bei einem kleinen Beben? Ab wann gehen Gebäude kaputt? Wann ist alles zerstört?',
         words: ['kaum spürbar', 'Geschirr klirrt', 'Risse', 'Schäden', 'stürzen ein', 'totale Zerstörung'],
         starters: 'Unter 3: …\n4: …\n5: …\n6: …\n7: …\n8 und mehr: …',
-        keys: [['kleine Stärke: kaum spürbar', ['kaum', 'spuer', 'merkt']], ['Stärke 6: Schäden / Risse an Gebäuden', ['schaed', 'riss', 'kaputt']], ['Stärke 7: Gebäude stürzen ein', ['stuerz']], ['Stärke 8 und mehr: totale Zerstörung', ['zerstoer', 'verwuest']]] },
+        keys: [['kleine Stärke: kaum spürbar', ['kaum', 'spuer', 'merkt']], ['Stärke 6: Schäden / Risse an Gebäuden', ['schaed', 'riss', 'kaputt']], ['Stärke 7: Gebäude stürzen ein', ['stuerz']], ['Stärke 8 und mehr: totale Zerstörung', ['zerstoer', 'verwuest']]],
+        tipEs: 'Ve de pequeño a grande: ¿Qué se nota en un terremoto pequeño? ¿Desde qué magnitud se dañan los edificios? ¿Cuándo está todo destruido?',
+        wordsEs: ['casi no se siente', 'los platos vibran', 'grietas', 'daños', 'se derrumban', 'destrucción total'],
+        startersEs: 'Menos de 3: …\n4: …\n5: …\n6: …\n7: …\n8 o más: …',
+        keysEs: [['magnitud pequeña: casi no se siente', ['casi no', 'apenas', 'sient', 'percib']], ['magnitud 6: daños / grietas en edificios', ['dano', 'griet', 'romp']], ['magnitud 7: los edificios se derrumban', ['derrumb', ' caen', 'colaps']], ['magnitud 8 o más: destrucción total', ['destru', 'arras']]] },
       l4_verhalten: { tip: 'Denk an drei Orte: im Haus, draussen und im Auto. Was kann herunterfallen oder kaputtgehen? Wo bist du geschützt?',
         words: ['Tisch', 'festhalten', 'Fenster', 'kein Lift', 'freier Platz', 'Auto anhalten'],
         starters: 'Im Haus …\nIm Freien …\nIm Auto …',
-        keys: [['unter einen Tisch', ['tisch']], ['weg von Fenstern / Glas / Schränken', ['fenster', 'glas', 'schrank', 'regal']], ['keinen Lift benutzen', ['lift', 'aufzug']], ['im Freien: auf einen freien Platz', ['platz', 'frei']], ['im Auto: anhalten und sitzen bleiben', ['auto']]] },
+        keys: [['unter einen Tisch', ['tisch']], ['weg von Fenstern / Glas / Schränken', ['fenster', 'glas', 'schrank', 'regal']], ['keinen Lift benutzen', ['lift', 'aufzug']], ['im Freien: auf einen freien Platz', ['platz', 'frei']], ['im Auto: anhalten und sitzen bleiben', ['auto']]],
+        tipEs: 'Piensa en tres lugares: en casa, afuera y en el auto. ¿Qué se puede caer o romper? ¿Dónde estás protegido?',
+        wordsEs: ['mesa', 'agarrarse', 'ventana', 'no usar el ascensor', 'lugar abierto', 'parar el auto'],
+        startersEs: 'En casa …\nAfuera …\nEn el auto …',
+        keysEs: [['debajo de una mesa', ['mesa']], ['lejos de ventanas / vidrios / armarios', ['ventan', 'vidrio', 'cristal', 'armario', 'estante', 'mueble']], ['no usar el ascensor', ['ascensor', 'elevador']], ['afuera: a un lugar abierto', ['abierto', 'libre', 'espacio', 'plaza']], ['en el auto: parar y quedarse sentado', ['auto', 'coche', 'carro', 'vehiculo']]] },
       l5_ausloeser: { tip: 'Ein Tsunami beginnt nicht mit Wind, sondern unter dem Meer. Was bewegt sich dort plötzlich?',
         words: ['Seebeben', 'Meeresboden', 'ganzes Wasser', 'nach oben gestossen'],
         starters: 'Ein Tsunami entsteht durch …\nDer Meeresboden …\nDadurch wird …',
-        keys: [['Seebeben / Erdbeben im Meer', ['beben']], ['der Meeresboden bewegt sich', ['boden', 'grund']], ['das ganze Wasser wird nach oben gestossen', ['ganz', 'gesamt', 'alles', 'oben', 'hoch']]] },
+        keys: [['Seebeben / Erdbeben im Meer', ['beben']], ['der Meeresboden bewegt sich', ['boden', 'grund']], ['das ganze Wasser wird nach oben gestossen', ['ganz', 'gesamt', 'alles', 'oben', 'hoch']]],
+        tipEs: 'Un tsunami no empieza con el viento, sino debajo del mar. ¿Qué se mueve allí de repente?',
+        wordsEs: ['terremoto submarino', 'fondo del mar', 'toda el agua', 'empujada hacia arriba'],
+        startersEs: 'Un tsunami se forma por …\nEl fondo del mar …\nPor eso …',
+        keysEs: [['terremoto submarino / terremoto en el mar', ['terremot', 'sism', 'maremoto']], ['el fondo del mar se mueve', ['fondo', 'suelo']], ['toda el agua es empujada hacia arriba', ['toda', 'todo', 'entera', 'arriba', 'sube', 'eleva', 'levant']]] },
       l5_tabelle: { tip: 'Vergleiche vier Dinge: Wie entsteht die Welle? Welches Wasser bewegt sich? Wie lang ist die Welle? Wie schnell ist sie?',
         words: ['Wind', 'Seebeben', 'oberste Schicht', 'ganzes Wasser', '400 m', '1000 km', 'langsam', 'sehr schnell'],
         starters: 'Entstehung: normale Welle … / Tsunami …\nBewegung des Wassers: normale Welle … / Tsunami …\nWellenlänge: normale Welle … / Tsunami …\nGeschwindigkeit: normale Welle … / Tsunami …',
         keys: [['Wind', ['wind']], ['Seebeben', ['beben']], ['nur oben / oberste Schicht', ['ober', 'nur oben']], ['ganzes Wasser', ['ganz', 'gesamt', 'grund']],
-               ['bis ca. 400 m', ['400']], ['bis 1000 km', ['1000', '1 000', "1'000", '1.000']], ['langsam', ['langsam']], ['sehr schnell', ['schnell']]] },
+               ['bis ca. 400 m', ['400']], ['bis 1000 km', ['1000', '1 000', "1'000", '1.000']], ['langsam', ['langsam']], ['sehr schnell', ['schnell']]],
+        tipEs: 'Compara cuatro cosas: ¿Cómo se forma la ola? ¿Qué agua se mueve? ¿Cuál es su longitud? ¿Cuál es su velocidad?',
+        wordsEs: ['viento', 'terremoto submarino', 'capa de arriba', 'toda el agua', '400 m', '1000 km', 'lenta', 'muy rápida'],
+        startersEs: 'Cómo se forma: ola normal … / tsunami …\nMovimiento del agua: ola normal … / tsunami …\nLongitud de onda: ola normal … / tsunami …\nVelocidad: ola normal … / tsunami …',
+        keysEs: [['viento', ['viento']], ['terremoto submarino', ['terremot', 'sism', 'maremoto']], ['solo arriba / la capa de arriba', ['arriba', 'superfic', 'superior']], ['toda el agua', ['toda', 'todo', 'entera', 'fondo']],
+               ['hasta aprox. 400 m', ['400']], ['hasta 1000 km', ['1000', '1 000', "1'000", '1.000']], ['lenta', ['lent']], ['muy rápida', ['rapid']]] },
       l5_kueste: { tip: 'Teil 1: Wie tief ist das offene Meer? Wie hoch ist dort die Welle? Teil 2: Was passiert, wenn die schnelle Welle ins flache Wasser kommt? Denk an einen Stau auf der Autobahn.',
         words: ['tief', 'ca. 1 m', 'abgebremst', 'staut sich', 'türmt sich auf', 'enge Bucht'],
         starters: 'Auf dem offenen Meer …\nAn der Küste wird die Welle …\nIn engen Buchten …',
         keys: [['offenes Meer: Welle nur ca. 1 m / flach', ['1 m', '1m', 'meter', 'flach', 'klein', 'niedrig', 'tief']], ['an der Küste abgebremst', ['brems', 'langsamer']],
-               ['das Wasser staut sich / türmt sich auf', ['stau', 'tuerm', 'hoch']], ['enge Bucht: kein Platz zum Ausweichen', ['bucht', 'eng', 'platz']]] },
+               ['das Wasser staut sich / türmt sich auf', ['stau', 'tuerm', 'hoch']], ['enge Bucht: kein Platz zum Ausweichen', ['bucht', 'eng', 'platz']]],
+        tipEs: 'Parte 1: ¿Es profundo el mar abierto? ¿Qué altura tiene allí la ola? Parte 2: ¿Qué pasa cuando la ola rápida llega al agua poco profunda? Piensa en un embotellamiento en la autopista.',
+        wordsEs: ['profundo', 'aprox. 1 m', 'se frena', 'se amontona', 'sube muy alto', 'bahía estrecha'],
+        startersEs: 'En mar abierto …\nEn la costa, la ola …\nEn las bahías estrechas …',
+        keysEs: [['mar abierto: ola de solo aprox. 1 m / baja', ['1 m', '1m', 'metro', ' baj', 'pequen', 'profund']], ['en la costa se frena', ['fren', 'lent', 'despacio']],
+               ['el agua se amontona / sube muy alto', ['amonton', 'acumul', ' alt', 'crece', 'sube']], ['bahía estrecha: no hay espacio para salir', ['bahia', 'estrech', 'espacio', 'lugar']]] },
       l5_strand: { tip: 'Das Meer macht vor dem Tsunami etwas Seltsames mit dem Wasser am Strand. Und dann: Wohin musst du gehen, damit das Wasser dich nicht erreicht?',
         words: ['Meer zieht sich zurück', 'weg vom Strand', 'hoher Ort', 'Hügel', 'andere warnen'],
         starters: 'Das Warnzeichen ist: …\nIch muss sofort …',
-        keys: [['das Meer zieht sich zurück', ['zurueck']], ['sofort weg vom Strand', ['weg', 'renn', 'flieh', 'lauf']], ['an einen hohen Ort (Hügel, hohes Gebäude)', ['hoch', 'hoeh', 'huegel', 'berg', 'stock', 'dach']], ['andere warnen', ['warn']]] }
+        keys: [['das Meer zieht sich zurück', ['zurueck']], ['sofort weg vom Strand', ['weg', 'renn', 'flieh', 'lauf']], ['an einen hohen Ort (Hügel, hohes Gebäude)', ['hoch', 'hoeh', 'huegel', 'berg', 'stock', 'dach']], ['andere warnen', ['warn']]],
+        tipEs: 'Antes del tsunami, el mar hace algo raro con el agua de la playa. Y después: ¿Adónde tienes que ir para que el agua no te alcance?',
+        wordsEs: ['el mar se retira', 'lejos de la playa', 'lugar alto', 'colina', 'avisar a otros'],
+        startersEs: 'La señal de alerta es: …\nTengo que …',
+        keysEs: [['el mar se retira', ['retir', 'se va', 'retroced']], ['enseguida lejos de la playa', ['lejos', 'corr', 'hui', 'huy', 'alej', 'salir']], ['a un lugar alto (colina, edificio alto)', [' alt', 'colina', 'cerro', 'monta', 'piso', 'techo', 'arriba']], ['avisar a otros', ['avis', 'advert', 'alert']]] }
     };
+    // Hilfe in der gewählten Sprache
+    const helpOf = (id) => {
+      const h = HELP[id] || {};
+      return ES() ? { tip: h.tipEs, words: h.wordsEs, starters: h.startersEs, keys: h.keysEs } : h;
+    };
+    // Freitext pro Sprache getrennt speichern (deutsche Texte unter dem alten Schlüssel)
+    const blattKey = (id, lang) => ((lang || LANG) === 'es' ? 'blatt_es_' : 'blatt_') + id;
 
     const normText = (s) => String(s || '').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/\u00df/g, 'ss');
+    // Spanisch: Akzente und Gross/Klein egal (á = a, ñ = n), Satzzeichen ausser . und ' werden zu Leerzeichen
+    const normEs = (s) => ' ' + String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9.']+/g, ' ').replace(/\s+/g, ' ').trim() + ' ';
 
     function toggleBox(prefix, id) {
       const box = document.getElementById(prefix + '-' + id);
       if (box) box.classList.toggle('hidden');
     }
     function insertStarters(id) {
-      const h = HELP[id], ta = document.querySelector(`textarea[data-key="blatt_${id}"]`);
+      const h = helpOf(id), ta = document.querySelector(`textarea[data-key="${blattKey(id)}"]`);
       if (!h || !h.starters || !ta) return;
       const first = h.starters.split('\n')[0].split('…')[0].trim();
       if (ta.value.includes(first)) { ta.focus(); return; }
       ta.value = ta.value.trim() ? ta.value.replace(/\s+$/, '') + '\n' + h.starters : h.starters;
       ta.rows = Math.max(ta.rows, h.starters.split('\n').length + 2);
-      saveAnswer('blatt_' + id, ta.value);
+      saveAnswer(blattKey(id), ta.value);
       ta.focus();
-      showToast('✏️ Satzanfänge eingefügt', 'Schreib bei den drei Punkten … weiter.');
+      showToast(tr('✏️ Satzanfänge eingefügt', '✏️ Inicios de frase puestos'), tr('Schreib bei den drei Punkten … weiter.', 'Sigue escribiendo donde están los tres puntos …'));
     }
-    // Sucht die wichtigen Punkte im Text der Schüler (die eingefügten Satzanfänge zählen nicht mit)
+    // Sucht die wichtigen Punkte im Text der Schüler (die eingefügten Satzanfänge zählen nicht mit).
+    // Geprüft wird der Text der gewählten Sprache mit den Schlüsselwörtern dieser Sprache.
     function checkText(id) {
-      const h = HELP[id], box = document.getElementById('chk-' + id);
+      const h = helpOf(id), box = document.getElementById('chk-' + id);
       if (!h || !h.keys || !box) return;
-      let text = A('blatt_' + id) || '';
+      let text = A(blattKey(id)) || '';
       if (h.starters) h.starters.split('\n').forEach(line => {
         const pre = line.split('…')[0].trim();
         if (pre) text = text.split(pre).join(' ');
       });
-      text = normText(text.replace(/…/g, ' '));
+      const es = ES();
+      text = es ? normEs(text.replace(/…/g, ' ')) : normText(text.replace(/…/g, ' '));
+      const keyNorm = (p) => es ? p.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '') : p;
       if (text.replace(/[^a-z0-9]/g, '').length < 5) {
-        box.innerHTML = '<p class="font-semibold text-amber-800">Schreib zuerst eine Antwort ins Feld. Tipp und Satzanfänge helfen dir dabei.</p>';
+        box.innerHTML = `<p class="font-semibold text-amber-800">${tr('Schreib zuerst eine Antwort ins Feld. Tipp und Satzanfänge helfen dir dabei.', 'Primero escribe una respuesta en el campo. La pista y los inicios de frase te ayudan.')}</p>`;
         box.classList.remove('hidden');
         return;
       }
-      const res = h.keys.map(([label, parts]) => ({ label, ok: parts.some(p => text.includes(p)) }));
+      const res = h.keys.map(([label, parts]) => ({ label, ok: parts.some(p => text.includes(keyNorm(p))) }));
       const n = res.filter(r => r.ok).length;
       box.innerHTML = `
-        <p class="font-bold ${n === res.length ? 'text-emerald-700' : 'text-amber-800'}">${n === res.length ? '🌟 Super! Alle wichtigen Punkte sind drin.' : `Du hast ${n} von ${res.length} wichtigen Punkten.`}</p>
+        <p class="font-bold ${n === res.length ? 'text-emerald-700' : 'text-amber-800'}">${n === res.length ? tr('🌟 Super! Alle wichtigen Punkte sind drin.', '🌟 ¡Súper! Están todos los puntos importantes.') : tr(`Du hast ${n} von ${res.length} wichtigen Punkten.`, `Tienes ${n} de ${res.length} puntos importantes.`)}</p>
         <ul class="mt-1 space-y-0.5">${res.map(r => `<li>${r.ok ? '✅' : '❌'} ${r.label}</li>`).join('')}</ul>
-        <p class="text-[11px] text-slate-500 mt-1">Der Computer sucht nur nach wichtigen Wörtern. Vergleiche danach trotzdem mit der Musterlösung.</p>`;
+        <p class="text-[11px] text-slate-500 mt-1">${tr('Der Computer sucht nur nach wichtigen Wörtern. Vergleiche danach trotzdem mit der Musterlösung.', 'El programa solo busca palabras importantes. Después compara igual con la respuesta modelo.')}</p>`;
       box.classList.remove('hidden');
     }
     function openTheory(tab) {
@@ -788,41 +1079,48 @@
       if (d) { d.open = true; setTimeout(() => d.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); }
     }
 
+    function solBtnText(step, shown) {
+      return `${step} · ` + (shown ? tr('🙈 Musterlösung verstecken', '🙈 Ocultar la respuesta modelo') : tr('👀 Musterlösung zeigen', '👀 Ver la respuesta modelo'));
+    }
     function renderBlatt() {
       const list = document.getElementById('blatt-list');
       if (!list) return;
       const btn = 'px-2.5 py-1.5 rounded-lg text-xs font-bold border';
       list.innerHTML = BLATT.map(sec => `
         <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
-          <h3 class="text-base font-black text-slate-900">${sec.lz}</h3>
+          <h3 class="text-base font-black text-slate-900">${T(sec.lz)}</h3>
           ${sec.items.map(it => {
-            const h = HELP[it.id] || {};
+            const h = helpOf(it.id);
             const words = h.words ? shuffleArray(h.words) : [];
+            // Hinweis, wenn nur in der anderen Sprache ein Text gespeichert ist
+            const other = !it.sketch && !A(blattKey(it.id)) && A(blattKey(it.id, ES() ? 'de' : 'es'))
+              ? `<p class="text-[11px] text-sky-800">${tr('Du hast hier schon eine Antwort auf Spanisch geschrieben. Tippe oben auf «Español», um sie zu sehen.', 'Aquí ya escribiste una respuesta en alemán. Toca «Deutsch» arriba para verla.')}</p>` : '';
             return `
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-2">
-              <p class="text-sm font-semibold text-slate-800">${it.q}</p>
+              <p class="text-sm font-semibold text-slate-800">${T(it.q)}</p>
               ${it.sketch
-                ? '<p class="text-xs text-slate-500">Zeichne die Skizze auf dein Blatt. Vergleiche dann mit der Musterlösung.</p>'
-                : `<textarea data-key="blatt_${it.id}" rows="4" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-sm" placeholder="Deine Antwort in eigenen Worten …">${esc(A('blatt_' + it.id) || '')}</textarea>`}
-              <p class="text-[11px] text-slate-500">Weisst du nicht weiter? Geh Schritt für Schritt: 1 → 2 → 3 → 4.</p>
+                ? `<p class="text-xs text-slate-500">${tr('Zeichne die Skizze auf dein Blatt. Vergleiche dann mit der Musterlösung.', 'Haz el dibujo en tu hoja. Después compáralo con la respuesta modelo.')}</p>`
+                : `<textarea data-key="${blattKey(it.id)}" rows="4" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-sm" placeholder="${tr('Deine Antwort in eigenen Worten …', 'Tu respuesta con tus propias palabras …')}">${esc(A(blattKey(it.id)) || '')}</textarea>`}
+              ${other}
+              <p class="text-[11px] text-slate-500">${tr('Weisst du nicht weiter? Geh Schritt für Schritt: 1 → 2 → 3 → 4.', '¿No sabes cómo seguir? Ve paso a paso: 1 → 2 → 3 → 4.')}</p>
               <div class="flex flex-wrap gap-1.5">
-                ${h.tip ? `<button type="button" onclick="toggleBox('tip','${it.id}')" class="${btn} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">1 · 💡 Tipp</button>` : ''}
-                ${h.starters ? `<button type="button" onclick="insertStarters('${it.id}')" class="${btn} bg-sky-50 border-sky-300 text-sky-900 hover:bg-sky-100">2 · ✏️ Satzanfänge</button>` : ''}
-                ${h.keys ? `<button type="button" onclick="checkText('${it.id}')" class="${btn} bg-violet-50 border-violet-300 text-violet-900 hover:bg-violet-100">3 · 🔍 Antwort prüfen</button>` : ''}
-                <button type="button" onclick="toggleSolution('${it.id}')" id="solbtn-${it.id}" class="${btn} bg-orange-100 border-orange-300 text-orange-900 hover:bg-orange-200">${h.keys ? '4' : '2'} · 👀 Musterlösung zeigen</button>
-                <button type="button" onclick="openTheory('${sec.tab}')" class="${btn} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
+                ${h.tip ? `<button type="button" onclick="toggleBox('tip','${it.id}')" class="${btn} bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">${tr('1 · 💡 Tipp', '1 · 💡 Pista')}</button>` : ''}
+                ${h.starters ? `<button type="button" onclick="insertStarters('${it.id}')" class="${btn} bg-sky-50 border-sky-300 text-sky-900 hover:bg-sky-100">${tr('2 · ✏️ Satzanfänge', '2 · ✏️ Inicios de frase')}</button>` : ''}
+                ${h.keys ? `<button type="button" onclick="checkText('${it.id}')" class="${btn} bg-violet-50 border-violet-300 text-violet-900 hover:bg-violet-100">${tr('3 · 🔍 Antwort prüfen', '3 · 🔍 Revisar mi respuesta')}</button>` : ''}
+                <button type="button" onclick="toggleSolution('${it.id}')" id="solbtn-${it.id}" data-step="${h.keys ? '4' : '2'}" class="${btn} bg-orange-100 border-orange-300 text-orange-900 hover:bg-orange-200">${solBtnText(h.keys ? '4' : '2', false)}</button>
+                <button type="button" onclick="openTheory('${sec.tab}')" class="${btn} bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${tr('📖 Theorie', '📖 Teoría')}</button>
               </div>
               ${h.tip ? `<div id="tip-${it.id}" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-                <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${h.tip}
-                ${words.length ? `<div class="mt-2 text-[11px] font-bold text-yellow-800">Diese Wörter helfen dir:</div>
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">${tr('💡 Tipp', '💡 Pista')}</div>${h.tip}
+                ${words.length ? `<div class="mt-2 text-[11px] font-bold text-yellow-800">${tr('Diese Wörter helfen dir:', 'Estas palabras te ayudan:')}</div>
                 <div class="flex flex-wrap gap-1 mt-1">${words.map(w => `<span class="px-2 py-0.5 rounded-full bg-white border border-yellow-300 text-xs font-semibold">${w}</span>`).join(' ')}</div>` : ''}
               </div>` : ''}
               <div id="chk-${it.id}" class="hidden rounded-lg border border-violet-300 bg-violet-50 p-3 text-sm text-slate-800"></div>
               <div id="sol-${it.id}" class="hidden rounded-lg border border-emerald-300 bg-emerald-50 p-3 text-sm text-slate-800 leading-relaxed">
-                <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 mb-1">Musterlösung</div>${it.sol}
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 mb-1">${tr('Musterlösung', 'Respuesta modelo')}</div>${T(it.sol)}
               </div>
               <label class="flex items-center gap-1.5 text-xs font-semibold text-emerald-800 cursor-pointer pt-1">
-                <input type="checkbox" data-key="blatt_ok_${it.id}" class="accent-emerald-600" ${A('blatt_ok_' + it.id) === true ? 'checked' : ''}> Das kann ich jetzt
+                <input type="checkbox" data-key="blatt_ok_${it.id}" class="accent-emerald-600" ${A('blatt_ok_' + it.id) === true ? 'checked' : ''}> ${tr('Das kann ich jetzt', 'Ya lo sé')}
               </label>
             </div>`;
           }).join('')}
@@ -834,13 +1132,13 @@
       if (!box) return;
       const show = box.classList.contains('hidden');
       box.classList.toggle('hidden', !show);
-      if (btn) btn.textContent = show ? btn.textContent.replace('👀', '🙈').replace('zeigen', 'verstecken') : btn.textContent.replace('🙈', '👀').replace('verstecken', 'zeigen');
+      if (btn) btn.textContent = solBtnText(btn.dataset.step, show);
     }
     function updateBlattProgress() {
       const el = document.getElementById('blatt-progress');
       if (!el) return;
       const n = BLATT_ITEMS.filter(it => A('blatt_ok_' + it.id) === true).length;
-      el.textContent = `✅ ${n} von ${BLATT_ITEMS.length} Lernzielen kann ich schon.`;
+      el.textContent = tr(`✅ ${n} von ${BLATT_ITEMS.length} Lernzielen kann ich schon.`, `✅ Ya sé ${n} de ${BLATT_ITEMS.length} objetivos.`);
     }
 
     // ==============================================================
@@ -933,6 +1231,7 @@
     // ==============================================================
     const CARD = 'bg-slate-50 border border-slate-200';
     let DISPLAY = {};   // gemischte Reihenfolgen
+    const CHECKED = new Set();   // Aufgaben, die schon geprüft wurden (Farben bleiben beim Sprachwechsel)
 
     // Mischt eine Aufgabe neu: Reihenfolge der Teilfragen, Zeilen, Antworten, Karten und Abschnitte im Lückentext
     function shuffleTask(taskId) {
@@ -952,26 +1251,30 @@
       Object.keys(DEFS).forEach(shuffleTask);
     }
 
-    function selectHTML(key, opts, order, extra) {
+    // labels: spanische Anzeige zu opts (gleiche Reihenfolge); der Wert bleibt deutsch
+    function selectHTML(key, opts, order, extra, labels) {
+      const lab = (o, i) => (ES() && labels) ? labels[i] : o;
       const options = order
         ? opts.map(o => `<option value="${esc(o)}">${o}.</option>`).join('')
-        : opts.map(o => `<option value="${esc(o)}">${o}</option>`).join('');
+        : opts.map((o, i) => `<option value="${esc(o)}">${lab(o, i)}</option>`).join('');
       return `<select id="card-${key}" data-key="${key}" ${order ? 'data-noshuffle' : ''} class="${CARD} rounded-lg px-2 py-1 text-sm font-semibold text-slate-800 ${extra || ''}">
-        <option value="">${order ? '–' : '– wählen –'}</option>${options}</select>`;
+        <option value="">${order ? '–' : tr('– wählen –', '– elige –')}</option>${options}</select>`;
     }
 
     // Kopf eines Teils (mit Buchstaben a, b, c …) und optionalem Bild
     function renderPart(b) {
-      const head = b.head ? `<p class="text-sm font-semibold text-slate-800 pt-1">${b._label || ''}${b.head}</p>` : '';
-      return head + (b.pre || '') + renderBlock(b);
+      const head = b.head ? `<p class="text-sm font-semibold text-slate-800 pt-1">${b._label || ''}${T(b.head)}</p>` : '';
+      return head + T(b.pre) + renderBlock(b);
     }
 
     function renderBlock(b) {
-      if (b.type === 'html') return b.html;
+      if (b.type === 'html') return T(b.html);
 
       if (b.type === 'gaps') {
+        // Spanisch: derselbe Abschnitt aus parasEs (gleiche Lücken, gleiche Reihenfolge wie gemischt)
+        const para = (p) => (ES() && b.parasEs) ? b.parasEs[b.paras.indexOf(p)] : p;
         return `<div class="gap-text text-sm text-slate-700 leading-loose space-y-3">` +
-          DISPLAY[b._id].map(p => '<p>' + p.map(s => typeof s === 'string' ? s : selectHTML(s.key, s.opts)).join('') + '</p>').join('') +
+          DISPLAY[b._id].map(p => '<p>' + para(p).map(s => typeof s === 'string' ? s : selectHTML(s.key, s.opts, false, '', s.es)).join('') + '</p>').join('') +
           `</div>`;
       }
 
@@ -980,15 +1283,15 @@
         const nums = Array.from({ length: n }, (_, i) => String(i + 1));
         const rows = DISPLAY[b._id].map(r => {
           if (r.svg) {
-            return `<div class="bg-white border border-slate-200 rounded-xl p-3 space-y-2">${r.svg}
-              <label class="block text-sm font-semibold text-slate-700">${r.label}</label>${selectHTML(r.key, r.opts, false, 'w-full')}</div>`;
+            return `<div class="bg-white border border-slate-200 rounded-xl p-3 space-y-2">${T(r.svg)}
+              <label class="block text-sm font-semibold text-slate-700">${T(r.label)}</label>${selectHTML(r.key, r.opts, false, 'w-full', r.es)}</div>`;
           }
           if (b.order) {
             return `<div class="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-2.5">
-              ${selectHTML(r.key, nums, true, 'shrink-0 w-16')}<span class="text-sm text-slate-700">${r.label}</span></div>`;
+              ${selectHTML(r.key, nums, true, 'shrink-0 w-16')}<span class="text-sm text-slate-700">${T(r.label)}</span></div>`;
           }
           return `<div class="bg-white border border-slate-200 rounded-xl p-2.5 space-y-1.5">
-            <div class="text-sm font-semibold text-slate-800">${r.label}</div>${selectHTML(r.key, r.opts, false, 'w-full')}</div>`;
+            <div class="text-sm font-semibold text-slate-800">${T(r.label)}</div>${selectHTML(r.key, r.opts, false, 'w-full', r.es)}</div>`;
         }).join('');
         return `<div class="${b.grid ? 'grid sm:grid-cols-2 gap-3' : 'space-y-2'}">${rows}</div>`;
       }
@@ -997,8 +1300,8 @@
         const opts = DISPLAY[b._id].map(o => `
           <label class="flex items-start gap-2 p-2 rounded-lg hover:bg-white cursor-pointer text-sm text-slate-700">
             <input type="radio" name="${b.key}" value="${esc(o.v)}" data-key="${b.key}" class="mt-0.5 accent-orange-600" ${A(b.key) === o.v ? 'checked' : ''}>
-            <span>${o.t}</span></label>`).join('');
-        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b._label || ''}${b.q}</p>${opts}</div>`;
+            <span>${T(o.t)}</span></label>`).join('');
+        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b._label || ''}${T(b.q)}</p>${opts}</div>`;
       }
 
       if (b.type === 'checks') {
@@ -1006,19 +1309,19 @@
           const k = `${b.key}__${o.id}`;
           return `<label class="flex items-start gap-2 p-2 rounded-lg hover:bg-white cursor-pointer text-sm text-slate-700">
             <input type="checkbox" data-key="${k}" class="mt-0.5 accent-orange-600" ${A(k) === true ? 'checked' : ''}>
-            <span>${o.t}</span></label>`;
+            <span>${T(o.t)}</span></label>`;
         }).join('');
-        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b._label || ''}${b.q}</p>${opts}
-          <p class="text-[11px] text-slate-500 px-2">Achtung: Eine falsche Antwort gibt einen Punkt Abzug.</p></div>`;
+        return `<div id="card-${b.key}" class="${CARD} rounded-xl p-3"><p class="text-sm font-semibold text-slate-800 mb-1">${b._label || ''}${T(b.q)}</p>${opts}
+          <p class="text-[11px] text-slate-500 px-2">${tr('Achtung: Eine falsche Antwort gibt einen Punkt Abzug.', 'Ojo: cada respuesta marcada que no es correcta resta un punto.')}</p></div>`;
       }
 
       if (b.type === 'num') {
         return `<div class="space-y-2">` + DISPLAY[b._id].map(r => `
           <div class="bg-white border border-slate-200 rounded-xl p-2.5 space-y-1.5">
-            <div class="text-sm text-slate-800">${r.label}</div>
+            <div class="text-sm text-slate-800">${T(r.label)}</div>
             <div class="flex items-center gap-2"><input type="text" inputmode="numeric" autocomplete="off" id="card-${r.key}" data-key="${r.key}"
-              value="${esc(A(r.key) || '')}" class="${CARD} rounded-lg px-2 py-1 text-sm font-bold w-32" placeholder="Zahl">
-              <span class="text-sm text-slate-500">-mal</span></div>
+              value="${esc(A(r.key) || '')}" class="${CARD} rounded-lg px-2 py-1 text-sm font-bold w-32" placeholder="${tr('Zahl', 'Número')}">
+              <span class="text-sm text-slate-500">${tr('-mal', 'veces')}</span></div>
           </div>`).join('') + `</div>`;
       }
 
@@ -1033,22 +1336,23 @@
     function dndCardHTML(c) {
       const sel = dndSelected && dndSelected.key === c.key;
       return `<div id="card-${c.key}" data-card="${c.key}" draggable="true"
-        class="dnd-card ${CARD} rounded-lg px-2.5 py-1.5 text-sm font-medium text-slate-800 ${sel ? 'is-selected' : ''}">${c.t}</div>`;
+        class="dnd-card ${CARD} rounded-lg px-2.5 py-1.5 text-sm font-medium text-slate-800 ${sel ? 'is-selected' : ''}">${T(c.t)}</div>`;
     }
     function renderDnd(b) {
       DND_BLOCKS[b.key] = b;
       const cards = DISPLAY[b._id];
       const pool = cards.filter(c => !b.zones.includes(A(c.key)));
       const ready = dndSelected && dndSelected.block === b.key ? 'is-ready' : '';
+      const zoneLabel = (z) => (ES() && b.zonesEs) ? b.zonesEs[b.zones.indexOf(z)] : z;
       const zone = (z) => `
         <div data-zone="${esc(z)}" data-block="${b.key}" class="dnd-zone ${ready} rounded-xl border-2 border-dashed border-slate-300 bg-white p-2.5 min-h-[110px]">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-orange-700 mb-2">${z}</div>
+          <div class="text-xs font-extrabold uppercase tracking-wider text-orange-700 mb-2">${zoneLabel(z)}</div>
           <div class="flex flex-wrap gap-1.5">${cards.filter(c => A(c.key) === z).map(dndCardHTML).join('')}</div>
         </div>`;
       return `
         <div data-zone="" data-block="${b.key}" class="dnd-zone ${ready} rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/60 p-2.5 min-h-[56px]">
-          <div class="text-[11px] font-semibold text-slate-500 mb-1.5">Karten: antippen, dann die Gruppe antippen (oder mit der Maus ziehen).</div>
-          <div class="flex flex-wrap gap-1.5">${pool.map(dndCardHTML).join('') || '<span class="text-xs text-slate-400">Alle Karten verteilt.</span>'}</div>
+          <div class="text-[11px] font-semibold text-slate-500 mb-1.5">${tr('Karten: antippen, dann die Gruppe antippen (oder mit der Maus ziehen).', 'Tarjetas: toca una tarjeta y después toca el grupo (o arrástrala).')}</div>
+          <div class="flex flex-wrap gap-1.5">${pool.map(dndCardHTML).join('') || `<span class="text-xs text-slate-400">${tr('Alle Karten verteilt.', 'Ya pusiste todas las tarjetas.')}</span>`}</div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">${b.zones.map(zone).join('')}</div>`;
     }
@@ -1125,22 +1429,24 @@
       if (parts.length > 1) parts.forEach((b, i) => { b._label = `<b>${'abcdefgh'[i]})</b> `; });
       const sec = host.closest('section');
       const tab = sec ? sec.id.replace('view-', '') : '';
+      const intro = T(d.intro);
+      const bank = ES() && d.bankEs ? d.bankEs : d.bank;
       host.innerHTML = `
         <div class="flex items-start justify-between gap-3">
-          <h3 class="text-base font-black text-slate-900">Aufgabe ${d.nr}: ${d.title}</h3>
-          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full ${d.extra ? 'bg-slate-200 text-slate-700' : 'bg-orange-100 text-orange-800'}">${d.extra ? 'Zusatz · ' : ''}${TASKS[id].max} P.</span>
+          <h3 class="text-base font-black text-slate-900">${tr('Aufgabe', 'Tarea')} ${d.nr}: ${T(d.title)}</h3>
+          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full ${d.extra ? 'bg-slate-200 text-slate-700' : 'bg-orange-100 text-orange-800'}">${d.extra ? tr('Zusatz · ', 'Extra · ') : ''}${TASKS[id].max} ${tr('P.', 'pts.')}</span>
         </div>
-        ${d.intro ? `<p class="text-sm text-slate-600">${d.intro}</p>` : ''}
-        ${d.bank ? `<div class="flex flex-wrap gap-1.5">${shuffleArray(d.bank).map(w => `<span class="px-2 py-0.5 rounded-full bg-orange-50 border border-orange-200 text-xs font-semibold">${w}</span>`).join(' ')}</div>` : ''}
+        ${intro ? `<p class="text-sm text-slate-600">${intro}</p>` : ''}
+        ${bank ? `<div class="flex flex-wrap gap-1.5">${shuffleArray(bank).map(w => `<span class="px-2 py-0.5 rounded-full bg-orange-50 border border-orange-200 text-xs font-semibold">${w}</span>`).join(' ')}</div>` : ''}
         ${order.map(renderPart).join('')}
         ${d.tip ? `<div id="tip-${id}" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${d.tip}</div>` : ''}
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">${tr('💡 Tipp', '💡 Pista')}</div>${T(d.tip)}</div>` : ''}
         <div class="pt-3 border-t border-slate-100 space-y-2">
           <div class="flex flex-wrap items-center gap-2">
-            <button onclick="checkTask('${id}')" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold transition">✓ Aufgabe ${d.nr} prüfen</button>
-            ${d.tip ? `<button type="button" onclick="toggleBox('tip','${id}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>` : ''}
-            <button type="button" onclick="openTheory('${tab}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
-            <button type="button" onclick="retryTask('${id}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>
+            <button onclick="checkTask('${id}')" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold transition">${tr(`✓ Aufgabe ${d.nr} prüfen`, `✓ Comprobar la tarea ${d.nr}`)}</button>
+            ${d.tip ? `<button type="button" onclick="toggleBox('tip','${id}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">${tr('💡 Tipp', '💡 Pista')}</button>` : ''}
+            <button type="button" onclick="openTheory('${tab}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${tr('📖 Theorie', '📖 Teoría')}</button>
+            <button type="button" onclick="retryTask('${id}')" class="px-2.5 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700 hover:bg-slate-100">${tr('🔀 Nochmals üben', '🔀 Practicar otra vez')}</button>
           </div>
           <div id="fb-${id}" class="text-xs font-semibold"></div>
         </div>`;
@@ -1157,7 +1463,8 @@
       el.classList.add(ok ? 'bg-emerald-50' : 'bg-rose-50', ok ? 'border-emerald-400' : 'border-rose-400');
     }
 
-    function checkTask(id) {
+    function checkTask(id, quiet) {
+      CHECKED.add(id);
       DEFS[id].blocks.forEach(b => {
         if (b.type === 'checks') markCard(`card-${b.key}`, blockScore(b) === blockMax(b));
         else blockItems(b).forEach(it => markCard(`card-${it.key}`, itemOk(b, it)));
@@ -1165,10 +1472,12 @@
       const pts = TASKS[id].score(), max = TASKS[id].max;
       const fb = document.getElementById(`fb-${id}`);
       if (fb) {
-        fb.textContent = pts === max ? `🌟 ${pts}/${max} Punkte: Alles richtig! Mit «🔀 Nochmals üben» kannst du sie neu gemischt wiederholen.` : `${pts}/${max} Punkte. Rot = noch falsch.${DEFS[id].tip ? ' Brauchst du Hilfe? Drück auf «💡 Tipp».' : ''}`;
+        fb.textContent = pts === max
+          ? tr(`🌟 ${pts}/${max} Punkte: Alles richtig! Mit «🔀 Nochmals üben» kannst du sie neu gemischt wiederholen.`, `🌟 ${pts}/${max} puntos: ¡Todo correcto! Con «🔀 Practicar otra vez» puedes repetirla en otro orden.`)
+          : tr(`${pts}/${max} Punkte. Rot = noch falsch.`, `${pts}/${max} puntos. Rojo = todavía no del todo. No pasa nada.`) + (DEFS[id].tip ? tr(' Brauchst du Hilfe? Drück auf «💡 Tipp».', ' ¿Necesitas ayuda? Toca «💡 Pista».') : '');
         fb.className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-amber-700';
       }
-      showToast(`Aufgabe ${DEFS[id].nr}`, `${pts} von ${max} Punkten.`);
+      if (!quiet) showToast(`${tr('Aufgabe', 'Tarea')} ${DEFS[id].nr}`, tr(`${pts} von ${max} Punkten.`, `${pts} de ${max} puntos.`));
     }
 
     // ==============================================================
@@ -1193,36 +1502,37 @@
     // ==============================================================
     // TEST-SIMULATION (SCHWEIZER NOTENSKALA)
     // ==============================================================
-    function evaluateFullExam() {
+    function evaluateFullExam(quiet) {
       const score = EXAM_TASKS.reduce((s, [, t]) => s + t.score(), 0);
       const pct = Math.round((score / MAX_POINTS) * 100);
       const grade = Math.round(((score / MAX_POINTS) * 5 + 1) * 10) / 10;
       const passed = score >= PASS_POINTS;
       let title, cls, badge;
-      if (pct >= 90)      { title = 'Sehr gut ⭐'; cls = 'bg-sky-50 border-sky-300 text-sky-950'; badge = 'bg-sky-600'; }
-      else if (pct >= 75) { title = 'Gut 👏'; cls = 'bg-emerald-50 border-emerald-300 text-emerald-950'; badge = 'bg-emerald-600'; }
-      else if (passed)    { title = 'Bestanden 👍'; cls = 'bg-amber-50 border-amber-300 text-amber-950'; badge = 'bg-amber-600'; }
-      else                { title = 'Noch nicht erreicht ⚠️ Nochmals üben!'; cls = 'bg-rose-50 border-rose-300 text-rose-950'; badge = 'bg-rose-600'; }
+      if (pct >= 90)      { title = tr('Sehr gut ⭐', 'Muy bien ⭐'); cls = 'bg-sky-50 border-sky-300 text-sky-950'; badge = 'bg-sky-600'; }
+      else if (pct >= 75) { title = tr('Gut 👏', 'Bien 👏'); cls = 'bg-emerald-50 border-emerald-300 text-emerald-950'; badge = 'bg-emerald-600'; }
+      else if (passed)    { title = tr('Bestanden 👍', 'Aprobado 👍'); cls = 'bg-amber-50 border-amber-300 text-amber-950'; badge = 'bg-amber-600'; }
+      else                { title = tr('Noch nicht erreicht ⚠️ Nochmals üben!', 'Todavía no lo lograste ⚠️ ¡Practica otra vez!'); cls = 'bg-rose-50 border-rose-300 text-rose-950'; badge = 'bg-rose-600'; }
 
       const rows = EXAM_TASKS.map(([id, t]) => {
         const p = t.score();
-        return `<li class="flex justify-between gap-2 py-1 border-b border-black/5"><span>Aufgabe ${DEFS[id].nr}: ${DEFS[id].title}</span>
+        return `<li class="flex justify-between gap-2 py-1 border-b border-black/5"><span>${tr('Aufgabe', 'Tarea')} ${DEFS[id].nr}: ${T(DEFS[id].title)}</span>
           <span class="font-bold ${p === t.max ? 'text-emerald-700' : 'text-slate-700'} shrink-0">${p} / ${t.max}</span></li>`;
       }).join('');
 
       const banner = document.getElementById('exam-result-banner');
       banner.className = `mt-4 p-4 sm:p-5 rounded-2xl border shadow-sm ${cls} block animate-fade-in`;
       banner.innerHTML = `
-        <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full text-white ${badge}">${passed ? 'Bestanden' : 'Nicht bestanden'}</span>
+        <span class="text-xs uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full text-white ${badge}">${passed ? tr('Bestanden', 'Aprobado') : tr('Nicht bestanden', 'Todavía no aprobado')}</span>
         <h3 class="text-xl font-black mt-2">${title}</h3>
         <div class="flex flex-wrap gap-3 mt-3">
-          <div class="bg-white/80 rounded-xl border border-black/10 px-3 py-2 text-center"><div class="text-[10px] font-bold text-slate-500 uppercase">Punkte</div><div class="text-2xl font-black">${score} <span class="text-xs text-slate-500 font-normal">/ ${MAX_POINTS}</span></div></div>
-          <div class="bg-white/80 rounded-xl border border-black/10 px-3 py-2 text-center"><div class="text-[10px] font-bold text-slate-500 uppercase">Prozent</div><div class="text-2xl font-black">${pct}%</div></div>
-          <div class="bg-white/80 rounded-xl border border-black/10 px-3 py-2 text-center"><div class="text-[10px] font-bold text-slate-500 uppercase">Note</div><div class="text-2xl font-black text-blue-700">${grade.toFixed(1)}</div></div>
+          <div class="bg-white/80 rounded-xl border border-black/10 px-3 py-2 text-center"><div class="text-[10px] font-bold text-slate-500 uppercase">${tr('Punkte', 'Puntos')}</div><div class="text-2xl font-black">${score} <span class="text-xs text-slate-500 font-normal">/ ${MAX_POINTS}</span></div></div>
+          <div class="bg-white/80 rounded-xl border border-black/10 px-3 py-2 text-center"><div class="text-[10px] font-bold text-slate-500 uppercase">${tr('Prozent', 'Porcentaje')}</div><div class="text-2xl font-black">${pct}%</div></div>
+          <div class="bg-white/80 rounded-xl border border-black/10 px-3 py-2 text-center"><div class="text-[10px] font-bold text-slate-500 uppercase">${tr('Note', 'Nota')}</div><div class="text-2xl font-black text-blue-700">${grade.toFixed(1)}</div></div>
         </div>
         <ul class="mt-4 text-xs sm:text-sm">${rows}</ul>`;
+      if (quiet) return;
       banner.scrollIntoView({ behavior: 'smooth' });
-      showToast('Auswertung fertig!', `${score} von ${MAX_POINTS} Punkten, Note ${grade.toFixed(1)}.`);
+      showToast(tr('Auswertung fertig!', '¡Corrección lista!'), tr(`${score} von ${MAX_POINTS} Punkten, Note ${grade.toFixed(1)}.`, `${score} de ${MAX_POINTS} puntos, nota ${grade.toFixed(1)}.`));
     }
 
     // Eine Aufgabe leeren, neu mischen und nochmals lösen
@@ -1233,21 +1543,23 @@
       taskKeys(id).forEach(k => { delete STATE.answers[k]; });
       persist();
       dndSelected = null;
+      CHECKED.delete(id);
       shuffleTask(id);
       renderTask(id);
       const host = document.querySelector(`[data-task="${id}"]`);
       if (host) host.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      showToast('🔀 Neu gemischt', `Aufgabe ${DEFS[id].nr} ist leer und neu gemischt. Viel Erfolg!`);
+      showToast(tr('🔀 Neu gemischt', '🔀 Mezclada otra vez'), tr(`Aufgabe ${DEFS[id].nr} ist leer und neu gemischt. Viel Erfolg!`, `La tarea ${DEFS[id].nr} está vacía y mezclada otra vez. ¡Mucha suerte!`));
     }
 
     function resetAll() {
       STATE.answers = {};
       dndSelected = null;
+      CHECKED.clear();
       try { localStorage.removeItem(STORE_KEY); } catch (e) {}
       document.getElementById('exam-result-banner').classList.add('hidden');
       initShuffledData();
       renderAll();
-      showToast('Zurückgesetzt', 'Alle Antworten wurden gelöscht und neu gemischt.');
+      showToast(tr('Zurückgesetzt', 'Todo borrado'), tr('Alle Antworten wurden gelöscht und neu gemischt.', 'Se borraron todas las respuestas y todo se mezcló otra vez.'));
     }
 
     let toastTimeout = null;
@@ -1266,13 +1578,51 @@
     }
 
     // ==============================================================
+    // SPRACHE ANWENDEN (Umschalter Deutsch | Español)
+    // ==============================================================
+    // title/aria-label im HTML: Spanisch steht in data-es-title / data-es-aria, Deutsch wird beim ersten Mal gemerkt
+    function applyAttrs() {
+      [['title', 'esTitle', 'deTitle'], ['aria-label', 'esAria', 'deAria']].forEach(([attr, es, de]) => {
+        document.querySelectorAll(`[data-${attr === 'title' ? 'es-title' : 'es-aria'}]`).forEach(el => {
+          if (el.dataset[de] == null) el.dataset[de] = el.getAttribute(attr) || '';
+          el.setAttribute(attr, ES() ? el.dataset[es] : el.dataset[de]);
+        });
+      });
+    }
+    function applyLang() {
+      document.documentElement.lang = LANG;
+      document.title = TITLE[LANG];
+      document.querySelectorAll('.lang-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.setlang === LANG));
+      applyAttrs();
+    }
+    // Alles neu zeichnen; Antworten, Mischung, geöffnete Hilfen und Rückmeldungen bleiben
+    function setLang(l) {
+      LANG = l === 'es' ? 'es' : 'de';
+      try { localStorage.setItem(LANG_KEY, LANG); } catch (e) {}
+      const open = [...document.querySelectorAll('[id^="tip-"]:not(.hidden), [id^="sol-"]:not(.hidden)')].map(el => el.id);
+      const chk = [...document.querySelectorAll('[id^="chk-"]:not(.hidden)')].map(el => el.id.slice(4));
+      const banner = document.getElementById('exam-result-banner');
+      const examShown = banner && !banner.classList.contains('hidden');
+      applyLang();
+      renderAll();
+      open.forEach(id => {
+        if (id.startsWith('sol-')) toggleSolution(id.slice(4));
+        else { const el = document.getElementById(id); if (el) el.classList.remove('hidden'); }
+      });
+      chk.forEach(checkText);
+      CHECKED.forEach(id => checkTask(id, true));
+      if (examShown) evaluateFullExam(true);
+    }
+
+    // ==============================================================
     // START
     // ==============================================================
-    Object.assign(window, { switchTab, checkTask, evaluateFullExam, resetAll, toggleSolution, toggleBox, insertStarters, checkText, openTheory, retryTask });
+    Object.assign(window, { setLang, switchTab, checkTask, evaluateFullExam, resetAll, toggleSolution, toggleBox, insertStarters, checkText, openTheory, retryTask });
 
     // Start sobald das HTML da ist – wartet NICHT auf Tailwind/Schriften
     function boot() {
       loadState();
+      applyLang();
       initShuffledData();
       document.querySelectorAll('.js-max-pts').forEach(el => el.textContent = MAX_POINTS);
       document.querySelectorAll('.js-pass-pts').forEach(el => el.textContent = PASS_POINTS);
