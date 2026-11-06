@@ -244,6 +244,7 @@
     // EINSTELLUNGEN
     // ==========================================================
     const ACTIVE_N = 7;               // so viele Wörter sind im Lernpfad gleichzeitig dran
+    const ETAPPE_N = 10;              // nach so vielen Antworten: «Etappe geschafft» (weitermachen oder Pause)
     const TEST_A = 10, TEST_B = 10;   // Test: Deutsch → Englisch, Englisch → Deutsch
     const STAGES = [
       { dir: 'en2de', type: 'mc', label: 'Englisch → Deutsch auswählen' },
@@ -338,7 +339,7 @@
     // SPEICHERN (jeder Zugriff in try/catch)
     // ==========================================================
     const SAVE_KEY = 'ow2u2_lernpfad';
-    const STATE = { part: 't1', path: {}, medal: {}, tests: {} };
+    const STATE = { part: 't1', path: {}, medal: {}, tests: {}, testOpen: {} };
     function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(STATE)); } catch (e) {} }
     function load() {
       try {
@@ -348,6 +349,7 @@
         if (s.path && typeof s.path === 'object') STATE.path = s.path;
         if (s.medal && typeof s.medal === 'object') STATE.medal = s.medal;
         if (s.tests && typeof s.tests === 'object') STATE.tests = s.tests;
+        if (s.testOpen && typeof s.testOpen === 'object') STATE.testOpen = s.testOpen;
       } catch (e) {}
     }
 
@@ -448,8 +450,9 @@
       for (const w of due.concat(started, fresh)) { if (p.queue.length >= ACTIVE_N) break; p.queue.push(w.id); }
     }
     // Aktuelle Frage (wird nicht gespeichert, beim Laden neu gemischt)
-    const Q = { id: null, stage: 0, review: false, opts: [], phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1, token: 0 };
+    const Q = { id: null, stage: 0, review: false, hint: false, opts: [], phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1, token: 0 };
     let STREAK = 0;
+    const SESSION = { answers: 0, right: 0, etappe: 0 };   // nur für diese Sitzung (Etappen)
     function mcOptions(w, dir) {
       const block = new Set([w.id, ...related(w, SAME_IDS), ...related(w, FAMILY_IDS)]);
       const text = x => dir === 'en2de' ? x.de : x.en;
@@ -471,7 +474,7 @@
       const review = isDue(w);
       // Wiederholung: einmal schreiben (lange Ausdrücke: Englisch → Deutsch)
       const stage = review ? (w.noType ? 2 : 3) : Math.min(levelOf(w), STAGES.length - 1);
-      Object.assign(Q, { id: w.id, stage, review, phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1 });
+      Object.assign(Q, { id: w.id, stage, review, hint: false, phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1 });
       Q.opts = STAGES[stage].type === 'mc' ? mcOptions(w, STAGES[stage].dir) : [];
     }
     // Wort nach der Antwort einreihen
@@ -498,6 +501,8 @@
       applyResult(w, ok);
       Object.assign(Q, { phase: 'answered', ok, ans, dontKnow, mastered: ok && !Q.review && isMastered(w) });
       STREAK = ok ? STREAK + 1 : 0;
+      SESSION.answers++;
+      if (ok) SESSION.right++;
       placeWord(w.id, ok);
       save();
       renderPfad(true);
@@ -537,21 +542,62 @@
     function nextQuestion() {
       if (Q.phase !== 'answered') return;
       Q.token++;
+      refill();
+      // Nach jeder Etappe kurz innehalten: Erfolg sehen, weitermachen oder Pause
+      if (P().queue.length && SESSION.answers % ETAPPE_N === 0 && SESSION.etappe !== SESSION.answers) {
+        SESSION.etappe = SESSION.answers;
+        Q.phase = 'etappe';
+        renderPfad(true);
+        return;
+      }
       newQuestion();
       renderPfad(true);
     }
+    function continuePfad() { if (Q.phase !== 'etappe' && Q.phase !== 'pause') return; newQuestion(); renderPfad(true); }
+    function pausePfad() { if (Q.phase !== 'etappe') return; Q.phase = 'pause'; renderPfad(true); }
+    // Hilfe vor «Weiss ich nicht»: erster Buchstabe
+    function giveHint() {
+      if (Q.phase !== 'ask' || STAGES[Q.stage].type !== 'write' || Q.hint) return;
+      const inp = $('pfad-in'), val = inp ? inp.value : '';
+      Q.hint = true;
+      renderPfad(true);
+      if ($('pfad-in')) $('pfad-in').value = val;
+    }
+    const firstLetter = (w, dir) => (dir === 'de2en' ? w.en : deForms(w)[0]).trim().charAt(0);
     function renderPfad(keepFocus) {
       const words = partWords(), done = words.filter(w => isMastered(w)).length;
       const dueN = words.filter(w => isDue(w)).length;
-      const inWork = P().queue.filter(id => !isMastered(BY_ID[id])).length, waiting = words.length - done - inWork;
-      const status = dueN ? `🔁 heute wiederholen: ${dueN}` : done < words.length ? `in Arbeit ${inWork} · noch ${Math.max(0, waiting)}` : '🏆';
+      // Balken wächst mit jedem richtigen Schritt (nicht erst, wenn ein Wort ganz fertig ist)
+      const steps = words.reduce((a, w) => a + levelOf(w), 0), allSteps = words.reduce((a, w) => a + maxLevel(w), 0);
+      const pct = Math.round(steps / allSteps * 100);
+      const status = dueN ? `🔁 heute wiederholen: ${dueN}` : `⭐ ${done} von ${words.length} gemeistert`;
       $('pfad-progress').innerHTML = `
         <div class="flex justify-between items-end text-sm font-bold text-slate-700 mb-1 gap-2">
-          <span>⭐ Gemeistert: ${done} von ${words.length}</span>
+          <span>Fortschritt: ${pct} %</span>
           <span class="text-xs font-semibold text-slate-500 text-right">${status}</span>
         </div>
-        <div class="h-4 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all" style="width:${Math.round(done / words.length * 100)}%"></div></div>`;
+        <div class="h-4 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all" style="width:${pct}%"></div></div>`;
       const box = $('body-pfad');
+      if (Q.phase === 'etappe' || Q.phase === 'pause') {
+        box.innerHTML = Q.phase === 'etappe' ? `
+          <div class="rounded-2xl border-2 border-sky-300 bg-sky-50 p-5 text-center space-y-2 pop">
+            <div class="text-4xl">🎉</div>
+            <div class="text-lg font-black text-slate-900">Etappe geschafft!</div>
+            <div class="text-sm text-slate-700">${SESSION.answers} Antworten, davon ${SESSION.right} richtig. ${done ? `⭐ ${done} Wörter sind schon gemeistert.` : 'Deine Wörter sind auf gutem Weg.'}</div>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <button type="button" onclick="pausePfad()" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">Für heute fertig</button>
+              <button type="button" id="next-btn" onclick="continuePfad()" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">Weiter üben →</button>
+            </div>
+          </div>` : `
+          <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-2 pop">
+            <div class="text-4xl">👍</div>
+            <div class="text-lg font-black text-slate-900">Super gemacht!</div>
+            <div class="text-sm text-slate-700">Dein Fortschritt ist gespeichert. Komm morgen wieder: 10 Minuten reichen.</div>
+            <button type="button" id="next-btn" onclick="continuePfad()" class="mt-1 px-4 py-2 rounded-xl text-sm font-bold border-2 border-emerald-400 bg-white text-emerald-800">Doch weiter üben</button>
+          </div>`;
+        if (keepFocus && $('next-btn')) $('next-btn').focus({ preventScroll: true });
+        return;
+      }
       if (Q.phase === 'done') {
         box.innerHTML = `
           <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-2 pop">
@@ -594,6 +640,7 @@
             <input id="pfad-in" type="text" placeholder="auf ${ANSWER_LANG[st.dir]} schreiben …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${st.dir === 'de2en' ? 'en' : 'de'}"
               onkeydown="if(event.key==='Enter'){event.preventDefault();submitWrite(false);}"
               class="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-3 text-lg font-semibold text-slate-800">
+            ${Q.hint ? `<div class="text-sm font-bold text-sky-800">💡 Beginnt mit «${esc(firstLetter(w, st.dir))}»</div>` : `<button type="button" onclick="giveHint()" class="text-sm font-bold text-sky-700 underline">💡 Hilfe: erster Buchstabe</button>`}
             <div class="grid grid-cols-2 gap-2">
               <button type="button" onclick="submitWrite(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 Weiss ich nicht</button>
               <button type="button" onclick="submitWrite(false)" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">✓ Prüfen</button>
@@ -707,9 +754,29 @@
       const next = all[all.indexOf(el) + 1];
       if (next) next.focus(); else el.blur();
     }
+    function openTest() {
+      STATE.testOpen[STATE.part] = true;
+      save();
+      renderTest();
+      const first = document.querySelector('#body-test .test-in');
+      if (first) first.focus();
+    }
     function renderTest() {
       const t = T();
       $('test-max').textContent = TASKS.test.max;
+      // Erst auf Wunsch aufklappen: keine Wand aus 20 Feldern beim Öffnen der Seite
+      const open = STATE.testOpen[STATE.part] || t.checked || [...t.a, ...t.b].some(it => it.ans.trim());
+      $('check-test').classList.toggle('hidden', !open);
+      if (!open) {
+        $('body-test').innerHTML = `
+          <div class="rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/60 p-5 text-center space-y-2">
+            <div class="text-3xl">📝</div>
+            <p class="text-sm text-slate-700">Hast du die Wörter im Lernpfad geübt? Dann teste dich wie in der Prüfung: ${t.a.length} Wörter Deutsch → Englisch und ${t.b.length} Wörter Englisch → Deutsch.</p>
+            <button type="button" onclick="openTest()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">▶ Wörtertest starten</button>
+          </div>`;
+        $('fb-test').innerHTML = '';
+        return;
+      }
       const head = (txt, n) => `<div class="flex items-center justify-between gap-2 bg-slate-100 rounded-lg px-3 py-2 mb-2"><h3 class="text-sm font-black text-slate-800">${txt}</h3><span class="text-xs font-bold text-slate-600">${n} P.</span></div>`;
       $('body-test').innerHTML = `
         <div class="space-y-5">
@@ -775,7 +842,7 @@
       save();
     }
 
-    Object.assign(window, { setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, testInput, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak });
+    Object.assign(window, { setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, continuePfad, pausePfad, giveHint, openTest, testInput, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak });
 
     // Start sobald das HTML da ist
     document.addEventListener('DOMContentLoaded', function () {

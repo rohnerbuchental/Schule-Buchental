@@ -26,7 +26,7 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - Auswahl-Ablenker: nie aus `SAME` (ähnliche Bedeutung) oder `FAMILY` (Wortfamilie). Schreiben: `SAME_TYPE` gilt gegenseitig als richtig, `DE_ALT` = weitere richtige deutsche Antworten, dazu im Lernpfad (nicht im Test) der Knopf «meine Antwort bedeutet dasselbe». Mehrere Bedeutungen («Wettbewerb, Wettkampf») sind richtig, wenn jede stimmt.
 - **Wörtertest:** 10 × Deutsch → Englisch (ohne `noType`) und 10 × Englisch → Deutsch, 20 P., bestanden ab 12. Kein Selbst-Korrigieren. Teil B zeigt nie ein Wort aus `SAME_TYPE` oder `FAMILY` eines Teil-A-Worts.
 - Prüfung: Gross/Klein egal, ä = ae = a, ß = ss, Artikel und «to» am Anfang egal.
-- Angstfrei: «Noch nicht ganz» statt «Falsch», Gelb statt Rot, Test «nur zum Üben».
+- Angstfrei und für Lernende, die schnell aufgeben: «Noch nicht ganz» statt «Falsch», Gelb statt Rot. Fortschrittsbalken nach Stufen (wächst mit jedem richtigen Schritt). Nach `ETAPPE_N` = 10 Antworten «Etappe geschafft» mit «Weiter üben» oder «Für heute fertig». Beim Schreiben zuerst «Hilfe: erster Buchstabe». Wörtertest zugeklappt, bis «Wörtertest starten» (`testOpen`), dann «nur zum Üben».
 - Gespeichert unter `ow2u2_lernpfad` (Teil, Stufe pro Wort, Wiederholungen `rev`, aktive Wörter, beste Test-Medaille, Test-Antworten). Der Stand gilt nur auf dem Gerät und im Browser, wo geübt wurde. «Nochmals üben» beim Lernpfad fragt vorher nach.
 
 ## RZG-Hub: Besonderheiten
