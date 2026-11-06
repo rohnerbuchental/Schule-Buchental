@@ -65,6 +65,8 @@ class Pairs(HTMLParser):
                 self.solo.append(v)
         if tag in ('script', 'style'):
             self.skip += 1
+        if tag in ('br', 'p', 'li', 'div', 'td', 'th', 'tr') and self.stack:
+            self.stack[-1]['text'].append(' ')
         if tag in self.VOID:
             return
         self.stack.append({'tag': tag, 'l': a.get('data-l'), 'en': a.get('lang') == 'en', 'text': []})
@@ -99,14 +101,40 @@ def js_pairs(src):
         de = next((x for x in g[0:3] if x is not None), '')
         es = next((x for x in g[3:6] if x is not None), '')
         out.append((de, es, src.count('\n', 0, m.start()) + 1))
-    for m in re.finditer(r"\bes\s*:\s*" + STR, src):
-        es = next((x for x in m.groups() if x is not None), '')
+    line = lambda pos: src.count('\n', 0, pos) + 1
+    first = lambda m, i=0: next((x for x in m.groups()[i:i + 3] if x is not None), '')
+    # { de/text/…: '…', es: '…' }  (nur als Schlüssel, nicht «So heisst es:» im Text)
+    for m in re.finditer(r"(?:^|[{,])\s*es\s*:\s*" + STR, src, re.M):
         start = src.rfind('{', 0, m.start())
         before = src[max(start, m.start() - 1500):m.start()]
         cand = list(re.finditer(r"\b\w+\s*:\s*" + STR, before))
-        de = next((x for x in cand[-1].groups() if x is not None), '') if cand else ''
-        out.append((de, es, src.count('\n', 0, m.start()) + 1))
+        out.append((first(cand[-1]) if cand else '', first(m), line(m.start())))
+    # { tip: '…', tipEs: '…' } und Listen { words: [...], wordsEs: [...] }
+    LIST = r"\[((?:\s*" + STR + r"\s*,?)*)\s*\]"
+    def val(txt):
+        return ' '.join(x for mm in re.finditer(STR, txt) for x in mm.groups() if x is not None)
+    for m in re.finditer(r"\b(\w+)Es\s*:\s*(" + STR + "|" + LIST + ")", src):
+        key = m.group(1)
+        if key == 'keys':            # Wortteile (amenaz, policia): keine Rechtschreibung
+            continue
+        start = src.rfind('{', 0, m.start())
+        before = src[max(start, m.start() - 3000):m.start()]
+        cand = list(re.finditer(r"\b" + key + r"\s*:\s*(" + STR + "|" + LIST + ")", before))
+        out.append((val(cand[-1].group(1)) if cand else '', val(m.group(2)), line(m.start())))
+    # ['Deutsch', 'Español']
+    for m in re.finditer(r"\[\s*" + STR + r"\s*,\s*" + STR + r"\s*\]", src):
+        de, es = first(m), first(m, 3)
+        if spanish_score(es) > spanish_score(de) + 0.3:
+            out.append((de, es, line(m.start())))
     return out
+
+
+def spanish_score(t):
+    """Anteil Wörter, die das spanische Wörterbuch kennt."""
+    ws = [w for w in words(t) if len(w) > 2]
+    if not ws or not SPELL:
+        return 0
+    return 1 - len(unknown_words(ws)) / len(ws)
 
 
 def words(t):
@@ -126,6 +154,10 @@ def is_es_word(w):
     return SPELL and not unknown_words([w]) or (SPELL and not unknown_words([w.lower()]))
 
 
+LAND = {'Schweiz': 'Suiza', 'Kasachstan': 'Kazajistán', 'Deutschland': 'Alemania', 'Italien': 'Italia',
+        'Island': 'Islandia', 'Japan': 'Japón', 'Schottland': 'Escocia', 'England': 'Inglaterra', 'London': 'Londres'}
+
+
 def check(path):
     src = open(path, encoding='utf-8').read()
     p = Pairs()
@@ -137,15 +169,18 @@ def check(path):
     de_words = set(words(de_all))
     # Namen: gross, kein spanisches Wort, auf der Seite in beiden Sprachen
     # Name = im Spanischen mitten im Satz gross, steht auch im Deutschen, kein spanisches Wort
-    names = {w for w in set(caps(es_all)) if w in de_words and not is_es_word(w)}
+    all_words = set(words(de_all + ' ' + es_all))
+    names = {w for w in set(caps(es_all)) if w in de_words and not is_es_word(w) and w.lower() not in all_words}
     rep = []
     for de, es, ln in pairs:
         if not es.strip():
             continue
         dw, ew = set(words(de)), set(words(es))
         for n in sorted(names & dw - ew):
+            if LAND.get(n, '-') in es:      # Ländernamen werden übersetzt (Schweiz → Suiza)
+                continue
             # Genitiv/Plural (Toms, Linas) zählt als gleich
-            if not any(x.startswith(n) or n.startswith(x) for x in ew if x[0].isupper()):
+            if not any(x in (n, n + 's', n + 'es') for x in ew):
                 rep.append(f"  Zeile {ln}: Name «{n}» fehlt im Spanischen: «{es[:90]}»")
         for w in sorted(set(caps(es)) - dw - names):
             if is_es_word(w):
@@ -156,12 +191,11 @@ def check(path):
     unknown = {}
     if SPELL:
         for w in words(es_all):
-            lw = w.lower()
-            if len(w) < 3 or w in de_words or lw in (x.lower() for x in names):
+            if len(w) < 3 or w in de_words or w.lower() in (x.lower() for x in names):
                 continue
-            unknown[lw] = unknown.get(lw, 0) + 1
+            unknown[w] = unknown.get(w, 0) + 1
         bad = unknown_words(list(unknown))
-        unknown = {w: n for w, n in unknown.items() if w in bad}
+        unknown = {w: n for w, n in unknown.items() if w in bad and (w == w.lower() or w.lower() in unknown_words([w.lower()]))}
     print(f"\n=== {os.path.basename(path)}: {len(pairs)} Paare, {len(solo)} Spanisch ohne Paar")
     print(f"Namen auf der Seite: {', '.join(sorted(names)) or '–'}")
     print("Namen:" if rep else "Namen: ✅ keine Abweichung gefunden")
