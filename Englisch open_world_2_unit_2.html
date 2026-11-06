@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open World 2 · Unit 2: Weird and wonderful games · Wörter-Training</title>
+  <title>Open World 2 · Unit 2: Weird and wonderful games · Wörter lernen</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,512 +11,253 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', sans-serif; }
-    input:focus, select:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.3);
-    }
-    /* Lange Wörter und Ausdrücke umbrechen (Handy 390 px) */
-    .wrap-any { overflow-wrap: anywhere; hyphens: auto; }
-    select.gap { max-width: 100%; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in { animation: fadeIn 0.25s ease-out forwards; }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-4px); }
-      40%, 80% { transform: translateX(4px); }
-    }
-    .shake { animation: shake 0.4s; }
-    /* Aussprache-Knopf ausblenden, wenn der Browser nicht vorlesen kann */
+    input:focus { outline: none; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.3); }
+    .wrap-any { overflow-wrap: anywhere; }
     .no-tts .say-btn { display: none !important; }
-    /* Sprungziele nicht unter dem fixierten Kopf verstecken */
-    [data-task], #theory details { scroll-margin-top: 8.5rem; }
+    [data-task], #theory { scroll-margin-top: 5rem; }
+    @keyframes pop { 0% { transform: scale(0.96); } 60% { transform: scale(1.03); } 100% { transform: scale(1); } }
+    .pop { animation: pop 0.25s ease-out; }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-emerald-600 selection:text-white">
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased">
 
-  <!-- Header -->
+  <!-- Kopf -->
   <header class="bg-gradient-to-r from-emerald-900 via-teal-900 to-sky-900 text-white shadow-lg sticky top-0 z-40">
-    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center gap-3">
-      <span class="text-2xl sm:text-3xl p-2 bg-white/10 rounded-2xl shadow-inner shrink-0">🎯</span>
-      <div class="min-w-0">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-100 border border-emerald-300/30">Open World 2 · Unit 2</span>
-          <span class="text-[11px] font-semibold text-emerald-200 hidden md:inline">LP21: FS1E.5.B.1</span>
-        </div>
-        <h1 class="text-lg sm:text-xl font-bold leading-tight">Weird and wonderful games</h1>
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+      <span class="text-2xl p-2 bg-white/10 rounded-2xl shrink-0">🎯</span>
+      <div class="min-w-0 flex-1">
+        <div class="text-[11px] font-bold tracking-wider uppercase text-emerald-200">Open World 2 · Unit 2</div>
+        <h1 class="text-lg sm:text-xl font-bold leading-tight">Wörter lernen</h1>
+      </div>
+      <div class="shrink-0 bg-white/10 px-2.5 py-1 rounded-xl border border-white/15 text-xs font-bold" title="Wörter, die du schon kannst (beide Richtungen zusammen)">
+        ⭐ <span id="header-known">0</span>
       </div>
     </div>
-
-    <!-- Navigation: weitere Reiter (z.B. Grammatik) später hier anhängen -->
-    <nav class="max-w-5xl mx-auto px-4 flex items-center gap-2 border-t border-white/10 py-2 text-xs sm:text-sm font-medium">
-      <div class="flex gap-1.5 sm:gap-2 overflow-x-auto min-w-0">
-        <button type="button" onclick="switchTab('words')" id="tab-btn-words" class="tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-emerald-900 font-bold shadow-sm">
-          <span>🔤</span> Wörter-Training
-        </button>
-      </div>
-      <div class="ml-auto shrink-0 flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-xl border border-white/15 text-xs font-bold" title="Deine Medaillen">
-        <span id="header-medals">🥇 0 · 🥈 0 · 🥉 0</span>
-      </div>
-    </nav>
   </header>
 
-  <!-- Main Container -->
-  <main class="max-w-5xl w-full mx-auto p-4 sm:p-6 flex-1">
+  <main class="max-w-3xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-5">
 
-    <!-- ============================================================== -->
-    <!-- REITER 1: WÖRTER-TRAINING                                       -->
-    <!-- Weitere Reiter als eigene <section id="view-…" class="tab-view hidden"> anhängen. -->
-    <!-- ============================================================== -->
-    <section id="view-words" class="tab-view space-y-6 animate-fade-in">
-
-      <!-- Quizlet: Links stehen oben im Script (QUIZLET). Leerer Link = Knopf weg, beide leer = Box weg. -->
-      <div id="quizlet-box" class="hidden bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 flex-col sm:flex-row sm:items-center gap-3">
-        <div class="text-sm font-bold text-slate-800">🃏 Auch auf Quizlet üben</div>
-        <div class="flex flex-wrap gap-2">
-          <a id="quizlet-teil1" href="#" target="_blank" rel="noopener" class="hidden px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border border-indigo-300 bg-indigo-50 text-indigo-800 hover:bg-indigo-100">Teil 1: Highland Games ↗</a>
-          <a id="quizlet-teil2" href="#" target="_blank" rel="noopener" class="hidden px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border border-indigo-300 bg-indigo-50 text-indigo-800 hover:bg-indigo-100">Teil 2: Village fête ↗</a>
-        </div>
+    <!-- Schritt 1: Teil wählen und Fortschritt -->
+    <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900">1 · Welche Wörter?</h2>
+        <p class="text-sm text-slate-600">Die Wörter stehen im Language Companion.</p>
       </div>
-
-      <!-- Einleitung und Auswahl der Wörter -->
-      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
-        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 mb-1">
-          Wörter-Training · Lehrplan 21: FS1E.5.B.1
-        </div>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-800">🏴 Highland Games der Wörter</h2>
-        <p class="text-sm text-slate-700 mt-1">Bei den Highland Games gibt es verrückte Disziplinen. Hier auch – nur mit Wörtern.</p>
-        <p class="text-xs sm:text-sm text-slate-600 mt-1">Für jede Disziplin bekommst du eine Medaille: 🥇 ab 90 %, 🥈 ab 75 %, 🥉 ab 60 %.</p>
-
-        <div class="mt-4 bg-slate-50 rounded-xl border border-slate-200 p-3">
-          <div class="text-xs font-bold text-slate-600 mb-2">Welche Wörter willst du üben?</div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" onclick="setPart('t1')" id="part-btn-t1" class="part-btn">Teil 1: Highland Games</button>
-            <button type="button" onclick="setPart('t2')" id="part-btn-t2" class="part-btn">Teil 2: Village fête</button>
-            <button type="button" onclick="setPart('all')" id="part-btn-all" class="part-btn">Alle Wörter</button>
-          </div>
-          <p id="part-info" class="text-xs text-slate-500 mt-2">–</p>
-        </div>
+      <div class="grid grid-cols-2 gap-2">
+        <button type="button" id="part-btn-t1" onclick="setPart('t1')" class="part-btn"></button>
+        <button type="button" id="part-btn-t2" onclick="setPart('t2')" class="part-btn"></button>
       </div>
-
-      <!-- Medaillenspiegel -->
-      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">🏅 Medaillenspiegel</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mt-1">Deine beste Medaille pro Disziplin. Tipp auf eine Disziplin, dann springst du hin.</p>
-        <div class="mt-3 overflow-x-auto">
-          <table id="medal-table" class="w-full text-sm"></table>
-        </div>
+      <div class="space-y-2">
+        <div class="text-sm font-bold text-slate-700">Das kannst du schon:</div>
+        <div id="progress" class="space-y-2"></div>
       </div>
-
-      <!-- Theorie (kurz, zugeklappt). Jede Aufgabe springt mit «📖 Theorie» hierher. -->
-      <div id="theory" class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
-        <h2 class="text-lg sm:text-xl font-bold text-slate-800">📖 Theorie</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mt-1">Kurz erklärt. Antippen zum Öffnen.</p>
-        <div class="mt-3 space-y-3">
-
-          <details id="theory-lernen" class="rounded-xl border border-sky-200 bg-sky-50/60 p-3">
-            <summary class="text-sm font-bold text-sky-900 cursor-pointer">📖 So lernst du Wörter</summary>
-            <ul class="mt-2 space-y-1.5 text-sm text-slate-700 leading-relaxed list-disc pl-5">
-              <li><b>Laut sprechen:</b> Sag jedes Wort laut. Drück auf 🔊 und sprich nach.</li>
-              <li><b>Aufschreiben:</b> Schreib das Wort auf. Deck es ab. Schreib es nochmals. Vergleiche.</li>
-              <li><b>Oft und kurz:</b> 3× pro Woche 10 Minuten. Das bringt mehr als 1× eine Stunde.</li>
-              <li><b>Karteikarten:</b> Gewusst → weg. Nicht gewusst → bald nochmals.</li>
-              <li><b>Eselsbrücke:</b> Mach dir für schwierige Wörter ein Bild oder einen Satz im Kopf. Beispiel: «breakfast» = break (brechen) + fast (fasten). Am Morgen brichst du das Fasten der Nacht.</li>
-              <li><b>Wortfamilien:</b> Lern verwandte Wörter zusammen (siehe «Wortfamilien»).</li>
-            </ul>
-            <button type="button" onclick="backToTask()" class="theory-back mt-2 px-2.5 py-1.5 rounded-lg text-xs font-bold border bg-white border-sky-300 text-sky-800 hover:bg-sky-100">↩ Zurück zur Aufgabe</button>
-          </details>
-
-          <details id="theory-familien" class="rounded-xl border border-sky-200 bg-sky-50/60 p-3">
-            <summary class="text-sm font-bold text-sky-900 cursor-pointer">📖 Wortfamilien</summary>
-            <div class="mt-2 space-y-2 text-sm text-slate-700 leading-relaxed">
-              <p>Viele Wörter gehören zu einer Familie. Lern sie zusammen:</p>
-              <div class="rounded-lg bg-white border border-sky-100 p-2.5 wrap-any">
-                <b>brilliant</b> (Adjektiv: Wie ist etwas?) → <b>brilliantly</b> (Adverb: Wie macht man etwas?)
-              </div>
-              <div class="rounded-lg bg-white border border-sky-100 p-2.5 wrap-any">
-                <b>entertain</b> (Verb: unterhalten) → <b>entertaining</b> (Adjektiv: unterhaltsam) → <b>entertainment</b> (Nomen: Unterhaltung)
-              </div>
-              <p>Achte auf die Endung: <b>-ly</b> ist oft ein Adverb. <b>-ment</b> ist oft ein Nomen. <b>-ing</b> kann ein Adjektiv sein.</p>
-            </div>
-            <button type="button" onclick="backToTask()" class="theory-back mt-2 px-2.5 py-1.5 rounded-lg text-xs font-bold border bg-white border-sky-300 text-sky-800 hover:bg-sky-100">↩ Zurück zur Aufgabe</button>
-          </details>
-
-          <details id="theory-wortarten" class="rounded-xl border border-sky-200 bg-sky-50/60 p-3">
-            <summary class="text-sm font-bold text-sky-900 cursor-pointer">📖 Welches Wort passt in die Lücke?</summary>
-            <div class="mt-2 space-y-2 text-sm text-slate-700 leading-relaxed">
-              <p>Schau die Wörter <b>vor</b> und <b>nach</b> der Lücke an. Sie zeigen dir die Wortart.</p>
-              <div class="grid sm:grid-cols-2 gap-2">
-                <div class="rounded-lg bg-white border border-sky-100 p-2.5"><b>Nomen</b> (Wer? Was?)<br>oft nach <i>a, an, the, my, lots of</i><br><span class="text-slate-500">a <u>ball</u>, lots of <u>water</u></span></div>
-                <div class="rounded-lg bg-white border border-sky-100 p-2.5"><b>Verb</b> (Was tut man?)<br>oft nach <i>to, can, will, don't</i><br><span class="text-slate-500">I can <u>swim</u>.</span></div>
-                <div class="rounded-lg bg-white border border-sky-100 p-2.5"><b>Adjektiv</b> (Wie ist etwas?)<br>nach <i>is, was, very, too</i> oder vor einem Nomen<br><span class="text-slate-500">The film is <u>funny</u>. a <u>big</u> house</span></div>
-                <div class="rounded-lg bg-white border border-sky-100 p-2.5"><b>Adverb</b> (Wie macht man etwas?)<br>oft nach dem Verb, oft mit <i>-ly</i><br><span class="text-slate-500">She sings <u>badly</u>.</span></div>
-              </div>
-              <p>Am Schluss: Lies den ganzen Satz mit deinem Wort. Klingt er richtig?</p>
-            </div>
-            <button type="button" onclick="backToTask()" class="theory-back mt-2 px-2.5 py-1.5 rounded-lg text-xs font-bold border bg-white border-sky-300 text-sky-800 hover:bg-sky-100">↩ Zurück zur Aufgabe</button>
-          </details>
-
-          <details id="theory-schreiben" class="rounded-xl border border-sky-200 bg-sky-50/60 p-3">
-            <summary class="text-sm font-bold text-sky-900 cursor-pointer">📖 Wörter richtig schreiben</summary>
-            <ul class="mt-2 space-y-1.5 text-sm text-slate-700 leading-relaxed list-disc pl-5">
-              <li>Sprich das Wort langsam in Silben: foot-ball, birth-day.</li>
-              <li>Markier die schwierige Stelle mit Farbe, z.B. doppelte Buchstaben (sh<b>ee</b>p) oder stumme Buchstaben (<b>k</b>nife).</li>
-              <li>Abdecken – schreiben – vergleichen. Falsch? Sofort 3× richtig schreiben.</li>
-              <li>Ausdrücke mit mehreren Wörtern immer ganz lernen, z.B. «go for a walk».</li>
-              <li>Hier auf der Seite sind Gross- und Kleinschreibung egal. Lern die Wörter trotzdem genau.</li>
-            </ul>
-            <button type="button" onclick="backToTask()" class="theory-back mt-2 px-2.5 py-1.5 rounded-lg text-xs font-bold border bg-white border-sky-300 text-sky-800 hover:bg-sky-100">↩ Zurück zur Aufgabe</button>
-          </details>
-
-        </div>
-      </div>
-
-      <!-- Aufgabe 1: Caber Toss – Karteikarten (Selbsteinschätzung, zählt nicht in TASKS) | FS1E.5.B.1.c, FS1E.5.B.2.c -->
-      <div id="task-caber" data-task="caber" class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 space-y-4">
-        <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
-          <div class="min-w-0">
-            <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Disziplin 1</div>
-            <h3 class="text-base sm:text-lg font-black text-slate-900">🪵 Caber Toss – Karteikarten</h3>
-            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Lies die Karte und sag das Wort laut. Tipp auf die Karte: Jetzt siehst du die Lösung. Sei ehrlich: «✔ Gewusst» oder «✖ Nochmals»?</p>
-          </div>
-          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">zählt nicht</span>
-        </div>
-        <div id="body-caber"></div>
-        <div id="tip-caber" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-          Sag das Wort zuerst laut, <b>bevor</b> du die Karte umdrehst. Drück nur auf «Gewusst», wenn du es ohne Hilfe wusstest – sonst schummelst du nur dich selbst. Mach dir ein Bild im Kopf: Wie sieht das Wort aus? Wo hast du es schon gehört? Schwierige Wörter kommen nochmals. Das ist gut so!
-        </div>
-        <div class="pt-3 border-t border-slate-100 space-y-2">
-          <div class="flex flex-wrap items-center gap-2">
-            <button type="button" onclick="toggleTip('caber')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>
-            <button type="button" onclick="openTheory('lernen','caber')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
-            <button type="button" onclick="retryTask('caber')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>
-          </div>
-          <div id="fb-caber" class="text-xs font-semibold"></div>
-          <div class="text-xs text-slate-500">Beste Medaille (<span class="js-part-short">–</span>): <span id="best-caber">–</span></div>
-        </div>
-      </div>
-
-      <!-- Aufgabe 2: Tug of War – Zuordnen gegen die Uhr | FS1E.5.B.1.c -->
-      <div id="task-tug" data-task="tug" class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 space-y-4">
-        <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
-          <div class="min-w-0">
-            <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Disziplin 2</div>
-            <h3 class="text-base sm:text-lg font-black text-slate-900">🪢 Tug of War – Zuordnen gegen die Uhr</h3>
-            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Tipp links auf ein englisches Wort. Tipp dann rechts auf das passende deutsche Wort. <span class="js-tug-rounds">2</span> Runden mit je <span class="js-tug-pairs">6</span> Paaren. Die Zeit läuft!</p>
-          </div>
-          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800"><span data-max="tug">–</span> P.</span>
-        </div>
-        <div id="body-tug"></div>
-        <div id="tip-tug" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-          Fang mit den Wörtern an, die du sicher kennst. Dann bleiben weniger übrig – wie beim Aufräumen: zuerst das Einfache weg. Lies das deutsche Wort ganz: Steht etwas in Klammern? Lieber kurz überlegen als raten. Jeder Fehler kostet <span class="js-tug-pen">5</span> Sekunden.
-        </div>
-        <div class="pt-3 border-t border-slate-100 space-y-2">
-          <div class="flex flex-wrap items-center gap-2">
-            <button type="button" onclick="toggleTip('tug')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>
-            <button type="button" onclick="openTheory('familien','tug')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
-            <button type="button" onclick="retryTask('tug')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>
-          </div>
-          <div id="fb-tug" class="text-xs font-semibold"></div>
-          <div class="text-xs text-slate-500">Beste Medaille (<span class="js-part-short">–</span>): <span id="best-tug">–</span> · Bestzeit: <span id="best-time">–</span></div>
-        </div>
-      </div>
-
-      <!-- Aufgabe 3: Hammer Throw – Wörter schreiben (Deutsch → Englisch) | FS1E.5.B.1.c, FS1E.5.E.1.c -->
-      <div id="task-hammer" data-task="hammer" class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 space-y-4">
-        <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
-          <div class="min-w-0">
-            <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Disziplin 3</div>
-            <h3 class="text-base sm:text-lg font-black text-slate-900">🔨 Hammer Throw – Wörter schreiben</h3>
-            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Schreib das englische Wort ins Feld. Hilfe: «Erster Buchstabe» zeigt dir den Anfang. Dann gibt es noch ½ Punkt.</p>
-          </div>
-          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800"><span data-max="hammer">–</span> P.</span>
-        </div>
-        <div id="body-hammer"></div>
-        <div id="tip-hammer" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-          Sprich das Wort zuerst leise vor dich hin. Wie klingt es? Schreib es dann in Silben, wie bei foot-ball. Kennst du ein Wort aus der gleichen Familie? Die Zahl in Klammern sagt dir, aus wie vielen Wörtern der Ausdruck besteht. Gross- und Kleinschreibung sind hier egal.
-        </div>
-        <div class="pt-3 border-t border-slate-100 space-y-2">
-          <div class="flex flex-wrap items-center gap-2">
-            <button type="button" id="check-hammer" onclick="checkTask('hammer')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-sm transition">✓ Prüfen</button>
-            <button type="button" onclick="toggleTip('hammer')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>
-            <button type="button" onclick="openTheory('schreiben','hammer')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
-            <button type="button" onclick="retryTask('hammer')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>
-          </div>
-          <div id="fb-hammer" class="text-xs font-semibold"></div>
-          <div class="text-xs text-slate-500">Beste Medaille (<span class="js-part-short">–</span>): <span id="best-hammer">–</span></div>
-        </div>
-      </div>
-
-      <!-- Aufgabe 4: Highland Dancing – Sätze ergänzen | FS1E.5.B.1.c, FS1E.5.D.1.c -->
-      <div id="task-dance" data-task="dance" class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 space-y-4">
-        <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
-          <div class="min-w-0">
-            <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Disziplin 4</div>
-            <h3 class="text-base sm:text-lg font-black text-slate-900">💃 Highland Dancing – Sätze ergänzen</h3>
-            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Wähle bei jeder Lücke das passende Wort. Nur ein Wort passt.</p>
-          </div>
-          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800"><span data-max="dance">–</span> P.</span>
-        </div>
-        <div id="body-dance"></div>
-        <div id="tip-dance" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-          Was für ein Wort fehlt? Ist es ein Verb, ein Nomen, ein Adjektiv oder ein Adverb? Schau die Wörter vor und nach der Lücke an. Lies den Satz am Schluss mit deinem Wort nochmals ganz. Klingt er richtig – wie ein Puzzleteil, das genau passt?
-        </div>
-        <div class="pt-3 border-t border-slate-100 space-y-2">
-          <div class="flex flex-wrap items-center gap-2">
-            <button type="button" id="check-dance" onclick="checkTask('dance')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-sm transition">✓ Prüfen</button>
-            <button type="button" onclick="toggleTip('dance')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>
-            <button type="button" onclick="openTheory('wortarten','dance')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
-            <button type="button" onclick="retryTask('dance')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>
-          </div>
-          <div id="fb-dance" class="text-xs font-semibold"></div>
-          <div class="text-xs text-slate-500">Beste Medaille (<span class="js-part-short">–</span>): <span id="best-dance">–</span></div>
-        </div>
-      </div>
-
-      <!-- Aufgabe 5: Probe-Wörtertest (10 × schreiben, 10 × Lückensatz) | FS1E.5.B.1.c, FS1E.5.E.1.c, FS1E.5.D.1.c -->
-      <div id="task-test" data-task="test" class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border-2 border-amber-300 space-y-4">
-        <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
-          <div class="min-w-0">
-            <div class="text-[11px] font-bold uppercase tracking-wider text-amber-700">Disziplin 5 · Finale</div>
-            <h3 class="text-base sm:text-lg font-black text-slate-900">🏆 Probe-Wörtertest</h3>
-            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Wie ein echter Wörtertest, ohne Hilfe. Füll alles aus und drück dann auf «✓ Test prüfen». Bestanden ab <span class="js-pass-pts">–</span> Punkten (Note 4.0).</p>
-          </div>
-          <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800"><span data-max="test">–</span> P.</span>
-        </div>
-        <div id="body-test"></div>
-        <div id="tip-test" class="hidden rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-          Mach zuerst die Aufgaben, die du sicher weisst. Dann die schwierigen. Bei den Lücken: Welche Wortart fehlt? Am Schluss liest du alles nochmals: Hast du jedes Wort richtig geschrieben? Wie beim Packen für ein Lager: Am Schluss kontrollierst du nochmals, ob alles da ist.
-        </div>
-        <div class="pt-3 border-t border-slate-100 space-y-2">
-          <div class="flex flex-wrap items-center gap-2">
-            <button type="button" id="check-test" onclick="checkTask('test')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-bold shadow-sm transition">✓ Test prüfen</button>
-            <button type="button" onclick="toggleTip('test')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-yellow-50 border-yellow-300 text-yellow-900 hover:bg-yellow-100">💡 Tipp</button>
-            <button type="button" onclick="openTheory('lernen','test')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-white border-slate-300 text-slate-700 hover:bg-slate-100">📖 Theorie</button>
-            <button type="button" onclick="retryTask('test')" class="act-btn px-2.5 py-2 rounded-xl text-xs font-bold border transition bg-white border-slate-300 text-slate-700 hover:bg-slate-100">🔀 Nochmals üben</button>
-          </div>
-          <div id="fb-test" class="text-sm font-semibold"></div>
-          <div class="text-xs text-slate-500">Beste Medaille (<span class="js-part-short">–</span>): <span id="best-test">–</span></div>
-        </div>
-      </div>
-
     </section>
+
+    <!-- Aufgabe 1: Üben, ein Wort nach dem anderen | FS1E.5.B.1.c, FS1E.5.B.2.c -->
+    <section id="task-ueben" data-task="ueben" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900">2 · Üben</h2>
+        <p class="text-sm text-slate-600">Ein Wort nach dem anderen. 10 Wörter pro Runde.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-2" id="dir-btns"></div>
+      <div id="body-ueben"></div>
+      <div id="tip-ueben" class="hidden rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
+        <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
+        Sag das Wort zuerst laut. Weisst du es nicht? Dann drück «Weiss ich nicht». Das Wort kommt am Schluss der Runde nochmals. Wie beim Velofahren: Du übst, bis es sitzt.
+      </div>
+      <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
+        <button type="button" onclick="toggleTip('ueben')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900">💡 Tipp</button>
+        <button type="button" onclick="openTheory('ueben')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">📖 Theorie</button>
+        <button type="button" onclick="retryTask('ueben')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">🔀 Nochmals üben</button>
+      </div>
+    </section>
+
+    <!-- Aufgabe 2: Wörtertest wie in der Prüfung | FS1E.5.B.1.c, FS1E.5.E.1.c -->
+    <section id="task-test" data-task="test" class="bg-white rounded-2xl p-5 shadow-sm border-2 border-amber-300 space-y-4">
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0">
+          <h2 class="text-lg font-bold text-slate-900">3 · Wörtertest</h2>
+          <p class="text-sm text-slate-600">Wie in der Prüfung. Füll alles aus und drück auf «Test prüfen».</p>
+        </div>
+        <span class="shrink-0 text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800"><span id="test-max">–</span> P.</span>
+      </div>
+      <div id="body-test"></div>
+      <div id="tip-test" class="hidden rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
+        <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
+        Mach zuerst die Wörter, die du sicher weisst. Dann die schwierigen. Am Schluss liest du alles nochmals – wie beim Packen: Ist alles da?
+      </div>
+      <div class="space-y-3 pt-3 border-t border-slate-100">
+        <div class="flex flex-wrap gap-2">
+          <button type="button" id="check-test" onclick="checkTest()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold shadow-sm">✓ Test prüfen</button>
+          <button type="button" onclick="toggleTip('test')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900">💡 Tipp</button>
+          <button type="button" onclick="openTheory('test')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">📖 Theorie</button>
+          <button type="button" onclick="retryTask('test')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">🔀 Nochmals üben</button>
+        </div>
+        <div id="fb-test"></div>
+      </div>
+    </section>
+
+    <!-- Theorie (kurz, zugeklappt) -->
+    <details id="theory" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
+      <summary class="text-base font-bold text-slate-900 cursor-pointer">📖 Theorie: So lernst du Wörter</summary>
+      <ul class="mt-3 space-y-1.5 text-sm text-slate-700 leading-relaxed list-disc pl-5">
+        <li><b>Laut sprechen:</b> Sag jedes Wort laut. Drück auf 🔊 und sprich nach.</li>
+        <li><b>Beide Richtungen:</b> Übe Deutsch → Englisch <b>und</b> Englisch → Deutsch. Beides kommt im Test.</li>
+        <li><b>Oft und kurz:</b> 3× pro Woche 10 Minuten bringt mehr als 1× eine Stunde.</li>
+        <li><b>Schwierige Wörter:</b> 3× richtig aufschreiben. Mach dir ein Bild im Kopf.</li>
+        <li><b>So prüft die Seite:</b> Gross- und Kleinschreibung sind egal. «ae» gilt wie «ä». Bei Englisch → Deutsch zählt jede Bedeutung aus der Wortliste.</li>
+      </ul>
+      <button type="button" onclick="backToTask()" class="mt-3 px-3 py-1.5 rounded-lg text-xs font-bold border bg-white border-slate-300 text-slate-700">↩ Zurück zur Aufgabe</button>
+    </details>
 
   </main>
 
-  <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-5 right-5 left-5 sm:left-auto z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-700 pointer-events-none text-xs sm:text-sm">
-    <span id="toast-icon">✨</span>
-    <div class="min-w-0">
-      <div id="toast-title" class="font-bold">Mitteilung</div>
-      <div id="toast-msg" class="text-slate-300 text-xs">Details</div>
-    </div>
-  </div>
-
   <script>
-    // Quizlet-Links der Lehrperson. Leer = Knopf ausgeblendet, beide leer = Box ausgeblendet.
-    const QUIZLET = { teil1: '', teil2: '' };
-
     // ==========================================================
-    // WÖRTER (Wortliste der Lehrperson, Open World 2 Unit 2)
-    // Eine Zeile pro Wort: englisch | deutsch. Gruppe = Überschrift.
+    // WÖRTER (Language Companion, Open World 2 Unit 2)
+    // Eine Zeile pro Wort: englisch | deutsch
     // ==========================================================
     const WORD_TEXT = {
-      t1: {
-        'Keywords': `
-          bagpipes | Dudelsack
-          brilliant | hervorragend, fantastisch
-          competition | Wettbewerb, Wettkampf
-          event | Veranstaltung, Ereignis
-          Highland Games | Hochlandspiele
-          invent | erfinden
-          prize | Preis
-          throw | werfen
-          toss | werfen (hochwerfen, schleudern)
-          village fête | Dorffest`,
-        'Highland Games': `
-          amazing | erstaunlich, toll
-          arrangement | Abmachung, Verabredung
-          attend | anwesend sein bei, besuchen
-          be game | bereit sein, dabei sein
-          brilliantly | brillant, hervorragend (Adverb)
-          complicated | kompliziert
-          concert | Konzert
-          fantastic | fantastisch
-          have fun | Spass haben
-          heavy | schwer
-          hill | Hügel
-          metal | Metall
-          noon | Mittag
-          strange | merkwürdig
-          weird | seltsam, komisch
-          wonderful | wunderbar`
-      },
-      t2: {
-        'Village fête': `
-          at the bottom | unten
-          at the top | oben
-          be allowed to | dürfen
-          corner | Ecke
-          entertaining | unterhaltsam
-          entertainment | Unterhaltung
-          equipment | Ausrüstung, Ausstattung
-          find one's way (to) | den Weg finden (zu)
-          finishing point | Endpunkt, Zielort
-          foreground | Vordergrund
-          in the top left-hand corner | links oben, oben links in der Ecke
-          knock down / knock over | umwerfen, treffen
-          nowadays | heutzutage
-          popular | beliebt
-          right-hand | rechte(r, s)
-          starting point | Ausgangspunkt
-          take place | stattfinden
-          tell someone the way | jemandem den Weg beschreiben
-          tie | binden
-          unusual | ungewöhnlich
-          volunteer | Freiwillige/-r
-          winner | Gewinner/-in`,
-        'Focus': `
-          attitude | Haltung, Einstellung
-          hit the target | das Ziel treffen, ins Ziel treffen
-          quite | ziemlich, ganz, völlig
-          rather | ziemlich, eher
-          really | wirklich
-          require | brauchen, benötigen
-          sketch | Skizze
-          space | Raum, Platz`
-      }
+      t1: `
+        bagpipes | Dudelsack
+        brilliant | hervorragend, fantastisch
+        competition | Wettbewerb, Wettkampf
+        event | Veranstaltung, Ereignis
+        Highland Games | Hochlandspiele
+        invent | erfinden
+        prize | Preis
+        throw | werfen
+        toss | werfen (hochwerfen, schleudern)
+        village fête | Dorffest
+        amazing | erstaunlich, toll
+        arrangement | Abmachung, Verabredung
+        attend | anwesend sein bei, besuchen
+        be game | bereit sein, dabei sein
+        brilliantly | brillant, hervorragend (Adverb)
+        complicated | kompliziert
+        concert | Konzert
+        fantastic | fantastisch
+        have fun | Spass haben
+        heavy | schwer
+        hill | Hügel
+        metal | Metall
+        noon | Mittag
+        strange | merkwürdig
+        weird | seltsam, komisch
+        wonderful | wunderbar`,
+      t2: `
+        at the bottom | unten
+        at the top | oben
+        be allowed to | dürfen
+        corner | Ecke
+        entertaining | unterhaltsam
+        entertainment | Unterhaltung
+        equipment | Ausrüstung, Ausstattung
+        find one's way (to) | den Weg finden (zu)
+        finishing point | Endpunkt, Zielort
+        foreground | Vordergrund
+        in the top left-hand corner | links oben, oben links in der Ecke
+        knock down / knock over | umwerfen, treffen
+        nowadays | heutzutage
+        popular | beliebt
+        right-hand | rechte(r, s)
+        starting point | Ausgangspunkt
+        take place | stattfinden
+        tell someone the way | jemandem den Weg beschreiben
+        tie | binden
+        unusual | ungewöhnlich
+        volunteer | Freiwillige/-r
+        winner | Gewinner/-in
+        attitude | Haltung, Einstellung
+        hit the target | das Ziel treffen, ins Ziel treffen
+        quite | ziemlich, ganz, völlig
+        rather | ziemlich, eher
+        really | wirklich
+        require | brauchen, benötigen
+        sketch | Skizze
+        space | Raum, Platz`
+    };
+    const PARTS = {
+      t1: { label: 'Teil 1', page: 'S. 12' },
+      t2: { label: 'Teil 2', page: 'S. 13' }
     };
 
-    // Beim Schreiben: alt = weitere richtige Schreibweisen, hint = kleiner Zusatz zur Frage (verrät das Wort nicht)
-    // noType = langer Ausdruck: wird nicht geschrieben (nur Karteikarten, Zuordnen und Lückensätze)
+    // Deutsch → Englisch: weitere richtige Schreibweisen (alt), Zusatz zur Frage (hint).
+    // noType = langer Ausdruck: kommt nur in Richtung Englisch → Deutsch.
     const EXTRA = {
       'bagpipes': { alt: ['bagpipe'] },
-      'village fête': { stems: ['fête'] },
       'prize': { hint: 'beim Gewinnen' },
       'heavy': { hint: 'Gewicht' },
       'noon': { alt: ['midday'] },
       'be allowed to': { alt: ['be allowed'] },
-      "find one's way (to)": { noType: true, alt: ["find one's way", "find one's way to", 'find your way', 'find your way to'] },
-      'in the top left-hand corner': { noType: true, alt: ['in the top left corner'] },
-      'knock down / knock over': { noType: true, alt: ['knock down', 'knock over', 'knock down or knock over', 'knock over / knock down', 'knock over or knock down'] },
-      'tell someone the way': { noType: true, alt: ['tell somebody the way', 'tell sb the way', 'tell someone the way to', 'tell somebody the way to'] },
+      "find one's way (to)": { noType: true },
+      'in the top left-hand corner': { noType: true },
+      'knock down / knock over': { noType: true },
+      'tell someone the way': { noType: true },
       'require': { hint: 'nicht «need»' },
       'space': { hint: 'freier Platz' }
     };
-
     // Gleiche deutsche Bedeutung: beim Schreiben gelten beide als richtig
     const SAME = [['throw', 'toss'], ['brilliant', 'fantastic'], ['strange', 'weird'], ['quite', 'rather']];
-    // Wortfamilien: Im Probetest darf Teil B kein Familienmitglied eines Teil-A-Worts zeigen (verrät sonst die Schreibweise)
-    const FAMILY = [['brilliant', 'brilliantly'], ['entertaining', 'entertainment'], ['corner', 'in the top left-hand corner']];
-    // Nie in derselben Runde (deutsche Bedeutung zu ähnlich)
-    const CLASH = [
-      ...SAME,
-      ['brilliant', 'fantastic', 'brilliantly', 'amazing', 'wonderful'],
-      ['strange', 'weird', 'unusual'],
-      ['knock down / knock over', 'hit the target'],
-      ['attend', 'be game'],
-      ['at the top', 'in the top left-hand corner'],
-      ['corner', 'in the top left-hand corner']
-    ];
+    // Wortfamilien: im Test nie in Teil A und Teil B zugleich (verrät sonst die Schreibweise)
+    const FAMILY = [['brilliant', 'brilliantly'], ['entertaining', 'entertainment'], ['corner', 'in the top left-hand corner'], ['at the top', 'in the top left-hand corner']];
+    // Englisch → Deutsch: weitere richtige deutsche Antworten (zusätzlich zu allen Bedeutungen aus der Liste)
+    const DE_ALT = {
+      'bagpipes': ['Dudelsäcke'],
+      'brilliant': ['brillant', 'super', 'toll', 'genial'],
+      'competition': ['Wettstreit', 'Turnier'],
+      'event': ['Anlass', 'Event', 'Fest'],
+      'Highland Games': ['Highland Games', 'Highlandspiele'],
+      'prize': ['Gewinn'],
+      'throw': ['schmeissen'],
+      'toss': ['hochwerfen', 'schleudern', 'schmeissen'],
+      'village fête': ['Dorffescht', 'Fest im Dorf'],
+      'amazing': ['unglaublich', 'super', 'fantastisch', 'erstaunlich'],
+      'arrangement': ['Vereinbarung', 'Termin'],
+      'attend': ['anwesend sein', 'teilnehmen', 'dabei sein'],
+      'be game': ['bereit', 'dabei'],
+      'brilliantly': ['super', 'toll', 'genial', 'fantastisch'],
+      'complicated': ['schwierig'],
+      'fantastic': ['toll', 'super', 'genial'],
+      'noon': ['12 Uhr', 'Mittagszeit'],
+      'strange': ['seltsam', 'komisch'],
+      'weird': ['merkwürdig'],
+      'wonderful': ['wundervoll', 'toll', 'super'],
+      'be allowed to': ['erlaubt sein'],
+      'entertaining': ['unterhaltend', 'lustig'],
+      'equipment': ['Material'],
+      "find one's way (to)": ['den Weg finden', 'Weg finden', 'hinfinden'],
+      'finishing point': ['Ziel', 'Endpunkt', 'Ende'],
+      'in the top left-hand corner': ['oben links', 'links oben', 'links oben in der Ecke', 'oben links in der Ecke', 'in der Ecke oben links'],
+      'knock down / knock over': ['umstossen', 'umschmeissen', 'umhauen'],
+      'nowadays': ['heute'],
+      'popular': ['populär'],
+      'right-hand': ['rechte', 'rechter', 'rechtes', 'recht', 'rechts'],
+      'starting point': ['Start', 'Startpunkt', 'Anfang'],
+      'tell someone the way': ['den Weg beschreiben', 'Weg beschreiben', 'den Weg erklären', 'jemandem den Weg erklären'],
+      'tie': ['festbinden', 'anbinden', 'zusammenbinden'],
+      'unusual': ['aussergewöhnlich', 'speziell'],
+      'volunteer': ['Freiwillige', 'Freiwilliger', 'Helfer', 'Helferin'],
+      'winner': ['Gewinner', 'Gewinnerin', 'Sieger', 'Siegerin'],
+      'hit the target': ['Ziel treffen', 'treffen'],
+      'really': ['echt'],
+      'require': ['verlangen'],
+      'sketch': ['Zeichnung', 'Entwurf']
+    };
 
     // ==========================================================
-    // LÜCKENSÄTZE (selbst geschrieben, nicht aus dem Lehrmittel)
-    // w = gesuchtes Wort (wie in der Wortliste), a = Form im Satz (wenn anders),
-    // d = mögliche Ablenker aus dem gleichen Teil. Jeder Ablenker passt grammatisch NICHT
-    // in die Lücke oder ist klar falsch. Pro Runde werden 3 davon zufällig gezeigt.
+    // EINSTELLUNGEN
     // ==========================================================
-    const SENTENCES = [
-      // ---- Teil 1 ----
-      { w: 'bagpipes', s: 'My uncle plays the ___ in a band.', d: ['invent', 'brilliantly', 'attend', 'complicated', 'have fun', 'amazing'] },
-      { w: 'brilliant', s: 'The show was ___. Everybody clapped for a long time.', d: ['invent', 'hill', 'attend', 'throw', 'bagpipes', 'arrangement'] },
-      { w: 'competition', s: 'Our class won the singing ___ at school.', d: ['invent', 'heavy', 'brilliantly', 'attend', 'weird', 'have fun'] },
-      { w: 'event', s: 'Sports day is my favourite ___ of the school year.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'strange', 'have fun'] },
-      { w: 'Highland Games', s: 'At the ___ in Scotland, strong men throw heavy things.', d: ['invent', 'brilliantly', 'attend', 'complicated', 'have fun', 'wonderful'] },
-      { w: 'invent', s: 'My little brother wants to ___ a new board game.', d: ['bagpipes', 'brilliant', 'heavy', 'noon', 'brilliantly', 'competition'] },
-      { w: 'prize', s: 'She won first ___ in the drawing competition.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'strange', 'wonderful'] },
-      { w: 'throw', s: 'Can you ___ the ball to me, please?', d: ['bagpipes', 'heavy', 'noon', 'brilliantly', 'competition', 'amazing'] },
-      { w: 'toss', s: "Let's ___ a coin to see who starts the game.", d: ['bagpipes', 'heavy', 'noon', 'brilliantly', 'event', 'weird'] },
-      { w: 'village fête', s: 'On Sunday there is a ___ with music, games and cakes in our village.', d: ['invent', 'brilliantly', 'attend', 'complicated', 'weird', 'amazing'] },
-      { w: 'amazing', s: 'That magic trick was ___! How did you do it?', d: ['invent', 'bagpipes', 'noon', 'attend', 'throw', 'hill'] },
-      { w: 'arrangement', s: 'We have an ___: I cook on Mondays and you cook on Tuesdays.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'toss', 'amazing'] },
-      { w: 'attend', s: 'Over 500 people will ___ the concert tonight.', d: ['bagpipes', 'heavy', 'noon', 'brilliantly', 'competition', 'weird'] },
-      { w: 'be game', a: 'game', s: 'A water fight in the park? Sure, I\'m ___!', d: ['invent', 'bagpipes', 'brilliantly', 'noon', 'throw', 'attend'] },
-      { w: 'brilliantly', s: 'Mia played ___ and won the match.', d: ['throw', 'invent', 'attend', 'noon', 'prize', 'hill'] },
-      { w: 'complicated', s: 'The rules of this game are very ___. I don\'t understand them.', d: ['invent', 'bagpipes', 'hill', 'noon', 'attend', 'toss'] },
-      { w: 'concert', s: 'We are going to a rock ___ on Friday evening.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'strange', 'amazing'] },
-      { w: 'fantastic', s: 'Thank you for the party. It was ___!', d: ['invent', 'bagpipes', 'prize', 'throw', 'attend', 'arrangement'] },
-      { w: 'have fun', s: 'Enjoy the trip and ___!', d: ['heavy', 'brilliantly', 'strange', 'complicated', 'weird', 'amazing'] },
-      { w: 'heavy', s: 'This bag is too ___. I can\'t carry it.', d: ['invent', 'bagpipes', 'hill', 'noon', 'attend', 'prize'] },
-      { w: 'hill', s: 'We walked up the ___ and looked down at the village.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'amazing', 'have fun'] },
-      { w: 'metal', s: 'This chair isn\'t made of wood. It\'s made of ___.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'amazing', 'toss'] },
-      { w: 'noon', s: 'School finishes at ___ on Wednesdays, so we have a free afternoon.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'strange', 'complicated'] },
-      { w: 'strange', s: 'This soup tastes ___. What is in it?', d: ['invent', 'hill', 'attend', 'have fun', 'noon', 'prize'] },
-      { w: 'weird', s: 'My cousin\'s clothes are always very ___: green socks, a pink hat and a yellow scarf.', d: ['invent', 'hill', 'attend', 'have fun', 'bagpipes', 'noon'] },
-      { w: 'wonderful', s: 'The day at the lake was ___. The sun was shining all day.', d: ['invent', 'prize', 'attend', 'toss', 'have fun', 'bagpipes'] },
-      // ---- Teil 2 ----
-      { w: 'at the bottom', s: 'Write your name ___ of the page, below the last line.', d: ['popular', 'require', 'volunteer', 'nowadays', 'equipment', 'unusual'] },
-      { w: 'at the top', s: 'The castle is ___ of the hill. You can see it from far away.', d: ['popular', 'require', 'volunteer', 'nowadays', 'entertaining', 'tie'] },
-      { w: 'be allowed to', a: 'are allowed to', s: 'In the break, we ___ play football in the school yard.', d: ['require', 'popular', 'equipment', 'winner', 'space', 'unusual'] },
-      { w: 'corner', s: 'The bakery is on the ___ of Main Street and Station Road.', d: ['require', 'popular', 'nowadays', 'really', 'unusual', 'quite'] },
-      { w: 'entertaining', s: 'The film was very ___. We laughed a lot.', d: ['winner', 'require', 'nowadays', 'equipment', 'take place', 'sketch'] },
-      { w: 'entertainment', s: 'There is lots of ___ at the fête: music, games and a clown.', d: ['require', 'popular', 'nowadays', 'really', 'unusual', 'rather'] },
-      { w: 'equipment', s: 'For this sport you need special ___, like a helmet and gloves.', d: ['popular', 'nowadays', 'require', 'unusual', 'really', 'take place'] },
-      { w: "find one's way (to)", a: 'find your way', s: 'Take the map with you, so you can ___ to the finishing point.', d: ['popular', 'nowadays', 'equipment', 'attitude', 'unusual', 'foreground'] },
-      { w: 'finishing point', s: 'The race ends at the ___ next to the old church.', d: ['popular', 'require', 'nowadays', 'really', 'unusual', 'take place'] },
-      { w: 'foreground', s: 'In the ___ of the photo you can see two dogs. In the background there are mountains.', d: ['popular', 'require', 'nowadays', 'really', 'unusual', 'rather'] },
-      { w: 'in the top left-hand corner', s: 'Write the date ___ of the page.', d: ['popular', 'require', 'volunteer', 'nowadays', 'equipment', 'attitude'] },
-      { w: 'knock down / knock over', a: 'knock down', s: 'Throw the ball and try to ___ all ten bottles.', d: ['popular', 'nowadays', 'equipment', 'unusual', 'attitude', 'foreground'] },
-      { w: 'nowadays', s: 'In the past, people wrote letters, but ___ they send messages on their phones.', d: ['popular', 'require', 'equipment', 'winner', 'unusual', 'quite'] },
-      { w: 'popular', s: 'Football is very ___ in Switzerland. Lots of kids play it.', d: ['require', 'nowadays', 'equipment', 'winner', 'take place', 'volunteer'] },
-      { w: 'right-hand', s: 'Our classroom is the second door on the ___ side.', d: ['require', 'nowadays', 'really', 'take place', 'quite', 'rather'] },
-      { w: 'starting point', s: 'All runners meet at the ___ at nine o\'clock. Then the race begins.', d: ['popular', 'require', 'nowadays', 'really', 'unusual', 'quite'] },
-      { w: 'take place', s: 'The village fête will ___ on Saturday in the school yard.', d: ['popular', 'equipment', 'nowadays', 'attitude', 'unusual', 'foreground'] },
-      { w: 'tell someone the way', a: 'tell me the way', s: 'Excuse me, can you ___ to the station, please?', d: ['popular', 'equipment', 'nowadays', 'attitude', 'winner', 'rather'] },
-      { w: 'tie', s: 'In this race, you ___ your leg to your partner\'s leg with a scarf.', d: ['popular', 'nowadays', 'equipment', 'attitude', 'really', 'unusual'] },
-      { w: 'unusual', s: 'A pink cat is very ___. You don\'t see one every day.', d: ['require', 'nowadays', 'equipment', 'take place', 'winner', 'sketch'] },
-      { w: 'volunteer', s: 'Tom is a ___ at the fête. He helps, but he doesn\'t get money for it.', d: ['popular', 'require', 'nowadays', 'really', 'unusual', 'take place'] },
-      { w: 'winner', s: 'The ___ of the race gets a medal and a big cake.', d: ['popular', 'require', 'nowadays', 'really', 'unusual', 'rather'] },
-      { w: 'attitude', s: 'She always has a positive ___. She never gives up.', d: ['require', 'nowadays', 'really', 'take place', 'popular', 'quite'] },
-      { w: 'hit the target', s: 'In darts, you throw small arrows and try to ___.', d: ['popular', 'nowadays', 'equipment', 'attitude', 'foreground', 'unusual'] },
-      { w: 'quite', s: 'The test was ___ easy. I finished it in ten minutes.', d: ['require', 'equipment', 'winner', 'take place', 'attitude', 'space'] },
-      { w: 'rather', s: 'This puzzle is ___ difficult. Can you help me?', d: ['popular', 'require', 'equipment', 'nowadays', 'winner', 'space'] },
-      { w: 'really', s: 'I ___ love this game! Can we play it again?', d: ['popular', 'require', 'equipment', 'winner', 'unusual', 'sketch'] },
-      { w: 'require', s: 'Football doesn\'t ___ a lot of equipment. You only need a ball.', d: ['popular', 'nowadays', 'attitude', 'unusual', 'foreground', 'quite'] },
-      { w: 'sketch', s: 'Before I paint a picture, I make a quick ___ with a pencil.', d: ['popular', 'require', 'nowadays', 'really', 'unusual', 'take place'] },
-      { w: 'space', s: 'There isn\'t enough ___ in my room for a big bed.', d: ['popular', 'require', 'nowadays', 'really', 'unusual', 'quite'] }
+    const ROUND_N = 10;               // Wörter pro Übungsrunde
+    const TEST_A = 10, TEST_B = 10;   // Test: Deutsch → Englisch, Englisch → Deutsch
+    const MEDALS = [
+      { min: 0.9, icon: '🥇', name: 'Gold' },
+      { min: 0.75, icon: '🥈', name: 'Silber' },
+      { min: 0.6, icon: '🥉', name: 'Bronze' }
     ];
-
-    // ==========================================================
-    // EINSTELLUNGEN DER SPIELE
-    // ==========================================================
-    const TUG_ROUNDS = 2, TUG_PAIRS = 6, TUG_PENALTY = 5;   // 2 Runden à 6 Paare, Fehler = +5 s
-    const HAMMER_N = 10;                                   // Wörter pro Runde
-    const DANCE_N = 8;                                     // Sätze pro Runde
-    const TEST_TYPE = 10, TEST_GAP = 10;                   // Probe-Wörtertest
-    const PARTS = {
-      t1: { label: 'Teil 1: Highland Games', short: 'Teil 1', info: 'Keywords + Highland Games' },
-      t2: { label: 'Teil 2: Village fête', short: 'Teil 2', info: 'Village fête + Focus' },
-      all: { label: 'Alle Wörter', short: 'Alle', info: 'Teil 1 + Teil 2' }
-    };
-    const MEDALS = {
-      gold: { icon: '🥇', name: 'Gold', min: 0.9, rank: 3 },
-      silver: { icon: '🥈', name: 'Silber', min: 0.75, rank: 2 },
-      bronze: { icon: '🥉', name: 'Bronze', min: 0.6, rank: 1 }
-    };
-    const DISC = {
-      caber: { name: '🪵 Caber Toss', what: 'Karteikarten' },
-      tug: { name: '🪢 Tug of War', what: 'Zuordnen' },
-      hammer: { name: '🔨 Hammer Throw', what: 'Schreiben' },
-      dance: { name: '💃 Highland Dancing', what: 'Sätze ergänzen' },
-      test: { name: '🏆 Probe-Wörtertest', what: `${TEST_TYPE + TEST_GAP} Fragen` }
+    const DIRS = {
+      de2en: { label: 'Deutsch → Englisch', ask: 'Deutsch', answer: 'Englisch' },
+      en2de: { label: 'Englisch → Deutsch', ask: 'Englisch', answer: 'Deutsch' }
     };
 
     // ==========================================================
@@ -524,864 +265,446 @@
     // ==========================================================
     const $ = id => document.getElementById(id);
     const slug = en => en.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-+|-+$/g, '');
-
     const WORDS = [];
-    Object.entries(WORD_TEXT).forEach(([part, groups]) => {
-      Object.entries(groups).forEach(([group, text]) => {
-        text.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
-          const [en, de] = line.split(' | ').map(x => x.trim());
-          WORDS.push({ id: slug(en), en, de, part, group, alt: [], hint: '', stems: [], noType: false, ...(EXTRA[en] || {}) });
-        });
+    Object.entries(WORD_TEXT).forEach(([part, text]) => {
+      text.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
+        const [en, de] = line.split(' | ').map(x => x.trim());
+        WORDS.push({ id: slug(en), en, de, part, alt: [], hint: '', noType: false, ...(EXTRA[en] || {}) });
       });
     });
     const BY_ID = {}, BY_EN = {};
     WORDS.forEach(w => { BY_ID[w.id] = w; BY_EN[w.en] = w; });
-    const toIds = list => list.map(en => BY_EN[en]).filter(Boolean).map(w => w.id);
-    const SAME_IDS = SAME.map(toIds);
-    const CLASH_IDS = CLASH.map(toIds);
-    const synonymsOf = w => [...new Set(SAME_IDS.filter(g => g.includes(w.id)).flat())].filter(id => id !== w.id).map(id => BY_ID[id]);
-    const FAMILY_IDS = FAMILY.map(toIds);
-    const familyOf = w => [...new Set(FAMILY_IDS.filter(g => g.includes(w.id)).flat())].filter(id => id !== w.id).map(id => BY_ID[id]);
-
-    // Englische Wörter, die im Satz selbst vorkommen (dürfen im Probetest nicht gleichzeitig abgefragt werden)
-    function wordsInText(text) {
-      const t = ' ' + text.toLowerCase().replace(/[^a-zäöüéêè'\- ]/g, ' ').replace(/\s+/g, ' ') + ' ';
-      return WORDS.filter(w => [w.en, ...w.alt, ...w.stems].some(f => t.includes(' ' + f.toLowerCase().replace(/[()]/g, '').replace(/\s+/g, ' ').trim() + ' '))).map(w => w.id);
-    }
-    const SENTS = [];
-    const SENT_BY_ID = {};
-    SENTENCES.forEach(s => {
-      const w = BY_EN[s.w];
-      if (!w) return;
-      const n = SENTS.filter(x => x.wid === w.id).length + 1;
-      const item = { id: `${w.id}-${n}`, wid: w.id, part: w.part, s: s.s, a: s.a || w.en, d: toIds(s.d) };
-      item.textIds = wordsInText(s.s).filter(id => id !== w.id);
-      SENTS.push(item);
-      SENT_BY_ID[item.id] = item;
-    });
+    const groupIds = list => list.map(g => g.map(en => BY_EN[en]).filter(Boolean).map(w => w.id));
+    const SAME_IDS = groupIds(SAME), FAMILY_IDS = groupIds(FAMILY);
+    const related = (w, groups) => [...new Set(groups.filter(g => g.includes(w.id)).flat())].filter(id => id !== w.id);
+    const partWords = (part = STATE.part) => WORDS.filter(w => w.part === part);
+    // Deutsch → Englisch ohne lange Ausdrücke (noType)
+    const dirWords = (dir, part = STATE.part) => partWords(part).filter(w => dir === 'en2de' || !w.noType);
+    // «auch richtig» bei Deutsch → Englisch (gleiche deutsche Bedeutung)
+    const alsoText = w => { const r = related(w, SAME_IDS).map(id => BY_ID[id].en); return r.length ? `<span class="text-xs font-semibold text-slate-600">auch richtig: ${r.map(esc).join(', ')}</span>` : ''; };
 
     // ==========================================================
     // HILFSFUNKTIONEN
     // ==========================================================
     function shuffle(arr) {
-      const copy = [...arr];
-      for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+      return a;
     }
-    // Neu mischen, aber sicher anders als vorher
-    function shuffleNew(arr, prev) {
-      let next = shuffle(arr);
-      for (let i = 0; i < 20 && prev && arr.length > 1 && next.every((x, k) => x === prev[k]); i++) next = shuffle(arr);
-      return next;
-    }
-    function escHtml(str) {
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
-    function escAttr(str) { return escHtml(str).replace(/"/g, '&quot;'); }
+    const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const fmt = p => String(Math.round(p * 10) / 10);
-    const fmtTime = sec => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
-    const inPart = (w, part) => part === 'all' || w.part === part;
-    const partWords = (part = STATE.part) => WORDS.filter(w => inPart(w, part));
-    const typeWords = (part = STATE.part) => partWords(part).filter(w => !w.noType);
-    const partSents = (part = STATE.part) => SENTS.filter(s => inPart(BY_ID[s.wid], part));
-    const clashes = (a, b, groups) => groups.some(g => g.includes(a.id) && g.includes(b.id));
-    // n Wörter auswählen, nie zwei aus derselben Gruppe
-    function pickNoClash(pool, n, groups, exclude = new Set()) {
-      const out = [];
-      for (const w of shuffle(pool)) {
-        if (out.length >= n) break;
-        if (exclude.has(w.id) || out.some(o => clashes(o, w, groups))) continue;
-        out.push(w);
-      }
-      return out;
-    }
-    // Wie viele Wörter hat der Ausdruck? («knock down / knock over» → 2)
-    function wordCount(w) {
-      return w.en.replace(/\(.*?\)/g, '').split('/')[0].trim().split(/\s+/).length;
-    }
+    const medalOf = (pts, max) => MEDALS.find(m => max && pts / max >= m.min - 1e-9) || null;
 
-    // Vergleich beim Schreiben: Gross/Klein, Leerzeichen am Rand, Akzente, Apostroph und Bindestrich egal
-    function norm(str) {
-      return String(str || '')
-        .normalize('NFD').replace(/[̀-ͯ]/g, '')
-        .toLowerCase()
-        .replace(/[’‘´`']/g, '')
-        .replace(/[()]/g, ' ')
-        .replace(/[-‐–]/g, ' ')
-        .replace(/\s*\/\s*/g, ' / ')
-        .replace(/[.,!?;:]/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .replace(/^(to|the|a|an) /, '');
+    // Englisch prüfen: Gross/Klein, Akzente, Apostroph, Bindestrich und «to»/«the» am Anfang egal
+    function normEn(s) {
+      return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+        .replace(/[’‘´`']/g, '').replace(/\(.*?\)/g, ' ').replace(/[-‐–]/g, ' ').replace(/[.,!?;:]/g, ' ')
+        .replace(/\s+/g, ' ').trim().replace(/^(to|the|a|an) /, '');
     }
-    function acceptedForms(w) {
+    function enOk(w, input) {
+      const u = normEn(input);
+      if (!u) return false;
       const forms = [w.en, ...w.alt];
-      synonymsOf(w).forEach(s => forms.push(s.en, ...s.alt));
-      return forms.map(norm);
+      related(w, SAME_IDS).forEach(id => forms.push(BY_ID[id].en, ...BY_ID[id].alt));
+      return forms.map(normEn).includes(u);
     }
-    function typedOk(w, input) {
-      const u = norm(input);
-      return u !== '' && acceptedForms(w).includes(u);
+    // Deutsch prüfen: Gross/Klein egal, ä = ae = a, ß = ss, Artikel am Anfang egal
+    function normDe(s, plain) {
+      let t = String(s || '').toLowerCase().replace(/ß/g, 'ss');
+      t = plain ? t.replace(/ä/g, 'a').replace(/ö/g, 'o').replace(/ü/g, 'u') : t.replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue');
+      return t.replace(/[.,!?;:«»"]/g, ' ').replace(/\s+/g, ' ').trim().replace(/^(der|die|das|ein|eine|einen) /, '');
     }
+    function deForms(w) {
+      const out = [];
+      // Bedeutungen trennen, Klammern weg, «/-r» und «/-in» auflösen
+      w.de.replace(/\(.*?\)/g, '').split(',').map(p => p.trim()).filter(Boolean).forEach(p => {
+        const m = p.match(/^(.*?)\/-(\S+)$/);
+        if (m) out.push(m[1], m[1] + m[2]); else out.push(p);
+      });
+      return out.concat(DE_ALT[w.en] || []);
+    }
+    function deOk(w, input) {
+      if (!String(input || '').trim()) return false;
+      return deForms(w).some(f => normDe(f, false) === normDe(input, false) || normDe(f, true) === normDe(input, true));
+    }
+    const isOk = (w, dir, input) => dir === 'de2en' ? enOk(w, input) : deOk(w, input);
+    const askText = (w, dir) => dir === 'de2en' ? w.de : w.en;
+    const answerText = (w, dir) => dir === 'de2en' ? w.en : w.de;
 
     // ==========================================================
-    // SPEICHERN (eigener Präfix ow2u2_, jeder Zugriff in try/catch)
+    // SPEICHERN (jeder Zugriff in try/catch)
     // ==========================================================
-    const SAVE_KEY = 'ow2u2_state';
-    const STATE = { part: 't1', cardMode: 'en', medals: {}, best: {}, rounds: {} };
-    function save() {
-      try { localStorage.setItem(SAVE_KEY, JSON.stringify(STATE)); } catch (e) {}
-    }
+    const SAVE_KEY = 'ow2u2_words';
+    const STATE = { part: 't1', dir: 'de2en', known: {}, medal: {}, tests: {} };
+    function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(STATE)); } catch (e) {} }
     function load() {
       try {
         const s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
         if (!s || typeof s !== 'object') return;
         if (PARTS[s.part]) STATE.part = s.part;
-        if (s.cardMode === 'de' || s.cardMode === 'en') STATE.cardMode = s.cardMode;
-        if (s.medals && typeof s.medals === 'object') STATE.medals = s.medals;
-        if (s.best && typeof s.best === 'object') STATE.best = s.best;
-        if (s.rounds && typeof s.rounds === 'object') STATE.rounds = s.rounds;
+        if (DIRS[s.dir]) STATE.dir = s.dir;
+        if (s.known && typeof s.known === 'object') STATE.known = s.known;
+        if (s.medal && typeof s.medal === 'object') STATE.medal = s.medal;
+        if (s.tests && typeof s.tests === 'object') STATE.tests = s.tests;
       } catch (e) {}
     }
-    const R = () => STATE.rounds[STATE.part];
+    // «Kann ich»: die letzte Antwort in dieser Richtung war richtig
+    function setKnown(id, dir, ok) {
+      STATE.known[id] = STATE.known[id] || {};
+      STATE.known[id][dir] = ok ? 1 : 0;
+    }
+    const isKnown = (id, dir) => !!(STATE.known[id] && STATE.known[id][dir]);
 
     // ==========================================================
-    // RUNDEN ERSTELLEN UND PRÜFEN, OB GESPEICHERTE RUNDEN NOCH GÜLTIG SIND
+    // BEWERTUNG: eine Stelle für die Übungsrunde und den Wörtertest
     // ==========================================================
-    function newCaber(part, ids) {
-      const list = ids || partWords(part).map(w => w.id);
-      return { queue: shuffle(list), first: {}, total: list.length, full: !ids };
-    }
-    function newHammer(part) {
-      return { items: pickNoClash(typeWords(part), HAMMER_N, SAME_IDS).map(w => ({ w: w.id, ans: '', help: false })), checked: false, warned: false };
-    }
-    function gapItem(s, block = new Set()) {
-      let d = shuffle(s.d.filter(id => !block.has(id)));
-      if (d.length < 3) d = d.concat(shuffle(s.d.filter(id => !d.includes(id))));
-      return { k: s.id, opts: shuffle([s.a, ...d.slice(0, 3).map(id => BY_ID[id].en)]), ans: '' };
-    }
-    function newDance(part) {
-      const used = new Set(), items = [];
-      for (const s of shuffle(partSents(part))) {
-        if (items.length >= DANCE_N) break;
-        if (used.has(s.wid)) continue;
-        used.add(s.wid);
-        items.push(gapItem(s));
-      }
-      return { items, checked: false, warned: false };
-    }
-    // Probetest: Kein Wort zum Schreiben darf in einem Lückensatz oder Auswahlmenü vorkommen (verrät sonst die Schreibweise)
-    function newTest(part) {
-      const words = partWords(part), sents = partSents(part);
-      let best = null;
-      for (let tries = 0; tries < 400; tries++) {
-        const typing = pickNoClash(typeWords(part), TEST_TYPE, SAME_IDS);
-        const block = new Set();
-        typing.forEach(w => { block.add(w.id); [...synonymsOf(w), ...familyOf(w)].forEach(s => block.add(s.id)); });
-        const used = new Set(), gaps = [];
-        for (const s of shuffle(sents)) {
-          if (gaps.length >= TEST_GAP) break;
-          if (used.has(s.wid) || block.has(s.wid) || s.textIds.some(id => block.has(id))) continue;
-          if (s.d.filter(id => !block.has(id)).length < 3) continue;
-          used.add(s.wid);
-          gaps.push(s);
-        }
-        if (!best || gaps.length > best.gaps.length) best = { typing, gaps, block };
-        if (gaps.length >= TEST_GAP) break;
-      }
-      // Notlösung (sollte nicht vorkommen): mit weiteren Sätzen auffüllen
-      const used = new Set(best.gaps.map(s => s.wid));
-      for (const s of shuffle(sents)) {
-        if (best.gaps.length >= TEST_GAP) break;
-        if (used.has(s.wid) || best.block.has(s.wid)) continue;
-        used.add(s.wid);
-        best.gaps.push(s);
-      }
-      return {
-        typing: best.typing.map(w => ({ w: w.id, ans: '' })),
-        gaps: best.gaps.map(s => gapItem(s, best.block)),
-        checked: false, warned: false
-      };
-    }
-    function validTyping(items, part) {
-      return Array.isArray(items) && items.length > 0 && items.every(it => it && BY_ID[it.w] && !BY_ID[it.w].noType && inPart(BY_ID[it.w], part) && typeof it.ans === 'string');
-    }
-    function validGaps(items, part) {
-      return Array.isArray(items) && items.length > 0 && items.every(it => {
-        const s = it && SENT_BY_ID[it.k];
-        return s && inPart(BY_ID[s.wid], part) && Array.isArray(it.opts) && it.opts.length === 4 && it.opts.includes(s.a) && typeof it.ans === 'string';
-      });
-    }
-    function validCaber(c, part) {
-      return c && Array.isArray(c.queue) && c.queue.every(id => BY_ID[id] && inPart(BY_ID[id], part)) &&
-        c.first && typeof c.first === 'object' && typeof c.total === 'number' && c.total > 0;
-    }
-    const reshuffleGaps = items => shuffle(items).map(it => ({ ...it, opts: shuffle(it.opts) }));
-    // Gespeicherte Runde behalten, aber bei jedem Laden neu mischen
-    function ensureRounds(part) {
-      const old = STATE.rounds[part] || {};
-      const r = {};
-      r.caber = validCaber(old.caber, part) ? { ...old.caber, queue: shuffle(old.caber.queue) } : newCaber(part);
-      r.hammer = old.hammer && validTyping(old.hammer.items, part) ? { ...old.hammer, items: shuffle(old.hammer.items) } : newHammer(part);
-      r.dance = old.dance && validGaps(old.dance.items, part) ? { ...old.dance, items: reshuffleGaps(old.dance.items) } : newDance(part);
-      r.test = old.test && validTyping(old.test.typing, part) && validGaps(old.test.gaps, part)
-        ? { ...old.test, typing: shuffle(old.test.typing), gaps: reshuffleGaps(old.test.gaps) } : newTest(part);
-      STATE.rounds[part] = r;
-    }
-
-    // ==========================================================
-    // BEWERTUNG: eine Stelle für alle Prüfen-Knöpfe und den Probe-Wörtertest
-    // (Karteikarten = Selbsteinschätzung, darum nicht in TASKS)
-    // ==========================================================
-    const typedPoints = it => typedOk(BY_ID[it.w], it.ans) ? (it.help ? 0.5 : 1) : 0;
-    const gapPoints = it => it.ans === SENT_BY_ID[it.k].a ? 1 : 0;
-    const sum = (arr, f) => arr.reduce((s, x) => s + f(x), 0);
     const TASKS = {
-      tug: {
-        get max() { return TUG.rounds.flat().length; },
-        score() { return Math.max(0, TUG.found - TUG.errors); }
-      },
-      hammer: {
-        get max() { return R().hammer.items.length; },
-        score() { return sum(R().hammer.items, typedPoints); }
-      },
-      dance: {
-        get max() { return R().dance.items.length; },
-        score() { return sum(R().dance.items, gapPoints); }
+      ueben: {
+        get max() { return ROUND.ids.length; },
+        score() { return ROUND.ids.filter(id => ROUND.first[id] === 1).length; }
       },
       test: {
-        get max() { return R().test.typing.length + R().test.gaps.length; },
-        score() { return sum(R().test.typing, typedPoints) + sum(R().test.gaps, gapPoints); }
+        get max() { return T().a.length + T().b.length; },
+        score() { return T().a.filter(it => enOk(BY_ID[it.w], it.ans)).length + T().b.filter(it => testBOk(it)).length; }
       }
     };
     // Schweizer Note: Punkte ÷ Total × 5 + 1, auf 0.1 gerundet. Bestanden ab 60 %.
     const gradeOf = (pts, max) => Math.round((pts / max * 5 + 1) * 10) / 10;
     const passPoints = max => Math.ceil(max * 0.6);
-    function medalOf(pts, max) {
-      const pct = max ? pts / max : 0;
-      return Object.keys(MEDALS).find(m => pct >= MEDALS[m].min - 1e-9) || null;
-    }
-    const medalText = m => m ? `${MEDALS[m].icon} ${MEDALS[m].name}` : 'noch keine Medaille (unter 60 %)';
-    function awardMedal(id, pts, max) {
-      const m = medalOf(pts, max), part = STATE.part;
-      STATE.medals[id] = STATE.medals[id] || {};
-      const cur = STATE.medals[id][part];
-      const better = m && (!MEDALS[cur] || MEDALS[m].rank > MEDALS[cur].rank);
-      if (better) STATE.medals[id][part] = m;
-      save();
-      renderMedals();
-      showToast(m ? `${MEDALS[m].icon} ${MEDALS[m].name}!` : '💪 Weiter üben!',
-        `${DISC[id].name}: ${fmt(pts)} von ${max} Punkten${better ? ' · neue Bestleistung' : ''}`);
-      return m;
-    }
 
     // ==========================================================
-    // AUSSPRACHE (speechSynthesis, en-GB bevorzugt)
+    // AUSSPRACHE (en-GB, wenn vorhanden)
     // ==========================================================
-    const TTS_OK = (() => {
-      try { return 'speechSynthesis' in window && typeof window.SpeechSynthesisUtterance === 'function'; } catch (e) { return false; }
-    })();
-    function speakText(text) {
+    const TTS_OK = (() => { try { return 'speechSynthesis' in window && typeof window.SpeechSynthesisUtterance === 'function'; } catch (e) { return false; } })();
+    function speak(text) {
       if (!TTS_OK) return;
       try {
         const u = new SpeechSynthesisUtterance(String(text).replace(/\s*\/\s*/g, ', ').replace(/[()]/g, ''));
-        u.lang = 'en-GB';
-        u.rate = 0.9;
-        const lang = v => String(v.lang || '').replace('_', '-').toLowerCase();
+        u.lang = 'en-GB'; u.rate = 0.9;
         const voices = window.speechSynthesis.getVoices() || [];
-        const voice = voices.find(v => lang(v) === 'en-gb') || voices.find(v => lang(v).startsWith('en'));
-        if (voice) u.voice = voice;
+        const v = voices.find(x => String(x.lang).replace('_', '-').toLowerCase() === 'en-gb') || voices.find(x => String(x.lang).toLowerCase().startsWith('en'));
+        if (v) u.voice = v;
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(u);
       } catch (e) {}
     }
-    function sayBtn(ev, btn) {
-      if (ev) ev.stopPropagation();
-      speakText(btn.getAttribute('data-say') || '');
-    }
-    const sayHtml = (text, big) => `<button type="button" class="say-btn shrink-0 inline-flex items-center justify-center rounded-lg border border-emerald-300 bg-white hover:bg-emerald-50 ${big ? 'w-11 h-11 text-xl' : 'w-7 h-7 text-sm'} align-middle" data-say="${escAttr(text)}" onclick="sayBtn(event,this)" title="Anhören" aria-label="Anhören">🔊</button>`;
+    const sayBtn = (text, big) => `<button type="button" class="say-btn shrink-0 inline-flex items-center justify-center rounded-lg border border-emerald-300 bg-white ${big ? 'w-10 h-10 text-lg' : 'w-7 h-7 text-sm'}" data-say="${esc(text)}" onclick="speak(this.dataset.say)" aria-label="Anhören">🔊</button>`;
 
     // ==========================================================
-    // TIPP, THEORIE, NAVIGATION
-    // ==========================================================
-    let THEORY_BACK = null;
-    function toggleTip(id) {
-      const box = $('tip-' + id);
-      if (box) box.classList.toggle('hidden');
-    }
-    function openTheory(key, fromTask) {
-      THEORY_BACK = fromTask;
-      const d = $('theory-' + key);
-      if (!d) return;
-      d.open = true;
-      setTimeout(() => d.scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
-    }
-    function backToTask() { goTask(THEORY_BACK || 'caber'); }
-    function goTask(id) {
-      const el = $('task-' + id);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    const TAB_ON = 'tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition bg-white text-emerald-900 font-bold shadow-sm';
-    const TAB_OFF = 'tab-btn px-3 py-1.5 rounded-xl flex items-center gap-1.5 whitespace-nowrap transition text-emerald-100 hover:bg-white/10';
-    function switchTab(tab) {
-      document.querySelectorAll('.tab-view').forEach(v => v.classList.toggle('hidden', v.id !== 'view-' + tab));
-      document.querySelectorAll('.tab-btn').forEach(b => { b.className = b.id === 'tab-btn-' + tab ? TAB_ON : TAB_OFF; });
-    }
-
-    // ==========================================================
-    // AUSWAHL: TEIL 1 / TEIL 2 / ALLE
+    // TEIL, RICHTUNG, FORTSCHRITT
     // ==========================================================
     function setPart(part) {
-      if (!PARTS[part]) return;
+      if (!PARTS[part] || part === STATE.part) return;
       STATE.part = part;
-      ensureRounds(part);
-      CARD.flipped = false;
-      newTug();
       save();
+      newRound();
       renderAll();
-      showToast('🔤 ' + PARTS[part].label, `${partWords().length} Wörter. Alle Disziplinen nutzen jetzt diese Wörter.`);
     }
-    function renderPart() {
+    function setDir(dir) {
+      if (!DIRS[dir] || dir === STATE.dir) return;
+      STATE.dir = dir;
+      save();
+      newRound();
+      renderUeben();
+    }
+    function renderTop() {
       Object.keys(PARTS).forEach(p => {
+        const on = p === STATE.part, n = partWords(p).length;
         const b = $('part-btn-' + p);
-        if (!b) return;
-        const on = p === STATE.part;
-        b.className = 'part-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-bold border transition ' +
-          (on ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100');
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.innerHTML = `<span class="block text-base font-black">${PARTS[p].label}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}">${PARTS[p].page} · ${n} Wörter</span>`;
+        b.className = 'part-btn px-3 py-3 rounded-xl border-2 text-center transition ' + (on ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50');
+        b.setAttribute('aria-pressed', on);
       });
-      $('part-info').textContent = `${partWords().length} Wörter · ${PARTS[STATE.part].info}`;
-      document.querySelectorAll('.js-part-short').forEach(el => el.textContent = PARTS[STATE.part].short);
-    }
-
-    // ==========================================================
-    // MEDAILLENSPIEGEL
-    // ==========================================================
-    function renderMedals() {
-      const parts = Object.keys(PARTS);
-      let html = `<thead><tr class="text-[11px] uppercase tracking-wider text-slate-500">
-          <th class="text-left font-bold py-1.5 pr-2">Disziplin</th>
-          ${parts.map(p => `<th class="font-bold py-1.5 px-1 text-center ${p === STATE.part ? 'text-emerald-700' : ''}">${PARTS[p].short}</th>`).join('')}
-        </tr></thead><tbody>`;
-      const count = { gold: 0, silver: 0, bronze: 0 };
-      Object.entries(DISC).forEach(([id, d]) => {
-        html += `<tr class="border-t border-slate-100">
-            <td class="py-1.5 pr-2"><button type="button" onclick="goTask('${id}')" class="text-left text-xs sm:text-sm font-semibold text-slate-800 hover:text-emerald-700">${d.name}<span class="block text-[11px] font-normal text-slate-500">${d.what}</span></button></td>
-            ${parts.map(p => {
-              const m = (STATE.medals[id] || {})[p];
-              if (MEDALS[m]) count[m]++;
-              return `<td class="text-center text-lg sm:text-xl py-1.5 ${p === STATE.part ? 'bg-emerald-50' : ''}">${MEDALS[m] ? MEDALS[m].icon : '<span class="text-slate-300 text-sm">–</span>'}</td>`;
-            }).join('')}
-          </tr>`;
-      });
-      $('medal-table').innerHTML = html + '</tbody>';
-      $('header-medals').textContent = `🥇 ${count.gold} · 🥈 ${count.silver} · 🥉 ${count.bronze}`;
-      Object.keys(DISC).forEach(id => {
-        const el = $('best-' + id);
-        const m = (STATE.medals[id] || {})[STATE.part];
-        if (el) el.textContent = MEDALS[m] ? `${MEDALS[m].icon} ${MEDALS[m].name}` : '–';
-      });
-      const bt = STATE.best[STATE.part];
-      if ($('best-time')) $('best-time').textContent = typeof bt === 'number' ? fmtTime(bt) : '–';
-    }
-
-    // ==========================================================
-    // DISZIPLIN 1: CABER TOSS (KARTEIKARTEN)
-    // ==========================================================
-    const CARD = { flipped: false };
-    function setCardMode(mode) {
-      STATE.cardMode = mode;
-      CARD.flipped = false;
-      save();
-      renderCaber();
-    }
-    function flipCard() {
-      CARD.flipped = !CARD.flipped;
-      renderCaber();
-    }
-    function cardAnswer(known) {
-      const c = R().caber;
-      if (!c.queue.length) return;
-      const id = c.queue.shift();
-      if (!(id in c.first)) c.first[id] = known ? 1 : 0;
-      // Nicht gewusst: kommt nach 3 anderen Karten wieder
-      if (!known) c.queue.splice(Math.min(3, c.queue.length), 0, id);
-      CARD.flipped = false;
-      if (!c.queue.length && c.full) {
-        awardMedal('caber', Object.values(c.first).filter(v => v === 1).length, c.total);
-      }
-      save();
-      renderCaber();
-    }
-    function practiceHard() {
-      const c = R().caber;
-      const hard = Object.keys(c.first).filter(id => c.first[id] === 0 && BY_ID[id]);
-      if (!hard.length) return;
-      R().caber = newCaber(STATE.part, hard);
-      CARD.flipped = false;
-      save();
-      renderCaber();
-    }
-    function renderCaber() {
-      const c = R().caber;
-      const remaining = new Set(c.queue).size;
-      const done = c.total - remaining;
-      const pct = Math.round(done / c.total * 100);
-      const known = Object.values(c.first).filter(v => v === 1).length;
-      const modeBtn = (mode, label) => `<button type="button" onclick="setCardMode('${mode}')" class="px-2.5 py-1 rounded-lg ${STATE.cardMode === mode ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-600 hover:bg-white'}">${label}</button>`;
-      let html = `
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-          <div class="flex rounded-xl bg-slate-100 p-1 border border-slate-200 text-xs font-semibold">
-            ${modeBtn('en', 'Englisch zuerst')}${modeBtn('de', 'Deutsch zuerst')}
-          </div>
-          <div class="text-xs font-semibold text-slate-600">${c.full ? '' : 'Schwierige Wörter · '}${done} von ${c.total} Karten</div>
-        </div>
-        <div class="h-2.5 rounded-full bg-slate-100 border border-slate-200 overflow-hidden mb-4">
-          <div class="h-full bg-emerald-500 transition-all" style="width:${pct}%"></div>
-        </div>`;
-      if (!c.queue.length) {
-        const hard = Object.keys(c.first).filter(id => c.first[id] === 0).length;
-        const m = c.full ? medalOf(known, c.total) : null;
-        html += `
-          <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-2">
-            <div class="text-3xl">${m ? MEDALS[m].icon : '🎉'}</div>
-            <div class="text-base font-black text-slate-900">Alle Karten geschafft!</div>
-            <div class="text-sm text-slate-700">Beim ersten Mal gewusst: <b>${known} von ${c.total}</b> (${Math.round(known / c.total * 100)} %)</div>
-            ${c.full ? `<div class="text-sm font-bold text-emerald-800">${medalText(m)}</div>` : '<div class="text-xs text-slate-500">Runde mit schwierigen Wörtern: ohne Medaille.</div>'}
-            ${hard ? `<button type="button" onclick="practiceHard()" class="mt-1 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold border bg-white border-emerald-400 text-emerald-800 hover:bg-emerald-100">🔁 Nur die ${hard} schwierigen Wörter üben</button>` : ''}
+      let total = 0, all = 0;
+      $('progress').innerHTML = Object.entries(DIRS).map(([dir, d]) => {
+        const words = dirWords(dir);
+        const n = words.filter(w => isKnown(w.id, dir)).length;
+        total += n; all += words.length;
+        const pct = Math.round(n / words.length * 100);
+        return `<div>
+            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1"><span>${d.label}</span><span>${n} von ${words.length}${n === words.length ? ' 🎉' : ''}</span></div>
+            <div class="h-3 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-emerald-500 transition-all" style="width:${pct}%"></div></div>
           </div>`;
-      } else {
-        const w = BY_ID[c.queue[0]];
-        const showEn = (STATE.cardMode === 'en') !== CARD.flipped;
-        const text = showEn ? w.en : w.de;
-        html += `
-          <div role="button" tabindex="0" onclick="flipCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}"
-            class="relative min-h-[11rem] rounded-2xl border-2 ${showEn ? 'border-emerald-300 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-5 flex flex-col items-center justify-center text-center gap-3 cursor-pointer select-none shadow-sm hover:shadow-md transition">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider ${showEn ? 'text-emerald-700' : 'text-amber-700'}">${showEn ? 'Englisch' : 'Deutsch'} · ${escHtml(w.group)}</div>
-            <div class="flex items-center justify-center gap-3 max-w-full">
-              <span class="text-2xl sm:text-4xl font-black text-slate-900 wrap-any" lang="${showEn ? 'en' : 'de'}">${escHtml(text)}</span>
-              ${showEn ? sayHtml(w.en, true) : ''}
-            </div>
-            <div class="text-xs text-slate-500">${CARD.flipped ? 'Lösung' : 'Antippen zum Umdrehen'}</div>
-          </div>`;
-        html += CARD.flipped ? `
-          <div class="grid grid-cols-2 gap-2 mt-3">
-            <button type="button" onclick="cardAnswer(false)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-rose-300 bg-rose-50 text-rose-800 hover:bg-rose-100">✖ Nochmals</button>
-            <button type="button" onclick="cardAnswer(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-emerald-400 bg-emerald-50 text-emerald-800 hover:bg-emerald-100">✔ Gewusst</button>
-          </div>` : `<p class="text-xs text-slate-500 text-center mt-3">Zuerst überlegen, dann die Karte antippen.</p>`;
-      }
-      $('body-caber').innerHTML = html;
-      $('fb-caber').textContent = c.queue.length ? `Beim ersten Mal gewusst: ${known}` : '';
-      $('fb-caber').className = 'text-xs font-semibold text-slate-600';
+      }).join('');
+      $('header-known').textContent = `${total} / ${all}`;
     }
 
     // ==========================================================
-    // DISZIPLIN 2: TUG OF WAR (ZUORDNEN GEGEN DIE UHR)
+    // AUFGABE 1: ÜBEN (ein Wort nach dem anderen)
     // ==========================================================
-    const TUG = { phase: 'ready', rounds: [], r: 0, left: [], right: [], matched: {}, sel: null, errors: 0, found: 0, start: 0, end: 0, timer: null, flash: null, lock: false };
-    function stopTugTimer() {
-      if (TUG.timer) clearInterval(TUG.timer);
-      TUG.timer = null;
+    const ROUND = { ids: [], queue: [], first: {}, phase: 'ask', last: null, streak: 0, best: 0, extra: {} };
+    function newRound() {
+      const dir = STATE.dir;
+      const pool = dirWords(dir);
+      // Zuerst die Wörter, die man noch nicht kann
+      const todo = shuffle(pool.filter(w => !isKnown(w.id, dir)));
+      const done = shuffle(pool.filter(w => isKnown(w.id, dir)));
+      const ids = todo.concat(done).slice(0, ROUND_N).map(w => w.id);
+      Object.assign(ROUND, { ids, queue: shuffle(ids), first: {}, phase: 'ask', last: null, streak: 0, best: 0, extra: {} });
     }
-    function newTug() {
-      stopTugTimer();
-      const words = partWords();
-      const r1 = pickNoClash(words, TUG_PAIRS, CLASH_IDS);
-      const used = new Set(r1.map(w => w.id));
-      const rounds = [r1];
-      for (let k = 1; k < TUG_ROUNDS; k++) {
-        const rk = pickNoClash(words, TUG_PAIRS, CLASH_IDS, used);
-        rk.forEach(w => used.add(w.id));
-        if (rk.length) rounds.push(rk);
-      }
-      Object.assign(TUG, { phase: 'ready', rounds: rounds.map(r => r.map(w => w.id)), r: 0, matched: {}, sel: null, errors: 0, found: 0, start: 0, end: 0, flash: null, lock: false });
-      setupTugRound();
-    }
-    function setupTugRound() {
-      const ids = TUG.rounds[TUG.r] || [];
-      TUG.left = shuffle(ids);
-      // Rechts so mischen, dass kein Paar auf derselben Zeile steht
-      let right = shuffle(ids);
-      for (let i = 0; i < 100 && ids.length > 1 && right.some((x, k) => x === TUG.left[k]); i++) right = shuffle(ids);
-      TUG.right = right;
-    }
-    const tugSeconds = () => ((TUG.end || Date.now()) - TUG.start) / 1000;
-    function startTug() {
-      TUG.phase = 'play';
-      TUG.start = Date.now();
-      stopTugTimer();
-      TUG.timer = setInterval(() => {
-        const el = $('tug-time');
-        if (el) el.textContent = fmtTime(tugSeconds());
-      }, 250);
-      renderTug();
-    }
-    function tugTap(side, id) {
-      if (TUG.phase !== 'play' || TUG.lock || TUG.matched[id]) return;
-      if (!TUG.sel || TUG.sel.side === side) {
-        TUG.sel = TUG.sel && TUG.sel.side === side && TUG.sel.id === id ? null : { side, id };
-        renderTug();
-        return;
-      }
-      const other = TUG.sel.id;
-      TUG.sel = null;
-      if (other === id) {
-        TUG.matched[id] = true;
-        TUG.found++;
-        const roundDone = (TUG.rounds[TUG.r] || []).every(x => TUG.matched[x]);
-        if (roundDone && TUG.r < TUG.rounds.length - 1) {
-          TUG.lock = true;
-          renderTug();
-          setTimeout(() => { TUG.r++; TUG.lock = false; setupTugRound(); renderTug(); }, 600);
-          return;
-        }
-        if (roundDone) { finishTug(); return; }
-      } else {
-        TUG.errors++;
-        const pair = side === 'left' ? [id, other] : [other, id];
-        TUG.flash = pair;
-        setTimeout(() => { if (TUG.flash === pair) { TUG.flash = null; renderTug(); } }, 650);
-      }
-      renderTug();
-    }
-    function finishTug() {
-      TUG.phase = 'done';
-      TUG.end = Date.now();
-      stopTugTimer();
-      const total = tugSeconds() + TUG_PENALTY * TUG.errors;
-      const prev = STATE.best[STATE.part];
-      TUG.newBest = typeof prev !== 'number' || total < prev;
-      if (TUG.newBest) STATE.best[STATE.part] = Math.round(total * 10) / 10;
-      TUG.total = total;
-      awardMedal('tug', TASKS.tug.score(), TASKS.tug.max);
+    function answerWord(dontKnow) {
+      if (ROUND.phase !== 'ask' || !ROUND.queue.length) return;
+      const id = ROUND.queue[0], w = BY_ID[id], dir = STATE.dir;
+      const inp = $('ueben-in');
+      const ans = dontKnow ? '' : (inp ? inp.value : '');
+      if (!dontKnow && !ans.trim()) { if (inp) inp.focus(); return; }
+      const ok = !dontKnow && isOk(w, dir, ans);
+      if (!(id in ROUND.first)) { ROUND.first[id] = ok ? 1 : 0; setKnown(id, dir, ok); }
+      if (!ok && !ROUND.extra[id]) { ROUND.queue.push(id); ROUND.extra[id] = true; }   // kommt am Schluss nochmals
+      ROUND.streak = ok ? ROUND.streak + 1 : 0;
+      ROUND.best = Math.max(ROUND.best, ROUND.streak);
+      ROUND.last = { id, ok, ans, dontKnow };
+      ROUND.phase = 'answered';
       save();
-      renderTug();
+      renderUeben(true);
+      renderTop();
     }
-    function renderTug() {
-      const box = $('body-tug');
-      const max = TASKS.tug.max;
-      if (TUG.phase === 'ready') {
+    // Englisch → Deutsch: Die eigene Antwort meint dasselbe (z.B. ein anderes deutsches Wort)
+    function overrideWord() {
+      const L = ROUND.last;
+      if (!L || L.ok || L.dontKnow || STATE.dir !== 'en2de') return;
+      L.ok = true;
+      if (ROUND.first[L.id] === 0) { ROUND.first[L.id] = 1; setKnown(L.id, 'en2de', true); }
+      const k = ROUND.queue.lastIndexOf(L.id);
+      if (k > 0) ROUND.queue.splice(k, 1);
+      ROUND.extra[L.id] = false;
+      ROUND.streak++;
+      ROUND.best = Math.max(ROUND.best, ROUND.streak);
+      save();
+      renderUeben(true);
+      renderTop();
+    }
+    function nextWord() {
+      if (ROUND.phase !== 'answered') return;
+      ROUND.queue.shift();
+      ROUND.phase = ROUND.queue.length ? 'ask' : 'done';
+      renderUeben(true);
+    }
+    function renderUeben(keepFocus) {
+      $('dir-btns').innerHTML = Object.entries(DIRS).map(([dir, d]) => {
+        const on = dir === STATE.dir;
+        return `<button type="button" onclick="setDir('${dir}')" aria-pressed="${on}" class="px-2 py-2 rounded-xl border-2 text-xs sm:text-sm font-bold transition ${on ? 'bg-sky-600 border-sky-600 text-white' : 'bg-white border-slate-300 text-slate-700 hover:bg-slate-50'}">${d.label}</button>`;
+      }).join('');
+      const box = $('body-ueben');
+      const dir = STATE.dir, d = DIRS[dir];
+      if (ROUND.phase === 'done') {
+        const pts = TASKS.ueben.score(), max = TASKS.ueben.max, m = medalOf(pts, max);
         box.innerHTML = `
-          <div class="rounded-2xl border-2 border-dashed border-emerald-300 bg-emerald-50/60 p-5 text-center space-y-3">
-            <div class="text-3xl">🪢</div>
-            <p class="text-sm text-slate-700">${TUG.rounds.length} Runden · ${max} Paare · Jeder Fehler: +${TUG_PENALTY} Sekunden</p>
-            <button type="button" onclick="startTug()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-sm">▶ Start</button>
+          <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-2 pop">
+            <div class="text-4xl">${m ? m.icon : '💪'}</div>
+            <div class="text-lg font-black text-slate-900">Runde fertig!</div>
+            <div class="text-sm text-slate-700">Beim ersten Mal richtig: <b>${pts} von ${max}</b></div>
+            ${ROUND.best >= 3 ? `<div class="text-sm text-slate-700">Längste Serie: 🔥 ${ROUND.best}</div>` : ''}
+            <button type="button" id="next-btn" onclick="retryTask('ueben')" class="mt-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">▶ Neue Runde</button>
           </div>`;
-        $('fb-tug').textContent = '';
+        if (keepFocus) $('next-btn').focus();
         return;
       }
-      const pos = Math.max(5, Math.min(95, 50 + 50 * (TUG.found - TUG.errors) / max));
+      const id = ROUND.queue[0], w = BY_ID[id];
+      const answered = Object.keys(ROUND.first).length;
+      const again = ROUND.extra[id] && ROUND.queue.indexOf(id) === 0 && answered === ROUND.ids.length && ROUND.phase === 'ask';
+      const hint = dir === 'de2en' && w.hint ? ` <span class="text-sm font-medium text-slate-500">(${esc(w.hint)})</span>` : '';
+      const nr = Math.min(answered + (ROUND.phase === 'ask' && !(id in ROUND.first) ? 1 : 0), ROUND.ids.length);
       let html = `
-        <div class="flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm font-semibold text-slate-700 mb-2">
-          <span>Runde ${TUG.r + 1} von ${TUG.rounds.length}</span>
-          <span>⏱️ <span id="tug-time" class="font-mono">${fmtTime(tugSeconds())}</span></span>
-          <span>Fehler: <b class="${TUG.errors ? 'text-rose-700' : ''}">${TUG.errors}</b></span>
+        <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2">
+          <span>${again || (id in ROUND.first && ROUND.phase === 'ask') ? 'Nochmals' : `Wort ${nr} von ${ROUND.ids.length}`}</span>
+          <span>${ROUND.streak >= 2 ? '🔥 ' + ROUND.streak + ' richtig' : ''}</span>
         </div>
-        <div class="relative h-3 rounded-full bg-gradient-to-r from-rose-200 via-slate-200 to-emerald-300 mb-1" aria-hidden="true">
-          <div class="absolute -top-2 text-lg leading-none transition-all duration-300" style="left:${pos}%; transform:translateX(-50%)">🎌</div>
-        </div>
-        <div class="flex justify-between text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3"><span>Fehler</span><span>richtig</span></div>`;
-      if (TUG.phase === 'play') {
-        const btn = (side, id) => {
-          const w = BY_ID[id];
-          const sel = TUG.sel && TUG.sel.side === side && TUG.sel.id === id;
-          const ok = TUG.matched[id];
-          const bad = TUG.flash && TUG.flash[side === 'left' ? 0 : 1] === id;
-          const cls = ok ? 'bg-emerald-100 border-emerald-300 text-emerald-800 opacity-60'
-            : bad ? 'bg-rose-100 border-rose-400 text-rose-800 shake'
-            : sel ? 'bg-sky-100 border-sky-500 text-sky-900 ring-2 ring-sky-300'
-            : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50';
-          return `<button type="button" onclick="tugTap('${side}','${id}')" ${ok ? 'disabled' : ''} lang="${side === 'left' ? 'en' : 'de'}"
-            class="w-full min-h-[3rem] px-2.5 py-2 rounded-xl border-2 text-xs sm:text-sm font-semibold text-left wrap-any transition ${cls}">${ok ? '✔ ' : ''}${escHtml(side === 'left' ? w.en : w.de)}</button>`;
-        };
+        <div class="rounded-2xl border-2 ${dir === 'de2en' ? 'border-amber-300 bg-amber-50' : 'border-emerald-300 bg-emerald-50'} p-5 text-center space-y-2">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">${d.ask}</div>
+          <div class="flex items-center justify-center gap-2">
+            <span class="text-2xl sm:text-3xl font-black text-slate-900 wrap-any" lang="${dir === 'de2en' ? 'de' : 'en'}">${esc(askText(w, dir))}${hint}</span>
+            ${dir === 'en2de' ? sayBtn(w.en, true) : ''}
+          </div>
+        </div>`;
+      if (ROUND.phase === 'ask') {
         html += `
-          <div class="grid grid-cols-2 gap-2">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700">Englisch</div>
-            <div class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700">Deutsch</div>
-            ${TUG.left.map((id, i) => btn('left', id) + btn('right', TUG.right[i])).join('')}
+          <div class="mt-3 space-y-2">
+            <input id="ueben-in" type="text" placeholder="auf ${d.answer} …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${dir === 'de2en' ? 'en' : 'de'}"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();answerWord(false);}"
+              class="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-3 text-lg font-semibold text-slate-800">
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="answerWord(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 Weiss ich nicht</button>
+              <button type="button" onclick="answerWord(false)" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">✓ Prüfen</button>
+            </div>
           </div>`;
-        $('fb-tug').textContent = TUG.sel ? 'Gut. Tipp jetzt auf der anderen Seite auf das passende Wort.' : '';
-        $('fb-tug').className = 'text-xs font-semibold text-sky-700';
       } else {
-        const pts = TASKS.tug.score(), m = medalOf(pts, max);
+        const L = ROUND.last;
         html += `
-          <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-1.5">
-            <div class="text-3xl">${m ? MEDALS[m].icon : '💪'}</div>
-            <div class="text-base font-black text-slate-900">Geschafft!</div>
-            <div class="text-sm text-slate-700">Zeit ${fmtTime(tugSeconds())} + ${TUG.errors} Fehler × ${TUG_PENALTY} s = <b>${fmtTime(TUG.total)}</b>${TUG.newBest ? ' · 🎉 neue Bestzeit!' : ''}</div>
-            <div class="text-sm text-slate-700">Punkte: <b>${fmt(pts)} von ${max}</b> (jeder Fehler −1)</div>
-            <div class="text-sm font-bold text-emerald-800">${medalText(m)}</div>
-          </div>`;
-        $('fb-tug').textContent = pts === max ? '🌟 Ohne Fehler! Schaffst du es noch schneller?' : 'Mit «🔀 Nochmals üben» bekommst du neue Wörter.';
-        $('fb-tug').className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-amber-700';
+          <div class="mt-3 rounded-2xl border-2 ${L.ok ? 'border-emerald-400 bg-emerald-50' : 'border-rose-300 bg-rose-50'} p-4 space-y-2 pop">
+            <div class="text-base font-black ${L.ok ? 'text-emerald-800' : 'text-rose-800'}">${L.ok ? '✔ Richtig!' : (L.dontKnow ? 'So heisst es:' : '✖ Leider falsch. Richtig ist:')}</div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-xl font-black text-slate-900 wrap-any">${esc(answerText(w, dir))}</span>${dir === 'de2en' ? sayBtn(w.en) + alsoText(w) : ''}
+            </div>
+            ${!L.ok && !L.dontKnow ? `<div class="text-xs text-slate-600 wrap-any">Deine Antwort: <span class="font-semibold">${esc(L.ans)}</span>. Das Wort kommt am Schluss nochmals.</div>` : ''}
+            ${L.dontKnow ? '<div class="text-xs text-slate-600">Das Wort kommt am Schluss nochmals.</div>' : ''}
+            ${!L.ok && !L.dontKnow && dir === 'en2de' ? `<button type="button" onclick="overrideWord()" class="text-xs font-bold underline text-slate-600 text-left">Meine Antwort bedeutet dasselbe → zählt als richtig</button>` : ''}
+          </div>
+          <button type="button" id="next-btn" onclick="nextWord()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">Weiter →</button>`;
       }
       box.innerHTML = html;
+      if (keepFocus) {
+        const f = ROUND.phase === 'ask' ? $('ueben-in') : $('next-btn');
+        if (f) f.focus({ preventScroll: true });
+      }
     }
 
     // ==========================================================
-    // DISZIPLIN 3: HAMMER THROW (SCHREIBEN) und Teil A des Probetests
+    // AUFGABE 2: WÖRTERTEST (Teil A: Deutsch → Englisch, Teil B: Englisch → Deutsch)
     // ==========================================================
-    function typingRowHtml(scope, it, num, locked, withHelp) {
-      const w = BY_ID[it.w];
-      const n = wordCount(w);
-      const extra = [w.hint, n > 1 ? `${n} Wörter` : ''].filter(Boolean).map(x => `(${escHtml(x)})`).join(' ');
-      let cls = 'bg-slate-50 border-slate-200', fb = '';
-      if (locked) {
-        const ok = typedOk(w, it.ans);
-        const syn = synonymsOf(w);
-        cls = ok ? 'bg-emerald-50 border-emerald-300' : 'bg-rose-50 border-rose-300';
-        fb = `<div class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs ${ok ? 'text-emerald-800' : 'text-rose-800'} font-semibold">
-            <span>${ok ? (it.help ? '✔ Richtig, mit Hilfe: ½ Punkt' : '✔ Richtig') : '✖ Richtig ist:'}</span>
-            <span class="font-black text-slate-900 wrap-any" lang="en">${escHtml(w.en)}</span>${sayHtml(w.en)}
-            ${syn.length ? `<span class="text-slate-600 font-medium">auch richtig: ${syn.map(s => escHtml(s.en)).join(', ')}</span>` : ''}
-          </div>`;
+    const T = () => STATE.tests[STATE.part];
+    function newTest(part) {
+      const words = partWords(part);
+      const a = [], block = new Set();
+      for (const w of shuffle(words.filter(x => !x.noType))) {
+        if (a.length >= TEST_A) break;
+        if (block.has(w.id)) continue;
+        a.push(w);
+        [w.id, ...related(w, SAME_IDS), ...related(w, FAMILY_IDS)].forEach(id => block.add(id));
       }
-      const helpBtn = withHelp && !locked
-        ? `<button type="button" onclick="hammerHelp('${it.w}')" ${it.help ? 'disabled' : ''} class="shrink-0 px-2.5 py-2 rounded-lg text-xs font-bold border ${it.help ? 'bg-amber-50 border-amber-300 text-amber-900' : 'bg-white border-slate-300 text-slate-700 hover:bg-slate-100'}">${it.help ? `Beginnt mit «${escHtml(w.en.charAt(0))}»` : '🔤 Erster Buchstabe'}</button>` : '';
+      const b = shuffle(words.filter(w => !block.has(w.id))).slice(0, TEST_B);
+      return { a: a.map(w => ({ w: w.id, ans: '' })), b: b.map(w => ({ w: w.id, ans: '', same: false })), checked: false, warned: false };
+    }
+    const testBOk = it => !!it.same || deOk(BY_ID[it.w], it.ans);
+    function validTest(t, part) {
+      const ok = list => Array.isArray(list) && list.length > 0 && list.every(it => it && BY_ID[it.w] && BY_ID[it.w].part === part && typeof it.ans === 'string');
+      return t && ok(t.a) && ok(t.b);
+    }
+    // Gespeicherten Test behalten, aber bei jedem Laden neu mischen
+    function ensureTest(part) {
+      const old = STATE.tests[part];
+      STATE.tests[part] = validTest(old, part) ? { ...old, a: shuffle(old.a), b: shuffle(old.b) } : newTest(part);
+    }
+    function testInput(key, id, val) {
+      const t = T();
+      if (t.checked) return;
+      const it = t[key].find(x => x.w === id);
+      if (it) { it.ans = val; save(); }
+    }
+    function testSame(id) {
+      const t = T(), it = t.b.find(x => x.w === id);
+      if (!t.checked || !it || it.same || !String(it.ans).trim()) return;
+      it.same = true;
+      setKnown(id, 'en2de', true);
+      save();
+      renderTest();
+      renderTop();
+    }
+    function checkTest() {
+      const t = T();
+      if (t.checked) return;
+      const empty = [...t.a, ...t.b].filter(it => !it.ans.trim()).length;
+      if (empty && !t.warned) { t.warned = true; save(); renderTest(); return; }
+      t.checked = true;
+      t.a.forEach(it => setKnown(it.w, 'de2en', enOk(BY_ID[it.w], it.ans)));
+      t.b.forEach(it => setKnown(it.w, 'en2de', testBOk(it)));
+      const m = medalOf(TASKS.test.score(), TASKS.test.max);
+      const old = MEDALS.findIndex(x => x.name === STATE.medal[STATE.part]);
+      if (m && (old < 0 || MEDALS.indexOf(m) < old)) STATE.medal[STATE.part] = m.name;
+      save();
+      renderTest();
+      renderTop();
+      $('fb-test').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function testRow(key, it, num, t) {
+      const w = BY_ID[it.w], dir = key === 'a' ? 'de2en' : 'en2de';
+      const ok = key === 'a' ? enOk(w, it.ans) : testBOk(it);
+      const hint = key === 'a' && w.hint ? ` <span class="text-xs font-medium text-slate-500">(${esc(w.hint)})</span>` : '';
+      const fb = !t.checked ? '' : `
+        <div class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold ${ok ? 'text-emerald-800' : 'text-rose-800'}">
+          <span>${ok ? '✔' : '✖ Richtig:'}</span>
+          ${ok ? '' : `<span class="font-black text-slate-900 wrap-any">${esc(answerText(w, dir))}</span>`}
+          ${key === 'a' ? sayBtn(w.en) + (ok ? '' : alsoText(w)) : ''}
+          ${!ok && key === 'b' && it.ans.trim() ? `<button type="button" onclick="testSame('${it.w}')" class="underline text-slate-600 font-bold text-left">meine Antwort bedeutet dasselbe</button>` : ''}
+        </div>`;
       return `
-        <div class="p-3 rounded-xl border ${cls}">
+        <div class="p-3 rounded-xl border ${!t.checked ? 'bg-slate-50 border-slate-200' : ok ? 'bg-emerald-50 border-emerald-300' : 'bg-rose-50 border-rose-300'}">
           <div class="flex items-start gap-2">
-            <span class="text-xs font-bold text-slate-500 w-6 shrink-0 pt-0.5">${num}.</span>
+            <span class="text-xs font-bold text-slate-500 w-6 shrink-0 pt-2.5">${num}.</span>
             <div class="min-w-0 flex-1">
-              <div class="text-sm font-bold text-slate-800 wrap-any" lang="de">${escHtml(w.de)} <span class="text-xs font-medium text-slate-500">${extra}</span></div>
-              <div class="mt-2 flex flex-wrap items-center gap-2">
-                <input type="text" id="in-${scope}-${it.w}" value="${escAttr(it.ans)}" ${locked ? 'disabled' : ''} oninput="typeInput('${scope}','${it.w}',this.value)" onkeydown="nextOnEnter(event,this)"
-                  placeholder="englisch …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="en"
-                  class="type-in min-w-0 flex-1 basis-40 bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm font-semibold text-slate-800 disabled:bg-slate-100">
-                ${helpBtn}
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                <span class="text-sm font-bold text-slate-800 wrap-any" lang="${key === 'a' ? 'de' : 'en'}">${esc(askText(w, dir))}${hint}</span>
+                <input type="text" value="${esc(it.ans)}" ${t.checked ? 'disabled' : ''} oninput="testInput('${key}','${it.w}',this.value)" onkeydown="testEnter(event,this)"
+                  placeholder="auf ${DIRS[dir].answer} …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${key === 'a' ? 'en' : 'de'}"
+                  class="test-in min-w-0 flex-1 basis-40 bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm font-semibold text-slate-800">
               </div>
               ${fb}
             </div>
           </div>
         </div>`;
     }
-    function typingItems(scope) { return scope === 'test' ? R().test.typing : R().hammer.items; }
-    function typeInput(scope, id, val) {
-      const it = typingItems(scope).find(x => x.w === id);
-      if (!it || R()[scope].checked) return;
-      it.ans = val;
-      save();
-    }
-    function hammerHelp(id) {
-      const it = R().hammer.items.find(x => x.w === id);
-      if (!it || R().hammer.checked) return;
-      it.help = true;
-      save();
-      renderHammer();
-      const inp = $('in-hammer-' + id);
-      if (inp) inp.focus();
-    }
     // Enter springt ins nächste Feld
-    function nextOnEnter(ev, el) {
+    function testEnter(ev, el) {
       if (ev.key !== 'Enter') return;
       ev.preventDefault();
-      const all = [...el.closest('[data-task]').querySelectorAll('.type-in:not([disabled])')];
+      const all = [...document.querySelectorAll('#body-test .test-in:not([disabled])')];
       const next = all[all.indexOf(el) + 1];
       if (next) next.focus(); else el.blur();
     }
-    function renderHammer() {
-      const h = R().hammer;
-      $('body-hammer').innerHTML = `<div class="space-y-3">${h.items.map((it, i) => typingRowHtml('hammer', it, i + 1, h.checked, true)).join('')}</div>`;
-      renderResult('hammer');
-    }
-
-    // ==========================================================
-    // DISZIPLIN 4: HIGHLAND DANCING (LÜCKENSÄTZE) und Teil B des Probetests
-    // ==========================================================
-    function gapRowHtml(scope, it, num, locked) {
-      const s = SENT_BY_ID[it.k];
-      const [before, after] = s.s.split('___');
-      const ok = gapPoints(it) === 1;
-      const select = `<select onchange="gapInput('${scope}','${it.k}',this.value)" ${locked ? 'disabled' : ''} aria-label="Lücke ${num}"
-          class="gap inline-block align-baseline bg-white border ${locked ? (ok ? 'border-emerald-400' : 'border-rose-400') : 'border-slate-300'} rounded-lg px-2 py-1 mx-0.5 text-sm font-semibold text-slate-800 disabled:opacity-100">
-          <option value="">– wählen –</option>
-          ${it.opts.map(o => `<option value="${escAttr(o)}" ${it.ans === o ? 'selected' : ''}>${escHtml(o)}</option>`).join('')}
-        </select>`;
-      let fb = '';
-      if (locked) {
-        const full = before + s.a + after;
-        fb = `<div class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold ${ok ? 'text-emerald-800' : 'text-rose-800'}">
-            <span>${ok ? '✔ Richtig' : '✖ Richtig ist:'}</span>
-            ${ok ? '' : `<span class="font-black text-slate-900 wrap-any" lang="en">${escHtml(s.a)}</span>`}
-            ${sayHtml(full)}<span class="text-slate-500 font-medium">ganzen Satz anhören</span>
-          </div>`;
-      }
-      return `
-        <div class="p-3 rounded-xl border ${locked ? (ok ? 'bg-emerald-50 border-emerald-300' : 'bg-rose-50 border-rose-300') : 'bg-slate-50 border-slate-200'}">
-          <div class="flex items-start gap-2">
-            <span class="text-xs font-bold text-slate-500 w-6 shrink-0 pt-1.5">${num}.</span>
-            <div class="min-w-0 flex-1">
-              <div class="text-sm font-medium text-slate-800 leading-loose wrap-any" lang="en">${escHtml(before)}${select}${escHtml(after)}</div>
-              ${fb}
-            </div>
-          </div>
-        </div>`;
-    }
-    function gapItems(scope) { return scope === 'test' ? R().test.gaps : R().dance.items; }
-    function gapInput(scope, k, val) {
-      const it = gapItems(scope).find(x => x.k === k);
-      if (!it || R()[scope].checked) return;
-      it.ans = val;
-      save();
-    }
-    function renderDance() {
-      const d = R().dance;
-      $('body-dance').innerHTML = `<div class="space-y-3">${d.items.map((it, i) => gapRowHtml('dance', it, i + 1, d.checked)).join('')}</div>`;
-      renderResult('dance');
-    }
-
-    // ==========================================================
-    // DISZIPLIN 5: PROBE-WÖRTERTEST
-    // ==========================================================
     function renderTest() {
-      const t = R().test;
-      const nA = t.typing.length, nB = t.gaps.length;
+      const t = T();
+      $('test-max').textContent = TASKS.test.max;
+      const head = (txt, n) => `<div class="flex items-center justify-between gap-2 bg-slate-100 rounded-lg px-3 py-2 mb-2"><h3 class="text-sm font-black text-slate-800">${txt}</h3><span class="text-xs font-bold text-slate-600">${n} P.</span></div>`;
       $('body-test').innerHTML = `
         <div class="space-y-5">
-          <div>
-            <div class="flex items-center justify-between gap-2 bg-slate-100 rounded-lg px-3 py-2 mb-3">
-              <h4 class="text-sm font-black text-slate-800">Teil A: Schreib das englische Wort.</h4>
-              <span class="shrink-0 text-[11px] font-bold text-slate-600">${nA} P.</span>
-            </div>
-            <div class="space-y-3">${t.typing.map((it, i) => typingRowHtml('test', it, i + 1, t.checked, false)).join('')}</div>
-          </div>
-          <div>
-            <div class="flex items-center justify-between gap-2 bg-slate-100 rounded-lg px-3 py-2 mb-3">
-              <h4 class="text-sm font-black text-slate-800">Teil B: Wähle das passende Wort.</h4>
-              <span class="shrink-0 text-[11px] font-bold text-slate-600">${nB} P.</span>
-            </div>
-            <div class="space-y-3">${t.gaps.map((it, i) => gapRowHtml('test', it, nA + i + 1, t.checked)).join('')}</div>
-          </div>
+          <div>${head('Teil A: Deutsch → Englisch', t.a.length)}<div class="space-y-2">${t.a.map((it, i) => testRow('a', it, i + 1, t)).join('')}</div></div>
+          <div>${head('Teil B: Englisch → Deutsch', t.b.length)}<div class="space-y-2">${t.b.map((it, i) => testRow('b', it, t.a.length + i + 1, t)).join('')}</div></div>
         </div>`;
-      renderResult('test');
+      const btn = $('check-test');
+      btn.disabled = t.checked;
+      btn.classList.toggle('opacity-50', t.checked);
+      const fb = $('fb-test');
+      if (!t.checked) {
+        const empty = [...t.a, ...t.b].filter(it => !it.ans.trim()).length;
+        fb.innerHTML = t.warned && empty ? `<div class="text-sm font-bold text-amber-700">Noch ${empty} leer. Füll alles aus oder drück nochmals auf «Test prüfen».</div>` : '';
+        return;
+      }
+      const pts = TASKS.test.score(), max = TASKS.test.max, m = medalOf(pts, max);
+      const grade = gradeOf(pts, max), pass = pts >= passPoints(max);
+      const best = MEDALS.find(x => x.name === STATE.medal[STATE.part]);
+      fb.innerHTML = `
+        <div class="rounded-2xl border-2 ${pass ? 'border-emerald-300 bg-emerald-50' : 'border-rose-300 bg-rose-50'} p-4 space-y-1 pop">
+          <div class="text-lg font-black text-slate-900">${m ? m.icon + ' ' : ''}${fmt(pts)} von ${max} Punkten · Note ${grade.toFixed(1)}</div>
+          <div class="text-sm ${pass ? 'text-emerald-800' : 'text-rose-800'}">${pass ? '✅ Bestanden' : '❌ Noch nicht bestanden'} (ab ${passPoints(max)} Punkten)</div>
+          ${best ? `<div class="text-xs text-slate-600">Deine beste Medaille in ${PARTS[STATE.part].label}: ${best.icon} ${best.name}</div>` : ''}
+          <div class="text-xs text-slate-600">Rot = noch üben. Mit «🔀 Nochmals üben» bekommst du einen neuen Test.</div>
+        </div>`;
     }
 
     // ==========================================================
-    // PRÜFEN (Punkte immer aus TASKS)
+    // TIPP, THEORIE, NOCHMALS ÜBEN
     // ==========================================================
-    function emptyCount(id) {
-      const r = R()[id];
-      const items = id === 'test' ? [...r.typing, ...r.gaps] : r.items;
-      return items.filter(it => !String(it.ans || '').trim()).length;
+    let BACK = 'ueben';
+    function toggleTip(id) { $('tip-' + id).classList.toggle('hidden'); }
+    function openTheory(from) {
+      BACK = from;
+      const d = $('theory');
+      d.open = true;
+      setTimeout(() => d.scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
     }
-    function checkTask(id) {
-      const r = R()[id];
-      if (r.checked) return;
-      if (emptyCount(id) && !r.warned) {
-        r.warned = true;
-        save();
-        renderResult(id);
-        return;
-      }
-      r.checked = true;
-      awardMedal(id, TASKS[id].score(), TASKS[id].max);
-      save();
-      renderTask(id);
-      const fb = $('fb-' + id);
-      if (fb) fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-    function renderResult(id) {
-      const r = R()[id], fb = $('fb-' + id), btn = $('check-' + id);
-      if (btn) { btn.disabled = !!r.checked; btn.classList.toggle('opacity-50', !!r.checked); }
-      if (!fb) return;
-      if (!r.checked) {
-        const empty = emptyCount(id);
-        fb.textContent = r.warned && empty ? `Noch ${empty} leer. Füll alles aus oder drück nochmals auf «Prüfen».` : '';
-        fb.className = 'text-xs font-bold text-amber-700';
-        return;
-      }
-      const pts = TASKS[id].score(), max = TASKS[id].max, m = medalOf(pts, max);
-      if (id === 'test') {
-        const grade = gradeOf(pts, max), pass = pts >= passPoints(max);
-        fb.innerHTML = `<div class="rounded-xl border-2 ${pass ? 'border-emerald-300 bg-emerald-50' : 'border-rose-300 bg-rose-50'} p-3 space-y-1">
-            <div class="text-base font-black text-slate-900">${fmt(pts)} von ${max} Punkten · Note ${grade.toFixed(1)}</div>
-            <div class="text-sm ${pass ? 'text-emerald-800' : 'text-rose-800'}">${pass ? '✅ Bestanden' : '❌ Noch nicht bestanden'} (bestanden ab ${passPoints(max)} Punkten) · ${medalText(m)}</div>
-            <div class="text-xs text-slate-600 font-medium">Rot = falsch. Lern diese Wörter nochmals. Mit «🔀 Nochmals üben» bekommst du einen neuen Test.</div>
-          </div>`;
-        fb.className = 'text-sm font-semibold';
-        return;
-      }
-      fb.textContent = pts === max
-        ? `🌟 ${fmt(pts)} von ${max} Punkten · ${medalText(m)}. Mit «🔀 Nochmals üben» kommen neue Wörter.`
-        : `${fmt(pts)} von ${max} Punkten · ${medalText(m)}. Rot = falsch: Schau das richtige Wort an und sprich es laut. Dann «🔀 Nochmals üben».`;
-      fb.className = pts === max ? 'text-xs font-bold text-emerald-700' : 'text-xs font-bold text-amber-700';
-    }
-
-    // ==========================================================
-    // NOCHMALS ÜBEN: nur diese Aufgabe leeren und neu mischen
-    // ==========================================================
+    function backToTask() { $('task-' + BACK).scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    // Leert nur diese Aufgabe und mischt neu
     function retryTask(id) {
-      const part = STATE.part;
-      if (id === 'caber') { R().caber = newCaber(part); CARD.flipped = false; }
-      if (id === 'tug') newTug();
-      if (id === 'hammer') R().hammer = newHammer(part);
-      if (id === 'dance') R().dance = newDance(part);
-      if (id === 'test') R().test = newTest(part);
-      save();
-      renderTask(id);
-      showToast('🔀 Neu gemischt', `${DISC[id].name}: neue Runde.`);
-    }
-
-    // ==========================================================
-    // ANZEIGE
-    // ==========================================================
-    function renderTask(id) {
-      ({ caber: renderCaber, tug: renderTug, hammer: renderHammer, dance: renderDance, test: renderTest })[id]();
+      if (id === 'ueben') { newRound(); renderUeben(true); }
+      if (id === 'test') { STATE.tests[STATE.part] = newTest(STATE.part); save(); renderTest(); }
     }
     function renderAll() {
-      renderPart();
-      renderMedals();
-      Object.keys(DISC).forEach(renderTask);
-      document.querySelectorAll('[data-max]').forEach(el => el.textContent = TASKS[el.dataset.max].max);
-      document.querySelectorAll('.js-pass-pts').forEach(el => el.textContent = passPoints(TASKS.test.max));
-      document.querySelectorAll('.js-tug-rounds').forEach(el => el.textContent = TUG_ROUNDS);
-      document.querySelectorAll('.js-tug-pairs').forEach(el => el.textContent = TUG_PAIRS);
-      document.querySelectorAll('.js-tug-pen').forEach(el => el.textContent = TUG_PENALTY);
-    }
-    function setupQuizlet() {
-      let any = false;
-      ['teil1', 'teil2'].forEach(k => {
-        const a = $('quizlet-' + k), url = String(QUIZLET[k] || '').trim();
-        if (!a) return;
-        if (url) { a.href = url; a.classList.remove('hidden'); any = true; } else a.classList.add('hidden');
-      });
-      const box = $('quizlet-box');
-      if (box) { box.classList.toggle('hidden', !any); box.classList.toggle('flex', any); }
-    }
-    let toastTimer = null;
-    function showToast(title, msg) {
-      const toast = $('toast');
-      if (!toast) return;
-      $('toast-title').innerText = title;
-      $('toast-msg').innerText = msg;
-      toast.classList.remove('translate-y-20', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }, 3000);
+      ensureTest(STATE.part);
+      renderTop();
+      renderUeben();
+      renderTest();
     }
 
-    Object.assign(window, {
-      switchTab, setPart, goTask, toggleTip, openTheory, backToTask, retryTask, checkTask,
-      setCardMode, flipCard, cardAnswer, practiceHard, startTug, tugTap,
-      typeInput, hammerHelp, nextOnEnter, gapInput, sayBtn, showToast
-    });
+    Object.assign(window, { setPart, setDir, answerWord, overrideWord, nextWord, testInput, testSame, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak });
 
-    // Start sobald das HTML da ist (wartet nicht auf Tailwind/Schriften)
+    // Start sobald das HTML da ist
     document.addEventListener('DOMContentLoaded', function () {
       load();
       if (!TTS_OK) document.body.classList.add('no-tts');
       try { if (TTS_OK) window.speechSynthesis.getVoices(); } catch (e) {}
-      setupQuizlet();
-      ensureRounds(STATE.part);
-      newTug();
-      save();
+      newRound();
       renderAll();
+      save();
     });
   </script>
 </body>

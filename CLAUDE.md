@@ -14,7 +14,7 @@ Alles andere liegt in der **privaten Ablage** (siehe unten).
 | `connected_3_scratch_trainingshub.html` | Informatik, Connected 3 «Abheben mit Algorithmen» (Scratch) |
 | `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» |
 | `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 |
-| `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter-Training; Grammatik folgt) |
+| `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter lernen) |
 | `RZG Vulkane Erdbeben Tsunamis.html` | RZG, Dynamik der Erde, Test 2 (Vulkane, Erdbeben, Tsunamis) |
 
 Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer Seite nur ihren Abschnitt lesen.
@@ -31,6 +31,7 @@ Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer S
 - **Noten:** Schweizer Skala. Note = Punkte ÷ Total × 5 + 1, gerundet auf 0.1. Bestanden ab 60 % (Note 4.0).
 - **Technik:** Eine Datei pro Seite, Tailwind über `cdn.tailwindcss.com`, Schrift Inter (Google Fonts). Keine weiteren Abhängigkeiten.
 - **Niveau:** Vor neuen Aufgaben das Niveau-Profil des Fachs in der privaten Ablage lesen (`Niveau-Profil.md`).
+- **Nicht überladen (Wunsch Lehrperson):** Wenige, klare Aufgaben, die genau das üben, was im Test kommt. Lieber eine einfache Seite als viele Spiele. Spiel-Elemente nur leicht (Fortschritt, Medaille).
 
 ## Private Ablage (alles, was nicht öffentlich sein darf)
 - Privates Repo `rohnerbuchental/Schule-Buchental-Material`, geklont nach `/home/user/schule-buchental-material` (bei Bedarf mit `add_repo` verbinden, dann `register_repo_root`).

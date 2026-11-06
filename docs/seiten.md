@@ -20,14 +20,12 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - Sätze und die Wörter in `[ … / … ]` werden gemischt. Tipps auf Deutsch, Beispiele auf Englisch.
 
 ## Englisch-Hub Unit 2: Besonderheiten
-- Vorerst nur Reiter «Wörter-Training». Grammatik später als eigener Reiter anhängen (`<section id="view-…" class="tab-view hidden">` + Knopf `switchTab('…')` in der `nav`), `TASKS` um neue Einträge erweitern.
-- Wörter im Script in `WORD_TEXT` (eine Zeile «englisch | deutsch», Teil 1 = Keywords + Highland Games, 26 Wörter; Teil 2 = Village fête + Focus, 30 Wörter). `EXTRA`: weitere richtige Schreibweisen (`alt`) und kleine Zusätze beim Schreiben (`hint`). `SAME`: gleiche deutsche Bedeutung, beim Schreiben beide richtig (throw/toss, brilliant/fantastic, strange/weird, quite/rather). `CLASH`: nie in derselben Zuordnen-Runde. `FAMILY` (brilliant/brilliantly, entertaining/entertainment, corner/in the top left-hand corner) und `stems` in `EXTRA` («fête»): Im Probe-Wörtertest zeigt Teil B kein Wort aus der Familie eines Teil-A-Worts. `noType` (lange Ausdrücke wie «in the top left-hand corner»): werden nie geschrieben, nur Karteikarten, Zuordnen und Lücken. Wunsch Lehrperson: alles Schwierige raus, darum keine Wortart-Fallen als Ablenker (kein Adverb in Adjektiv-Lücken, keine Wortfamilie).
-- Lückensätze in `SENTENCES`: selbst geschrieben (Urheberrecht, Repo ist öffentlich), keine Sätze aus dem Lehrmittel. Pro Wort mind. ein Satz, je 6 Ablenker aus dem gleichen Teil, die grammatisch nicht passen; pro Runde werden 3 gezeigt. Neue Sätze: jede Lücke mit allen Ablenkern durchprobieren.
-- Auswahl oben: Teil 1 (Standard) / Teil 2 / Alle Wörter. Alle Disziplinen nutzen die Auswahl.
-- 5 Disziplinen mit Medaille (🥇 ab 90 %, 🥈 ab 75 %, 🥉 ab 60 %), beste Medaille pro Disziplin und Teil im Medaillenspiegel. Karteikarten (Caber Toss) sind Selbsteinschätzung und zählen nicht in `TASKS`. `TASKS`: Tug of War (12 P., jeder Fehler −1, Bestzeit mit +5 s pro Fehler), Hammer Throw (10 P., «Erster Buchstabe» = ½ P.), Highland Dancing (8 P.), Probe-Wörtertest (20 P., Note, bestanden ab 12).
-- Probe-Wörtertest: Kein Wort aus Teil A (schreiben) kommt in Teil B vor (weder als Lücke, Ablenker noch im Satz), damit nichts die Schreibweise verrät.
-- Quizlet-Links in `QUIZLET` ganz oben im Script; leer = Box ausgeblendet. 🔊 mit `speechSynthesis` (en-GB), ausgeblendet ohne Unterstützung.
-- Gespeichert unter `ow2u2_state` (Teil, Medaillen, Bestzeiten, laufende Runden pro Teil).
+- **Wunsch Lehrperson: einfach, nicht überladen.** Die Seite übt genau das, was im Wörtertest kommt: Deutsch → Englisch und Englisch → Deutsch. Keine weiteren Spiele dazubauen.
+- Aufbau: 1 Teil wählen (Teil 1 = Language Companion S. 12, 26 Wörter; Teil 2 = S. 13 inkl. Focus, 30 Wörter) · 2 Üben (ein Wort nach dem anderen, 10 pro Runde, Richtung wählbar, falsche Wörter kommen am Schluss nochmals) · 3 Wörtertest (10 × Deutsch → Englisch, 10 × Englisch → Deutsch, Note).
+- Spiel-Elemente nur leicht: Fortschrittsbalken «Das kannst du schon» pro Richtung (letzte Antwort richtig), Serie 🔥, Medaille am Rundenende und beim Test.
+- Wörter in `WORD_TEXT` (eine Zeile «englisch | deutsch»). `EXTRA`: weitere englische Schreibweisen (`alt`), Zusatz zur Frage (`hint`), `noType` = langer Ausdruck, nur Englisch → Deutsch. `SAME`: gleiche Bedeutung, beide richtig. `FAMILY`: im Test nie in Teil A und B zugleich. `DE_ALT`: weitere richtige deutsche Antworten; dazu Knopf «meine Antwort bedeutet dasselbe» bei Englisch → Deutsch.
+- Prüfung: Gross/Klein egal, ä = ae = a, ß = ss, Artikel und «to» am Anfang egal.
+- Gespeichert unter `ow2u2_words` (Teil, Richtung, «kann ich» pro Wort, beste Test-Medaille, Test-Antworten). Der Stand gilt nur auf dem Gerät und im Browser, wo geübt wurde.
 
 ## RZG-Hub: Besonderheiten
 - Grundlagen: Dossier «Dynamik der Erde» mit Lösungen der Lehrperson und Blatt «Lernziele Dynamik der Erde Teil 2» (Ich-kann-Checkliste, LZ1 bis LZ5) mit Musterlösungen, die sich aufs Dossier stützen.
