@@ -27,6 +27,7 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - **Wörtertest:** 10 × Deutsch → Englisch (ohne `noType`) und 10 × Englisch → Deutsch, 20 P., bestanden ab 12. Kein Selbst-Korrigieren. Teil B zeigt nie ein Wort aus `SAME_TYPE` oder `FAMILY` eines Teil-A-Worts.
 - Prüfung: Gross/Klein egal, ä = ae = a, ß = ss, Artikel und «to» am Anfang egal.
 - Angstfrei und für Lernende, die schnell aufgeben: «Noch nicht ganz» statt «Falsch», Gelb statt Rot. Fortschrittsbalken nach Stufen (wächst mit jedem richtigen Schritt). Nach `ETAPPE_N` = 10 Antworten «Etappe geschafft» mit «Weiter üben» oder «Für heute fertig». Beim Schreiben zuerst «Hilfe: erster Buchstabe». Wörtertest zugeklappt, bis «Wörtertest starten» (`testOpen`), dann «nur zum Üben».
+- Mehr Bestätigung (Wunsch Lehrperson): wechselndes Lob (`PRAISE`), bei 5/10/15 richtig in Folge «🔥 N richtig hintereinander», gemeistertes Wort: Stern fliegt zum Zähler oben, «⭐ Meine Sammlung» (zugeklappt, gemeisterte Wörter als Karten, heute neue mit gelbem Rand, antippen = anhören). Etappe nennt die heute neu gemeisterten Wörter. «Diese Woche geübt» Mo–So mit ✓ (`days`, nur auf diesem Gerät, keine Serie, die auf 0 fällt).
 - Gespeichert unter `ow2u2_lernpfad` (Teil, Stufe pro Wort, Wiederholungen `rev`, aktive Wörter, beste Test-Medaille, Test-Antworten). Der Stand gilt nur auf dem Gerät und im Browser, wo geübt wurde. «Nochmals üben» beim Lernpfad fragt vorher nach.
 
 ## RZG-Hub: Besonderheiten

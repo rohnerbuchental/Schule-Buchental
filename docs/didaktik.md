@@ -55,6 +55,8 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 | Fortschrittsbalken wächst mit jedem richtigen Schritt. | Erfolgserlebnisse sichtbar machen (Bandura, 1977). |
 | Beim Schreiben zuerst «Hilfe: erster Buchstabe», dann «Weiss ich nicht». | Hilfen und hohe Erfolgsquote beim Üben (Rosenshine, 2012). |
 | Der Wörtertest ist zugeklappt, bis man ihn startet. | Nicht überladen (Sweller, 1988), kein Prüfungsgefühl beim Üben. |
+| Wechselndes kurzes Lob, Stern fliegt zum Zähler, «Meine Sammlung» mit den gemeisterten Wörtern, Etappe nennt die neuen Wörter. | Eigene Erfolge sichtbar machen stärkt die Zuversicht (Bandura, 1977). Sammeln und Fortschritt anzeigen wirken leicht positiv (Sailer & Homner, 2020). Lob nur kurz und ehrlich: Lob allein bringt wenig, die Rückmeldung zur Aufgabe zählt (Hattie & Timperley, 2007). |
+| «Diese Woche geübt» mit Häkchen, ohne Serie, die auf 0 fällt. | Regelmässiges, verteiltes Üben (Cepeda et al., 2006), ohne Druck oder Verlustangst (angstfrei, Abschnitt 1). |
 
 ## 3 Grammatik lernen (für neue Übungen)
 

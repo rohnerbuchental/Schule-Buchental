@@ -17,6 +17,10 @@
     [data-task], #theory { scroll-margin-top: 5rem; }
     @keyframes pop { 0% { transform: scale(0.96); } 60% { transform: scale(1.03); } 100% { transform: scale(1); } }
     .pop { animation: pop 0.25s ease-out; }
+    .fly-star { position: fixed; z-index: 60; font-size: 2rem; pointer-events: none; transition: transform 0.8s cubic-bezier(.5,-0.3,.6,1), opacity 0.8s; }
+    @keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+    .bump { animation: bump 0.45s ease-out; }
+    @media (prefers-reduced-motion: reduce) { .pop, .bump { animation: none; } .fly-star { display: none; } }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased">
@@ -30,7 +34,7 @@
         <h1 class="text-lg sm:text-xl font-bold leading-tight">Wörter lernen</h1>
       </div>
       <div class="shrink-0 bg-white/10 px-2.5 py-1 rounded-xl border border-white/15 text-xs font-bold" title="Gemeisterte Wörter">
-        ⭐ <span id="header-known">0</span>
+        ⭐ <span id="header-known" class="inline-block">0</span>
       </div>
     </div>
   </header>
@@ -44,6 +48,7 @@
         <button type="button" id="part-btn-t1" onclick="setPart('t1')"></button>
         <button type="button" id="part-btn-t2" onclick="setPart('t2')"></button>
       </div>
+      <div id="week-days" class="mt-3"></div>
     </section>
 
     <!-- Aufgabe 1: Lernpfad – alle Wörter, bis jedes sitzt | FS1E.5.B.1.c, FS1E.5.B.2.c -->
@@ -339,7 +344,7 @@
     // SPEICHERN (jeder Zugriff in try/catch)
     // ==========================================================
     const SAVE_KEY = 'ow2u2_lernpfad';
-    const STATE = { part: 't1', path: {}, medal: {}, tests: {}, testOpen: {} };
+    const STATE = { part: 't1', path: {}, medal: {}, tests: {}, testOpen: {}, days: [] };
     function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(STATE)); } catch (e) {} }
     function load() {
       try {
@@ -350,6 +355,7 @@
         if (s.medal && typeof s.medal === 'object') STATE.medal = s.medal;
         if (s.tests && typeof s.tests === 'object') STATE.tests = s.tests;
         if (s.testOpen && typeof s.testOpen === 'object') STATE.testOpen = s.testOpen;
+        if (Array.isArray(s.days)) STATE.days = s.days.filter(d => typeof d === 'string').slice(-60);
       } catch (e) {}
     }
 
@@ -407,6 +413,7 @@
         b.setAttribute('aria-pressed', on);
       });
       $('header-known').textContent = `${TASKS.pfad.score()} / ${TASKS.pfad.max}`;
+      renderWeek();
     }
 
     // ==========================================================
@@ -452,7 +459,56 @@
     // Aktuelle Frage (wird nicht gespeichert, beim Laden neu gemischt)
     const Q = { id: null, stage: 0, review: false, hint: false, opts: [], phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1, token: 0 };
     let STREAK = 0;
-    const SESSION = { answers: 0, right: 0, etappe: 0 };   // nur für diese Sitzung (Etappen)
+    let SAMMLUNG_OPEN = false;
+    const SESSION = { answers: 0, right: 0, etappe: 0, newMastered: [], lastPraise: '' };   // nur für diese Sitzung
+    // Wechselndes Lob (kurz, ehrlich, nie übertrieben)
+    const PRAISE = ['Richtig!', 'Genau!', 'Stark!', 'Super!', 'Sitzt!', 'Perfekt!', 'Klasse!', 'Bravo!'];
+    function praise() {
+      let t = PRAISE[Math.floor(Math.random() * PRAISE.length)];
+      if (t === SESSION.lastPraise) t = PRAISE[(PRAISE.indexOf(t) + 1) % PRAISE.length];
+      SESSION.lastPraise = t;
+      return '✔ ' + t;
+    }
+    // Übungstage: auf diesem Gerät, nie «Serie verloren»
+    const dayKey = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    function markToday() {
+      const k = dayKey(new Date());
+      if (!STATE.days.includes(k)) { STATE.days.push(k); STATE.days = STATE.days.slice(-60); }
+    }
+    function renderWeek() {
+      const now = new Date(), monday = new Date(now);
+      monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+      const names = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+      const cells = names.map((n, i) => {
+        const d = new Date(monday); d.setDate(monday.getDate() + i);
+        const done = STATE.days.includes(dayKey(d)), today = dayKey(d) === dayKey(now);
+        return `<div class="flex flex-col items-center gap-0.5"><span class="text-[11px] font-semibold ${today ? 'text-slate-900' : 'text-slate-500'}">${n}</span><span class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-black ${done ? 'bg-emerald-500 text-white' : today ? 'border-2 border-emerald-400 text-emerald-600' : 'bg-slate-100 text-slate-300'}">${done ? '✓' : ''}</span></div>`;
+      }).join('');
+      const n = names.filter((_, i) => { const d = new Date(monday); d.setDate(monday.getDate() + i); return STATE.days.includes(dayKey(d)); }).length;
+      $('week-days').innerHTML = `<div class="flex items-center justify-between gap-2"><span class="text-xs font-bold text-slate-600">Diese Woche geübt${n ? `: ${n} ${n === 1 ? 'Tag' : 'Tage'}` : ''}</span><div class="flex gap-1.5">${cells}</div></div>`;
+    }
+    // Stern fliegt vom Wort zum Zähler oben
+    function flyStar(fromEl) {
+      try {
+        const target = $('header-known');
+        if (!fromEl || !target || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+        const a = fromEl.getBoundingClientRect(), t = target.getBoundingClientRect();
+        const star = document.createElement('span');
+        star.className = 'fly-star';
+        star.textContent = '⭐';
+        star.style.left = (a.left + a.width / 2 - 16) + 'px';
+        star.style.top = (a.top + 8) + 'px';
+        document.body.appendChild(star);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          star.style.transform = `translate(${t.left - a.left - a.width / 2 + 16}px, ${t.top - a.top - 8}px) scale(0.5)`;
+          star.style.opacity = '0.3';
+        }));
+        setTimeout(() => { star.remove(); target.classList.remove('bump'); void target.offsetWidth; target.classList.add('bump'); }, 820);
+      } catch (e) {}
+    }
+    function noteMastered(w) {
+      if (!SESSION.newMastered.includes(w.en)) SESSION.newMastered.push(w.en);
+    }
     function mcOptions(w, dir) {
       const block = new Set([w.id, ...related(w, SAME_IDS), ...related(w, FAMILY_IDS)]);
       const text = x => dir === 'en2de' ? x.de : x.en;
@@ -503,10 +559,14 @@
       STREAK = ok ? STREAK + 1 : 0;
       SESSION.answers++;
       if (ok) SESSION.right++;
+      Q.praise = ok ? praise() : '';
+      markToday();
+      if (Q.mastered) noteMastered(w);
       placeWord(w.id, ok);
       save();
       renderPfad(true);
       renderParts();
+      if (Q.mastered) setTimeout(() => flyStar(document.querySelector('#body-pfad .feedback-box')), 60);
       // Richtig: automatisch weiter (Auswahl schneller als Schreiben)
       if (ok) {
         const t = ++Q.token;
@@ -533,11 +593,14 @@
       applyResult(w, true);
       Q.ok = true;
       Q.mastered = !Q.review && isMastered(w);
+      Q.praise = praise();
       STREAK++;
+      if (Q.mastered) noteMastered(w);
       placeWord(w.id, true);
       save();
       renderPfad(true);
       renderParts();
+      if (Q.mastered) setTimeout(() => flyStar(document.querySelector('#body-pfad .feedback-box')), 60);
     }
     function nextQuestion() {
       if (Q.phase !== 'answered') return;
@@ -576,14 +639,19 @@
           <span>Fortschritt: ${pct} %</span>
           <span class="text-xs font-semibold text-slate-500 text-right">${status}</span>
         </div>
-        <div class="h-4 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all" style="width:${pct}%"></div></div>`;
+        <div class="h-4 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all" style="width:${pct}%"></div></div>
+        <details id="sammlung" class="mt-2 rounded-xl border border-emerald-200 bg-emerald-50/50 px-3 py-2" ${SAMMLUNG_OPEN ? 'open' : ''} ontoggle="SAMMLUNG_OPEN=this.open">
+          <summary class="text-sm font-bold text-emerald-900 cursor-pointer">⭐ Meine Sammlung: ${done} ${done === 1 ? 'Wort' : 'Wörter'}</summary>
+          <div class="mt-2 flex flex-wrap gap-1.5">${words.filter(w => isMastered(w)).map(w => `<button type="button" onclick="speak(this.dataset.say)" data-say="${esc(w.en)}" title="${esc(w.de)}" class="px-2.5 py-1 rounded-full bg-white border border-emerald-300 text-xs font-bold text-emerald-800 ${SESSION.newMastered.includes(w.en) ? 'ring-2 ring-amber-300' : ''}">⭐ ${esc(w.en)}</button>`).join('') || '<span class="text-xs text-slate-600">Hier sammelst du jedes Wort, das du gemeistert hast.</span>'}</div>
+          ${done ? '<div class="mt-1.5 text-[11px] text-slate-500">Gelber Rand = heute neu. Antippen = anhören.</div>' : ''}
+        </details>`;
       const box = $('body-pfad');
       if (Q.phase === 'etappe' || Q.phase === 'pause') {
         box.innerHTML = Q.phase === 'etappe' ? `
           <div class="rounded-2xl border-2 border-sky-300 bg-sky-50 p-5 text-center space-y-2 pop">
             <div class="text-4xl">🎉</div>
             <div class="text-lg font-black text-slate-900">Etappe geschafft!</div>
-            <div class="text-sm text-slate-700">${SESSION.answers} Antworten, davon ${SESSION.right} richtig. ${done ? `⭐ ${done} Wörter sind schon gemeistert.` : 'Deine Wörter sind auf gutem Weg.'}</div>
+            <div class="text-sm text-slate-700">${SESSION.answers} Antworten, davon ${SESSION.right} richtig. ${SESSION.newMastered.length ? `Heute neu gemeistert: <b>${SESSION.newMastered.map(esc).join(', ')}</b> ⭐` : 'Deine Wörter sind auf gutem Weg: Bald kommen die ersten Sterne.'}</div>
             <div class="grid grid-cols-2 gap-2 pt-1">
               <button type="button" onclick="pausePfad()" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">Für heute fertig</button>
               <button type="button" id="next-btn" onclick="continuePfad()" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">Weiter üben →</button>
@@ -649,10 +717,10 @@
       }
       if (Q.phase === 'answered') {
         const write = st.type === 'write';
-        const title = Q.mastered ? '⭐ Gemeistert!' : Q.ok ? (Q.review ? '✔ Sitzt noch!' : '✔ Richtig!') : (Q.dontKnow ? 'So heisst es:' : 'Noch nicht ganz. Richtig ist:');
+        const title = Q.mastered ? `⭐ Gemeistert! «${esc(w.en)}» kommt in deine Sammlung.` : Q.ok ? (Q.review ? '✔ Sitzt noch!' : (STREAK >= 5 && STREAK % 5 === 0 ? `🔥 ${STREAK} richtig hintereinander!` : (Q.praise || '✔ Richtig!'))) : (Q.dontKnow ? 'So heisst es:' : 'Noch nicht ganz. Richtig ist:');
         const calm = Q.review ? 'Vergessen ist normal. Du übst es gleich nochmals.' : 'Kein Problem: Das Wort kommt gleich nochmals.';
         html += `
-          <div class="mt-3 rounded-2xl border-2 ${Q.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-3 space-y-1.5 pop">
+          <div class="feedback-box mt-3 rounded-2xl border-2 ${Q.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-3 space-y-1.5 pop">
             <div class="text-base font-black ${Q.ok ? 'text-emerald-800' : 'text-amber-900'}">${title}</div>
             <div class="flex items-center gap-2 flex-wrap">
               <span class="text-lg font-black text-slate-900 wrap-any">${esc(right)}</span>${st.dir === 'de2en' ? sayBtn(w.en) + (write ? alsoText(w) : '') : ''}
