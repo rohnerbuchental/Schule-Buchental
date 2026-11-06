@@ -396,6 +396,7 @@
     };
 
     // Beim Schreiben: alt = weitere richtige Schreibweisen, hint = kleiner Zusatz zur Frage (verrät das Wort nicht)
+    // noType = langer Ausdruck: wird nicht geschrieben (nur Karteikarten, Zuordnen und Lückensätze)
     const EXTRA = {
       'bagpipes': { alt: ['bagpipe'] },
       'village fête': { stems: ['fête'] },
@@ -403,10 +404,10 @@
       'heavy': { hint: 'Gewicht' },
       'noon': { alt: ['midday'] },
       'be allowed to': { alt: ['be allowed'] },
-      "find one's way (to)": { alt: ["find one's way", "find one's way to", 'find your way', 'find your way to'] },
-      'in the top left-hand corner': { alt: ['in the top left corner'] },
-      'knock down / knock over': { alt: ['knock down', 'knock over', 'knock down or knock over', 'knock over / knock down', 'knock over or knock down'] },
-      'tell someone the way': { alt: ['tell somebody the way', 'tell sb the way', 'tell someone the way to', 'tell somebody the way to'] },
+      "find one's way (to)": { noType: true, alt: ["find one's way", "find one's way to", 'find your way', 'find your way to'] },
+      'in the top left-hand corner': { noType: true, alt: ['in the top left corner'] },
+      'knock down / knock over': { noType: true, alt: ['knock down', 'knock over', 'knock down or knock over', 'knock over / knock down', 'knock over or knock down'] },
+      'tell someone the way': { noType: true, alt: ['tell somebody the way', 'tell sb the way', 'tell someone the way to', 'tell somebody the way to'] },
       'require': { hint: 'nicht «need»' },
       'space': { hint: 'freier Platz' }
     };
@@ -435,7 +436,7 @@
     const SENTENCES = [
       // ---- Teil 1 ----
       { w: 'bagpipes', s: 'My uncle plays the ___ in a band.', d: ['invent', 'brilliantly', 'attend', 'complicated', 'have fun', 'amazing'] },
-      { w: 'brilliant', s: 'The show was ___. Everybody clapped for a long time.', d: ['invent', 'brilliantly', 'attend', 'throw', 'bagpipes', 'arrangement'] },
+      { w: 'brilliant', s: 'The show was ___. Everybody clapped for a long time.', d: ['invent', 'hill', 'attend', 'throw', 'bagpipes', 'arrangement'] },
       { w: 'competition', s: 'Our class won the singing ___ at school.', d: ['invent', 'heavy', 'brilliantly', 'attend', 'weird', 'have fun'] },
       { w: 'event', s: 'Sports day is my favourite ___ of the school year.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'strange', 'have fun'] },
       { w: 'Highland Games', s: 'At the ___ in Scotland, strong men throw heavy things.', d: ['invent', 'brilliantly', 'attend', 'complicated', 'have fun', 'wonderful'] },
@@ -444,28 +445,28 @@
       { w: 'throw', s: 'Can you ___ the ball to me, please?', d: ['bagpipes', 'heavy', 'noon', 'brilliantly', 'competition', 'amazing'] },
       { w: 'toss', s: "Let's ___ a coin to see who starts the game.", d: ['bagpipes', 'heavy', 'noon', 'brilliantly', 'event', 'weird'] },
       { w: 'village fête', s: 'On Sunday there is a ___ with music, games and cakes in our village.', d: ['invent', 'brilliantly', 'attend', 'complicated', 'weird', 'amazing'] },
-      { w: 'amazing', s: 'That magic trick was ___! How did you do it?', d: ['invent', 'bagpipes', 'brilliantly', 'attend', 'throw', 'hill'] },
+      { w: 'amazing', s: 'That magic trick was ___! How did you do it?', d: ['invent', 'bagpipes', 'noon', 'attend', 'throw', 'hill'] },
       { w: 'arrangement', s: 'We have an ___: I cook on Mondays and you cook on Tuesdays.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'toss', 'amazing'] },
       { w: 'attend', s: 'Over 500 people will ___ the concert tonight.', d: ['bagpipes', 'heavy', 'noon', 'brilliantly', 'competition', 'weird'] },
       { w: 'be game', a: 'game', s: 'A water fight in the park? Sure, I\'m ___!', d: ['invent', 'bagpipes', 'brilliantly', 'noon', 'throw', 'attend'] },
-      { w: 'brilliantly', s: 'Mia played ___ and won the match.', d: ['brilliant', 'invent', 'attend', 'noon', 'prize', 'hill'] },
-      { w: 'complicated', s: 'The rules of this game are very ___. I don\'t understand them.', d: ['invent', 'bagpipes', 'brilliantly', 'noon', 'attend', 'toss'] },
+      { w: 'brilliantly', s: 'Mia played ___ and won the match.', d: ['throw', 'invent', 'attend', 'noon', 'prize', 'hill'] },
+      { w: 'complicated', s: 'The rules of this game are very ___. I don\'t understand them.', d: ['invent', 'bagpipes', 'hill', 'noon', 'attend', 'toss'] },
       { w: 'concert', s: 'We are going to a rock ___ on Friday evening.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'strange', 'amazing'] },
-      { w: 'fantastic', s: 'Thank you for the party. It was ___!', d: ['invent', 'bagpipes', 'brilliantly', 'throw', 'attend', 'arrangement'] },
+      { w: 'fantastic', s: 'Thank you for the party. It was ___!', d: ['invent', 'bagpipes', 'prize', 'throw', 'attend', 'arrangement'] },
       { w: 'have fun', s: 'Enjoy the trip and ___!', d: ['heavy', 'brilliantly', 'strange', 'complicated', 'weird', 'amazing'] },
-      { w: 'heavy', s: 'This bag is too ___. I can\'t carry it.', d: ['invent', 'bagpipes', 'brilliantly', 'noon', 'attend', 'prize'] },
+      { w: 'heavy', s: 'This bag is too ___. I can\'t carry it.', d: ['invent', 'bagpipes', 'hill', 'noon', 'attend', 'prize'] },
       { w: 'hill', s: 'We walked up the ___ and looked down at the village.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'amazing', 'have fun'] },
       { w: 'metal', s: 'This chair isn\'t made of wood. It\'s made of ___.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'amazing', 'toss'] },
       { w: 'noon', s: 'School finishes at ___ on Wednesdays, so we have a free afternoon.', d: ['invent', 'brilliantly', 'attend', 'heavy', 'strange', 'complicated'] },
-      { w: 'strange', s: 'This soup tastes ___. What is in it?', d: ['invent', 'brilliantly', 'attend', 'have fun', 'noon', 'prize'] },
-      { w: 'weird', s: 'My cousin\'s clothes are always very ___: green socks, a pink hat and a yellow scarf.', d: ['invent', 'brilliantly', 'attend', 'have fun', 'bagpipes', 'noon'] },
-      { w: 'wonderful', s: 'The day at the lake was ___. The sun was shining all day.', d: ['invent', 'brilliantly', 'attend', 'toss', 'have fun', 'bagpipes'] },
+      { w: 'strange', s: 'This soup tastes ___. What is in it?', d: ['invent', 'hill', 'attend', 'have fun', 'noon', 'prize'] },
+      { w: 'weird', s: 'My cousin\'s clothes are always very ___: green socks, a pink hat and a yellow scarf.', d: ['invent', 'hill', 'attend', 'have fun', 'bagpipes', 'noon'] },
+      { w: 'wonderful', s: 'The day at the lake was ___. The sun was shining all day.', d: ['invent', 'prize', 'attend', 'toss', 'have fun', 'bagpipes'] },
       // ---- Teil 2 ----
       { w: 'at the bottom', s: 'Write your name ___ of the page, below the last line.', d: ['popular', 'require', 'volunteer', 'nowadays', 'equipment', 'unusual'] },
       { w: 'at the top', s: 'The castle is ___ of the hill. You can see it from far away.', d: ['popular', 'require', 'volunteer', 'nowadays', 'entertaining', 'tie'] },
       { w: 'be allowed to', a: 'are allowed to', s: 'In the break, we ___ play football in the school yard.', d: ['require', 'popular', 'equipment', 'winner', 'space', 'unusual'] },
       { w: 'corner', s: 'The bakery is on the ___ of Main Street and Station Road.', d: ['require', 'popular', 'nowadays', 'really', 'unusual', 'quite'] },
-      { w: 'entertaining', s: 'The film was very ___. We laughed a lot.', d: ['entertainment', 'require', 'nowadays', 'equipment', 'take place', 'sketch'] },
+      { w: 'entertaining', s: 'The film was very ___. We laughed a lot.', d: ['winner', 'require', 'nowadays', 'equipment', 'take place', 'sketch'] },
       { w: 'entertainment', s: 'There is lots of ___ at the fête: music, games and a clown.', d: ['require', 'popular', 'nowadays', 'really', 'unusual', 'rather'] },
       { w: 'equipment', s: 'For this sport you need special ___, like a helmet and gloves.', d: ['popular', 'nowadays', 'require', 'unusual', 'really', 'take place'] },
       { w: "find one's way (to)", a: 'find your way', s: 'Take the map with you, so you can ___ to the finishing point.', d: ['popular', 'nowadays', 'equipment', 'attitude', 'unusual', 'foreground'] },
@@ -529,7 +530,7 @@
       Object.entries(groups).forEach(([group, text]) => {
         text.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
           const [en, de] = line.split(' | ').map(x => x.trim());
-          WORDS.push({ id: slug(en), en, de, part, group, alt: [], hint: '', stems: [], ...(EXTRA[en] || {}) });
+          WORDS.push({ id: slug(en), en, de, part, group, alt: [], hint: '', stems: [], noType: false, ...(EXTRA[en] || {}) });
         });
       });
     });
@@ -584,6 +585,7 @@
     const fmtTime = sec => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
     const inPart = (w, part) => part === 'all' || w.part === part;
     const partWords = (part = STATE.part) => WORDS.filter(w => inPart(w, part));
+    const typeWords = (part = STATE.part) => partWords(part).filter(w => !w.noType);
     const partSents = (part = STATE.part) => SENTS.filter(s => inPart(BY_ID[s.wid], part));
     const clashes = (a, b, groups) => groups.some(g => g.includes(a.id) && g.includes(b.id));
     // n Wörter auswählen, nie zwei aus derselben Gruppe
@@ -654,7 +656,7 @@
       return { queue: shuffle(list), first: {}, total: list.length, full: !ids };
     }
     function newHammer(part) {
-      return { items: pickNoClash(partWords(part), HAMMER_N, SAME_IDS).map(w => ({ w: w.id, ans: '', help: false })), checked: false, warned: false };
+      return { items: pickNoClash(typeWords(part), HAMMER_N, SAME_IDS).map(w => ({ w: w.id, ans: '', help: false })), checked: false, warned: false };
     }
     function gapItem(s, block = new Set()) {
       let d = shuffle(s.d.filter(id => !block.has(id)));
@@ -676,7 +678,7 @@
       const words = partWords(part), sents = partSents(part);
       let best = null;
       for (let tries = 0; tries < 400; tries++) {
-        const typing = pickNoClash(words, TEST_TYPE, SAME_IDS);
+        const typing = pickNoClash(typeWords(part), TEST_TYPE, SAME_IDS);
         const block = new Set();
         typing.forEach(w => { block.add(w.id); [...synonymsOf(w), ...familyOf(w)].forEach(s => block.add(s.id)); });
         const used = new Set(), gaps = [];
@@ -705,7 +707,7 @@
       };
     }
     function validTyping(items, part) {
-      return Array.isArray(items) && items.length > 0 && items.every(it => it && BY_ID[it.w] && inPart(BY_ID[it.w], part) && typeof it.ans === 'string');
+      return Array.isArray(items) && items.length > 0 && items.every(it => it && BY_ID[it.w] && !BY_ID[it.w].noType && inPart(BY_ID[it.w], part) && typeof it.ans === 'string');
     }
     function validGaps(items, part) {
       return Array.isArray(items) && items.length > 0 && items.every(it => {
