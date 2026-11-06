@@ -21,9 +21,26 @@
     @keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
     .bump { animation: bump 0.45s ease-out; }
     @media (prefers-reduced-motion: reduce) { .pop, .bump { animation: none; } .fly-star { display: none; } }
+    /* Sprachwechsel: feste Texte stehen doppelt (data-l="de" / data-l="es") */
+    html[lang="es"] [data-l="de"], html:not([lang="es"]) [data-l="es"] { display: none !important; }
+    html:not([lang="es"]) .lang-btn[data-setlang="de"], html[lang="es"] .lang-btn[data-setlang="es"] { background: #fff; color: #0f172a; }
   </style>
+  <script>
+    // Sprache sofort setzen (gilt für alle Seiten des Lernportals), damit nichts kurz auf Deutsch aufblitzt
+    try { if (localStorage.getItem('lernportal_lang') === 'es') document.documentElement.lang = 'es'; } catch (e) {}
+  </script>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased">
+
+  <!-- Sprache: Deutsch | Español -->
+  <div class="bg-emerald-950 text-white">
+    <div class="max-w-3xl mx-auto px-4 pt-2 pb-1 flex justify-end">
+      <div class="inline-flex rounded-full bg-white/10 border border-white/15 p-0.5 text-xs font-bold" role="group" aria-label="Sprache · Idioma">
+        <button type="button" data-setlang="de" onclick="setLang('de')" lang="de" class="lang-btn px-3 py-1 rounded-full text-white/80">Deutsch</button>
+        <button type="button" data-setlang="es" onclick="setLang('es')" lang="es" class="lang-btn px-3 py-1 rounded-full text-white/80">Español</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Kopf -->
   <header class="bg-gradient-to-r from-emerald-900 via-teal-900 to-sky-900 text-white shadow-lg sticky top-0 z-40">
@@ -33,13 +50,13 @@
         <div class="text-[11px] font-bold tracking-wider uppercase text-emerald-200">Open World 2 · Unit 2</div>
         <h1 class="text-lg sm:text-xl font-bold leading-tight">Weird and wonderful games</h1>
       </div>
-      <div class="shrink-0 bg-white/10 px-2.5 py-1 rounded-xl border border-white/15 text-xs font-bold" title="Gemeisterte Wörter">
+      <div id="header-count" class="shrink-0 bg-white/10 px-2.5 py-1 rounded-xl border border-white/15 text-xs font-bold" title="Gemeisterte Wörter">
         <span id="header-icon">⭐</span> <span id="header-known" class="inline-block">0</span>
       </div>
     </div>
     <nav class="max-w-3xl mx-auto px-4 pb-2.5 grid grid-cols-2 gap-2 text-sm font-bold">
-      <button type="button" id="tab-btn-woerter" onclick="switchTab('woerter')" class="tab-btn">🔤 Wörter</button>
-      <button type="button" id="tab-btn-grammatik" onclick="switchTab('grammatik')" class="tab-btn">🧩 Grammatik</button>
+      <button type="button" id="tab-btn-woerter" onclick="switchTab('woerter')" class="tab-btn"><span data-l="de">🔤 Wörter</span><span data-l="es" lang="es">🔤 Palabras</span></button>
+      <button type="button" id="tab-btn-grammatik" onclick="switchTab('grammatik')" class="tab-btn"><span data-l="de">🧩 Grammatik</span><span data-l="es" lang="es">🧩 Gramática</span></button>
     </nav>
   </header>
 
@@ -48,7 +65,7 @@
 
     <!-- Teil wählen -->
     <section class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
-      <div class="text-sm font-bold text-slate-700 mb-2">Welche Wörter? <span class="font-normal text-slate-500">(Language Companion)</span></div>
+      <div class="text-sm font-bold text-slate-700 mb-2"><span data-l="de">Welche Wörter?</span><span data-l="es" lang="es">¿Qué palabras?</span> <span class="font-normal text-slate-500">(Language Companion)</span></div>
       <div class="grid grid-cols-2 gap-2">
         <button type="button" id="part-btn-t1" onclick="setPart('t1')"></button>
         <button type="button" id="part-btn-t2" onclick="setPart('t2')"></button>
@@ -59,19 +76,21 @@
     <!-- Aufgabe 1: Lernpfad – alle Wörter, bis jedes sitzt | FS1E.5.B.1.c, FS1E.5.B.2.c -->
     <section id="task-pfad" data-task="pfad" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
       <div>
-        <h2 class="text-lg font-bold text-slate-900">1 · Lernpfad</h2>
-        <p class="text-sm text-slate-600">Jedes Wort geht durch 4 Stufen. Dann ist es gemeistert ⭐ Fehler sind okay: Das Wort kommt einfach nochmals.</p>
+        <h2 class="text-lg font-bold text-slate-900">1 · <span data-l="de">Lernpfad</span><span data-l="es" lang="es">Ruta de aprendizaje</span></h2>
+        <p class="text-sm text-slate-600" data-l="de">Jedes Wort geht durch 4 Stufen. Dann ist es gemeistert ⭐ Fehler sind okay: Das Wort kommt einfach nochmals.</p>
+        <p class="text-sm text-slate-600" data-l="es" lang="es">Cada palabra pasa por 4 niveles. Después la dominas ⭐ Equivocarse está bien: la palabra simplemente vuelve.</p>
       </div>
       <div id="pfad-progress"></div>
       <div id="body-pfad"></div>
       <div id="tip-pfad" class="hidden rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-        <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-        Sag jedes Wort laut, bevor du antwortest. Falsch ist nicht schlimm: Das Wort kommt gleich nochmals – so lange, bis es sitzt. Lieber jeden Tag 10 Minuten als einmal eine Stunde. Dein Fortschritt bleibt auf diesem Gerät gespeichert.
+        <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1"><span data-l="de">💡 Tipp</span><span data-l="es" lang="es">💡 Pista</span></div>
+        <span data-l="de">Sag jedes Wort laut, bevor du antwortest. Falsch ist nicht schlimm: Das Wort kommt gleich nochmals – so lange, bis es sitzt. Lieber jeden Tag 10 Minuten als einmal eine Stunde. Dein Fortschritt bleibt auf diesem Gerät gespeichert.</span>
+        <span data-l="es" lang="es">Di cada palabra en voz alta antes de responder. Equivocarse no es grave: la palabra vuelve enseguida, hasta que te la sepas. Mejor 10 minutos cada día que una hora de una vez. Tu progreso queda guardado en este dispositivo.</span>
       </div>
       <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
-        <button type="button" onclick="toggleTip('pfad')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900">💡 Tipp</button>
-        <button type="button" onclick="openTheory('pfad')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">📖 Theorie</button>
-        <button type="button" onclick="retryTask('pfad')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">🔀 Nochmals üben</button>
+        <button type="button" onclick="toggleTip('pfad')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900"><span data-l="de">💡 Tipp</span><span data-l="es" lang="es">💡 Pista</span></button>
+        <button type="button" onclick="openTheory('pfad')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">📖 Theorie</span><span data-l="es" lang="es">📖 Teoría</span></button>
+        <button type="button" onclick="retryTask('pfad')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">🔀 Nochmals üben</span><span data-l="es" lang="es">🔀 Practicar otra vez</span></button>
       </div>
     </section>
 
@@ -79,22 +98,24 @@
     <section id="task-test" data-task="test" class="bg-white rounded-2xl p-5 shadow-sm border-2 border-amber-300 space-y-4">
       <div class="flex items-start justify-between gap-3">
         <div class="min-w-0">
-          <h2 class="text-lg font-bold text-slate-900">2 · Wörtertest</h2>
-          <p class="text-sm text-slate-600">Wie in der Prüfung, aber nur zum Üben: Niemand ausser dir sieht das Ergebnis.</p>
+          <h2 class="text-lg font-bold text-slate-900">2 · <span data-l="de">Wörtertest</span><span data-l="es" lang="es">Prueba de vocabulario</span></h2>
+          <p class="text-sm text-slate-600" data-l="de">Wie in der Prüfung, aber nur zum Üben: Niemand ausser dir sieht das Ergebnis.</p>
+          <p class="text-sm text-slate-600" data-l="es" lang="es">Como en el examen, pero solo para practicar: nadie más que tú ve el resultado.</p>
         </div>
-        <span class="shrink-0 text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800"><span id="test-max">–</span> P.</span>
+        <span class="shrink-0 text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800"><span id="test-max">–</span> <span data-l="de">P.</span><span data-l="es" lang="es">p.</span></span>
       </div>
       <div id="body-test"></div>
       <div id="tip-test" class="hidden rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-        <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-        Mach zuerst die Wörter, die du sicher weisst. Dann die schwierigen. Am Schluss liest du alles nochmals – wie beim Packen: Ist alles da?
+        <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1"><span data-l="de">💡 Tipp</span><span data-l="es" lang="es">💡 Pista</span></div>
+        <span data-l="de">Mach zuerst die Wörter, die du sicher weisst. Dann die schwierigen. Am Schluss liest du alles nochmals – wie beim Packen: Ist alles da?</span>
+        <span data-l="es" lang="es">Haz primero las palabras que sabes seguro. Después, las difíciles. Al final lo lees todo otra vez, como cuando haces la maleta: ¿está todo?</span>
       </div>
       <div class="space-y-3 pt-3 border-t border-slate-100">
         <div class="flex flex-wrap gap-2">
-          <button type="button" id="check-test" onclick="checkTest()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold shadow-sm">✓ Test prüfen</button>
-          <button type="button" onclick="toggleTip('test')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900">💡 Tipp</button>
-          <button type="button" onclick="openTheory('test')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">📖 Theorie</button>
-          <button type="button" onclick="retryTask('test')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">🔀 Nochmals üben</button>
+          <button type="button" id="check-test" onclick="checkTest()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold shadow-sm"><span data-l="de">✓ Test prüfen</span><span data-l="es" lang="es">✓ Corregir la prueba</span></button>
+          <button type="button" onclick="toggleTip('test')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900"><span data-l="de">💡 Tipp</span><span data-l="es" lang="es">💡 Pista</span></button>
+          <button type="button" onclick="openTheory('test')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">📖 Theorie</span><span data-l="es" lang="es">📖 Teoría</span></button>
+          <button type="button" onclick="retryTask('test')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">🔀 Nochmals üben</span><span data-l="es" lang="es">🔀 Practicar otra vez</span></button>
         </div>
         <div id="fb-test"></div>
       </div>
@@ -102,8 +123,8 @@
 
     <!-- Theorie (kurz, zugeklappt) -->
     <details id="theory" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
-      <summary class="text-base font-bold text-slate-900 cursor-pointer">📖 Theorie: So lernst du Wörter</summary>
-      <ul class="mt-3 space-y-1.5 text-sm text-slate-700 leading-relaxed list-disc pl-5">
+      <summary class="text-base font-bold text-slate-900 cursor-pointer"><span data-l="de">📖 Theorie: So lernst du Wörter</span><span data-l="es" lang="es">📖 Teoría: así aprendes palabras</span></summary>
+      <ul class="mt-3 space-y-1.5 text-sm text-slate-700 leading-relaxed list-disc pl-5" data-l="de">
         <li><b>Die 4 Stufen:</b> 1 Englisch → Deutsch auswählen · 2 Deutsch → Englisch auswählen · 3 Englisch → Deutsch schreiben · 4 Deutsch → Englisch schreiben. Zuerst erkennen, dann selber wissen.</li>
         <li><b>Laut sprechen:</b> Sag jedes Wort laut. Drück auf 🔊 und sprich nach.</li>
         <li><b>Oft und kurz:</b> Jeden Tag 10 Minuten bringt mehr als einmal eine Stunde. Darum kommen gemeisterte Wörter nach 1 und nach 3 Tagen nochmals kurz dran.</li>
@@ -111,7 +132,15 @@
         <li><b>Gross- und Kleinschreibung zählt:</b> Im Deutschen schreibt man Nomen gross (Dudelsack), im Englischen fast alles klein (bagpipes), ausser Namen (Highland Games).</li>
         <li><b>So prüft die Seite:</b> «ae» gilt wie «ä». Bei Englisch → Deutsch zählt jede Bedeutung aus der Wortliste.</li>
       </ul>
-      <button type="button" onclick="backToTask()" class="mt-3 px-3 py-1.5 rounded-lg text-xs font-bold border bg-white border-slate-300 text-slate-700">↩ Zurück zur Aufgabe</button>
+      <ul class="mt-3 space-y-1.5 text-sm text-slate-700 leading-relaxed list-disc pl-5" data-l="es" lang="es">
+        <li><b>Los 4 niveles:</b> 1 elegir inglés → español · 2 elegir español → inglés · 3 escribir inglés → español · 4 escribir español → inglés. Primero reconocer, después saberlo sin ayuda.</li>
+        <li><b>Hablar en voz alta:</b> Di cada palabra en voz alta. Pulsa 🔊 y repite.</li>
+        <li><b>A menudo y poco rato:</b> 10 minutos cada día sirven más que una hora de una vez. Por eso las palabras que ya dominas vuelven un momento después de 1 y de 3 días.</li>
+        <li><b>Los errores son parte del aprendizaje:</b> Quien busca una respuesta y después ve la solución aprende más que solo leyendo.</li>
+        <li><b>En inglés cuentan las mayúsculas:</b> En inglés casi todo se escribe en minúscula (bagpipes), excepto los nombres (Highland Games).</li>
+        <li><b>Así corrige la página:</b> En español, los acentos no cuentan (á = a). En inglés → español vale cada significado de la lista. Masculino y femenino valen los dos (pesado/a).</li>
+      </ul>
+      <button type="button" onclick="backToTask()" class="mt-3 px-3 py-1.5 rounded-lg text-xs font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span><span data-l="es" lang="es">↩ Volver a la tarea</span></button>
     </details>
 
     </div>
@@ -122,35 +151,39 @@
     <div id="view-grammatik" class="tab-view hidden space-y-5">
       <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-2">
         <div id="week-days-g" class="pb-2 mb-1 border-b border-slate-100"></div>
-        <h2 class="text-lg font-bold text-slate-900">🧩 Pläne für die Zukunft</h2>
-        <p class="text-sm text-slate-700">Ist etwas schon <b>abgemacht</b>? Dann brauchst du <b>am / is / are + Verb-ing</b>.</p>
-        <div class="rounded-xl bg-sky-50 border border-sky-200 p-3 text-sm text-slate-800" lang="en"><b>We're flying</b> to London on Friday. <span class="text-slate-500" lang="de">= Wir fliegen am Freitag nach London (das ist abgemacht).</span></div>
+        <h2 class="text-lg font-bold text-slate-900"><span data-l="de">🧩 Pläne für die Zukunft</span><span data-l="es" lang="es">🧩 Planes para el futuro</span></h2>
+        <p class="text-sm text-slate-700" data-l="de">Ist etwas schon <b>abgemacht</b>? Dann brauchst du <b>am / is / are + Verb-ing</b>.</p>
+        <p class="text-sm text-slate-700" data-l="es" lang="es">¿Algo ya está <b>acordado</b>? Entonces necesitas <b>am / is / are + verbo-ing</b>.</p>
+        <div class="rounded-xl bg-sky-50 border border-sky-200 p-3 text-sm text-slate-800" lang="en"><b>We're flying</b> to London on Friday. <span class="text-slate-500" lang="de" data-l="de">= Wir fliegen am Freitag nach London (das ist abgemacht).</span><span class="text-slate-500" lang="es" data-l="es">= Volamos a Londres el viernes (ya está acordado).</span></div>
       </section>
 
       <!-- Aufgabe 3: Grammatik-Pfad «present continuous für Abmachungen» (erkennen → auswählen → Satz bauen → schreiben) | FS1E.5.D.1.c -->
       <section id="task-gram" data-task="gram" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
         <div>
-          <h2 class="text-lg font-bold text-slate-900">Grammatik-Pfad</h2>
-          <p class="text-sm text-slate-600">4 Stufen, vom Auswählen bis zum Schreiben. Fehler sind okay: Der Satz kommt einfach nochmals.</p>
+          <h2 class="text-lg font-bold text-slate-900"><span data-l="de">Grammatik-Pfad</span><span data-l="es" lang="es">Ruta de gramática</span></h2>
+          <p class="text-sm text-slate-600" data-l="de">4 Stufen, vom Auswählen bis zum Schreiben. Fehler sind okay: Der Satz kommt einfach nochmals.</p>
+          <p class="text-sm text-slate-600" data-l="es" lang="es">4 niveles, de elegir a escribir. Equivocarse está bien: la frase simplemente vuelve.</p>
         </div>
         <div id="gram-progress"></div>
         <div id="body-gram"></div>
         <div id="tip-gram" class="hidden rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>
-          Frag dich zuerst: Wer macht es? Schau dann in die Tabelle in der Theorie. Wie bei einem Zug mit zwei Wagen: Zuerst kommt der Wagen «am / is / are», dann der Wagen «Verb + ing».
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1"><span data-l="de">💡 Tipp</span><span data-l="es" lang="es">💡 Pista</span></div>
+          <span data-l="de">Frag dich zuerst: Wer macht es? Schau dann in die Tabelle in der Theorie. Wie bei einem Zug mit zwei Wagen: Zuerst kommt der Wagen «am / is / are», dann der Wagen «Verb + ing».</span>
+          <span data-l="es" lang="es">Pregúntate primero: ¿quién lo hace? Después mira la tabla de la teoría. Como un tren con dos vagones: primero va el vagón «am / is / are», después el vagón «verbo + ing».</span>
         </div>
         <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
-          <button type="button" onclick="toggleTip('gram')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900">💡 Tipp</button>
-          <button type="button" onclick="openTheoryG()" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">📖 Theorie</button>
-          <button type="button" onclick="retryTask('gram')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700">🔀 Nochmals üben</button>
+          <button type="button" onclick="toggleTip('gram')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900"><span data-l="de">💡 Tipp</span><span data-l="es" lang="es">💡 Pista</span></button>
+          <button type="button" onclick="openTheoryG()" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">📖 Theorie</span><span data-l="es" lang="es">📖 Teoría</span></button>
+          <button type="button" onclick="retryTask('gram')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">🔀 Nochmals üben</span><span data-l="es" lang="es">🔀 Practicar otra vez</span></button>
         </div>
       </section>
 
       <!-- Theorie Grammatik (kurz, zugeklappt) -->
       <details id="theory-g" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer">📖 Theorie: Pläne mit am / is / are + Verb-ing</summary>
+        <summary class="text-base font-bold text-slate-900 cursor-pointer"><span data-l="de">📖 Theorie: Pläne mit am / is / are + Verb-ing</span><span data-l="es" lang="es">📖 Teoría: planes con am / is / are + verbo-ing</span></summary>
         <div class="mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
-          <p><b>Wann?</b> Für feste Abmachungen in der Zukunft. Oft steht eine Zeit dabei: <i lang="en">at 6 pm, on Saturday, tomorrow, tonight</i>.</p>
+          <p data-l="de"><b>Wann?</b> Für feste Abmachungen in der Zukunft. Oft steht eine Zeit dabei: <i lang="en">at 6 pm, on Saturday, tomorrow, tonight</i>.</p>
+          <p data-l="es" lang="es"><b>¿Cuándo?</b> Para planes fijos en el futuro, ya acordados. A menudo hay una hora o un día: <i lang="en">at 6 pm, on Saturday, tomorrow, tonight</i>.</p>
           <table class="w-full text-sm border border-slate-200 rounded-lg overflow-hidden" lang="en">
             <tbody>
               <tr class="border-b border-slate-200"><td class="p-2 font-bold">I</td><td class="p-2"><b>am</b> ('m) reading</td></tr>
@@ -158,10 +191,11 @@
               <tr><td class="p-2 font-bold">we / you / they</td><td class="p-2"><b>are</b> ('re) reading</td></tr>
             </tbody>
           </table>
-          <p><b>Frage:</b> <span lang="en">When <b>are</b> you <b>leaving</b> on Monday? – I'm <b>leaving</b> at 8 am.</span></p>
-          <p><b>-ing:</b> <span lang="en">read → reading, fly → flying.</span> Endet das Verb auf -e, fällt das e weg: <span lang="en">ride → riding</span>.</p>
+          <p><b><span data-l="de">Frage:</span><span data-l="es" lang="es">Pregunta:</span></b> <span lang="en">When <b>are</b> you <b>leaving</b> on Monday? – I'm <b>leaving</b> at 8 am.</span></p>
+          <p data-l="de"><b>-ing:</b> <span lang="en">read → reading, fly → flying.</span> Endet das Verb auf -e, fällt das e weg: <span lang="en">ride → riding</span>.</p>
+          <p data-l="es" lang="es"><b>-ing:</b> <span lang="en">read → reading, fly → flying.</span> Si el verbo termina en -e, la e se quita: <span lang="en">ride → riding</span>.</p>
         </div>
-        <button type="button" onclick="backToTaskG()" class="mt-3 px-3 py-1.5 rounded-lg text-xs font-bold border bg-white border-slate-300 text-slate-700">↩ Zurück zur Aufgabe</button>
+        <button type="button" onclick="backToTaskG()" class="mt-3 px-3 py-1.5 rounded-lg text-xs font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span><span data-l="es" lang="es">↩ Volver a la tarea</span></button>
       </details>
     </div>
 
@@ -233,8 +267,8 @@
         space | Raum, Platz`
     };
     const PARTS = {
-      t1: { label: 'Teil 1', page: 'S. 12' },
-      t2: { label: 'Teil 2', page: 'S. 13' }
+      t1: { get label() { return tr('Teil 1', 'Parte 1'); }, get page() { return tr('S. 12', 'p. 12'); } },
+      t2: { get label() { return tr('Teil 2', 'Parte 2'); }, get page() { return tr('S. 13', 'p. 13'); } }
     };
 
     // Deutsch → Englisch: weitere richtige Schreibweisen (alt), Zusatz zur Frage (hint).
@@ -303,23 +337,155 @@
     };
 
     // ==========================================================
+    // SPANISCH (Sprachwechsel, Entscheid Lehrperson 6.11.2026: Wörter Englisch–Spanisch)
+    // Eine Zeile pro Wort: englisch | spanisch. «o/a» = männlich und weiblich richtig (pesado/a).
+    // ==========================================================
+    const WORD_ES_TEXT = `
+      bagpipes | gaita
+      brilliant | brillante, genial
+      competition | competición, concurso
+      event | evento, acontecimiento
+      Highland Games | Juegos de las Tierras Altas (Escocia)
+      invent | inventar
+      prize | premio
+      throw | lanzar, tirar
+      toss | lanzar (al aire)
+      village fête | fiesta del pueblo
+      amazing | asombroso/a, increíble
+      arrangement | acuerdo, cita
+      attend | asistir a
+      be game | estar dispuesto/a
+      brilliantly | de forma brillante (adverbio)
+      complicated | complicado/a
+      concert | concierto
+      fantastic | fantástico/a
+      have fun | divertirse
+      heavy | pesado/a
+      hill | colina
+      metal | metal
+      noon | mediodía
+      strange | extraño/a
+      weird | raro/a
+      wonderful | maravilloso/a
+      at the bottom | abajo
+      at the top | arriba
+      be allowed to | tener permiso (para), poder
+      corner | esquina, rincón
+      entertaining | entretenido/a
+      entertainment | entretenimiento
+      equipment | equipo, material
+      find one's way (to) | encontrar el camino (a)
+      finishing point | punto de llegada, meta
+      foreground | primer plano
+      in the top left-hand corner | arriba a la izquierda
+      knock down / knock over | derribar, tirar
+      nowadays | hoy en día
+      popular | popular
+      right-hand | derecho/a (de la derecha)
+      starting point | punto de partida
+      take place | tener lugar
+      tell someone the way | indicar el camino a alguien
+      tie | atar
+      unusual | poco común, inusual
+      volunteer | voluntario/a
+      winner | ganador/a
+      attitude | actitud
+      hit the target | dar en el blanco
+      quite | bastante, completamente
+      rather | bastante, más bien
+      really | realmente, de verdad
+      require | requerir, necesitar
+      sketch | boceto
+      space | espacio, lugar`;
+    const WORD_ES = {};
+    WORD_ES_TEXT.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => { const [en, es] = line.split(' | ').map(x => x.trim()); WORD_ES[en] = es; });
+    // Spanisch → Englisch: Zusatz zur Frage (wie hint)
+    const HINT_ES = { 'prize': 'al ganar', 'heavy': 'peso', 'require': 'no «need»', 'space': 'lugar libre' };
+    // Englisch → Spanisch: weitere richtige Antworten (Akzente und Gross/Klein egal)
+    const ES_ALT = {
+      'bagpipes': ['gaitas', 'gaita escocesa'],
+      'brilliant': ['excelente', 'estupendo/a', 'fantástico/a'],
+      'competition': ['competencia', 'campeonato', 'torneo'],
+      'event': ['fiesta', 'acto', 'suceso'],
+      'Highland Games': ['Highland Games', 'juegos de las Highlands', 'juegos escoceses'],
+      'prize': ['recompensa'],
+      'throw': ['arrojar', 'echar'],
+      'toss': ['tirar', 'arrojar', 'lanzar al aire', 'tirar al aire'],
+      'village fête': ['fiesta de pueblo', 'fiesta popular', 'feria del pueblo'],
+      'amazing': ['impresionante', 'sorprendente', 'genial', 'fantástico/a'],
+      'arrangement': ['plan', 'compromiso', 'arreglo'],
+      'attend': ['asistir', 'ir a', 'participar', 'estar presente'],
+      'be game': ['dispuesto/a', 'animarse', 'apuntarse', 'estar listo/a', 'estar preparado/a'],
+      'brilliantly': ['brillantemente', 'genial', 'muy bien', 'estupendamente', 'de maravilla'],
+      'complicated': ['difícil'],
+      'fantastic': ['genial', 'estupendo/a', 'increíble'],
+      'have fun': ['pasarlo bien', 'pasarla bien', 'pasar un buen rato', 'disfrutar'],
+      'hill': ['cerro', 'loma'],
+      'noon': ['las doce', 'medio día', 'doce del mediodía'],
+      'strange': ['raro/a', 'curioso/a'],
+      'weird': ['extraño/a', 'curioso/a'],
+      'wonderful': ['estupendo/a', 'genial', 'precioso/a', 'fantástico/a'],
+      'at the bottom': ['debajo', 'en la parte de abajo', 'abajo del todo', 'al fondo'],
+      'at the top': ['encima', 'en la parte de arriba', 'arriba del todo'],
+      'be allowed to': ['tener permiso para', 'estar permitido', 'permitido'],
+      'entertaining': ['divertido/a', 'ameno/a'],
+      'entertainment': ['diversión', 'ocio', 'espectáculo'],
+      'equipment': ['equipamiento'],
+      "find one's way (to)": ['encontrar el camino a', 'encontrar el camino hacia', 'orientarse', 'llegar'],
+      'finishing point': ['llegada', 'final', 'punto final', 'fin'],
+      'foreground': ['delante', 'parte delantera'],
+      'in the top left-hand corner': ['arriba izquierda', 'a la izquierda arriba', 'en la esquina superior izquierda', 'esquina superior izquierda', 'en la esquina de arriba a la izquierda'],
+      'knock down / knock over': ['tumbar', 'volcar', 'tirar al suelo', 'golpear'],
+      'nowadays': ['hoy', 'actualmente', 'en la actualidad'],
+      'right-hand': ['derecha', 'de la derecha', 'a la derecha'],
+      'starting point': ['salida', 'inicio', 'comienzo', 'principio', 'punto de inicio'],
+      'take place': ['celebrarse', 'realizarse', 'ocurrir', 'pasar', 'suceder'],
+      'tell someone the way': ['indicar el camino', 'explicar el camino', 'decir el camino', 'mostrar el camino', 'indicarle el camino a alguien', 'explicarle el camino a alguien', 'decirle el camino a alguien'],
+      'tie': ['amarrar', 'anudar'],
+      'unusual': ['poco habitual', 'especial', 'fuera de lo común', 'insólito/a', 'extraordinario/a'],
+      'volunteer': ['ayudante'],
+      'winner': ['vencedor/a', 'campeón', 'campeona'],
+      'attitude': ['postura'],
+      'hit the target': ['acertar', 'dar en el objetivo', 'atinar'],
+      'quite': ['muy', 'del todo', 'totalmente'],
+      'rather': ['algo', 'un poco'],
+      'really': ['en serio', 'verdaderamente'],
+      'require': ['exigir', 'hacer falta'],
+      'sketch': ['dibujo', 'croquis', 'esbozo', 'bosquejo'],
+      'space': ['sitio']
+    };
+
+    // ==========================================================
+    // SPRACHE (Deutsch | Español). Gespeichert für alle Seiten unter «lernportal_lang».
+    // Feste Texte stehen im HTML doppelt (data-l), Texte aus dem Skript mit tr('Deutsch', 'Español').
+    // Intern heisst die Muttersprache-Seite weiter «de» (de2en = Muttersprache → Englisch).
+    // ==========================================================
+    const LANG_KEY = 'lernportal_lang';
+    let LANG = 'de';
+    try { LANG = localStorage.getItem(LANG_KEY) === 'es' ? 'es' : 'de'; } catch (e) {}
+    const ES = () => LANG === 'es';
+    const tr = (de, es) => ES() ? es : de;
+    const TITLE = { de: 'Open World 2 · Unit 2: Weird and wonderful games · Wörter und Grammatik', es: 'Open World 2 · Unit 2: Weird and wonderful games · Palabras y gramática' };
+
+    // ==========================================================
     // EINSTELLUNGEN
     // ==========================================================
     const ACTIVE_N = 7;               // so viele Wörter sind im Lernpfad gleichzeitig dran
     const ETAPPE_N = 10;              // nach so vielen Antworten: «Etappe geschafft» (weitermachen oder Pause)
     const TEST_A = 10, TEST_B = 10;   // Test: Deutsch → Englisch, Englisch → Deutsch
     const STAGES = [
-      { dir: 'en2de', type: 'mc', label: 'Englisch → Deutsch auswählen' },
-      { dir: 'de2en', type: 'mc', label: 'Deutsch → Englisch auswählen' },
-      { dir: 'en2de', type: 'write', label: 'Englisch → Deutsch schreiben' },
-      { dir: 'de2en', type: 'write', label: 'Deutsch → Englisch schreiben' }
+      { dir: 'en2de', type: 'mc', get label() { return tr('Englisch → Deutsch auswählen', 'elegir inglés → español'); } },
+      { dir: 'de2en', type: 'mc', get label() { return tr('Deutsch → Englisch auswählen', 'elegir español → inglés'); } },
+      { dir: 'en2de', type: 'write', get label() { return tr('Englisch → Deutsch schreiben', 'escribir inglés → español'); } },
+      { dir: 'de2en', type: 'write', get label() { return tr('Deutsch → Englisch schreiben', 'escribir español → inglés'); } }
     ];
     const MEDALS = [
-      { min: 0.9, icon: '🥇', name: 'Gold' },
-      { min: 0.75, icon: '🥈', name: 'Silber' },
-      { min: 0.6, icon: '🥉', name: 'Bronze' }
+      { min: 0.9, icon: '🥇', name: 'Gold', es: 'Oro' },
+      { min: 0.75, icon: '🥈', name: 'Silber', es: 'Plata' },
+      { min: 0.6, icon: '🥉', name: 'Bronze', es: 'Bronce' }
     ];
-    const ANSWER_LANG = { de2en: 'Englisch', en2de: 'Deutsch' };
+    const medalName = m => ES() ? m.es : m.name;   // gespeichert wird immer der deutsche Name
+    const ANSWER_LANG = { de: { de2en: 'Englisch', en2de: 'Deutsch' }, es: { de2en: 'inglés', en2de: 'español' } };
 
     // ==========================================================
     // DATEN AUFBEREITEN
@@ -330,7 +496,7 @@
     Object.entries(WORD_TEXT).forEach(([part, text]) => {
       text.split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
         const [en, de] = line.split(' | ').map(x => x.trim());
-        WORDS.push({ id: slug(en), en, de, part, alt: [], hint: '', noType: false, ...(EXTRA[en] || {}) });
+        WORDS.push({ id: slug(en), en, de, es: WORD_ES[en] || de, part, alt: [], hint: '', noType: false, ...(EXTRA[en] || {}) });
       });
     });
     const BY_ID = {}, BY_EN = {};
@@ -351,8 +517,10 @@
     const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const fmt = p => String(Math.round(p * 10) / 10);
     const medalOf = (pts, max) => MEDALS.find(m => max && pts / max >= m.min - 1e-9) || null;
-    const askText = (w, dir) => dir === 'de2en' ? w.de : w.en;
-    const answerText = (w, dir) => dir === 'de2en' ? w.en : w.de;
+    const mean = w => ES() ? w.es : w.de;                 // Bedeutung in der gewählten Sprache
+    const hintOf = w => ES() ? (HINT_ES[w.en] || '') : w.hint;
+    const askText = (w, dir) => dir === 'de2en' ? mean(w) : w.en;
+    const answerText = (w, dir) => dir === 'de2en' ? w.en : mean(w);
 
     // Englisch prüfen: Gross/Klein zählt (Wunsch Lehrperson). Akzente, Apostroph, Bindestrich und «to»/«the» am Anfang egal.
     // loose = ohne Gross/Klein: nur um «Fast! Gross-/Kleinschreibung» anzuzeigen
@@ -397,10 +565,31 @@
       const pieces = raw.split(/\s*(?:,|;|\/|\bund\b|\boder\b)\s*/).filter(Boolean);
       return pieces.length > 1 && pieces.every(x => deOne(w, x, loose));
     }
-    const isOk = (w, dir, input, loose) => dir === 'de2en' ? enOk(w, input, loose) : deOk(w, input, loose);
+    // Spanisch prüfen: Gross/Klein und Akzente egal (á = a, ñ = n), Artikel am Anfang egal, «o/a» = beide Formen richtig
+    function normEs(s) {
+      return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[.,!?;:«»"¿¡]/g, ' ').replace(/\s+/g, ' ').trim().replace(/^(el|la|los|las|un|una|unos|unas) /, '');
+    }
+    const oa = p => { let m = p.match(/^(.+)o\/a$/); if (m) return [m[1] + 'o', m[1] + 'a']; m = p.match(/^(.+)\/a$/); return m ? [m[1], m[1] + 'a'] : [p]; };
+    function esForms(w) {
+      const parts = w.es.replace(/\(.*?\)/g, '').split(',').map(p => p.trim()).filter(Boolean);
+      return parts.concat(ES_ALT[w.en] || []).flatMap(p => [...oa(p), p]);
+    }
+    const esOne = (w, input) => esForms(w).some(f => normEs(f) === normEs(input));
+    function esOk(w, input) {
+      const raw = String(input || '').trim();
+      if (!raw) return false;
+      if (esOne(w, raw)) return true;
+      const pieces = raw.split(/\s*(?:,|;|\/|\by\b|\bo\b)\s*/).filter(Boolean);
+      return pieces.length > 1 && pieces.every(x => esOne(w, x));
+    }
+    // Muttersprache-Seite: Deutsch oder Spanisch, je nach Umschalter
+    const l1Forms = w => ES() ? esForms(w) : deForms(w);
+    const l1Ok = (w, input, loose) => ES() ? esOk(w, input) : deOk(w, input, loose);
+    const isOk = (w, dir, input, loose) => dir === 'de2en' ? enOk(w, input, loose) : l1Ok(w, input, loose);
     // Nur die Gross-/Kleinschreibung stimmt nicht
     const caseOnly = (w, dir, input) => !isOk(w, dir, input) && isOk(w, dir, input, true);
-    const caseTip = dir => dir === 'en2de' ? 'Im Deutschen schreibt man Nomen gross.' : 'Im Englischen schreibt man fast alles klein, ausser Namen.';
+    const caseTip = dir => dir === 'en2de' ? 'Im Deutschen schreibt man Nomen gross.' : tr('Im Englischen schreibt man fast alles klein, ausser Namen.', 'En inglés casi todo se escribe en minúscula, excepto los nombres.');
 
     // ==========================================================
     // FAST RICHTIG (Wunsch Lehrperson): nur Gross/Klein, ein Buchstabe oder die Endung anders.
@@ -430,17 +619,22 @@
         const forms = [w.en, ...w.alt, ...related(w, TYPE_IDS).flatMap(id => [BY_ID[id].en, ...BY_ID[id].alt])].map(f => normEn(f, true));
         return nearType(forms, normEn(input, true));
       }
+      if (ES()) return nearType(esForms(w).map(normEs), normEs(input));
       return nearType(deForms(w).map(f => normDe(f, false, true)), normDe(input, false, true));
     }
-    const MISS_TITLE = { case: 'Fast richtig! Nur die Gross- und Kleinschreibung stimmt noch nicht:', letter: 'Fast richtig! Nur ein Buchstabe stimmt noch nicht:', ending: 'Fast richtig! Achte auf die Endung:' };
+    const MISS_TITLE = {
+      get case() { return tr('Fast richtig! Nur die Gross- und Kleinschreibung stimmt noch nicht:', '¡Casi correcto! Solo las mayúsculas y minúsculas no están bien todavía:'); },
+      get letter() { return tr('Fast richtig! Nur ein Buchstabe stimmt noch nicht:', '¡Casi correcto! Solo una letra no está bien todavía:'); },
+      get ending() { return tr('Fast richtig! Achte auf die Endung:', '¡Casi correcto! Fíjate en el final:'); }
+    };
     function missTip(m, dir, right) {
       if (!m) return '';
       if (m.type === 'case') return caseTip(dir);
-      if (m.type === 'ending') return /ly$/.test(right) ? 'Wie macht man etwas? Dann braucht es -ly.' : /ing$/.test(right) ? 'Nach am / is / are kommt das Verb mit -ing.' : 'Schau den Schluss vom Wort genau an.';
-      return 'Schau das Wort genau an und schreib es einmal richtig ab.';
+      if (m.type === 'ending') return /ly$/.test(right) ? tr('Wie macht man etwas? Dann braucht es -ly.', '¿Cómo se hace algo? Entonces hace falta -ly.') : /ing$/.test(right) ? tr('Nach am / is / are kommt das Verb mit -ing.', 'Después de am / is / are, el verbo va con -ing.') : tr('Schau den Schluss vom Wort genau an.', 'Mira bien el final de la palabra.');
+      return tr('Schau das Wort genau an und schreib es einmal richtig ab.', 'Mira bien la palabra y cópiala una vez correctamente.');
     }
     // «auch richtig» bei Deutsch → Englisch
-    const alsoText = w => { const r = related(w, TYPE_IDS).map(id => BY_ID[id].en); return r.length ? `<span class="text-xs font-semibold text-slate-600">auch richtig: ${r.map(esc).join(', ')}</span>` : ''; };
+    const alsoText = w => { const r = related(w, TYPE_IDS).map(id => BY_ID[id].en); return r.length ? `<span class="text-xs font-semibold text-slate-600">${tr('auch richtig', 'también correcto')}: ${r.map(esc).join(', ')}</span>` : ''; };
 
     // ==========================================================
     // SPEICHERN (jeder Zugriff in try/catch)
@@ -500,7 +694,7 @@
         window.speechSynthesis.speak(u);
       } catch (e) {}
     }
-    const sayBtn = (text, big) => `<button type="button" class="say-btn shrink-0 inline-flex items-center justify-center rounded-lg border border-emerald-300 bg-white ${big ? 'w-10 h-10 text-lg' : 'w-7 h-7 text-sm'}" data-say="${esc(text)}" onclick="event.stopPropagation();speak(this.dataset.say)" aria-label="Anhören">🔊</button>`;
+    const sayBtn = (text, big) => `<button type="button" class="say-btn shrink-0 inline-flex items-center justify-center rounded-lg border border-emerald-300 bg-white ${big ? 'w-10 h-10 text-lg' : 'w-7 h-7 text-sm'}" data-say="${esc(text)}" onclick="event.stopPropagation();speak(this.dataset.say)" aria-label="${tr('Anhören', 'Escuchar')}">🔊</button>`;
 
     // ==========================================================
     // TEIL WÄHLEN
@@ -570,10 +764,12 @@
     let SAMMLUNG_OPEN = false;
     const SESSION = { answers: 0, right: 0, etappe: 0, newMastered: [], lastPraise: '' };   // nur für diese Sitzung
     // Wechselndes Lob (kurz, ehrlich, nie übertrieben)
-    const PRAISE = ['Richtig!', 'Genau!', 'Stark!', 'Super!', 'Sitzt!', 'Perfekt!', 'Klasse!', 'Bravo!'];
+    const PRAISE = { de: ['Richtig!', 'Genau!', 'Stark!', 'Super!', 'Sitzt!', 'Perfekt!', 'Klasse!', 'Bravo!'],
+      es: ['¡Correcto!', '¡Exacto!', '¡Muy bien!', '¡Súper!', '¡Eso es!', '¡Perfecto!', '¡Genial!', '¡Bravo!'] };
     function praise() {
-      let t = PRAISE[Math.floor(Math.random() * PRAISE.length)];
-      if (t === SESSION.lastPraise) t = PRAISE[(PRAISE.indexOf(t) + 1) % PRAISE.length];
+      const list = PRAISE[LANG];
+      let t = list[Math.floor(Math.random() * list.length)];
+      if (t === SESSION.lastPraise) t = list[(list.indexOf(t) + 1) % list.length];
       SESSION.lastPraise = t;
       return '✔ ' + t;
     }
@@ -586,14 +782,14 @@
     function renderWeek() {
       const now = new Date(), monday = new Date(now);
       monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
-      const names = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+      const names = ES() ? ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá', 'Do'] : ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
       const cells = names.map((n, i) => {
         const d = new Date(monday); d.setDate(monday.getDate() + i);
         const done = STATE.days.includes(dayKey(d)), today = dayKey(d) === dayKey(now);
         return `<div class="flex flex-col items-center gap-0.5"><span class="text-[11px] font-semibold ${today ? 'text-slate-900' : 'text-slate-500'}">${n}</span><span class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-black ${done ? 'bg-emerald-500 text-white' : today ? 'border-2 border-emerald-400 text-emerald-600' : 'bg-slate-100 text-slate-300'}">${done ? '✓' : ''}</span></div>`;
       }).join('');
       const n = names.filter((_, i) => { const d = new Date(monday); d.setDate(monday.getDate() + i); return STATE.days.includes(dayKey(d)); }).length;
-      const weekHtml = `<div class="flex items-center justify-between gap-2"><span class="text-xs font-bold text-slate-600">Diese Woche geübt${n ? `: ${n} ${n === 1 ? 'Tag' : 'Tage'}` : ''}</span><div class="flex gap-1.5">${cells}</div></div>`;
+      const weekHtml = `<div class="flex items-center justify-between gap-2"><span class="text-xs font-bold text-slate-600">${tr('Diese Woche geübt', 'Practicado esta semana')}${n ? `: ${n} ${n === 1 ? tr('Tag', 'día') : tr('Tage', 'días')}` : ''}</span><div class="flex gap-1.5">${cells}</div></div>`;
       $('week-days').innerHTML = weekHtml;
       if ($('week-days-g')) $('week-days-g').innerHTML = weekHtml;
     }
@@ -621,7 +817,7 @@
     }
     function mcOptions(w, dir) {
       const block = new Set([w.id, ...related(w, SAME_IDS), ...related(w, FAMILY_IDS)]);
-      const text = x => dir === 'en2de' ? x.de : x.en;
+      const text = x => dir === 'en2de' ? mean(x) : x.en;
       const seen = new Set([text(w)]);
       const others = [];
       for (const x of shuffle(partWords(w.part))) {
@@ -687,7 +883,7 @@
       if (Q.phase !== 'ask' || !Q.opts[i]) return;
       const w = BY_ID[Q.id], dir = STAGES[Q.stage].dir;
       Q.pick = i;
-      answer(Q.opts[i] === (dir === 'en2de' ? w.de : w.en), Q.opts[i], false);
+      answer(Q.opts[i] === answerText(w, dir), Q.opts[i], false);
     }
     function submitWrite(dontKnow) {
       if (Q.phase !== 'ask') return;
@@ -737,42 +933,42 @@
       renderPfad(true);
       if ($('pfad-in')) $('pfad-in').value = val;
     }
-    const firstLetter = (w, dir) => (dir === 'de2en' ? w.en : deForms(w)[0]).trim().charAt(0);
+    const firstLetter = (w, dir) => (dir === 'de2en' ? w.en : l1Forms(w)[0]).trim().charAt(0);
     function renderPfad(keepFocus) {
       const words = partWords(), done = words.filter(w => isMastered(w)).length;
       const dueN = words.filter(w => isDue(w)).length;
       // Balken wächst mit jedem richtigen Schritt (nicht erst, wenn ein Wort ganz fertig ist)
       const steps = words.reduce((a, w) => a + levelOf(w), 0), allSteps = words.reduce((a, w) => a + maxLevel(w), 0);
       const pct = Math.round(steps / allSteps * 100);
-      const status = dueN ? `🔁 heute wiederholen: ${dueN}` : `⭐ ${done} von ${words.length} gemeistert`;
+      const status = dueN ? `🔁 ${tr('heute wiederholen', 'repasar hoy')}: ${dueN}` : `⭐ ${done} ${tr('von', 'de')} ${words.length} ${tr('gemeistert', 'dominadas')}`;
       $('pfad-progress').innerHTML = `
         <div class="flex justify-between items-end text-sm font-bold text-slate-700 mb-1 gap-2">
-          <span>Fortschritt: ${pct} %</span>
+          <span>${tr('Fortschritt', 'Progreso')}: ${pct} %</span>
           <span class="text-xs font-semibold text-slate-500 text-right">${status}</span>
         </div>
         <div class="h-4 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all" style="width:${pct}%"></div></div>
         <details id="sammlung" class="mt-2 rounded-xl border border-emerald-200 bg-emerald-50/50 px-3 py-2" ${SAMMLUNG_OPEN ? 'open' : ''} ontoggle="SAMMLUNG_OPEN=this.open">
-          <summary class="text-sm font-bold text-emerald-900 cursor-pointer">⭐ Meine Sammlung: ${done} ${done === 1 ? 'Wort' : 'Wörter'}</summary>
-          <div class="mt-2 flex flex-wrap gap-1.5">${words.filter(w => isMastered(w)).map(w => `<button type="button" onclick="speak(this.dataset.say)" data-say="${esc(w.en)}" title="${esc(w.de)}" class="px-2.5 py-1 rounded-full bg-white border border-emerald-300 text-xs font-bold text-emerald-800 ${SESSION.newMastered.includes(w.en) ? 'ring-2 ring-amber-300' : ''}">⭐ ${esc(w.en)}</button>`).join('') || '<span class="text-xs text-slate-600">Hier sammelst du jedes Wort, das du gemeistert hast.</span>'}</div>
-          ${done ? '<div class="mt-1.5 text-[11px] text-slate-500">Gelber Rand = heute neu. Antippen = anhören.</div>' : ''}
+          <summary class="text-sm font-bold text-emerald-900 cursor-pointer">⭐ ${tr('Meine Sammlung', 'Mi colección')}: ${done} ${done === 1 ? tr('Wort', 'palabra') : tr('Wörter', 'palabras')}</summary>
+          <div class="mt-2 flex flex-wrap gap-1.5">${words.filter(w => isMastered(w)).map(w => `<button type="button" onclick="speak(this.dataset.say)" data-say="${esc(w.en)}" title="${esc(mean(w))}" class="px-2.5 py-1 rounded-full bg-white border border-emerald-300 text-xs font-bold text-emerald-800 ${SESSION.newMastered.includes(w.en) ? 'ring-2 ring-amber-300' : ''}">⭐ ${esc(w.en)}</button>`).join('') || `<span class="text-xs text-slate-600">${tr('Hier sammelst du jedes Wort, das du gemeistert hast.', 'Aquí reúnes cada palabra que ya dominas.')}</span>`}</div>
+          ${done ? `<div class="mt-1.5 text-[11px] text-slate-500">${tr('Gelber Rand = heute neu. Antippen = anhören.', 'Borde amarillo = nueva de hoy. Tocar = escuchar.')}</div>` : ''}
         </details>`;
       const box = $('body-pfad');
       if (Q.phase === 'etappe' || Q.phase === 'pause') {
         box.innerHTML = Q.phase === 'etappe' ? `
           <div class="rounded-2xl border-2 border-sky-300 bg-sky-50 p-5 text-center space-y-2 pop">
             <div class="text-4xl">🎉</div>
-            <div class="text-lg font-black text-slate-900">Etappe geschafft!</div>
-            <div class="text-sm text-slate-700">${SESSION.answers} Antworten, davon ${SESSION.right} richtig. ${SESSION.newMastered.length ? `Heute neu gemeistert: <b>${SESSION.newMastered.map(esc).join(', ')}</b> ⭐` : 'Deine Wörter sind auf gutem Weg: Bald kommen die ersten Sterne.'}</div>
+            <div class="text-lg font-black text-slate-900">${tr('Etappe geschafft!', '¡Etapa superada!')}</div>
+            <div class="text-sm text-slate-700">${SESSION.answers} ${tr('Antworten, davon', 'respuestas,')} ${SESSION.right} ${tr('richtig', 'correctas')}. ${SESSION.newMastered.length ? `${tr('Heute neu gemeistert', 'Nuevas dominadas hoy')}: <b>${SESSION.newMastered.map(esc).join(', ')}</b> ⭐` : tr('Deine Wörter sind auf gutem Weg: Bald kommen die ersten Sterne.', 'Tus palabras van por buen camino: pronto llegan las primeras estrellas.')}</div>
             <div class="grid grid-cols-2 gap-2 pt-1">
-              <button type="button" onclick="pausePfad()" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">Für heute fertig</button>
-              <button type="button" id="next-btn" onclick="continuePfad()" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">Weiter üben →</button>
+              <button type="button" onclick="pausePfad()" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">${tr('Für heute fertig', 'Terminar por hoy')}</button>
+              <button type="button" id="next-btn" onclick="continuePfad()" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">${tr('Weiter üben →', 'Seguir practicando →')}</button>
             </div>
           </div>` : `
           <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-2 pop">
             <div class="text-4xl">👍</div>
-            <div class="text-lg font-black text-slate-900">Super gemacht!</div>
-            <div class="text-sm text-slate-700">Dein Fortschritt ist gespeichert. Komm morgen wieder: 10 Minuten reichen.</div>
-            <button type="button" id="next-btn" onclick="continuePfad()" class="mt-1 px-4 py-2 rounded-xl text-sm font-bold border-2 border-emerald-400 bg-white text-emerald-800">Doch weiter üben</button>
+            <div class="text-lg font-black text-slate-900">${tr('Super gemacht!', '¡Muy bien hecho!')}</div>
+            <div class="text-sm text-slate-700">${tr('Dein Fortschritt ist gespeichert. Komm morgen wieder: 10 Minuten reichen.', 'Tu progreso está guardado. Vuelve mañana: 10 minutos son suficientes.')}</div>
+            <button type="button" id="next-btn" onclick="continuePfad()" class="mt-1 px-4 py-2 rounded-xl text-sm font-bold border-2 border-emerald-400 bg-white text-emerald-800">${tr('Doch weiter üben', 'Seguir practicando')}</button>
           </div>`;
         if (keepFocus && $('next-btn')) $('next-btn').focus({ preventScroll: true });
         return;
@@ -781,24 +977,24 @@
         box.innerHTML = `
           <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-2 pop">
             <div class="text-5xl">🏆</div>
-            <div class="text-lg font-black text-slate-900">Alle ${words.length} Wörter gemeistert!</div>
-            <div class="text-sm text-slate-700">Super! Mach jetzt den Wörtertest wie in der Prüfung.</div>
-            ${reviewsLeft() ? '<div class="text-sm text-slate-700">🔁 In den nächsten Tagen kommen die Wörter kurz zum Wiederholen. So bleiben sie im Kopf.</div>' : ''}
-            <button type="button" onclick="document.getElementById('task-test').scrollIntoView({behavior:'smooth'})" class="mt-1 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">Zum Wörtertest ↓</button>
+            <div class="text-lg font-black text-slate-900">${tr(`Alle ${words.length} Wörter gemeistert!`, `¡Dominas las ${words.length} palabras!`)}</div>
+            <div class="text-sm text-slate-700">${tr('Super! Mach jetzt den Wörtertest wie in der Prüfung.', '¡Genial! Ahora haz la prueba de vocabulario como en el examen.')}</div>
+            ${reviewsLeft() ? `<div class="text-sm text-slate-700">${tr('🔁 In den nächsten Tagen kommen die Wörter kurz zum Wiederholen. So bleiben sie im Kopf.', '🔁 En los próximos días las palabras vuelven un momento para repasar. Así se quedan en la cabeza.')}</div>` : ''}
+            <button type="button" onclick="document.getElementById('task-test').scrollIntoView({behavior:'smooth'})" class="mt-1 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('Zum Wörtertest ↓', 'A la prueba ↓')}</button>
           </div>`;
         return;
       }
       const w = BY_ID[Q.id], st = STAGES[Q.stage], lvl = levelOf(w), max = maxLevel(w);
       const dots = Array.from({ length: max }, (_, k) => `<span class="inline-block w-2.5 h-2.5 rounded-full ${k < lvl ? 'bg-emerald-500' : k === Q.stage && Q.phase === 'ask' ? 'bg-sky-400' : 'bg-slate-200'}"></span>`).join('');
-      const hint = st.dir === 'de2en' && w.hint ? ` <span class="text-sm font-medium text-slate-500">(${esc(w.hint)})</span>` : '';
+      const hint = st.dir === 'de2en' && hintOf(w) ? ` <span class="text-sm font-medium text-slate-500">(${esc(hintOf(w))})</span>` : '';
       let html = `
         <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2 gap-2">
-          <span class="flex items-center gap-1.5">${Q.review ? `🔁 Wiederholen: ${st.label}` : `Stufe ${Q.stage + 1}: ${st.label} <span class="flex gap-1 ml-1">${dots}</span>`}</span>
+          <span class="flex items-center gap-1.5">${Q.review ? `🔁 ${tr('Wiederholen', 'Repasar')}: ${st.label}` : `${tr('Stufe', 'Nivel')} ${Q.stage + 1}: ${st.label} <span class="flex gap-1 ml-1">${dots}</span>`}</span>
           <span class="shrink-0">${STREAK >= 3 ? '🔥 ' + STREAK : ''}</span>
         </div>
         <div class="rounded-2xl border-2 ${st.dir === 'de2en' ? 'border-amber-300 bg-amber-50' : 'border-emerald-300 bg-emerald-50'} p-5 text-center">
           <div class="flex items-center justify-center gap-2">
-            <span class="text-2xl sm:text-3xl font-black text-slate-900 wrap-any" lang="${st.dir === 'de2en' ? 'de' : 'en'}">${esc(askText(w, st.dir))}${hint}</span>
+            <span class="text-2xl sm:text-3xl font-black text-slate-900 wrap-any" lang="${st.dir === 'de2en' ? LANG : 'en'}">${esc(askText(w, st.dir))}${hint}</span>
             ${st.dir === 'en2de' ? sayBtn(w.en, true) : ''}
           </div>
         </div>`;
@@ -811,37 +1007,37 @@
             else if (i === Q.pick) cls = 'bg-amber-50 border-amber-400 text-amber-900';
             else cls = 'bg-white border-slate-200 text-slate-400';
           }
-          return `<button type="button" onclick="pickOption(${i})" ${Q.phase !== 'ask' ? 'disabled' : ''} lang="${st.dir === 'de2en' ? 'en' : 'de'}" class="w-full min-h-[3.25rem] px-3 py-2.5 rounded-xl border-2 text-base font-bold text-left wrap-any transition ${cls}">${esc(o)}</button>`;
+          return `<button type="button" onclick="pickOption(${i})" ${Q.phase !== 'ask' ? 'disabled' : ''} lang="${st.dir === 'de2en' ? 'en' : LANG}" class="w-full min-h-[3.25rem] px-3 py-2.5 rounded-xl border-2 text-base font-bold text-left wrap-any transition ${cls}">${esc(o)}</button>`;
         }).join('')}</div>`;
       } else if (Q.phase === 'ask') {
         html += `
           <div class="mt-3 space-y-2">
-            <input id="pfad-in" type="text" placeholder="auf ${ANSWER_LANG[st.dir]} schreiben …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${st.dir === 'de2en' ? 'en' : 'de'}"
+            <input id="pfad-in" type="text" placeholder="${tr(`auf ${ANSWER_LANG.de[st.dir]} schreiben …`, `escribe en ${ANSWER_LANG.es[st.dir]} …`)}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${st.dir === 'de2en' ? 'en' : LANG}"
               onkeydown="if(event.key==='Enter'){event.preventDefault();submitWrite(false);}"
               class="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-3 text-lg font-semibold text-slate-800">
-            ${Q.hint ? `<div class="text-sm font-bold text-sky-800">💡 Beginnt mit «${esc(firstLetter(w, st.dir))}»</div>` : `<button type="button" onclick="giveHint()" class="text-sm font-bold text-sky-700 underline">💡 Hilfe: erster Buchstabe</button>`}
+            ${Q.hint ? `<div class="text-sm font-bold text-sky-800">💡 ${tr('Beginnt mit', 'Empieza por')} «${esc(firstLetter(w, st.dir))}»</div>` : `<button type="button" onclick="giveHint()" class="text-sm font-bold text-sky-700 underline">💡 ${tr('Hilfe: erster Buchstabe', 'Ayuda: primera letra')}</button>`}
             <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="submitWrite(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 Weiss ich nicht</button>
-              <button type="button" onclick="submitWrite(false)" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">✓ Prüfen</button>
+              <button type="button" onclick="submitWrite(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 ${tr('Weiss ich nicht', 'No lo sé')}</button>
+              <button type="button" onclick="submitWrite(false)" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">✓ ${tr('Prüfen', 'Comprobar')}</button>
             </div>
           </div>`;
       }
       if (Q.phase === 'answered') {
         const write = st.type === 'write';
-        const title = Q.mastered ? `⭐ Gemeistert! «${esc(w.en)}» kommt in deine Sammlung.` : Q.ok ? (Q.review ? '✔ Sitzt noch!' : (STREAK >= 5 && STREAK % 5 === 0 ? `🔥 ${STREAK} richtig hintereinander!` : (Q.praise || '✔ Richtig!'))) : (Q.dontKnow ? 'So heisst es:' : Q.miss ? MISS_TITLE[Q.miss.type] : 'Noch nicht ganz. Richtig ist:');
-        const calm = Q.review ? 'Vergessen ist normal. Du übst es gleich nochmals.' : 'Kein Problem: Das Wort kommt gleich nochmals.';
+        const title = Q.mastered ? tr(`⭐ Gemeistert! «${esc(w.en)}» kommt in deine Sammlung.`, `⭐ ¡Dominada! «${esc(w.en)}» va a tu colección.`) : Q.ok ? (Q.review ? tr('✔ Sitzt noch!', '✔ ¡Todavía te la sabes!') : (STREAK >= 5 && STREAK % 5 === 0 ? tr(`🔥 ${STREAK} richtig hintereinander!`, `🔥 ¡${STREAK} correctas seguidas!`) : (Q.praise || tr('✔ Richtig!', '✔ ¡Correcto!')))) : (Q.dontKnow ? tr('So heisst es:', 'Se dice así:') : Q.miss ? MISS_TITLE[Q.miss.type] : tr('Noch nicht ganz. Richtig ist:', 'Todavía no del todo. Lo correcto es:'));
+        const calm = Q.review ? tr('Vergessen ist normal. Du übst es gleich nochmals.', 'Olvidar es normal. La practicas otra vez enseguida.') : tr('Kein Problem: Das Wort kommt gleich nochmals.', 'No pasa nada: la palabra vuelve enseguida.');
         html += `
           <div class="feedback-box mt-3 rounded-2xl border-2 ${Q.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-3 space-y-1.5 pop">
             <div class="text-base font-black ${Q.ok ? 'text-emerald-800' : 'text-amber-900'}">${title}</div>
             <div class="flex items-center gap-2 flex-wrap">
               <span class="text-lg font-black text-slate-900 wrap-any">${esc(right)}</span>${st.dir === 'de2en' ? sayBtn(w.en) + (write ? alsoText(w) : '') : ''}
             </div>
-            ${!Q.ok && write && !Q.dontKnow ? `<div class="text-xs text-slate-600 wrap-any">Deine Antwort: <span class="font-semibold">${esc(Q.ans)}</span></div>` : ''}
+            ${!Q.ok && write && !Q.dontKnow ? `<div class="text-xs text-slate-600 wrap-any">${tr('Deine Antwort', 'Tu respuesta')}: <span class="font-semibold">${esc(Q.ans)}</span></div>` : ''}
             ${!Q.ok && Q.miss ? `<div class="text-xs font-semibold text-amber-900">${missTip(Q.miss, st.dir, right)}</div>` : ''}
             ${!Q.ok ? `<div class="text-xs text-slate-600">${calm}</div>` : ''}
-            ${!Q.ok && write && !Q.dontKnow && !Q.miss && st.dir === 'en2de' ? `<button type="button" onclick="overrideAnswer()" class="text-xs font-bold underline text-slate-600 text-left">Meine Antwort bedeutet dasselbe → zählt als richtig</button>` : ''}
+            ${!Q.ok && write && !Q.dontKnow && !Q.miss && st.dir === 'en2de' ? `<button type="button" onclick="overrideAnswer()" class="text-xs font-bold underline text-slate-600 text-left">${tr('Meine Antwort bedeutet dasselbe → zählt als richtig', 'Mi respuesta significa lo mismo → cuenta como correcta')}</button>` : ''}
           </div>
-          <button type="button" id="next-btn" onclick="nextQuestion()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">Weiter →</button>`;
+          <button type="button" id="next-btn" onclick="nextQuestion()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">${tr('Weiter →', 'Seguir →')}</button>`;
       }
       box.innerHTML = html;
       if (keepFocus) {
@@ -871,7 +1067,7 @@
       const b = shuffle(words.filter(w => !block.has(w.id))).slice(0, TEST_B);
       return { a: a.map(w => ({ w: w.id, ans: '' })), b: b.map(w => ({ w: w.id, ans: '' })), checked: false, warned: false };
     }
-    const testBOk = it => deOk(BY_ID[it.w], it.ans);
+    const testBOk = it => l1Ok(BY_ID[it.w], it.ans);
     function validTest(t, part) {
       const ok = list => Array.isArray(list) && list.length > 0 && list.every(it => it && BY_ID[it.w] && BY_ID[it.w].part === part && typeof it.ans === 'string');
       return t && ok(t.a) && ok(t.b);
@@ -903,10 +1099,10 @@
     function testRow(key, it, num, t) {
       const w = BY_ID[it.w], dir = key === 'a' ? 'de2en' : 'en2de';
       const ok = key === 'a' ? enOk(w, it.ans) : testBOk(it);
-      const hint = key === 'a' && w.hint ? ` <span class="text-xs font-medium text-slate-500">(${esc(w.hint)})</span>` : '';
+      const hint = key === 'a' && hintOf(w) ? ` <span class="text-xs font-medium text-slate-500">(${esc(hintOf(w))})</span>` : '';
       const fb = !t.checked ? '' : `
         <div class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold ${ok ? 'text-emerald-800' : 'text-amber-900'}">
-          <span>${ok ? '✔' : missInfo(w, dir, it.ans) ? 'Fast richtig! Richtig ist:' : 'Richtig wäre:'}</span>
+          <span>${ok ? '✔' : missInfo(w, dir, it.ans) ? tr('Fast richtig! Richtig ist:', '¡Casi! Lo correcto es:') : tr('Richtig wäre:', 'Lo correcto sería:')}</span>
           ${ok ? '' : `<span class="font-black text-slate-900 wrap-any">${esc(answerText(w, dir))}</span>`}
           ${key === 'a' ? sayBtn(w.en) + (ok ? '' : alsoText(w)) : ''}
         </div>`;
@@ -916,9 +1112,9 @@
             <span class="text-xs font-bold text-slate-500 w-6 shrink-0 pt-2.5">${num}.</span>
             <div class="min-w-0 flex-1">
               <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                <span class="text-sm font-bold text-slate-800 wrap-any" lang="${key === 'a' ? 'de' : 'en'}">${esc(askText(w, dir))}${hint}</span>
+                <span class="text-sm font-bold text-slate-800 wrap-any" lang="${key === 'a' ? LANG : 'en'}">${esc(askText(w, dir))}${hint}</span>
                 <input type="text" value="${esc(it.ans)}" ${t.checked ? 'disabled' : ''} oninput="testInput('${key}','${it.w}',this.value)" onkeydown="testEnter(event,this)"
-                  placeholder="auf ${ANSWER_LANG[dir]} …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${key === 'a' ? 'en' : 'de'}"
+                  placeholder="${tr(`auf ${ANSWER_LANG.de[dir]} …`, `en ${ANSWER_LANG.es[dir]} …`)}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="${key === 'a' ? 'en' : LANG}"
                   class="test-in min-w-0 flex-1 basis-40 bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm font-semibold text-slate-800">
               </div>
               ${fb}
@@ -951,17 +1147,17 @@
         $('body-test').innerHTML = `
           <div class="rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/60 p-5 text-center space-y-2">
             <div class="text-3xl">📝</div>
-            <p class="text-sm text-slate-700">Hast du die Wörter im Lernpfad geübt? Dann teste dich wie in der Prüfung: ${t.a.length} Wörter Deutsch → Englisch und ${t.b.length} Wörter Englisch → Deutsch.</p>
-            <button type="button" onclick="openTest()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">▶ Wörtertest starten</button>
+            <p class="text-sm text-slate-700">${tr(`Hast du die Wörter im Lernpfad geübt? Dann teste dich wie in der Prüfung: ${t.a.length} Wörter Deutsch → Englisch und ${t.b.length} Wörter Englisch → Deutsch.`, `¿Has practicado las palabras en la ruta de aprendizaje? Entonces ponte a prueba como en el examen: ${t.a.length} palabras español → inglés y ${t.b.length} palabras inglés → español.`)}</p>
+            <button type="button" onclick="openTest()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('▶ Wörtertest starten', '▶ Empezar la prueba')}</button>
           </div>`;
         $('fb-test').innerHTML = '';
         return;
       }
-      const head = (txt, n) => `<div class="flex items-center justify-between gap-2 bg-slate-100 rounded-lg px-3 py-2 mb-2"><h3 class="text-sm font-black text-slate-800">${txt}</h3><span class="text-xs font-bold text-slate-600">${n} P.</span></div>`;
+      const head = (txt, n) => `<div class="flex items-center justify-between gap-2 bg-slate-100 rounded-lg px-3 py-2 mb-2"><h3 class="text-sm font-black text-slate-800">${txt}</h3><span class="text-xs font-bold text-slate-600">${n} ${tr('P.', 'p.')}</span></div>`;
       $('body-test').innerHTML = `
         <div class="space-y-5">
-          <div>${head('Teil A: Deutsch → Englisch', t.a.length)}<div class="space-y-2">${t.a.map((it, i) => testRow('a', it, i + 1, t)).join('')}</div></div>
-          <div>${head('Teil B: Englisch → Deutsch', t.b.length)}<div class="space-y-2">${t.b.map((it, i) => testRow('b', it, t.a.length + i + 1, t)).join('')}</div></div>
+          <div>${head(tr('Teil A: Deutsch → Englisch', 'Parte A: español → inglés'), t.a.length)}<div class="space-y-2">${t.a.map((it, i) => testRow('a', it, i + 1, t)).join('')}</div></div>
+          <div>${head(tr('Teil B: Englisch → Deutsch', 'Parte B: inglés → español'), t.b.length)}<div class="space-y-2">${t.b.map((it, i) => testRow('b', it, t.a.length + i + 1, t)).join('')}</div></div>
         </div>`;
       const btn = $('check-test');
       btn.disabled = t.checked;
@@ -969,7 +1165,7 @@
       const fb = $('fb-test');
       if (!t.checked) {
         const empty = [...t.a, ...t.b].filter(it => !it.ans.trim()).length;
-        fb.innerHTML = t.warned && empty ? `<div class="text-sm font-bold text-amber-700">Noch ${empty} leer. Füll alles aus oder drück nochmals auf «Test prüfen».</div>` : '';
+        fb.innerHTML = t.warned && empty ? `<div class="text-sm font-bold text-amber-700">${tr(`Noch ${empty} leer. Füll alles aus oder drück nochmals auf «Test prüfen».`, `Faltan ${empty}. Rellena todo o pulsa otra vez «Corregir la prueba».`)}</div>` : '';
         return;
       }
       const pts = TASKS.test.score(), max = TASKS.test.max, m = medalOf(pts, max);
@@ -977,10 +1173,10 @@
       const best = MEDALS.find(x => x.name === STATE.medal[STATE.part]);
       fb.innerHTML = `
         <div class="rounded-2xl border-2 ${pass ? 'border-emerald-300 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-4 space-y-1 pop">
-          <div class="text-lg font-black text-slate-900">${m ? m.icon + ' ' : ''}${fmt(pts)} von ${max} Punkten · Note ${grade.toFixed(1)}</div>
-          <div class="text-sm ${pass ? 'text-emerald-800' : 'text-amber-900'}">${pass ? '✅ Bestanden' : 'Noch nicht ganz. Übe die gelben Wörter im Lernpfad, dann klappt es.'} (bestanden ab ${passPoints(max)} Punkten)</div>
-          ${best ? `<div class="text-xs text-slate-600">Deine beste Medaille in ${PARTS[STATE.part].label}: ${best.icon} ${best.name}</div>` : ''}
-          <div class="text-xs text-slate-600">Gelb = noch üben. Mit «🔀 Nochmals üben» bekommst du einen neuen Test.</div>
+          <div class="text-lg font-black text-slate-900">${m ? m.icon + ' ' : ''}${fmt(pts)} ${tr('von', 'de')} ${max} ${tr('Punkten · Note', 'puntos · Nota')} ${grade.toFixed(1)}</div>
+          <div class="text-sm ${pass ? 'text-emerald-800' : 'text-amber-900'}">${pass ? tr('✅ Bestanden', '✅ Aprobado') : tr('Noch nicht ganz. Übe die gelben Wörter im Lernpfad, dann klappt es.', 'Todavía no del todo. Practica las palabras amarillas en la ruta de aprendizaje y lo conseguirás.')} (${tr('bestanden ab', 'aprobado desde')} ${passPoints(max)} ${tr('Punkten', 'puntos')})</div>
+          ${best ? `<div class="text-xs text-slate-600">${tr('Deine beste Medaille in', 'Tu mejor medalla en la')} ${ES() ? PARTS[STATE.part].label.toLowerCase() : PARTS[STATE.part].label}: ${best.icon} ${medalName(best)}</div>` : ''}
+          <div class="text-xs text-slate-600">${tr('Gelb = noch üben. Mit «🔀 Nochmals üben» bekommst du einen neuen Test.', 'Amarillo = practicar más. Con «🔀 Practicar otra vez» recibes una prueba nueva.')}</div>
         </div>`;
     }
 
@@ -993,6 +1189,20 @@
       const icon = $('header-icon');
       if (icon) icon.textContent = g ? '🧩' : '⭐';
       $('header-known').textContent = g ? `${TASKS.gram.score()} / ${TASKS.gram.max}` : `${TASKS.pfad.score()} / ${TASKS.pfad.max}`;
+      $('header-count').title = g ? tr('Geschaffte Grammatik-Sätze', 'Frases de gramática superadas') : tr('Gemeisterte Wörter', 'Palabras dominadas');
+    }
+    // Umschalter Deutsch | Español: alles neu zeichnen, Fortschritt bleibt gleich
+    function setLang(l) {
+      LANG = l === 'es' ? 'es' : 'de';
+      try { localStorage.setItem(LANG_KEY, LANG); } catch (e) {}
+      document.documentElement.lang = LANG;
+      document.title = TITLE[LANG];
+      document.querySelectorAll('.lang-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.setlang === LANG));
+      if (Q.phase === 'ask' && Q.id && STAGES[Q.stage].type === 'mc') Q.opts = mcOptions(BY_ID[Q.id], STAGES[Q.stage].dir);
+      renderParts();
+      renderPfad();
+      renderTest();
+      renderGram();
     }
     function switchTab(tab) {
       if (tab !== 'woerter' && tab !== 'grammatik') tab = 'woerter';
@@ -1014,10 +1224,10 @@
     // Danach Wiederholung nach 1 und nach weiteren 3 Tagen (4 Sätze schreiben).
     // ==========================================================
     const G_STAGES = [
-      { key: 'be', type: 'mc', label: 'am / is / are auswählen', example: '<b>He is</b> playing tennis on Monday.' },
-      { key: 'ing', type: 'mc', label: 'Verb + ing auswählen', example: 'I am <b>reading</b> a book tonight.' },
-      { key: 'build', type: 'tiles', label: 'Satz bauen', example: 'She · is · reading · a book · tonight' },
-      { key: 'write', type: 'write', label: 'Selber schreiben', example: 'He ___ (read) a book tonight. → <b>is reading</b>' }
+      { key: 'be', type: 'mc', get label() { return tr('am / is / are auswählen', 'elegir am / is / are'); }, example: '<b>He is</b> playing tennis on Monday.' },
+      { key: 'ing', type: 'mc', get label() { return tr('Verb + ing auswählen', 'elegir verbo + ing'); }, example: 'I am <b>reading</b> a book tonight.' },
+      { key: 'build', type: 'tiles', get label() { return tr('Satz bauen', 'construir la frase'); }, example: 'She · is · reading · a book · tonight' },
+      { key: 'write', type: 'write', get label() { return tr('Selber schreiben', 'escribirlo tú'); }, example: 'He ___ (read) a book tonight. → <b>is reading</b>' }
     ];
     const G_ITEMS = {
       be: [
@@ -1207,9 +1417,9 @@
     function renderGram(keepFocus) {
       const s = GS(), total = TASKS.gram.max, done = TASKS.gram.score();
       const pct = Math.round(done / total * 100);
-      const stageTxt = s.stage >= G_STAGES.length ? '🏆 alle Stufen geschafft' : `Stufe ${s.stage + 1} von ${G_STAGES.length}`;
+      const stageTxt = s.stage >= G_STAGES.length ? tr('🏆 alle Stufen geschafft', '🏆 todos los niveles superados') : `${tr('Stufe', 'Nivel')} ${s.stage + 1} ${tr('von', 'de')} ${G_STAGES.length}`;
       $('gram-progress').innerHTML = `
-        <div class="flex justify-between items-end text-sm font-bold text-slate-700 mb-1 gap-2"><span>Fortschritt: ${pct} %</span><span class="text-xs font-semibold text-slate-500">${stageTxt}</span></div>
+        <div class="flex justify-between items-end text-sm font-bold text-slate-700 mb-1 gap-2"><span>${tr('Fortschritt', 'Progreso')}: ${pct} %</span><span class="text-xs font-semibold text-slate-500">${stageTxt}</span></div>
         <div class="h-4 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-gradient-to-r from-sky-400 to-sky-600 transition-all" style="width:${pct}%"></div></div>
         <div class="mt-2 flex gap-1.5">${G_STAGES.map((st, k) => `<span class="flex-1 text-center text-[11px] font-bold rounded-lg py-1 ${k < s.stage ? 'bg-emerald-100 text-emerald-800' : k === s.stage ? 'bg-sky-100 text-sky-800 ring-1 ring-sky-300' : 'bg-slate-100 text-slate-400'}">${k < s.stage ? '⭐' : k + 1}</span>`).join('')}</div>`;
       const box = $('body-gram');
@@ -1217,20 +1427,20 @@
       const nextBtn = label => `<button type="button" id="g-next" onclick="gContinue()" class="mt-1 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">${label}</button>`;
       if (G.phase === 'stageDone') {
         const nxt = G_STAGES[s.stage + 1];
-        box.innerHTML = card('⭐', `Stufe ${s.stage + 1} geschafft!`, nxt ? `Als Nächstes: ${nxt.label}.` : 'Das war die letzte Stufe.', nextBtn(nxt ? 'Weiter zur nächsten Stufe →' : 'Fertig →'));
+        box.innerHTML = card('⭐', tr(`Stufe ${s.stage + 1} geschafft!`, `¡Nivel ${s.stage + 1} superado!`), nxt ? `${tr('Als Nächstes', 'Lo siguiente')}: ${nxt.label}.` : tr('Das war die letzte Stufe.', 'Era el último nivel.'), nextBtn(nxt ? tr('Weiter zur nächsten Stufe →', 'Al siguiente nivel →') : tr('Fertig →', 'Terminar →')));
       } else if (G.phase === 'etappe') {
-        box.innerHTML = card('🎉', 'Etappe geschafft!', `${G.answers} Antworten, davon ${G.right} richtig.`,
-          `<div class="grid grid-cols-2 gap-2 pt-1"><button type="button" onclick="gPause()" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700">Für heute fertig</button><button type="button" id="g-next" onclick="gContinue()" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">Weiter üben →</button></div>`);
+        box.innerHTML = card('🎉', tr('Etappe geschafft!', '¡Etapa superada!'), `${G.answers} ${tr('Antworten, davon', 'respuestas,')} ${G.right} ${tr('richtig', 'correctas')}.`,
+          `<div class="grid grid-cols-2 gap-2 pt-1"><button type="button" onclick="gPause()" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700">${tr('Für heute fertig', 'Terminar por hoy')}</button><button type="button" id="g-next" onclick="gContinue()" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">${tr('Weiter üben →', 'Seguir practicando →')}</button></div>`);
       } else if (G.phase === 'pause') {
-        box.innerHTML = card('👍', 'Super gemacht!', 'Dein Fortschritt ist gespeichert. Komm morgen wieder.', nextBtn('Doch weiter üben'));
+        box.innerHTML = card('👍', tr('Super gemacht!', '¡Muy bien hecho!'), tr('Dein Fortschritt ist gespeichert. Komm morgen wieder.', 'Tu progreso está guardado. Vuelve mañana.'), nextBtn(tr('Doch weiter üben', 'Seguir practicando')));
       } else if (G.phase === 'done') {
         const more = s.rev < REVIEW_DAYS.length;
-        box.innerHTML = card('🏆', 'Grammatik-Pfad geschafft!', more ? 'Du kannst Pläne mit am / is / are + Verb-ing bilden. In den nächsten Tagen kommen 4 Sätze zum Wiederholen.' : 'Du kannst Pläne mit am / is / are + Verb-ing bilden. Auch die Wiederholungen sind geschafft.', '');
+        box.innerHTML = card('🏆', tr('Grammatik-Pfad geschafft!', '¡Ruta de gramática superada!'), more ? tr('Du kannst Pläne mit am / is / are + Verb-ing bilden. In den nächsten Tagen kommen 4 Sätze zum Wiederholen.', 'Ya sabes formar planes con am / is / are + verbo-ing. En los próximos días vuelven 4 frases para repasar.') : tr('Du kannst Pläne mit am / is / are + Verb-ing bilden. Auch die Wiederholungen sind geschafft.', 'Ya sabes formar planes con am / is / are + verbo-ing. También has terminado los repasos.'), '');
       } else {
         const it = gItem(G.id), st = G_STAGES[it.stage], right = gRight(it);
         let html = `
-          <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2 gap-2"><span>${G.review ? '🔁 Wiederholen: Selber schreiben' : `Stufe ${it.stage + 1}: ${st.label}`}</span><span class="shrink-0">${G.streak >= 3 ? '🔥 ' + G.streak : ''}</span></div>
-          ${G.review ? '' : `<div class="mb-2 text-xs text-slate-600" lang="en"><span class="font-bold" lang="de">Beispiel:</span> ${st.example}</div>`}`;
+          <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2 gap-2"><span>${G.review ? `🔁 ${tr('Wiederholen', 'Repasar')}: ${G_STAGES[3].label}` : `${tr('Stufe', 'Nivel')} ${it.stage + 1}: ${st.label}`}</span><span class="shrink-0">${G.streak >= 3 ? '🔥 ' + G.streak : ''}</span></div>
+          ${G.review ? '' : `<div class="mb-2 text-xs text-slate-600" lang="en"><span class="font-bold" lang="${LANG}">${tr('Beispiel', 'Ejemplo')}:</span> ${st.example}</div>`}`;
         if (st.type === 'mc') {
           html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4 text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' ? right : '')}</div>
             <div class="mt-3 grid grid-cols-3 gap-2">${G.opts.map((o, i) => {
@@ -1240,30 +1450,30 @@
             }).join('')}</div>`;
         } else if (st.type === 'tiles') {
           const words = it.data.t;
-          html += `<div class="text-sm font-semibold text-slate-700 mb-1">Tipp die Wörter in der richtigen Reihenfolge an:</div>
+          html += `<div class="text-sm font-semibold text-slate-700 mb-1">${tr('Tipp die Wörter in der richtigen Reihenfolge an:', 'Toca las palabras en el orden correcto:')}</div>
             <div class="min-h-[3.5rem] rounded-xl border-2 border-dashed ${G.phase === 'answered' ? (G.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50') : 'border-sky-300 bg-sky-50/60'} p-2 flex flex-wrap gap-2" lang="en">
-              ${G.placed.map((k, pos) => `<button type="button" onclick="gUnplace(${pos})" ${G.phase !== 'ask' ? 'disabled' : ''} class="px-3 py-2 rounded-lg bg-sky-600 text-white text-base font-bold">${esc(pos === 0 ? cap(words[k]) : words[k])}</button>`).join('') || '<span class="text-sm text-slate-400 p-1.5">Hier entsteht dein Satz.</span>'}${G.placed.length && !G.pool.length ? `<span class="self-center text-lg font-black text-slate-700">${it.data.q ? '?' : '.'}</span>` : ''}
+              ${G.placed.map((k, pos) => `<button type="button" onclick="gUnplace(${pos})" ${G.phase !== 'ask' ? 'disabled' : ''} class="px-3 py-2 rounded-lg bg-sky-600 text-white text-base font-bold">${esc(pos === 0 ? cap(words[k]) : words[k])}</button>`).join('') || `<span class="text-sm text-slate-400 p-1.5" lang="${LANG}">${tr('Hier entsteht dein Satz.', 'Aquí se forma tu frase.')}</span>`}${G.placed.length && !G.pool.length ? `<span class="self-center text-lg font-black text-slate-700">${it.data.q ? '?' : '.'}</span>` : ''}
             </div>
             <div class="mt-2 flex flex-wrap gap-2" lang="en">${G.pool.map(k => `<button type="button" onclick="gPlace(${k})" ${G.phase !== 'ask' ? 'disabled' : ''} class="px-3 py-2 rounded-lg bg-white border-2 border-slate-300 text-base font-bold text-slate-800 hover:bg-slate-50">${esc(words[k])}</button>`).join('')}</div>`;
           if (G.phase === 'ask') html += `
             <div class="mt-3 space-y-2">
-              ${G.hint ? '<div class="text-sm font-bold text-sky-800">💡 Das erste Wort steht schon da.</div>' : '<button type="button" onclick="gHint()" class="text-sm font-bold text-sky-700 underline">💡 Hilfe: erstes Wort</button>'}
+              ${G.hint ? `<div class="text-sm font-bold text-sky-800">💡 ${tr('Das erste Wort steht schon da.', 'La primera palabra ya está puesta.')}</div>` : `<button type="button" onclick="gHint()" class="text-sm font-bold text-sky-700 underline">💡 ${tr('Hilfe: erstes Wort', 'Ayuda: primera palabra')}</button>`}
               <div class="grid grid-cols-2 gap-2">
-                <button type="button" onclick="gCheckTiles(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 Weiss ich nicht</button>
-                <button type="button" onclick="gCheckTiles()" ${G.pool.length ? 'disabled' : ''} class="px-3 py-3 rounded-xl text-sm font-bold text-white ${G.pool.length ? 'bg-slate-300' : 'bg-emerald-600 hover:bg-emerald-700'}">✓ Prüfen</button>
+                <button type="button" onclick="gCheckTiles(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 ${tr('Weiss ich nicht', 'No lo sé')}</button>
+                <button type="button" onclick="gCheckTiles()" ${G.pool.length ? 'disabled' : ''} class="px-3 py-3 rounded-xl text-sm font-bold text-white ${G.pool.length ? 'bg-slate-300' : 'bg-emerald-600 hover:bg-emerald-700'}">✓ ${tr('Prüfen', 'Comprobar')}</button>
               </div>
             </div>`;
         } else {
           html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4 text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' ? right : '')}</div>`;
           if (G.phase === 'ask') html += `
             <div class="mt-3 space-y-2">
-              <input id="g-in" type="text" placeholder="am / is / are + Verb-ing …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="en"
+              <input id="g-in" type="text" placeholder="${tr('am / is / are + Verb-ing …', 'am / is / are + verbo-ing …')}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="en"
                 onkeydown="if(event.key==='Enter'){event.preventDefault();gWrite(false);}"
                 class="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-3 text-lg font-semibold text-slate-800">
-              ${G.hint ? `<div class="text-sm font-bold text-sky-800">💡 Beginnt mit «${esc(right.split(' ')[0])} …»</div>` : '<button type="button" onclick="gHint()" class="text-sm font-bold text-sky-700 underline">💡 Hilfe: erstes Wort</button>'}
+              ${G.hint ? `<div class="text-sm font-bold text-sky-800">💡 ${tr('Beginnt mit', 'Empieza por')} «${esc(right.split(' ')[0])} …»</div>` : `<button type="button" onclick="gHint()" class="text-sm font-bold text-sky-700 underline">💡 ${tr('Hilfe: erstes Wort', 'Ayuda: primera palabra')}</button>`}
               <div class="grid grid-cols-2 gap-2">
-                <button type="button" onclick="gWrite(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 Weiss ich nicht</button>
-                <button type="button" onclick="gWrite(false)" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">✓ Prüfen</button>
+                <button type="button" onclick="gWrite(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 ${tr('Weiss ich nicht', 'No lo sé')}</button>
+                <button type="button" onclick="gWrite(false)" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">✓ ${tr('Prüfen', 'Comprobar')}</button>
               </div>
             </div>`;
         }
@@ -1271,13 +1481,13 @@
           const full = st.type === 'tiles' ? right : it.data[0].replace('___', right).replace(/\s*\(.*?\)/, '');
           html += `
             <div class="feedback-box mt-3 rounded-2xl border-2 ${G.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-3 space-y-1.5 pop">
-              <div class="text-base font-black ${G.ok ? 'text-emerald-800' : 'text-amber-900'}">${G.ok ? (G.streak >= 5 && G.streak % 5 === 0 ? `🔥 ${G.streak} richtig hintereinander!` : G.praise) : (G.dontKnow ? 'So heisst es:' : G.miss ? MISS_TITLE[G.miss.type] : 'Noch nicht ganz. Richtig ist:')}</div>
+              <div class="text-base font-black ${G.ok ? 'text-emerald-800' : 'text-amber-900'}">${G.ok ? (G.streak >= 5 && G.streak % 5 === 0 ? tr(`🔥 ${G.streak} richtig hintereinander!`, `🔥 ¡${G.streak} correctas seguidas!`) : G.praise) : (G.dontKnow ? tr('So heisst es:', 'Se dice así:') : G.miss ? MISS_TITLE[G.miss.type] : tr('Noch nicht ganz. Richtig ist:', 'Todavía no del todo. Lo correcto es:'))}</div>
               <div class="flex items-center gap-2 flex-wrap"><span class="text-base font-bold text-slate-900 wrap-any" lang="en">${esc(full)}</span>${sayBtn(full)}</div>
-              ${!G.ok && G.ans && st.type !== 'mc' ? `<div class="text-xs text-slate-600 wrap-any">Deine Antwort: <span class="font-semibold">${esc(G.ans)}</span></div>` : ''}
+              ${!G.ok && G.ans && st.type !== 'mc' ? `<div class="text-xs text-slate-600 wrap-any">${tr('Deine Antwort', 'Tu respuesta')}: <span class="font-semibold">${esc(G.ans)}</span></div>` : ''}
               ${!G.ok && G.miss ? `<div class="text-xs font-semibold text-amber-900">${missTip(G.miss, 'de2en', right)}</div>` : ''}
-              ${!G.ok ? '<div class="text-xs text-slate-600">Kein Problem: Der Satz kommt gleich nochmals.</div>' : ''}
+              ${!G.ok ? `<div class="text-xs text-slate-600">${tr('Kein Problem: Der Satz kommt gleich nochmals.', 'No pasa nada: la frase vuelve enseguida.')}</div>` : ''}
             </div>
-            <button type="button" id="g-next" onclick="gNext()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">Weiter →</button>`;
+            <button type="button" id="g-next" onclick="gNext()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">${tr('Weiter →', 'Seguir →')}</button>`;
         }
         box.innerHTML = html;
       }
@@ -1309,7 +1519,8 @@
     function retryTask(id) {
       if (id === 'pfad') {
         let ok = true;
-        try { ok = window.confirm(`Lernpfad ${PARTS[STATE.part].label} von vorne beginnen? Deine Sterne in ${PARTS[STATE.part].label} werden gelöscht.`); } catch (e) {}
+        const pl = PARTS[STATE.part].label;
+        try { ok = window.confirm(tr(`Lernpfad ${pl} von vorne beginnen? Deine Sterne in ${pl} werden gelöscht.`, `¿Empezar la ruta de la ${pl.toLowerCase()} desde el principio? Se borran tus estrellas de la ${pl.toLowerCase()}.`)); } catch (e) {}
         if (!ok) return;
         STATE.path[STATE.part] = { level: {}, queue: [], rev: {} };
         STREAK = 0;
@@ -1321,7 +1532,7 @@
       if (id === 'test') { STATE.tests[STATE.part] = newTest(STATE.part); save(); renderTest(); }
       if (id === 'gram') {
         let ok = true;
-        try { ok = window.confirm('Grammatik-Pfad von vorne beginnen? Dein Fortschritt in der Grammatik wird gelöscht.'); } catch (e) {}
+        try { ok = window.confirm(tr('Grammatik-Pfad von vorne beginnen? Dein Fortschritt in der Grammatik wird gelöscht.', '¿Empezar la ruta de gramática desde el principio? Se borra tu progreso en gramática.')); } catch (e) {}
         if (!ok) return;
         STATE.gram = null;
         G.streak = 0;
@@ -1345,13 +1556,16 @@
       save();
     }
 
-    Object.assign(window, { setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, continuePfad, pausePfad, giveHint, openTest, testInput, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak, switchTab, gPick, gPlace, gUnplace, gCheckTiles, gWrite, gHint, gNext, gContinue, gPause, openTheoryG, backToTaskG });
+    Object.assign(window, { setLang, setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, continuePfad, pausePfad, giveHint, openTest, testInput, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, speak, switchTab, gPick, gPlace, gUnplace, gCheckTiles, gWrite, gHint, gNext, gContinue, gPause, openTheoryG, backToTaskG });
 
     // Start sobald das HTML da ist
     document.addEventListener('DOMContentLoaded', function () {
       load();
       if (!TTS_OK) document.body.classList.add('no-tts');
       try { if (TTS_OK) window.speechSynthesis.getVoices(); } catch (e) {}
+      document.documentElement.lang = LANG;
+      document.title = TITLE[LANG];
+      document.querySelectorAll('.lang-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.setlang === LANG));
       renderAll();
     });
   </script>

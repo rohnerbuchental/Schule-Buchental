@@ -3,16 +3,23 @@
 Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/seiten.md`).
 
 ## Spanisch: Stand pro Seite
-Übersetzt wird erst, wenn die Lehrperson die deutsche Fassung freigegeben hat (Regel in `CLAUDE.md`).
+Übersetzt wird erst, wenn die Lehrperson die deutsche Fassung freigegeben hat (Regel in `CLAUDE.md`). Am 6.11.2026 hat sie alle Seiten freigegeben (auch den Grammatik-Pfad Unit 2). Begründung mit Quellen: `docs/didaktik.md`, Abschnitt 4.
 
 | Seite | Deutsch freigegeben | Spanisch |
 |---|---|---|
-| `index.html` | noch fragen | – |
-| `connected_3_scratch_trainingshub.html` | noch fragen | – |
-| `Deutsch Novemberschnee.html` | noch fragen | – |
-| `Englisch open_world_2_unit_1.html` | noch fragen | – |
-| `Englisch open_world_2_unit_2.html` | Lernpfad: noch fragen; Grammatik: nein (Pull Request #13 wartet) | – |
-| `RZG Vulkane Erdbeben Tsunamis.html` | noch fragen | – |
+| `index.html` | ja (6.11.2026) | fertig (6.11.2026); Kacheln noch nicht übersetzter Seiten zeigen «🕒 pronto en español» |
+| `connected_3_scratch_trainingshub.html` | ja (6.11.2026) | offen |
+| `Deutsch Novemberschnee.html` | ja (6.11.2026) | offen. Entscheid: **alles** spanisch (auch Antworten und Musterlösungen) |
+| `Englisch open_world_2_unit_1.html` | ja (6.11.2026) | offen |
+| `Englisch open_world_2_unit_2.html` | ja, Lernpfad und Grammatik (6.11.2026) | fertig (6.11.2026). Entscheid: Wörter **Englisch–Spanisch** |
+| `RZG Vulkane Erdbeben Tsunamis.html` | ja (6.11.2026) | offen |
+
+**So ist der Sprachwechsel gebaut (auf jeder Seite gleich):**
+- Umschalter «Deutsch | Español» ganz oben rechts (`.lang-btn`, `setLang('de' | 'es')`). Die Wahl gilt für alle Seiten: `localStorage`-Schlüssel `lernportal_lang` (`'de'` oder `'es'`).
+- Ein kleines Skript im `<head>` setzt `<html lang="es">` sofort (sonst blitzt Deutsch kurz auf). Es startet nichts; die Seite startet weiter mit `DOMContentLoaded`.
+- Feste Texte stehen im HTML doppelt: `<span data-l="de">…</span><span data-l="es" lang="es">…</span>`. Eine CSS-Regel blendet die andere Sprache aus.
+- Texte aus dem Skript: `tr('Deutsch', 'Español')`. Nach dem Umschalten zeichnet `setLang` alles neu; der Fortschritt bleibt gleich.
+- Spanisch einfach und neutral (tú, keine Wörter nur aus Spanien oder nur aus Lateinamerika), mit «¡…!» und «¿…?».
 
 ## Scratch-Hub: Besonderheiten
 - Scratch-Blöcke nur mit den `.sb-*`-Klassen bauen (Scratch-3-Look: `.sb`, `.sb-hat`, `.sb-c`, `.sb-bool`, `.sb-num`, Farben `.sb-motion` usw.). Texte wie im deutschen Scratch 3 («gehe 10er-Schritt», «wiederhole 4 mal»). Keinen «Ende»-Block, den gibt es in Scratch nicht.
@@ -42,6 +49,7 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - Mehr Bestätigung (Wunsch Lehrperson): wechselndes Lob (`PRAISE`), bei 5/10/15 richtig in Folge «🔥 N richtig hintereinander», gemeistertes Wort: Stern fliegt zum Zähler oben, «⭐ Meine Sammlung» (zugeklappt, gemeisterte Wörter als Karten, heute neue mit gelbem Rand, antippen = anhören). Etappe nennt die heute neu gemeisterten Wörter. «Diese Woche geübt» Mo–So mit ✓ (`days`, nur auf diesem Gerät, keine Serie, die auf 0 fällt).
 - Gespeichert unter `ow2u2_lernpfad` (Teil, Stufe pro Wort, Wiederholungen `rev`, aktive Wörter, beste Test-Medaille, Test-Antworten). Der Stand gilt nur auf dem Gerät und im Browser, wo geübt wurde. «Nochmals üben» beim Lernpfad fragt vorher nach.
 - **Reiter:** «🔤 Wörter» und «🧩 Grammatik» (`switchTab`, gemerkt in `STATE.tab`).
+- **Spanisch** (Entscheid 6.11.2026): Mit «Español» ist die Muttersprache-Seite Spanisch, also Englisch–Spanisch in Lernpfad und Wörtertest (`WORD_ES_TEXT`, `ES_ALT`, `HINT_ES`). Intern bleiben die Namen `de` / `de2en` (= Muttersprache → Englisch). Spanische Antworten: Gross/Klein und Akzente egal (á = a, ñ = n), Artikel am Anfang egal, «o/a» und «/a» = beide Formen richtig (pesado/a, ganador/a). Englische Antworten wie bisher (Gross/Klein zählt). `SAME` und `FAMILY` gelten auch auf Spanisch; geprüft: keine spanische Antwort gilt auch für ein anderes Wort im gleichen Teil. Der Fortschritt ist für beide Sprachen derselbe. Medaillen werden deutsch gespeichert (`Gold`) und als `Oro` usw. angezeigt.
 - **Grammatik-Pfad** (present continuous für Abmachungen, CB 2–3, LC L2.1): 4 Stufen mit eigenen Sätzen (`G_ITEMS`, nichts aus dem Lehrmittel): 1 am / is / are auswählen (10), 2 Verb + ing auswählen (10), 3 Satz bauen durch Antippen der Bausteine (7, Zeitangabe darf vorne oder hinten stehen), 4 «am / is / are + Verb-ing» schreiben (8, «'m / 's / 're» gilt auch). Pro Stufe ein Beispiel (`example`), das in keiner Aufgabe vorkommt; auch Kopfkarte, Theorie und Platzhalter nutzen nur Verben, die in keiner Aufgabe vorkommen (read, fly, ride, leave). Sätze bewusst anders als die Coursebook-Übungen CB 2–3. Satz bauen: Bausteine klein (ausser I und Namen), Gross-Anfang und «.»/«?» setzt die Seite; «Weiss ich nicht» vorhanden. Schreiben: Subjekt davor und Satzzeichen erlaubt («I'm meeting.»), ohne Apostroph («m meeting») falsch. Kopf zeigt ⭐ Wörter oder 🧩 Grammatik je nach Reiter; «Diese Woche geübt» in beiden Reitern. Hilfe: erstes Wort. Falsche Sätze kommen nach 2 anderen wieder. Stufe fertig = alle Sätze einmal richtig. Danach Wiederholung nach 1 und 3 Tagen (4 Sätze schreiben). Etappen, Lob und Übungstage wie im Lernpfad. Gespeichert in `STATE.gram`.
 
 ## RZG-Hub: Besonderheiten
