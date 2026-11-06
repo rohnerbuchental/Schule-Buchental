@@ -14,7 +14,7 @@ Alles andere liegt in der **privaten Ablage** (siehe unten).
 | `connected_3_scratch_trainingshub.html` | Informatik, Connected 3 «Abheben mit Algorithmen» (Scratch) |
 | `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» |
 | `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 |
-| `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter lernen) |
+| `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter-Lernpfad, Grammatik-Pfad present continuous) |
 | `RZG Vulkane Erdbeben Tsunamis.html` | RZG, Dynamik der Erde, Test 2 (Vulkane, Erdbeben, Tsunamis) |
 
 Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer Seite nur ihren Abschnitt lesen. Die didaktischen Grundsätze mit Quellen stehen in `docs/didaktik.md`.
@@ -35,6 +35,7 @@ Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer S
 - **Angstfrei (Wunsch Lehrperson, sehr wichtig):** Kein Zeitdruck, keine Rangliste, Fehler kosten nichts (Aufgabe kommt nochmals), «Weiss ich nicht» erlaubt. Sprache «Noch nicht ganz» statt «Falsch», Gelb statt Rot. Probetests sind Übung.
 - **Begründet mit Quellen (Wunsch Lehrperson):** Jede Übungsform folgt `docs/didaktik.md` (Abrufen üben, verteiltes Üben, sofortige Rückmeldung, erst erkennen dann selber bilden, wenig auf einmal). Eine neue Übungsform nur mit Quelle; die Begründung dort nachtragen. Der Lehrperson bei neuen Aufgaben kurz sagen, welches Prinzip dahinter steht.
 - **Für Lernende, die schnell aufgeben (Wunsch Lehrperson):** Vor jeder neuen Aufgabe recherchieren (WebSearch), welche Übungsform für dieses Lernziel bei schwächeren Lernenden am besten belegt ist, und die Checkliste in `docs/didaktik.md` (Abschnitt 1b) abarbeiten: leichter Einstieg, kleine Etappen, sichtbarer Fortschritt, Hilfe vor Lösung, eine Sache auf einen Blick, etwa 80 % Erfolg beim Üben.
+- **Sprachwechsel Spanisch (Wunsch Lehrperson):** Jede Seite (auch `index.html`) bekommt oben einen Umschalter «Deutsch | Español». Dann wird alles Deutsche spanisch: Aufträge, Knöpfe, Tipps, Theorie, Rückmeldungen. Die Wahl bleibt gespeichert (`localStorage`). Erst übersetzen, wenn die Lehrperson die deutsche Fassung freigegeben hat (sonst doppelte Arbeit), und zwar in einer eigenen Sitzung. Neue Aufgaben darum zuerst nur auf Deutsch. Stand pro Seite in `docs/seiten.md`.
 
 ## Private Ablage (alles, was nicht öffentlich sein darf)
 - Privates Repo `rohnerbuchental/Schule-Buchental-Material`, geklont nach `/home/user/schule-buchental-material` (bei Bedarf mit `add_repo` verbinden, dann `register_repo_root`).

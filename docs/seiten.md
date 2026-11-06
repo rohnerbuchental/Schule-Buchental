@@ -2,6 +2,25 @@
 
 Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/seiten.md`).
 
+## Spanisch: Stand pro Seite
+Übersetzt wird erst, wenn die Lehrperson die deutsche Fassung freigegeben hat (Regel in `CLAUDE.md`). Am 6.11.2026 hat sie alle Seiten freigegeben (auch den Grammatik-Pfad Unit 2). Begründung mit Quellen: `docs/didaktik.md`, Abschnitt 4.
+
+| Seite | Deutsch freigegeben | Spanisch |
+|---|---|---|
+| `index.html` | ja (6.11.2026) | fertig (6.11.2026); Kacheln noch nicht übersetzter Seiten zeigen «🕒 pronto en español» |
+| `connected_3_scratch_trainingshub.html` | ja (6.11.2026) | offen |
+| `Deutsch Novemberschnee.html` | ja (6.11.2026) | offen. Entscheid: **alles** spanisch (auch Antworten und Musterlösungen) |
+| `Englisch open_world_2_unit_1.html` | ja (6.11.2026) | offen |
+| `Englisch open_world_2_unit_2.html` | ja, Lernpfad und Grammatik (6.11.2026) | fertig (6.11.2026). Entscheid: Wörter **Englisch–Spanisch** |
+| `RZG Vulkane Erdbeben Tsunamis.html` | ja (6.11.2026) | offen |
+
+**So ist der Sprachwechsel gebaut (auf jeder Seite gleich):**
+- Umschalter «Deutsch | Español» ganz oben rechts (`.lang-btn`, `setLang('de' | 'es')`). Die Wahl gilt für alle Seiten: `localStorage`-Schlüssel `lernportal_lang` (`'de'` oder `'es'`).
+- Ein kleines Skript im `<head>` setzt `<html lang="es">` sofort (sonst blitzt Deutsch kurz auf). Es startet nichts; die Seite startet weiter mit `DOMContentLoaded`.
+- Feste Texte stehen im HTML doppelt: `<span data-l="de">…</span><span data-l="es" lang="es">…</span>`. Eine CSS-Regel blendet die andere Sprache aus.
+- Texte aus dem Skript: `tr('Deutsch', 'Español')`. Nach dem Umschalten zeichnet `setLang` alles neu; der Fortschritt bleibt gleich.
+- Spanisch einfach und neutral (tú, keine Wörter nur aus Spanien oder nur aus Lateinamerika), mit «¡…!» und «¿…?».
+
 ## Scratch-Hub: Besonderheiten
 - Scratch-Blöcke nur mit den `.sb-*`-Klassen bauen (Scratch-3-Look: `.sb`, `.sb-hat`, `.sb-c`, `.sb-bool`, `.sb-num`, Farben `.sb-motion` usw.). Texte wie im deutschen Scratch 3 («gehe 10er-Schritt», «wiederhole 4 mal»). Keinen «Ende»-Block, den gibt es in Scratch nicht.
 - Aufgabe 2 ist ein SVG-Ablaufdiagramm mit Drag & Drop (Felder `fs1`–`fs3`).
@@ -20,15 +39,18 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - Sätze und die Wörter in `[ … / … ]` werden gemischt. Tipps auf Deutsch, Beispiele auf Englisch.
 
 ## Englisch-Hub Unit 2: Besonderheiten
-- **Wunsch Lehrperson: einfach, nicht überladen, schnell zum Ziel.** Im Wörtertest kommt Deutsch → Englisch und Englisch → Deutsch. Die Seite hat nur 2 Aufgaben: Lernpfad und Wörtertest. Keine weiteren Spiele dazubauen.
+- **Wunsch Lehrperson: einfach, nicht überladen, schnell zum Ziel.** Im Wörtertest kommt Deutsch → Englisch und Englisch → Deutsch. Reiter «Wörter»: nur Lernpfad und Wörtertest. Reiter «Grammatik»: nur der Grammatik-Pfad. Keine weiteren Spiele dazubauen.
 - Teil 1 = Language Companion S. 12 (26 Wörter), Teil 2 = S. 13 inkl. Focus (30 Wörter).
 - **Lernpfad** (wie Quizlet «Lernen»): Jedes Wort hat 4 Stufen: 1 Englisch → Deutsch auswählen, 2 Deutsch → Englisch auswählen, 3 Englisch → Deutsch schreiben, 4 Deutsch → Englisch schreiben. Richtig = eine Stufe höher, falsch = kommt nach 2 anderen Wörtern nochmals. Immer nur 7 Wörter gleichzeitig (`ACTIVE_N`); gemeistert ⭐ = alle Stufen. Lange Ausdrücke (`noType`) ohne Stufe 4. Richtig = automatisch weiter (Auswahl nach 0.7 s, Schreiben nach 1.1 s). Ohne Fehler 104 Antworten für Teil 1 (ca. 10 Minuten). **Wiederholen** (successive relearning, `REVIEW_DAYS` = 1 und 3 Tage): Gemeisterte Wörter kommen je einmal zum Schreiben; vergessen = zurück auf Stufe 3. Begründung mit Quellen: `docs/didaktik.md`.
 - Auswahl-Ablenker: nie aus `SAME` (ähnliche Bedeutung) oder `FAMILY` (Wortfamilie). Schreiben: `SAME_TYPE` gilt gegenseitig als richtig, `DE_ALT` = weitere richtige deutsche Antworten, dazu im Lernpfad (nicht im Test) der Knopf «meine Antwort bedeutet dasselbe». Mehrere Bedeutungen («Wettbewerb, Wettkampf») sind richtig, wenn jede stimmt.
 - **Wörtertest:** 10 × Deutsch → Englisch (ohne `noType`) und 10 × Englisch → Deutsch, 20 P., bestanden ab 12. Kein Selbst-Korrigieren. Teil B zeigt nie ein Wort aus `SAME_TYPE` oder `FAMILY` eines Teil-A-Worts.
-- Prüfung: Gross/Klein egal, ä = ae = a, ß = ss, Artikel und «to» am Anfang egal.
+- Prüfung: **Gross-/Kleinschreibung zählt** (Wunsch Lehrperson, wie im Test). **«Fast richtig!»** (Wunsch Lehrperson, `missInfo`, `gMiss`): wenn nur Gross/Klein, nur ein Buchstabe (Abstand 1, ab 4 Buchstaben) oder nur die Endung anders ist (z.B. brilliant statt brilliantly, «is visit»). Mit kurzem Hinweis (Nomen gross / -ly / -ing / genau abschreiben). Zählt noch nicht als richtig, das Wort kommt nochmals; «meine Antwort bedeutet dasselbe» erscheint dann nicht. Im Wörtertest: «Fast richtig!», aber 0 Punkte. Sonst egal: ä = ae = a, ß = ss, Artikel und «to» am Anfang, Akzente. Gilt auch für das Schreiben im Grammatik-Pfad.
 - Angstfrei und für Lernende, die schnell aufgeben: «Noch nicht ganz» statt «Falsch», Gelb statt Rot. Fortschrittsbalken nach Stufen (wächst mit jedem richtigen Schritt). Nach `ETAPPE_N` = 10 Antworten «Etappe geschafft» mit «Weiter üben» oder «Für heute fertig». Beim Schreiben zuerst «Hilfe: erster Buchstabe». Wörtertest zugeklappt, bis «Wörtertest starten» (`testOpen`), dann «nur zum Üben».
 - Mehr Bestätigung (Wunsch Lehrperson): wechselndes Lob (`PRAISE`), bei 5/10/15 richtig in Folge «🔥 N richtig hintereinander», gemeistertes Wort: Stern fliegt zum Zähler oben, «⭐ Meine Sammlung» (zugeklappt, gemeisterte Wörter als Karten, heute neue mit gelbem Rand, antippen = anhören). Etappe nennt die heute neu gemeisterten Wörter. «Diese Woche geübt» Mo–So mit ✓ (`days`, nur auf diesem Gerät, keine Serie, die auf 0 fällt).
 - Gespeichert unter `ow2u2_lernpfad` (Teil, Stufe pro Wort, Wiederholungen `rev`, aktive Wörter, beste Test-Medaille, Test-Antworten). Der Stand gilt nur auf dem Gerät und im Browser, wo geübt wurde. «Nochmals üben» beim Lernpfad fragt vorher nach.
+- **Reiter:** «🔤 Wörter» und «🧩 Grammatik» (`switchTab`, gemerkt in `STATE.tab`).
+- **Spanisch** (Entscheid 6.11.2026): Mit «Español» ist die Muttersprache-Seite Spanisch, also Englisch–Spanisch in Lernpfad und Wörtertest (`WORD_ES_TEXT`, `ES_ALT`, `HINT_ES`). Intern bleiben die Namen `de` / `de2en` (= Muttersprache → Englisch). Spanische Antworten: Gross/Klein und Akzente egal (á = a, ñ = n), Artikel am Anfang egal, «o/a» und «/a» = beide Formen richtig (pesado/a, ganador/a). Englische Antworten wie bisher (Gross/Klein zählt). `SAME` und `FAMILY` gelten auch auf Spanisch; geprüft: eine spanische Antwort gilt nur dann auch für ein anderes Wort im gleichen Teil, wenn beide in einer `SAME`-Gruppe sind (z.B. «genial», wie «toll» auf Deutsch). Der Fortschritt im Lernpfad ist für beide Sprachen derselbe; der Wörtertest ist pro Sprache getrennt (`tKey`: `t1` bzw. `t1_es`), damit deutsche Antworten nach dem Umschalten nicht spanisch bewertet werden. Medaillen werden deutsch gespeichert (`Gold`) und als `Oro` usw. angezeigt.
+- **Grammatik-Pfad** (present continuous für Abmachungen, CB 2–3, LC L2.1): 4 Stufen mit eigenen Sätzen (`G_ITEMS`, nichts aus dem Lehrmittel): 1 am / is / are auswählen (10), 2 Verb + ing auswählen (10), 3 Satz bauen durch Antippen der Bausteine (7, Zeitangabe darf vorne oder hinten stehen), 4 «am / is / are + Verb-ing» schreiben (8, «'m / 's / 're» gilt auch). Pro Stufe ein Beispiel (`example`), das in keiner Aufgabe vorkommt; auch Kopfkarte, Theorie und Platzhalter nutzen nur Verben, die in keiner Aufgabe vorkommen (read, fly, ride, leave). Sätze bewusst anders als die Coursebook-Übungen CB 2–3. Satz bauen: Bausteine klein (ausser I und Namen), Gross-Anfang und «.»/«?» setzt die Seite; «Weiss ich nicht» vorhanden. Schreiben: Subjekt davor und Satzzeichen erlaubt («I'm meeting.»), ohne Apostroph («m meeting») falsch. Kopf zeigt ⭐ Wörter oder 🧩 Grammatik je nach Reiter; «Diese Woche geübt» in beiden Reitern. Hilfe: erstes Wort. Falsche Sätze kommen nach 2 anderen wieder. Stufe fertig = alle Sätze einmal richtig. Danach Wiederholung nach 1 und 3 Tagen (4 Sätze schreiben). Etappen, Lob und Übungstage wie im Lernpfad. Gespeichert in `STATE.gram`.
 
 ## RZG-Hub: Besonderheiten
 - Grundlagen: Dossier «Dynamik der Erde» mit Lösungen der Lehrperson und Blatt «Lernziele Dynamik der Erde Teil 2» (Ich-kann-Checkliste, LZ1 bis LZ5) mit Musterlösungen, die sich aufs Dossier stützen.
