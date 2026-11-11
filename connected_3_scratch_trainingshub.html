@@ -493,7 +493,12 @@
         { id: 'k1_was', st: 1, type: 'mc', first: true, q: 'Was ist ein Algorithmus?',
           opts: ['Eine genaue Anleitung, Schritt für Schritt.', 'Ein Speicherchip, der in der Drohne steckt.', 'Ein zufälliges Durcheinander von Zahlen.', 'Ein Foto, das die Drohne in der Luft macht.'],
           tip: 'Denk an ein Kochrezept oder an eine Lego-Bauanleitung. Was haben die beiden gemeinsam?',
-          why: 'Ein Algorithmus sagt genau, was man tun muss, und in welcher Reihenfolge.' },
+          why: 'Ein Algorithmus sagt genau, was man tun muss, und in welcher Reihenfolge.',
+          // Erklärung zur gewählten falschen Antwort (gleiche Reihenfolge wie opts, 0 = richtig)
+          whyNot: [null,
+            'Ein Speicherchip ist ein Bauteil. Er speichert Daten, aber er sagt nicht, was man Schritt für Schritt tun soll.',
+            'Ein Durcheinander hat keine Reihenfolge. Ein Algorithmus ist das Gegenteil: genau und geordnet.',
+            'Ein Foto zeigt nur ein Bild. Es sagt nicht, was man tun soll.'] },
         { id: 'k1_bsp', st: 1, type: 'mc', q: 'Welches Beispiel ist ein Algorithmus?',
           opts: ['Eine Bauanleitung für ein Vogelhaus', 'Ein Tagebucheintrag über das Wochenende', 'Eine Liste mit deinen Lieblingsliedern', 'Ein Foto vom letzten Schulausflug'],
           tip: 'Frag dich bei jedem Beispiel: Sagt es mir, was ich zuerst tun soll und was danach?',
@@ -1301,7 +1306,12 @@
         if (it.type === 'open') body = `<div class="text-base text-slate-700">${tr('Gut erklärt! Das hilft dir im Test.', '¡Bien explicado! Esto te ayuda en el examen.')}</div>`;
       } else {
         title = Q.dontKnow ? tr('Kein Problem. So ist es richtig:', 'No pasa nada. Así es correcto:') : tr('Noch nicht ganz.', 'Todavía no del todo.');
-        if (it.type === 'mc') body = `<div class="text-base text-slate-800">${tr('Richtig ist:', 'Lo correcto es:')} <b>${optHtml(it, 0)}</b></div>`;
+        if (it.type === 'mc') {
+          const o = Q.pick != null ? Q.opts[Q.pick] : null;
+          if (it.whyNot && o && !o.ok && it.whyNot[o.i] && !Q.dontKnow)
+            body += `<div class="text-base text-slate-800"><span class="font-bold">${tr('Deine Antwort:', 'Tu respuesta:')}</span> ${optHtml(it, o.i)}</div><div class="text-base text-slate-700" lang="de">↳ ${esc(it.whyNot[o.i])}</div>`;
+          body += `<div class="text-base text-slate-800 ${body ? 'pt-1' : ''}"><span class="font-bold">✔ ${tr('Richtig ist:', 'Lo correcto es:')}</span> <b>${optHtml(it, 0)}</b></div>`;
+        }
         if (it.type === 'multi' || it.type === 'sort') body = `<div class="text-base text-slate-800">${tr('Schau die Zeilen an: Die richtige Antwort ist grün.', 'Mira las filas: la respuesta correcta está en verde.')}</div>`;
         if (it.type === 'slots') body = `<div class="text-base text-slate-800">${tr('So ist die richtige Reihenfolge:', 'Este es el orden correcto:')}</div><ol class="list-decimal pl-5 text-base text-slate-800 space-y-0.5">${SLOTS.map((sl, i) => `<li>${esc(flowCard(it.flow, i))}</li>`).join('')}</ol>`;
         if (it.type === 'order') body = `<div class="text-base text-slate-800">${tr('So ist die richtige Reihenfolge:', 'Este es el orden correcto:')}</div>` + (it.blocks

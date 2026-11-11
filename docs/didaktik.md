@@ -80,6 +80,8 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 | Offene Antwort mit Hilfe-Treppe, danach mit der Musterlösung vergleichen («Hab ich so / Noch nicht»). | Hilfe vor der Lösung (Rosenshine, 2012); Rückmeldung zur Aufgabe (Hattie & Timperley, 2007). Selbstvergleich mit einer Musterlösung ist eine Form von Rückmeldung; die Lernenden schätzen sich aber oft zu gut ein, darum sucht «Antwort prüfen» vorher die Schlüsselwörter. |
 | Wiederholung nach 1 und 3 Tagen. | Verteiltes Üben und successive relearning (Cepeda et al., 2006; Rawson & Dunlosky, 2022). |
 
+**Rückmeldung mit Erklärung (Wunsch Lehrperson 11.11.2026):** Nach einer falschen Antwort nicht nur «Noch nicht ganz» und die Lösung, sondern kurz sagen, warum die gewählte Antwort nicht stimmt und warum die richtige stimmt. Erklärende Rückmeldung wirkt besser als nur die richtige Antwort zu zeigen (Van der Kleij, Feskens & Eggen, 2015; Shute, 2008), besonders bei Anfängern (Moreno, 2004). Höchstens 1–2 kurze Sätze.
+
 ## 2c Programmieren lernen (Lernpfad Informatik)
 
 **Warum:** Blöcke in die richtige Reihenfolge bringen («Parsons-Aufgaben») bringt etwa gleich viel wie Code selber schreiben, geht aber schneller und entmutigt weniger (Ericson, Margulieux & Rick, 2017). Falsche Zusatzblöcke (Ablenker) machen es für junge Anfänger schwerer und weniger effizient (Harms, Chen & Kelleher, 2016), darum zuerst ohne, dann mit Ablenkern. Programme zuerst lesen und nachverfolgen, dann ändern und selber schreiben (Lister et al., 2004; PRIMM: Sentance, Waite & Kallia, 2019).
@@ -170,3 +172,6 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - Harms, K. J., Chen, J., & Kelleher, C. L. (2016). Distractors in Parsons problems decrease learning efficiency for young novice programmers. *Proceedings of the 2016 ACM Conference on International Computing Education Research (ICER)*, 241–250.
 - Lister, R., et al. (2004). A multi-national study of reading and tracing skills in novice programmers. *ACM SIGCSE Bulletin, 36*(4), 119–150.
 - Sentance, S., Waite, J., & Kallia, M. (2019). Teaching computer programming with PRIMM: A sociocultural perspective. *Computer Science Education, 29*(2–3), 136–176.
+- Moreno, R. (2004). Decreasing cognitive load for novice students: Effects of explanatory versus corrective feedback in discovery-based multimedia. *Instructional Science, 32*, 99–113.
+- Shute, V. J. (2008). Focus on formative feedback. *Review of Educational Research, 78*(1), 153–189.
+- Van der Kleij, F. M., Feskens, R. C. W., & Eggen, T. J. H. M. (2015). Effects of feedback in a computer-based learning environment on students' learning outcomes: A meta-analysis. *Review of Educational Research, 85*(4), 475–511.
