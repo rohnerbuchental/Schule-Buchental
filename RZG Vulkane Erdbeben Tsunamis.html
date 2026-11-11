@@ -432,14 +432,14 @@
                  ['Was entsteht immer wieder?', ['neu']], ['Was passiert mit den alten Vulkanen?', ['erlisch', 'erlosch', 'kein magma', 'inaktiv', 'weggeschoben', 'ausbruch mehr']]],
           need: 3,
           model: 'Die Platte bewegt sich, der Hotspot bleibt am gleichen Ort. Darum entsteht immer wieder ein neuer Vulkan. Die alten werden weggeschoben und erlöschen.' },
-        { id: 'k1_e_ring', st: 3, nr: [4], type: 'open', q: 'Was ist der «Ring of Fire»? Warum gibt es dort so viele Vulkane und Erdbeben?',
-          tip: 'Schau auf eine Weltkarte: Wo liegen Plattengrenzen rund um den grössten Ozean? Was machen die Platten dort?',
-          words: ['Pazifik', 'rund um', 'zusammenstossen', 'abtauchen', 'verhaken'],
-          starter: 'Der «Ring of Fire» ist …\nDort …',
-          keys: [['Wo liegt der Ring?', ['pazifi']], ['Was machen die Platten dort?', ['zusammen', 'stoss', 'abtauch', 'taucht', 'unter die', 'grenze']],
-                 ['Warum gibt es Vulkane?', ['schmilz', 'schmelz', 'magma']], ['Warum gibt es Erdbeben?', ['verhak', 'spannung', 'ruck', 'bricht', 'reiben']]],
-          need: 3,
-          model: 'Der «Ring of Fire» ist ein Gürtel von Vulkanen rund um den Pazifik. Dort stossen Platten zusammen: Eine Platte taucht ab und schmilzt, darum gibt es Vulkane. Die Platten verhaken sich, darum gibt es Erdbeben.' }
+        { id: 'k1_e_ring', st: 3, nr: [4], type: 'open', q: 'Warum gibt es am «Ring of Fire» so viele Vulkane?',
+          tip: 'Rund um den Pazifik liegen viele Plattengrenzen. Was machen die Platten dort? Und was passiert mit einer Platte, die tief nach unten in die heisse Erde kommt?',
+          words: ['Platten', 'zusammenstossen', 'abtauchen', 'schmilzt', 'Magma steigt auf'],
+          starter: 'Dort stossen …',
+          keys: [['Was machen die Platten dort?', ['zusammen', 'stoss', 'abtauch', 'taucht', 'unter die', 'grenze']],
+                 ['Was passiert mit dem Gestein?', ['schmilz', 'schmelz', 'fluessig']], ['Was steigt auf?', ['magma', 'steigt']]],
+          need: 2,
+          model: 'Dort stossen Platten zusammen. Eine Platte taucht unter die andere ab. Das Gestein schmilzt, und Magma steigt auf.' }
       ],
       // ---------- Teil 2: Aufbau, Vulkantypen, Ausbrüche (LZ2, LZ3) ----------
       k2: [
@@ -486,6 +486,14 @@
           keys: [['Wie ist das Magma?', ['zaeh', 'dickfluessig']], ['Was ist mit den Gasen?', ['gas']], ['Was baut sich auf?', ['druck']], ['Wie bricht er aus?', ['explo']]],
           need: 4,
           model: 'Das Magma ist zähflüssig, wie kalter Honig. Die Gase bleiben darin stecken und können kaum entweichen. So wird der Druck im Schlot immer grösser. Plötzlich bricht der Vulkan explosiv aus: Asche, Steine und Lava fliegen heraus.' },
+        // Aufgabe 2b: Ausbruch Schildvulkan erklären (wie im Test) | RZG.1.3.a
+        { id: 'k2_e_schild', st: 3, nr: [10], type: 'open', q: 'Wie bricht ein Schildvulkan aus?',
+          tip: 'Denk an eine offene Flasche Mineralwasser: Die Gase können einfach entweichen. Und die Lava ist dünnflüssig wie Wasser.',
+          words: ['dünnflüssig', 'Gase entweichen', 'kaum Druck', 'ruhig', 'fliesst'],
+          starter: 'Die Lava ist …\nDarum …',
+          keys: [['Wie ist die Lava?', ['duennfluessig', 'fluessig', 'wie wasser']], ['Was ist mit den Gasen?', ['gas']], ['Wie bricht er aus?', ['ruhig', 'fliesst', 'fliessen', 'langsam']]],
+          need: 2,
+          model: 'Die Lava ist dünnflüssig. Die Gase können leicht entweichen, darum gibt es kaum Druck. Die Lava fliesst ruhig aus dem Krater und breitet sich weit aus.' },
       ],
       // ---------- Teil 3: Erdbeben (LZ4) ----------
       k3: [
@@ -536,14 +544,14 @@
                  ['Was passiert plötzlich?', ['bricht', 'brech', 'reiss', 'ruck', 'ploetzlich']], ['Was macht die Erde?', ['bebt', 'wackelt', 'zittert', 'erdbeben']]],
           need: 3,
           model: 'Die Platten bewegen sich und verhaken sich. Spannung baut sich auf. Plötzlich bricht das Gestein, und die Erde bebt.' },
-        { id: 'k3_e_regeln', st: 3, nr: [14], type: 'open', q: 'Nenne drei Regeln für ein starkes Erdbeben. Schreib etwas für drinnen und für draussen.',
+        { id: 'k3_e_regeln', st: 3, nr: [14], type: 'open', q: 'Nenne zwei Regeln für ein starkes Erdbeben.',
           tip: 'Was kann dir bei einem Beben auf den Kopf fallen oder kaputtgehen? Wo bist du davor geschützt?',
           words: ['Tisch', 'festhalten', 'Fenster', 'Lift', 'freier Platz', 'Hauswand'],
-          starter: '1. Im Haus …\n2. …\n3. Draussen …',
+          starter: '1. Im Haus …\n2. Draussen …',
           keys: [['Wohin im Haus?', ['tisch']], ['Wovon weg im Haus?', ['fenster', 'glas', 'schrank', 'regal', 'spiegel']], ['Was nimmst du nicht?', ['lift', 'aufzug']],
                  ['Wohin draussen?', ['frei', 'platz', 'offen', 'wiese']], ['Wovon weg draussen?', ['hauswand', 'wand', 'gebaeude', 'haeus', 'mast', 'laterne', 'balkon']]],
-          need: 3,
-          model: '1. Im Haus kriecht man unter einen stabilen Tisch und hält sich fest. 2. Man bleibt weg von Fenstern, Glas und schweren Schränken und nimmt keinen Lift. 3. Draussen geht man auf einen freien Platz, weg von Hauswänden und Strommasten.' }
+          need: 2,
+          model: '1. Im Haus kriecht man unter einen stabilen Tisch und hält sich fest. 2. Draussen geht man auf einen freien Platz, weg von Hauswänden und Strommasten.' }
       ],
       // ---------- Teil 4: Tsunamis (LZ5) ----------
       k4: [
@@ -588,14 +596,23 @@
                  ['Was wird bewegt?', ['ganze wasser', 'ganzes wasser', 'wassersaeule', 'alles wasser', 'wasser']]],
           need: 3,
           model: 'Am Meeresboden gibt es ein Seebeben. Der Boden hebt oder senkt sich ruckartig. Dadurch wird das ganze Wasser darüber bewegt, vom Grund bis zur Oberfläche.' },
-        { id: 'k4_e_strand', st: 3, nr: [18], type: 'open', q: 'Du bist am Strand. Welches Zeichen der Natur warnt dich vor einem Tsunami? Was machst du?',
-          tip: 'Was macht das Wasser am Strand normalerweise? Was wäre ganz ungewöhnlich? Und: Wo ist man vor Wasser sicher?',
-          words: ['Meer', 'zieht sich zurück', 'sofort', 'weg vom Strand', 'hoher Ort', 'warnen'],
-          starter: 'Das Warnzeichen ist …\nIch …',
-          keys: [['Welches Zeichen?', ['zurueck', 'verschwind', 'ebbe', 'zieht sich']], ['Wohin gehst du?', ['hoch', 'huegel', 'berg', 'stock', 'oben', 'dach']],
+        // Zwei Fragen getrennt (Wunsch Lehrperson 11.11.2026: eine Frage = eine Sache) | RZG.1.3.c
+        { id: 'k4_e_strand', st: 3, nr: [18], type: 'open', q: 'Am Strand zieht sich das Meer plötzlich weit zurück. Was machst du jetzt? Schreib zwei Dinge.',
+          tip: 'Das Wasser kommt bald als riesige Welle zurück. Wo ist man vor Wasser sicher? Und wer muss es auch noch wissen?',
+          words: ['sofort', 'weg vom Strand', 'hoher Ort', 'Hügel', 'warnen'],
+          starter: '1. Ich gehe …\n2. Ich …',
+          keys: [['Wohin gehst du?', ['hoch', 'huegel', 'berg', 'stock', 'oben', 'dach', 'weg vom strand']],
                  ['Wann gehst du?', ['sofort', 'schnell']], ['Und die anderen Leute?', ['warn', 'rufe', 'sage']]],
-          need: 3,
-          model: 'Das Meer zieht sich plötzlich weit zurück. Dann gehe ich sofort weg vom Strand an einen hohen Ort, zum Beispiel auf einen Hügel oder in ein oberes Stockwerk eines stabilen Gebäudes. Ich warne die anderen Leute und gehe nicht zurück, um zu schauen.' }
+          need: 2,
+          model: '1. Ich gehe sofort weg vom Strand an einen hohen Ort, zum Beispiel auf einen Hügel. 2. Ich warne die anderen Leute.' },
+        // Warum wird der Tsunami an der Küste so hoch? (wie im Test) | RZG.1.3.b
+        { id: 'k4_e_kueste', st: 3, nr: [17], type: 'open', q: 'Warum wird ein Tsunami an der Küste so hoch?',
+          tip: 'Denk an einen Stau auf der Autobahn: Vorne müssen die Autos bremsen, von hinten kommen immer mehr. Was passiert mit dem Wasser im flachen Meer?',
+          words: ['flaches Wasser', 'abgebremst', 'staut sich', 'türmt sich auf'],
+          starter: 'Im flachen Wasser …',
+          keys: [['Wo passiert es?', ['flach', 'kueste', 'seicht']], ['Was passiert mit der Welle?', ['brems', 'langsam']], ['Was macht das Wasser?', ['staut', 'tuermt', 'hoch', 'auf']]],
+          need: 2,
+          model: 'Im flachen Wasser wird die Welle abgebremst. Das Wasser staut sich und türmt sich hoch auf.' }
       ]
     };
     // Wortkästen für Lücken (mit Ablenkern): erst mit Wortkasten, dann frei erklären
