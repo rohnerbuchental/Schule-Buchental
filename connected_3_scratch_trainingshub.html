@@ -467,13 +467,16 @@
       { id: 'k1', emoji: '📜', title: 'Algorithmus & Ablaufdiagramm', sub: 'Anleitungen und Ablaufdiagramme', subEs: 'Instrucciones y diagramas de flujo', titleEs: 'Algoritmo y diagrama de flujo' },
       { id: 'k2', emoji: '🔄', title: 'Schleifen', sub: 'Wie oft? Schritte rechnen, die richtige Schleife, Richtung, Quadrat', subEs: '¿Cuántas veces? Calcular pasos, el bucle correcto, dirección, cuadrado', titleEs: 'Bucles' },
       { id: 'k3', emoji: '🧩', title: 'Eigene Blöcke & Fehler finden', sub: 'Namen geben, wozu eigene Blöcke, Bug finden und verbessern', subEs: 'Poner nombres, para qué sirven los bloques propios, encontrar y corregir el bug', titleEs: 'Bloques propios y errores' },
-      { id: 'k4', emoji: '💡', title: 'Bedingungen mit UND/ODER', sub: 'Wann gilt die Regel? Regeln mit 2 Bedingungen auswerten', subEs: '¿Cuándo vale la regla? Evaluar reglas con 2 condiciones', titleEs: 'Lógica con «y» y «o»' }
+      { id: 'k4', emoji: '💡', stages: 'k4', title: 'Bedingungen mit UND/ODER', sub: 'Wann gilt die Regel? Regeln mit 2 Bedingungen auswerten', subEs: '¿Cuándo vale la regla? Evaluar reglas con 2 condiciones', titleEs: 'Lógica con «y» y «o»' }
     ];
     const STAGES = [
       { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus oder tippst an.', labelEs: 'Reconocer', introEs: 'Eliges o tocas.' },
       { icon: '✏️', label: 'Ergänzen', intro: 'Du schreibst Wörter selber oder baust die Reihenfolge. Es gibt Hilfe.', labelEs: 'Completar', introEs: 'Escribes tú las palabras o armas el orden. Hay ayuda.' },
       { icon: '💬', label: 'Erklären', intro: 'Du erklärst in eigenen Worten, wie auf dem Blatt. Mit Hilfe-Treppe.', labelEs: 'Explicar', introEs: 'Explicas con tus propias palabras, como en la hoja. Con escalera de ayuda.' }
     ];
+    // Teil 4: Im Test gibt es keine Erklärung zu UND/ODER, sondern eine Tabelle mit 3 Regeln (Wunsch Lehrperson 11.11.2026). Stufe 3 heisst darum «Wie im Test».
+    const STAGES_K4 = [STAGES[0], STAGES[1], { icon: '🏆', label: 'Wie im Test', intro: 'Regeln mit 3 Teilen auswerten und die Antwort selber schreiben.', labelEs: 'Como en el examen', introEs: 'Evalúas reglas con 3 partes y escribes tú la respuesta.' }];
+    const stagesOf = pid => PART_BY_ID[pid] && PART_BY_ID[pid].stages === 'k4' ? STAGES_K4 : STAGES;
     // Wiederverwendete Skripte
     const PRE_LOOP4 = () => SB.script(SB.flag(), SB.loop(4, SB.move(10) + SB.wait(1)));
     const PRE_BUG_LAND = () => SB.script(SB.define(both('Landen', 'Aterrizar')), SB.until(SB.ground(), SB.chY(5, true)));
@@ -983,42 +986,14 @@
           hint: 'Prüfe Regel 1: Stimmen wirklich beide Teile?', tip: TIP_GANG,
           sitEs: RULES_GANG_ES, textEs: 'Está claro. Alguien se mueve. La luz está ___.', aEs: ['APAGADA'], bankEs: ['ENCENDIDA', 'APAGADA'],
           hintEs: 'Revisa la regla 1: ¿se cumplen de verdad las dos partes?', tipEs: TIP_GANG_ES },
-        { id: 'k4_g_spr1', st: 2, type: 'gap', rules: true, sit: RULES_GARTEN, text: 'Boden trocken · Sonne · 12:00 Uhr (Mittag). Der Sprenger ist ___.', a: ['KURZ'], bank: ['AN (lang)', 'KURZ', 'AUS'],
+        { id: 'k4_g_spr1', st: 3, type: 'gap', rules: true, sit: RULES_GARTEN, text: 'Boden trocken · Sonne · 12:00 Uhr (Mittag). Der Sprenger ist ___.', a: ['KURZ'], bank: ['AN (lang)', 'KURZ', 'AUS'],
           hint: 'Prüfe zuerst die Regel AUS. Dann schau auf die Uhrzeit.', tip: TIP_GARTEN,
           sitEs: RULES_GARTEN_ES, textEs: 'Suelo seco · Sol · 12:00 (mediodía). El aspersor está en modo ___.', aEs: ['CORTO'], bankEs: ['ENCENDIDO (largo)', 'CORTO', 'APAGADO'],
           hintEs: 'Revisa primero la regla APAGADO. Después mira la hora.', tipEs: TIP_GARTEN_ES },
-        { id: 'k4_g_spr2', st: 2, type: 'gap', rules: true, sit: RULES_GARTEN, text: 'Boden trocken · Regen · 19:00 Uhr (Abend). Der Sprenger ist ___.', a: ['AUS'], bank: ['AN (lang)', 'KURZ', 'AUS'],
+        { id: 'k4_g_spr2', st: 3, type: 'gap', rules: true, sit: RULES_GARTEN, text: 'Boden trocken · Regen · 19:00 Uhr (Abend). Der Sprenger ist ___.', a: ['AUS'], bank: ['AN (lang)', 'KURZ', 'AUS'],
           hint: 'Prüfe zuerst die Regel AUS.', tip: TIP_GARTEN,
           sitEs: RULES_GARTEN_ES, textEs: 'Suelo seco · Lluvia · 19:00 (atardecer). El aspersor está en modo ___.', aEs: ['APAGADO'], bankEs: ['ENCENDIDO (largo)', 'CORTO', 'APAGADO'],
-          hintEs: 'Revisa primero la regla APAGADO.', tipEs: TIP_GARTEN_ES },
-        { id: 'k4_e_und', st: 3, type: 'open', q: 'Erkläre in eigenen Worten: Wann ist eine Bedingung mit UND wahr?',
-          tip: 'Denk an die Regel fürs Gamen: Hausaufgaben fertig UND Zimmer aufgeräumt. Was passiert, wenn nur eines erledigt ist?',
-          words: ['beide', 'Bedingungen', 'stimmen', 'wahr', 'falsch'],
-          starter: 'Mit UND ist es wahr, wenn …',
-          keys: [['Wie viele Bedingungen müssen stimmen?', ['beide', 'beides', 'alle', 'zwei']], ['Und wenn eine nicht stimmt? (Zusatz)', ['falsch', 'nicht wahr', 'nicht erfuellt']]],
-          need: 1,
-          model: 'Mit UND ist es nur wahr, wenn beide Bedingungen stimmen. Stimmt eine nicht, ist alles falsch.',
-          qEs: 'Explica con tus propias palabras: ¿cuándo es verdadera una condición con «Y»?',
-          tipEs: 'Piensa en la regla para jugar videojuegos: tareas terminadas «Y» cuarto ordenado. ¿Qué pasa si solo una de las dos cosas está hecha?',
-          wordsEs: ['las dos', 'condiciones', 'cumplirse', 'verdadero', 'falso'],
-          starterEs: 'Con «Y» es verdadero cuando …',
-          keysEs: [['las dos', 'ambas', 'ambos', 'los dos', 'todas', 'todos', ' dos '], ['falso', 'no es verdad', 'no se cumple']],
-          labelsEs: ['¿Cuántas condiciones tienen que cumplirse?', '¿Y si una no se cumple? (extra)'],
-          modelEs: 'Con «Y» solo es verdadero cuando las dos condiciones se cumplen. Si una no se cumple, todo es falso.' },
-        { id: 'k4_e_oder', st: 3, type: 'open', q: 'Erkläre in eigenen Worten: Wann ist eine Bedingung mit ODER wahr?',
-          tip: 'Denk ans Dessert: Gemüse essen ODER Tisch abräumen. Musst du beides machen?',
-          words: ['mindestens', 'eine', 'reicht', 'beide', 'wahr'],
-          starter: 'Mit ODER ist es wahr, wenn …',
-          keys: [['Wie viele Bedingungen müssen mindestens stimmen?', [' eine ', ' einer ', ' eins ', 'mindestens', ' nur ein ', 'reicht', 'genuegt']], ['Und wenn beide stimmen? (Zusatz)', ['auch wenn beide', 'auch bei beiden', 'auch wenn beides', 'beide auch', 'beides auch', 'auch beide', 'auch wahr']]],
-          need: 1,
-          model: 'Mit ODER ist es wahr, wenn mindestens eine Bedingung stimmt. Eine reicht. Auch wenn beide stimmen, ist es wahr.',
-          qEs: 'Explica con tus propias palabras: ¿cuándo es verdadera una condición con «O»?',
-          tipEs: 'Piensa en el postre: comer la verdura «O» recoger la mesa. ¿Tienes que hacer las dos cosas?',
-          wordsEs: ['por lo menos', 'una', 'basta', 'las dos', 'verdadero'],
-          starterEs: 'Con «O» es verdadero cuando …',
-          keysEs: [[' una ', ' uno ', 'por lo menos', 'al menos', ' solo un', 'basta', 'alcanza', 'suficiente'], ['tambien si las dos', 'tambien cuando las dos', 'tambien si ambas', 'tambien cuando ambas', 'las dos tambien', 'tambien es verdad', 'tambien verdadero', 'tambien es verdadero']],
-          labelsEs: ['¿Cuántas condiciones tienen que cumplirse como mínimo?', '¿Y si se cumplen las dos? (extra)'],
-          modelEs: 'Con «O» es verdadero cuando por lo menos una condición se cumple. Basta con una. También es verdadero si se cumplen las dos.' }
+          hintEs: 'Revisa primero la regla APAGADO.', tipEs: TIP_GARTEN_ES }
       ]
     };
     const BY_ID = {};
@@ -1564,7 +1539,7 @@
 
     function renderPartHead(pid) {
       const p = PART_BY_ID[pid], k = curStage(pid), pct = pctOf(pid), Q = curQ(pid);
-      const steps = STAGES.map((s, i) => {
+      const steps = stagesOf(pid).map((s, i) => {
         const done = i < k, now = i === k && !Q.review;
         return `<div class="flex-1 min-w-0 rounded-lg px-1 py-1 text-center border-2 text-[11px] sm:text-xs font-bold whitespace-nowrap ${done ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : now ? 'bg-sky-50 border-sky-400 text-sky-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">${done ? '⭐' : s.icon} ${L(s, 'label')}</div>`;
       }).join('');
@@ -1786,7 +1761,7 @@
           `${homeBtn}<button type="button" id="next-btn" onclick="continuePart('${pid}')" class="${BTN_MAIN}">${tr('Doch weiter üben', 'Mejor sigo practicando')}</button>`);
       } else if (Q.phase === 'stageDone') {
         const k = curStage(pid);
-        box.innerHTML = celebrate('⭐', tr(`Stufe ${k} geschafft!`, `¡Nivel ${k} logrado!`), tr(`Du bekommst einen Stern. Jetzt kommt <b>Stufe ${k + 1}: ${STAGES[k].label}</b>. ${STAGES[k].intro}`, `Recibes una estrella. Ahora viene el <b>nivel ${k + 1}: ${STAGES[k].labelEs}</b>. ${STAGES[k].introEs}`),
+        box.innerHTML = celebrate('⭐', tr(`Stufe ${k} geschafft!`, `¡Nivel ${k} logrado!`), tr(`Du bekommst einen Stern. Jetzt kommt <b>Stufe ${k + 1}: ${stagesOf(pid)[k].label}</b>. ${stagesOf(pid)[k].intro}`, `Recibes una estrella. Ahora viene el <b>nivel ${k + 1}: ${stagesOf(pid)[k].labelEs}</b>. ${stagesOf(pid)[k].introEs}`),
           `${homeBtn}<button type="button" id="next-btn" onclick="continuePart('${pid}')" class="${BTN_MAIN}">${tr(`Weiter zu Stufe ${k + 1} →`, `Al nivel ${k + 1} →`)}</button>`);
       } else if (Q.phase === 'partDone') {
         box.innerHTML = celebrate('🏅', tr('Teil gemeistert!', '¡Parte dominada!'), `${starsHtml(3, 'text-2xl')}<br>${tr('Morgen kommen 4 Aufgaben zum Wiederholen. So bleibt es im Kopf.', 'Mañana vienen 4 tareas para repasar. Así se te queda en la cabeza.')}`,
@@ -1803,7 +1778,7 @@
         box.innerHTML = celebrate('🏅', tr('Diesen Teil hast du gemeistert!', '¡Dominaste esta parte!'), `${starsHtml(3, 'text-2xl')}<br>${when}`,
           `${homeBtn}<button type="button" id="next-btn" onclick="startExtra('${pid}')" class="${BTN_MAIN}">${tr('🔁 4 Aufgaben auffrischen', '🔁 Refrescar 4 tareas')}</button>`);
       } else {
-        const it = BY_ID[Q.id], st = STAGES[it.st - 1];
+        const it = BY_ID[Q.id], st = stagesOf(pid)[it.st - 1];
         const deOnly = LANG === 'es' && it.qEs == null && it.textEs == null;
         const rest = it.type === 'gap' ? '' : esc(L(it, 'q') || '');
         let html = `
