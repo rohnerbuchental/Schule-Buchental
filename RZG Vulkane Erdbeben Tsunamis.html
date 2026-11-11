@@ -27,6 +27,27 @@
     svg .zone { cursor: pointer; }
     svg .zone:hover > :first-child { filter: brightness(1.12); }
     @media (prefers-reduced-motion: reduce) { .pop, .bump { animation: none; } .fly-star { display: none; } .bar { transition: none; } }
+    /* Vulkan zum Antippen auf der Startansicht (docs/didaktik.md 1c): bewegt sich nur nach Antippen, 1.8 s */
+    .volc-btn { -webkit-tap-highlight-color: transparent; }
+    .volc-btn:focus-visible { outline: 3px solid #ea580c; outline-offset: 3px; }
+    .volc .v-magma { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); }
+    .volc .v-spurt, .volc .v-ash, .volc .v-flow { opacity: 0; }
+    .volc .v-eye { transform-box: fill-box; transform-origin: center; }
+    .volc .v-ash { transform-box: fill-box; transform-origin: 50% 100%; }
+    .volc.erupt .v-magma { animation: vMagma 1.8s ease-in-out; }
+    .volc.erupt .v-spurt { animation: vSpurt 1.8s ease-out; }
+    .volc.erupt .v-spurt.s2 { --dx: -14px; } .volc.erupt .v-spurt.s3 { --dx: 14px; }
+    .volc.erupt .v-ash { animation: vAsh 1.8s ease-out; }
+    .volc.erupt .v-eye { animation: vEye 1.8s; } .volc.erupt .v-flow { animation: vFlow 1.8s ease-out; }
+    @keyframes vMagma { 0% { transform: scaleY(0); } 35% { transform: scaleY(1); } 80% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
+    @keyframes vSpurt { 0%, 33% { opacity: 0; transform: translate(0, 6px); } 40% { opacity: 1; } 55% { opacity: 1; transform: translate(calc(var(--dx, 0px) * 0.6), -20px); } 75% { opacity: 0; transform: translate(var(--dx, 0px), 0); } 100% { opacity: 0; } }
+    @keyframes vAsh { 0%, 38% { opacity: 0; transform: translateY(6px) scale(0.4); } 60% { opacity: 0.95; transform: translateY(-2px) scale(1); } 85% { opacity: 0.8; transform: translateY(-6px) scale(1.1); } 100% { opacity: 0; transform: translateY(-8px) scale(1.15); } }
+    @keyframes vEye { 0%, 30% { transform: scale(1); } 36%, 85% { transform: scale(1.45); } 100% { transform: scale(1); } }
+    @keyframes vFlow { 0%, 40% { opacity: 0; stroke-dasharray: 0 60; } 70% { opacity: 1; stroke-dasharray: 60 0; } 88% { opacity: 1; stroke-dasharray: 60 0; } 100% { opacity: 0; stroke-dasharray: 60 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .volc.erupt .v-magma, .volc.erupt .v-spurt, .volc.erupt .v-ash, .volc.erupt .v-eye, .volc.erupt .v-flow { animation: none; }
+      .volc.erupt .v-magma { transform: scaleY(1); } .volc.erupt .v-ash { opacity: 0.9; } .volc.erupt .v-spurt.s1, .volc.erupt .v-flow { opacity: 1; }
+    }
     /* Sprachwechsel: feste Texte stehen doppelt (data-l="de" / data-l="es") */
     html[lang="es"] [data-l="de"], html:not([lang="es"]) [data-l="es"] { display: none !important; }
     html:not([lang="es"]) .lang-btn[data-setlang="de"], html[lang="es"] .lang-btn[data-setlang="es"] { background: #fff; color: #0f172a; }
@@ -79,6 +100,31 @@
         <h2 class="text-xl font-black text-slate-900"><span data-l="de">Fit für den Test</span><span data-l="es" lang="es">¡Listo para el examen!</span> 🌋</h2>
         <p class="text-base text-slate-600 mt-1" data-l="de">4 Teile, wie im Test. Jeder Teil hat 3 Stufen: <b>erkennen</b>, <b>ergänzen</b>, <b>erklären</b>. Fehler sind okay: Die Aufgabe kommt einfach später nochmals.</p>
         <p class="text-base text-slate-600 mt-1" data-l="es" lang="es">4 partes, como en el examen. Cada parte tiene 3 niveles: <b>reconocer</b>, <b>completar</b>, <b>explicar</b>. Equivocarse está bien: la tarea simplemente vuelve a salir más tarde.</p>
+        <!-- Kleiner Vulkan zum Antippen (Startansicht, nicht in einer Aufgabe): Magma steigt aus der Magmakammer, an der Oberfläche Lava -->
+        <div class="mt-3 flex items-center gap-3">
+          <button type="button" id="volc-btn" onclick="eruptVolcano()" class="volc-btn shrink-0 w-28 rounded-2xl bg-sky-50 border border-sky-100 overflow-hidden" aria-label="Vulkan antippen: Ausbruch zeigen" data-es-aria-label="Tocar el volcán: mostrar la erupción">
+            <svg id="volc" class="volc block w-full h-auto" viewBox="0 0 120 112" aria-hidden="true" focusable="false">
+              <g class="v-ash" fill="#94a3b8"><circle cx="50" cy="14" r="8"/><circle cx="62" cy="9" r="10"/><circle cx="74" cy="15" r="7"/><circle cx="60" cy="18" r="7"/></g>
+              <rect x="0" y="80" width="120" height="32" fill="#a16207"/>
+              <path d="M8 80 L52 25 L68 25 L112 80 Z" fill="#78716c"/>
+              <path d="M52 25 L56 30 L64 30 L68 25 Z" fill="#57534e"/>
+              <rect x="57" y="29" width="6" height="64" fill="#57534e"/>
+              <ellipse cx="60" cy="97" rx="24" ry="9" fill="#dc2626"/>
+              <ellipse cx="60" cy="95" rx="15" ry="4.5" fill="#f97316"/>
+              <rect class="v-magma" x="57" y="29" width="6" height="64" fill="#f97316"/>
+              <path class="v-flow" d="M67 27 Q80 40 97 63" stroke="#f97316" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <circle class="v-spurt s1" cx="60" cy="24" r="4.5" fill="#f97316"/>
+              <circle class="v-spurt s2" cx="57" cy="25" r="3.5" fill="#ef4444"/>
+              <circle class="v-spurt s3" cx="63" cy="25" r="3.5" fill="#fb923c"/>
+              <circle class="v-eye" cx="44" cy="58" r="2.8" fill="#1c1917"/><circle class="v-eye" cx="76" cy="58" r="2.8" fill="#1c1917"/>
+              <circle cx="39" cy="65" r="3" fill="#fda4af" opacity="0.7"/><circle cx="81" cy="65" r="3" fill="#fda4af" opacity="0.7"/>
+            </svg>
+          </button>
+          <div class="min-w-0 text-base text-slate-700">
+            <p class="font-bold"><span data-l="de">👆 Tipp den Vulkan an!</span><span data-l="es" lang="es">👆 ¡Toca el volcán!</span></p>
+            <p id="volc-info" class="hidden text-sm text-slate-600 mt-1"><span data-l="de">Magma steigt aus der <b>Magmakammer</b>. An der Oberfläche heisst es <b>Lava</b>.</span><span data-l="es" lang="es">El magma sube desde la <b>cámara magmática</b>. En la superficie se llama <b>lava</b>.</span></p>
+          </div>
+        </div>
         <button type="button" id="continue-btn" onclick="continueLearning()" class="w-full mt-4 min-h-[56px] rounded-2xl bg-orange-600 hover:bg-orange-700 text-white text-lg font-black shadow-sm">▶ Hier weitermachen</button>
         <div id="week-days" class="mt-4 pt-3 border-t border-slate-100"></div>
       </section>
@@ -1603,7 +1649,16 @@
     // START
     // ==============================================================
     Object.assign(window, { setLang, switchTab, continueLearning, pick, tapZone, choose, checkSort, place, unplace, checkOrder, submitGap, gapHint, bankPick,
-      dontKnow, saveDraft, openHelp, selfRate, toggleTip, nextQ, continuePart, pausePart, startExtra, askReset, cancelReset, doReset, openTheory, backToTask });
+      dontKnow, saveDraft, openHelp, selfRate, toggleTip, nextQ, continuePart, pausePart, startExtra, askReset, cancelReset, doReset, openTheory, backToTask, eruptVolcano });
+    // Vulkan auf der Startansicht: Antippen startet einen kurzen Ausbruch (1.8 s), danach wieder ruhig
+    let volcTimer = null;
+    function eruptVolcano() {
+      const v = $('volc'); if (!v) return;
+      v.classList.remove('erupt'); void v.getBoundingClientRect();
+      v.classList.add('erupt');
+      clearTimeout(volcTimer);
+      volcTimer = setTimeout(() => { v.classList.remove('erupt'); const i = $('volc-info'); if (i) i.classList.remove('hidden'); }, 1850);
+    }
     // Bilder in der Theorie (in der aktuellen Sprache, nach dem Umschalten neu)
     function renderTheory() {
       $('theory-k1-sk').innerHTML = `<div>${SVG_SK_AUS()}${tr('auseinander · Island', 'se separan · Islandia')}</div><div>${SVG_SK_ZUS()}${tr('zusammen · Japan', 'chocan · Japón')}</div><div>${SVG_SK_HOT()}Hotspot · Hawaii</div>`;
