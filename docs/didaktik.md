@@ -80,7 +80,7 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 | Offene Antwort mit Hilfe-Treppe, danach mit der Musterlösung vergleichen («Hab ich so / Noch nicht»). | Hilfe vor der Lösung (Rosenshine, 2012); Rückmeldung zur Aufgabe (Hattie & Timperley, 2007). Selbstvergleich mit einer Musterlösung ist eine Form von Rückmeldung; die Lernenden schätzen sich aber oft zu gut ein, darum sucht «Antwort prüfen» vorher die Schlüsselwörter. |
 | Wiederholung nach 1 und 3 Tagen. | Verteiltes Üben und successive relearning (Cepeda et al., 2006; Rawson & Dunlosky, 2022). |
 
-**Rückmeldung mit Erklärung (Wunsch Lehrperson 11.11.2026):** Nach einer falschen Antwort nicht nur «Noch nicht ganz» und die Lösung, sondern kurz sagen, warum die gewählte Antwort nicht stimmt und warum die richtige stimmt. Erklärende Rückmeldung wirkt besser als nur die richtige Antwort zu zeigen (Van der Kleij, Feskens & Eggen, 2015; Shute, 2008), besonders bei Anfängern (Moreno, 2004). Höchstens 1–2 kurze Sätze.
+**Rückmeldung bei falscher Antwort (Wunsch Lehrperson 11.11.2026):** Nicht die Lösung zeigen. Ganz kurz (ein Satz, wenige Wörter) sagen, warum die gewählte Antwort nicht passt, die Antwort durchstreichen und nochmals probieren lassen. Erklärende Rückmeldung wirkt besser als nur richtig/falsch (Van der Kleij, Feskens & Eggen, 2015; Shute, 2008), besonders bei Anfängern (Moreno, 2004); mehrere Versuche mit Hinweis wirken besser als sofort die Lösung (Attali, 2015). Die Lösung zeigt nur «Weiss ich nicht».
 
 ## 2c Programmieren lernen (Lernpfad Informatik)
 
@@ -175,3 +175,4 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - Moreno, R. (2004). Decreasing cognitive load for novice students: Effects of explanatory versus corrective feedback in discovery-based multimedia. *Instructional Science, 32*, 99–113.
 - Shute, V. J. (2008). Focus on formative feedback. *Review of Educational Research, 78*(1), 153–189.
 - Van der Kleij, F. M., Feskens, R. C. W., & Eggen, T. J. H. M. (2015). Effects of feedback in a computer-based learning environment on students' learning outcomes: A meta-analysis. *Review of Educational Research, 85*(4), 475–511.
+- Attali, Y. (2015). Effects of multiple-try feedback and question type during mathematics problem solving on performance in similar problems. *Computers & Education, 86*, 260–267.
