@@ -188,7 +188,7 @@
             <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><polygon points="20,1 38,12 20,23 2,12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/></svg><span data-l="de">eine Frage mit zwei Ausgängen: JA und NEIN</span><span data-l="es" lang="es">un rombo <span lang="de">(Raute)</span>: una pregunta con dos salidas, SÍ y NO</span></li>
           </ul>
           <p data-l="de"><b>Schleife im Ablaufdiagramm:</b> Ist die Antwort NEIN, macht man einen Schritt und geht dann <b>zurück zur Frage</b>. Das wiederholt sich, bis die Antwort JA ist.</p>
-          <p data-l="es" lang="es"><b>Bucle en el diagrama de flujo:</b> si la respuesta es NO, se hace un paso y después se <b>vuelve a la pregunta</b>. Esto se repite hasta que la respuesta es SÍ.</p>
+          <p data-l="es" lang="es"><b>Bucle <span lang="de">(Schleife)</span> en el diagrama de flujo:</b> si la respuesta es NO, se hace un paso y después se <b>vuelve a la pregunta</b>. Esto se repite hasta que la respuesta es SÍ.</p>
         </div>
         <div id="theory-k1-svg" class="mt-3 max-w-sm mx-auto"></div>
         <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span><span data-l="es" lang="es">↩ Volver a la tarea</span></button>
@@ -531,7 +531,7 @@
           cats: ['Algorithmus', 'kein Algorithmus'],
           tip: 'Kann man mit dem Text etwas tun, Schritt für Schritt? Oder erfährt man nur etwas?',
           qEs: '¿Es un algoritmo o no?',
-          rowsEs: ['Instrucciones de un modelo de Lego: paso 1 las ruedas, paso 2 la base, paso 3 el techo.', 'Pronóstico del tiempo para mañana: soleado, lluvia por la noche, 12 grados.', 'Álbum de fotos del campamento de esquí: fotos del trineo, de la comida y de la fiesta final.'],
+          rowsEs: ['Instrucciones de un modelo de Lego: paso 1 las ruedas, paso 2 la base, paso 3 el techo.', 'Pronóstico del tiempo para mañana: soleado, lluvia por la noche, 12 grados.', 'Álbum de fotos del campamento de esquí: fotos del paseo en trineo, de la comida y de la fiesta final.'],
           catsEs: ['Algoritmo', 'No es un algoritmo'],
           whyNotEs: ['Aquí hay pasos para construir.', 'El pronóstico del tiempo no dice qué hay que hacer.', 'Las fotos solo muestran lo que pasó.'],
           tipEs: '¿Se puede hacer algo con el texto, paso a paso? ¿O solo te enteras de algo?' },
@@ -571,7 +571,7 @@
           why: 'Bei NEIN wartet man 1 Minute. Dann geht der Pfeil zurück zur Frage. Das ist eine Schleife.',
           whyNot: [null, 'Das passiert erst bei JA.', 'Der Pfeil NEIN führt nicht zum Ende.', 'Davon steht nichts im Ablaufdiagramm.'],
           qEs: 'El agua todavía no hierve. ¿Qué pasa?',
-          optsEs: ['Se espera, y después vuelve la pregunta.', 'El agua va igual enseguida a la taza.', 'El programa se detiene y ya terminó.', 'El hervidor se apaga solo.'],
+          optsEs: ['Se espera, y después vuelve la pregunta.', 'El agua va de todos modos enseguida a la taza.', 'El programa se detiene y ya terminó.', 'El hervidor se apaga solo.'],
           tipEs: 'La respuesta a la pregunta es NO. Sigue con el dedo la flecha NO. ¿Adónde va después?',
           whyEs: 'Con NO se espera 1 minuto. Después la flecha vuelve a la pregunta. Eso es un bucle.',
           whyNotEs: [null, 'Eso pasa solo con SÍ.', 'La flecha NO no lleva al final.', 'De eso no dice nada el diagrama de flujo.'] },
@@ -579,7 +579,7 @@
           steps: ['Wasser anstellen.', 'Hände nass machen.', 'Seife nehmen und einreiben.', 'Hände abspülen.', 'Wasser abstellen und abtrocknen.'],
           tip: 'Mach es in Gedanken am Lavabo vor. Was musst du zuerst tun, damit überhaupt Wasser kommt?',
           qEs: 'Pon las instrucciones «Lavarse las manos» en el orden correcto.',
-          stepsEs: ['Abrir el agua.', 'Mojarse las manos.', 'Tomar jabón y frotarlo.', 'Enjuagarse las manos.', 'Cerrar el agua y secarse.'],
+          stepsEs: ['Abrir el agua.', 'Mojarse las manos.', 'Tomar jabón y frotarse las manos.', 'Enjuagarse las manos.', 'Cerrar el agua y secarse.'],
           tipEs: 'Hazlo en tu cabeza junto al lavamanos. ¿Qué tienes que hacer primero para que salga agua?' },
         { id: 'k1_flow_post', st: 2, type: 'slots', flow: 'post', q: 'Ablaufdiagramm der Postdrohne',
           sit: 'Eine Postdrohne soll ein Paket ausliefern. Sie steigt zuerst auf, fliegt dann so lange vorwärts, bis sie am Ziel ist, und landet dort.',
@@ -639,7 +639,7 @@
           tip: 'Denk an eine Treppe: Du gehst 3-mal hintereinander je 5 Stufen hoch. Wie viele Stufen sind das zusammen? Der Warte-Block macht nur eine Pause, er bewegt nichts.',
           why: 'Rechnen: Wiederholungen × Schritte = 4 × 10 = 40.',
           whyNot: [null, 'Das ist nur ein Durchgang der Schleife.', 'Das ist plus. Wiederholen heisst mal rechnen.'],
-          qEs: 'Al final, ¿cuántos pasos vuela el dron en total?', optsEs: ['40 pasos (4 × 10)', '10 pasos', '14 pasos (4 + 10)'],
+          qEs: 'Al final, ¿cuántos pasos voló el dron en total?', optsEs: ['40 pasos (4 × 10)', '10 pasos', '14 pasos (4 + 10)'],
           tipEs: 'Piensa en una escalera: subes 3 veces seguidas 5 escalones cada vez. ¿Cuántos escalones son en total? El bloque «esperar» solo hace una pausa, no mueve nada.',
           whyEs: 'Cálculo: repeticiones × pasos = 4 × 10 = 40.',
           whyNotEs: [null, 'Eso es solo una vuelta del bucle.', 'Eso es sumar. Repetir quiere decir multiplicar.'] },
@@ -750,7 +750,7 @@
           tipEs: 'Imagina que bajas una escalera a oscuras. ¿Sabes cuántos escalones hay? ¿Cuándo dejas de caminar?',
           wordsEs: ['no se sabe', 'cuántos', 'suelo', 'demasiado pronto', 'demasiado tarde'],
           starterEs: 'Porque …',
-          keysEs: [['no se sabe', 'no sabe', 'no sabemos', 'no sabes', 'no se conoce', 'ni idea', 'desconoc'],
+          keysEs: [['no se sabe', 'no sabe', 'no sabemos', 'no sabes', 'no se conoce', 'ni idea', 'desconoc', 'no se cuant', 'nadie sabe'],
                    ['cuantos', 'cuantas', 'cuanto', 'numero', 'pasos', 'cantidad'],
                    ['pronto', 'tarde', 'suelo']],
           labelsEs: ['¿Se sabe antes?', '¿Qué es lo que no se sabe?', '¿Qué pasa con 10 veces? (extra)'],
@@ -886,10 +886,10 @@
           qEs: '¿Por qué se hacen bloques propios? Escribe una razón.',
           tipEs: 'Piensa en una tarjeta de receta para masa de pizza. La escribes una vez y la vuelves a usar para cada pizza. ¿Qué tiene eso de práctico?',
           wordsEs: ['armar solo una vez', 'usar una y otra vez', 'cambiar en un solo lugar', 'más claro'],
-          starterEs: 'Con un bloque propio …',
-          keysEs: [['una vez', 'una sola vez', 'no hay que armar', 'otra vez', 'varias veces', 'reutiliz', 'volver a usar'],
+          starterEs: 'Con un bloque propio hay que …',
+          keysEs: [['una vez', 'una sola vez', 'no hay que armar', 'otra vez', 'varias veces', 'reutiliz', 'volver a usar', 'no repetir', 'no tener que armar'],
                    ['un solo lugar', 'un lugar', 'una sola parte', 'solo alli', 'solo en el bloque'],
-                   ['claro', 'ordenado', 'corto', 'facil de leer']],
+                   ['mas claro', 'ordenado', 'corto', 'facil de leer']],
           labelsEs: ['¿Cuántas veces se arman los comandos?', '¿Qué es más fácil al cambiar algo?', '¿Cómo queda el programa?'],
           modelEs: 'Con un bloque propio, los comandos se arman solo una vez. Después solo hace falta el nombre. Y si quieres cambiar algo, lo haces en un solo lugar.' }
       ],
@@ -969,7 +969,7 @@
           hintEs: HINT_YO_ES, tipEs: '¿Se carga el teléfono si solo se cumple una de las dos cosas?' },
         { id: 'k4_g_hund', st: 2, type: 'gap', text: 'Der Hund bellt, wenn es an der Tür klingelt ___ wenn jemand klopft.', a: ['oder'],
           hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Bellt der Hund schon, wenn nur eines davon passiert?',
-          textEs: 'El perro ladra si suena el timbre de la puerta ___ si alguien golpea.', aEs: ['o'],
+          textEs: 'El perro ladra si suena el timbre ___ si alguien golpea la puerta.', aEs: ['o'],
           hintEs: HINT_YO_ES, tipEs: '¿Ladra el perro si solo pasa una de las dos cosas?' },
         { id: 'k4_g_zopf', st: 2, type: 'gap', text: 'Ein Zopf gelingt nur, wenn du Mehl ___ Hefe im Teig hast.', a: ['und'],
           hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Was passiert mit dem Zopf, wenn eine der zwei Zutaten fehlt?',
@@ -1002,7 +1002,7 @@
           tipEs: 'Piensa en la regla para jugar videojuegos: tareas terminadas «Y» cuarto ordenado. ¿Qué pasa si solo una de las dos cosas está hecha?',
           wordsEs: ['las dos', 'condiciones', 'cumplirse', 'verdadero', 'falso'],
           starterEs: 'Con «Y» es verdadero cuando …',
-          keysEs: [['las dos', 'ambas', 'ambos', 'los dos', 'todas', 'todos', 'dos'], ['falso', 'no es verdad', 'no se cumple']],
+          keysEs: [['las dos', 'ambas', 'ambos', 'los dos', 'todas', 'todos', ' dos '], ['falso', 'no es verdad', 'no se cumple']],
           labelsEs: ['¿Cuántas condiciones tienen que cumplirse?', '¿Y si una no se cumple? (extra)'],
           modelEs: 'Con «Y» solo es verdadero cuando las dos condiciones se cumplen. Si una no se cumple, todo es falso.' },
         { id: 'k4_e_oder', st: 3, type: 'open', q: 'Erkläre in eigenen Worten: Wann ist eine Bedingung mit ODER wahr?',
@@ -1761,7 +1761,7 @@
       let text = LANG === 'es' && es ? es : de;
       const lang = LANG === 'es' && !es ? 'de' : LANG;
       const nExtra = it.type === 'slots' ? FLOWS[it.flow].extra.length : it.extra ? it.extra.length : 0;
-      if (nExtra) text += lang === 'de' ? ` ${nExtra} ${it.type === 'slots' ? 'Kärtchen' : 'Blöcke'} brauchst du nicht.` : ` ${nExtra} ${it.type === 'slots' ? 'tarjetas' : 'bloques'} no los necesitas.`;
+      if (nExtra) text += lang === 'de' ? ` ${nExtra} ${it.type === 'slots' ? 'Kärtchen' : 'Blöcke'} brauchst du nicht.` : ` No necesitas ${nExtra} ${it.type === 'slots' ? 'tarjetas' : 'bloques'}.`;
       const sp = text.indexOf(' ');
       return `<div class="text-base text-slate-600 mt-1 mb-3" lang="${lang}"><b class="text-slate-800">${text.slice(0, sp)}</b>${text.slice(sp)}</div>`;
     }
