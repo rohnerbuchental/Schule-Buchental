@@ -599,7 +599,7 @@
       ]
     };
     // Wortkästen für Lücken (mit Ablenkern): erst mit Wortkasten, dann frei erklären
-    const BANKS = { k3: ['verhaken', 'trennen', 'Spannung', 'Hitze', 'bricht', 'schmilzt'] };   // pro Lücke ein Ablenker der gleichen Wortart
+    const BANKS = { k3: ['verhaken', 'trennen', 'Spannung', 'Seismograph', 'Richter-Skala', 'bricht', 'schmilzt'] };   // Ablenker: Verben gleicher Art; Nomen aus dem Thema, die nicht in die Lücke passen (Wunsch Lehrperson 11.11.2026)
     const BY_ID = {};
     PARTS.forEach(p => ITEMS[p.id].forEach(it => { it.part = p.id; BY_ID[it.id] = it; }));
     const PART_BY_ID = Object.fromEntries(PARTS.map(p => [p.id, p]));
