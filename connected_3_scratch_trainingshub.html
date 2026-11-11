@@ -973,15 +973,15 @@
     // Offene Fragen mit Hilfe-Treppe (wie RZG und Novemberschnee): 1 Tipp mit Wortkasten → 2 Satzanfang →
     // 3 Antwort prüfen (Schlüsselwörter) → 4 Musterlösung, danach «Hab ich so / Noch nicht».
     // keys: [Leitfrage, [Wortteile], optional] – Wortteile klein, ä=ae, ö=oe, ü=ue; ein Wortteil genügt.
-    // need: so viele Schlüssel braucht es (Standard: alle ohne «optional»). Satzanfänge zählen nicht mit,
-    // ausser keepStarter (dort ist der Satzanfang schon ein Teil der Antwort).
+    // need: so viele Schlüssel braucht es (Standard: alle ohne «optional»). Satzanfänge zählen nicht mit
+    // und enthalten darum kein Schlüsselwort (sonst wäre ein Punkt geschenkt).
     // short: einfache Variante (Kurzantwort: Tipp → prüfen → Lösung). Offene Fragen geben keine Punkte (nicht in TASKS).
     const OPEN_Q = {
       a1_def: {
         q: 'Erkläre in eigenen Worten: Was ist ein Algorithmus?',
         tip: 'Denk an ein Rezept oder eine Lego-Bauanleitung. Was haben die beiden gemeinsam? Wie sind sie aufgebaut? Und wozu brauchst du sie?',
         words: ['Anleitung', 'Schritt für Schritt', 'Reihenfolge', 'Problem', 'Ziel'],
-        starter: 'Ein Algorithmus ist eine … Anleitung, …',
+        starter: 'Ein Algorithmus ist eine …',
         keys: [['Was für ein Text ist es?', ['anleitung', 'befehl', 'regel']],
                ['Wie geht man vor?', ['schritt']],
                ['Worauf muss man achten?', ['reihenfolge', 'genau', 'eindeutig']],
@@ -1001,8 +1001,7 @@
         q: 'Warum passt «wiederhole 10 mal» hier nicht? Erkläre mit «weil».',
         tip: 'Stell dir vor, du gehst im Dunkeln eine Treppe hinunter. Weisst du, wie viele Stufen es sind? Wann hörst du auf zu gehen?',
         words: ['weiss nicht', 'wie viele', 'Boden', 'zu früh', 'zu spät'],
-        starter: 'Weil man nicht weiss, …',
-        keepStarter: true,
+        starter: 'Weil man …',
         keys: [['Weiss man es im Voraus?', ['weiss nicht', 'nicht weiss', 'unbekannt', 'nicht wissen', 'keine ahnung', 'nicht bekannt']],
                ['Was genau weiss man nicht?', ['wie viele', 'wie viel', 'wie oft', 'anzahl', 'schritte']],
                ['Was passiert mit 10-mal? (Zusatz)', ['zu frueh', 'zu spaet', 'boden'], true]],
@@ -1172,8 +1171,8 @@
           <th class="p-1.5 w-[4.5rem] font-semibold leading-tight">${bothDe('Algo&shy;rithmus')}</th>
           <th class="p-1.5 w-[4.5rem] font-semibold leading-tight">${bothDe('kein Algo&shy;rithmus')}</th>
         </tr></thead>
-        <tbody>${dispAlgo.map(r => `<tr id="row-${r.id}" class="bg-white border-slate-200">
-          <td class="p-2 border-t border-slate-200 text-slate-800 break-words">${bothDe(r.text)}</td>${radio(r, 'ja')}${radio(r, 'nein')}</tr>`).join('')}</tbody>`;
+        <tbody>${dispAlgo.map(r => `<tr id="row-${r.id}" class="bg-slate-50 border-slate-200">
+          <td class="p-2 border-t border-slate-200 text-sm text-slate-800 break-words">${bothDe(r.text)}</td>${radio(r, 'ja')}${radio(r, 'nein')}</tr>`).join('')}</tbody>`;
     }
     function renderA2() {
       renderFlow();
@@ -1789,9 +1788,6 @@
         const label = part.querySelector('.js-label');
         if (label) label.textContent = 'abcdefgh'[i] + ') ';
       });
-      // Die Schreib-Frage steht fest am Schluss (erst erkennen, dann selber schreiben) und bekommt den nächsten Buchstaben
-      let n = box.querySelectorAll(':scope > [data-part]').length;
-      document.querySelectorAll(`[data-task="${id}"] [data-open-q]`).forEach(el => { OPEN_LABEL[el.dataset.openQ] = 'abcdefgh'[n++] + ') '; });
     }
 
     // Grün/Gelb-Färbung entfernen
@@ -1831,7 +1827,6 @@
     // Keine Punkte (nicht in TASKS). Alles mit both()/bothDe(): Der Sprachwechsel braucht kein Neuzeichnen.
     // ==============================================================
     const OPEN_UI = {};      // offene Hilfe-Boxen pro Frage (nicht gespeichert)
-    const OPEN_LABEL = {};   // Buchstabe a), b) … (setzt shuffleParts)
     const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const deAccent = t => String(t || '').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/\u00df/g, 'ss')
       .replace(/[áà]/g, 'a').replace(/[éè]/g, 'e').replace(/[íì]/g, 'i').replace(/[óò]/g, 'o').replace(/[úù]/g, 'u').replace(/ñ/g, 'n');
@@ -1842,11 +1837,11 @@
       if (val.trim()) STATE.answers['txt_' + k] = val; else delete STATE.answers['txt_' + k];
       persist();
     }
-    // Schlüsselwörter suchen; der eingefügte Satzanfang zählt nicht mit (ausser keepStarter)
+    // Schlüsselwörter suchen; der eingefügte Satzanfang zählt nicht mit
     function openCheck(k, text) {
       const d = OPEN_Q[k];
       let t = normText(text);
-      if (d.starter && !d.keepStarter) d.starter.split('\n').forEach(line => {
+      if (d.starter) d.starter.split('\n').forEach(line => {
         const st = normText(line.split('…')[0]).trim();
         if (st.length > 2) t = t.replace(' ' + st + ' ', ' ');
       });
@@ -1894,12 +1889,12 @@
           <span class="text-[11px] text-slate-500">${bothDe('ohne Punkte, zum Üben')}</span>
           ${done ? `<span class="text-[11px] font-bold text-emerald-700">${bothDe('✔ erledigt')}</span>` : ''}
         </div>
-        <label for="txt-${k}" class="text-xs sm:text-sm font-bold text-slate-900 block break-words"><span class="js-label">${OPEN_LABEL[k] || ''}</span>${bothDe(d.q)}</label>
+        <label for="txt-${k}" class="text-sm sm:text-base font-bold text-slate-900 block break-words">${bothDe(d.q)}</label>
         <p class="text-[11px] text-slate-500" data-l="es" lang="es">Esta pregunta todavía está solo en alemán.</p>`;
       if (d.pre) h += d.pre;
       h += d.short
-        ? `<input type="text" id="txt-${k}" value="${esc(txt)}" oninput="saveOpen('${k}', this.value)" maxlength="80" autocomplete="off" placeholder="${ph}" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm font-semibold focus:ring-2 focus:ring-sky-500">`
-        : `<textarea id="txt-${k}" rows="3" oninput="saveOpen('${k}', this.value)" placeholder="${ph}" data-es-placeholder="${phEs}" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm text-slate-800 leading-relaxed focus:ring-2 focus:ring-sky-500">${esc(txt)}</textarea>`;
+        ? `<input type="text" id="txt-${k}" value="${esc(txt)}" oninput="saveOpen('${k}', this.value)" maxlength="80" autocomplete="off" placeholder="${ph}" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-base font-semibold focus:ring-2 focus:ring-sky-500">`
+        : `<textarea id="txt-${k}" rows="3" oninput="saveOpen('${k}', this.value)" placeholder="${ph}" data-es-placeholder="${phEs}" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-base text-slate-800 leading-relaxed focus:ring-2 focus:ring-sky-500">${esc(txt)}</textarea>`;
       h += `<div class="text-xs font-bold text-slate-600">${both('Hilfe-Treppe: Nimm so viel Hilfe, wie du brauchst.', 'Escalera de ayuda: toma toda la ayuda que necesites.')}</div>`;
       h += d.short
         ? `<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">${stepBtn(1, 'tip', both('💡 Tipp', '💡 Pista'), ui.tip)}${stepBtn(2, 'check', both('🔍 Antwort prüfen', '🔍 Revisar respuesta'), !!ui.check)}${stepBtn(3, 'model', bothDe('📗 Lösung zeigen'), ui.model)}</div>`
