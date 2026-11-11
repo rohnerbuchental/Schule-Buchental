@@ -1169,17 +1169,19 @@
 
     function answer(pid, ok, dontKnow) {
       const Q = curQ(pid), s = PS(pid), id = Q.id, before = curStage(pid);
+      // Erst nach falschem Versuch richtig: Lob, aber die Aufgabe kommt später nochmals (Wunsch Lehrperson: was falsch war, kommt wieder)
+      const retry = ok && !!((Q.tried || []).length || Q.sortHint || Object.keys(Q.rowTried || {}).length);
       if (Q.review) {
         const rq = Q.review === 'rev' ? s.revQueue : EXTRA[pid];
         const i = rq.indexOf(id); if (i >= 0) rq.splice(i, 1);
-        if (!ok) rq.splice(Math.min(2, rq.length), 0, id);
+        if (!ok || retry) rq.splice(Math.min(2, rq.length), 0, id);
         if (!rq.length) {
           if (Q.review === 'rev') { s.rev++; s.revDue = s.rev < REVIEW_DAYS.length ? Date.now() + REVIEW_DAYS[s.rev] * DAY - EARLY : 0; }
           Q.after = 'reviewDone';
         }
       } else {
         s.queue = s.queue.filter(x => x !== id);
-        if (ok) s.done[id] = true;
+        if (ok && !retry) s.done[id] = true;
         else s.queue.splice(Math.min(2, s.queue.length), 0, id);   // nach 2 anderen nochmals
         const after = curStage(pid);
         if (after > before) {
