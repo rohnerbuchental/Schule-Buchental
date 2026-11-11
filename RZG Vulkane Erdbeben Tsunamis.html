@@ -311,6 +311,7 @@
     try { LANG = localStorage.getItem(LANG_KEY) === 'es' ? 'es' : 'de'; } catch (e) {}
     const tr = (de, es) => LANG === 'es' ? es : de;
     const L = (o, k) => LANG === 'es' && o[k + 'Es'] != null ? o[k + 'Es'] : o[k];   // Feld der Aufgabe in der aktuellen Sprache
+    const nudgeText = (it, n) => n && typeof n === 'object' ? (L(it, 'whyNot') || [])[n.why] || '' : n;   // kurzer Grund (whyNot / whyNotEs)
     const TITLE = { de: 'RZG · Vulkane, Erdbeben, Tsunamis · Lernpfad', es: 'RZG · Volcanes, terremotos, tsunamis · Ruta de aprendizaje' };
     let READY = false;
     // Attribute ohne <span>: title / aria-label (data-es-…)
@@ -490,6 +491,7 @@
         { id: 'k1_wo', st: 1, nr: [1, 4], type: 'mc', first: true, q: 'Wo gibt es besonders viele Vulkane?',
           opts: ['An den Grenzen der Erdplatten', 'Mitten in den grossen Wüsten', 'Rund um den Nordpol herum', 'Überall auf der Welt gleich'],
           whyNot: [null, 'Sand und Hitze machen keine Vulkane.', 'Kälte hat mit Vulkanen nichts zu tun.', 'Vulkane sind nicht gleichmässig verteilt.'],
+          whyNotEs: [null, 'La arena y el calor no hacen volcanes.', 'El frío no tiene nada que ver con los volcanes.', 'Los volcanes no están repartidos por igual.'],
           tip: 'Die Erdkruste ist wie ein Puzzle aus grossen Teilen. Wo kann am ehesten etwas von unten herauskommen?',
           why: 'Die meisten Vulkane liegen an Plattengrenzen. Dort kann Magma aufsteigen.',
           qEs: '¿Dónde hay especialmente muchos volcanes?',
@@ -507,6 +509,7 @@
         { id: 'k1_sk_aus', st: 1, nr: [1], type: 'mc', pic: 'sk_aus', q: 'Schau die Skizze an. Welche Art zeigt sie?',
           opts: ['Platten driften auseinander', 'Platten stossen zusammen', 'Hotspot'],
           whyNot: [null, 'Die Pfeile zeigen nicht aufeinander zu.', 'Hier gibt es eine Plattengrenze.'],
+          whyNotEs: [null, 'Las flechas no apuntan una hacia la otra.', 'Aquí hay un límite de placas.'],
           tip: 'Schau auf die Pfeile: Bewegen sich die Platten aufeinander zu oder voneinander weg?',
           why: 'Die Platten driften auseinander. Im Riss steigt Magma auf.',
           qEs: 'Mira el dibujo. ¿Qué tipo muestra?',
@@ -516,6 +519,7 @@
         { id: 'k1_sk_zus', st: 1, nr: [1], type: 'mc', pic: 'sk_zus', q: 'Schau die Skizze an. Welche Art zeigt sie?',
           opts: ['Platten stossen zusammen', 'Platten driften auseinander', 'Hotspot'],
           whyNot: [null, 'Die Pfeile zeigen nicht voneinander weg.', 'Hier gibt es eine Plattengrenze.'],
+          whyNotEs: [null, 'Las flechas no se alejan una de la otra.', 'Aquí hay un límite de placas.'],
           tip: 'Schau auf die Pfeile. Und: Taucht eine Platte nach unten?',
           why: 'Die Platten stossen zusammen. Eine Platte taucht ab und schmilzt.',
           qEs: 'Mira el dibujo. ¿Qué tipo muestra?',
@@ -525,6 +529,7 @@
         { id: 'k1_sk_hot', st: 1, nr: [1, 2], type: 'mc', pic: 'sk_hot', q: 'Schau die Skizze an. Welche Art zeigt sie?',
           opts: ['Hotspot', 'Platten driften auseinander', 'Platten stossen zusammen'],
           whyNot: [null, 'Hier gibt es keinen Riss zwischen Platten.', 'Hier taucht keine Platte ab.'],
+          whyNotEs: [null, 'Aquí no hay una grieta entre placas.', 'Aquí no se hunde ninguna placa.'],
           tip: 'Gibt es hier überhaupt eine Grenze zwischen zwei Platten? Woher kommt das Magma?',
           why: 'Hotspot: Mitten unter der Platte steigt ein Magmastrahl auf.',
           qEs: 'Mira el dibujo. ¿Qué tipo muestra?',
@@ -534,6 +539,7 @@
         { id: 'k1_hot', st: 1, nr: [2], type: 'mc', q: 'Was ist ein Hotspot?',
           opts: ['Ein heisser Punkt im Erdmantel, wo Magma aufsteigt.', 'Ein Vulkan, der seit langer Zeit nie mehr ausbricht.', 'Eine Stelle, wo zwei Platten zusammenstossen.', 'Ein sehr heisser Strand am Meer in den Tropen.'],
           whyNot: [null, 'Das ist ein erloschener Vulkan.', 'Ein Hotspot liegt nicht an einer Plattengrenze.', 'Es geht um Vulkane, nicht um Ferien.'],
+          whyNotEs: [null, 'Eso es un volcán apagado.', 'Un hotspot no está en un límite de placas.', 'Se trata de volcanes, no de vacaciones.'],
           tip: 'Übersetze das Wort aus dem Englischen: «hot» und «spot». Und: Ein Hotspot liegt nicht an einer Plattengrenze.',
           why: 'Ein Hotspot liegt mitten unter einer Platte. Ein Magmastrahl brennt sich durch die Platte.',
           qEs: '¿Qué es un hotspot?',
@@ -543,6 +549,7 @@
         { id: 'k1_alt', st: 1, nr: [3], type: 'mc', pic: 'hawaii', q: 'Die Inseln von Hawaii sind über einem Hotspot entstanden. Welche Insel ist am ältesten?',
           opts: ['Kauai', 'Oahu', 'Maui', 'Hawaii (Big Island)'],
           whyNot: [null, 'Oahu ist nicht am weitesten vom Hotspot weg.', 'Maui liegt noch recht nah beim Hotspot.', 'Diese Insel liegt über dem Hotspot.'],
+          whyNotEs: [null, 'Oahu no es la que está más lejos del hotspot.', 'Maui todavía está bastante cerca del hotspot.', 'Esta isla está encima del hotspot.'],
           tip: 'Über dem Hotspot entsteht gerade ein Vulkan. Die Platte trägt die Inseln weg wie ein Förderband. Welche Insel ist schon am längsten unterwegs?',
           why: 'Kauai ist am weitesten weg vom Hotspot. Darum ist sie am ältesten.',
           qEs: 'Las islas de Hawaii se formaron sobre un hotspot. ¿Qué isla es la más antigua?',
@@ -552,6 +559,7 @@
         { id: 'k1_ring', st: 1, nr: [4], type: 'mc', pic: 'ring', q: 'Die roten Dreiecke sind Vulkane. Wie heisst dieser Gürtel aus Vulkanen?',
           opts: ['Ring of Fire (Pazifischer Feuerring)', 'Golfstrom (Strömung im Atlantik)', 'Äquator (Linie um die Erdmitte)', 'Alpenbogen (Gebirge in Europa)'],
           whyNot: [null, 'Die Dreiecke liegen nicht im Atlantik.', 'Der Äquator ist nur eine gedachte Linie.', 'Die Dreiecke liegen nicht in Europa.'],
+          whyNotEs: [null, 'Los triángulos no están en el Atlántico.', 'El ecuador es solo una línea imaginaria.', 'Los triángulos no están en Europa.'],
           tip: 'Die Vulkane bilden fast einen Kreis. Und Vulkane haben mit Feuer zu tun.',
           why: 'Der «Ring of Fire» liegt rund um den Pazifik. Dort gibt es viele Vulkane und Erdbeben.',
           qEs: 'Los triángulos rojos son volcanes. ¿Cómo se llama este cinturón de volcanes?',
@@ -628,6 +636,7 @@
         { id: 'k2_magma', st: 1, nr: [5], type: 'mc', q: 'Was ist der Unterschied zwischen Magma und Lava?',
           opts: ['Magma ist unter der Erde. Lava ist an der Erdoberfläche.', 'Magma ist an der Erdoberfläche. Lava ist unter der Erde.', 'Magma ist kalt und fest. Lava ist heiss und flüssig.', 'Magma und Lava sind zwei Namen für zwei Vulkane.'],
           whyNot: [null, 'Lava ist erst an der Oberfläche.', 'Beides ist heisses, flüssiges Gestein.', 'Magma und Lava sind keine Vulkane.'],
+          whyNotEs: [null, 'La lava aparece solo en la superficie.', 'Los dos son roca caliente y líquida.', 'Magma y lava no son volcanes.'],
           tip: 'Es ist das gleiche flüssige Gestein. Nur der Ort ist anders. Wo ist es, bevor der Vulkan ausbricht?',
           why: 'Magma ist flüssiges Gestein unter der Erde. Sobald es herauskommt, heisst es Lava.',
           qEs: '¿Cuál es la diferencia entre magma y lava?',
@@ -637,6 +646,7 @@
         { id: 'k2_bild', st: 1, nr: [7], type: 'mc', picOpts: true, q: 'Welches Bild zeigt einen Schildvulkan?',
           opts: ['shield', 'strato'], right: 'Der flache, breite Vulkan ist der Schildvulkan. Der steile ist ein Schichtvulkan.',
           whyNot: [null, 'Dieser Vulkan ist steil und spitz.'],
+          whyNotEs: [null, 'Este volcán es empinado y puntiagudo.'],
           tip: 'Stell dir einen runden Schild vor, der auf dem Boden liegt. Ist er steil oder flach?',
           qEs: '¿Qué imagen muestra un volcán en escudo?',
           rightEs: 'El volcán plano y ancho es el volcán en escudo. El empinado es un estratovolcán.',
@@ -660,6 +670,7 @@
         { id: 'k2_schild', st: 1, nr: [10], type: 'mc', q: 'Wie bricht ein Schildvulkan meistens aus?',
           opts: ['Ruhig: Die Lava fliesst aus dem Krater.', 'Laut: Eine riesige Explosion zerreisst den Berg.', 'Gar nicht: Ein Schildvulkan bricht nie aus.', 'Nass: Aus dem Krater kommt nur heisses Wasser.'],
           whyNot: [null, 'So bricht ein Schichtvulkan aus.', 'Auch Schildvulkane brechen aus.', 'Ein Vulkan bringt Magma, nicht nur Wasser.'],
+          whyNotEs: [null, 'Así entra en erupción un estratovolcán.', 'Los volcanes en escudo también entran en erupción.', 'Un volcán saca magma, no solo agua.'],
           tip: 'Die Lava ist dünnflüssig. Die Gase können gut heraus, wie bei einer offenen Flasche.',
           why: 'Die Lava ist dünnflüssig, die Gase entweichen leicht. Es gibt kaum Druck. Darum fliesst die Lava ruhig.',
           qEs: '¿Cómo entra en erupción casi siempre un volcán en escudo?',
@@ -723,6 +734,7 @@
         { id: 'k3_geraet', st: 1, nr: [12], type: 'mc', first: true, q: 'Mit welchem Gerät misst man Erdbeben?',
           opts: ['Seismograph', 'Thermometer', 'Kompass', 'Taschenrechner'],
           whyNot: [null, 'Ein Thermometer misst die Temperatur.', 'Ein Kompass zeigt, wo Norden ist.', 'Ein Taschenrechner rechnet, er misst nichts.'],
+          whyNotEs: [null, 'Un termómetro mide la temperatura.', 'Una brújula muestra dónde está el norte.', 'Una calculadora calcula, no mide nada.'],
           tip: 'Ein Thermometer misst die Temperatur. Ein Kompass zeigt, wo Norden ist. Und welches Gerät misst Erdbeben?',
           why: 'Ein Seismograph zeichnet jede Bewegung der Erde auf.',
           qEs: '¿Con qué aparato se miden los terremotos?',
@@ -732,6 +744,7 @@
         { id: 'k3_kurve', st: 1, nr: [12], type: 'mc', pic: 'seismo', q: 'Ein Gerät hat diese Zickzack-Kurve gezeichnet. Wie heisst die Aufzeichnung?',
           opts: ['Seismogramm', 'Seismograph', 'Richter-Skala', 'Landkarte'],
           whyNot: [null, 'Das ist das Gerät, nicht das Blatt.', 'Die Richter-Skala zeigt nur die Stärke.', 'Eine Landkarte zeigt Orte, keine Bewegung.'],
+          whyNotEs: [null, 'Eso es el aparato, no la hoja.', 'La escala de Richter solo muestra la fuerza.', 'Un mapa muestra lugares, no movimientos.'],
           tip: 'Das Gerät und die Aufzeichnung klingen fast gleich. Gesucht ist das Blatt mit der Kurve, nicht das Gerät.',
           why: 'Seismograph = Gerät. Seismogramm = Aufzeichnung.',
           qEs: 'Un aparato dibujó esta línea en zigzag. ¿Cómo se llama el registro?',
@@ -741,6 +754,7 @@
         { id: 'k3_vorher', st: 1, nr: [11], type: 'mc', q: 'Was passiert im Boden, bevor die Erde bebt?',
           opts: ['Die Platten verhaken sich, Spannung baut sich auf.', 'Es regnet viele Tage lang, der Boden wird weich.', 'Der Wind drückt sehr stark auf die hohen Berge.', 'Ein Vulkan kühlt ab, und die Lava wird fest.'],
           whyNot: [null, 'Das Wetter macht keine Erdbeben.', 'Wind kann keinen Berg bewegen.', 'Abkühlende Lava lässt die Erde nicht beben.'],
+          whyNotEs: [null, 'El clima no causa terremotos.', 'El viento no puede mover una montaña.', 'La lava que se enfría no hace temblar la Tierra.'],
           tip: 'Erdbeben haben mit den Erdplatten zu tun, nicht mit dem Wetter.',
           why: 'Die Platten verhaken sich. Die Spannung wächst, bis das Gestein plötzlich bricht.',
           qEs: '¿Qué pasa en el suelo antes de que la Tierra tiemble?',
@@ -772,6 +786,7 @@
         { id: 'k3_draussen', st: 1, nr: [14], type: 'mc', q: 'Du bist draussen auf der Strasse. Die Erde bebt stark. Was machst du?',
           opts: ['Auf einen freien Platz gehen, weg von Häusern.', 'Schnell in das nächste Haus rennen und warten.', 'Mich unter einen Balkon stellen und abwarten.', 'Auf eine Brücke gehen, dort ist es sicher.'],
           whyNot: [null, 'Auf dem Weg können Ziegel herunterfallen.', 'Ein Balkon kann abbrechen und herunterfallen.', 'Eine Brücke kann beim Beben einstürzen.'],
+          whyNotEs: [null, 'Pueden caer tejas sobre el camino.', 'Un balcón se puede romper y caer.', 'Un puente se puede derrumbar con el terremoto.'],
           tip: 'Wo kann nichts auf dich herunterfallen?',
           why: 'Auf einem freien Platz kann nichts auf dich fallen.',
           qEs: 'Estás afuera en la calle. La Tierra tiembla fuerte. ¿Qué haces?',
@@ -855,6 +870,7 @@
         { id: 'k4_was', st: 1, nr: [15], type: 'mc', first: true, q: 'Was ist ein Tsunami?',
           opts: ['Eine riesige Welle, die an der Küste Schäden macht.', 'Ein starker Sturm, der in der Wüste Sand aufwirbelt.', 'Ein Vulkan, der unter dickem Eis versteckt ist.', 'Ein kleiner Bach, der in den Bergen entspringt.'],
           whyNot: [null, 'Das wäre ein Sandsturm.', 'Ein Tsunami ist kein Vulkan.', 'Ein kleiner Bach ist harmlos.'],
+          whyNotEs: [null, 'Eso sería una tormenta de arena.', 'Un tsunami no es un volcán.', 'Un arroyo pequeño no es peligroso.'],
           tip: 'Das Wort kommt aus Japan und heisst «Hafenwelle».',
           why: 'Ein Tsunami ist eine riesige Welle. Sie entsteht meistens durch ein Seebeben.',
           qEs: '¿Qué es un tsunami?',
@@ -864,6 +880,7 @@
         { id: 'k4_ausl', st: 1, nr: [15], type: 'mc', q: 'Was löst einen Tsunami meistens aus?',
           opts: ['Ein Seebeben am Meeresboden', 'Ein starker Wind auf dem Meer', 'Ein grosses Schiff im Hafen', 'Starker Regen über dem Meer'],
           whyNot: [null, 'Wind macht nur normale Wellen.', 'Ein Schiff ist viel zu klein dafür.', 'Regen bewegt nicht das ganze Meer.'],
+          whyNotEs: [null, 'El viento solo hace olas normales.', 'Un barco es demasiado pequeño para eso.', 'La lluvia no mueve todo el mar.'],
           tip: 'Normale Wellen macht der Wind. Ein Tsunami bewegt aber das ganze Wasser bis zum Boden. Was kann den Meeresboden bewegen?',
           why: 'Bei einem Seebeben hebt oder senkt sich der Meeresboden ruckartig.',
           qEs: '¿Qué provoca casi siempre un tsunami?',
@@ -881,6 +898,7 @@
         { id: 'k4_kueste', st: 1, nr: [17], type: 'mc', q: 'Der Tsunami kommt an eine flache Küste. Was passiert mit der Welle?',
           opts: ['Sie wird abgebremst und türmt sich hoch auf.', 'Sie wird schneller und dabei immer flacher.', 'Sie versickert langsam im weichen Sand.', 'Sie teilt sich in viele kleine Wellen auf.'],
           whyNot: [null, 'Im flachen Wasser wird sie nicht schneller.', 'So viel Wasser kann nicht versickern.', 'Die Welle wird nicht kleiner.'],
+          whyNotEs: [null, 'En el agua poco profunda no se hace más rápida.', 'Tanta agua no se puede filtrar.', 'La ola no se hace más pequeña.'],
           tip: 'Denk an einen Stau auf der Autobahn: Wo die Autos langsamer werden müssen, drängen sie sich zusammen.',
           why: 'Im flachen Wasser wird die Welle abgebremst. Das Wasser staut sich und türmt sich 10 bis 30 m hoch auf.',
           qEs: 'El tsunami llega a una costa poco profunda. ¿Qué pasa con la ola?',
@@ -890,6 +908,7 @@
         { id: 'k4_zeichen', st: 1, nr: [18], type: 'mc', q: 'Du bist am Strand. Welches Zeichen warnt dich vor einem Tsunami?',
           opts: ['Das Meer zieht sich plötzlich weit zurück.', 'Die Sonne scheint plötzlich sehr stark.', 'Am Himmel fliegen plötzlich viele Möwen.', 'Der Sand am Strand wird plötzlich warm.'],
           whyNot: [null, 'Die Sonne hat mit Tsunamis nichts zu tun.', 'Möwen fliegen am Strand oft herum.', 'Warmer Sand ist am Strand normal.'],
+          whyNotEs: [null, 'El sol no tiene nada que ver con los tsunamis.', 'En la playa las gaviotas vuelan a menudo.', 'La arena caliente es normal en la playa.'],
           tip: 'Achte auf das Wasser selbst. Was wäre am Strand sehr ungewöhnlich?',
           why: 'Wenn das Meer sich plötzlich weit zurückzieht, kommt bald eine riesige Welle.',
           qEs: 'Estás en la playa. ¿Qué señal te avisa de un tsunami?',
@@ -899,6 +918,7 @@
         { id: 'k4_tun', st: 1, nr: [18], type: 'mc', q: 'Das Meer zieht sich plötzlich zurück. Was machst du?',
           opts: ['Sofort an einen hohen Ort gehen, andere warnen.', 'Muscheln sammeln, die jetzt am Boden liegen.', 'Am Strand bleiben und mit dem Handy filmen.', 'Ins Wasser gehen und nachschauen, was los ist.'],
           whyNot: [null, 'Dafür bleibt keine Zeit.', 'Am Strand holt dich die Welle ein.', 'Im Wasser bist du in grosser Gefahr.'],
+          whyNotEs: [null, 'Para eso no hay tiempo.', 'En la playa la ola te alcanza.', 'En el agua estás en gran peligro.'],
           tip: 'Das Wasser kommt bald als riesige Welle zurück. Wo ist man vor Wasser sicher?',
           why: 'Viel Zeit bleibt nicht: sofort hoch hinauf, zum Beispiel auf einen Hügel.',
           qEs: 'El mar se retira de repente. ¿Qué haces?',
@@ -1236,7 +1256,7 @@
       const it = BY_ID[Q.id], o = Q.opts[i];
       if (!o.ok && it.whyNot && it.whyNot[o.i]) {
         if (!Q.tried.includes(i)) Q.tried.push(i);
-        Q.nudge = it.whyNot[o.i];
+        Q.nudge = { why: o.i };   // Index: Grund steht nach dem Umschalten in der neuen Sprache
         renderPart(pid);
         return;
       }
@@ -1463,7 +1483,7 @@
             return `<button type="button" onclick="pick('${pid}',${i})" ${done || tried ? 'disabled' : ''} class="w-full min-h-[52px] px-4 py-2.5 rounded-2xl border-2 text-base font-bold text-left wrap-any transition ${cls}">${done && o.ok ? '✔ ' : ''}${esc(L(it, 'opts')[o.i])}</button>`;
           }).join('')}</div>`;
         }
-        if (!done && Q.nudge) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 wrap-any pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> <span lang="de">${esc(Q.nudge)}</span> ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
+        if (!done && Q.nudge) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 wrap-any pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> <span lang="${LANG === 'es' && !it.whyNotEs ? 'de' : LANG}">${esc(nudgeText(it, Q.nudge))}</span> ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
       }
       if (it.type === 'tap') {
         const o = { tap: !done };
