@@ -11,7 +11,7 @@ Alles andere liegt in der **privaten Ablage** (siehe unten).
 ## Seiten
 | Datei | Thema |
 |---|---|
-| `connected_3_scratch_trainingshub.html` | Informatik, Connected 3 «Abheben mit Algorithmen» (Scratch) |
+| `connected_3_scratch_trainingshub.html` | Informatik, Connected 3 «Abheben mit Algorithmen» (Scratch): Lernpfad in 4 Teilen (Algorithmus & Ablaufdiagramm, Schleifen, eigene Blöcke & Fehler, UND/ODER) |
 | `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» |
 | `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 (abgeschlossen: Kachel auf der Startseite entfernt 11.11.2026, Datei bleibt) |
 | `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter-Lernpfad, Grammatik-Pfade present continuous und Adverbien) |
