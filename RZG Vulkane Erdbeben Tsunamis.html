@@ -13,6 +13,10 @@
     body { font-family: 'Inter', sans-serif; }
     input:focus, textarea:focus { outline: none; box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.3); }
     .wrap-any { overflow-wrap: anywhere; }
+    button:focus, [role="button"]:focus { outline: none; }
+    button:focus-visible, [role="button"]:focus-visible, summary:focus-visible { outline: 3px solid #fb923c; outline-offset: 2px; }
+    @media (max-width: 639px) { .pic svg { max-height: 200px; } }
+    [id^="body-"] { scroll-margin-top: 8.5rem; }
     [id^="card-"], [id^="theory-"] { scroll-margin-top: 8.5rem; }
     @keyframes pop { 0% { transform: scale(0.96); } 60% { transform: scale(1.03); } 100% { transform: scale(1); } }
     .pop { animation: pop 0.25s ease-out; }
@@ -36,10 +40,10 @@
 
   <!-- Sprache: Deutsch | Español (Spanisch folgt nach Freigabe der deutschen Fassung) -->
   <div class="bg-orange-950 text-white">
-    <div class="max-w-3xl mx-auto px-4 pt-2 pb-1 flex justify-end">
+    <div class="max-w-3xl mx-auto px-4 py-1.5 flex justify-end">
       <div class="inline-flex rounded-full bg-white/10 border border-white/15 p-0.5 text-xs font-bold" role="group" aria-label="Sprache · Idioma">
-        <button type="button" data-setlang="de" onclick="setLang('de')" lang="de" class="lang-btn px-3 py-1 rounded-full text-white/80">Deutsch</button>
-        <button type="button" data-setlang="es" onclick="setLang('es')" lang="es" class="lang-btn px-3 py-1 rounded-full text-white/80">Español</button>
+        <button type="button" data-setlang="de" onclick="setLang('de')" lang="de" class="lang-btn px-4 py-2.5 rounded-full text-white/80">Deutsch</button>
+        <button type="button" data-setlang="es" onclick="setLang('es')" lang="es" class="lang-btn px-4 py-2.5 rounded-full text-white/80">Español</button>
       </div>
     </div>
   </div>
@@ -53,7 +57,7 @@
         <div class="text-[11px] font-bold tracking-wider uppercase text-orange-100">RZG · Dynamik der Erde · Teil 2</div>
         <h1 class="text-base sm:text-xl font-black leading-tight">Vulkane, Erdbeben, Tsunamis</h1>
       </div>
-      <div class="shrink-0 bg-white/15 border border-white/25 rounded-xl px-2.5 py-1 text-sm font-black" title="Sterne: 3 pro Teil">
+      <div id="star-box" class="shrink-0 bg-white/15 border border-white/25 rounded-xl px-2.5 py-1 text-sm font-black" title="Sterne: 3 pro Teil">
         ⭐ <span id="star-count" class="inline-block">0</span><span class="text-white/75 font-bold">/<span id="star-max">12</span></span>
       </div>
     </div>
@@ -90,7 +94,7 @@
         <div id="body-k1"></div>
       </div>
       <details id="theory-k1" class="bg-white rounded-3xl p-5 shadow-sm border border-orange-100">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[32px]">📖 Kurz erklärt: Wie Vulkane entstehen</summary>
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2">📖 Kurz erklärt: Wie Vulkane entstehen</summary>
         <ul class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
           <li>Die meisten Vulkane liegen an den <b>Plattengrenzen</b>. Dort kann Magma aufsteigen.</li>
           <li><b>Platten driften auseinander</b> (← →): Im Riss steigt Magma auf. Beispiel: <b>Island</b>.</li>
@@ -113,7 +117,7 @@
         <div id="body-k2"></div>
       </div>
       <details id="theory-k2" class="bg-white rounded-3xl p-5 shadow-sm border border-orange-100">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[32px]">📖 Kurz erklärt: Aufbau, Vulkantypen, Ausbrüche</summary>
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2">📖 Kurz erklärt: Aufbau, Vulkantypen, Ausbrüche</summary>
         <ul class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
           <li><b>Magma</b> ist flüssiges Gestein unter der Erde. Sobald es an die Erdoberfläche kommt, heisst es <b>Lava</b>.</li>
           <li><b>Aufbau:</b> Unten sammelt sich das Magma in der <b>Magmakammer</b>. Durch den <b>Schlot</b> steigt es nach oben. Oben ist die Öffnung, der <b>Krater</b>. Heraus kommen ein <b>Lavastrom</b> und eine <b>Aschewolke</b>.</li>
@@ -148,7 +152,7 @@
         <div id="body-k3"></div>
       </div>
       <details id="theory-k3" class="bg-white rounded-3xl p-5 shadow-sm border border-orange-100">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[32px]">📖 Kurz erklärt: Erdbeben</summary>
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2">📖 Kurz erklärt: Erdbeben</summary>
         <ul class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
           <li><b>So entsteht ein Erdbeben:</b> Platten bewegen sich → sie <b>verhaken</b> sich → <b>Spannung</b> baut sich auf → das Gestein <b>bricht plötzlich</b> (am Erdbebenherd) → die Erde <b>bebt</b>.</li>
           <li><b>Seismograph:</b> das Messgerät. <b>Seismogramm:</b> die Aufzeichnung (die Zickzack-Kurve). <b>Richter-Skala:</b> Damit gibt man die Stärke an.</li>
@@ -169,7 +173,7 @@
         <div id="body-k4"></div>
       </div>
       <details id="theory-k4" class="bg-white rounded-3xl p-5 shadow-sm border border-orange-100">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[32px]">📖 Kurz erklärt: Tsunamis</summary>
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2">📖 Kurz erklärt: Tsunamis</summary>
         <ul class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
           <li><b>Auslöser:</b> ein <b>Seebeben</b>. Der Meeresboden hebt oder senkt sich ruckartig. Dadurch wird das ganze Wasser darüber bewegt, vom Grund bis zur Oberfläche.</li>
         </ul>
@@ -376,7 +380,7 @@
       // ---------- Teil 1: Vulkane entstehen (LZ1) ----------
       k1: [
         { id: 'k1_wo', st: 1, nr: [1, 4], type: 'mc', first: true, q: 'Wo gibt es besonders viele Vulkane?',
-          opts: ['An den Grenzen der Erdplatten', 'Mitten in grossen Wüsten', 'Nur am Nordpol', 'Überall gleich viele'],
+          opts: ['An den Grenzen der Erdplatten', 'Mitten in den grossen Wüsten', 'Rund um den Nordpol herum', 'Überall auf der Welt gleich'],
           tip: 'Die Erdkruste ist wie ein Puzzle aus grossen Teilen. Wo kann am ehesten etwas von unten herauskommen?',
           why: 'Die meisten Vulkane liegen an Plattengrenzen. Dort kann Magma aufsteigen.' },
         { id: 'k1_orte', st: 1, nr: [1], type: 'sort', q: 'Welches Land passt zu welcher Art?',
@@ -396,7 +400,7 @@
           tip: 'Gibt es hier überhaupt eine Grenze zwischen zwei Platten? Woher kommt das Magma?',
           why: 'Hotspot: Mitten unter der Platte steigt ein Magmastrahl auf.' },
         { id: 'k1_hot', st: 1, nr: [2], type: 'mc', q: 'Was ist ein Hotspot?',
-          opts: ['Ein besonders heisser Punkt im Erdmantel. Von dort steigt Magma auf.', 'Ein Vulkan, der nie ausbricht.', 'Eine Stelle, wo zwei Platten zusammenstossen.', 'Ein sehr heisser Strand am Meer.'],
+          opts: ['Ein heisser Punkt im Erdmantel, wo Magma aufsteigt.', 'Ein Vulkan, der seit langer Zeit nie mehr ausbricht.', 'Eine Stelle, wo zwei Platten zusammenstossen.', 'Ein sehr heisser Strand am Meer in den Tropen.'],
           tip: 'Übersetze das Wort aus dem Englischen: «hot» und «spot». Und: Ein Hotspot liegt nicht an einer Plattengrenze.',
           why: 'Ein Hotspot liegt mitten unter einer Platte. Ein Magmastrahl brennt sich durch die Platte.' },
         { id: 'k1_alt', st: 1, nr: [3], type: 'mc', pic: 'hawaii', q: 'Die Inseln von Hawaii sind über einem Hotspot entstanden. Welche Insel ist am ältesten?',
@@ -404,7 +408,7 @@
           tip: 'Über dem Hotspot entsteht gerade ein Vulkan. Die Platte trägt die Inseln weg wie ein Förderband. Welche Insel ist schon am längsten unterwegs?',
           why: 'Kauai ist am weitesten weg vom Hotspot. Darum ist sie am ältesten.' },
         { id: 'k1_ring', st: 1, nr: [4], type: 'mc', pic: 'ring', q: 'Die roten Dreiecke sind Vulkane. Wie heisst dieser Gürtel aus Vulkanen?',
-          opts: ['Ring of Fire (Pazifischer Feuerring)', 'Golfstrom', 'Äquator', 'Alpenbogen'],
+          opts: ['Ring of Fire (Pazifischer Feuerring)', 'Golfstrom (Strömung im Atlantik)', 'Äquator (Linie um die Erdmitte)', 'Alpenbogen (Gebirge in Europa)'],
           tip: 'Die Vulkane bilden fast einen Kreis. Und Vulkane haben mit Feuer zu tun.',
           why: 'Der «Ring of Fire» liegt rund um den Pazifik. Dort gibt es viele Vulkane und Erdbeben.' },
         { id: 'k1_g_hot', st: 2, nr: [2], type: 'gap', text: 'Bei Hawaii steigt mitten unter einer Platte sehr heisses Magma auf. Diese Stelle heisst ___.',
@@ -444,7 +448,7 @@
         { id: 'k2_schlot', st: 1, nr: [6], type: 'tap', zone: 'schlot', q: 'Tippe im Bild auf den Schlot.',
           tip: 'Ein Schlot ist wie ein Kamin oder ein Trinkhalm: ein Rohr, durch das etwas nach oben steigt.' },
         { id: 'k2_magma', st: 1, nr: [5], type: 'mc', q: 'Was ist der Unterschied zwischen Magma und Lava?',
-          opts: ['Magma ist unter der Erde. Lava ist an der Erdoberfläche.', 'Magma ist an der Erdoberfläche. Lava ist unter der Erde.', 'Magma ist kalt. Lava ist heiss.', 'Magma und Lava sind zwei verschiedene Vulkane.'],
+          opts: ['Magma ist unter der Erde. Lava ist an der Erdoberfläche.', 'Magma ist an der Erdoberfläche. Lava ist unter der Erde.', 'Magma ist kalt und fest. Lava ist heiss und flüssig.', 'Magma und Lava sind zwei Namen für zwei Vulkane.'],
           tip: 'Es ist das gleiche flüssige Gestein. Nur der Ort ist anders. Wo ist es, bevor der Vulkan ausbricht?',
           why: 'Magma ist flüssiges Gestein unter der Erde. Sobald es herauskommt, heisst es Lava.' },
         { id: 'k2_bild', st: 1, nr: [7], type: 'mc', picOpts: true, q: 'Welches Bild zeigt einen Schildvulkan?',
@@ -459,7 +463,7 @@
           cats: ['Schichtvulkan', 'Schildvulkan'],
           tip: 'Denk an Hawaii: Wie fliesst dort die Lava? Und der Fujiyama ist ein steiler, spitzer Berg.' },
         { id: 'k2_schild', st: 1, nr: [11], type: 'mc', q: 'Wie bricht ein Schildvulkan meistens aus?',
-          opts: ['Ruhig: Die Lava fliesst aus dem Krater.', 'Mit einer riesigen Explosion.', 'Er bricht nie aus.', 'Es kommt nur Wasser heraus.'],
+          opts: ['Ruhig: Die Lava fliesst aus dem Krater.', 'Laut: Eine riesige Explosion zerreisst den Berg.', 'Gar nicht: Ein Schildvulkan bricht nie aus.', 'Nass: Aus dem Krater kommt nur heisses Wasser.'],
           tip: 'Die Lava ist dünnflüssig. Die Gase können gut heraus, wie bei einer offenen Flasche.',
           why: 'Die Lava ist dünnflüssig, die Gase entweichen leicht. Es gibt kaum Druck. Darum fliesst die Lava ruhig.' },
         { id: 'k2_g_krater', st: 2, nr: [6], type: 'gap', pic: 'vk:krater', text: 'Der markierte Teil (?) heisst ___.',
@@ -500,7 +504,7 @@
           tip: 'Das Gerät und die Aufzeichnung klingen fast gleich. Gesucht ist das Blatt mit der Kurve, nicht das Gerät.',
           why: 'Seismograph = Gerät. Seismogramm = Aufzeichnung.' },
         { id: 'k3_vorher', st: 1, nr: [12], type: 'mc', q: 'Was passiert im Boden, bevor die Erde bebt?',
-          opts: ['Die Platten verhaken sich. Die Spannung wird immer grösser.', 'Es regnet sehr lange.', 'Der Wind drückt auf die Berge.', 'Ein Vulkan kühlt ab.'],
+          opts: ['Die Platten verhaken sich, Spannung baut sich auf.', 'Es regnet viele Tage lang, der Boden wird weich.', 'Der Wind drückt sehr stark auf die hohen Berge.', 'Ein Vulkan kühlt ab, und die Lava wird fest.'],
           tip: 'Erdbeben haben mit den Erdplatten zu tun, nicht mit dem Wetter.',
           why: 'Die Platten verhaken sich. Die Spannung wächst, bis das Gestein plötzlich bricht.' },
         { id: 'k3_o_entst', st: 1, nr: [12], type: 'order', q: 'Wie entsteht ein Erdbeben?',
@@ -515,7 +519,7 @@
           cats: ['Richtig', 'Lieber nicht'],
           tip: 'Frag dich bei jeder Zeile: Kann mir hier etwas auf den Kopf fallen? Kann ich stecken bleiben?' },
         { id: 'k3_draussen', st: 1, nr: [15], type: 'mc', q: 'Du bist draussen auf der Strasse. Die Erde bebt stark. Was machst du?',
-          opts: ['Auf einen freien Platz gehen, weg von Häusern und Strommasten.', 'Schnell ins nächste Haus rennen.', 'Mich unter einen Balkon stellen.', 'Auf eine Brücke gehen.'],
+          opts: ['Auf einen freien Platz gehen, weg von Häusern.', 'Schnell in das nächste Haus rennen und warten.', 'Mich unter einen Balkon stellen und abwarten.', 'Auf eine Brücke gehen, dort ist es sicher.'],
           tip: 'Wo kann nichts auf dich herunterfallen?',
           why: 'Auf einem freien Platz kann nichts auf dich fallen.' },
         { id: 'k3_g_graph', st: 2, nr: [13], type: 'gap', text: 'Ein Stift zeichnet jede Bewegung der Erde auf. Dieses Messgerät heisst ___.',
@@ -550,11 +554,11 @@
       // ---------- Teil 4: Tsunamis (LZ5) ----------
       k4: [
         { id: 'k4_was', st: 1, nr: [16], type: 'mc', first: true, q: 'Was ist ein Tsunami?',
-          opts: ['Eine riesige Welle, die an der Küste grosse Schäden macht.', 'Ein starker Sturm in der Wüste.', 'Ein Vulkan unter dem Eis.', 'Ein kleiner Bach in den Bergen.'],
+          opts: ['Eine riesige Welle, die an der Küste Schäden macht.', 'Ein starker Sturm, der in der Wüste Sand aufwirbelt.', 'Ein Vulkan, der unter dickem Eis versteckt ist.', 'Ein kleiner Bach, der in den Bergen entspringt.'],
           tip: 'Das Wort kommt aus Japan und heisst «Hafenwelle».',
           why: 'Ein Tsunami ist eine riesige Welle. Sie entsteht meistens durch ein Seebeben.' },
         { id: 'k4_ausl', st: 1, nr: [16], type: 'mc', q: 'Was löst einen Tsunami meistens aus?',
-          opts: ['Ein Seebeben am Meeresboden', 'Ein starker Wind', 'Ein grosses Schiff', 'Starker Regen'],
+          opts: ['Ein Seebeben am Meeresboden', 'Ein starker Wind auf dem Meer', 'Ein grosses Schiff im Hafen', 'Starker Regen über dem Meer'],
           tip: 'Normale Wellen macht der Wind. Ein Tsunami bewegt aber das ganze Wasser bis zum Boden. Was kann den Meeresboden bewegen?',
           why: 'Bei einem Seebeben hebt oder senkt sich der Meeresboden ruckartig.' },
         { id: 'k4_sort1', st: 1, nr: [17], type: 'sort', q: 'Normale Welle oder Tsunami?',
@@ -570,11 +574,11 @@
           cats: ['Offenes Meer', 'An der Küste'],
           tip: 'Denk an einen Stau auf der Autobahn: Wo die Autos langsamer werden müssen, drängen sie sich zusammen.' },
         { id: 'k4_zeichen', st: 1, nr: [19], type: 'mc', q: 'Du bist am Strand. Welches Zeichen warnt dich vor einem Tsunami?',
-          opts: ['Das Meer zieht sich plötzlich weit zurück.', 'Die Sonne scheint sehr stark.', 'Es hat viele Möwen am Himmel.', 'Der Sand wird plötzlich warm.'],
+          opts: ['Das Meer zieht sich plötzlich weit zurück.', 'Die Sonne scheint plötzlich sehr stark.', 'Am Himmel fliegen plötzlich viele Möwen.', 'Der Sand am Strand wird plötzlich warm.'],
           tip: 'Achte auf das Wasser selbst. Was wäre am Strand sehr ungewöhnlich?',
           why: 'Wenn das Meer sich plötzlich weit zurückzieht, kommt bald eine riesige Welle.' },
         { id: 'k4_tun', st: 1, nr: [19], type: 'mc', q: 'Das Meer zieht sich plötzlich zurück. Was machst du?',
-          opts: ['Sofort weg vom Strand an einen hohen Ort gehen und andere warnen.', 'Muscheln sammeln, die jetzt am Boden liegen.', 'Am Strand bleiben und filmen.', 'Ins Wasser gehen und schauen.'],
+          opts: ['Sofort an einen hohen Ort gehen, andere warnen.', 'Muscheln sammeln, die jetzt am Boden liegen.', 'Am Strand bleiben und mit dem Handy filmen.', 'Ins Wasser gehen und nachschauen, was los ist.'],
           tip: 'Das Wasser kommt bald als riesige Welle zurück. Wo ist man vor Wasser sicher?',
           why: 'Viel Zeit bleibt nicht: sofort hoch hinauf, zum Beispiel auf einen Hügel.' },
         { id: 'k4_g_see', st: 2, nr: [16], type: 'gap', text: 'Ein Erdbeben unter dem Meer heisst ___.',
@@ -607,7 +611,7 @@
       ]
     };
     // Wortkästen für Lücken (mit Ablenkern): erst mit Wortkasten, dann frei erklären
-    const BANKS = { k3: ['verhaken', 'Spannung', 'bricht', 'schmilzt', 'Lava', 'trennen'] };
+    const BANKS = { k3: ['verhaken', 'trennen', 'Spannung', 'Hitze', 'bricht', 'schmilzt'] };   // pro Lücke ein Ablenker der gleichen Wortart
     const BY_ID = {};
     PARTS.forEach(p => ITEMS[p.id].forEach(it => { it.part = p.id; BY_ID[it.id] = it; }));
     const PART_BY_ID = Object.fromEntries(PARTS.map(p => [p.id, p]));
@@ -823,7 +827,7 @@
       renderHeader();
       if (ok) {
         const t = ++Q.token, type = BY_ID[id].type;
-        setTimeout(() => { if (Q.token === t && Q.phase === 'answered') nextQ(pid); }, type === 'mc' || type === 'tap' ? 1000 : 1500);
+        setTimeout(() => { if (Q.token === t && Q.phase === 'answered') nextQ(pid); }, type === 'mc' || type === 'tap' ? 1800 : 2200);
       }
     }
     function nextQ(pid) {
@@ -931,6 +935,8 @@
       }
       if (step === 4) { saveDraft(it.id, val); Q.help.model = true; }
       renderPart(pid);
+      const box = Q.warn ? $('help-warn') : $('help-' + step);
+      if (box) box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       if (step === 2 && $('open-in')) { const t = $('open-in'); t.focus(); t.setSelectionRange(t.value.length, t.value.length); }
     }
     function selfRate(pid, ok) {
@@ -938,7 +944,7 @@
       if (Q.phase !== 'ask' || !Q.help.model) return;
       answer(pid, ok, Q.dontKnow);
     }
-    function toggleTip(pid) { const Q = curQ(pid); Q.tip = !Q.tip; renderPart(pid); }
+    function toggleTip(pid) { const Q = curQ(pid); Q.tip = !Q.tip; renderPart(pid); if ($('tip-box')) $('tip-box').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
 
     // ==============================================================
     // ANZEIGE
@@ -946,6 +952,7 @@
     const BTN_MAIN = 'min-h-[52px] px-4 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white text-base font-black shadow-sm';
     const BTN_SOFT = 'min-h-[52px] px-4 rounded-2xl border-2 border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-base font-bold';
     const BTN_SMALL = 'min-h-[44px] px-3 rounded-xl text-sm font-bold border';
+    const DUNNO_BTN = 'mt-2 w-full min-h-[44px] rounded-xl text-sm font-semibold text-slate-500 hover:text-slate-700 underline underline-offset-2';
     function bar(pct, h = 'h-4') {
       return `<div class="${h} rounded-full bg-orange-100 border border-orange-200 overflow-hidden"><div class="bar h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-500" style="width:${pct}%"></div></div>`;
     }
@@ -957,6 +964,7 @@
 
     function renderHeader() {
       $('star-count').textContent = totalStars();
+      $('star-box').classList.toggle('invisible', totalStars() === 0);
       $('star-max').textContent = PARTS.length * STAGES.length;
       ['home', ...PARTS.map(p => p.id)].forEach(v => {
         const b = $('nav-' + v);
@@ -1011,21 +1019,16 @@
       const p = PART_BY_ID[pid], k = curStage(pid), pct = pctOf(pid), Q = curQ(pid);
       const steps = STAGES.map((s, i) => {
         const done = i < k, now = i === k && !Q.review;
-        return `<div class="flex-1 min-w-0 rounded-xl px-2 py-1.5 text-center border-2 ${done ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : now ? 'bg-orange-50 border-orange-400 text-orange-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">
-          <div class="text-base leading-none">${done ? '⭐' : s.icon}</div><div class="text-[11px] sm:text-xs font-bold mt-0.5">${i + 1} ${s.label}</div></div>`;
+        return `<div class="flex-1 min-w-0 rounded-lg px-1 py-1 text-center border-2 text-[11px] sm:text-xs font-bold whitespace-nowrap ${done ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : now ? 'bg-orange-50 border-orange-400 text-orange-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">${done ? '⭐' : s.icon} ${s.label}</div>`;
       }).join('');
       $('head-' + pid).innerHTML = `
-        <div class="flex items-center gap-3">
-          <span class="text-3xl w-12 h-12 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0">${p.emoji}</span>
-          <div class="min-w-0 flex-1">
-            <div class="text-xs font-bold uppercase tracking-wider text-orange-700">Teil ${PARTS.indexOf(p) + 1} · ${p.lz}</div>
-            <h2 class="text-xl font-black text-slate-900 leading-tight">${p.title}</h2>
-          </div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl shrink-0">${p.emoji}</span>
+          <h2 class="text-lg sm:text-xl font-black text-slate-900 leading-tight flex-1 min-w-0">${p.title}</h2>
+          ${starsHtml(starsOf(pid), 'text-base shrink-0')}
         </div>
-        <div class="mt-2 text-sm font-semibold text-slate-600 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">📄 Auf deinem Blatt: Fragen Nr. ${p.nrs}</div>
-        <div class="mt-3 flex justify-between items-end text-sm font-bold text-slate-700 mb-1"><span>Fortschritt: ${pct} %</span>${starsHtml(starsOf(pid), 'text-base')}</div>
-        ${bar(pct)}
-        <div class="mt-3 flex gap-1.5">${steps}</div>`;
+        <div class="mt-2 flex items-center gap-2"><div class="flex-1">${bar(pct, 'h-3')}</div><span class="text-sm font-bold text-slate-600 shrink-0">${pct ? pct + ' %' : 'Los geht’s!'}</span></div>
+        <div class="mt-2 flex gap-1">${steps}</div>`;
     }
 
     function feedbackHtml(pid, Q, it) {
@@ -1057,7 +1060,7 @@
       const done = Q.phase !== 'ask';
       let h = '';
       if (it.type === 'mc') {
-        if (it.pic && PICS[it.pic]) h += `<div class="rounded-2xl bg-sky-50/50 border border-sky-100 p-2 mb-3">${PICS[it.pic]}</div>`;
+        if (it.pic && PICS[it.pic]) h += `<div class="pic rounded-2xl bg-sky-50/50 border border-sky-100 p-2 mb-3">${PICS[it.pic]}</div>`;
         if (it.picOpts) {
           h += `<div class="grid grid-cols-2 gap-3">${Q.opts.map((o, i) => {
             let cls = 'border-slate-300 bg-white hover:border-orange-400';
@@ -1075,7 +1078,7 @@
       if (it.type === 'tap') {
         const o = { tap: !done };
         if (done) { o.right = it.zone; if (Q.pick && Q.pick !== it.zone) o.wrong = Q.pick; }
-        h += `<div class="rounded-2xl bg-orange-50/40 border border-orange-100 p-2">${svgVulkan(o)}</div>`;
+        h += `<div class="pic rounded-2xl bg-orange-50/40 border border-orange-100 p-2">${svgVulkan(o)}</div>`;
       }
       if (it.type === 'sort') {
         h += `<div class="space-y-2.5">${Q.rows.map(r => {
@@ -1107,7 +1110,7 @@
         }
       }
       if (it.type === 'gap') {
-        if (it.pic && it.pic.startsWith('vk:')) h += `<div class="rounded-2xl bg-orange-50/40 border border-orange-100 p-2 mb-3">${svgVulkan({ mark: it.pic.slice(3) })}</div>`;
+        if (it.pic && it.pic.startsWith('vk:')) h += `<div class="pic rounded-2xl bg-orange-50/40 border border-orange-100 p-2 mb-3">${svgVulkan({ mark: it.pic.slice(3) })}</div>`;
         const parts = it.text.split('___');
         h += `<div class="text-lg font-semibold text-slate-900 leading-relaxed wrap-any">${esc(parts[0])}<span class="inline-block min-w-[5rem] border-b-4 border-orange-400 mx-1 text-center text-orange-700">${done ? esc(Q.ok ? (Q.near ? it.a[0] : Q.ans) : it.a[0]) : '&nbsp;?&nbsp;'}</span>${esc(parts[1] || '')}</div>`;
         if (!done && it.bank) h += `<div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-3"><div class="text-sm font-bold text-slate-600 mb-2">Wortkasten: Tippe ein Wort an.</div><div class="flex flex-wrap gap-2">${Q.bank.map(w => `<button type="button" onclick="bankPick('${esc(w)}')" class="min-h-[44px] px-3 rounded-xl border-2 border-slate-300 bg-white hover:border-orange-400 text-base font-bold text-slate-800">${esc(w)}</button>`).join('')}</div></div>`;
@@ -1118,10 +1121,7 @@
                 onkeydown="if(event.key==='Enter'){event.preventDefault();submitGap('${pid}',false);}"
                 class="w-full bg-white border-2 border-slate-300 rounded-2xl px-4 py-3 text-lg font-semibold text-slate-800">
               ${Q.hint ? `<div class="text-base font-bold text-sky-800">💡 Das Wort beginnt mit «${esc(it.a[0].charAt(0))}» und hat ${it.a[0].length} Buchstaben.</div>` : `<button type="button" onclick="gapHint('${pid}')" class="min-h-[44px] text-base font-bold text-sky-700 underline">💡 Hilfe: erster Buchstabe</button>`}
-              <div class="grid grid-cols-2 gap-2">
-                <button type="button" onclick="dontKnow('${pid}')" class="${BTN_SOFT}">🤷 Weiss ich nicht</button>
-                <button type="button" onclick="submitGap('${pid}',false)" class="${BTN_MAIN}">✓ Prüfen</button>
-              </div>
+              <button type="button" onclick="submitGap('${pid}',false)" class="w-full ${BTN_MAIN}">✓ Prüfen</button>
             </div>`;
         }
       }
@@ -1134,18 +1134,18 @@
             <div class="mt-1.5 grid grid-cols-2 gap-2">
               ${stepBtn(1, '💡 Tipp und Wörter', Q.help.tip)}${stepBtn(2, '✏️ Satzanfang', false)}${stepBtn(3, '🔍 Antwort prüfen', !!Q.help.check)}${stepBtn(4, '📗 Musterlösung', Q.help.model)}
             </div>`;
-          if (Q.warn) h += `<div class="mt-2 rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-base text-yellow-900">${esc(Q.warn)}</div>`;
-          if (Q.help.tip) h += `<div class="mt-2 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 space-y-2"><div class="text-base text-slate-800">💡 ${esc(it.tip)}</div><div class="text-sm font-bold text-slate-600">Diese Wörter helfen dir:</div><div class="flex flex-wrap gap-1.5">${shuffle(it.words).map(w => `<span class="px-2.5 py-1 rounded-full bg-white border border-yellow-300 text-sm font-semibold text-slate-800">${esc(w)}</span>`).join('')}</div></div>`;
+          if (Q.warn) h += `<div id="help-warn" class="mt-2 rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-base text-yellow-900">${esc(Q.warn)}</div>`;
+          if (Q.help.tip) h += `<div id="help-1" class="mt-2 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 space-y-2"><div class="text-base text-slate-800">💡 ${esc(it.tip)}</div><div class="text-sm font-bold text-slate-600">Diese Wörter helfen dir:</div><div class="flex flex-wrap gap-1.5">${shuffle(it.words).map(w => `<span class="px-2.5 py-1 rounded-full bg-white border border-yellow-300 text-sm font-semibold text-slate-800">${esc(w)}</span>`).join('')}</div></div>`;
           if (Q.help.check) {
             const found = Q.help.check.filter(x => x[1]).length, need = it.need || it.keys.length;
-            h += `<div class="mt-2 rounded-2xl border border-sky-200 bg-sky-50 p-3 space-y-1">
+            h += `<div id="help-3" class="mt-2 rounded-2xl border border-sky-200 bg-sky-50 p-3 space-y-1">
               <div class="text-base font-bold text-slate-800">${found >= need ? '👍 Sehr gut! Das Wichtigste ist drin.' : 'Das hast du schon:'}</div>
-              ${Q.help.check.map(([label, ok]) => `<div class="text-base ${ok ? 'text-emerald-800' : 'text-slate-500'}">${ok ? '✔' : '○'} ${esc(label)}</div>`).join('')}
-              ${found < need ? `<div class="text-sm text-slate-600">Ergänze, was noch fehlt (○). Dann prüf nochmals.</div>` : '<div class="text-sm text-slate-600">Vergleiche jetzt mit der Musterlösung (4).</div>'}
+              ${Q.help.check.map(([label, ok]) => `<div class="text-base ${ok ? 'text-emerald-800' : 'text-slate-500'}">${ok ? '✔' : '☐'} ${esc(label)}</div>`).join('')}
+              ${found < need ? `<div class="text-sm text-slate-600">Darüber kannst du noch weiterschreiben: Ergänze, was noch fehlt (☐). Dann prüf nochmals.</div>` : '<div class="text-sm text-slate-600">Vergleiche jetzt mit der Musterlösung (4).</div>'}
             </div>`;
           }
           if (Q.help.model) {
-            h += `<div class="mt-2 rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-3 space-y-2">
+            h += `<div id="help-4" class="mt-2 rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-3 space-y-2">
               <div class="text-sm font-bold uppercase tracking-wider text-emerald-800">📗 Musterlösung</div>
               <div class="text-base text-slate-800 leading-relaxed">${esc(it.model)}</div>
               <div class="text-sm font-bold text-slate-700 pt-1">Vergleiche mit deiner Antwort. Hast du das Wichtigste?</div>
@@ -1155,12 +1155,10 @@
               </div>
             </div>`;
           } else {
-            h += `<button type="button" onclick="dontKnow('${pid}')" class="mt-3 w-full ${BTN_SOFT}">🤷 Weiss ich nicht</button>`;
+            h += `<button type="button" onclick="dontKnow('${pid}')" class="${DUNNO_BTN}">🤷 Weiss ich nicht</button>`;
           }
         }
       }
-      // «Weiss ich nicht» für Auswahl, Antippen, Zuordnen, Reihenfolge
-      if (!done && ['mc', 'tap', 'sort', 'order'].includes(it.type)) h += `<button type="button" onclick="dontKnow('${pid}')" class="mt-3 w-full min-h-[48px] rounded-2xl text-base font-bold text-slate-600 border-2 border-transparent hover:border-slate-200">🤷 Weiss ich nicht</button>`;
       return h;
     }
 
@@ -1207,21 +1205,22 @@
         let html = `
           <div class="flex items-center justify-between gap-2 text-xs font-bold text-slate-500 mb-2">
             <span>${Q.review ? '🔁 Wiederholen' : `${st.icon} Stufe ${it.st}: ${st.label}`}</span>
-            <span class="flex items-center gap-2">${STREAK >= 3 ? `<span class="text-orange-600">🔥 ${STREAK}</span>` : ''}<span class="px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800">${nrText(it)}</span></span>
+            <span class="flex items-center gap-2"><span class="px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800">${nrText(it)}</span></span>
           </div>
           ${rest ? `<div class="text-lg sm:text-xl font-black text-slate-900 leading-snug wrap-any">${rest}</div>` : ''}
-          <div class="text-base text-slate-600 mt-1 mb-3"><b class="text-slate-800">${verb}</b>${hint.slice(verb.length)}</div>
+          ${/^(Tippe|Schreib|Erkläre|Nenne|Bring|Ordne|Wähle)\b/.test(it.q || '') ? '<div class="mb-3"></div>' : `<div class="text-base text-slate-600 mt-1 mb-3"><b class="text-slate-800">${verb}</b>${hint.slice(verb.length)}</div>`}
           ${askHtml(pid, Q, it)}`;
         if (Q.phase === 'answered') html += feedbackHtml(pid, Q, it);
         if (Q.phase === 'ask' && it.type !== 'open') {
           html += `
-            ${Q.tip ? `<div class="mt-3 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 text-base text-slate-800 leading-relaxed"><div class="text-xs font-extrabold uppercase tracking-wider text-yellow-800 mb-1">💡 Tipp</div>${esc(it.tip)}</div>` : ''}
-            <div class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap gap-2">
-              <button type="button" onclick="toggleTip('${pid}')" class="${BTN_SMALL} bg-yellow-50 border-yellow-300 text-yellow-900">💡 Tipp</button>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <button type="button" onclick="toggleTip('${pid}')" class="${BTN_SMALL} ${Q.tip ? 'bg-yellow-100' : 'bg-yellow-50'} border-yellow-300 text-yellow-900">💡 Tipp</button>
               <button type="button" onclick="openTheory()" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700">📖 Theorie</button>
-            </div>`;
+            </div>
+            ${Q.tip ? `<div id="tip-box" class="mt-2 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 text-base text-slate-800 leading-relaxed">💡 ${esc(it.tip)}</div>` : ''}
+            <button type="button" onclick="dontKnow('${pid}')" class="${DUNNO_BTN}">🤷 Weiss ich nicht</button>`;
         } else if (Q.phase === 'ask') {
-          html += `<div class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap gap-2"><button type="button" onclick="openTheory()" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700">📖 Theorie</button></div>`;
+          html += `<div class="mt-3 flex flex-wrap gap-2"><button type="button" onclick="openTheory()" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700">📖 Theorie</button></div>`;
         }
         box.innerHTML = html;
       }
@@ -1229,6 +1228,9 @@
       if (keepFocus) {
         const f = Q.phase === 'ask' ? ($('gap-in') || null) : $('next-btn');
         if (f) f.focus({ preventScroll: true });
+        // Rückmeldung bzw. Feier ganz sichtbar machen
+        if (Q.phase !== 'ask') { const fb = box.querySelector('.feedback-box, .celebrate'); const nb = $('next-btn'); if (fb) fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); if (nb) setTimeout(() => nb.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50); }
+        else showTop(pid);
       }
     }
 
@@ -1243,7 +1245,7 @@
             <button type="button" onclick="cancelReset()" class="${BTN_SOFT}">Abbrechen</button>
             <button type="button" onclick="doReset('${pid}')" class="${BTN_MAIN}">Ja, neu starten</button>
           </div>
-        </div>` : `<div class="text-center"><button type="button" onclick="askReset('${pid}')" ${any ? '' : 'disabled'} class="${BTN_SMALL} bg-white border-slate-300 text-slate-700 ${any ? '' : 'opacity-40 cursor-not-allowed'}">🔀 Nochmals üben (diesen Teil von vorne)</button></div>`;
+        </div>` : `<div class="text-center"><button type="button" onclick="askReset('${pid}')" ${any ? '' : 'disabled'} class="min-h-[44px] px-3 text-sm font-semibold text-slate-500 hover:text-slate-700 underline underline-offset-2 ${any ? '' : 'opacity-40 cursor-not-allowed'}">🔀 Nochmals üben (diesen Teil von vorne)</button></div>`;
     }
     function askReset(pid) { CONFIRM_RESET = pid; renderReset(pid); }
     function cancelReset() { const pid = CONFIRM_RESET; CONFIRM_RESET = null; if (pid) renderReset(pid); }
@@ -1259,6 +1261,7 @@
       scrollToCard(pid);
     }
 
+    function showTop(pid) { const b = $('body-' + pid); if (b && b.getBoundingClientRect().top < 120) b.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     function scrollToCard(pid) { const c = $('card-' + pid); if (c && c.getBoundingClientRect().top < 0) c.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     function openTheory() {
       const d = $('theory-' + STATE.view);
