@@ -80,6 +80,12 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 | Offene Antwort mit Hilfe-Treppe, danach mit der Musterlösung vergleichen («Hab ich so / Noch nicht»). | Hilfe vor der Lösung (Rosenshine, 2012); Rückmeldung zur Aufgabe (Hattie & Timperley, 2007). Selbstvergleich mit einer Musterlösung ist eine Form von Rückmeldung; die Lernenden schätzen sich aber oft zu gut ein, darum sucht «Antwort prüfen» vorher die Schlüsselwörter. |
 | Wiederholung nach 1 und 3 Tagen. | Verteiltes Üben und successive relearning (Cepeda et al., 2006; Rawson & Dunlosky, 2022). |
 
+## 2c Programmieren lernen (Lernpfad Informatik)
+
+**Warum:** Blöcke in die richtige Reihenfolge bringen («Parsons-Aufgaben») bringt etwa gleich viel wie Code selber schreiben, geht aber schneller und entmutigt weniger (Ericson, Margulieux & Rick, 2017). Falsche Zusatzblöcke (Ablenker) machen es für junge Anfänger schwerer und weniger effizient (Harms, Chen & Kelleher, 2016), darum zuerst ohne, dann mit Ablenkern. Programme zuerst lesen und nachverfolgen, dann ändern und selber schreiben (Lister et al., 2004; PRIMM: Sentance, Waite & Kallia, 2019).
+
+**So setzt es das Portal um:** Pro Teil zuerst Skripte lesen und vorhersagen (Erkennen), dann Blöcke ordnen oder Zahlen einsetzen (Ergänzen), zuletzt mit «weil» erklären (Hilfe-Treppe).
+
 ## 3 Grammatik lernen (für neue Übungen)
 
 - **Kurze, klare Regel mit Beispiel zuerst.** Ausdrückliche Erklärung wirkt im Fremdsprachenunterricht stärker als nur «entdecken lassen» (Norris & Ortega, 2000; Spada & Tomita, 2010).
@@ -160,3 +166,7 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - Yanagisawa, A., Webb, S., & Uchihara, T. (2020). How do different forms of glossing contribute to L2 vocabulary learning from reading? A meta-regression analysis. *Studies in Second Language Acquisition, 42*(2), 411–438. https://doi.org/10.1017/S0272263119000688
 - Sundararajan, N., & Adesope, O. (2020). Keep it coherent: A meta-analysis of the seductive details effect. *Educational Psychology Review, 32*, 707–734. https://doi.org/10.1007/s10648-020-09522-4
 - Wong, R. M., & Adesope, O. O. (2021). Meta-analysis of emotional designs in multimedia learning: A replication and extension study. *Educational Psychology Review, 33*, 357–385. https://doi.org/10.1007/s10648-020-09545-x
+- Ericson, B. J., Margulieux, L. E., & Rick, J. (2017). Solving Parsons problems versus fixing and writing code. *Proceedings of the 17th Koli Calling International Conference on Computing Education Research*, 20–29. https://doi.org/10.1145/3141880.3141895
+- Harms, K. J., Chen, J., & Kelleher, C. L. (2016). Distractors in Parsons problems decrease learning efficiency for young novice programmers. *Proceedings of the 2016 ACM Conference on International Computing Education Research (ICER)*, 241–250.
+- Lister, R., et al. (2004). A multi-national study of reading and tracing skills in novice programmers. *ACM SIGCSE Bulletin, 36*(4), 119–150.
+- Sentance, S., Waite, J., & Kallia, M. (2019). Teaching computer programming with PRIMM: A sociocultural perspective. *Computer Science Education, 29*(2–3), 136–176.
