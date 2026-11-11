@@ -8,7 +8,7 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 | Seite | Deutsch freigegeben | Spanisch |
 |---|---|---|
 | `index.html` | ja (6.11.2026) | fertig (6.11.2026). Kachel «Vocabulary und Grammatik lernen» zuoberst, Informatik an zweiter Stelle (Wunsch Lehrperson) |
-| `connected_3_scratch_trainingshub.html` | ja (6.11.2026); Lernpfad (11.11.2026) noch nicht | Oberfläche fertig; neue Aufgaben vom 11.11.2026 noch nur Deutsch. Früher (6.11.2026): Blocktexte wie Scratch 3 Spanisch («mover (10) pasos», «sumar a y», «posición en y»). `<option>`, SVG-Text und Attribute über `data-es…` und `applyLangAttrs()` |
+| `connected_3_scratch_trainingshub.html` | ja (6.11.2026); Lernpfad (11.11.2026) | fertig (11.11.2026): alle 61 Aufgaben, kurze Gründe (`whyNotEs`), Theorie. Früher (6.11.2026): Blocktexte wie Scratch 3 Spanisch («mover (10) pasos», «sumar a y», «posición en y»). `<option>`, SVG-Text und Attribute über `data-es…` und `applyLangAttrs()` |
 | `Deutsch Novemberschnee.html` | ja (6.11.2026) | fertig (6.11.2026). **Alles** spanisch, auch Zitate und Musterlösungen. Offene Antworten: ein Speicher, «Antwort prüfen» erkennt deutsche und spanische Schlüsselwörter |
 | `Englisch open_world_2_unit_1.html` | ja (6.11.2026) | fertig (6.11.2026). Antworten sind Englisch (gleich in beiden Sprachen); Voci-Spickzettel Englisch–Spanisch |
 | `Englisch open_world_2_unit_2.html` | ja, Lernpfad und Grammatik «Pläne» (6.11.2026); Grammatik «Adverbien» ja (6.11.2026, abends) | fertig (6.11.2026), Grammatik «Adverbien» auch (6.11.2026, spät). Entscheid: Wörter **Englisch–Spanisch** |
@@ -33,7 +33,7 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - **Animation (didaktik.md 1c):** freundliche Drohne mit Gesicht auf der Startansicht; Antippen = sie fliegt in 1.8 s ein Quadrat. Die gleiche Drohne fliegt das Quadrat als Belohnung nach einem richtig gebauten Quadrat-Skript (in der Rückmeldung). Nie in einer Aufgabe; `prefers-reduced-motion` beachtet.
 - **Bewertung an einer Stelle:** `TASKS` pro Teil (`max` = Anzahl Aufgaben, `score()` = erledigte).
 - **Gespeichert** unter `c3_algo_pfad`. Der alte Schlüssel `scratch_hub_answers` wird nicht mehr gelesen.
-- **Spanisch:** Oberfläche (Knöpfe, Rückmeldungen, Feiern) spanisch wie RZG. Übernommene Aufgaben haben spanische Felder (`qEs`, `optsEs`, `sitEs`, `rowsEs`, `catsEs`, `tipEs`), Scratch-Blöcke und das Postdrohnen-Diagramm sind zweisprachig. Neue Texte vom 11.11.2026 noch nur Deutsch: Die spanische Ansicht zeigt sie deutsch (`lang="de"`) mit «Esta pregunta todavía está solo en alemán.». Nach der Freigabe übersetzen.
+- **Spanisch:** Oberfläche (Knöpfe, Rückmeldungen, Feiern) spanisch wie RZG. Übernommene Aufgaben haben spanische Felder (`qEs`, `optsEs`, `sitEs`, `rowsEs`, `catsEs`, `tipEs`), Scratch-Blöcke und das Postdrohnen-Diagramm sind zweisprachig. Seit 11.11.2026 alles übersetzt, auch `whyNotEs` (Zuordnen: Schlüssel = deutsche Spalte), `textEs`/`aEs`/`bankEs`/`hintEs`, `containsEs` (spanische Wortteile zählen zusätzlich), `keysEs`/`labelsEs`/`starterEs`/`modelEs`. Licht im Gang: ENCENDIDA/APAGADA, Rasensprenger: ENCENDIDO (largo)/CORTO/APAGADO. Fehlt bei einer neuen Aufgabe ein `…Es`-Feld, zeigt die spanische Ansicht Deutsch mit «Esta pregunta todavía está solo en alemán.».
 
 ## Deutsch-Hub (Novemberschnee): Besonderheiten
 - Aufgaben 1–8 über die ganze Seite durchnummeriert. 1, 2, 3, 5, 7 geben Punkte (34 P., aus `TASKS`). 4, 6, 8 sind offene Fragen mit Hilfe-Treppe und Musterlösung, ohne Punkte. Keine Test-Simulation.

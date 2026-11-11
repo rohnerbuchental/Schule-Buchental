@@ -155,7 +155,7 @@
               <circle cx="34" cy="27" r="2" fill="#0f172a"/><circle cx="48" cy="27" r="2" fill="#0f172a"/>
               <path d="M34 34 Q40 39 46 34" stroke="#0f172a" stroke-width="2" fill="none" stroke-linecap="round"/>
             </svg>
-            <span class="text-[11px] font-bold text-sky-700"><span data-l="de">Tipp mich an!</span><span data-l="es" lang="de">Tipp mich an!</span></span>
+            <span class="text-[11px] font-bold text-sky-700"><span data-l="de">Tipp mich an!</span><span data-l="es" lang="es">¡Tócame!</span></span>
           </button>
         </div>
         <p class="text-base text-slate-600 mt-1" data-l="de">4 Teile, wie im Test. Jeder Teil hat 3 Stufen: <b>erkennen</b>, <b>ergänzen</b>, <b>erklären</b>. Fehler sind okay: Die Aufgabe kommt einfach später nochmals.</p>
@@ -188,7 +188,7 @@
             <li class="flex items-center gap-2"><svg viewBox="0 0 40 24" width="40" height="24" class="shrink-0" aria-hidden="true"><polygon points="20,1 38,12 20,23 2,12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/></svg><span data-l="de">eine Frage mit zwei Ausgängen: JA und NEIN</span><span data-l="es" lang="es">un rombo <span lang="de">(Raute)</span>: una pregunta con dos salidas, SÍ y NO</span></li>
           </ul>
           <p data-l="de"><b>Schleife im Ablaufdiagramm:</b> Ist die Antwort NEIN, macht man einen Schritt und geht dann <b>zurück zur Frage</b>. Das wiederholt sich, bis die Antwort JA ist.</p>
-          <p data-l="es" lang="de"><b>Schleife im Ablaufdiagramm:</b> Ist die Antwort NEIN, macht man einen Schritt und geht dann <b>zurück zur Frage</b>. Das wiederholt sich, bis die Antwort JA ist.</p>
+          <p data-l="es" lang="es"><b>Bucle en el diagrama de flujo:</b> si la respuesta es NO, se hace un paso y después se <b>vuelve a la pregunta</b>. Esto se repite hasta que la respuesta es SÍ.</p>
         </div>
         <div id="theory-k1-svg" class="mt-3 max-w-sm mx-auto"></div>
         <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span><span data-l="es" lang="es">↩ Volver a la tarea</span></button>
@@ -223,7 +223,7 @@
           <p data-l="de"><b>Richtung:</b> x geht nach links und rechts, y nach oben und unten. Ein Plus bei y heisst nach oben, ein Minus heisst nach unten.</p>
           <p data-l="es" lang="es"><b>Dirección:</b> la <b>x</b> va a la izquierda o a la derecha. La <b>y</b> va hacia arriba o hacia abajo. Un más en la <b>y</b> significa hacia arriba; un menos, hacia abajo.</p>
           <p data-l="de">Bei x ist es gleich: Plus heisst nach rechts, Minus heisst nach links. Beispiel: «ändere x um -20» = 20 Schritte nach links.</p>
-          <p data-l="es" lang="de">Bei x ist es gleich: Plus heisst nach rechts, Minus heisst nach links. Beispiel: «ändere x um -20» = 20 Schritte nach links.</p>
+          <p data-l="es" lang="es">En la <b>x</b> es igual: más quiere decir hacia la derecha; menos, hacia la izquierda. Ejemplo: «sumar a x -20» = 20 pasos hacia la izquierda.</p>
           <p data-l="de"><b>Quadrat:</b> 4 gleiche Seiten und 4 Ecken mit je 90 Grad. 4 × 90 Grad = 360 Grad, also einmal ganz herum.</p>
           <p data-l="es" lang="es"><b>Cuadrado:</b> 4 lados iguales y 4 esquinas de 90 grados cada una. 4 × 90 grados = 360 grados, o sea, una vuelta completa.</p>
         </div>
@@ -285,7 +285,7 @@
         </div>
         <div class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed">
           <p data-l="de"><b>Regeln auswerten:</b> Prüfe jede Regel der Reihe nach. Bei UND schaust du, ob wirklich beide Teile stimmen. Bei ODER reicht ein Teil. Steht bei einer Regel «gilt immer zuerst», prüfst du sie zuerst.</p>
-          <p data-l="es" lang="de"><b>Regeln auswerten:</b> Prüfe jede Regel der Reihe nach. Bei UND schaust du, ob wirklich beide Teile stimmen. Bei ODER reicht ein Teil. Steht bei einer Regel «gilt immer zuerst», prüfst du sie zuerst.</p>
+          <p data-l="es" lang="es"><b>Evaluar reglas <span lang="de">(Regeln auswerten)</span>:</b> revisa cada regla en orden. Con «y» miras si de verdad se cumplen las dos partes. Con «o» basta con una parte. Si una regla «siempre va primero», la revisas primero.</p>
         </div>
         <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span><span data-l="es" lang="es">↩ Volver a la tarea</span></button>
       </details>
@@ -301,8 +301,9 @@
     // SPRACHE. Gespeichert für alle Seiten unter «lernportal_lang».
     // Feste Texte im HTML mit data-l, Texte aus dem Skript mit tr() oder both(),
     // Aufgaben mit Feldern …Es (qEs, optsEs, sitEs …) über L(). Fortschritt gemeinsam für beide Sprachen.
-    // Neue Aufgaben (11.11.2026) sind noch nicht übersetzt: ohne …Es zeigt die spanische Ansicht
+    // Alle Aufgaben sind übersetzt (11.11.2026). Fehlt bei einer neuen Aufgabe …Es, zeigt die spanische Ansicht
     // den deutschen Text (lang="de") mit dem Hinweis «Esta pregunta todavía está solo en alemán.».
+    // whyNotEs: kurze Gründe; aEs/containsEs/keysEs: spanische Antworten zählen zusätzlich zu den deutschen.
     // ==============================================================
     const LANG_KEY = 'lernportal_lang';
     let LANG = 'de';
@@ -381,9 +382,9 @@
     const FLOWS = {
       post: { f1: ['Steige auf 20 m', 'Sube a 20 m'], q: ['Ist das Ziel erreicht?', '¿Llegó al destino?'], no: ['Fliege 10 m vorwärts', 'Vuela 10 m hacia adelante'], yes: ['Lande & öffne den Paket-Haken', 'Aterriza y abre el gancho del paquete'],
         extra: [['Fliege 10 m rückwärts', 'Vuela 10 m hacia atrás'], ['Öffne den Haken in der Luft', 'Abre el gancho en el aire']] },
-      hund: { f1: ['Steige auf'], q: ['Siehst du den Hund?'], no: ['Fliege ein Stück weiter'], yes: ['Schick ein Foto'],
-        extra: [['Lande sofort'], ['Ist es Mittag?']] },
-      tee: { f1: ['Schalte den Wasserkocher ein'], q: ['Kocht das Wasser?'], no: ['Warte 1 Minute'], yes: ['Giesse das Wasser in die Tasse'], extra: [] }
+      hund: { f1: ['Steige auf', 'Sube'], q: ['Siehst du den Hund?', '¿Ves al perro?'], no: ['Fliege ein Stück weiter', 'Vuela un poco más'], yes: ['Schick ein Foto', 'Manda una foto'],
+        extra: [['Lande sofort', 'Aterriza enseguida'], ['Ist es Mittag?', '¿Es mediodía?']] },
+      tee: { f1: ['Schalte den Wasserkocher ein', 'Enciende el hervidor de agua'], q: ['Kocht das Wasser?', '¿Hierve el agua?'], no: ['Warte 1 Minute', 'Espera 1 minuto'], yes: ['Giesse das Wasser in die Tasse', 'Echa el agua en la taza'], extra: [] }
     };
     const ft = pair => LANG === 'es' && pair[1] ? pair[1] : pair[0];
     const flowCard = (key, k) => { const F = FLOWS[key]; return ft(k < SLOTS.length ? F[SLOTS[k]] : F.extra[k - SLOTS.length]); };
@@ -463,10 +464,10 @@
     // Keine Beispiele aus dem Test (öffentliche Seite). Andere, gleich schwere Beispiele.
     // ==============================================================
     const PARTS = [
-      { id: 'k1', emoji: '📜', title: 'Algorithmus & Ablaufdiagramm', sub: 'Anleitungen und Ablaufdiagramme', titleEs: 'Algoritmo y diagrama de flujo' },
-      { id: 'k2', emoji: '🔄', title: 'Schleifen', sub: 'Wie oft? Schritte rechnen, die richtige Schleife, Richtung, Quadrat', titleEs: 'Bucles' },
-      { id: 'k3', emoji: '🧩', title: 'Eigene Blöcke & Fehler finden', sub: 'Namen geben, wozu eigene Blöcke, Bug finden und verbessern', titleEs: 'Bloques propios y errores' },
-      { id: 'k4', emoji: '💡', title: 'Bedingungen mit UND/ODER', sub: 'Wann gilt die Regel? Regeln mit 2 Bedingungen auswerten', titleEs: 'Lógica con «y» y «o»' }
+      { id: 'k1', emoji: '📜', title: 'Algorithmus & Ablaufdiagramm', sub: 'Anleitungen und Ablaufdiagramme', subEs: 'Instrucciones y diagramas de flujo', titleEs: 'Algoritmo y diagrama de flujo' },
+      { id: 'k2', emoji: '🔄', title: 'Schleifen', sub: 'Wie oft? Schritte rechnen, die richtige Schleife, Richtung, Quadrat', subEs: '¿Cuántas veces? Calcular pasos, el bucle correcto, dirección, cuadrado', titleEs: 'Bucles' },
+      { id: 'k3', emoji: '🧩', title: 'Eigene Blöcke & Fehler finden', sub: 'Namen geben, wozu eigene Blöcke, Bug finden und verbessern', subEs: 'Poner nombres, para qué sirven los bloques propios, encontrar y corregir el bug', titleEs: 'Bloques propios y errores' },
+      { id: 'k4', emoji: '💡', title: 'Bedingungen mit UND/ODER', sub: 'Wann gilt die Regel? Regeln mit 2 Bedingungen auswerten', subEs: '¿Cuándo vale la regla? Evaluar reglas con 2 condiciones', titleEs: 'Lógica con «y» y «o»' }
     ];
     const STAGES = [
       { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus oder tippst an.', labelEs: 'Reconocer', introEs: 'Eliges o tocas.' },
@@ -486,6 +487,9 @@
     const TIP_GARTEN = 'Die Regel AUS gilt immer zuerst, wie eine rote Ampel: Dann ist alles andere egal. Prüfe also bei jeder Zeile zuerst: Ist der Boden feucht, oder regnet es? Erst wenn beides nicht stimmt, schaust du auf die Uhrzeit.';
     const TIP_GARTEN_ES = 'La regla APAGADO siempre va primero, como un semáforo en rojo: entonces todo lo demás da igual. Así que en cada fila revisa primero: ¿el suelo está húmedo o llueve? Solo si ninguna de las dos cosas se cumple, miras la hora.';
     const TIP_GANG = 'Spiel die Lampe: Prüfe zuerst Regel 1. Stimmen wirklich beide Teile? Wenn nicht, gilt Regel 2.';
+    const TIP_GANG_ES = 'Haz de lámpara: revisa primero la regla 1. ¿Se cumplen de verdad las dos partes? Si no, vale la regla 2.';
+    const RULES_GANG_ES = '<div class="font-bold">📋 Las 2 reglas para la luz del pasillo:</div><div>1. <b>ENCENDIDA:</b> si está <b>oscuro</b> <b>Y</b> alguien se <b>mueve</b>.</div><div>2. <b>APAGADA:</b> si está <b>claro</b> <b>O</b> <b>nadie</b> se mueve.</div>';
+    const HINT_YO_ES = '¿Tienen que cumplirse las dos? Entonces «y». ¿Basta con una? Entonces «o».';
 
     const ITEMS = {
       // ---------- Teil 1: Algorithmus & Ablaufdiagramm (Kompetenz 1) ----------
@@ -495,47 +499,88 @@
           tip: 'Denk an ein Kochrezept oder an eine Lego-Bauanleitung. Was haben die beiden gemeinsam?',
           why: 'Ein Algorithmus sagt genau, was man tun muss, und in welcher Reihenfolge.',
           // Sehr kurz: warum die gewählte falsche Antwort nicht passt (Reihenfolge wie opts, 0 = richtig). Keine Lösung zeigen, nochmals probieren.
-          whyNot: [null, 'Ein Chip ist ein Bauteil, keine Anleitung.', 'Ein Durcheinander hat keine Reihenfolge.', 'Ein Foto sagt nicht, was man tun soll.'] },
+          whyNot: [null, 'Ein Chip ist ein Bauteil, keine Anleitung.', 'Ein Durcheinander hat keine Reihenfolge.', 'Ein Foto sagt nicht, was man tun soll.'],
+          qEs: '¿Qué es un algoritmo?',
+          optsEs: ['Unas instrucciones exactas, paso a paso.', 'Un chip de memoria que está dentro del dron.', 'Un desorden de números al azar.', 'Una foto que el dron toma en el aire.'],
+          tipEs: 'Piensa en una receta de cocina o en las instrucciones de montaje de Lego. ¿Qué tienen en común?',
+          whyEs: 'Un algoritmo dice exactamente qué hay que hacer y en qué orden.',
+          whyNotEs: [null, 'Un chip es una pieza, no unas instrucciones.', 'Un desorden no tiene orden.', 'Una foto no dice qué hay que hacer.'] },
         { id: 'k1_bsp', st: 1, type: 'mc', q: 'Welches Beispiel ist ein Algorithmus?',
           opts: ['Eine Bauanleitung für ein Vogelhaus', 'Ein Tagebucheintrag über das Wochenende', 'Eine Liste mit deinen Lieblingsliedern', 'Ein Foto vom letzten Schulausflug'],
           tip: 'Frag dich bei jedem Beispiel: Sagt es mir, was ich zuerst tun soll und was danach?',
           why: 'Eine Bauanleitung sagt dir Schritt für Schritt, was du tun musst.',
-          whyNot: [null, 'Ein Tagebuch erzählt nur, was passiert ist.', 'Eine Liste zählt nur auf, ohne Schritte.', 'Ein Foto sagt nicht, was man tun soll.'] },
+          whyNot: [null, 'Ein Tagebuch erzählt nur, was passiert ist.', 'Eine Liste zählt nur auf, ohne Schritte.', 'Ein Foto sagt nicht, was man tun soll.'],
+          qEs: '¿Qué ejemplo es un algoritmo?',
+          optsEs: ['Las instrucciones para construir una casita para pájaros', 'Una página de diario sobre el fin de semana', 'Una lista con tus canciones favoritas', 'Una foto de la última excursión escolar'],
+          tipEs: 'Pregúntate en cada ejemplo: ¿me dice qué tengo que hacer primero y qué después?',
+          whyEs: 'Las instrucciones de montaje te dicen paso a paso qué tienes que hacer.',
+          whyNotEs: [null, 'Un diario solo cuenta lo que pasó.', 'Una lista solo enumera, sin pasos.', 'Una foto no dice qué hay que hacer.'] },
         { id: 'k1_tab1', st: 1, type: 'sort', q: 'Algorithmus oder nicht?',
           rows: [['Rezept Schoggikuchen: Mehl abwägen, Eier rühren, 30 Minuten backen.', 'Algorithmus'], ['Klassenliste: Ana, Ben, Cem, Dana.', 'kein Algorithmus'], ['Anleitung Zähneputzen: Zahnpasta auf die Bürste, 2 Minuten putzen, Mund ausspülen.', 'Algorithmus']],
           whyNot: ['Hier stehen Schritte, die man nacheinander tut.', 'Eine Liste zählt nur Namen auf.', 'Hier steht, was man nacheinander tun soll.'],
           cats: ['Algorithmus', 'kein Algorithmus'],
-          tip: 'Ein Roboter liest den Text. Weiss er danach, was er Schritt für Schritt tun muss? Oder ist es nur eine Aufzählung?' },
+          tip: 'Ein Roboter liest den Text. Weiss er danach, was er Schritt für Schritt tun muss? Oder ist es nur eine Aufzählung?',
+          qEs: '¿Es un algoritmo o no?',
+          rowsEs: ['Receta de pastel de chocolate: pesar la harina, batir los huevos, hornear 30 minutos.', 'Lista de la clase: Ana, Ben, Cem, Dana.', 'Instrucciones para lavarse los dientes: pasta en el cepillo, cepillarse 2 minutos, enjuagarse la boca.'],
+          catsEs: ['Algoritmo', 'No es un algoritmo'],
+          whyNotEs: ['Aquí hay pasos que se hacen uno tras otro.', 'Una lista solo enumera nombres.', 'Aquí dice qué hay que hacer, uno tras otro.'],
+          tipEs: 'Un robot lee el texto. ¿Sabe después qué tiene que hacer paso a paso? ¿O es solo una enumeración?' },
         { id: 'k1_tab2', st: 1, type: 'sort', q: 'Algorithmus oder nicht?',
           rows: [['Bauanleitung Lego-Modell: Schritt 1 die Räder, Schritt 2 der Boden, Schritt 3 das Dach.', 'Algorithmus'], ['Wetterbericht für morgen: sonnig, am Abend Regen, 12 Grad.', 'kein Algorithmus'], ['Fotoalbum vom Skilager: Bilder vom Schlitteln, vom Essen und vom Schlussabend.', 'kein Algorithmus']],
           whyNot: ['Hier stehen Schritte zum Nachbauen.', 'Ein Wetterbericht sagt nicht, was man tun soll.', 'Fotos zeigen nur, was war.'],
           cats: ['Algorithmus', 'kein Algorithmus'],
-          tip: 'Kann man mit dem Text etwas tun, Schritt für Schritt? Oder erfährt man nur etwas?' },
+          tip: 'Kann man mit dem Text etwas tun, Schritt für Schritt? Oder erfährt man nur etwas?',
+          qEs: '¿Es un algoritmo o no?',
+          rowsEs: ['Instrucciones de un modelo de Lego: paso 1 las ruedas, paso 2 la base, paso 3 el techo.', 'Pronóstico del tiempo para mañana: soleado, lluvia por la noche, 12 grados.', 'Álbum de fotos del campamento de esquí: fotos del trineo, de la comida y de la fiesta final.'],
+          catsEs: ['Algoritmo', 'No es un algoritmo'],
+          whyNotEs: ['Aquí hay pasos para construir.', 'El pronóstico del tiempo no dice qué hay que hacer.', 'Las fotos solo muestran lo que pasó.'],
+          tipEs: '¿Se puede hacer algo con el texto, paso a paso? ¿O solo te enteras de algo?' },
         { id: 'k1_form', st: 1, type: 'mc', q: 'Welche Form hat im Ablaufdiagramm eine Ja/Nein-Frage?',
           opts: ['Raute ◇', 'Rechteck ▭', 'Oval ⬭', 'Kreis ○'],
           tip: 'Aus diesem Feld gehen zwei Pfeile hinaus: JA und NEIN. Welche Form hat Spitzen, aus denen Pfeile hinausgehen können?',
           why: 'Eine Ja/Nein-Frage steht in einer Raute ◇. Aus ihr gehen zwei Pfeile: JA und NEIN.',
-          whyNot: [null, 'Im Rechteck steht ein Befehl, keine Frage.', 'Das Oval steht für Start oder Ende.', 'Den Kreis brauchen wir im Ablaufdiagramm nicht.'] },
+          whyNot: [null, 'Im Rechteck steht ein Befehl, keine Frage.', 'Das Oval steht für Start oder Ende.', 'Den Kreis brauchen wir im Ablaufdiagramm nicht.'],
+          qEs: 'En un diagrama de flujo, ¿qué forma tiene una pregunta de sí o no?',
+          optsEs: ['Rombo ◇', 'Rectángulo ▭', 'Óvalo ⬭', 'Círculo ○'],
+          tipEs: 'De este campo salen dos flechas: SÍ y NO. ¿Qué forma tiene puntas de donde pueden salir flechas?',
+          whyEs: 'Una pregunta de sí o no va en un rombo ◇. De él salen dos flechas: SÍ y NO.',
+          whyNotEs: [null, 'En el rectángulo va un comando, no una pregunta.', 'El óvalo es para el inicio o el final.', 'En el diagrama de flujo no usamos el círculo.'] },
         { id: 'k1_raute', st: 1, type: 'mc', pic: 'flow:post:full', q: 'Warum ist in der Mitte eine Raute ◇ gezeichnet und kein Rechteck?',
           opts: ['Weil dort eine Ja/Nein-Entscheidung getroffen wird', 'Weil die Drohne dort schneller fliegen soll', 'Weil dort der Akku geladen wird'],
           tip: 'Zähl die Pfeile, die aus der Raute hinausgehen. Was steht daran?',
           why: 'In der Raute steht eine Frage. Die Antwort ist JA oder NEIN.',
           whyNot: [null, 'Die Form sagt nichts über das Tempo.', 'Im Feld steht nichts vom Akku.'],
           qEs: '¿Por qué en el centro hay un rombo ◇ y no un rectángulo?',
-          optsEs: ['Porque allí se toma una decisión de sí o no', 'Porque allí el dron tiene que volar más rápido', 'Porque allí se carga la batería'] },
+          optsEs: ['Porque allí se toma una decisión de sí o no', 'Porque allí el dron tiene que volar más rápido', 'Porque allí se carga la batería'],
+          tipEs: 'Cuenta las flechas que salen del rombo. ¿Qué dice en ellas?',
+          whyEs: 'En el rombo hay una pregunta. La respuesta es SÍ o NO.',
+          whyNotEs: [null, 'La forma no dice nada sobre la velocidad.', 'En el campo no dice nada de la batería.'] },
         { id: 'k1_tee_q', st: 1, type: 'mc', pic: 'flow:tee:q', q: 'Was gehört in die Raute mit dem «?»',
           opts: ['Kocht das Wasser?', 'Ist der Tee kalt?', 'Warte 1 Minute.', 'Hole eine Tasse.'],
           tip: 'In eine Raute gehört eine Frage. Welche Frage passt dazu, dass man bei NEIN wartet?',
           why: '«Kocht das Wasser?» passt: Bei NEIN wartet man, bei JA kommt das Wasser in die Tasse.',
-          whyNot: [null, 'Der Tee ist noch gar nicht gemacht.', 'Warten ist ein Befehl, keine Frage.', 'Eine Tasse holen ist ein Befehl, keine Frage.'] },
+          whyNot: [null, 'Der Tee ist noch gar nicht gemacht.', 'Warten ist ein Befehl, keine Frage.', 'Eine Tasse holen ist ein Befehl, keine Frage.'],
+          qEs: '¿Qué va en el rombo con el «?»?',
+          optsEs: ['¿Hierve el agua?', '¿Está frío el té?', 'Espera 1 minuto.', 'Busca una taza.'],
+          tipEs: 'En un rombo va una pregunta. ¿Qué pregunta encaja con que, si la respuesta es NO, hay que esperar?',
+          whyEs: '«¿Hierve el agua?» encaja: con NO se espera, con SÍ el agua va a la taza.',
+          whyNotEs: [null, 'El té todavía no está hecho.', 'Esperar es un comando, no una pregunta.', 'Buscar una taza es un comando, no una pregunta.'] },
         { id: 'k1_tee_nein', st: 1, type: 'mc', pic: 'flow:tee:full', q: 'Das Wasser kocht noch nicht. Was passiert?',
           opts: ['Warten, dann kommt die Frage nochmals.', 'Das Wasser kommt trotzdem sofort in die Tasse.', 'Das Programm hört auf und ist dann fertig.', 'Der Wasserkocher geht von selbst aus.'],
           tip: 'Die Antwort auf die Frage ist NEIN. Folge mit dem Finger dem Pfeil NEIN. Wohin geht es danach?',
           why: 'Bei NEIN wartet man 1 Minute. Dann geht der Pfeil zurück zur Frage. Das ist eine Schleife.',
-          whyNot: [null, 'Das passiert erst bei JA.', 'Der Pfeil NEIN führt nicht zum Ende.', 'Davon steht nichts im Ablaufdiagramm.'] },
+          whyNot: [null, 'Das passiert erst bei JA.', 'Der Pfeil NEIN führt nicht zum Ende.', 'Davon steht nichts im Ablaufdiagramm.'],
+          qEs: 'El agua todavía no hierve. ¿Qué pasa?',
+          optsEs: ['Se espera, y después vuelve la pregunta.', 'El agua va igual enseguida a la taza.', 'El programa se detiene y ya terminó.', 'El hervidor se apaga solo.'],
+          tipEs: 'La respuesta a la pregunta es NO. Sigue con el dedo la flecha NO. ¿Adónde va después?',
+          whyEs: 'Con NO se espera 1 minuto. Después la flecha vuelve a la pregunta. Eso es un bucle.',
+          whyNotEs: [null, 'Eso pasa solo con SÍ.', 'La flecha NO no lleva al final.', 'De eso no dice nada el diagrama de flujo.'] },
         { id: 'k1_haende', st: 2, type: 'order', q: 'Bring die Anleitung «Hände waschen» in die richtige Reihenfolge.',
           steps: ['Wasser anstellen.', 'Hände nass machen.', 'Seife nehmen und einreiben.', 'Hände abspülen.', 'Wasser abstellen und abtrocknen.'],
-          tip: 'Mach es in Gedanken am Lavabo vor. Was musst du zuerst tun, damit überhaupt Wasser kommt?' },
+          tip: 'Mach es in Gedanken am Lavabo vor. Was musst du zuerst tun, damit überhaupt Wasser kommt?',
+          qEs: 'Pon las instrucciones «Lavarse las manos» en el orden correcto.',
+          stepsEs: ['Abrir el agua.', 'Mojarse las manos.', 'Tomar jabón y frotarlo.', 'Enjuagarse las manos.', 'Cerrar el agua y secarse.'],
+          tipEs: 'Hazlo en tu cabeza junto al lavamanos. ¿Qué tienes que hacer primero para que salga agua?' },
         { id: 'k1_flow_post', st: 2, type: 'slots', flow: 'post', q: 'Ablaufdiagramm der Postdrohne',
           sit: 'Eine Postdrohne soll ein Paket ausliefern. Sie steigt zuerst auf, fliegt dann so lange vorwärts, bis sie am Ziel ist, und landet dort.',
           tip: 'Lies die Situation oben nochmals langsam. Frag dich: Was macht die Drohne ganz am Anfang? Was macht sie immer wieder, solange sie noch nicht am Ziel ist? Folge mit dem Finger dem Pfeil NEIN: Wohin führt er?',
@@ -544,7 +589,10 @@
           tipEs: 'Vuelve a leer despacio la situación de arriba. Pregúntate: ¿qué hace el dron al principio? ¿Qué hace una y otra vez mientras todavía no llega al destino? Sigue con el dedo la flecha NO: ¿adónde lleva?' },
         { id: 'k1_flow_hund', st: 2, type: 'slots', flow: 'hund', q: 'Ablaufdiagramm der Suchdrohne',
           sit: 'Eine Drohne sucht auf einem Feld einen verlorenen Hund. Sie steigt zuerst auf. Dann fliegt sie so lange ein Stück weiter, bis sie den Hund sieht. Dann schickt sie ein Foto.',
-          tip: 'In die Raute gehört eine Frage. Welche Frage passt zur Situation? Und was macht die Drohne, solange die Antwort NEIN ist?' },
+          tip: 'In die Raute gehört eine Frage. Welche Frage passt zur Situation? Und was macht die Drohne, solange die Antwort NEIN ist?',
+          qEs: 'Diagrama de flujo del dron de búsqueda',
+          sitEs: 'Un dron busca en un campo a un perro perdido. Primero sube. Después sigue volando un poco más, hasta que ve al perro. Entonces manda una foto.',
+          tipEs: 'En el rombo va una pregunta. ¿Qué pregunta encaja con la situación? ¿Y qué hace el dron mientras la respuesta es NO?' },
         { id: 'k1_e_def', st: 3, type: 'open', q: 'Erkläre in eigenen Worten: Was ist ein Algorithmus?',
           tip: 'Denk an ein Rezept oder eine Lego-Bauanleitung. Was haben die beiden gemeinsam? Wie sind sie aufgebaut? Und wozu brauchst du sie?',
           words: ['Anleitung', 'Schritt für Schritt', 'Reihenfolge', 'Problem', 'Ziel'],
@@ -552,14 +600,28 @@
           keys: [['Was für ein Text ist es?', ['anleitung', 'befehl', 'regel']], ['Wie geht man vor?', ['schritt']],
                  ['Worauf muss man achten?', ['reihenfolge', 'genau', 'eindeutig']], ['Wozu braucht man ihn?', ['problem', 'ziel', 'aufgabe', 'loes']]],
           need: 3,
-          model: 'Ein Algorithmus ist eine genaue Anleitung. Sie sagt Schritt für Schritt und in der richtigen Reihenfolge, was man tun muss, um ein Problem zu lösen oder ein Ziel zu erreichen.' },
+          model: 'Ein Algorithmus ist eine genaue Anleitung. Sie sagt Schritt für Schritt und in der richtigen Reihenfolge, was man tun muss, um ein Problem zu lösen oder ein Ziel zu erreichen.',
+          qEs: 'Explica con tus propias palabras: ¿qué es un algoritmo?',
+          tipEs: 'Piensa en una receta o en las instrucciones de montaje de Lego. ¿Qué tienen en común? ¿Cómo están hechas? ¿Y para qué las necesitas?',
+          wordsEs: ['instrucciones', 'paso a paso', 'orden', 'problema', 'objetivo'],
+          starterEs: 'Un algoritmo es …',
+          keysEs: [['instruccion', 'comando', 'regla'], ['paso'], ['orden', 'exact', 'precis', 'claro'], ['problema', 'objetivo', 'meta', 'tarea', 'resolver', 'solucion']],
+          labelsEs: ['¿Qué tipo de texto es?', '¿Cómo se avanza?', '¿A qué hay que prestar atención?', '¿Para qué sirve?'],
+          modelEs: 'Un algoritmo son unas instrucciones exactas. Dicen paso a paso y en el orden correcto qué hay que hacer para resolver un problema o llegar a un objetivo.' },
         { id: 'k1_e_raute', st: 3, type: 'open', pic: 'flow:tee:full', q: 'Erkläre mit «weil»: Warum ist das Feld «Kocht das Wasser?» eine Raute ◇ und kein Rechteck?',
           tip: 'Schau die Pfeile an, die aus der Raute kommen. Aus einem Rechteck geht nur ein Pfeil hinaus. Wie ist das bei der Raute? Denk an eine Weggabelung beim Wandern.',
           words: ['Frage', 'Ja', 'Nein', 'Entscheidung', 'weiter'],
           starter: 'Weil dort …',
           keys: [['Was steht in der Raute?', ['frage', 'entscheid']], ['Welche Antworten gibt es?', [' ja ', 'nein']]],
           need: 2,
-          model: 'Weil dort eine Frage steht, die man mit Ja oder Nein beantwortet. Je nach Antwort geht es anders weiter.' }
+          model: 'Weil dort eine Frage steht, die man mit Ja oder Nein beantwortet. Je nach Antwort geht es anders weiter.',
+          qEs: 'Explica con «porque»: ¿por qué el campo «¿Hierve el agua?» es un rombo ◇ y no un rectángulo?',
+          tipEs: 'Mira las flechas que salen del rombo. De un rectángulo sale solo una flecha. ¿Cómo es en el rombo? Piensa en un cruce de caminos cuando vas de excursión.',
+          wordsEs: ['pregunta', 'sí', 'no', 'decisión', 'seguir'],
+          starterEs: 'Porque allí …',
+          keysEs: [['pregunta', 'decision', 'decide'], ['si o no', 'si y no', 'si no', 'dos salidas', 'dos flechas', 'dos caminos', 'dos respuestas']],
+          labelsEs: ['¿Qué hay en el rombo?', '¿Qué respuestas hay?'],
+          modelEs: 'Porque allí hay una pregunta que se contesta con sí o no. Según la respuesta, se sigue por otro camino.' }
       ],
       // ---------- Teil 2: Schleifen (Kompetenz 2) ----------
       k2: [
@@ -568,70 +630,112 @@
           tip: 'Alles in der orangen Klammer macht die Drohne mehrmals. Wo steht, wie oft?',
           why: 'Die Schleife «wiederhole 4 mal» macht den blauen Block 4-mal.',
           whyNot: [null, 'Die Klammer macht es mehr als einmal.', '10 sind die Schritte, nicht die Wiederholungen.', 'Hier musst du nichts rechnen.'],
-          qEs: '¿Cuántas veces se repite el comando azul?', optsEs: ['4 veces', '1 vez', '10 veces', '40 veces'] },
+          qEs: '¿Cuántas veces se repite el comando azul?', optsEs: ['4 veces', '1 vez', '10 veces', '40 veces'],
+          tipEs: 'Todo lo que está dentro de la «C» naranja, el dron lo hace varias veces. ¿Dónde dice cuántas veces?',
+          whyEs: 'El bucle «repetir 4» hace el bloque azul 4 veces.',
+          whyNotEs: [null, 'La «C» lo hace más de una vez.', '10 son los pasos, no las repeticiones.', 'Aquí no tienes que calcular nada.'] },
         { id: 'k2_total', st: 1, type: 'mc', pre: PRE_LOOP4, q: 'Wie viele Schritte ist die Drohne am Ende insgesamt geflogen?',
           opts: ['40 Schritte (4 × 10)', '10 Schritte', '14 Schritte (4 + 10)'],
           tip: 'Denk an eine Treppe: Du gehst 3-mal hintereinander je 5 Stufen hoch. Wie viele Stufen sind das zusammen? Der Warte-Block macht nur eine Pause, er bewegt nichts.',
           why: 'Rechnen: Wiederholungen × Schritte = 4 × 10 = 40.',
           whyNot: [null, 'Das ist nur ein Durchgang der Schleife.', 'Das ist plus. Wiederholen heisst mal rechnen.'],
           qEs: 'Al final, ¿cuántos pasos vuela el dron en total?', optsEs: ['40 pasos (4 × 10)', '10 pasos', '14 pasos (4 + 10)'],
-          tipEs: 'Piensa en una escalera: subes 3 veces seguidas 5 escalones cada vez. ¿Cuántos escalones son en total? El bloque «esperar» solo hace una pausa, no mueve nada.' },
+          tipEs: 'Piensa en una escalera: subes 3 veces seguidas 5 escalones cada vez. ¿Cuántos escalones son en total? El bloque «esperar» solo hace una pausa, no mueve nada.',
+          whyEs: 'Cálculo: repeticiones × pasos = 4 × 10 = 40.',
+          whyNotEs: [null, 'Eso es solo una vuelta del bucle.', 'Eso es sumar. Repetir quiere decir multiplicar.'] },
         { id: 'k2_bis', st: 1, type: 'mc', optsHtml: true, sit: SIT_LAND, q: 'Welcher Schleifen-Block ist dafür perfekt?',
           opts: [SB.bare(SB.until(SB.ground())), SB.bare(SB.loop(10)), SB.bare(SB.forever())],
           tip: 'Weisst du, wie viele Schritte es bis zum Boden sind? Welcher Block hört genau im richtigen Moment auf?',
           why: '«wiederhole bis» hört genau dann auf, wenn die Drohne den Boden berührt.',
           whyNot: [null, 'Du weisst nicht, ob 10 Schritte genau reichen.', 'Dieser Block hört nie auf.'],
-          sitEs: SIT_LAND_ES, qEs: '¿Qué bloque de bucle es perfecto para esto?' },
+          sitEs: SIT_LAND_ES, qEs: '¿Qué bloque de bucle es perfecto para esto?',
+          tipEs: '¿Sabes cuántos pasos hay hasta el suelo? ¿Qué bloque se detiene justo en el momento correcto?',
+          whyEs: '«repetir hasta que» se detiene justo cuando el dron toca el suelo.',
+          whyNotEs: [null, 'No sabes si justo 10 pasos alcanzan.', 'Este bloque nunca se detiene.'] },
         { id: 'k2_kreis', st: 1, type: 'mc', optsHtml: true, sit: 'Die Drohne soll <b>ohne Ende</b> im Kreis fliegen, wie ein Karussell.', q: 'Welche Schleife passt?',
           opts: [SB.bare(SB.forever()), SB.bare(SB.loop(10)), SB.bare(SB.until(SB.ground()))],
           tip: 'Soll die Drohne irgendwann aufhören? Lies jeden Block wie einen Satz.',
           why: '«wiederhole fortlaufend» hört nie auf.',
-          whyNot: [null, 'Nach 10 Runden hört dieser Block auf.', 'Dieser Block hört am Boden auf.'] },
+          whyNot: [null, 'Nach 10 Runden hört dieser Block auf.', 'Dieser Block hört am Boden auf.'],
+          sitEs: 'El dron tiene que volar en círculo <b>sin parar</b>, como un carrusel.', qEs: '¿Qué bucle encaja?',
+          tipEs: '¿El dron tiene que parar en algún momento? Lee cada bloque como una frase.',
+          whyEs: '«por siempre» nunca se detiene.',
+          whyNotEs: [null, 'Este bloque se detiene después de 10 vueltas.', 'Este bloque se detiene en el suelo.'] },
         { id: 'k2_runter', st: 1, type: 'mc', optsHtml: true, q: 'Welcher y-Wert lässt die Drohne nach UNTEN sinken?',
           opts: [SB.bare(SB.chY(-1)), SB.bare(SB.chY(10)), SB.bare(SB.chX(10))],
           tip: 'Denk an einen Lift: Was passiert mit der Stockwerk-Zahl, wenn er nach unten fährt? Und denk daran: x geht nach links und rechts, y nach oben und unten.',
           why: 'Minus bei y heisst nach unten.',
           whyNot: [null, 'Plus bei y geht nach oben.', 'x geht nach links und rechts.'],
           qEs: '¿Qué valor de y hace BAJAR al dron?',
-          tipEs: 'Piensa en un ascensor: ¿qué pasa con el número del piso cuando baja? Y recuerda: la x va a la izquierda o a la derecha; la y va hacia arriba o hacia abajo.' },
+          tipEs: 'Piensa en un ascensor: ¿qué pasa con el número del piso cuando baja? Y recuerda: la x va a la izquierda o a la derecha; la y va hacia arriba o hacia abajo.',
+          whyEs: 'Un menos en la y quiere decir hacia abajo.',
+          whyNotEs: [null, 'Un más en la y va hacia arriba.', 'La x va a la izquierda o a la derecha.'] },
         { id: 'k2_rechts', st: 1, type: 'mc', optsHtml: true, q: 'Mit welchem Block fliegt die Drohne nach RECHTS?',
           opts: [SB.bare(SB.chX(10)), SB.bare(SB.chX(-10)), SB.bare(SB.chY(10)), SB.bare(SB.chY(-10))],
           tip: 'Denk an einen Zahlenstrahl: Auf welcher Seite werden die Zahlen grösser? Und welcher Buchstabe ist für links und rechts?',
           why: 'x geht nach links und rechts. Plus bei x heisst nach rechts.',
-          whyNot: [null, 'Minus bei x geht nach links.', 'Plus bei y geht nach oben.', 'Minus bei y geht nach unten.'] },
+          whyNot: [null, 'Minus bei x geht nach links.', 'Plus bei y geht nach oben.', 'Minus bei y geht nach unten.'],
+          qEs: '¿Con qué bloque vuela el dron hacia la DERECHA?',
+          tipEs: 'Piensa en una recta numérica: ¿de qué lado los números se hacen más grandes? ¿Y qué letra es para izquierda y derecha?',
+          whyEs: 'La x va a la izquierda o a la derecha. Un más en la x quiere decir hacia la derecha.',
+          whyNotEs: [null, 'Un menos en la x va hacia la izquierda.', 'Un más en la y va hacia arriba.', 'Un menos en la y va hacia abajo.'] },
         { id: 'k2_grad', st: 1, type: 'mc', q: 'Die Drohne fliegt ein Quadrat. Um wie viel Grad dreht sie an jeder Ecke?',
           opts: ['90 Grad', '45 Grad', '180 Grad', '360 Grad'],
           tip: 'Schau eine Ecke von deinem Heft an. Wie heisst so eine Ecke in Mathe?',
           why: 'Jede Ecke hat 90 Grad. 4 × 90 Grad = 360 Grad, also einmal ganz herum.',
-          whyNot: [null, '45 Grad ist zu wenig gedreht.', 'Mit 180 Grad fliegt sie zurück.', 'Mit 360 Grad dreht sie einmal ganz herum.'] },
+          whyNot: [null, '45 Grad ist zu wenig gedreht.', 'Mit 180 Grad fliegt sie zurück.', 'Mit 360 Grad dreht sie einmal ganz herum.'],
+          qEs: 'El dron vuela un cuadrado. ¿Cuántos grados gira en cada esquina?',
+          optsEs: ['90 grados', '45 grados', '180 grados', '360 grados'],
+          tipEs: 'Mira una esquina de tu cuaderno. ¿Cómo se llama una esquina así en matemáticas?',
+          whyEs: 'Cada esquina tiene 90 grados. 4 × 90 grados = 360 grados, o sea, una vuelta completa.',
+          whyNotEs: [null, 'Con 45 grados gira demasiado poco.', 'Con 180 grados vuelve hacia atrás.', 'Con 360 grados da una vuelta completa.'] },
         { id: 'k2_wdh', st: 1, type: 'mc', q: 'Wie oft muss die Schleife für ein Quadrat wiederholen?',
           opts: ['4-mal', '2-mal', '3-mal', '90-mal'],
           tip: 'Fahr mit dem Finger einmal um ein Quadrat herum. Wie viele Seiten fliegst du?',
           why: 'Ein Quadrat hat 4 Seiten und 4 Ecken: Die Schleife wiederholt 4-mal.',
-          whyNot: [null, 'Nach 2 Seiten ist das Quadrat nicht fertig.', 'Nach 3 Seiten ist das Quadrat nicht fertig.', '90 ist der Winkel, nicht die Anzahl Seiten.'] },
+          whyNot: [null, 'Nach 2 Seiten ist das Quadrat nicht fertig.', 'Nach 3 Seiten ist das Quadrat nicht fertig.', '90 ist der Winkel, nicht die Anzahl Seiten.'],
+          qEs: '¿Cuántas veces tiene que repetir el bucle para hacer un cuadrado?',
+          optsEs: ['4 veces', '2 veces', '3 veces', '90 veces'],
+          tipEs: 'Recorre un cuadrado con el dedo, una vuelta. ¿Cuántos lados vuelas?',
+          whyEs: 'Un cuadrado tiene 4 lados y 4 esquinas: el bucle repite 4 veces.',
+          whyNotEs: [null, 'Después de 2 lados el cuadrado no está terminado.', 'Después de 3 lados el cuadrado no está terminado.', '90 es el ángulo, no el número de lados.'] },
         { id: 'k2_g_oft', st: 2, type: 'gap', num: true, pre: () => SB.script(SB.flag(), SB.loop(3, SB.move(25))),
           text: 'Die Drohne führt den Block «gehe 25er-Schritt» ___ mal aus.', a: ['3'],
-          hint: 'Schau oben auf den orangen Block.', tip: 'Alles in der orangen Klammer passiert mehrmals. Die Zahl dort sagt, wie oft.' },
+          hint: 'Schau oben auf den orangen Block.', tip: 'Alles in der orangen Klammer passiert mehrmals. Die Zahl dort sagt, wie oft.',
+          textEs: 'El dron hace el bloque «mover 25 pasos» ___ veces.',
+          hintEs: 'Mira arriba el bloque naranja.', tipEs: 'Todo lo que está dentro de la «C» naranja pasa varias veces. El número que está allí dice cuántas veces.' },
         { id: 'k2_g_total', st: 2, type: 'gap', num: true, pre: () => SB.script(SB.flag(), SB.loop(3, SB.move(25))),
           text: 'Die Drohne fliegt insgesamt ___ Schritte.', a: ['75'],
-          hint: 'Rechne: Wiederholungen × Schritte.', tip: 'Stell dir 3 Stapel mit je 25 Franken vor. Wie viel Geld ist das zusammen?' },
+          hint: 'Rechne: Wiederholungen × Schritte.', tip: 'Stell dir 3 Stapel mit je 25 Franken vor. Wie viel Geld ist das zusammen?',
+          textEs: 'El dron vuela en total ___ pasos.',
+          hintEs: 'Calcula: repeticiones × pasos.', tipEs: 'Imagina 3 montones de 25 francos cada uno. ¿Cuánto dinero es en total?' },
         { id: 'k2_g_total2', st: 2, type: 'gap', num: true, pre: () => SB.script(SB.flag(), SB.loop(5, SB.move(20) + SB.wait(1))),
           text: 'Die Drohne fliegt insgesamt ___ Schritte.', a: ['100'],
-          hint: 'Rechne: Wiederholungen × Schritte. Der Warte-Block zählt nicht.', tip: 'Welcher Block bewegt die Drohne wirklich? Der Warte-Block macht nur eine Pause.' },
+          hint: 'Rechne: Wiederholungen × Schritte. Der Warte-Block zählt nicht.', tip: 'Welcher Block bewegt die Drohne wirklich? Der Warte-Block macht nur eine Pause.',
+          textEs: 'El dron vuela en total ___ pasos.',
+          hintEs: 'Calcula: repeticiones × pasos. El bloque «esperar» no cuenta.', tipEs: '¿Qué bloque mueve de verdad al dron? El bloque «esperar» solo hace una pausa.' },
         { id: 'k2_g_unten', st: 2, type: 'gap', num: true, text: 'Die Drohne soll 10 Schritte nach unten fliegen. Schreib die Zahl: «ändere y um ___»', a: ['-10'],
-          hint: 'Plus oder Minus: Was passt bei y zu «nach unten»?', tip: 'Denk an ein Thermometer: Wie schreibt man eine Temperatur unter null?' },
+          hint: 'Plus oder Minus: Was passt bei y zu «nach unten»?', tip: 'Denk an ein Thermometer: Wie schreibt man eine Temperatur unter null?',
+          textEs: 'El dron tiene que volar 10 pasos hacia abajo. Escribe el número: «sumar a y ___»',
+          hintEs: '¿Más o menos? ¿Qué encaja en la y con «hacia abajo»?', tipEs: 'Piensa en un termómetro: ¿cómo se escribe una temperatura bajo cero?' },
         { id: 'k2_g_links', st: 2, type: 'gap', num: true, text: 'Die Drohne soll 20 Schritte nach links fliegen. Schreib die Zahl: «ändere x um ___»', a: ['-20'],
-          hint: 'Plus oder Minus: Was passt bei x zu «nach links»?', tip: 'Denk an einen Zahlenstrahl: Welche Zahlen stehen links von der Null?' },
+          hint: 'Plus oder Minus: Was passt bei x zu «nach links»?', tip: 'Denk an einen Zahlenstrahl: Welche Zahlen stehen links von der Null?',
+          textEs: 'El dron tiene que volar 20 pasos hacia la izquierda. Escribe el número: «sumar a x ___»',
+          hintEs: '¿Más o menos? ¿Qué encaja en la x con «hacia la izquierda»?', tipEs: 'Piensa en una recta numérica: ¿qué números están a la izquierda del cero?' },
         { id: 'k2_quad', st: 2, type: 'order', blocks: true, q: 'Bau das Skript für das Quadrat.',
           sit: 'Die Drohne soll ein Quadrat abfliegen. Jede Seite ist 50 Schritte lang. Sie fliegt zuerst eine Seite und dreht sich dann an der Ecke.',
           steps: [K_LOOP(4), K_MOVE(50), K_TURN(90)],
           tip: 'Der orange Block ist wie eine Schachtel: Alles, was in der Schachtel liegt, wird mehrmals gemacht. Wie viele Ecken hat ein Quadrat? Schau in die Vorschau: Liegen alle Befehle in der Schachtel, die sich wiederholen sollen? Lies den Plan nochmals Wort für Wort und achte darauf, in welcher Reihenfolge er Fliegen und Drehen nennt.',
           sitEs: 'El dron tiene que volar un cuadrado. Cada lado mide 50 pasos. Primero vuela un lado y después gira en la esquina.',
-          tipEs: 'El bloque naranja es como una caja: todo lo que está dentro de la caja se hace varias veces. ¿Cuántas esquinas tiene un cuadrado? Mira la vista previa: ¿están dentro de la caja todos los comandos que se tienen que repetir? Vuelve a leer el plan palabra por palabra y fíjate en qué orden nombra volar y girar.' },
+          tipEs: 'El bloque naranja es como una caja: todo lo que está dentro de la caja se hace varias veces. ¿Cuántas esquinas tiene un cuadrado? Mira la vista previa: ¿están dentro de la caja todos los comandos que se tienen que repetir? Vuelve a leer el plan palabra por palabra y fíjate en qué orden nombra volar y girar.',
+          qEs: 'Arma el programa para el cuadrado.' },
         { id: 'k2_quad2', st: 2, type: 'order', blocks: true, q: 'Bau das Skript für das Quadrat.',
           sit: 'Die Drohne soll ein Quadrat fliegen. Jede Seite ist 40 Schritte lang. Sie fliegt zuerst eine Seite und dreht sich dann an der Ecke.',
           steps: [K_LOOP(4), K_MOVE(40), K_TURN(90)], extra: [K_TURN(180), K_LOOP(3)],
-          tip: 'Wie viele Ecken hat ein Quadrat? Und wie gross ist eine Ecke? Zwei Blöcke passen nicht zum Quadrat.' },
+          tip: 'Wie viele Ecken hat ein Quadrat? Und wie gross ist eine Ecke? Zwei Blöcke passen nicht zum Quadrat.',
+          qEs: 'Arma el programa para el cuadrado.',
+          sitEs: 'El dron tiene que volar un cuadrado. Cada lado mide 40 pasos. Primero vuela un lado y después gira en la esquina.',
+          tipEs: '¿Cuántas esquinas tiene un cuadrado? ¿Y de cuántos grados es una esquina? Dos bloques no sirven para el cuadrado.' },
         { id: 'k2_e_10mal', st: 3, type: 'open', sit: SIT_LAND, q: 'Warum passt «wiederhole 10 mal» hier nicht? Erkläre mit «weil».',
           tip: 'Stell dir vor, du gehst im Dunkeln eine Treppe hinunter. Weisst du, wie viele Stufen es sind? Wann hörst du auf zu gehen?',
           words: ['weiss nicht', 'wie viele', 'Boden', 'zu früh', 'zu spät'],
@@ -641,7 +745,16 @@
                  ['Was passiert mit 10-mal? (Zusatz)', ['zu frueh', 'zu spaet', 'boden']]],
           need: 2,
           model: 'Weil man nicht weiss, wie viele Schritte es bis zum Boden sind. Mit 10-mal hört die Drohne zu früh oder zu spät auf.',
-          sitEs: SIT_LAND_ES }
+          sitEs: SIT_LAND_ES,
+          qEs: '¿Por qué aquí no sirve «repetir 10»? Explica con «porque».',
+          tipEs: 'Imagina que bajas una escalera a oscuras. ¿Sabes cuántos escalones hay? ¿Cuándo dejas de caminar?',
+          wordsEs: ['no se sabe', 'cuántos', 'suelo', 'demasiado pronto', 'demasiado tarde'],
+          starterEs: 'Porque …',
+          keysEs: [['no se sabe', 'no sabe', 'no sabemos', 'no sabes', 'no se conoce', 'ni idea', 'desconoc'],
+                   ['cuantos', 'cuantas', 'cuanto', 'numero', 'pasos', 'cantidad'],
+                   ['pronto', 'tarde', 'suelo']],
+          labelsEs: ['¿Se sabe antes?', '¿Qué es lo que no se sabe?', '¿Qué pasa con 10 veces? (extra)'],
+          modelEs: 'Porque no se sabe cuántos pasos hay hasta el suelo. Con 10 veces, el dron se detiene demasiado pronto o demasiado tarde.' }
       ],
       // ---------- Teil 3: Eigene Blöcke & Fehler finden (Kompetenz 3) ----------
       k3: [
@@ -651,58 +764,101 @@
           why: 'y wird immer grösser, bis y = 200. Die Drohne steigt: Sie hebt ab.',
           whyNot: [null, 'Im Skript gibt es keinen Drehen-Block.', 'Von einem Paket steht nichts im Skript.'],
           qEs: '¿Qué nombre le queda mejor a este bloque?', optsEs: ['despegar', 'girar en círculo', 'soltar el paquete'],
-          tipEs: 'Lee el bloque rosa como una pequeña historia: ¿la y se hace más grande o más pequeña? Entonces, ¿el dron vuela más alto o más bajo? ¿Cuándo se detiene?' },
+          tipEs: 'Lee el bloque rosa como una pequeña historia: ¿la y se hace más grande o más pequeña? Entonces, ¿el dron vuela más alto o más bajo? ¿Cuándo se detiene?',
+          whyEs: 'La y se hace cada vez más grande, hasta y = 200. El dron sube: despega.',
+          whyNotEs: [null, 'En el programa no hay ningún bloque de girar.', 'En el programa no dice nada de un paquete.'] },
         { id: 'k3_name_rechts', st: 1, type: 'mc', pre: () => SB.script(SB.define('???'), SB.loop(10, SB.chX(5))), q: 'Welcher Name passt für diesen Block?',
           opts: ['nach rechts fliegen', 'nach links fliegen', 'landen', 'abheben'],
           tip: 'Welcher Buchstabe steht im blauen Block, x oder y? Und steht dort eine Plus- oder eine Minuszahl?',
           why: 'x wird grösser: Die Drohne fliegt nach rechts.',
-          whyNot: [null, 'Für links braucht es eine Minuszahl.', 'Landen geht nach unten, also mit y.', 'Abheben geht nach oben, also mit y.'] },
+          whyNot: [null, 'Für links braucht es eine Minuszahl.', 'Landen geht nach unten, also mit y.', 'Abheben geht nach oben, also mit y.'],
+          qEs: '¿Qué nombre le queda a este bloque?',
+          optsEs: ['volar a la derecha', 'volar a la izquierda', 'aterrizar', 'despegar'],
+          tipEs: '¿Qué letra hay en el bloque azul, x o y? ¿Y el número es positivo o negativo?',
+          whyEs: 'La x se hace más grande: el dron vuela hacia la derecha.',
+          whyNotEs: [null, 'Para la izquierda hace falta un número negativo.', 'Aterrizar es hacia abajo, o sea, con la y.', 'Despegar es hacia arriba, o sea, con la y.'] },
         { id: 'k3_grund1', st: 1, type: 'mc', q: 'Was ist ein guter Grund für einen eigenen Block?',
           opts: ['Man baut die Befehle einmal und braucht dann nur den Namen.', 'Mit eigenen Blöcken fliegt die Drohne immer doppelt so schnell.', 'Ohne eigenen Block kann Scratch gar nichts mehrmals machen.', 'Ein eigener Block zeigt ganz von selbst an, wo ein Fehler ist.'],
           tip: 'Denk an eine Rezeptkarte für Pizzateig. Du schreibst sie einmal. Was ist danach praktisch?',
           why: 'Einmal bauen, dann immer wieder mit dem Namen brauchen.',
-          whyNot: [null, 'Ein eigener Block macht nichts schneller.', 'Mehrmals machen kann auch eine Schleife.', 'Fehler musst du selber suchen.'] },
+          whyNot: [null, 'Ein eigener Block macht nichts schneller.', 'Mehrmals machen kann auch eine Schleife.', 'Fehler musst du selber suchen.'],
+          qEs: '¿Cuál es una buena razón para hacer un bloque propio?',
+          optsEs: ['Armas los comandos una vez y después solo usas el nombre.', 'Con bloques propios el dron siempre vuela el doble de rápido.', 'Sin un bloque propio, Scratch no puede hacer nada varias veces.', 'Un bloque propio muestra por sí solo dónde hay un error.'],
+          tipEs: 'Piensa en una tarjeta de receta para masa de pizza. La escribes una vez. ¿Qué es práctico después?',
+          whyEs: 'Lo armas una vez y después lo usas una y otra vez con el nombre.',
+          whyNotEs: [null, 'Un bloque propio no hace nada más rápido.', 'Hacer algo varias veces también lo hace un bucle.', 'Los errores los tienes que buscar tú.'] },
         { id: 'k3_grund2', st: 1, type: 'mc', sit: 'Dein Programm braucht den eigenen Block «Quadrat fliegen» an 5 Stellen. Jetzt sollen die Seiten länger werden.', q: 'Was ist mit dem eigenen Block praktisch?',
           opts: ['Du änderst die Zahl nur einmal: im Definiere-Block.', 'Du musst die Zahl an allen 5 Stellen einzeln ändern.', 'Mit einem eigenen Block kann man nichts mehr ändern.', 'Der Block macht die Seiten jeden Tag von selbst länger.'],
           tip: 'Denk an die Rezeptkarte: Du willst mehr Salz im Teig. Wo änderst du das?',
           why: 'Die Befehle stehen nur im Definiere-Block. Dort änderst du es einmal, und es gilt überall.',
-          whyNot: [null, 'An den 5 Stellen steht nur der Name.', 'Doch, ein eigener Block lässt sich ändern.', 'Ein Block ändert sich nie von selbst.'] },
+          whyNot: [null, 'An den 5 Stellen steht nur der Name.', 'Doch, ein eigener Block lässt sich ändern.', 'Ein Block ändert sich nie von selbst.'],
+          sitEs: 'Tu programa usa el bloque propio «volar cuadrado» en 5 lugares. Ahora los lados tienen que ser más largos.', qEs: '¿Qué es práctico con el bloque propio?',
+          optsEs: ['Cambias el número solo una vez: en el bloque «definir».', 'Tienes que cambiar el número en los 5 lugares, uno por uno.', 'Con un bloque propio ya no se puede cambiar nada.', 'El bloque hace los lados más largos solo, cada día.'],
+          tipEs: 'Piensa en la tarjeta de receta: quieres más sal en la masa. ¿Dónde lo cambias?',
+          whyEs: 'Los comandos están solo en el bloque «definir». Allí lo cambias una vez, y vale en todas partes.',
+          whyNotEs: [null, 'En los 5 lugares solo está el nombre.', 'Sí, un bloque propio se puede cambiar.', 'Un bloque nunca cambia solo.'] },
         { id: 'k3_grund_2von5', st: 1, type: 'multi', nRight: 2, q: 'Warum macht man eigene Blöcke? Wähle die zwei richtigen Gründe.',
           opts: ['Man muss die gleichen Befehle nicht immer wieder neu bauen.', 'Will man etwas verbessern, macht man es nur an einer Stelle.', 'Mit eigenen Blöcken fliegt die Drohne viel schneller.', 'Ohne eigenen Block kann Scratch nichts wiederholen.', 'Ein eigener Block zeigt von selbst an, wo ein Fehler ist.'],
-          tip: 'Zwei Gründe stimmen. Denk an die Rezeptkarte: Was ist praktisch, wenn man sie oft braucht? Und wenn man sie verbessern will?' },
+          tip: 'Zwei Gründe stimmen. Denk an die Rezeptkarte: Was ist praktisch, wenn man sie oft braucht? Und wenn man sie verbessern will?',
+          qEs: '¿Por qué se hacen bloques propios? Elige las dos razones correctas.',
+          optsEs: ['No hay que armar los mismos comandos una y otra vez.', 'Si quieres mejorar algo, lo haces en un solo lugar.', 'Con bloques propios el dron vuela mucho más rápido.', 'Sin un bloque propio, Scratch no puede repetir nada.', 'Un bloque propio muestra por sí solo dónde hay un error.'],
+          tipEs: 'Dos razones son correctas. Piensa en la tarjeta de receta: ¿qué es práctico si la usas a menudo? ¿Y si la quieres mejorar?' },
         { id: 'k3_bug_why', st: 1, type: 'mc', sit: SIT_BUG, pre: PRE_BUG_LAND, q: 'Warum fliegt die Drohne nach oben statt zum Boden?',
           opts: ['Weil dort eine positive Zahl (+5) steht statt einer Minuszahl', 'Weil das Wort «Landen» falsch geschrieben ist', 'Weil man statt «y» die Taste Leertaste drücken muss'],
           tip: 'Sei ein Detektiv: Die gelbe Zahl ist verdächtig. Was bedeutet diese Zahl für die Richtung? Denk an einen Lift: Was muss mit der Stockwerk-Zahl passieren, damit er nach unten fährt?',
           why: 'Plus bei y heisst nach oben. Nach unten braucht es eine Minuszahl.',
           whyNot: [null, 'Der Name ändert nichts an der Richtung.', 'Die Leertaste bestimmt keine Richtung.'],
           sitEs: SIT_BUG_ES, qEs: '¿Por qué el dron vuela hacia arriba en vez de ir al suelo?',
-          optsEs: ['Porque allí hay un número positivo (+5) en vez de un número negativo', 'Porque la palabra «Aterrizar» está mal escrita', 'Porque en vez de «y» hay que usar la barra espaciadora'] },
+          optsEs: ['Porque allí hay un número positivo (+5) en vez de un número negativo', 'Porque la palabra «Aterrizar» está mal escrita', 'Porque en vez de «y» hay que usar la barra espaciadora'],
+          tipEs: 'Sé un detective: el número amarillo es sospechoso. ¿Qué significa este número para la dirección? Piensa en un ascensor: ¿qué tiene que pasar con el número del piso para que baje?',
+          whyEs: 'Un más en la y quiere decir hacia arriba. Para bajar hace falta un número negativo.',
+          whyNotEs: [null, 'El nombre no cambia la dirección.', 'La barra espaciadora no decide la dirección.'] },
         { id: 'k3_bug_fix', st: 1, type: 'mc', optsHtml: true, sit: SIT_BUG, pre: PRE_BUG_LAND, q: 'Was muss man eintragen, damit sie nach unten sinkt?',
           opts: [SB.bare(SB.chY(-1)), SB.bare(SB.chY(10)), SB.bare(SB.chY(0))],
           tip: 'Plus heisst bei y nach oben. Was ist das Gegenteil von plus?',
           why: 'Minus bei y heisst nach unten.',
           whyNot: [null, 'Plus bei y geht nach oben.', 'Mit 0 bewegt sich die Drohne gar nicht.'],
-          sitEs: SIT_BUG_ES, qEs: '¿Qué hay que poner para que baje?' },
+          sitEs: SIT_BUG_ES, qEs: '¿Qué hay que poner para que baje?',
+          tipEs: 'En la y, más quiere decir hacia arriba. ¿Qué es lo contrario de más?',
+          whyEs: 'Un menos en la y quiere decir hacia abajo.',
+          whyNotEs: [null, 'Un más en la y va hacia arriba.', 'Con 0 el dron no se mueve nada.'] },
         { id: 'k3_bug_x', st: 1, type: 'mc', optsHtml: true, sit: 'Die Drohne soll nach <b>links</b> zum Baum fliegen. Aber sie fliegt nach rechts!', pre: () => SB.script(SB.flag(), SB.loop(10, SB.chX(8, true))), q: 'Welcher Block ist richtig?',
           opts: [SB.bare(SB.chX(-8)), SB.bare(SB.chX(8)), SB.bare(SB.chY(-8)), SB.bare(SB.chY(8))],
           tip: 'x ist für links und rechts. Denk an einen Zahlenstrahl: Auf welcher Seite sind die Minuszahlen?',
           why: 'Nach links braucht es bei x eine Minuszahl: «ändere x um -8».',
-          whyNot: [null, 'Plus bei x geht nach rechts.', 'Minus bei y geht nach unten.', 'Plus bei y geht nach oben.'] },
+          whyNot: [null, 'Plus bei x geht nach rechts.', 'Minus bei y geht nach unten.', 'Plus bei y geht nach oben.'],
+          sitEs: 'El dron tiene que volar hacia la <b>izquierda</b>, hasta el árbol. ¡Pero vuela hacia la derecha!', qEs: '¿Qué bloque es el correcto?',
+          tipEs: 'La x es para izquierda y derecha. Piensa en una recta numérica: ¿de qué lado están los números negativos?',
+          whyEs: 'Para ir a la izquierda hace falta un número negativo en la x: «sumar a x -8».',
+          whyNotEs: [null, 'Un más en la x va hacia la derecha.', 'Un menos en la y va hacia abajo.', 'Un más en la y va hacia arriba.'] },
         { id: 'k3_g_name_quad', st: 2, type: 'gap', pre: () => SB.script(SB.define('???'), SB.loop(4, SB.move(50) + SB.turn(90))),
           text: 'Ein passender Name für diesen Block: ___', a: ['Quadrat fliegen'], contains: ['quadrat', 'viereck'], also: 'Auch richtig: «Quadrat», «Viereck fliegen».',
-          hint: 'Welche Form hat 4 gleiche Seiten und 4 Ecken?', tip: 'Welche Form fliegt die Drohne? Fahr den Weg mit dem Finger nach: geradeaus, drehen, und das 4-mal.' },
+          hint: 'Welche Form hat 4 gleiche Seiten und 4 Ecken?', tip: 'Welche Form fliegt die Drohne? Fahr den Weg mit dem Finger nach: geradeaus, drehen, und das 4-mal.',
+          textEs: 'Un nombre que le queda a este bloque: ___', aEs: ['volar cuadrado'], containsEs: ['cuadrad', 'cuadro'], alsoEs: 'También es correcto: «cuadrado», «volar en cuadrado».',
+          hintEs: '¿Qué forma tiene 4 lados iguales y 4 esquinas?', tipEs: '¿Qué forma vuela el dron? Sigue el camino con el dedo: recto, girar, y eso 4 veces.' },
         { id: 'k3_g_name_land', st: 2, type: 'gap', pre: () => SB.script(SB.define('???'), SB.until(SB.ground(), SB.chY(-2))),
           text: 'Ein passender Name für diesen Block: ___', a: ['landen'], contains: ['land', 'sink', 'runter', 'hinunter', 'abwaerts', 'nach unten', 'boden', 'absteig'], also: 'Auch richtig: «nach unten fliegen», «sinken».',
-          hint: 'Die Drohne fliegt nach unten, bis sie den Boden berührt.', tip: 'Wird y grösser oder kleiner? Und wann hört die Drohne auf?' },
+          hint: 'Die Drohne fliegt nach unten, bis sie den Boden berührt.', tip: 'Wird y grösser oder kleiner? Und wann hört die Drohne auf?',
+          textEs: 'Un nombre que le queda a este bloque: ___', aEs: ['aterrizar'], containsEs: ['aterriz', 'baj', 'descend', 'suelo', 'abajo'], alsoEs: 'También es correcto: «volar hacia abajo», «bajar».',
+          hintEs: 'El dron vuela hacia abajo hasta que toca el suelo.', tipEs: '¿La y se hace más grande o más pequeña? ¿Y cuándo se detiene el dron?' },
         { id: 'k3_g_bug_unten', st: 2, type: 'gap', num: true, sit: 'Die Drohne soll nach unten zum Boden fliegen. Aber sie fliegt nach oben!', pre: () => SB.script(SB.flag(), SB.until(SB.ground(), SB.chY(4, true))),
           text: 'Schreib den Block richtig: «ändere y um ___»', a: ['-4'],
-          hint: 'Schau die Zahl im Skript an. Stimmt die Richtung?', tip: 'Plus bei y heisst nach oben. Was braucht es für nach unten?' },
+          hint: 'Schau die Zahl im Skript an. Stimmt die Richtung?', tip: 'Plus bei y heisst nach oben. Was braucht es für nach unten?',
+          sitEs: 'El dron tiene que volar hacia abajo, hasta el suelo. ¡Pero vuela hacia arriba!',
+          textEs: 'Escribe bien el bloque: «sumar a y ___»',
+          hintEs: 'Mira el número en el programa. ¿La dirección es correcta?', tipEs: 'Un más en la y quiere decir hacia arriba. ¿Qué hace falta para ir hacia abajo?' },
         { id: 'k3_g_bug_links', st: 2, type: 'gap', num: true, sit: 'Der Baum ist 30 Schritte links von der Drohne. Die Drohne soll zum Baum fliegen. Aber sie fliegt nach rechts!', pre: () => SB.script(SB.flag(), SB.chX(30, true)),
           text: 'Schreib den Block richtig: «ändere x um ___»', a: ['-30'],
-          hint: 'Schau die Zahl im Skript an. Stimmt die Richtung?', tip: 'x ist für links und rechts. Wo sind auf dem Zahlenstrahl die Minuszahlen?' },
+          hint: 'Schau die Zahl im Skript an. Stimmt die Richtung?', tip: 'x ist für links und rechts. Wo sind auf dem Zahlenstrahl die Minuszahlen?',
+          sitEs: 'El árbol está 30 pasos a la izquierda del dron. El dron tiene que volar hasta el árbol. ¡Pero vuela hacia la derecha!',
+          textEs: 'Escribe bien el bloque: «sumar a x ___»',
+          hintEs: 'Mira el número en el programa. ¿La dirección es correcta?', tipEs: 'La x es para izquierda y derecha. ¿Dónde están los números negativos en la recta numérica?' },
         { id: 'k3_g_bug_oben', st: 2, type: 'gap', num: true, sit: 'Die Drohne soll 6 Schritte nach oben aufs Dach fliegen. Aber sie fliegt nach unten!', pre: () => SB.script(SB.flag(), SB.chY(-6, true)),
           text: 'Schreib den Block richtig: «ändere y um ___»', a: ['6'],
-          hint: 'Schau die Zahl im Skript an. Stimmt die Richtung?', tip: 'Minus bei y heisst nach unten. Was braucht es für nach oben?' },
+          hint: 'Schau die Zahl im Skript an. Stimmt die Richtung?', tip: 'Minus bei y heisst nach unten. Was braucht es für nach oben?',
+          sitEs: 'El dron tiene que volar 6 pasos hacia arriba, hasta el techo. ¡Pero vuela hacia abajo!',
+          textEs: 'Escribe bien el bloque: «sumar a y ___»',
+          hintEs: 'Mira el número en el programa. ¿La dirección es correcta?', tipEs: 'Un menos en la y quiere decir hacia abajo. ¿Qué hace falta para ir hacia arriba?' },
         { id: 'k3_e_bug', st: 3, type: 'open', sit: SIT_BUG, pre: PRE_BUG_LAND, q: 'Erkläre mit «weil»: Warum fliegt die Drohne nach oben statt nach unten?',
           tip: 'Denk an einen Lift: Welche Zahlen gehen nach oben, welche nach unten? Schau die gelbe Zahl an. Steht ein Minus davor?',
           words: ['Pluszahl', 'Minuszahl', 'y', 'oben', 'unten'],
@@ -710,7 +866,14 @@
           keys: [['Was für eine Zahl steht jetzt bei y?', ['plus', 'positiv', ' 5 ']], ['Was für eine Zahl braucht es nach unten?', ['minus', 'negativ']]],
           need: 2,
           model: 'Weil bei y eine Pluszahl (+5) steht. Plus heisst nach oben. Nach unten braucht es eine Minuszahl.',
-          sitEs: SIT_BUG_ES },
+          sitEs: SIT_BUG_ES,
+          qEs: 'Explica con «porque»: ¿por qué el dron vuela hacia arriba en vez de hacia abajo?',
+          tipEs: 'Piensa en un ascensor: ¿qué números van hacia arriba y cuáles hacia abajo? Mira el número amarillo. ¿Tiene un menos delante?',
+          wordsEs: ['número positivo', 'número negativo', 'y', 'arriba', 'abajo'],
+          starterEs: 'Porque en la y hay un …',
+          keysEs: [['positiv', ' mas ', ' 5 '], ['negativ', 'menos']],
+          labelsEs: ['¿Qué número hay ahora en la y?', '¿Qué número hace falta para bajar?'],
+          modelEs: 'Porque en la y hay un número positivo (+5). Más quiere decir hacia arriba. Para bajar hace falta un número negativo.' },
         { id: 'k3_e_grund', st: 3, type: 'open', q: 'Warum macht man eigene Blöcke? Schreib einen Grund.',
           tip: 'Denk an eine Rezeptkarte für Pizzateig. Du schreibst sie einmal und brauchst sie für jede Pizza wieder. Was ist daran praktisch?',
           words: ['nur einmal bauen', 'immer wieder brauchen', 'an einer Stelle ändern', 'übersichtlich'],
@@ -719,7 +882,16 @@
                  ['Was ist beim Ändern einfacher?', ['einer stelle', 'eine stelle', 'nur dort', 'nur im block', 'nur da']],
                  ['Wie wird das Programm?', ['uebersicht', 'kuerzer', 'ordentlich']]],
           need: 1,
-          model: 'Mit einem eigenen Block muss man die Befehle nur einmal bauen. Danach braucht man nur noch den Namen. Und will man etwas ändern, macht man es nur an einer Stelle.' }
+          model: 'Mit einem eigenen Block muss man die Befehle nur einmal bauen. Danach braucht man nur noch den Namen. Und will man etwas ändern, macht man es nur an einer Stelle.',
+          qEs: '¿Por qué se hacen bloques propios? Escribe una razón.',
+          tipEs: 'Piensa en una tarjeta de receta para masa de pizza. La escribes una vez y la vuelves a usar para cada pizza. ¿Qué tiene eso de práctico?',
+          wordsEs: ['armar solo una vez', 'usar una y otra vez', 'cambiar en un solo lugar', 'más claro'],
+          starterEs: 'Con un bloque propio …',
+          keysEs: [['una vez', 'una sola vez', 'no hay que armar', 'otra vez', 'varias veces', 'reutiliz', 'volver a usar'],
+                   ['un solo lugar', 'un lugar', 'una sola parte', 'solo alli', 'solo en el bloque'],
+                   ['claro', 'ordenado', 'corto', 'facil de leer']],
+          labelsEs: ['¿Cuántas veces se arman los comandos?', '¿Qué es más fácil al cambiar algo?', '¿Cómo queda el programa?'],
+          modelEs: 'Con un bloque propio, los comandos se arman solo una vez. Después solo hace falta el nombre. Y si quieres cambiar algo, lo haces en un solo lugar.' }
       ],
       // ---------- Teil 4: Bedingungen mit UND / ODER (Kompetenz 4) ----------
       k4: [
@@ -727,12 +899,22 @@
           opts: ['Wenn beide Teile stimmen.', 'Wenn nur einer der zwei Teile stimmt.', 'Wenn keiner der zwei Teile stimmt.', 'Immer, egal ob etwas stimmt.'],
           tip: 'Du darfst gamen, wenn die Hausaufgaben fertig sind UND das Zimmer aufgeräumt ist. Was muss alles erledigt sein?',
           why: 'UND: Beide Bedingungen müssen stimmen.',
-          whyNot: [null, 'Nur ein Teil reicht bei UND nicht.', 'Wenn nichts stimmt, ist UND falsch.', 'UND ist nicht immer wahr.'] },
+          whyNot: [null, 'Nur ein Teil reicht bei UND nicht.', 'Wenn nichts stimmt, ist UND falsch.', 'UND ist nicht immer wahr.'],
+          qEs: '¿Cuándo es verdadera una condición con «Y»?',
+          optsEs: ['Cuando las dos partes se cumplen.', 'Cuando solo una de las dos partes se cumple.', 'Cuando ninguna de las dos partes se cumple.', 'Siempre, da igual si algo se cumple.'],
+          tipEs: 'Puedes jugar videojuegos si terminaste las tareas «Y» ordenaste tu cuarto. ¿Qué tiene que estar hecho?',
+          whyEs: '«Y»: las dos condiciones tienen que cumplirse.',
+          whyNotEs: [null, 'Con «Y» no basta con una parte.', 'Si nada se cumple, «Y» es falso.', '«Y» no siempre es verdadero.'] },
         { id: 'k4_oder', st: 1, type: 'mc', q: 'Wann ist eine Bedingung mit ODER wahr?',
           opts: ['Wenn mindestens ein Teil stimmt.', 'Nur wenn beide Teile gleichzeitig stimmen.', 'Nur wenn keiner der zwei Teile stimmt.', 'Nie, ODER ist immer falsch.'],
           tip: 'Du bekommst ein Dessert, wenn du das Gemüse isst ODER den Tisch abräumst. Musst du beides machen?',
           why: 'ODER: Mindestens eine Bedingung muss stimmen. Eine reicht.',
-          whyNot: [null, 'Bei ODER muss nicht beides stimmen.', 'Wenn nichts stimmt, ist ODER falsch.', 'ODER kann auch wahr sein.'] },
+          whyNot: [null, 'Bei ODER muss nicht beides stimmen.', 'Wenn nichts stimmt, ist ODER falsch.', 'ODER kann auch wahr sein.'],
+          qEs: '¿Cuándo es verdadera una condición con «O»?',
+          optsEs: ['Cuando por lo menos una parte se cumple.', 'Solo cuando las dos partes se cumplen a la vez.', 'Solo cuando ninguna de las dos partes se cumple.', 'Nunca, «O» siempre es falso.'],
+          tipEs: 'Te dan postre si te comes la verdura «O» si recoges la mesa. ¿Tienes que hacer las dos cosas?',
+          whyEs: '«O»: por lo menos una condición tiene que cumplirse. Basta con una.',
+          whyNotEs: [null, 'Con «O» no tienen que cumplirse las dos.', 'Si nada se cumple, «O» es falso.', '«O» también puede ser verdadero.'] },
         { id: 'k4_satz1', st: 1, type: 'sort', q: 'Welches Wort gehört in die Lücke?',
           rows: [['Die Drohne darf nur starten, wenn der Akku voll ist ___ das Wetter gut ist.', 'und'], ['Die Alarmanlage piepst, wenn die Tür ___ das Fenster geöffnet wird.', 'oder']],
           whyNot: ['Mit nur einem davon darf sie nicht starten.', 'Die Alarmanlage wartet nicht, bis beides offen ist.'],
@@ -740,7 +922,8 @@
           tip: 'Mach bei jedem Satz die Probe: Muss beides gleichzeitig stimmen? Oder reicht schon eines davon? Denk an deinen Alltag: Wann brauchst du zwei Sachen zusammen, und wann genügt eine?',
           qEs: '¿Qué palabra va en el hueco?',
           rowsEs: ['El dron solo puede despegar si la batería está llena ___ hace buen tiempo.', 'La alarma pita si se abre la puerta ___ la ventana.'], catsEs: ['y', 'o'],
-          tipEs: 'En cada frase, haz la prueba: ¿tienen que cumplirse las dos cosas a la vez? ¿O basta con una de ellas? Piensa en tu vida diaria: ¿cuándo necesitas dos cosas juntas y cuándo basta con una?' },
+          tipEs: 'En cada frase, haz la prueba: ¿tienen que cumplirse las dos cosas a la vez? ¿O basta con una de ellas? Piensa en tu vida diaria: ¿cuándo necesitas dos cosas juntas y cuándo basta con una?',
+          whyNotEs: ['Con solo una de las dos cosas no puede despegar.', 'La alarma no espera a que las dos estén abiertas.'] },
         { id: 'k4_satz2', st: 1, type: 'sort', q: 'Welches Wort gehört in die Lücke?',
           rows: [['Du kommst ins Kino, wenn du ein Ticket hast ___ pünktlich da bist.', 'und'], ['Die Schulglocke läutet um 10:00 Uhr ___ um 12:00 Uhr.', 'oder']],
           whyNot: ['Mit nur einem davon kommst du nicht hinein.', 'Es kann nicht zugleich 10 und 12 Uhr sein.'],
@@ -748,55 +931,94 @@
           tip: 'Mach bei jedem Satz die Probe: Muss beides gleichzeitig stimmen? Oder reicht schon eines davon? Frag dich auch: Kann beides überhaupt gleichzeitig passieren?',
           qEs: '¿Qué palabra va en el hueco?',
           rowsEs: ['Puedes entrar al cine si tienes una entrada ___ llegas a tiempo.', 'El timbre de la escuela suena a las 10:00 ___ a las 12:00.'], catsEs: ['y', 'o'],
-          tipEs: 'En cada frase, haz la prueba: ¿tienen que cumplirse las dos cosas a la vez? ¿O basta con una de ellas? Pregúntate también: ¿pueden pasar las dos cosas a la vez?' },
+          tipEs: 'En cada frase, haz la prueba: ¿tienen que cumplirse las dos cosas a la vez? ¿O basta con una de ellas? Pregúntate también: ¿pueden pasar las dos cosas a la vez?',
+          whyNotEs: ['Con solo una de las dos cosas no entras.', 'No pueden ser las 10 y las 12 a la vez.'] },
         { id: 'k4_gang', st: 1, type: 'sort', rules: true, sit: RULES_GANG, q: 'Was macht das Licht im Gang?',
           rows: [['dunkel · jemand bewegt sich', 'AN'], ['dunkel · niemand bewegt sich', 'AUS']],
           whyNot: ['AUS braucht: hell oder niemand bewegt sich.', 'Für AN muss sich auch jemand bewegen.'],
-          cats: ['AN', 'AUS'], tip: TIP_GANG },
+          cats: ['AN', 'AUS'], tip: TIP_GANG,
+          sitEs: RULES_GANG_ES, qEs: '¿Qué hace la luz del pasillo?',
+          rowsEs: ['oscuro · alguien se mueve', 'oscuro · nadie se mueve'], catsEs: ['ENCENDIDA', 'APAGADA'], tipEs: TIP_GANG_ES,
+          whyNotEs: ['APAGADA necesita: claro o nadie se mueve.', 'Para ENCENDIDA también tiene que moverse alguien.'] },
         { id: 'k4_gang2', st: 1, type: 'sort', rules: true, sit: RULES_GANG, q: 'Was macht das Licht im Gang?',
           rows: [['hell · jemand bewegt sich', 'AUS'], ['dunkel · jemand bewegt sich', 'AN']],
           whyNot: ['Für AN muss es auch dunkel sein.', 'AUS braucht: hell oder niemand bewegt sich.'],
-          cats: ['AN', 'AUS'], tip: TIP_GANG },
+          cats: ['AN', 'AUS'], tip: TIP_GANG,
+          sitEs: RULES_GANG_ES, qEs: '¿Qué hace la luz del pasillo?',
+          rowsEs: ['claro · alguien se mueve', 'oscuro · alguien se mueve'], catsEs: ['ENCENDIDA', 'APAGADA'], tipEs: TIP_GANG_ES,
+          whyNotEs: ['Para ENCENDIDA también tiene que estar oscuro.', 'APAGADA necesita: claro o nadie se mueve.'] },
         { id: 'k4_garten', st: 1, type: 'sort', rules: true, sit: RULES_GARTEN, q: 'Was macht der Rasensprenger?',
           rows: [['Boden trocken · Sonne · 19:00 Uhr (Abend)', 'AN (lang)'], ['Boden feucht · Sonne · 19:00 Uhr (Abend)', 'AUS']],
           whyNot: [{ 'KURZ': 'KURZ gilt nur am Mittag.', 'AUS': 'Der Boden ist trocken, und es regnet nicht.' }, 'Diese Regel gilt nur bei trockenem Boden.'],
           cats: ['AN (lang)', 'KURZ', 'AUS'], tip: TIP_GARTEN,
           sitEs: RULES_GARTEN_ES, rowsEs: ['Suelo seco · Sol · 19:00 (atardecer)', 'Suelo húmedo · Sol · 19:00 (atardecer)'],
-          catsEs: ['ENCENDIDO (largo)', 'CORTO', 'APAGADO'], tipEs: TIP_GARTEN_ES },
+          catsEs: ['ENCENDIDO (largo)', 'CORTO', 'APAGADO'], tipEs: TIP_GARTEN_ES,
+          qEs: '¿Qué hace el aspersor?',
+          whyNotEs: [{ 'KURZ': 'CORTO vale solo al mediodía.', 'AUS': 'El suelo está seco y no llueve.' }, 'Esta regla vale solo con el suelo seco.'] },
         { id: 'k4_garten2', st: 1, type: 'sort', rules: true, sit: RULES_GARTEN, q: 'Was macht der Rasensprenger?',
           rows: [['Boden trocken · Sonne · 12:00 Uhr (Mittag)', 'KURZ'], ['Boden trocken · Regen · 19:00 Uhr (Abend)', 'AUS']],
           whyNot: [{ 'AN (lang)': 'AN (lang) gilt nur am Abend.', 'AUS': 'Der Boden ist trocken, und es regnet nicht.' }, 'Bei Regen gilt diese Regel nicht.'],
           cats: ['AN (lang)', 'KURZ', 'AUS'], tip: TIP_GARTEN,
           sitEs: RULES_GARTEN_ES, rowsEs: ['Suelo seco · Sol · 12:00 (mediodía)', 'Suelo seco · Lluvia · 19:00 (atardecer)'],
-          catsEs: ['ENCENDIDO (largo)', 'CORTO', 'APAGADO'], tipEs: TIP_GARTEN_ES },
+          catsEs: ['ENCENDIDO (largo)', 'CORTO', 'APAGADO'], tipEs: TIP_GARTEN_ES,
+          qEs: '¿Qué hace el aspersor?',
+          whyNotEs: [{ 'AN (lang)': 'ENCENDIDO (largo) vale solo al atardecer.', 'AUS': 'El suelo está seco y no llueve.' }, 'Con lluvia esta regla no vale.'] },
         { id: 'k4_g_handy', st: 2, type: 'gap', text: 'Das Handy lädt nur, wenn das Kabel steckt ___ der Strom eingeschaltet ist.', a: ['und'],
-          hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Lädt das Handy schon, wenn nur eines davon stimmt?' },
+          hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Lädt das Handy schon, wenn nur eines davon stimmt?',
+          textEs: 'El teléfono solo se carga si el cable está enchufado ___ la corriente está encendida.', aEs: ['y'],
+          hintEs: HINT_YO_ES, tipEs: '¿Se carga el teléfono si solo se cumple una de las dos cosas?' },
         { id: 'k4_g_hund', st: 2, type: 'gap', text: 'Der Hund bellt, wenn es an der Tür klingelt ___ wenn jemand klopft.', a: ['oder'],
-          hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Bellt der Hund schon, wenn nur eines davon passiert?' },
+          hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Bellt der Hund schon, wenn nur eines davon passiert?',
+          textEs: 'El perro ladra si suena el timbre de la puerta ___ si alguien golpea.', aEs: ['o'],
+          hintEs: HINT_YO_ES, tipEs: '¿Ladra el perro si solo pasa una de las dos cosas?' },
         { id: 'k4_g_zopf', st: 2, type: 'gap', text: 'Ein Zopf gelingt nur, wenn du Mehl ___ Hefe im Teig hast.', a: ['und'],
-          hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Was passiert mit dem Zopf, wenn eine der zwei Zutaten fehlt?' },
+          hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Was passiert mit dem Zopf, wenn eine der zwei Zutaten fehlt?',
+          textEs: 'Una trenza de pan solo sale bien si tienes harina ___ levadura en la masa.', aEs: ['y'],
+          hintEs: HINT_YO_ES, tipEs: '¿Qué pasa con la trenza si falta uno de los dos ingredientes?' },
         { id: 'k4_g_pause', st: 2, type: 'gap', text: 'Die Pause ist im Schulhaus, wenn es regnet ___ wenn es sehr kalt ist.', a: ['oder'],
-          hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Bleibt die Klasse schon drinnen, wenn nur eines davon stimmt?' },
+          hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Bleibt die Klasse schon drinnen, wenn nur eines davon stimmt?',
+          textEs: 'El recreo es dentro de la escuela si llueve ___ si hace mucho frío.', aEs: ['o'],
+          hintEs: HINT_YO_ES, tipEs: '¿La clase ya se queda dentro si solo se cumple una de las dos cosas?' },
         { id: 'k4_g_gang', st: 2, type: 'gap', rules: true, sit: RULES_GANG, text: 'Es ist hell. Jemand bewegt sich. Das Licht ist ___.', a: ['AUS'], bank: ['AN', 'AUS'],
-          hint: 'Prüfe Regel 1: Stimmen wirklich beide Teile?', tip: TIP_GANG },
+          hint: 'Prüfe Regel 1: Stimmen wirklich beide Teile?', tip: TIP_GANG,
+          sitEs: RULES_GANG_ES, textEs: 'Está claro. Alguien se mueve. La luz está ___.', aEs: ['APAGADA'], bankEs: ['ENCENDIDA', 'APAGADA'],
+          hintEs: 'Revisa la regla 1: ¿se cumplen de verdad las dos partes?', tipEs: TIP_GANG_ES },
         { id: 'k4_g_spr1', st: 2, type: 'gap', rules: true, sit: RULES_GARTEN, text: 'Boden trocken · Sonne · 12:00 Uhr (Mittag). Der Sprenger ist ___.', a: ['KURZ'], bank: ['AN (lang)', 'KURZ', 'AUS'],
-          hint: 'Prüfe zuerst die Regel AUS. Dann schau auf die Uhrzeit.', tip: TIP_GARTEN },
+          hint: 'Prüfe zuerst die Regel AUS. Dann schau auf die Uhrzeit.', tip: TIP_GARTEN,
+          sitEs: RULES_GARTEN_ES, textEs: 'Suelo seco · Sol · 12:00 (mediodía). El aspersor está en modo ___.', aEs: ['CORTO'], bankEs: ['ENCENDIDO (largo)', 'CORTO', 'APAGADO'],
+          hintEs: 'Revisa primero la regla APAGADO. Después mira la hora.', tipEs: TIP_GARTEN_ES },
         { id: 'k4_g_spr2', st: 2, type: 'gap', rules: true, sit: RULES_GARTEN, text: 'Boden trocken · Regen · 19:00 Uhr (Abend). Der Sprenger ist ___.', a: ['AUS'], bank: ['AN (lang)', 'KURZ', 'AUS'],
-          hint: 'Prüfe zuerst die Regel AUS.', tip: TIP_GARTEN },
+          hint: 'Prüfe zuerst die Regel AUS.', tip: TIP_GARTEN,
+          sitEs: RULES_GARTEN_ES, textEs: 'Suelo seco · Lluvia · 19:00 (atardecer). El aspersor está en modo ___.', aEs: ['APAGADO'], bankEs: ['ENCENDIDO (largo)', 'CORTO', 'APAGADO'],
+          hintEs: 'Revisa primero la regla APAGADO.', tipEs: TIP_GARTEN_ES },
         { id: 'k4_e_und', st: 3, type: 'open', q: 'Erkläre in eigenen Worten: Wann ist eine Bedingung mit UND wahr?',
           tip: 'Denk an die Regel fürs Gamen: Hausaufgaben fertig UND Zimmer aufgeräumt. Was passiert, wenn nur eines erledigt ist?',
           words: ['beide', 'Bedingungen', 'stimmen', 'wahr', 'falsch'],
           starter: 'Mit UND ist es wahr, wenn …',
           keys: [['Wie viele Bedingungen müssen stimmen?', ['beide', 'beides', 'alle', 'zwei']], ['Und wenn eine nicht stimmt? (Zusatz)', ['falsch', 'nicht wahr', 'nicht erfuellt']]],
           need: 1,
-          model: 'Mit UND ist es nur wahr, wenn beide Bedingungen stimmen. Stimmt eine nicht, ist alles falsch.' },
+          model: 'Mit UND ist es nur wahr, wenn beide Bedingungen stimmen. Stimmt eine nicht, ist alles falsch.',
+          qEs: 'Explica con tus propias palabras: ¿cuándo es verdadera una condición con «Y»?',
+          tipEs: 'Piensa en la regla para jugar videojuegos: tareas terminadas «Y» cuarto ordenado. ¿Qué pasa si solo una de las dos cosas está hecha?',
+          wordsEs: ['las dos', 'condiciones', 'cumplirse', 'verdadero', 'falso'],
+          starterEs: 'Con «Y» es verdadero cuando …',
+          keysEs: [['las dos', 'ambas', 'ambos', 'los dos', 'todas', 'todos', 'dos'], ['falso', 'no es verdad', 'no se cumple']],
+          labelsEs: ['¿Cuántas condiciones tienen que cumplirse?', '¿Y si una no se cumple? (extra)'],
+          modelEs: 'Con «Y» solo es verdadero cuando las dos condiciones se cumplen. Si una no se cumple, todo es falso.' },
         { id: 'k4_e_oder', st: 3, type: 'open', q: 'Erkläre in eigenen Worten: Wann ist eine Bedingung mit ODER wahr?',
           tip: 'Denk ans Dessert: Gemüse essen ODER Tisch abräumen. Musst du beides machen?',
           words: ['mindestens', 'eine', 'reicht', 'beide', 'wahr'],
           starter: 'Mit ODER ist es wahr, wenn …',
           keys: [['Wie viele Bedingungen müssen mindestens stimmen?', [' eine ', ' einer ', ' eins ', 'mindestens', ' nur ein ', 'reicht', 'genuegt']], ['Und wenn beide stimmen? (Zusatz)', ['beide', 'beides', 'auch wahr']]],
           need: 1,
-          model: 'Mit ODER ist es wahr, wenn mindestens eine Bedingung stimmt. Eine reicht. Auch wenn beide stimmen, ist es wahr.' }
+          model: 'Mit ODER ist es wahr, wenn mindestens eine Bedingung stimmt. Eine reicht. Auch wenn beide stimmen, ist es wahr.',
+          qEs: 'Explica con tus propias palabras: ¿cuándo es verdadera una condición con «O»?',
+          tipEs: 'Piensa en el postre: comer la verdura «O» recoger la mesa. ¿Tienes que hacer las dos cosas?',
+          wordsEs: ['por lo menos', 'una', 'basta', 'las dos', 'verdadero'],
+          starterEs: 'Con «O» es verdadero cuando …',
+          keysEs: [[' una ', ' uno ', 'por lo menos', 'al menos', ' solo un', 'basta', 'alcanza', 'suficiente'], ['las dos', 'ambas', 'ambos', 'los dos', 'tambien es verdad', 'tambien verdadero', 'tambien es verdadero']],
+          labelsEs: ['¿Cuántas condiciones tienen que cumplirse como mínimo?', '¿Y si se cumplen las dos? (extra)'],
+          modelEs: 'Con «O» es verdadero cuando por lo menos una condición se cumple. Basta con una. También es verdadero si se cumplen las dos.' }
       ]
     };
     const BY_ID = {};
@@ -979,7 +1201,7 @@
     // Rechtschreibung zählt im Test nicht: ein (bei langen Wörtern zwei) Tippfehler sind okay
     function gapCheck(it, input) {
       if (it.num) { const v = numOf(input); return { ok: !isNaN(v) && it.a.some(f => numOf(f) === v), near: false }; }
-      if (it.contains) { const t = normText(input); return { ok: t.trim().length > 0 && it.contains.some(p => t.includes(p)), near: false }; }
+      if (it.contains) { const t = normText(input), cs = LANG === 'es' && it.containsEs ? it.contains.concat(it.containsEs) : it.contains; return { ok: t.trim().length > 0 && cs.some(p => t.includes(p)), near: false }; }
       const x = norm(input);
       if (!x) return { ok: false };
       const lists = LANG === 'es' && it.aEs ? [it.aEs, it.a] : [it.a];
@@ -1069,7 +1291,7 @@
       if (!o.ok && it.whyNot && it.whyNot[o.i]) {
         Q.tried = Q.tried || [];
         if (!Q.tried.includes(i)) Q.tried.push(i);
-        Q.nudge = it.whyNot[o.i];
+        Q.nudge = { why: o.i };   // Index, damit der Grund nach dem Umschalten in der neuen Sprache steht
         renderPart(pid);
         return;
       }
@@ -1105,10 +1327,10 @@
       if (wrong.length && it.whyNot) {
         Q.tried.push(wrong.length);
         Q.rowNudge = wrong.map(r => {
-          const w = it.whyNot[r], cat = Q.sel[r];
+          const cat = Q.sel[r];
           (Q.rowTried[r] = Q.rowTried[r] || []).push(cat);
           delete Q.sel[r];
-          return [r, typeof w === 'string' ? w : (w && w[cat]) || ''];
+          return [r, cat];
         });
         Q.rowLock = it.rows.map((row, r) => r).filter(r => !wrong.includes(r));
         renderPart(pid);
@@ -1272,6 +1494,9 @@
               <circle cx="33" cy="26" r="4" fill="#fff"/><circle cx="47" cy="26" r="4" fill="#fff"/>
               <circle cx="34" cy="27" r="2" fill="#0f172a"/><circle cx="48" cy="27" r="2" fill="#0f172a"/>
               <path d="M34 34 Q40 39 46 34" stroke="#0f172a" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>`;
+    // Kurzer Grund bei falscher Antwort, in der aktuellen Sprache (whyNot / whyNotEs). Zuordnen: pro Zeile Text oder {Spalte: Text}; Schlüssel = deutsche Spalte
+    const nudgeText = (it, n) => n && typeof n === 'object' ? (L(it, 'whyNot') || [])[n.why] || '' : n;
+    const rowWhy = (it, r, cat) => { const w = (L(it, 'whyNot') || [])[r]; return typeof w === 'string' ? w : (w && w[cat]) || ''; };
     const DE_ONLY = '<p class="text-xs text-slate-500 mt-1" lang="es">Esta pregunta todavía está solo en alemán.</p>';
     function bar(pct, h = 'h-4') {
       return `<div class="${h} rounded-full bg-sky-100 border border-sky-200 overflow-hidden"><div class="bar h-full rounded-full bg-gradient-to-r from-sky-400 to-indigo-500" style="width:${pct}%"></div></div>`;
@@ -1393,7 +1618,7 @@
           else if (tried) cls = 'bg-yellow-50 border-yellow-300 text-slate-400 line-through';
           return `<button type="button" onclick="pick('${pid}',${i})" ${done || tried ? 'disabled' : ''} class="w-full min-h-[52px] px-4 py-2.5 rounded-2xl border-2 text-base font-bold text-left wrap-any transition ${cls} ${done && !o.ok && i !== Q.pick ? 'opacity-60' : ''}">${done && o.ok ? '✔ ' : ''}${optHtml(it, o.i)}</button>`;
         }).join('')}</div>`;
-        if (!done && Q.nudge) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> <span lang="de">${esc(Q.nudge)}</span> ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
+        if (!done && Q.nudge) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> <span lang="${langOf(it, 'whyNot')}">${esc(nudgeText(it, Q.nudge))}</span> ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
       }
       if (it.type === 'multi') {
         h += `<div class="grid grid-cols-1 gap-2">${Q.opts.map((o, i) => {
@@ -1406,7 +1631,7 @@
         if (!done) {
           const ready = Q.multi.length === it.nRight;
           if (Q.nudge) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> ${esc(Q.nudge)} ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
-          h += `<div class="text-sm text-slate-500 mt-2" lang="de">${Q.multi.length} von ${it.nRight} gewählt</div>`;
+          h += `<div class="text-sm text-slate-500 mt-2">${tr(`${Q.multi.length} von ${it.nRight} gewählt`, `${Q.multi.length} de ${it.nRight} elegidas`)}</div>`;
           h += `<button type="button" onclick="checkMulti('${pid}')" ${ready ? '' : 'disabled'} class="mt-2 w-full ${BTN_MAIN} ${ready ? '' : 'opacity-40 cursor-not-allowed'}">${tr('✓ Prüfen', '✓ Comprobar')}</button>`;
         }
       }
@@ -1426,7 +1651,7 @@
               else if (struck) cls = 'bg-yellow-50 border-yellow-300 text-slate-400 line-through';
               if (done) cls = c === right ? 'bg-emerald-600 border-emerald-600 text-white' : sel === c ? 'bg-yellow-100 border-yellow-400 text-yellow-900' : 'bg-white border-slate-200 text-slate-400';
               return `<button type="button" onclick="choose('${pid}',${r},${ci})" ${done || lock || struck ? 'disabled' : ''} class="min-h-[44px] px-3 py-1.5 rounded-xl border-2 text-sm sm:text-base font-bold wrap-any ${cls}">${(done && c === right) || (lock && sel === c) ? '✔ ' : ''}${esc(cats[ci])}</button>`;
-            }).join('')}</div>${nud ? `<div class="mt-2 text-base text-yellow-900 pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b>${nud[1] ? ` <span lang="de">${esc(nud[1])}</span>` : ''} ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>` : ''}</div>`;
+            }).join('')}</div>${nud ? `<div class="mt-2 text-base text-yellow-900 pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b>${rowWhy(it, r, nud[1]) ? ` <span lang="${langOf(it, 'whyNot')}">${esc(rowWhy(it, r, nud[1]))}</span>` : ''} ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>` : ''}</div>`;
         }).join('')}</div>`;
         if (!done) {
           const all = Object.keys(Q.sel).length >= it.rows.length;
@@ -1442,7 +1667,7 @@
         const full = Q.placed.length >= n;
         if (!done && !full) h += `<div class="mt-2 ${it.blocks ? 'flex flex-wrap gap-1.5' : 'space-y-2'}">${Q.pool.map(k => `<button type="button" onclick="place('${pid}',${k})" class="${it.blocks ? 'sb-small max-w-full px-1.5 py-1' : 'w-full px-3 py-2'} min-h-[44px] text-left rounded-xl border-2 border-slate-300 bg-white hover:border-sky-400 text-base font-semibold text-slate-800 wrap-any">${stepHtml(it, k)}</button>`).join('')}</div>`;
         if (!done && Q.placed.length) h += `<div class="text-xs text-slate-500 mt-2">${tr('Falsch hingelegt? Tippe oben darauf, dann geht es zurück.', '¿Lo pusiste mal? Tócalo arriba y vuelve abajo.')}</div>`;
-        if (!done && full && it.extra) h += `<div class="mt-2 text-sm text-slate-500" lang="de">Diese Blöcke bleiben übrig: ${Q.pool.length}</div>`;
+        if (!done && full && it.extra) h += `<div class="mt-2 text-sm text-slate-500">${tr('Diese Blöcke bleiben übrig:', 'Estos bloques sobran:')} ${Q.pool.length}</div>`;
         if (it.blocks && (full || done)) h += `<div class="mt-3 text-xs font-bold text-slate-500 uppercase tracking-wide">${tr('👀 So sieht dein Skript in Scratch aus:', '👀 Así se ve tu programa en Scratch:')}</div><div class="mt-1">${SB.script(SB.flag(), buildScript(Q.placed.map(k => stepObj(it, k))))}</div>`;
         if (!done) h += `<button type="button" onclick="checkOrder('${pid}')" ${full ? '' : 'disabled'} class="mt-3 w-full ${BTN_MAIN} ${full ? '' : 'opacity-40 cursor-not-allowed'}">${tr('✓ Prüfen', '✓ Comprobar')}</button>`;
       }
@@ -1457,7 +1682,7 @@
           h += `<div class="mt-3 sm:mt-0"><div class="rounded-2xl border-2 border-dashed border-sky-200 bg-sky-50/50 p-3">
             <div class="text-sm font-bold text-sky-900 mb-2">${tr('🧰 Befehle', '🧰 Comandos')}</div>
             <div class="flex flex-wrap gap-2">${free.map(k => `<button type="button" data-card="${k}" onclick="tapCard(${k})" class="drag-card min-h-[44px] px-3 py-2 rounded-xl border-2 border-sky-300 bg-white hover:border-sky-500 text-sm sm:text-base font-bold text-sky-950 text-left wrap-any max-w-full">${esc(flowCard(it.flow, k))}</button>`).join('')}</div>
-            ${placed.some(x => x != null) ? `<div class="text-xs text-slate-500 mt-2" lang="de">Falsch hingelegt? Tippe im Bild auf das Feld, dann kommt das Kärtchen zurück.</div>` : ''}
+            ${placed.some(x => x != null) ? `<div class="text-xs text-slate-500 mt-2">${tr('Falsch hingelegt? Tippe im Bild auf das Feld, dann kommt das Kärtchen zurück.', '¿La pusiste mal? Toca el campo en el dibujo y la tarjeta vuelve.')}</div>` : ''}
           </div>`;
           const full = !nextFree(Q);
           h += `<button type="button" onclick="checkSlots('${pid}')" ${full ? '' : 'disabled'} class="mt-3 w-full ${BTN_MAIN} ${full ? '' : 'opacity-40 cursor-not-allowed'}">${tr('✓ Prüfen', '✓ Comprobar')}</button></div></div>`;
@@ -1521,13 +1746,13 @@
     // Kurzer Auftrag pro Typ: [Deutsch, Spanisch]; null = noch nicht übersetzt (Deutsch mit lang="de")
     const HINTS = {
       mc: ['Tippe auf die richtige Antwort.', 'Toca la respuesta correcta.'],
-      multi: ['Tippe die richtigen Antworten an. Dann prüfen.', null],
+      multi: ['Tippe die richtigen Antworten an. Dann prüfen.', 'Toca las respuestas correctas. Después, comprueba.'],
       sort: ['Tippe bei jeder Zeile die passende Antwort an.', 'Toca en cada fila la respuesta que corresponde.'],
       order: ['Tippe die Sätze in der richtigen Reihenfolge an.', 'Toca las frases en el orden correcto.'],
-      blocks: ['Tippe die Blöcke in der richtigen Reihenfolge an.', null],
-      slots: ['Tippe ein Kärtchen an: Es kommt ins blaue Feld. Du kannst es auch ins Feld ziehen.', null],
+      blocks: ['Tippe die Blöcke in der richtigen Reihenfolge an.', 'Toca los bloques en el orden correcto.'],
+      slots: ['Tippe ein Kärtchen an: Es kommt ins blaue Feld. Du kannst es auch ins Feld ziehen.', 'Toca una tarjeta: va al campo azul. También puedes arrastrarla al campo.'],
       gap: ['Schreib das fehlende Wort.', 'Escribe la palabra que falta.'],
-      num: ['Schreib die fehlende Zahl.', null],
+      num: ['Schreib die fehlende Zahl.', 'Escribe el número que falta.'],
       open: ['Erkläre in eigenen Worten.', 'Explica con tus propias palabras.']
     };
     function hintFor(it) {
@@ -1536,7 +1761,7 @@
       let text = LANG === 'es' && es ? es : de;
       const lang = LANG === 'es' && !es ? 'de' : LANG;
       const nExtra = it.type === 'slots' ? FLOWS[it.flow].extra.length : it.extra ? it.extra.length : 0;
-      if (nExtra && lang === 'de') text += ` ${nExtra} ${it.type === 'slots' ? 'Kärtchen' : 'Blöcke'} brauchst du nicht.`;
+      if (nExtra) text += lang === 'de' ? ` ${nExtra} ${it.type === 'slots' ? 'Kärtchen' : 'Blöcke'} brauchst du nicht.` : ` ${nExtra} ${it.type === 'slots' ? 'tarjetas' : 'bloques'} no los necesitas.`;
       const sp = text.indexOf(' ');
       return `<div class="text-base text-slate-600 mt-1 mb-3" lang="${lang}"><b class="text-slate-800">${text.slice(0, sp)}</b>${text.slice(sp)}</div>`;
     }
