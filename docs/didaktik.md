@@ -37,6 +37,17 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 
 **Bei jeder neuen Aufgabe recherchieren:** Welche Übungsform ist für dieses Lernziel (Wörter, Grammatik, Lesen, Hören, Schreiben) bei schwächeren Lernenden am besten belegt? Ergebnis mit Quelle hier nachtragen und der Lehrperson in 1–2 Sätzen sagen.
 
+## 1c Kleine Animationen zum Antippen (Wunsch Lehrperson 11.11.2026)
+
+**Warum:** Ein freundliches Aussehen (Figuren mit Gesicht, angenehme Farben) steigert Motivation und Lernen leicht (Brom, Stárková & D'Mello, 2018: Behalten d = 0.39, Verstehen d = 0.32; Wong & Adesope, 2021). **Aber:** Witziges, das nichts mit dem Stoff zu tun hat, lenkt ab und senkt das Lernen (Sundararajan & Adesope, 2020: g = −0.33), vor allem bei Anfängern und wenn es neben einer Lern-Grafik steht oder dauernd sichtbar ist.
+
+**So setzt es das Portal um:**
+
+- Höchstens eine kleine Animation pro Teil, nur mit CSS/SVG (kein Aufwand, keine Abhängigkeit).
+- Am besten **zum Stoff**: Antippen zeigt etwas, das man lernen soll (Vulkan bricht aus: Magma steigt aus der Magmakammer; Drohne fliegt das Quadrat).
+- Sonst **als Belohnung nach einer Etappe** oder auf der Startansicht, nie mitten in einer Aufgabe und nie neben einer Grafik, mit der man gerade arbeitet.
+- Bewegt sich nur nach Antippen, kurz (unter 2 Sekunden), dann wieder ruhig. `prefers-reduced-motion` beachten.
+
 ## 2 Wörter lernen (Lernpfad)
 
 | So macht es das Portal | Warum (Forschung) |
@@ -68,6 +79,14 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 | In Stufe 2 und 3 wird geschrieben, nicht nur gedacht. | Laborstudien fanden: Abrufen im Kopf wirkt etwa gleich wie laut oder schriftlich (Smith, Roediger & Karpicke, 2013). Eine Studie mit 8.-Klässlern (Begriffe aus den Naturwissenschaften) fand einen Vorteil für schriftliches Abrufen (Titel hier nicht geprüft). Ehrlich: Der Vorteil ist nicht sicher belegt. Schreiben hat aber einen klaren praktischen Nutzen: Man sieht, ob die Antwort stimmt, und übt die Form des Tests. |
 | Offene Antwort mit Hilfe-Treppe, danach mit der Musterlösung vergleichen («Hab ich so / Noch nicht»). | Hilfe vor der Lösung (Rosenshine, 2012); Rückmeldung zur Aufgabe (Hattie & Timperley, 2007). Selbstvergleich mit einer Musterlösung ist eine Form von Rückmeldung; die Lernenden schätzen sich aber oft zu gut ein, darum sucht «Antwort prüfen» vorher die Schlüsselwörter. |
 | Wiederholung nach 1 und 3 Tagen. | Verteiltes Üben und successive relearning (Cepeda et al., 2006; Rawson & Dunlosky, 2022). |
+
+**Rückmeldung bei falscher Antwort (Wunsch Lehrperson 11.11.2026):** Nicht die Lösung zeigen. Ganz kurz (ein Satz, wenige Wörter) sagen, warum die gewählte Antwort nicht passt, die Antwort durchstreichen und nochmals probieren lassen. Erklärende Rückmeldung wirkt besser als nur richtig/falsch (Van der Kleij, Feskens & Eggen, 2015; Shute, 2008), besonders bei Anfängern (Moreno, 2004); mehrere Versuche mit Hinweis wirken besser als sofort die Lösung (Attali, 2015). Die Lösung zeigt nur «Weiss ich nicht».
+
+## 2c Programmieren lernen (Lernpfad Informatik)
+
+**Warum:** Blöcke in die richtige Reihenfolge bringen («Parsons-Aufgaben») bringt etwa gleich viel wie Code selber schreiben, geht aber schneller und entmutigt weniger (Ericson, Margulieux & Rick, 2017). Falsche Zusatzblöcke (Ablenker) machen es für junge Anfänger schwerer und weniger effizient (Harms, Chen & Kelleher, 2016), darum zuerst ohne, dann mit Ablenkern. Programme zuerst lesen und nachverfolgen, dann ändern und selber schreiben (Lister et al., 2004; PRIMM: Sentance, Waite & Kallia, 2019).
+
+**So setzt es das Portal um:** Pro Teil zuerst Skripte lesen und vorhersagen (Erkennen), dann Blöcke ordnen oder Zahlen einsetzen (Ergänzen), zuletzt mit «weil» erklären (Hilfe-Treppe).
 
 ## 3 Grammatik lernen (für neue Übungen)
 
@@ -110,6 +129,7 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - Bandura, A. (1977). Self-efficacy: Toward a unifying theory of behavioral change. *Psychological Review, 84*(2), 191–215. https://doi.org/10.1037/0033-295X.84.2.191
 - Bandura, A., & Schunk, D. H. (1981). Cultivating competence, self-efficacy, and intrinsic interest through proximal self-motivation. *Journal of Personality and Social Psychology, 41*(3), 586–598. https://doi.org/10.1037/0022-3514.41.3.586
 - Bjork, R. A. (1994). Memory and metamemory considerations in the training of human beings. In J. Metcalfe & A. P. Shimamura (Hrsg.), *Metacognition: Knowing about knowing* (S. 185–205). MIT Press.
+- Brom, C., Stárková, T., & D'Mello, S. K. (2018). How effective is emotional design? A meta-analysis on facial anthropomorphisms and pleasant colors during multimedia learning. *Educational Research Review, 25*, 100–119. https://doi.org/10.1016/j.edurev.2018.09.004
 - Butler, A. C., & Roediger, H. L. (2008). Feedback enhances the positive effects and reduces the negative effects of multiple-choice testing. *Memory & Cognition, 36*(3), 604–616. https://doi.org/10.3758/MC.36.3.604
 - Cummins, J. (1979). Linguistic interdependence and the educational development of bilingual children. *Review of Educational Research, 49*(2), 222–251. https://doi.org/10.3102/00346543049002222
 - Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. *Psychological Bulletin, 132*(3), 354–380. https://doi.org/10.1037/0033-2909.132.3.354
@@ -146,3 +166,13 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - VanPatten, B., & Cadierno, T. (1993). Explicit instruction and input processing. *Studies in Second Language Acquisition, 15*(2), 225–243. https://doi.org/10.1017/S0272263100011979
 - Webb, S. (2009). The effects of receptive and productive learning of word pairs on vocabulary knowledge. *RELC Journal, 40*(3), 360–376.
 - Yanagisawa, A., Webb, S., & Uchihara, T. (2020). How do different forms of glossing contribute to L2 vocabulary learning from reading? A meta-regression analysis. *Studies in Second Language Acquisition, 42*(2), 411–438. https://doi.org/10.1017/S0272263119000688
+- Sundararajan, N., & Adesope, O. (2020). Keep it coherent: A meta-analysis of the seductive details effect. *Educational Psychology Review, 32*, 707–734. https://doi.org/10.1007/s10648-020-09522-4
+- Wong, R. M., & Adesope, O. O. (2021). Meta-analysis of emotional designs in multimedia learning: A replication and extension study. *Educational Psychology Review, 33*, 357–385. https://doi.org/10.1007/s10648-020-09545-x
+- Ericson, B. J., Margulieux, L. E., & Rick, J. (2017). Solving Parsons problems versus fixing and writing code. *Proceedings of the 17th Koli Calling International Conference on Computing Education Research*.
+- Harms, K. J., Chen, J., & Kelleher, C. L. (2016). Distractors in Parsons problems decrease learning efficiency for young novice programmers. *Proceedings of the 2016 ACM Conference on International Computing Education Research (ICER)*, 241–250.
+- Lister, R., et al. (2004). A multi-national study of reading and tracing skills in novice programmers. *ACM SIGCSE Bulletin, 36*(4), 119–150.
+- Sentance, S., Waite, J., & Kallia, M. (2019). Teaching computer programming with PRIMM: A sociocultural perspective. *Computer Science Education, 29*(2–3), 136–176.
+- Moreno, R. (2004). Decreasing cognitive load for novice students: Effects of explanatory versus corrective feedback in discovery-based multimedia. *Instructional Science, 32*, 99–113.
+- Shute, V. J. (2008). Focus on formative feedback. *Review of Educational Research, 78*(1), 153–189.
+- Van der Kleij, F. M., Feskens, R. C. W., & Eggen, T. J. H. M. (2015). Effects of feedback in a computer-based learning environment on students' learning outcomes: A meta-analysis. *Review of Educational Research, 85*(4), 475–511.
+- Attali, Y. (2015). Effects of multiple-try feedback and question type during mathematics problem solving on performance in similar problems. *Computers & Education, 86*, 260–267.

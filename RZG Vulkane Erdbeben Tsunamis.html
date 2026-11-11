@@ -27,6 +27,27 @@
     svg .zone { cursor: pointer; }
     svg .zone:hover > :first-child { filter: brightness(1.12); }
     @media (prefers-reduced-motion: reduce) { .pop, .bump { animation: none; } .fly-star { display: none; } .bar { transition: none; } }
+    /* Vulkan zum Antippen auf der Startansicht (docs/didaktik.md 1c): bewegt sich nur nach Antippen, 1.8 s */
+    .volc-btn { -webkit-tap-highlight-color: transparent; }
+    .volc-btn:focus-visible { outline: 3px solid #ea580c; outline-offset: 3px; }
+    .volc .v-magma { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); }
+    .volc .v-spurt, .volc .v-ash, .volc .v-flow { opacity: 0; }
+    .volc .v-eye { transform-box: fill-box; transform-origin: center; }
+    .volc .v-ash { transform-box: fill-box; transform-origin: 50% 100%; }
+    .volc.erupt .v-magma { animation: vMagma 1.8s ease-in-out; }
+    .volc.erupt .v-spurt { animation: vSpurt 1.8s ease-out; }
+    .volc.erupt .v-spurt.s2 { --dx: -14px; } .volc.erupt .v-spurt.s3 { --dx: 14px; }
+    .volc.erupt .v-ash { animation: vAsh 1.8s ease-out; }
+    .volc.erupt .v-eye { animation: vEye 1.8s; } .volc.erupt .v-flow { animation: vFlow 1.8s ease-out; }
+    @keyframes vMagma { 0% { transform: scaleY(0); } 35% { transform: scaleY(1); } 80% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
+    @keyframes vSpurt { 0%, 33% { opacity: 0; transform: translate(0, 6px); } 40% { opacity: 1; } 55% { opacity: 1; transform: translate(calc(var(--dx, 0px) * 0.6), -20px); } 75% { opacity: 0; transform: translate(var(--dx, 0px), 0); } 100% { opacity: 0; } }
+    @keyframes vAsh { 0%, 38% { opacity: 0; transform: translateY(6px) scale(0.4); } 60% { opacity: 0.95; transform: translateY(-2px) scale(1); } 85% { opacity: 0.8; transform: translateY(-6px) scale(1.1); } 100% { opacity: 0; transform: translateY(-8px) scale(1.15); } }
+    @keyframes vEye { 0%, 30% { transform: scale(1); } 36%, 85% { transform: scale(1.45); } 100% { transform: scale(1); } }
+    @keyframes vFlow { 0%, 40% { opacity: 0; stroke-dasharray: 0 60; } 70% { opacity: 1; stroke-dasharray: 60 0; } 88% { opacity: 1; stroke-dasharray: 60 0; } 100% { opacity: 0; stroke-dasharray: 60 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .volc.erupt .v-magma, .volc.erupt .v-spurt, .volc.erupt .v-ash, .volc.erupt .v-eye, .volc.erupt .v-flow { animation: none; }
+      .volc.erupt .v-magma { transform: scaleY(1); } .volc.erupt .v-ash { opacity: 0.9; } .volc.erupt .v-spurt.s1, .volc.erupt .v-flow { opacity: 1; }
+    }
     /* Sprachwechsel: feste Texte stehen doppelt (data-l="de" / data-l="es") */
     html[lang="es"] [data-l="de"], html:not([lang="es"]) [data-l="es"] { display: none !important; }
     html:not([lang="es"]) .lang-btn[data-setlang="de"], html[lang="es"] .lang-btn[data-setlang="es"] { background: #fff; color: #0f172a; }
@@ -79,6 +100,31 @@
         <h2 class="text-xl font-black text-slate-900"><span data-l="de">Fit für den Test</span><span data-l="es" lang="es">¡Listo para el examen!</span> 🌋</h2>
         <p class="text-base text-slate-600 mt-1" data-l="de">4 Teile, wie im Test. Jeder Teil hat 3 Stufen: <b>erkennen</b>, <b>ergänzen</b>, <b>erklären</b>. Fehler sind okay: Die Aufgabe kommt einfach später nochmals.</p>
         <p class="text-base text-slate-600 mt-1" data-l="es" lang="es">4 partes, como en el examen. Cada parte tiene 3 niveles: <b>reconocer</b>, <b>completar</b>, <b>explicar</b>. Equivocarse está bien: la tarea simplemente vuelve a salir más tarde.</p>
+        <!-- Kleiner Vulkan zum Antippen (Startansicht, nicht in einer Aufgabe): Magma steigt aus der Magmakammer, an der Oberfläche Lava -->
+        <div class="mt-3 flex items-center gap-3">
+          <button type="button" id="volc-btn" onclick="eruptVolcano()" class="volc-btn shrink-0 w-28 rounded-2xl bg-sky-50 border border-sky-100 overflow-hidden" aria-label="Vulkan antippen: Ausbruch zeigen" data-es-aria-label="Tocar el volcán: mostrar la erupción">
+            <svg id="volc" class="volc block w-full h-auto" viewBox="0 0 120 112" aria-hidden="true" focusable="false">
+              <g class="v-ash" fill="#94a3b8"><circle cx="50" cy="14" r="8"/><circle cx="62" cy="9" r="10"/><circle cx="74" cy="15" r="7"/><circle cx="60" cy="18" r="7"/></g>
+              <rect x="0" y="80" width="120" height="32" fill="#a16207"/>
+              <path d="M8 80 L52 25 L68 25 L112 80 Z" fill="#78716c"/>
+              <path d="M52 25 L56 30 L64 30 L68 25 Z" fill="#57534e"/>
+              <rect x="57" y="29" width="6" height="64" fill="#57534e"/>
+              <ellipse cx="60" cy="97" rx="24" ry="9" fill="#dc2626"/>
+              <ellipse cx="60" cy="95" rx="15" ry="4.5" fill="#f97316"/>
+              <rect class="v-magma" x="57" y="29" width="6" height="64" fill="#f97316"/>
+              <path class="v-flow" d="M67 27 Q80 40 97 63" stroke="#f97316" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <circle class="v-spurt s1" cx="60" cy="24" r="4.5" fill="#f97316"/>
+              <circle class="v-spurt s2" cx="57" cy="25" r="3.5" fill="#ef4444"/>
+              <circle class="v-spurt s3" cx="63" cy="25" r="3.5" fill="#fb923c"/>
+              <circle class="v-eye" cx="44" cy="58" r="2.8" fill="#1c1917"/><circle class="v-eye" cx="76" cy="58" r="2.8" fill="#1c1917"/>
+              <circle cx="39" cy="65" r="3" fill="#fda4af" opacity="0.7"/><circle cx="81" cy="65" r="3" fill="#fda4af" opacity="0.7"/>
+            </svg>
+          </button>
+          <div class="min-w-0 text-base text-slate-700">
+            <p class="font-bold"><span data-l="de">👆 Tipp den Vulkan an!</span><span data-l="es" lang="es">👆 ¡Toca el volcán!</span></p>
+            <p id="volc-info" class="hidden text-sm text-slate-600 mt-1"><span data-l="de">Magma steigt aus der <b>Magmakammer</b>. An der Oberfläche heisst es <b>Lava</b>.</span><span data-l="es" lang="es">El magma sube desde la <b>cámara magmática</b>. En la superficie se llama <b>lava</b>.</span></p>
+          </div>
+        </div>
         <button type="button" id="continue-btn" onclick="continueLearning()" class="w-full mt-4 min-h-[56px] rounded-2xl bg-orange-600 hover:bg-orange-700 text-white text-lg font-black shadow-sm">▶ Hier weitermachen</button>
         <div id="week-days" class="mt-4 pt-3 border-t border-slate-100"></div>
       </section>
@@ -443,6 +489,7 @@
       k1: [
         { id: 'k1_wo', st: 1, nr: [1, 4], type: 'mc', first: true, q: 'Wo gibt es besonders viele Vulkane?',
           opts: ['An den Grenzen der Erdplatten', 'Mitten in den grossen Wüsten', 'Rund um den Nordpol herum', 'Überall auf der Welt gleich'],
+          whyNot: [null, 'Sand und Hitze machen keine Vulkane.', 'Kälte hat mit Vulkanen nichts zu tun.', 'Vulkane sind nicht gleichmässig verteilt.'],
           tip: 'Die Erdkruste ist wie ein Puzzle aus grossen Teilen. Wo kann am ehesten etwas von unten herauskommen?',
           why: 'Die meisten Vulkane liegen an Plattengrenzen. Dort kann Magma aufsteigen.',
           qEs: '¿Dónde hay especialmente muchos volcanes?',
@@ -459,6 +506,7 @@
           tipEs: 'Un país está en medio del Atlántico, uno en el borde del Pacífico y uno en medio del Pacífico, lejos de todo límite de placas. Un país no tiene ningún volcán.' },
         { id: 'k1_sk_aus', st: 1, nr: [1], type: 'mc', pic: 'sk_aus', q: 'Schau die Skizze an. Welche Art zeigt sie?',
           opts: ['Platten driften auseinander', 'Platten stossen zusammen', 'Hotspot'],
+          whyNot: [null, 'Die Pfeile zeigen nicht aufeinander zu.', 'Hier gibt es eine Plattengrenze.'],
           tip: 'Schau auf die Pfeile: Bewegen sich die Platten aufeinander zu oder voneinander weg?',
           why: 'Die Platten driften auseinander. Im Riss steigt Magma auf.',
           qEs: 'Mira el dibujo. ¿Qué tipo muestra?',
@@ -467,6 +515,7 @@
           whyEs: 'Las placas se separan. En la grieta sube magma.' },
         { id: 'k1_sk_zus', st: 1, nr: [1], type: 'mc', pic: 'sk_zus', q: 'Schau die Skizze an. Welche Art zeigt sie?',
           opts: ['Platten stossen zusammen', 'Platten driften auseinander', 'Hotspot'],
+          whyNot: [null, 'Die Pfeile zeigen nicht voneinander weg.', 'Hier gibt es eine Plattengrenze.'],
           tip: 'Schau auf die Pfeile. Und: Taucht eine Platte nach unten?',
           why: 'Die Platten stossen zusammen. Eine Platte taucht ab und schmilzt.',
           qEs: 'Mira el dibujo. ¿Qué tipo muestra?',
@@ -475,6 +524,7 @@
           whyEs: 'Las placas chocan. Una placa se hunde y se derrite.' },
         { id: 'k1_sk_hot', st: 1, nr: [1, 2], type: 'mc', pic: 'sk_hot', q: 'Schau die Skizze an. Welche Art zeigt sie?',
           opts: ['Hotspot', 'Platten driften auseinander', 'Platten stossen zusammen'],
+          whyNot: [null, 'Hier gibt es keinen Riss zwischen Platten.', 'Hier taucht keine Platte ab.'],
           tip: 'Gibt es hier überhaupt eine Grenze zwischen zwei Platten? Woher kommt das Magma?',
           why: 'Hotspot: Mitten unter der Platte steigt ein Magmastrahl auf.',
           qEs: 'Mira el dibujo. ¿Qué tipo muestra?',
@@ -483,6 +533,7 @@
           whyEs: 'Hotspot: en medio, debajo de la placa, sube un chorro de magma.' },
         { id: 'k1_hot', st: 1, nr: [2], type: 'mc', q: 'Was ist ein Hotspot?',
           opts: ['Ein heisser Punkt im Erdmantel, wo Magma aufsteigt.', 'Ein Vulkan, der seit langer Zeit nie mehr ausbricht.', 'Eine Stelle, wo zwei Platten zusammenstossen.', 'Ein sehr heisser Strand am Meer in den Tropen.'],
+          whyNot: [null, 'Das ist ein erloschener Vulkan.', 'Ein Hotspot liegt nicht an einer Plattengrenze.', 'Es geht um Vulkane, nicht um Ferien.'],
           tip: 'Übersetze das Wort aus dem Englischen: «hot» und «spot». Und: Ein Hotspot liegt nicht an einer Plattengrenze.',
           why: 'Ein Hotspot liegt mitten unter einer Platte. Ein Magmastrahl brennt sich durch die Platte.',
           qEs: '¿Qué es un hotspot?',
@@ -491,6 +542,7 @@
           whyEs: 'Un hotspot está en medio, debajo de una placa. Un chorro de magma se abre paso a través de la placa.' },
         { id: 'k1_alt', st: 1, nr: [3], type: 'mc', pic: 'hawaii', q: 'Die Inseln von Hawaii sind über einem Hotspot entstanden. Welche Insel ist am ältesten?',
           opts: ['Kauai', 'Oahu', 'Maui', 'Hawaii (Big Island)'],
+          whyNot: [null, 'Oahu ist nicht am weitesten vom Hotspot weg.', 'Maui liegt noch recht nah beim Hotspot.', 'Diese Insel liegt über dem Hotspot.'],
           tip: 'Über dem Hotspot entsteht gerade ein Vulkan. Die Platte trägt die Inseln weg wie ein Förderband. Welche Insel ist schon am längsten unterwegs?',
           why: 'Kauai ist am weitesten weg vom Hotspot. Darum ist sie am ältesten.',
           qEs: 'Las islas de Hawaii se formaron sobre un hotspot. ¿Qué isla es la más antigua?',
@@ -499,6 +551,7 @@
           whyEs: 'Kauai es la que está más lejos del hotspot. Por eso es la más antigua.' },
         { id: 'k1_ring', st: 1, nr: [4], type: 'mc', pic: 'ring', q: 'Die roten Dreiecke sind Vulkane. Wie heisst dieser Gürtel aus Vulkanen?',
           opts: ['Ring of Fire (Pazifischer Feuerring)', 'Golfstrom (Strömung im Atlantik)', 'Äquator (Linie um die Erdmitte)', 'Alpenbogen (Gebirge in Europa)'],
+          whyNot: [null, 'Die Dreiecke liegen nicht im Atlantik.', 'Der Äquator ist nur eine gedachte Linie.', 'Die Dreiecke liegen nicht in Europa.'],
           tip: 'Die Vulkane bilden fast einen Kreis. Und Vulkane haben mit Feuer zu tun.',
           why: 'Der «Ring of Fire» liegt rund um den Pazifik. Dort gibt es viele Vulkane und Erdbeben.',
           qEs: 'Los triángulos rojos son volcanes. ¿Cómo se llama este cinturón de volcanes?',
@@ -574,6 +627,7 @@
           tipEs: 'La chimenea del volcán es como la chimenea de una casa o una pajita: un tubo por el que algo sube.' },
         { id: 'k2_magma', st: 1, nr: [5], type: 'mc', q: 'Was ist der Unterschied zwischen Magma und Lava?',
           opts: ['Magma ist unter der Erde. Lava ist an der Erdoberfläche.', 'Magma ist an der Erdoberfläche. Lava ist unter der Erde.', 'Magma ist kalt und fest. Lava ist heiss und flüssig.', 'Magma und Lava sind zwei Namen für zwei Vulkane.'],
+          whyNot: [null, 'Lava ist erst an der Oberfläche.', 'Beides ist heisses, flüssiges Gestein.', 'Magma und Lava sind keine Vulkane.'],
           tip: 'Es ist das gleiche flüssige Gestein. Nur der Ort ist anders. Wo ist es, bevor der Vulkan ausbricht?',
           why: 'Magma ist flüssiges Gestein unter der Erde. Sobald es herauskommt, heisst es Lava.',
           qEs: '¿Cuál es la diferencia entre magma y lava?',
@@ -582,6 +636,7 @@
           whyEs: 'El magma es roca líquida bajo tierra. En cuanto sale, se llama lava.' },
         { id: 'k2_bild', st: 1, nr: [7], type: 'mc', picOpts: true, q: 'Welches Bild zeigt einen Schildvulkan?',
           opts: ['shield', 'strato'], right: 'Der flache, breite Vulkan ist der Schildvulkan. Der steile ist ein Schichtvulkan.',
+          whyNot: [null, 'Dieser Vulkan ist steil und spitz.'],
           tip: 'Stell dir einen runden Schild vor, der auf dem Boden liegt. Ist er steil oder flach?',
           qEs: '¿Qué imagen muestra un volcán en escudo?',
           rightEs: 'El volcán plano y ancho es el volcán en escudo. El empinado es un estratovolcán.',
@@ -604,6 +659,7 @@
           tipEs: 'Piensa en Hawaii: ¿cómo fluye allí la lava? Y el Fujiyama es una montaña empinada y puntiaguda.' },
         { id: 'k2_schild', st: 1, nr: [10], type: 'mc', q: 'Wie bricht ein Schildvulkan meistens aus?',
           opts: ['Ruhig: Die Lava fliesst aus dem Krater.', 'Laut: Eine riesige Explosion zerreisst den Berg.', 'Gar nicht: Ein Schildvulkan bricht nie aus.', 'Nass: Aus dem Krater kommt nur heisses Wasser.'],
+          whyNot: [null, 'So bricht ein Schichtvulkan aus.', 'Auch Schildvulkane brechen aus.', 'Ein Vulkan bringt Magma, nicht nur Wasser.'],
           tip: 'Die Lava ist dünnflüssig. Die Gase können gut heraus, wie bei einer offenen Flasche.',
           why: 'Die Lava ist dünnflüssig, die Gase entweichen leicht. Es gibt kaum Druck. Darum fliesst die Lava ruhig.',
           qEs: '¿Cómo entra en erupción casi siempre un volcán en escudo?',
@@ -666,6 +722,7 @@
       k3: [
         { id: 'k3_geraet', st: 1, nr: [12], type: 'mc', first: true, q: 'Mit welchem Gerät misst man Erdbeben?',
           opts: ['Seismograph', 'Thermometer', 'Kompass', 'Taschenrechner'],
+          whyNot: [null, 'Ein Thermometer misst die Temperatur.', 'Ein Kompass zeigt, wo Norden ist.', 'Ein Taschenrechner rechnet, er misst nichts.'],
           tip: 'Ein Thermometer misst die Temperatur. Ein Kompass zeigt, wo Norden ist. Und welches Gerät misst Erdbeben?',
           why: 'Ein Seismograph zeichnet jede Bewegung der Erde auf.',
           qEs: '¿Con qué aparato se miden los terremotos?',
@@ -674,6 +731,7 @@
           whyEs: 'Un sismógrafo registra cada movimiento de la Tierra.' },
         { id: 'k3_kurve', st: 1, nr: [12], type: 'mc', pic: 'seismo', q: 'Ein Gerät hat diese Zickzack-Kurve gezeichnet. Wie heisst die Aufzeichnung?',
           opts: ['Seismogramm', 'Seismograph', 'Richter-Skala', 'Landkarte'],
+          whyNot: [null, 'Das ist das Gerät, nicht das Blatt.', 'Die Richter-Skala zeigt nur die Stärke.', 'Eine Landkarte zeigt Orte, keine Bewegung.'],
           tip: 'Das Gerät und die Aufzeichnung klingen fast gleich. Gesucht ist das Blatt mit der Kurve, nicht das Gerät.',
           why: 'Seismograph = Gerät. Seismogramm = Aufzeichnung.',
           qEs: 'Un aparato dibujó esta línea en zigzag. ¿Cómo se llama el registro?',
@@ -682,6 +740,7 @@
           whyEs: 'Sismógrafo = aparato. Sismograma = registro.' },
         { id: 'k3_vorher', st: 1, nr: [11], type: 'mc', q: 'Was passiert im Boden, bevor die Erde bebt?',
           opts: ['Die Platten verhaken sich, Spannung baut sich auf.', 'Es regnet viele Tage lang, der Boden wird weich.', 'Der Wind drückt sehr stark auf die hohen Berge.', 'Ein Vulkan kühlt ab, und die Lava wird fest.'],
+          whyNot: [null, 'Das Wetter macht keine Erdbeben.', 'Wind kann keinen Berg bewegen.', 'Abkühlende Lava lässt die Erde nicht beben.'],
           tip: 'Erdbeben haben mit den Erdplatten zu tun, nicht mit dem Wetter.',
           why: 'Die Platten verhaken sich. Die Spannung wächst, bis das Gestein plötzlich bricht.',
           qEs: '¿Qué pasa en el suelo antes de que la Tierra tiemble?',
@@ -712,6 +771,7 @@
           tipEs: 'Pregúntate en cada fila: ¿me puede caer algo en la cabeza? ¿Me puedo quedar atrapado?' },
         { id: 'k3_draussen', st: 1, nr: [14], type: 'mc', q: 'Du bist draussen auf der Strasse. Die Erde bebt stark. Was machst du?',
           opts: ['Auf einen freien Platz gehen, weg von Häusern.', 'Schnell in das nächste Haus rennen und warten.', 'Mich unter einen Balkon stellen und abwarten.', 'Auf eine Brücke gehen, dort ist es sicher.'],
+          whyNot: [null, 'Auf dem Weg können Ziegel herunterfallen.', 'Ein Balkon kann abbrechen und herunterfallen.', 'Eine Brücke kann beim Beben einstürzen.'],
           tip: 'Wo kann nichts auf dich herunterfallen?',
           why: 'Auf einem freien Platz kann nichts auf dich fallen.',
           qEs: 'Estás afuera en la calle. La Tierra tiembla fuerte. ¿Qué haces?',
@@ -794,6 +854,7 @@
       k4: [
         { id: 'k4_was', st: 1, nr: [15], type: 'mc', first: true, q: 'Was ist ein Tsunami?',
           opts: ['Eine riesige Welle, die an der Küste Schäden macht.', 'Ein starker Sturm, der in der Wüste Sand aufwirbelt.', 'Ein Vulkan, der unter dickem Eis versteckt ist.', 'Ein kleiner Bach, der in den Bergen entspringt.'],
+          whyNot: [null, 'Das wäre ein Sandsturm.', 'Ein Tsunami ist kein Vulkan.', 'Ein kleiner Bach ist harmlos.'],
           tip: 'Das Wort kommt aus Japan und heisst «Hafenwelle».',
           why: 'Ein Tsunami ist eine riesige Welle. Sie entsteht meistens durch ein Seebeben.',
           qEs: '¿Qué es un tsunami?',
@@ -802,6 +863,7 @@
           whyEs: 'Un tsunami es una ola enorme. Casi siempre se forma por un terremoto submarino.' },
         { id: 'k4_ausl', st: 1, nr: [15], type: 'mc', q: 'Was löst einen Tsunami meistens aus?',
           opts: ['Ein Seebeben am Meeresboden', 'Ein starker Wind auf dem Meer', 'Ein grosses Schiff im Hafen', 'Starker Regen über dem Meer'],
+          whyNot: [null, 'Wind macht nur normale Wellen.', 'Ein Schiff ist viel zu klein dafür.', 'Regen bewegt nicht das ganze Meer.'],
           tip: 'Normale Wellen macht der Wind. Ein Tsunami bewegt aber das ganze Wasser bis zum Boden. Was kann den Meeresboden bewegen?',
           why: 'Bei einem Seebeben hebt oder senkt sich der Meeresboden ruckartig.',
           qEs: '¿Qué provoca casi siempre un tsunami?',
@@ -818,6 +880,7 @@
           tipEs: 'Sopla sobre un vaso de agua: solo arriba se forman ondas. Golpea el vaso desde abajo: toda el agua se mueve.' },
         { id: 'k4_kueste', st: 1, nr: [17], type: 'mc', q: 'Der Tsunami kommt an eine flache Küste. Was passiert mit der Welle?',
           opts: ['Sie wird abgebremst und türmt sich hoch auf.', 'Sie wird schneller und dabei immer flacher.', 'Sie versickert langsam im weichen Sand.', 'Sie teilt sich in viele kleine Wellen auf.'],
+          whyNot: [null, 'Im flachen Wasser wird sie nicht schneller.', 'So viel Wasser kann nicht versickern.', 'Die Welle wird nicht kleiner.'],
           tip: 'Denk an einen Stau auf der Autobahn: Wo die Autos langsamer werden müssen, drängen sie sich zusammen.',
           why: 'Im flachen Wasser wird die Welle abgebremst. Das Wasser staut sich und türmt sich 10 bis 30 m hoch auf.',
           qEs: 'El tsunami llega a una costa poco profunda. ¿Qué pasa con la ola?',
@@ -826,6 +889,7 @@
           whyEs: 'En el agua poco profunda la ola se frena. El agua se acumula y se levanta de 10 a 30 m.' },
         { id: 'k4_zeichen', st: 1, nr: [18], type: 'mc', q: 'Du bist am Strand. Welches Zeichen warnt dich vor einem Tsunami?',
           opts: ['Das Meer zieht sich plötzlich weit zurück.', 'Die Sonne scheint plötzlich sehr stark.', 'Am Himmel fliegen plötzlich viele Möwen.', 'Der Sand am Strand wird plötzlich warm.'],
+          whyNot: [null, 'Die Sonne hat mit Tsunamis nichts zu tun.', 'Möwen fliegen am Strand oft herum.', 'Warmer Sand ist am Strand normal.'],
           tip: 'Achte auf das Wasser selbst. Was wäre am Strand sehr ungewöhnlich?',
           why: 'Wenn das Meer sich plötzlich weit zurückzieht, kommt bald eine riesige Welle.',
           qEs: 'Estás en la playa. ¿Qué señal te avisa de un tsunami?',
@@ -834,6 +898,7 @@
           whyEs: 'Cuando el mar se retira de repente muy lejos, pronto llega una ola enorme.' },
         { id: 'k4_tun', st: 1, nr: [18], type: 'mc', q: 'Das Meer zieht sich plötzlich zurück. Was machst du?',
           opts: ['Sofort an einen hohen Ort gehen, andere warnen.', 'Muscheln sammeln, die jetzt am Boden liegen.', 'Am Strand bleiben und mit dem Handy filmen.', 'Ins Wasser gehen und nachschauen, was los ist.'],
+          whyNot: [null, 'Dafür bleibt keine Zeit.', 'Am Strand holt dich die Welle ein.', 'Im Wasser bist du in grosser Gefahr.'],
           tip: 'Das Wasser kommt bald als riesige Welle zurück. Wo ist man vor Wasser sicher?',
           why: 'Viel Zeit bleibt nicht: sofort hoch hinauf, zum Beispiel auf einen Hügel.',
           qEs: 'El mar se retira de repente. ¿Qué haces?',
@@ -1002,7 +1067,7 @@
       return rest.concat(open).map(it => it.id);      // Erklären kommt zuletzt
     }
     function freshQ(pid) {
-      return { pid, id: null, phase: 'ask', review: null, ok: false, dontKnow: false, after: null, token: 0, tip: false, pick: null,
+      return { pid, id: null, phase: 'ask', review: null, ok: false, dontKnow: false, after: null, token: 0, tip: false, pick: null, tried: [], nudge: '', sortHint: null,
         opts: [], rows: [], cats: [], sel: {}, pool: [], placed: [], hint: false, ans: '', near: false,
         help: { tip: false, check: null, model: false }, warn: '' };
     }
@@ -1104,17 +1169,19 @@
 
     function answer(pid, ok, dontKnow) {
       const Q = curQ(pid), s = PS(pid), id = Q.id, before = curStage(pid);
+      // Erst nach falschem Versuch richtig: Lob, aber die Aufgabe kommt später nochmals (Wunsch Lehrperson: was falsch war, kommt wieder)
+      const retry = ok && !!((Q.tried || []).length || Q.sortHint || Object.keys(Q.rowTried || {}).length);
       if (Q.review) {
         const rq = Q.review === 'rev' ? s.revQueue : EXTRA[pid];
         const i = rq.indexOf(id); if (i >= 0) rq.splice(i, 1);
-        if (!ok) rq.splice(Math.min(2, rq.length), 0, id);
+        if (!ok || retry) rq.splice(Math.min(2, rq.length), 0, id);
         if (!rq.length) {
           if (Q.review === 'rev') { s.rev++; s.revDue = s.rev < REVIEW_DAYS.length ? Date.now() + REVIEW_DAYS[s.rev] * DAY - EARLY : 0; }
           Q.after = 'reviewDone';
         }
       } else {
         s.queue = s.queue.filter(x => x !== id);
-        if (ok) s.done[id] = true;
+        if (ok && !retry) s.done[id] = true;
         else s.queue.splice(Math.min(2, s.queue.length), 0, id);   // nach 2 anderen nochmals
         const after = curStage(pid);
         if (after > before) {
@@ -1125,7 +1192,7 @@
       Object.assign(Q, { phase: 'answered', ok, dontKnow: !!dontKnow });
       STREAK = ok ? STREAK + 1 : 0;
       SESSION.answers++;
-      Q.praise = ok ? praise() : '';
+      Q.praise = ok ? ((Q.tried || []).length || Q.sortHint ? tr('✔ Jetzt stimmt’s! Gut nachgedacht.', '✔ ¡Ahora sí! Bien pensado.') : praise()) : '';
       if (BY_ID[id].type === 'open') delete STATE.drafts[id];
       STATE.last = pid;
       markToday();
@@ -1165,7 +1232,15 @@
       const Q = curQ(pid);
       if (Q.phase !== 'ask' || !Q.opts[i]) return;
       Q.pick = i;
-      answer(pid, Q.opts[i].ok, false);
+      // Falsch und es gibt einen kurzen Grund: nicht die Lösung zeigen, sondern Grund nennen und nochmals probieren lassen
+      const it = BY_ID[Q.id], o = Q.opts[i];
+      if (!o.ok && it.whyNot && it.whyNot[o.i]) {
+        if (!Q.tried.includes(i)) Q.tried.push(i);
+        Q.nudge = it.whyNot[o.i];
+        renderPart(pid);
+        return;
+      }
+      answer(pid, o.ok, false);
     }
     function tapZone(z) {
       const pid = STATE.view, Q = QS[pid];
@@ -1182,7 +1257,10 @@
     function checkSort(pid) {
       const Q = curQ(pid), it = BY_ID[Q.id];
       if (Q.phase !== 'ask' || Object.keys(Q.sel).length < it.rows.length) return;
-      answer(pid, it.rows.every((row, r) => Q.sel[r] === row[1]), false);
+      const nOk = it.rows.filter((row, r) => Q.sel[r] === row[1]).length;
+      // Beim ersten Fehlversuch nur sagen, wie viele stimmen, und nochmals probieren lassen
+      if (nOk < it.rows.length && !Q.sortHint) { Q.sortHint = { n: nOk, of: it.rows.length }; renderPart(pid); return; }
+      answer(pid, nOk === it.rows.length, false);
     }
     function place(pid, k) {
       const Q = curQ(pid);
@@ -1371,16 +1449,21 @@
         if (it.picOpts) {
           h += `<div class="grid grid-cols-2 gap-3">${Q.opts.map((o, i) => {
             let cls = 'border-slate-300 bg-white hover:border-orange-400';
+            const tried = !done && Q.tried.includes(i);
             if (done) cls = o.ok ? 'border-emerald-500 bg-emerald-50' : i === Q.pick ? 'border-yellow-400 bg-yellow-50' : 'border-slate-200 bg-white opacity-60';
-            return `<button type="button" onclick="pick('${pid}',${i})" ${done ? 'disabled' : ''} class="rounded-2xl border-2 p-2 ${cls}"><div class="text-sm font-bold text-slate-600">${tr('Bild', 'Imagen')} ${i + 1}</div>${PICS[o.t]()}</button>`;
+            else if (tried) cls = 'border-yellow-300 bg-yellow-50 opacity-50';
+            return `<button type="button" onclick="pick('${pid}',${i})" ${done || tried ? 'disabled' : ''} class="rounded-2xl border-2 p-2 ${cls}"><div class="text-sm font-bold text-slate-600 ${tried ? 'line-through' : ''}">${tr('Bild', 'Imagen')} ${i + 1}</div>${PICS[o.t]()}</button>`;
           }).join('')}</div>`;
         } else {
           h += `<div class="grid grid-cols-1 gap-2">${Q.opts.map((o, i) => {
             let cls = 'bg-white border-slate-300 text-slate-800 hover:border-orange-400 hover:bg-orange-50/40';
+            const tried = !done && Q.tried.includes(i);
             if (done) cls = o.ok ? 'bg-emerald-50 border-emerald-500 text-emerald-900' : i === Q.pick ? 'bg-yellow-50 border-yellow-400 text-yellow-900' : 'bg-white border-slate-200 text-slate-400';
-            return `<button type="button" onclick="pick('${pid}',${i})" ${done ? 'disabled' : ''} class="w-full min-h-[52px] px-4 py-2.5 rounded-2xl border-2 text-base font-bold text-left wrap-any transition ${cls}">${done && o.ok ? '✔ ' : ''}${esc(L(it, 'opts')[o.i])}</button>`;
+            else if (tried) cls = 'bg-yellow-50 border-yellow-300 text-slate-400 line-through';
+            return `<button type="button" onclick="pick('${pid}',${i})" ${done || tried ? 'disabled' : ''} class="w-full min-h-[52px] px-4 py-2.5 rounded-2xl border-2 text-base font-bold text-left wrap-any transition ${cls}">${done && o.ok ? '✔ ' : ''}${esc(L(it, 'opts')[o.i])}</button>`;
           }).join('')}</div>`;
         }
+        if (!done && Q.nudge) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 wrap-any pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> <span lang="de">${esc(Q.nudge)}</span> ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
       }
       if (it.type === 'tap') {
         const o = { tap: !done };
@@ -1401,7 +1484,8 @@
             }).join('')}</div></div>`;
         }).join('')}</div>`;
         if (!done) {
-          const all = Object.keys(Q.sel).length >= it.rows.length;
+          const all = Object.keys(Q.sel).length >= it.rows.length, sh = Q.sortHint;
+          if (sh) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 wrap-any pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> ${tr(`${sh.n} von ${sh.of} ${sh.n === 1 ? 'stimmt' : 'stimmen'}.`, `${sh.n} de ${sh.of} ${sh.n === 1 ? 'está bien' : 'están bien'}.`)} ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
           h += `<button type="button" onclick="checkSort('${pid}')" ${all ? '' : 'disabled'} class="mt-3 w-full ${BTN_MAIN} ${all ? '' : 'opacity-40 cursor-not-allowed'}">${tr('✓ Prüfen', '✓ Comprobar')}</button>`;
         }
       }
@@ -1603,7 +1687,16 @@
     // START
     // ==============================================================
     Object.assign(window, { setLang, switchTab, continueLearning, pick, tapZone, choose, checkSort, place, unplace, checkOrder, submitGap, gapHint, bankPick,
-      dontKnow, saveDraft, openHelp, selfRate, toggleTip, nextQ, continuePart, pausePart, startExtra, askReset, cancelReset, doReset, openTheory, backToTask });
+      dontKnow, saveDraft, openHelp, selfRate, toggleTip, nextQ, continuePart, pausePart, startExtra, askReset, cancelReset, doReset, openTheory, backToTask, eruptVolcano });
+    // Vulkan auf der Startansicht: Antippen startet einen kurzen Ausbruch (1.8 s), danach wieder ruhig
+    let volcTimer = null;
+    function eruptVolcano() {
+      const v = $('volc'); if (!v) return;
+      v.classList.remove('erupt'); void v.getBoundingClientRect();
+      v.classList.add('erupt');
+      clearTimeout(volcTimer);
+      volcTimer = setTimeout(() => { v.classList.remove('erupt'); const i = $('volc-info'); if (i) i.classList.remove('hidden'); }, 1850);
+    }
     // Bilder in der Theorie (in der aktuellen Sprache, nach dem Umschalten neu)
     function renderTheory() {
       $('theory-k1-sk').innerHTML = `<div>${SVG_SK_AUS()}${tr('auseinander · Island', 'se separan · Islandia')}</div><div>${SVG_SK_ZUS()}${tr('zusammen · Japan', 'chocan · Japón')}</div><div>${SVG_SK_HOT()}Hotspot · Hawaii</div>`;
