@@ -58,6 +58,17 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 | Wechselndes kurzes Lob, Stern fliegt zum Zähler, «Meine Sammlung» mit den gemeisterten Wörtern, Etappe nennt die neuen Wörter. | Eigene Erfolge sichtbar machen stärkt die Zuversicht (Bandura, 1977). Sammeln und Fortschritt anzeigen wirken leicht positiv (Sailer & Homner, 2020). Lob nur kurz und ehrlich: Lob allein bringt wenig, die Rückmeldung zur Aufgabe zählt (Hattie & Timperley, 2007). |
 | «Diese Woche geübt» mit Häkchen, ohne Serie, die auf 0 fällt. | Regelmässiges, verteiltes Üben (Cepeda et al., 2006), ohne Druck oder Verlustangst (angstfrei, Abschnitt 1). |
 
+## 2b Sachwissen lernen (Lernpfad RZG)
+
+| So macht es das Portal | Warum (Forschung) |
+|---|---|
+| Fragen beantworten statt Text lesen, mit sofortiger Lösung. | Abrufen festigt Sachwissen aus Texten besser als nochmals Lesen und sogar besser als eine Mindmap zeichnen (Karpicke & Blunt, 2011). |
+| Kleine Schritte mit Rückmeldung nach jeder Antwort. | Abrufen mit Rückmeldung hilft gerade Lernenden mit wenig Arbeitsgedächtnis besonders (Agarwal et al., 2017). |
+| Zuerst erkennen (auswählen, im Bild antippen, Skizze erkennen), dann ergänzen, dann erklären; falsche Aufgaben kommen wieder, bis alles einmal richtig ist. | Schwächere Lernende profitieren vom Abrufen nur, wenn sie oft üben und genug Erfolg haben (Schwerter et al., 2025; Angabe der Lehrperson, Originaltitel hier nicht geprüft). Darum zuerst leichte Formen (Abschnitt 1b, etwa 80 % Erfolg). |
+| In Stufe 2 und 3 wird geschrieben, nicht nur gedacht. | Laborstudien fanden: Abrufen im Kopf wirkt etwa gleich wie laut oder schriftlich (Smith, Roediger & Karpicke, 2013). Eine Studie mit 8.-Klässlern (Begriffe aus den Naturwissenschaften) fand einen Vorteil für schriftliches Abrufen (Titel hier nicht geprüft). Ehrlich: Der Vorteil ist nicht sicher belegt. Schreiben hat aber einen klaren praktischen Nutzen: Man sieht, ob die Antwort stimmt, und übt die Form des Tests. |
+| Offene Antwort mit Hilfe-Treppe, danach mit der Musterlösung vergleichen («Hab ich so / Noch nicht»). | Hilfe vor der Lösung (Rosenshine, 2012); Rückmeldung zur Aufgabe (Hattie & Timperley, 2007). Selbstvergleich mit einer Musterlösung ist eine Form von Rückmeldung; die Lernenden schätzen sich aber oft zu gut ein, darum sucht «Antwort prüfen» vorher die Schlüsselwörter. |
+| Wiederholung nach 1 und 3 Tagen. | Verteiltes Üben und successive relearning (Cepeda et al., 2006; Rawson & Dunlosky, 2022). |
+
 ## 3 Grammatik lernen (für neue Übungen)
 
 - **Kurze, klare Regel mit Beispiel zuerst.** Ausdrückliche Erklärung wirkt im Fremdsprachenunterricht stärker als nur «entdecken lassen» (Norris & Ortega, 2000; Spada & Tomita, 2010).
@@ -94,6 +105,7 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 
 ## Quellen
 
+- Agarwal, P. K., Finley, J. R., Rose, N. S., & Roediger, H. L. (2017). Benefits from retrieval practice are greater for students with lower working memory capacity. *Memory, 25*(6), 764–771. https://doi.org/10.1080/09658211.2016.1220579
 - Agarwal, P. K., D'Antonio, L., Roediger, H. L., McDermott, K. B., & McDaniel, M. A. (2014). Classroom-based programs of retrieval practice reduce middle school and high school students' test anxiety. *Journal of Applied Research in Memory and Cognition, 3*(3), 131–139. https://doi.org/10.1016/j.jarmac.2014.07.002
 - Bandura, A. (1977). Self-efficacy: Toward a unifying theory of behavioral change. *Psychological Review, 84*(2), 191–215. https://doi.org/10.1037/0033-295X.84.2.191
 - Bandura, A., & Schunk, D. H. (1981). Cultivating competence, self-efficacy, and intrinsic interest through proximal self-motivation. *Journal of Personality and Social Psychology, 41*(3), 586–598. https://doi.org/10.1037/0022-3514.41.3.586
@@ -105,6 +117,7 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - Hattie, J., & Timperley, H. (2007). The power of feedback. *Review of Educational Research, 77*(1), 81–112. https://doi.org/10.3102/003465430298487
 - Horwitz, E. K., Horwitz, M. B., & Cope, J. (1986). Foreign language classroom anxiety. *The Modern Language Journal, 70*(2), 125–132. https://doi.org/10.1111/j.1540-4781.1986.tb05256.x
 - Karpicke, J. D., & Roediger, H. L. (2008). The critical importance of retrieval for learning. *Science, 319*(5865), 966–968. https://doi.org/10.1126/science.1152408
+- Karpicke, J. D., & Blunt, J. R. (2011). Retrieval practice produces more learning than elaborative studying with concept mapping. *Science, 331*(6018), 772–775. https://doi.org/10.1126/science.1199327
 - Kim, H. S., Lee, J. H., & Lee, H. (2024). Relative effects of L1 and L2 glosses on L2 learning: A meta-analysis. *Language Teaching Research, 28*(1), 7–28.
 - Kornell, N. (2009). Optimising learning using flashcards: Spacing is more effective than cramming. *Applied Cognitive Psychology, 23*(9), 1297–1317. https://doi.org/10.1002/acp.1537
 - Kulik, C.-L. C., Kulik, J. A., & Bangert-Drowns, R. L. (1990). Effectiveness of mastery learning programs: A meta-analysis. *Review of Educational Research, 60*(2), 265–299. https://doi.org/10.3102/00346543060002265
@@ -125,6 +138,8 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - Sailer, M., & Homner, L. (2020). The gamification of learning: A meta-analysis. *Educational Psychology Review, 32*, 77–112. https://doi.org/10.1007/s10648-019-09498-w
 - Shintani, N. (2015). The effectiveness of processing instruction and production-based instruction on L2 grammar acquisition: A meta-analysis. *Applied Linguistics, 36*(3), 306–325. https://doi.org/10.1093/applin/amu067
 - Sisk, V. F., Burgoyne, A. P., Sun, J., Butler, J. L., & Macnamara, B. N. (2018). To what extent and under which circumstances are growth mind-sets important to academic achievement? Two meta-analyses. *Psychological Science, 29*(4), 549–571. https://doi.org/10.1177/0956797617739704
+- Schwerter, J. et al. (2025). Studie zum Abrufen bei schwächeren Lernenden (Angabe der Lehrperson; vollständige Angaben noch nachtragen).
+- Smith, M. A., Roediger, H. L., & Karpicke, J. D. (2013). Covert retrieval practice benefits retention as much as overt retrieval practice. *Journal of Experimental Psychology: Learning, Memory, and Cognition, 39*(6), 1712–1725. https://doi.org/10.1037/a0033569
 - Spada, N., & Tomita, Y. (2010). Interactions between type of instruction and type of language feature: A meta-analysis. *Language Learning, 60*(2), 263–308.
 - Sweller, J. (1988). Cognitive load during problem solving: Effects on learning. *Cognitive Science, 12*(2), 257–285. https://doi.org/10.1207/s15516709cog1202_4
 - Sweller, J., van Merriënboer, J. J. G., & Paas, F. G. W. C. (1998). Cognitive architecture and instructional design. *Educational Psychology Review, 10*(3), 251–296.
