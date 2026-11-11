@@ -37,6 +37,17 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 
 **Bei jeder neuen Aufgabe recherchieren:** Welche Übungsform ist für dieses Lernziel (Wörter, Grammatik, Lesen, Hören, Schreiben) bei schwächeren Lernenden am besten belegt? Ergebnis mit Quelle hier nachtragen und der Lehrperson in 1–2 Sätzen sagen.
 
+## 1c Kleine Animationen zum Antippen (Wunsch Lehrperson 11.11.2026)
+
+**Warum:** Ein freundliches Aussehen (Figuren mit Gesicht, angenehme Farben) steigert Motivation und Lernen leicht (Brom, Stárková & D'Mello, 2018: Behalten d = 0.39, Verstehen d = 0.32; Wong & Adesope, 2021). **Aber:** Witziges, das nichts mit dem Stoff zu tun hat, lenkt ab und senkt das Lernen (Sundararajan & Adesope, 2020: g = −0.33), vor allem bei Anfängern und wenn es neben einer Lern-Grafik steht oder dauernd sichtbar ist.
+
+**So setzt es das Portal um:**
+
+- Höchstens eine kleine Animation pro Teil, nur mit CSS/SVG (kein Aufwand, keine Abhängigkeit).
+- Am besten **zum Stoff**: Antippen zeigt etwas, das man lernen soll (Vulkan bricht aus: Magma steigt aus der Magmakammer; Drohne fliegt das Quadrat).
+- Sonst **als Belohnung nach einer Etappe** oder auf der Startansicht, nie mitten in einer Aufgabe und nie neben einer Grafik, mit der man gerade arbeitet.
+- Bewegt sich nur nach Antippen, kurz (unter 2 Sekunden), dann wieder ruhig. `prefers-reduced-motion` beachten.
+
 ## 2 Wörter lernen (Lernpfad)
 
 | So macht es das Portal | Warum (Forschung) |
@@ -110,6 +121,7 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - Bandura, A. (1977). Self-efficacy: Toward a unifying theory of behavioral change. *Psychological Review, 84*(2), 191–215. https://doi.org/10.1037/0033-295X.84.2.191
 - Bandura, A., & Schunk, D. H. (1981). Cultivating competence, self-efficacy, and intrinsic interest through proximal self-motivation. *Journal of Personality and Social Psychology, 41*(3), 586–598. https://doi.org/10.1037/0022-3514.41.3.586
 - Bjork, R. A. (1994). Memory and metamemory considerations in the training of human beings. In J. Metcalfe & A. P. Shimamura (Hrsg.), *Metacognition: Knowing about knowing* (S. 185–205). MIT Press.
+- Brom, C., Stárková, T., & D'Mello, S. K. (2018). How effective is emotional design? A meta-analysis on facial anthropomorphisms and pleasant colors during multimedia learning. *Educational Research Review, 25*, 100–119. https://doi.org/10.1016/j.edurev.2018.09.004
 - Butler, A. C., & Roediger, H. L. (2008). Feedback enhances the positive effects and reduces the negative effects of multiple-choice testing. *Memory & Cognition, 36*(3), 604–616. https://doi.org/10.3758/MC.36.3.604
 - Cummins, J. (1979). Linguistic interdependence and the educational development of bilingual children. *Review of Educational Research, 49*(2), 222–251. https://doi.org/10.3102/00346543049002222
 - Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T., & Rohrer, D. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. *Psychological Bulletin, 132*(3), 354–380. https://doi.org/10.1037/0033-2909.132.3.354
@@ -146,3 +158,5 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - VanPatten, B., & Cadierno, T. (1993). Explicit instruction and input processing. *Studies in Second Language Acquisition, 15*(2), 225–243. https://doi.org/10.1017/S0272263100011979
 - Webb, S. (2009). The effects of receptive and productive learning of word pairs on vocabulary knowledge. *RELC Journal, 40*(3), 360–376.
 - Yanagisawa, A., Webb, S., & Uchihara, T. (2020). How do different forms of glossing contribute to L2 vocabulary learning from reading? A meta-regression analysis. *Studies in Second Language Acquisition, 42*(2), 411–438. https://doi.org/10.1017/S0272263119000688
+- Sundararajan, N., & Adesope, O. (2020). Keep it coherent: A meta-analysis of the seductive details effect. *Educational Psychology Review, 32*, 707–734. https://doi.org/10.1007/s10648-020-09522-4
+- Wong, R. M., & Adesope, O. O. (2021). Meta-analysis of emotional designs in multimedia learning: A replication and extension study. *Educational Psychology Review, 33*, 357–385. https://doi.org/10.1007/s10648-020-09545-x
