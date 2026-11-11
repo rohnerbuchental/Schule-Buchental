@@ -246,7 +246,7 @@
       <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-4" data-task="a1">
         <div class="border-b border-slate-100 pb-2 flex items-center justify-between gap-2">
           <h3 class="font-bold text-slate-900 text-sm sm:text-base"><span data-l="de">Aufgabe 1: Der Begriff «Algorithmus» (<span data-max="a1"></span> Punkte)</span><span data-l="es" lang="es">Tarea 1: la palabra «algoritmo» (<span data-max="a1"></span> puntos)</span></h3>
-          <span class="text-xs font-semibold text-slate-400"><span data-l="de">Multiple Choice</span><span data-l="es" lang="es">Opción múltiple</span></span>
+          <span class="text-xs font-semibold text-slate-400"><span data-l="de">Auswählen und schreiben</span><span data-l="es" lang="es">Elegir y escribir</span></span>
         </div>
 
         <!-- Teilfragen: Reihenfolge wird gemischt, Buchstaben setzt die Seite -->
@@ -264,7 +264,17 @@
             </span>
             <div class="space-y-1.5" id="opts-a1b"></div>
           </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a1c" data-part>
+            <span class="text-xs sm:text-sm font-bold text-slate-900 block">
+              <span class="js-label"></span><span data-l="de">Algorithmus oder nicht? Kreuze bei jeder Zeile an. (6 P.)</span><span data-l="es" lang="de">Algorithmus oder nicht? Kreuze bei jeder Zeile an. (6 P.)</span>
+            </span>
+            <div class="overflow-x-auto"><table class="w-full text-xs sm:text-sm border-collapse" id="tbl-a1c"></table></div>
+          </div>
         </div>
+
+        <!-- Selber schreiben (nach dem Erkennen, ohne Punkte) -->
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" data-open-q="a1_def"></div>
 
         <div data-tools="a1"></div>
       </div>
@@ -366,6 +376,9 @@
             <option value="wrong2" data-es="Porque allí se carga la batería">Weil dort der Akku geladen wird</option>
           </select>
         </div>
+
+        <!-- Selber schreiben (nach dem Erkennen, ohne Punkte) -->
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" data-open-q="a2_raute"></div>
 
         <div data-tools="a2"></div>
       </div>
@@ -505,6 +518,9 @@
           </div>
         </div>
 
+        <!-- Selber schreiben (nach dem Erkennen, ohne Punkte) -->
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" data-open-q="a4_why"></div>
+
         <div data-tools="a4"></div>
       </div>
 
@@ -516,8 +532,8 @@
         </div>
 
         <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-xl text-slate-900 text-xs sm:text-sm font-medium">
-          <span data-l="de">👉 <strong>Plan:</strong> Die Drohne soll ein Quadrat abfliegen: 50 Schritte vorwärts, um 90 Grad drehen, das Ganze 4-mal.  
-          Bringe die 3 Bausteine in die richtige Reihenfolge (Zahlen 1, 2, 3):</span><span data-l="es" lang="es">👉 <strong>Plan:</strong> el dron tiene que volar un cuadrado: 50 pasos hacia adelante, girar 90 grados, y todo eso 4 veces.
+          <span data-l="de">👉 <strong>Plan:</strong> Die Drohne soll ein Quadrat abfliegen. Jede Seite ist 50 Schritte lang. Sie fliegt zuerst eine Seite und dreht sich dann an der Ecke.  
+          Bringe die 3 Bausteine in die richtige Reihenfolge (Zahlen 1, 2, 3):</span><span data-l="es" lang="es">👉 <strong>Plan:</strong> el dron tiene que volar un cuadrado. Cada lado mide 50 pasos. Primero vuela un lado y después gira en la esquina.
           Pon los 3 bloques en el orden correcto (números 1, 2, 3):</span>
         </div>
 
@@ -526,6 +542,18 @@
           <div class="space-y-1.5">
             <div class="text-xs font-bold text-slate-500 uppercase tracking-wide"><span data-l="de">👀 So sieht dein Skript in Scratch aus:</span><span data-l="es" lang="es">👀 Así se ve tu programa en Scratch:</span></div>
             <div class="sb-area min-h-[140px]" id="square-preview"></div>
+          </div>
+        </div>
+
+        <!-- Zwei Fragen zum Quadrat: Reihenfolge wird gemischt, Buchstaben setzt die Seite -->
+        <div class="space-y-4 pt-1" data-parts="a6">
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a6-deg" data-part>
+            <span class="text-xs sm:text-sm font-bold text-slate-900 block"><span class="js-label"></span><span data-l="de">Um wie viel Grad dreht die Drohne an jeder Ecke? (1 P.)</span><span data-l="es" lang="de">Um wie viel Grad dreht die Drohne an jeder Ecke? (1 P.)</span></span>
+            <div class="space-y-1.5" id="opts-a6-deg"></div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" id="card-a6-rep" data-part>
+            <span class="text-xs sm:text-sm font-bold text-slate-900 block"><span class="js-label"></span><span data-l="de">Wie oft muss die Schleife wiederholen? (1 P.)</span><span data-l="es" lang="de">Wie oft muss die Schleife wiederholen? (1 P.)</span></span>
+            <div class="space-y-1.5" id="opts-a6-rep"></div>
           </div>
         </div>
 
@@ -614,6 +642,9 @@
           </div>
         </div>
 
+        <!-- Selber schreiben: Namen für einen neuen Block (ohne Punkte) -->
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" data-open-q="a5_name"></div>
+
         <div data-tools="a5"></div>
       </div>
 
@@ -671,6 +702,9 @@
             </select>
           </div>
         </div>
+
+        <!-- Selber schreiben (nach dem Erkennen, ohne Punkte) -->
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2" data-open-q="a8_why"></div>
 
         <div data-tools="a8"></div>
       </div>
@@ -845,6 +879,9 @@
     try { LANG = localStorage.getItem(LANG_KEY) === 'es' ? 'es' : 'de'; } catch (e) {}
     const tr = (de, es) => LANG === 'es' ? es : de;
     const both = (de, es) => `<span data-l="de">${de}</span><span data-l="es" lang="es">${es}</span>`;
+    // Noch nicht übersetzt: Die spanische Ansicht zeigt den deutschen Text (lang="de")
+    const bothDe = (de) => `<span data-l="de">${de}</span><span data-l="es" lang="de">${de}</span>`;
+    const bothOpt = (de, es) => es ? both(de, es) : bothDe(de);
     const TITLE = { de: 'Connected 3 · Abheben mit Algorithmen (Scratch Trainingshub)', es: 'Connected 3 · Despegar con algoritmos (práctica de Scratch)' };
 
     // ==============================================================
@@ -912,6 +949,90 @@
       { id: "gd_4", soil: "Boden trocken", weather: "Regen", time: "19:00 Uhr (Abend)", es: ["Suelo seco", "Lluvia", "19:00 (atardecer)"], correct: "AUS" }
     ];
 
+    // ---------- Neu (11.11.2026): erst erkennen, dann selber schreiben. Texte vorerst nur Deutsch ----------
+    // Ohne «es»-Text zeigt die spanische Ansicht den deutschen Text (bothDe) und einen kurzen Hinweis.
+    // A1c: Algorithmus oder nicht? (1 P. pro Zeile)
+    const ALGO_ROWS = [
+      { id: "al_cake",  text: "Rezept Schoggikuchen: Mehl abwägen, Eier rühren, 30 Minuten backen.", correct: "ja" },
+      { id: "al_lego",  text: "Bauanleitung Lego-Modell: Schritt 1 die Räder, Schritt 2 der Boden, Schritt 3 das Dach.", correct: "ja" },
+      { id: "al_teeth", text: "Anleitung Zähneputzen: Zahnpasta auf die Bürste, 2 Minuten putzen, Mund ausspülen.", correct: "ja" },
+      { id: "al_class", text: "Klassenliste: Ana, Ben, Cem, Dana.", correct: "nein" },
+      { id: "al_weather", text: "Wetterbericht für morgen: sonnig, am Abend Regen, 12 Grad.", correct: "nein" },
+      { id: "al_photo", text: "Fotoalbum vom Skilager: Bilder vom Schlitteln, vom Essen und vom Schlussabend.", correct: "nein" }
+    ];
+    // A6: zwei Auswahlfragen zum Quadrat
+    const QUAD_DEG = [
+      { id: "d90", text: "90 Grad", correct: true }, { id: "d45", text: "45 Grad", correct: false },
+      { id: "d180", text: "180 Grad", correct: false }, { id: "d360", text: "360 Grad", correct: false }
+    ];
+    const QUAD_REP = [
+      { id: "r4", text: "4-mal", correct: true }, { id: "r2", text: "2-mal", correct: false },
+      { id: "r3", text: "3-mal", correct: false }, { id: "r90", text: "90-mal", correct: false }
+    ];
+
+    // Offene Fragen mit Hilfe-Treppe (wie RZG und Novemberschnee): 1 Tipp mit Wortkasten → 2 Satzanfang →
+    // 3 Antwort prüfen (Schlüsselwörter) → 4 Musterlösung, danach «Hab ich so / Noch nicht».
+    // keys: [Leitfrage, [Wortteile], optional] – Wortteile klein, ä=ae, ö=oe, ü=ue; ein Wortteil genügt.
+    // need: so viele Schlüssel braucht es (Standard: alle ohne «optional»). Satzanfänge zählen nicht mit,
+    // ausser keepStarter (dort ist der Satzanfang schon ein Teil der Antwort).
+    // short: einfache Variante (Kurzantwort: Tipp → prüfen → Lösung). Offene Fragen geben keine Punkte (nicht in TASKS).
+    const OPEN_Q = {
+      a1_def: {
+        q: 'Erkläre in eigenen Worten: Was ist ein Algorithmus?',
+        tip: 'Denk an ein Rezept oder eine Lego-Bauanleitung. Was haben die beiden gemeinsam? Wie sind sie aufgebaut? Und wozu brauchst du sie?',
+        words: ['Anleitung', 'Schritt für Schritt', 'Reihenfolge', 'Problem', 'Ziel'],
+        starter: 'Ein Algorithmus ist eine … Anleitung, …',
+        keys: [['Was für ein Text ist es?', ['anleitung', 'befehl', 'regel']],
+               ['Wie geht man vor?', ['schritt']],
+               ['Worauf muss man achten?', ['reihenfolge', 'genau', 'eindeutig']],
+               ['Wozu braucht man ihn?', ['problem', 'ziel', 'aufgabe', 'loes']]],
+        model: 'Ein Algorithmus ist eine genaue Anleitung. Sie sagt Schritt für Schritt und in der richtigen Reihenfolge, was man tun muss, um ein Problem zu lösen oder ein Ziel zu erreichen.'
+      },
+      a2_raute: {
+        q: 'Erkläre mit «weil»: Warum ist das Feld eine Raute ◇ und kein Rechteck?',
+        tip: 'Schau die Pfeile an, die aus der Raute kommen. Aus einem Rechteck geht nur ein Pfeil hinaus. Wie ist das bei der Raute? Denk an eine Weggabelung beim Wandern.',
+        words: ['Frage', 'Ja', 'Nein', 'Entscheidung', 'weiter'],
+        starter: 'Weil dort …',
+        keys: [['Was steht in der Raute?', ['frage', 'entscheid']],
+               ['Welche Antworten gibt es?', [' ja ', 'nein']]],
+        model: 'Weil dort eine Frage steht, die man mit Ja oder Nein beantwortet. Je nach Antwort geht es anders weiter.'
+      },
+      a4_why: {
+        q: 'Warum passt «wiederhole 10 mal» hier nicht? Erkläre mit «weil».',
+        tip: 'Stell dir vor, du gehst im Dunkeln eine Treppe hinunter. Weisst du, wie viele Stufen es sind? Wann hörst du auf zu gehen?',
+        words: ['weiss nicht', 'wie viele', 'Boden', 'zu früh', 'zu spät'],
+        starter: 'Weil man nicht weiss, …',
+        keepStarter: true,
+        keys: [['Weiss man es im Voraus?', ['weiss nicht', 'nicht weiss', 'unbekannt', 'nicht wissen', 'keine ahnung', 'nicht bekannt']],
+               ['Was genau weiss man nicht?', ['wie viele', 'wie viel', 'wie oft', 'anzahl', 'schritte']],
+               ['Was passiert mit 10-mal? (Zusatz)', ['zu frueh', 'zu spaet', 'boden'], true]],
+        model: 'Weil man nicht weiss, wie viele Schritte es bis zum Boden sind. Mit 10-mal hört die Drohne zu früh oder zu spät auf.'
+      },
+      a5_name: {
+        short: true,
+        q: 'Schreib selber einen passenden Namen für diesen Block.',
+        // neuer kleiner Block (SB wird erst weiter unten definiert, darum als Getter)
+        get pre() {
+          return `<div class="sb-area inline-block max-w-full"><div class="sb-script">
+            <div class="sb sb-hat sb-define sb-myblocks">${both('Definiere', 'definir')} <span class="sb-rep" style="--c:#FF4D6A">???</span></div>
+            ${SB.loop(SB.move() + SB.turn())}</div></div>`;
+        },
+        tip: 'Welche Form fliegt die Drohne? Fahr den Weg mit dem Finger nach: geradeaus, drehen, und das 4-mal.',
+        keys: [['Name', ['quadrat', 'viereck']]],
+        model: 'Quadrat fliegen',
+        also: 'Auch richtig: «Quadrat», «Viereck fliegen».'
+      },
+      a8_why: {
+        q: 'Erkläre mit «weil»: Warum fliegt die Drohne nach oben statt nach unten?',
+        tip: 'Denk an einen Lift: Welche Zahlen gehen nach oben, welche nach unten? Schau die gelbe Zahl an. Steht ein Minus davor?',
+        words: ['Pluszahl', 'Minuszahl', 'y', 'oben', 'unten'],
+        starter: 'Weil bei y eine …',
+        keys: [['Was für eine Zahl steht jetzt bei y?', ['plus', 'positiv', ' 5 ']],
+               ['Was für eine Zahl braucht es nach unten?', ['minus', 'negativ']]],
+        model: 'Weil bei y eine Pluszahl (+5) steht. Plus heisst nach oben. Nach unten braucht es eine Minuszahl.'
+      }
+    };
+
     // Fisher-Yates Shuffle
     function shuffleArray(arr) {
       const copy = [...arr];
@@ -924,6 +1045,7 @@
 
     let dispA1a = [], dispA1b = [], dispFlow = [], dispSquare = [], dispReasons = [];
     let dispAndOr = [], dispSmart = [], dispGarden = [];
+    let dispAlgo = [], dispDeg = [], dispRep = [];
 
     function initShuffledData() {
       dispA1a = shuffleArray(BASICS_A1A);
@@ -934,6 +1056,9 @@
       dispAndOr = shuffleArray(ANDOR_ROWS);
       dispSmart = shuffleArray(SMARTHOME_ROWS);
       dispGarden = shuffleArray(GARDEN_ROWS);
+      dispAlgo = shuffleArray(ALGO_ROWS);
+      dispDeg = shuffleArray(QUAD_DEG);
+      dispRep = shuffleArray(QUAD_REP);
     }
 
     // ==============================================================
@@ -1023,7 +1148,7 @@
       return list.map(opt => `
         <label class="flex items-center gap-2.5 p-2 rounded-lg bg-white border border-slate-200 cursor-pointer ${hover} transition text-xs sm:text-sm">
           <input type="radio" name="${name}" value="${opt.id}" ${STATE.answers[key] === opt.id ? 'checked' : ''} onchange="saveAnswer('${key}', this.value)" class="w-4 h-4 text-sky-600 focus:ring-sky-500">
-          <span>${both(opt.text, opt.es)}</span>
+          <span class="min-w-0 break-words">${bothOpt(opt.text, opt.es)}</span>
         </label>`).join('');
     }
 
@@ -1032,10 +1157,28 @@
       if (boxA) boxA.innerHTML = radioListHTML(dispA1a, 'rad_a1a', 'a1a', 'hover:bg-sky-50');
       const boxB = document.getElementById('opts-a1b');
       if (boxB) boxB.innerHTML = radioListHTML(dispA1b, 'rad_a1b', 'a1b', 'hover:bg-sky-50');
+      renderAlgoTable();
+      renderOpen('a1_def');
+    }
+    // A1c: Tabelle «Algorithmus oder nicht?» (Zeilen gemischt, die zwei Spalten bleiben fest)
+    function renderAlgoTable() {
+      const tbl = document.getElementById('tbl-a1c');
+      if (!tbl) return;
+      const radio = (r, v) => `<td class="p-1.5 text-center align-middle border-t border-slate-200"><label class="inline-flex items-center justify-center w-11 h-11 rounded-lg cursor-pointer hover:bg-sky-100">
+          <input type="radio" name="rad_alg_${r.id}" value="${v}" ${A('alg_' + r.id) === v ? 'checked' : ''} onchange="saveAnswer('alg_${r.id}', this.value)" class="w-5 h-5 text-sky-600" aria-label="${v === 'ja' ? 'Algorithmus' : 'kein Algorithmus'}"></label></td>`;
+      tbl.innerHTML = `
+        <thead><tr class="text-[11px] sm:text-xs text-slate-600">
+          <th class="p-1.5 text-left font-semibold">${bothDe('Beispiel')}</th>
+          <th class="p-1.5 w-[4.5rem] font-semibold leading-tight">${bothDe('Algo&shy;rithmus')}</th>
+          <th class="p-1.5 w-[4.5rem] font-semibold leading-tight">${bothDe('kein Algo&shy;rithmus')}</th>
+        </tr></thead>
+        <tbody>${dispAlgo.map(r => `<tr id="row-${r.id}" class="bg-white border-slate-200">
+          <td class="p-2 border-t border-slate-200 text-slate-800 break-words">${bothDe(r.text)}</td>${radio(r, 'ja')}${radio(r, 'nein')}</tr>`).join('')}</tbody>`;
     }
     function renderA2() {
       renderFlow();
       bindSelect('sel-a2-3', 'sel-a2-3');
+      renderOpen('a2_raute');
     }
     function renderBasicsTab() {
       renderA1();
@@ -1047,6 +1190,7 @@
       dispA1a = shuffleArray(BASICS_A1A);
       dispA1b = shuffleArray(BASICS_A1B);
       dispFlow = shuffleArray(FLOW_CMDS);
+      dispAlgo = shuffleArray(ALGO_ROWS);
       shuffleParts('a1');
       renderBasicsTab();
       shuffleSelects(document.getElementById('view-basics'));
@@ -1195,8 +1339,20 @@
 
     // ---------- Tab 2 ----------
     function renderLoopsTab() {
-      ['sel-a3-1', 'sel-a3-2', 'sel-a4-1', 'sel-a4-2'].forEach(k => bindSelect(k, k));
+      ['sel-a3-1', 'sel-a3-2'].forEach(k => bindSelect(k, k));
+      renderA4();
+      renderA6();
+    }
+    function renderA4() {
+      ['sel-a4-1', 'sel-a4-2'].forEach(k => bindSelect(k, k));
+      renderOpen('a4_why');
+    }
+    function renderA6() {
       renderSquare();
+      const d = document.getElementById('opts-a6-deg');
+      if (d) d.innerHTML = radioListHTML(dispDeg, 'rad_a6_deg', 'a6_deg', 'hover:bg-amber-50');
+      const r = document.getElementById('opts-a6-rep');
+      if (r) r.innerHTML = radioListHTML(dispRep, 'rad_a6_rep', 'a6_rep', 'hover:bg-amber-50');
     }
 
     // A6: Die Platz-Auswahl 1., 2., 3. ist eine reine Platznummer (data-noshuffle), die Bausteine selbst werden gemischt
@@ -1245,7 +1401,11 @@
     // ---------- Tab 3 ----------
     function renderCustomTab() {
       renderA5();
+      renderA8();
+    }
+    function renderA8() {
       ['sel-a8-1', 'sel-a8-2'].forEach(k => bindSelect(k, k));
+      renderOpen('a8_why');
     }
     function renderA5() {
       bindSelect('sel-a5-1', 'a5_1');
@@ -1257,6 +1417,7 @@
             <span>${both(r.text, r.es)}</span>
           </label>`).join('');
       }
+      renderOpen('a5_name');
     }
 
     // ---------- Tab 4 ----------
@@ -1336,11 +1497,11 @@
     // ==============================================================
     const A = (k) => STATE.answers[k];
     const TASKS = {
-      a1:  { max: 2, score: () => (A('a1a') === 'opt_rule') + (A('a1b') === 'opt_recipe') },
+      a1:  { max: 2 + ALGO_ROWS.length, score: () => (A('a1a') === 'opt_rule') + (A('a1b') === 'opt_recipe') + ALGO_ROWS.filter(r => A('alg_' + r.id) === r.correct).length },
       a2:  { max: 4, score: () => FLOW_SLOTS.filter(sl => A('flow_' + sl) === FLOW_SOLUTION[sl]).length + (A('sel-a2-3') === 'right') },
       a3:  { max: 2, score: () => (A('sel-a3-1') === '4') + (A('sel-a3-2') === '40') },
       a4:  { max: 2, score: () => (A('sel-a4-1') === 'bis') + (A('sel-a4-2') === 'yminus1') },
-      a6:  { max: 3, score: () => SQUARE_BLOCKS.filter(b => parseInt(A(`sq_${b.id}`), 10) === b.correct).length },
+      a6:  { max: 5, score: () => SQUARE_BLOCKS.filter(b => parseInt(A(`sq_${b.id}`), 10) === b.correct).length + (A('a6_deg') === 'd90') + (A('a6_rep') === 'r4') },
       a5:  { max: 3, score: () => (A('a5_1') === 'abheben') + reasonPoints() },
       a8:  { max: 2, score: () => (A('sel-a8-1') === 'right') + (A('sel-a8-2') === '-1') },
       a7a: { max: ANDOR_ROWS.length, score: () => ANDOR_ROWS.filter(r => A(r.id) === r.correct).length },
@@ -1374,6 +1535,8 @@
                  `🌟 ${pts}/${max} puntos: ${perfectEs} Con «🔀 Practicar otra vez» puedes repetirla mezclada de nuevo.`)
           : both(`${pts}/${max} Punkte. Gelb = noch nicht ganz. Das ist okay: Mit «🔀 Nochmals üben» kommt die Aufgabe nochmals. Brauchst du Hilfe? Drück auf «💡 Tipp».`,
                  `${pts}/${max} puntos. Amarillo = todavía no del todo. No pasa nada: con «🔀 Practicar otra vez» la tarea vuelve. ¿Necesitas ayuda? Toca «💡 Pista».`);
+        const todo = (TASK_UI[task].open || []).filter(k => A('self_' + k) !== 'ok');
+        if (todo.length) fb.innerHTML += `<div class="mt-1 font-semibold text-sky-800">${bothDe('✍️ Übe auch die Schreib-Frage mit der Hilfe-Treppe. Sie gibt keine Punkte, hilft dir aber im Test.')}</div>`;
         fb.className = pts === max ? "text-xs font-bold text-emerald-700" : "text-xs font-bold text-amber-700";
       }
       showToast(tr(`Aufgabe ${TASK_UI[task].nr}`, `Tarea ${TASK_UI[task].nr}`), tr(`${pts} von ${max} Punkten erreicht.`, `Lograste ${pts} de ${max} puntos.`));
@@ -1382,6 +1545,7 @@
     function checkBasicsA1() {
       markCard('card-a1a', A('a1a') === 'opt_rule');
       markCard('card-a1b', A('a1b') === 'opt_recipe');
+      ALGO_ROWS.forEach(r => markCard('row-' + r.id, A('alg_' + r.id) === r.correct));
       feedback('a1', 'Alles richtig!', '¡Todo correcto!');
     }
 
@@ -1412,6 +1576,8 @@
 
     function checkSquareSort() {
       SQUARE_BLOCKS.forEach(b => markCard(`card-${b.id}`, parseInt(A(`sq_${b.id}`), 10) === b.correct));
+      markCard('card-a6-deg', A('a6_deg') === 'd90');
+      markCard('card-a6-rep', A('a6_rep') === 'r4');
       feedback('a6', 'Perfektes Quadrat!', '¡Cuadrado perfecto!');
     }
 
@@ -1452,14 +1618,14 @@
     const TASK_UI = {
       a1: {
         nr: '1', check: checkBasicsA1, render: renderA1, theory: 'theory-basics',
-        keys: () => ['a1a', 'a1b'],
-        mix: () => { dispA1a = shuffleArray(BASICS_A1A); dispA1b = shuffleArray(BASICS_A1B); },
+        keys: () => ['a1a', 'a1b', ...ALGO_ROWS.map(r => 'alg_' + r.id)], open: ['a1_def'],
+        mix: () => { dispA1a = shuffleArray(BASICS_A1A); dispA1b = shuffleArray(BASICS_A1B); dispAlgo = shuffleArray(ALGO_ROWS); },
         tip: 'Stell dir vor, du erklärst einem Roboter, wie er ein Sandwich macht. Der Roboter denkt nicht selber mit. Frag dich bei jeder Antwort: Könnte der Roboter damit eine Aufgabe lösen, ohne nachzufragen? Weiss er, was zuerst kommt und was danach?',
         tipEs: 'Imagina que le explicas a un robot cómo hacer un sándwich. El robot no piensa por sí mismo. En cada respuesta, pregúntate: ¿podría el robot resolver una tarea con esto, sin preguntar nada? ¿Sabe qué va primero y qué va después?'
       },
       a2: {
         nr: '2', check: checkBasicsA2, render: renderA2, theory: 'theory-basics',
-        keys: () => [...FLOW_SLOTS.map(sl => 'flow_' + sl), 'sel-a2-3'],
+        keys: () => [...FLOW_SLOTS.map(sl => 'flow_' + sl), 'sel-a2-3'], open: ['a2_raute'],
         mix: () => { dispFlow = shuffleArray(FLOW_CMDS); flowSelected = null; },
         tip: 'Lies die Situation oben nochmals langsam. Frag dich: Was macht die Drohne ganz am Anfang? Was macht sie immer wieder, solange sie noch nicht am Ziel ist? Folge mit dem Finger dem Pfeil NEIN: Wohin führt er? Bei der Raute: Wie viele Pfeile gehen aus ihr hinaus, und was steht daran? Achtung: Zwei Befehle bleiben übrig.',
         tipEs: 'Vuelve a leer despacio la situación de arriba. Pregúntate: ¿qué hace el dron al principio? ¿Qué hace una y otra vez mientras todavía no llega al destino? Sigue con el dedo la flecha NO: ¿adónde lleva? En el rombo: ¿cuántas flechas salen de él y qué dice en ellas? Atención: sobran dos comandos.'
@@ -1471,28 +1637,28 @@
         tipEs: 'Piensa en una escalera: subes 3 veces seguidas 5 escalones cada vez. ¿Cuántos escalones son en total? Después mira el programa: ¿qué bloque es como una pinza alrededor de los otros? ¿Qué número tiene que ver con volar? El bloque «esperar» solo hace una pausa, no mueve nada.'
       },
       a4: {
-        nr: '4', check: checkLoopsA4, render: bindAll(['sel-a4-1', 'sel-a4-2']), theory: 'theory-loops',
-        keys: () => ['sel-a4-1', 'sel-a4-2'],
+        nr: '4', check: checkLoopsA4, render: renderA4, theory: 'theory-loops',
+        keys: () => ['sel-a4-1', 'sel-a4-2'], open: ['a4_why'],
         tip: 'Überlege bei jedem Block: Hört er irgendwann von selbst auf? Hört er genau im richtigen Moment auf? Oder prüft er nur ein einziges Mal? Für die Richtung denk an einen Lift: Was passiert mit der Stockwerk-Zahl, wenn er nach unten fährt? Und denk daran: x geht nach links und rechts, y nach oben und unten.',
         tipEs: 'En cada bloque, piensa: ¿se detiene solo en algún momento? ¿Se detiene justo en el momento correcto? ¿O revisa una sola vez? Para la dirección, piensa en un ascensor: ¿qué pasa con el número del piso cuando baja? Y recuerda: la x va a la izquierda o a la derecha; la y va hacia arriba o hacia abajo.'
       },
       a6: {
-        nr: '6', check: checkSquareSort, render: renderSquare, theory: 'theory-loops',
-        keys: () => SQUARE_BLOCKS.map(b => 'sq_' + b.id),
-        mix: () => { dispSquare = shuffleArray(SQUARE_BLOCKS); },
-        tip: 'Der orange Block ist wie eine Schachtel: Alles, was in der Schachtel liegt, wird 4-mal gemacht. Schau in die Vorschau: Liegen alle Befehle in der Schachtel, die sich wiederholen sollen? Lies den Plan nochmals Wort für Wort und achte darauf, in welcher Reihenfolge er Fliegen und Drehen nennt.',
-        tipEs: 'El bloque naranja es como una caja: todo lo que está dentro de la caja se hace 4 veces. Mira la vista previa: ¿están dentro de la caja todos los comandos que se tienen que repetir? Vuelve a leer el plan palabra por palabra y fíjate en qué orden nombra volar y girar.'
+        nr: '6', check: checkSquareSort, render: renderA6, theory: 'theory-loops',
+        keys: () => [...SQUARE_BLOCKS.map(b => 'sq_' + b.id), 'a6_deg', 'a6_rep'],
+        mix: () => { dispSquare = shuffleArray(SQUARE_BLOCKS); dispDeg = shuffleArray(QUAD_DEG); dispRep = shuffleArray(QUAD_REP); },
+        tip: 'Der orange Block ist wie eine Schachtel: Alles, was in der Schachtel liegt, wird mehrmals gemacht. Wie viele Ecken hat ein Quadrat? Schau in die Vorschau: Liegen alle Befehle in der Schachtel, die sich wiederholen sollen? Lies den Plan nochmals Wort für Wort und achte darauf, in welcher Reihenfolge er Fliegen und Drehen nennt.',
+        tipEs: 'El bloque naranja es como una caja: todo lo que está dentro de la caja se hace varias veces. ¿Cuántas esquinas tiene un cuadrado? Mira la vista previa: ¿están dentro de la caja todos los comandos que se tienen que repetir? Vuelve a leer el plan palabra por palabra y fíjate en qué orden nombra volar y girar.'
       },
       a5: {
         nr: '5', check: checkCustomA5, render: renderA5, theory: 'theory-custom',
-        keys: () => ['a5_1', ...CUSTOM_REASONS.map(r => 'r_' + r.id)],
+        keys: () => ['a5_1', ...CUSTOM_REASONS.map(r => 'r_' + r.id)], open: ['a5_name'],
         mix: () => { dispReasons = shuffleArray(CUSTOM_REASONS); },
         tip: 'Lies den pinken Block wie eine kleine Geschichte: Wird y grösser oder kleiner? Fliegt die Drohne also höher oder tiefer? Wann hört sie auf? Bei den Gründen denk an eine Rezeptkarte für Pizzateig. Du schreibst sie einmal und brauchst sie für jede Pizza wieder. Was ist daran praktisch? Kreuze nur an, was wirklich stimmt: Ein Kreuz zu viel kostet einen Punkt.',
         tipEs: 'Lee el bloque rosa como una pequeña historia: ¿la y se hace más grande o más pequeña? Entonces, ¿el dron vuela más alto o más bajo? ¿Cuándo se detiene? Para las razones, piensa en una tarjeta con la receta de la masa de pizza. La escribes una vez y la vuelves a usar para cada pizza. ¿Qué tiene eso de práctico? Marca solo lo que de verdad es correcto: una marca de más resta un punto.'
       },
       a8: {
-        nr: '8', check: checkCustomA8, render: bindAll(['sel-a8-1', 'sel-a8-2']), theory: 'theory-custom',
-        keys: () => ['sel-a8-1', 'sel-a8-2'],
+        nr: '8', check: checkCustomA8, render: renderA8, theory: 'theory-custom',
+        keys: () => ['sel-a8-1', 'sel-a8-2'], open: ['a8_why'],
         tip: 'Sei ein Detektiv: Der Pfeil zeigt dir, wo der Fehler steckt. Was bedeutet diese Zahl für die Richtung? Denk an einen Lift: Was muss mit der Stockwerk-Zahl passieren, damit er nach unten fährt?',
         tipEs: 'Sé detective: la flecha te muestra dónde está el error. ¿Qué significa este número para la dirección? Piensa en un ascensor: ¿qué tiene que pasar con el número del piso para que baje?'
       },
@@ -1557,17 +1723,24 @@
     const LAMP = { AN: ['💡 AN', '💡 ENCENDIDA'], GEDIMMT: ['🌙 GEDIMMT', '🌙 TENUE'], AUS: ['⚫ AUS', '⚫ APAGADA'] };
     const SPRINKLER = { AN: ['💦 AN (lang)', '💦 ENCENDIDO (largo)'], KURZ: ['💧 KURZ', '💧 CORTO'], AUS: ['⚫ AUS', '⚫ APAGADO'] };
     const SOLUTION = {
-      a1: () => [BASICS_A1A, BASICS_A1B].map((list, i) => { const c = list.find(o => o.correct); return [`${['Algorithmus', 'Echter Algorithmus'][i]}: ${q(c.text)}`, `${['Algoritmo', 'Algoritmo de verdad'][i]}: ${q(c.es)}`]; }),
+      a1: () => [...[BASICS_A1A, BASICS_A1B].map((list, i) => { const c = list.find(o => o.correct); return [`${['Algorithmus', 'Echter Algorithmus'][i]}: ${q(c.text)}`, `${['Algoritmo', 'Algoritmo de verdad'][i]}: ${q(c.es)}`]; }),
+        [`Algorithmus: ${ALGO_ROWS.filter(r => r.correct === 'ja').map(r => r.text.split(':')[0]).join(', ')}. Kein Algorithmus: ${ALGO_ROWS.filter(r => r.correct === 'nein').map(r => r.text.split(':')[0]).join(', ')}.`, null],
+        [`So kannst du es erklären: ${q(OPEN_Q.a1_def.model)}`, null]],
       a2: () => [...FLOW_SLOTS.map((sl, i) => { const c = FLOW_CMDS.find(x => x.id === FLOW_SOLUTION[sl]); return [`Feld ${i + 1}: ${q(c.text)}`, `Campo ${i + 1}: ${q(c.es)}`]; }),
-        ['Raute ◇: Dort wird eine Ja/Nein-Entscheidung getroffen.', 'Rombo ◇: allí se toma una decisión de sí o no.']],
+        ['Raute ◇: Dort wird eine Ja/Nein-Entscheidung getroffen.', 'Rombo ◇: allí se toma una decisión de sí o no.'],
+        [`So kannst du es erklären: ${q(OPEN_Q.a2_raute.model)}`, null]],
       a3: () => [['Der blaue Befehl wird 4-mal wiederholt.', 'El comando azul se repite 4 veces.'], ['Total: 40 Schritte (4 × 10).', 'Total: 40 pasos (4 × 10).']],
       a4: () => [['Schleife: «wiederhole bis &lt;wird Boden berührt?&gt;». Sie hört genau beim Boden auf.', 'Bucle: «repetir hasta que &lt;¿tocando suelo?&gt;». Se detiene justo en el suelo.'],
-        ['Nach unten: «ändere y um ( -1 )». Minus bei y heisst nach unten.', 'Hacia abajo: «sumar a y ( -1 )». Un menos en la y significa hacia abajo.']],
-      a6: () => [['1. wiederhole 4 mal · 2. gehe 50er-Schritt · 3. drehe dich ↻ um 90 Grad', '1. repetir 4 · 2. mover 50 pasos · 3. girar ↻ 90 grados']],
+        ['Nach unten: «ändere y um ( -1 )». Minus bei y heisst nach unten.', 'Hacia abajo: «sumar a y ( -1 )». Un menos en la y significa hacia abajo.'],
+        [`So kannst du es erklären: ${q(OPEN_Q.a4_why.model)}`, null]],
+      a6: () => [['1. wiederhole 4 mal · 2. gehe 50er-Schritt · 3. drehe dich ↻ um 90 Grad', '1. repetir 4 · 2. mover 50 pasos · 3. girar ↻ 90 grados'],
+        ['An jeder Ecke 90 Grad. Die Schleife wiederholt 4-mal (4 Seiten, 4 Ecken).', null]],
       a5: () => [['Name: «abheben». y wird immer grösser, bis y = 200: Die Drohne steigt.', 'Nombre: «despegar». La y se hace cada vez más grande hasta y = 200: el dron sube.'],
-        ...CUSTOM_REASONS.filter(r => r.correct).map(r => [`Grund: ${q(r.text)}`, `Razón: ${q(r.es)}`])],
+        ...CUSTOM_REASONS.filter(r => r.correct).map(r => [`Grund: ${q(r.text)}`, `Razón: ${q(r.es)}`]),
+        [`Neuer Block: ${q(OPEN_Q.a5_name.model)}. Die Drohne fliegt ein Quadrat.`, null]],
       a8: () => [['Dort steht eine positive Zahl (+5) statt einer Minuszahl.', 'Allí hay un número positivo (+5) en vez de un número negativo.'],
-        ['Richtig ist: «ändere y um ( -1 )».', 'Lo correcto es: «sumar a y ( -1 )».']],
+        ['Richtig ist: «ändere y um ( -1 )».', 'Lo correcto es: «sumar a y ( -1 )».'],
+        [`So kannst du es erklären: ${q(OPEN_Q.a8_why.model)}`, null]],
       a7a: () => dispAndOr.map((r, i) => [`${i + 1}. ${r.before} <b>${r.correct}</b> ${r.after}`, `${i + 1}. ${r.es[0]} <b>${r.correct === 'und' ? 'y' : 'o'}</b> ${r.es[1]}`]),
       a7b: () => dispSmart.map((r, i) => [`${i + 1}. ${r.light} · ${r.sensor} · ${r.time} → <b>${LAMP[r.correct][0]}</b>`, `${i + 1}. ${r.es[0]} · ${r.es[1]} · ${r.es[2]} → <b>${LAMP[r.correct][1]}</b>`]),
       a7c: () => dispGarden.map((r, i) => [`${i + 1}. ${r.soil} · ${r.weather} · ${r.time} → <b>${SPRINKLER[r.correct][0]}</b>`, `${i + 1}. ${r.es[0]} · ${r.es[1]} · ${r.es[2]} → <b>${SPRINKLER[r.correct][1]}</b>`])
@@ -1577,7 +1750,7 @@
       if (!box || !SOLUTION[id]) return;
       box.innerHTML = `
         <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-800 mb-1">${both('✔ So ist es richtig', '✔ Así es correcto')}</div>
-        <ul class="space-y-1">${SOLUTION[id]().map(([de, es]) => `<li>${both(de, es)}</li>`).join('')}</ul>
+        <ul class="space-y-1">${SOLUTION[id]().map(([de, es]) => `<li>${bothOpt(de, es)}</li>`).join('')}</ul>
         <div class="mt-2 text-slate-600">${both('Das ist okay. Schau es in Ruhe an. Dann löse die Aufgabe mit «🔀 Nochmals üben» selber.', 'No pasa nada. Míralo con calma. Después resuelve la tarea tú con «🔀 Practicar otra vez».')}</div>`;
       box.classList.remove('hidden');
     }
@@ -1616,6 +1789,9 @@
         const label = part.querySelector('.js-label');
         if (label) label.textContent = 'abcdefgh'[i] + ') ';
       });
+      // Die Schreib-Frage steht fest am Schluss (erst erkennen, dann selber schreiben) und bekommt den nächsten Buchstaben
+      let n = box.querySelectorAll(':scope > [data-part]').length;
+      document.querySelectorAll(`[data-task="${id}"] [data-open-q]`).forEach(el => { OPEN_LABEL[el.dataset.openQ] = 'abcdefgh'[n++] + ') '; });
     }
 
     // Grün/Gelb-Färbung entfernen
@@ -1632,6 +1808,7 @@
       const u = TASK_UI[id], host = document.querySelector(`[data-task="${id}"]`);
       if (!u || !host) return;
       u.keys().forEach(k => { delete STATE.answers[k]; });
+      (u.open || []).forEach(k => { delete STATE.answers['txt_' + k]; delete STATE.answers['self_' + k]; OPEN_UI[k] = {}; });
       persist();
       if (u.mix) u.mix();
       shuffleParts(id);
@@ -1646,6 +1823,125 @@
       if (sol) { sol.classList.add('hidden'); sol.innerHTML = ''; }
       host.scrollIntoView({ behavior: 'smooth', block: 'start' });
       showToast(tr('🔀 Neu gemischt', '🔀 Mezclado de nuevo'), tr(`Aufgabe ${u.nr} ist leer und neu gemischt. Viel Erfolg!`, `La tarea ${u.nr} está vacía y mezclada de nuevo. ¡Mucho éxito!`));
+    }
+
+    // ==============================================================
+    // SELBER SCHREIBEN: HILFE-TREPPE (wie RZG und Novemberschnee)
+    // Text in STATE.answers['txt_' + k], Selbsteinschätzung in STATE.answers['self_' + k] ('ok').
+    // Keine Punkte (nicht in TASKS). Alles mit both()/bothDe(): Der Sprachwechsel braucht kein Neuzeichnen.
+    // ==============================================================
+    const OPEN_UI = {};      // offene Hilfe-Boxen pro Frage (nicht gespeichert)
+    const OPEN_LABEL = {};   // Buchstabe a), b) … (setzt shuffleParts)
+    const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const deAccent = t => String(t || '').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/\u00df/g, 'ss')
+      .replace(/[áà]/g, 'a').replace(/[éè]/g, 'e').replace(/[íì]/g, 'i').replace(/[óò]/g, 'o').replace(/[úù]/g, 'u').replace(/ñ/g, 'n');
+    const normText = t => ' ' + deAccent(t).replace(/[^a-z0-9]+/g, ' ').trim() + ' ';
+
+    function saveOpen(k, v) {
+      const val = String(v || '').slice(0, 2000);
+      if (val.trim()) STATE.answers['txt_' + k] = val; else delete STATE.answers['txt_' + k];
+      persist();
+    }
+    // Schlüsselwörter suchen; der eingefügte Satzanfang zählt nicht mit (ausser keepStarter)
+    function openCheck(k, text) {
+      const d = OPEN_Q[k];
+      let t = normText(text);
+      if (d.starter && !d.keepStarter) d.starter.split('\n').forEach(line => {
+        const st = normText(line.split('…')[0]).trim();
+        if (st.length > 2) t = t.replace(' ' + st + ' ', ' ');
+      });
+      return d.keys.map(([, parts]) => parts.some(p => t.includes(p)));
+    }
+    const openNeed = (d) => d.need || d.keys.filter(x => !x[2]).length;
+
+    function openHelp(k, step) {
+      const d = OPEN_Q[k], ui = OPEN_UI[k] || (OPEN_UI[k] = {});
+      const field = document.getElementById('txt-' + k), val = field ? field.value : '';
+      ui.warn = false; ui.again = false;
+      if (step === 'tip') ui.tip = !ui.tip;
+      if (step === 'starter' && d.starter) saveOpen(k, val.trim() ? val.replace(/\s+$/, '') + '\n' + d.starter : d.starter);
+      if (step === 'check') {
+        if (!val.trim()) ui.warn = true;
+        else { saveOpen(k, val); ui.check = openCheck(k, val); }
+        if (d.short && ui.check && ui.check.some(Boolean)) { STATE.answers['self_' + k] = 'ok'; persist(); }
+      }
+      if (step === 'model') { saveOpen(k, val); ui.model = true; }
+      renderOpen(k);
+      const box = document.getElementById(`oh-${step}-${k}`) || document.getElementById('oh-warn-' + k);
+      if (box) box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      if (step === 'starter') { const f = document.getElementById('txt-' + k); if (f) { f.focus(); f.setSelectionRange(f.value.length, f.value.length); } }
+    }
+    function selfRate(k, ok) {
+      const ui = OPEN_UI[k] || (OPEN_UI[k] = {});
+      if (ok) { STATE.answers['self_' + k] = 'ok'; ui.model = false; ui.check = null; }
+      else { delete STATE.answers['self_' + k]; ui.model = false; ui.check = null; ui.again = true; }
+      persist();
+      renderOpen(k);
+      const box = document.getElementById('oh-rated-' + k);
+      if (box) box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
+    function renderOpen(k) {
+      const host = document.querySelector(`[data-open-q="${k}"]`), d = OPEN_Q[k];
+      if (!host || !d) return;
+      const ui = OPEN_UI[k] || (OPEN_UI[k] = {}), txt = A('txt_' + k) || '', done = A('self_' + k) === 'ok';
+      const stepBtn = (n, step, label, on) => `<button type="button" onclick="openHelp('${k}','${step}')" class="min-h-[44px] px-2.5 py-1.5 rounded-xl border text-xs sm:text-sm font-bold text-left ${on ? 'bg-sky-100 border-sky-400 text-sky-900' : 'bg-white border-sky-200 text-sky-800 hover:bg-sky-50'}"><span class="inline-flex w-5 h-5 rounded-full bg-sky-600 text-white text-[11px] font-black items-center justify-center mr-1">${n}</span>${label}</button>`;
+      const ph = d.short ? 'Dein Name für den Block …' : 'Deine Antwort in eigenen Worten …';
+      const phEs = d.short ? '' : 'Tu respuesta con tus propias palabras …';
+      let h = `
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 border border-sky-300 whitespace-nowrap">${bothDe('✍️ Selber schreiben')}</span>
+          <span class="text-[11px] text-slate-500">${bothDe('ohne Punkte, zum Üben')}</span>
+          ${done ? `<span class="text-[11px] font-bold text-emerald-700">${bothDe('✔ erledigt')}</span>` : ''}
+        </div>
+        <label for="txt-${k}" class="text-xs sm:text-sm font-bold text-slate-900 block break-words"><span class="js-label">${OPEN_LABEL[k] || ''}</span>${bothDe(d.q)}</label>
+        <p class="text-[11px] text-slate-500" data-l="es" lang="es">Esta pregunta todavía está solo en alemán.</p>`;
+      if (d.pre) h += d.pre;
+      h += d.short
+        ? `<input type="text" id="txt-${k}" value="${esc(txt)}" oninput="saveOpen('${k}', this.value)" maxlength="80" autocomplete="off" placeholder="${ph}" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm font-semibold focus:ring-2 focus:ring-sky-500">`
+        : `<textarea id="txt-${k}" rows="3" oninput="saveOpen('${k}', this.value)" placeholder="${ph}" data-es-placeholder="${phEs}" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm text-slate-800 leading-relaxed focus:ring-2 focus:ring-sky-500">${esc(txt)}</textarea>`;
+      h += `<div class="text-xs font-bold text-slate-600">${both('Hilfe-Treppe: Nimm so viel Hilfe, wie du brauchst.', 'Escalera de ayuda: toma toda la ayuda que necesites.')}</div>`;
+      h += d.short
+        ? `<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">${stepBtn(1, 'tip', both('💡 Tipp', '💡 Pista'), ui.tip)}${stepBtn(2, 'check', both('🔍 Antwort prüfen', '🔍 Revisar respuesta'), !!ui.check)}${stepBtn(3, 'model', bothDe('📗 Lösung zeigen'), ui.model)}</div>`
+        : `<div class="grid grid-cols-2 gap-2">${stepBtn(1, 'tip', both('💡 Tipp und Wörter', '💡 Pista y palabras'), ui.tip)}${stepBtn(2, 'starter', both('✏️ Satzanfang', '✏️ Inicio de frase'), false)}${stepBtn(3, 'check', both('🔍 Antwort prüfen', '🔍 Revisar respuesta'), !!ui.check)}${stepBtn(4, 'model', both('📗 Musterlösung', '📗 Respuesta modelo'), ui.model)}</div>`;
+      if (ui.warn) h += `<div id="oh-warn-${k}" class="rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-xs sm:text-sm text-yellow-900">${d.short ? bothDe('Schreib zuerst einen Namen ins Feld.') : both('Schreib zuerst ein, zwei Sätze. Dann prüft die Seite deine Antwort.', 'Primero escribe una o dos frases. Después la página revisa tu respuesta.')}</div>`;
+      if (ui.tip) h += `<div id="oh-tip-${k}" class="rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-xs sm:text-sm text-slate-800 leading-relaxed space-y-2">
+          <div>💡 ${bothDe(d.tip)}</div>
+          ${d.words ? `<div class="text-[11px] font-bold text-yellow-800">${both('Diese Wörter helfen dir:', 'Estas palabras te ayudan:')}</div>
+          <div class="flex flex-wrap gap-1.5">${shuffleArray(d.words).map(w => `<span class="px-2 py-0.5 rounded-full bg-white border border-yellow-300 text-xs font-semibold">${bothDe(w)}</span>`).join('')}</div>` : ''}
+        </div>`;
+      if (ui.check) {
+        const found = ui.check.filter((ok, i) => ok && !d.keys[i][2]).length, need = openNeed(d);
+        if (d.short) {
+          const ok = ui.check.some(Boolean);
+          h += `<div id="oh-check-${k}" class="rounded-lg border p-3 text-xs sm:text-sm ${ok ? 'border-emerald-300 bg-emerald-50 text-emerald-900' : 'border-yellow-300 bg-yellow-50 text-yellow-900'}">${ok
+            ? bothDe('✅ Passt! Der Name sagt, was der Block macht.')
+            : bothDe('Noch nicht ganz. Der Name soll sagen, was die Drohne fliegt. Lies den Tipp (1) und versuch es nochmals.')}</div>`;
+        } else {
+          h += `<div id="oh-check-${k}" class="rounded-lg border border-sky-200 bg-sky-50 p-3 text-xs sm:text-sm space-y-1">
+            <div class="font-bold text-slate-800">${found >= need ? both('👍 Sehr gut! Das Wichtigste ist drin.', '👍 ¡Muy bien! Lo más importante está.') : both('Das hast du schon:', 'Esto ya lo tienes:')}</div>
+            ${ui.check.map((ok, i) => `<div class="${ok ? 'text-emerald-800' : 'text-slate-500'}">${ok ? '✔' : '☐'} ${bothDe(d.keys[i][0])}</div>`).join('')}
+            <div class="text-[11px] text-slate-600">${found < need ? both('Darüber kannst du noch weiterschreiben: Ergänze, was noch fehlt (☐). Dann prüf nochmals.', 'Puedes seguir escribiendo: completa lo que falta (☐). Después revisa otra vez.') : both('Vergleiche jetzt mit der Musterlösung (4).', 'Ahora compara con la respuesta modelo (4).')}</div>
+          </div>`;
+        }
+      }
+      if (ui.model) {
+        h += `<div id="oh-model-${k}" class="rounded-lg border-2 border-emerald-300 bg-emerald-50 p-3 text-xs sm:text-sm space-y-2">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-800">${d.short ? bothDe('📗 Lösung') : both('📗 Musterlösung', '📗 Respuesta modelo')}</div>
+          <div class="text-slate-800 leading-relaxed">${bothDe(esc(d.model))}${d.also ? `<div class="text-slate-600 mt-1">${bothDe(esc(d.also))}</div>` : ''}</div>`;
+        if (!d.short) h += `
+          <div class="font-bold text-slate-700">${both('Vergleiche mit deiner Antwort. Hast du das Wichtigste?', 'Compara con tu respuesta. ¿Tienes lo más importante?')}</div>
+          <div class="grid grid-cols-2 gap-2">
+            ${txt.trim() ? `<button type="button" onclick="selfRate('${k}', true)" class="min-h-[44px] px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-black">${both('✔ Hab ich so', '✔ Lo tengo así')}</button>` : ''}
+            <button type="button" onclick="selfRate('${k}', false)" class="min-h-[44px] px-3 rounded-xl border-2 border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-bold ${txt.trim() ? '' : 'col-span-2'}">${both('↻ Noch nicht', '↻ Todavía no')}</button>
+          </div>`;
+        else h += `<div class="text-slate-600">${bothDe('Schreib den Namen jetzt selber ins Feld.')}</div>`;
+        h += `</div>`;
+      }
+      if (!d.short && done && !ui.model) h += `<div id="oh-rated-${k}" class="rounded-lg border border-emerald-300 bg-emerald-50 p-3 text-xs sm:text-sm font-semibold text-emerald-900">🌟 ${both('Gut erklärt! Das hilft dir im Test.', '¡Bien explicado! Esto te ayuda en el examen.')}</div>`;
+      if (ui.again) h += `<div id="oh-rated-${k}" class="rounded-lg border border-yellow-300 bg-yellow-50 p-3 text-xs sm:text-sm text-yellow-900"><b>${both('Gut, dass du ehrlich bist.', '¡Qué bien que seas sincero!')}</b> ${bothDe('Verbessere deine Antwort oben. Dann prüf nochmals (3). Die Musterlösung kannst du jederzeit wieder öffnen (4).')}</div>`;
+      host.innerHTML = h;
+      applyLangAttrs(host);
     }
 
     // ==============================================================
@@ -1713,6 +2009,7 @@
     function resetAllHubData() {
       STATE.answers = {};
       flowSelected = null;
+      Object.keys(OPEN_UI).forEach(k => { OPEN_UI[k] = {}; });
       try { localStorage.removeItem('scratch_hub_answers'); } catch (e) {}
       const banner = document.getElementById('exam-result-banner');
       if (banner) banner.classList.add('hidden');
@@ -1749,7 +2046,8 @@
       checkTask, toggleTip, openTheory, retryTask, showSolution,
       checkBasicsA1, checkBasicsA2, checkLoopsA3, checkLoopsA4, checkSquareSort,
       checkCustomA5, checkCustomA8, checkLogicAndOr, checkLogicA7, checkLogicGarden,
-      handleFlowSlotClick, evaluateFullExam, resetAllHubData, setLang
+      handleFlowSlotClick, evaluateFullExam, resetAllHubData, setLang,
+      saveOpen, openHelp, selfRate
     });
 
     // Texte ohne <span>: <option> und SVG-<text> (data-es), Attribute title / aria-label (data-es-…)
@@ -1758,7 +2056,7 @@
         if (el.dataset.de === undefined) el.dataset.de = el.textContent;
         el.textContent = LANG === 'es' ? el.dataset.es : el.dataset.de;
       });
-      ['title', 'aria-label'].forEach(attr => {
+      ['title', 'aria-label', 'placeholder'].forEach(attr => {
         (root || document).querySelectorAll(`[data-es-${attr}]`).forEach(el => {
           if (!el.hasAttribute('data-de-' + attr)) el.setAttribute('data-de-' + attr, el.getAttribute(attr) || '');
           el.setAttribute(attr, el.getAttribute((LANG === 'es' ? 'data-es-' : 'data-de-') + attr));
