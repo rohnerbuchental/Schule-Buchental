@@ -110,7 +110,7 @@
       <div id="reset-k1"></div>
     </section>
 
-    <!-- Aufgabe 2: Lernpfad Teil 2 «Aufbau, Vulkantypen, Ausbrüche» (Blatt Nr. 5–11, LZ2 und LZ3) | RZG.1.3.a, RZG.1.3.b -->
+    <!-- Aufgabe 2: Lernpfad Teil 2 «Aufbau, Vulkantypen, Ausbrüche» (Blatt Nr. 5–10, LZ2 und LZ3) | RZG.1.3.a, RZG.1.3.b -->
     <section id="view-k2" class="view hidden space-y-4">
       <div id="card-k2" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-orange-100 space-y-4">
         <div id="head-k2"></div>
@@ -136,7 +136,6 @@
           </table>
         </div>
         <ul class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
-          <li><b>Warum Schichten?</b> Ein Schichtvulkan bricht immer wieder aus. Mal fliegen Asche und Steine heraus, mal fliesst Lava und wird hart. So legt sich Schicht auf Schicht.</li>
           <li><b>Schichtvulkan bricht aus:</b> Das Magma ist zähflüssig. Die Gase können kaum entweichen. Der Druck im Schlot wird immer grösser, bis der Vulkan explodiert.</li>
           <li><b>Schildvulkan bricht aus:</b> Die Lava ist dünnflüssig. Die Gase entweichen leicht, es gibt kaum Druck. Die Lava fliesst ruhig heraus und breitet sich weit aus.</li>
         </ul>
@@ -145,7 +144,7 @@
       <div id="reset-k2"></div>
     </section>
 
-    <!-- Aufgabe 3: Lernpfad Teil 3 «Erdbeben» (Blatt Nr. 12–15, LZ4) | RZG.1.3.b, RZG.1.3.c -->
+    <!-- Aufgabe 3: Lernpfad Teil 3 «Erdbeben» (Blatt Nr. 11–14, LZ4) | RZG.1.3.b, RZG.1.3.c -->
     <section id="view-k3" class="view hidden space-y-4">
       <div id="card-k3" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-orange-100 space-y-4">
         <div id="head-k3"></div>
@@ -166,7 +165,7 @@
       <div id="reset-k3"></div>
     </section>
 
-    <!-- Aufgabe 4: Lernpfad Teil 4 «Tsunamis» (Blatt Nr. 16–19, LZ5) | RZG.1.3.b, RZG.1.3.c -->
+    <!-- Aufgabe 4: Lernpfad Teil 4 «Tsunamis» (Blatt Nr. 15–18, LZ5) | RZG.1.3.b, RZG.1.3.c -->
     <section id="view-k4" class="view hidden space-y-4">
       <div id="card-k4" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-orange-100 space-y-4">
         <div id="head-k4"></div>
@@ -183,7 +182,6 @@
             <tbody>
               <tr><th class="p-2 border border-orange-100 font-semibold">Entstehung</th><td class="p-2 border border-orange-100">durch Wind</td><td class="p-2 border border-orange-100">durch ein Seebeben</td></tr>
               <tr><th class="p-2 border border-orange-100 font-semibold">Wasser</th><td class="p-2 border border-orange-100">nur die oberste Schicht bewegt sich</td><td class="p-2 border border-orange-100">das ganze Wasser bewegt sich</td></tr>
-              <tr><th class="p-2 border border-orange-100 font-semibold">Wellenlänge</th><td class="p-2 border border-orange-100">bis etwa 400 m</td><td class="p-2 border border-orange-100">bis 1000 km</td></tr>
               <tr><th class="p-2 border border-orange-100 font-semibold">Tempo</th><td class="p-2 border border-orange-100">eher langsam</td><td class="p-2 border border-orange-100">sehr schnell</td></tr>
             </tbody>
           </table>
@@ -343,12 +341,16 @@
         <path d="M108,130 C110,110 112,90 114,62 L126,62 C128,90 130,110 132,130 Z" fill="#ef4444"/>
         <path d="M104,62 L114,44 L126,44 L136,62 Z" fill="#a8a29e"/><path d="M114,44 L120,52 L126,44 Z" fill="#ef4444"/>
         ${ARR(70, 40, -1)}${ARR(170, 40, 1)}`);
+    // Platten stossen zusammen: dunkle, dünne Ozeanplatte biegt nach unten und taucht lang und schräg UNTER die helle, dicke Kontinentalplatte
     const SVG_SK_ZUS = SK(`
-        <path d="M0,62 L120,62 L180,122 L160,128 L104,86 L0,86 Z" fill="#57534e"/>
-        <path d="M120,62 L240,62 L240,86 L176,86 Z" fill="#a8a29e"/>
-        <path d="M150,96 C156,84 158,72 160,48 L168,48 C168,72 168,86 170,104 Z" fill="#ef4444"/>
-        <path d="M144,62 L158,36 L170,36 L184,62 Z" fill="#a8a29e"/><path d="M158,36 L164,44 L170,36 Z" fill="#ef4444"/>
-        ${ARR(30, 40, 1)}${ARR(226, 40, -1)}`);
+        <rect x="0" y="40" width="118" height="22" fill="#7dd3fc"/>
+        <path d="M0,62 L92,62 Q110,62 124,72 L214,128 L204,134 L114,84 Q104,78 92,78 L0,78 Z" fill="#292524"/>
+        <path d="M106,50 L240,50 L240,104 L170,104 L124,72 Q114,64 106,62 Z" fill="#e7e5e4" stroke="#a8a29e" stroke-width="2"/>
+        <path d="M188,120 C186,96 180,64 176,34 L184,34 C188,64 194,96 198,118 Z" fill="#ef4444"/>
+        <path d="M156,50 L172,24 L188,24 L204,50 Z" fill="#a8a29e"/><path d="M172,24 L180,33 L188,24 Z" fill="#ef4444"/>
+        <path d="M130,100 L160,119 m-11,1 l11,-1 l-4,-10" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M14,70 h30 m-8,-6 l8,6 l-8,6" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        ${ARR(232, 38, -1)}`);
     const SVG_SK_HOT = SK(`
         <rect x="0" y="62" width="240" height="24" fill="#78716c"/>
         <path d="M100,130 C108,112 114,96 116,62 L124,62 C126,96 132,112 140,130 Z" fill="#ef4444"/>
@@ -367,9 +369,9 @@
     // ==============================================================
     const PARTS = [
       { id: 'k1', emoji: '🌍', title: 'Vulkane entstehen', lz: 'LZ1', nrs: '1–4', sub: 'Plattengrenzen, Hotspot, Ring of Fire' },
-      { id: 'k2', emoji: '🌋', title: 'Aufbau & Ausbrüche', lz: 'LZ2 + LZ3', nrs: '5–11', sub: 'Magma, Teile des Vulkans, Schicht- und Schildvulkan' },
-      { id: 'k3', emoji: '📈', title: 'Erdbeben', lz: 'LZ4', nrs: '12–15', sub: 'Entstehung, Messen, Stärke, richtig verhalten' },
-      { id: 'k4', emoji: '🌊', title: 'Tsunamis', lz: 'LZ5', nrs: '16–19', sub: 'Seebeben, Welle oder Tsunami, Warnzeichen' }
+      { id: 'k2', emoji: '🌋', title: 'Aufbau & Ausbrüche', lz: 'LZ2 + LZ3', nrs: '5–10', sub: 'Magma, Teile des Vulkans, Schicht- und Schildvulkan' },
+      { id: 'k3', emoji: '📈', title: 'Erdbeben', lz: 'LZ4', nrs: '11–14', sub: 'Entstehung, Messen, Stärke, richtig verhalten' },
+      { id: 'k4', emoji: '🌊', title: 'Tsunamis', lz: 'LZ5', nrs: '15–18', sub: 'Seebeben, Küste, Warnzeichen' }
     ];
     const STAGES = [
       { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus oder tippst an.' },
@@ -458,11 +460,11 @@
           rows: [['steil und hoch', 'Schichtvulkan'], ['flach und breit', 'Schildvulkan'], ['zähflüssiges Magma', 'Schichtvulkan'], ['dünnflüssiges Magma', 'Schildvulkan']],
           cats: ['Schichtvulkan', 'Schildvulkan'],
           tip: 'Zähflüssiges Magma ist wie Honig: Es fliesst nicht weit und bleibt nah beim Krater. Was für eine Form gibt das?' },
-        { id: 'k2_sort2', st: 1, nr: [8, 9], type: 'sort', q: 'Passt das zum Schichtvulkan oder zum Schildvulkan?',
+        { id: 'k2_sort2', st: 1, nr: [8], type: 'sort', q: 'Passt das zum Schichtvulkan oder zum Schildvulkan?',
           rows: [['Schichten aus Asche und Lava', 'Schichtvulkan'], ['viele dünne Lavaschichten', 'Schildvulkan'], ['Beispiel: Fujiyama (Japan)', 'Schichtvulkan'], ['Beispiel: Mauna Loa (Hawaii)', 'Schildvulkan']],
           cats: ['Schichtvulkan', 'Schildvulkan'],
           tip: 'Denk an Hawaii: Wie fliesst dort die Lava? Und der Fujiyama ist ein steiler, spitzer Berg.' },
-        { id: 'k2_schild', st: 1, nr: [11], type: 'mc', q: 'Wie bricht ein Schildvulkan meistens aus?',
+        { id: 'k2_schild', st: 1, nr: [10], type: 'mc', q: 'Wie bricht ein Schildvulkan meistens aus?',
           opts: ['Ruhig: Die Lava fliesst aus dem Krater.', 'Laut: Eine riesige Explosion zerreisst den Berg.', 'Gar nicht: Ein Schildvulkan bricht nie aus.', 'Nass: Aus dem Krater kommt nur heisses Wasser.'],
           tip: 'Die Lava ist dünnflüssig. Die Gase können gut heraus, wie bei einer offenen Flasche.',
           why: 'Die Lava ist dünnflüssig, die Gase entweichen leicht. Es gibt kaum Druck. Darum fliesst die Lava ruhig.' },
@@ -472,69 +474,61 @@
           a: ['Lavastrom', 'Lava-Strom', 'Lavafluss'], tip: 'Zwei Wörter in einem: Wie heisst das flüssige Gestein draussen? Und wie sagt man zu Wasser, das in einem Fluss fliesst?' },
         { id: 'k2_g_magma', st: 2, nr: [5], type: 'gap', text: 'Solange das flüssige Gestein unter der Erde ist, heisst es ___.',
           a: ['Magma'], tip: 'Es ist nicht «Lava». Das Wort hat 5 Buchstaben.' },
-        { id: 'k2_g_duenn', st: 2, nr: [8, 11], type: 'gap', text: 'Beim Schildvulkan ist die Lava ___. Darum fliesst sie weit.',
+        { id: 'k2_g_duenn', st: 2, nr: [8, 10], type: 'gap', text: 'Beim Schildvulkan ist die Lava ___. Darum fliesst sie weit.',
           a: ['dünnflüssig'], tip: 'Denk an Wasser und an Honig. Was fliesst weiter?' },
-        { id: 'k2_o_explo', st: 2, nr: [10], type: 'order', q: 'Wie bricht ein Schichtvulkan aus?',
+        { id: 'k2_o_explo', st: 2, nr: [9], type: 'order', q: 'Wie bricht ein Schichtvulkan aus?',
           steps: ['Das Magma ist zähflüssig.', 'Die Gase können nicht entweichen.', 'Der Druck im Schlot wird immer grösser.', 'Der Vulkan bricht explosiv aus.'],
           tip: 'Am Anfang steht, wie das Magma ist. Am Schluss steht der Knall.' },
-        { id: 'k2_e_aus', st: 3, nr: [10], type: 'open', q: 'Wie bricht ein Schichtvulkan aus?',
+        { id: 'k2_e_aus', st: 3, nr: [9], type: 'open', q: 'Wie bricht ein Schichtvulkan aus?',
           tip: 'Denk an eine geschüttelte Flasche Mineralwasser mit zugedrehtem Deckel. Was passiert, wenn der Deckel nachgibt?',
           words: ['zähflüssig', 'Gas', 'Druck', 'explosiv'],
           starter: 'Das Magma ist …\nDarum …',
           keys: [['Wie ist das Magma?', ['zaeh', 'dickfluessig']], ['Was ist mit den Gasen?', ['gas']], ['Was baut sich auf?', ['druck']], ['Wie bricht er aus?', ['explo']]],
           need: 4,
           model: 'Das Magma ist zähflüssig, wie kalter Honig. Die Gase bleiben darin stecken und können kaum entweichen. So wird der Druck im Schlot immer grösser. Plötzlich bricht der Vulkan explosiv aus: Asche, Steine und Lava fliegen heraus.' },
-        { id: 'k2_e_schicht', st: 3, nr: [9], type: 'open', q: 'Warum besteht ein Schichtvulkan aus vielen Schichten?',
-          tip: 'Denk an eine Lasagne: Wie entstehen dort die Schichten?',
-          words: ['immer wieder', 'Ausbruch', 'Asche', 'Lava', 'wird hart', 'abwechselnd'],
-          starter: 'Ein Schichtvulkan bricht …\nJedes Mal …',
-          keys: [['Wie oft bricht er aus?', ['immer wieder', 'oft', 'viele', 'mehrmals', 'jedes mal']], ['Was legt sich ab?', ['asche', 'stein']],
-                 ['Was passiert mit der Lava?', ['erstarr', 'hart', 'fest', 'abkuehl', 'kuehlt']], ['In welcher Reihenfolge?', ['abwechselnd', 'wechsel', 'uebereinander', 'nacheinander', 'darauf']]],
-          need: 3,
-          model: 'Ein Schichtvulkan bricht immer wieder aus. Mal fliegen Asche und Steine heraus, mal fliesst Lava und wird hart. Das legt sich abwechselnd übereinander. So wächst der Vulkan Schicht für Schicht.' }
       ],
       // ---------- Teil 3: Erdbeben (LZ4) ----------
       k3: [
-        { id: 'k3_geraet', st: 1, nr: [13], type: 'mc', first: true, q: 'Mit welchem Gerät misst man Erdbeben?',
+        { id: 'k3_geraet', st: 1, nr: [12], type: 'mc', first: true, q: 'Mit welchem Gerät misst man Erdbeben?',
           opts: ['Seismograph', 'Thermometer', 'Kompass', 'Taschenrechner'],
           tip: 'Ein Thermometer misst die Temperatur. Ein Kompass zeigt, wo Norden ist. Und welches Gerät misst Erdbeben?',
           why: 'Ein Seismograph zeichnet jede Bewegung der Erde auf.' },
-        { id: 'k3_kurve', st: 1, nr: [13], type: 'mc', pic: 'seismo', q: 'Ein Gerät hat diese Zickzack-Kurve gezeichnet. Wie heisst die Aufzeichnung?',
+        { id: 'k3_kurve', st: 1, nr: [12], type: 'mc', pic: 'seismo', q: 'Ein Gerät hat diese Zickzack-Kurve gezeichnet. Wie heisst die Aufzeichnung?',
           opts: ['Seismogramm', 'Seismograph', 'Richter-Skala', 'Landkarte'],
           tip: 'Das Gerät und die Aufzeichnung klingen fast gleich. Gesucht ist das Blatt mit der Kurve, nicht das Gerät.',
           why: 'Seismograph = Gerät. Seismogramm = Aufzeichnung.' },
-        { id: 'k3_vorher', st: 1, nr: [12], type: 'mc', q: 'Was passiert im Boden, bevor die Erde bebt?',
+        { id: 'k3_vorher', st: 1, nr: [11], type: 'mc', q: 'Was passiert im Boden, bevor die Erde bebt?',
           opts: ['Die Platten verhaken sich, Spannung baut sich auf.', 'Es regnet viele Tage lang, der Boden wird weich.', 'Der Wind drückt sehr stark auf die hohen Berge.', 'Ein Vulkan kühlt ab, und die Lava wird fest.'],
           tip: 'Erdbeben haben mit den Erdplatten zu tun, nicht mit dem Wetter.',
           why: 'Die Platten verhaken sich. Die Spannung wächst, bis das Gestein plötzlich bricht.' },
-        { id: 'k3_o_entst', st: 1, nr: [12], type: 'order', q: 'Wie entsteht ein Erdbeben?',
+        { id: 'k3_o_entst', st: 1, nr: [11], type: 'order', q: 'Wie entsteht ein Erdbeben?',
           steps: ['Die Platten bewegen sich.', 'Sie verhaken sich.', 'Spannung baut sich auf.', 'Das Gestein bricht plötzlich.', 'Die Erde bebt.'],
           tip: 'Beginne mit der Bewegung. Am Schluss bebt die Erde.' },
-        { id: 'k3_staerke', st: 1, nr: [14], type: 'sort', keepCats: true, q: 'Welche Stärke auf der Richter-Skala passt?',
+        { id: 'k3_staerke', st: 1, nr: [13], type: 'sort', keepCats: true, q: 'Welche Stärke auf der Richter-Skala passt?',
           rows: [['Die Lampe wackelt ein wenig. Sonst merkt man fast nichts.', 'Stärke 3'], ['Mauern bekommen Risse. Einzelne Häuser stürzen ein.', 'Stärke 6'], ['Katastrophe: Riesige Gebiete werden zerstört.', 'Stärke 9']],
           cats: ['Stärke 3', 'Stärke 6', 'Stärke 9'],
           tip: 'Je grösser die Zahl, desto stärker das Beben. Schon eine Stufe mehr ist viel stärker.' },
-        { id: 'k3_regeln', st: 1, nr: [15], type: 'sort', q: 'Starkes Erdbeben! Ist das richtig oder lieber nicht?',
+        { id: 'k3_regeln', st: 1, nr: [14], type: 'sort', q: 'Starkes Erdbeben! Ist das richtig oder lieber nicht?',
           rows: [['Im Haus unter einen stabilen Tisch kriechen und festhalten', 'Richtig'], ['Weg von Fenstern und schweren Schränken', 'Richtig'], ['Schnell den Lift nehmen', 'Lieber nicht'], ['Draussen nahe an eine Hauswand stehen', 'Lieber nicht']],
           cats: ['Richtig', 'Lieber nicht'],
           tip: 'Frag dich bei jeder Zeile: Kann mir hier etwas auf den Kopf fallen? Kann ich stecken bleiben?' },
-        { id: 'k3_draussen', st: 1, nr: [15], type: 'mc', q: 'Du bist draussen auf der Strasse. Die Erde bebt stark. Was machst du?',
+        { id: 'k3_draussen', st: 1, nr: [14], type: 'mc', q: 'Du bist draussen auf der Strasse. Die Erde bebt stark. Was machst du?',
           opts: ['Auf einen freien Platz gehen, weg von Häusern.', 'Schnell in das nächste Haus rennen und warten.', 'Mich unter einen Balkon stellen und abwarten.', 'Auf eine Brücke gehen, dort ist es sicher.'],
           tip: 'Wo kann nichts auf dich herunterfallen?',
           why: 'Auf einem freien Platz kann nichts auf dich fallen.' },
-        { id: 'k3_g_graph', st: 2, nr: [13], type: 'gap', text: 'Ein Stift zeichnet jede Bewegung der Erde auf. Dieses Messgerät heisst ___.',
+        { id: 'k3_g_graph', st: 2, nr: [12], type: 'gap', text: 'Ein Stift zeichnet jede Bewegung der Erde auf. Dieses Messgerät heisst ___.',
           a: ['Seismograph', 'Seismograf'], tip: 'Gesucht ist das Gerät, nicht das Blatt mit der Kurve.' },
-        { id: 'k3_g_gramm', st: 2, nr: [13], type: 'gap', text: 'Das Blatt mit der Zickzack-Kurve heisst ___.',
+        { id: 'k3_g_gramm', st: 2, nr: [12], type: 'gap', text: 'Das Blatt mit der Zickzack-Kurve heisst ___.',
           a: ['Seismogramm'], tip: 'Gesucht ist die Aufzeichnung, nicht das Gerät. Das Wort klingt fast gleich wie das Gerät.' },
-        { id: 'k3_g_richter', st: 2, nr: [13], type: 'gap', text: 'In den Nachrichten hört man: «Ein Beben der Stärke 6 auf der ___-Skala.»',
+        { id: 'k3_g_richter', st: 2, nr: [12], type: 'gap', text: 'In den Nachrichten hört man: «Ein Beben der Stärke 6 auf der ___-Skala.»',
           a: ['Richter', 'Richterskala', 'Richter-Skala'], tip: 'Die Skala ist nach einem Forscher benannt. Sein Name ist auch ein Beruf am Gericht.' },
-        { id: 'k3_g_verhak', st: 2, nr: [12], type: 'gap', bank: 'k3', text: 'Die Platten bewegen sich. An der Grenze ___ sie sich.',
+        { id: 'k3_g_verhak', st: 2, nr: [11], type: 'gap', bank: 'k3', text: 'Die Platten bewegen sich. An der Grenze ___ sie sich.',
           a: ['verhaken'], tip: 'Denk an zwei Klettverschluss-Bänder, die aneinander hängen bleiben.' },
-        { id: 'k3_g_spann', st: 2, nr: [12], type: 'gap', bank: 'k3', text: 'Im Gestein baut sich eine grosse ___ auf.',
+        { id: 'k3_g_spann', st: 2, nr: [11], type: 'gap', bank: 'k3', text: 'Im Gestein baut sich eine grosse ___ auf.',
           a: ['Spannung'], tip: 'Denk an ein Gummiband, das du immer weiter dehnst.' },
-        { id: 'k3_g_bricht', st: 2, nr: [12], type: 'gap', bank: 'k3', text: 'Plötzlich ___ das Gestein. Die Erde bebt.',
+        { id: 'k3_g_bricht', st: 2, nr: [11], type: 'gap', bank: 'k3', text: 'Plötzlich ___ das Gestein. Die Erde bebt.',
           a: ['bricht'], tip: 'Was passiert mit einem Ast, den du zu fest biegst?' },
-        { id: 'k3_e_entst', st: 3, nr: [12], type: 'open', q: 'Wie entsteht ein Erdbeben?',
+        { id: 'k3_e_entst', st: 3, nr: [11], type: 'open', q: 'Wie entsteht ein Erdbeben?',
           tip: 'Du hast die Kette schon geübt: 5 Schritte, von «bewegen» bis «bebt». Biege in Gedanken ein Lineal immer stärker: Was passiert am Schluss?',
           words: ['bewegen sich', 'verhaken', 'Spannung', 'bricht plötzlich', 'bebt'],
           starter: 'Die Platten bewegen sich …',
@@ -542,7 +536,7 @@
                  ['Was passiert plötzlich?', ['bricht', 'brech', 'reiss', 'ruck', 'ploetzlich']], ['Was macht die Erde?', ['bebt', 'wackelt', 'zittert', 'erdbeben']]],
           need: 3,
           model: 'Die Platten bewegen sich und verhaken sich. Spannung baut sich auf. Plötzlich bricht das Gestein, und die Erde bebt.' },
-        { id: 'k3_e_regeln', st: 3, nr: [15], type: 'open', q: 'Nenne drei Regeln für ein starkes Erdbeben. Schreib etwas für drinnen und für draussen.',
+        { id: 'k3_e_regeln', st: 3, nr: [14], type: 'open', q: 'Nenne drei Regeln für ein starkes Erdbeben. Schreib etwas für drinnen und für draussen.',
           tip: 'Was kann dir bei einem Beben auf den Kopf fallen oder kaputtgehen? Wo bist du davor geschützt?',
           words: ['Tisch', 'festhalten', 'Fenster', 'Lift', 'freier Platz', 'Hauswand'],
           starter: '1. Im Haus …\n2. …\n3. Draussen …',
@@ -553,54 +547,48 @@
       ],
       // ---------- Teil 4: Tsunamis (LZ5) ----------
       k4: [
-        { id: 'k4_was', st: 1, nr: [16], type: 'mc', first: true, q: 'Was ist ein Tsunami?',
+        { id: 'k4_was', st: 1, nr: [15], type: 'mc', first: true, q: 'Was ist ein Tsunami?',
           opts: ['Eine riesige Welle, die an der Küste Schäden macht.', 'Ein starker Sturm, der in der Wüste Sand aufwirbelt.', 'Ein Vulkan, der unter dickem Eis versteckt ist.', 'Ein kleiner Bach, der in den Bergen entspringt.'],
           tip: 'Das Wort kommt aus Japan und heisst «Hafenwelle».',
           why: 'Ein Tsunami ist eine riesige Welle. Sie entsteht meistens durch ein Seebeben.' },
-        { id: 'k4_ausl', st: 1, nr: [16], type: 'mc', q: 'Was löst einen Tsunami meistens aus?',
+        { id: 'k4_ausl', st: 1, nr: [15], type: 'mc', q: 'Was löst einen Tsunami meistens aus?',
           opts: ['Ein Seebeben am Meeresboden', 'Ein starker Wind auf dem Meer', 'Ein grosses Schiff im Hafen', 'Starker Regen über dem Meer'],
           tip: 'Normale Wellen macht der Wind. Ein Tsunami bewegt aber das ganze Wasser bis zum Boden. Was kann den Meeresboden bewegen?',
           why: 'Bei einem Seebeben hebt oder senkt sich der Meeresboden ruckartig.' },
-        { id: 'k4_sort1', st: 1, nr: [17], type: 'sort', q: 'Normale Welle oder Tsunami?',
-          rows: [['entsteht durch Wind', 'Normale Welle'], ['entsteht durch ein Seebeben', 'Tsunami'], ['nur das Wasser oben bewegt sich', 'Normale Welle'], ['das ganze Wasser bewegt sich, vom Grund bis oben', 'Tsunami']],
+        { id: 'k4_sort1', st: 1, nr: [16], type: 'sort', q: 'Normale Welle oder Tsunami?',
+          rows: [['nur das Wasser oben bewegt sich', 'Normale Welle'], ['das ganze Wasser bewegt sich, vom Grund bis oben', 'Tsunami'], ['eher langsam', 'Normale Welle'], ['sehr schnell', 'Tsunami']],
           cats: ['Normale Welle', 'Tsunami'],
           tip: 'Blas über ein Glas Wasser: Nur oben kräuselt es sich. Stoss das Glas von unten an: Alles Wasser bewegt sich.' },
-        { id: 'k4_sort2', st: 1, nr: [17], type: 'sort', q: 'Normale Welle oder Tsunami?',
-          rows: [['Wellenlänge bis etwa 400 m', 'Normale Welle'], ['Wellenlänge bis 1000 km', 'Tsunami'], ['eher langsam', 'Normale Welle'], ['sehr schnell', 'Tsunami']],
-          cats: ['Normale Welle', 'Tsunami'],
-          tip: 'Ein Tsunami hat viel mehr Kraft als eine Welle vom Wind. Was heisst das für die Länge und das Tempo?' },
-        { id: 'k4_ort', st: 1, nr: [18], type: 'sort', q: 'Wo ist das so: auf dem offenen Meer oder an der flachen Küste?',
-          rows: [['Das Wasser ist sehr tief.', 'Offenes Meer'], ['Die Welle ist nur etwa 1 m hoch.', 'Offenes Meer'], ['Die Welle wird abgebremst und staut sich.', 'An der Küste'], ['Die Welle türmt sich 10 bis 30 m hoch auf.', 'An der Küste']],
-          cats: ['Offenes Meer', 'An der Küste'],
-          tip: 'Denk an einen Stau auf der Autobahn: Wo die Autos langsamer werden müssen, drängen sie sich zusammen.' },
-        { id: 'k4_zeichen', st: 1, nr: [19], type: 'mc', q: 'Du bist am Strand. Welches Zeichen warnt dich vor einem Tsunami?',
+        { id: 'k4_kueste', st: 1, nr: [17], type: 'mc', q: 'Der Tsunami kommt an eine flache Küste. Was passiert mit der Welle?',
+          opts: ['Sie wird abgebremst und türmt sich hoch auf.', 'Sie wird schneller und dabei immer flacher.', 'Sie versickert langsam im weichen Sand.', 'Sie teilt sich in viele kleine Wellen auf.'],
+          tip: 'Denk an einen Stau auf der Autobahn: Wo die Autos langsamer werden müssen, drängen sie sich zusammen.',
+          why: 'Im flachen Wasser wird die Welle abgebremst. Das Wasser staut sich und türmt sich 10 bis 30 m hoch auf.' },
+        { id: 'k4_zeichen', st: 1, nr: [18], type: 'mc', q: 'Du bist am Strand. Welches Zeichen warnt dich vor einem Tsunami?',
           opts: ['Das Meer zieht sich plötzlich weit zurück.', 'Die Sonne scheint plötzlich sehr stark.', 'Am Himmel fliegen plötzlich viele Möwen.', 'Der Sand am Strand wird plötzlich warm.'],
           tip: 'Achte auf das Wasser selbst. Was wäre am Strand sehr ungewöhnlich?',
           why: 'Wenn das Meer sich plötzlich weit zurückzieht, kommt bald eine riesige Welle.' },
-        { id: 'k4_tun', st: 1, nr: [19], type: 'mc', q: 'Das Meer zieht sich plötzlich zurück. Was machst du?',
+        { id: 'k4_tun', st: 1, nr: [18], type: 'mc', q: 'Das Meer zieht sich plötzlich zurück. Was machst du?',
           opts: ['Sofort an einen hohen Ort gehen, andere warnen.', 'Muscheln sammeln, die jetzt am Boden liegen.', 'Am Strand bleiben und mit dem Handy filmen.', 'Ins Wasser gehen und nachschauen, was los ist.'],
           tip: 'Das Wasser kommt bald als riesige Welle zurück. Wo ist man vor Wasser sicher?',
           why: 'Viel Zeit bleibt nicht: sofort hoch hinauf, zum Beispiel auf einen Hügel.' },
-        { id: 'k4_g_see', st: 2, nr: [16], type: 'gap', text: 'Ein Erdbeben unter dem Meer heisst ___.',
+        { id: 'k4_g_see', st: 2, nr: [15], type: 'gap', text: 'Ein Erdbeben unter dem Meer heisst ___.',
           a: ['Seebeben', 'Meeresbeben'], tip: 'Zwei Wörter in einem: ein anderes Wort für Meer und «Beben».' },
-        { id: 'k4_g_laenge', st: 2, nr: [17], type: 'gap', text: 'Der Abstand von einem Wellenberg zum nächsten heisst ___.',
-          a: ['Wellenlänge'], tip: 'Zwei Wörter in einem. Das zweite Wort sagt, wie lang etwas ist.' },
-        { id: 'k4_g_bucht', st: 2, nr: [18], type: 'gap', text: 'In einer engen Bucht wird das Wasser zusammengedrängt. Darum wird die Welle noch ___.',
-          a: ['höher', 'grösser'], tip: 'Stell dir vor, viel Wasser muss durch einen engen Trichter.' },
-        { id: 'k4_g_rueck', st: 2, nr: [19], type: 'gap', text: 'Warnzeichen: Das Meer zieht sich plötzlich weit ___.',
+        { id: 'k4_g_brems', st: 2, nr: [17], type: 'gap', text: 'An der flachen Küste wird die Welle ___. Das Wasser staut sich und türmt sich hoch auf.',
+          a: ['abgebremst', 'gebremst', 'langsamer'], tip: 'Was macht ein Auto, wenn vorne ein Stau ist?' },
+        { id: 'k4_g_rueck', st: 2, nr: [18], type: 'gap', text: 'Warnzeichen: Das Meer zieht sich plötzlich weit ___.',
           a: ['zurück'], tip: 'Das Wasser geht in die Richtung, aus der es gekommen ist.' },
-        { id: 'k4_o_ent', st: 2, nr: [16, 18], type: 'order', q: 'Wie entsteht ein Tsunami?',
+        { id: 'k4_o_ent', st: 2, nr: [15, 17], type: 'order', q: 'Wie entsteht ein Tsunami?',
           steps: ['Am Meeresboden gibt es ein Seebeben.', 'Der Boden hebt sich ruckartig.', 'Das ganze Wasser darüber wird angestossen.', 'Die Welle rast über das offene Meer.', 'An der Küste türmt sie sich hoch auf.'],
           tip: 'Beginne ganz unten am Meeresboden. Am Schluss erreicht die Welle die Küste.' },
-        { id: 'k4_e_kueste', st: 3, nr: [18], type: 'open', q: 'Warum merkt man einen Tsunami auf dem offenen Meer kaum? Warum wird er an der Küste so hoch?',
-          tip: 'Denk an viele Leute, die schnell durch einen breiten Gang laufen. Plötzlich wird der Gang eng und kurz. Was passiert mit den Leuten?',
-          words: ['tief', 'nur 1 Meter', 'flach', 'abgebremst', 'staut sich', 'enge Bucht'],
-          starter: 'Auf dem offenen Meer …\nAn der Küste …',
-          keys: [['Wie ist das Meer draussen?', ['tief']], ['Wie hoch ist die Welle draussen?', ['1 m', '1m', 'ein meter', 'einen meter', '1 meter', 'klein', 'niedrig']],
-                 ['Was passiert an der Küste?', ['brems', 'langsam', 'stau']], ['Wie hoch wird sie?', ['tuerm', 'hoch', '30', 'riesig']], ['Und in einer Bucht?', ['bucht', 'eng', 'zusammengedraeng']]],
+        { id: 'k4_e_ausl', st: 3, nr: [15], type: 'open', q: 'Wie wird ein Tsunami ausgelöst?',
+          tip: 'Stoss eine Badewanne voll Wasser von unten kräftig an. Was passiert mit dem Wasser?',
+          words: ['Seebeben', 'Meeresboden', 'hebt sich', 'ruckartig', 'ganzes Wasser'],
+          starter: 'Am Meeresboden …',
+          keys: [['Was passiert am Meeresboden?', ['seebeben', 'erdbeben', 'beben']], ['Wie bewegt sich der Boden?', ['hebt', 'senkt', 'ruck', 'stoss', 'schlagartig']],
+                 ['Was wird bewegt?', ['ganze wasser', 'ganzes wasser', 'wassersaeule', 'alles wasser', 'wasser']]],
           need: 3,
-          model: 'Auf dem offenen Meer ist das Wasser sehr tief. Die Welle ist dort nur etwa 1 Meter hoch, aber sehr lang. Darum merkt man sie kaum. An der flachen Küste wird die Welle abgebremst. Das Wasser staut sich und türmt sich 10 bis 30 Meter hoch auf. In einer engen Bucht wird das Wasser zusammengedrängt, die Welle wird noch höher.' },
-        { id: 'k4_e_strand', st: 3, nr: [19], type: 'open', q: 'Du bist am Strand. Welches Zeichen der Natur warnt dich vor einem Tsunami? Was machst du?',
+          model: 'Am Meeresboden gibt es ein Seebeben. Der Boden hebt oder senkt sich ruckartig. Dadurch wird das ganze Wasser darüber bewegt, vom Grund bis zur Oberfläche.' },
+        { id: 'k4_e_strand', st: 3, nr: [18], type: 'open', q: 'Du bist am Strand. Welches Zeichen der Natur warnt dich vor einem Tsunami? Was machst du?',
           tip: 'Was macht das Wasser am Strand normalerweise? Was wäre ganz ungewöhnlich? Und: Wo ist man vor Wasser sicher?',
           words: ['Meer', 'zieht sich zurück', 'sofort', 'weg vom Strand', 'hoher Ort', 'warnen'],
           starter: 'Das Warnzeichen ist …\nIch …',
