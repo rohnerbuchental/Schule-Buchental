@@ -91,6 +91,7 @@
     .sb-flag { color: #4CBF56; font-size: 16px; filter: drop-shadow(0 0 1px rgba(0,0,0,0.4)); }
     /* Ablaufdiagramm: Kärtchen ziehen oder antippen */
     .drag-card { touch-action: none; user-select: none; }
+    .sb-small .sb-script { zoom: 0.8; }
     .drag-ghost { position: fixed; z-index: 100; pointer-events: none; transform: translate(-50%, -50%) rotate(-2deg); box-shadow: 0 10px 25px rgba(0,0,0,0.25); }
     .flow-slot { cursor: pointer; }
     .flow-slot.is-hover rect, .flow-slot.is-hover polygon { fill: #e0f2fe; stroke: #0284c7; }
@@ -462,15 +463,15 @@
     // Keine Beispiele aus dem Test (öffentliche Seite). Andere, gleich schwere Beispiele.
     // ==============================================================
     const PARTS = [
-      { id: 'k1', emoji: '📜', title: 'Algorithmus & Ablaufdiagramm', sub: 'Was ist ein Algorithmus? Ja/Nein-Frage, Schleife zurück', titleEs: 'Algoritmo y diagrama de flujo' },
+      { id: 'k1', emoji: '📜', title: 'Algorithmus & Ablaufdiagramm', sub: 'Anleitungen und Ablaufdiagramme', titleEs: 'Algoritmo y diagrama de flujo' },
       { id: 'k2', emoji: '🔄', title: 'Schleifen', sub: 'Wie oft? Schritte rechnen, die richtige Schleife, Richtung, Quadrat', titleEs: 'Bucles' },
       { id: 'k3', emoji: '🧩', title: 'Eigene Blöcke & Fehler finden', sub: 'Namen geben, wozu eigene Blöcke, Bug finden und verbessern', titleEs: 'Bloques propios y errores' },
-      { id: 'k4', emoji: '💡', title: 'Bedingungen mit UND / ODER', sub: 'und oder oder? Regeln mit 2 Bedingungen auswerten', titleEs: 'Lógica con «y» y «o»' }
+      { id: 'k4', emoji: '💡', title: 'Bedingungen mit UND/ODER', sub: 'Wann gilt die Regel? Regeln mit 2 Bedingungen auswerten', titleEs: 'Lógica con «y» y «o»' }
     ];
     const STAGES = [
       { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus oder tippst an.', labelEs: 'Reconocer', introEs: 'Eliges o tocas.' },
-      { icon: '✏️', label: 'Ergänzen', intro: 'Jetzt schreibst du Wörter selber oder baust die Reihenfolge. Es gibt Hilfe.', labelEs: 'Completar', introEs: 'Ahora escribes tú las palabras o armas el orden. Hay ayuda.' },
-      { icon: '💬', label: 'Erklären', intro: 'Jetzt erklärst du in eigenen Worten, wie auf dem Blatt. Mit Hilfe-Treppe.', labelEs: 'Explicar', introEs: 'Ahora explicas con tus propias palabras, como en la hoja. Con escalera de ayuda.' }
+      { icon: '✏️', label: 'Ergänzen', intro: 'Du schreibst Wörter selber oder baust die Reihenfolge. Es gibt Hilfe.', labelEs: 'Completar', introEs: 'Escribes tú las palabras o armas el orden. Hay ayuda.' },
+      { icon: '💬', label: 'Erklären', intro: 'Du erklärst in eigenen Worten, wie auf dem Blatt. Mit Hilfe-Treppe.', labelEs: 'Explicar', introEs: 'Explicas con tus propias palabras, como en la hoja. Con escalera de ayuda.' }
     ];
     // Wiederverwendete Skripte
     const PRE_LOOP4 = () => SB.script(SB.flag(), SB.loop(4, SB.move(10) + SB.wait(1)));
@@ -720,13 +721,21 @@
           qEs: '¿Qué palabra va en el hueco?',
           rowsEs: ['Puedes entrar al cine si tienes una entrada ___ llegas a tiempo.', 'El timbre de la escuela suena a las 10:00 ___ a las 12:00.'], catsEs: ['y', 'o'],
           tipEs: 'En cada frase, haz la prueba: ¿tienen que cumplirse las dos cosas a la vez? ¿O basta con una de ellas? Pregúntate también: ¿pueden pasar las dos cosas a la vez?' },
-        { id: 'k4_gang', st: 1, type: 'sort', sit: RULES_GANG, q: 'Was macht das Licht im Gang?',
-          rows: [['dunkel · jemand bewegt sich', 'AN'], ['dunkel · niemand bewegt sich', 'AUS'], ['hell · jemand bewegt sich', 'AUS']],
+        { id: 'k4_gang', st: 1, type: 'sort', rules: true, sit: RULES_GANG, q: 'Was macht das Licht im Gang?',
+          rows: [['dunkel · jemand bewegt sich', 'AN'], ['dunkel · niemand bewegt sich', 'AUS']],
           cats: ['AN', 'AUS'], tip: TIP_GANG },
-        { id: 'k4_garten', st: 1, type: 'sort', sit: RULES_GARTEN, q: 'Was macht der Rasensprenger?',
-          rows: [['Boden trocken · Sonne · 19:00 Uhr (Abend)', 'AN (lang)'], ['Boden trocken · Sonne · 12:00 Uhr (Mittag)', 'KURZ'], ['Boden feucht · Sonne · 19:00 Uhr (Abend)', 'AUS'], ['Boden trocken · Regen · 19:00 Uhr (Abend)', 'AUS']],
+        { id: 'k4_gang2', st: 1, type: 'sort', rules: true, sit: RULES_GANG, q: 'Was macht das Licht im Gang?',
+          rows: [['hell · jemand bewegt sich', 'AUS'], ['dunkel · jemand bewegt sich', 'AN']],
+          cats: ['AN', 'AUS'], tip: TIP_GANG },
+        { id: 'k4_garten', st: 1, type: 'sort', rules: true, sit: RULES_GARTEN, q: 'Was macht der Rasensprenger?',
+          rows: [['Boden trocken · Sonne · 19:00 Uhr (Abend)', 'AN (lang)'], ['Boden feucht · Sonne · 19:00 Uhr (Abend)', 'AUS']],
           cats: ['AN (lang)', 'KURZ', 'AUS'], tip: TIP_GARTEN,
-          sitEs: RULES_GARTEN_ES, rowsEs: ['Suelo seco · Sol · 19:00 (atardecer)', 'Suelo seco · Sol · 12:00 (mediodía)', 'Suelo húmedo · Sol · 19:00 (atardecer)', 'Suelo seco · Lluvia · 19:00 (atardecer)'],
+          sitEs: RULES_GARTEN_ES, rowsEs: ['Suelo seco · Sol · 19:00 (atardecer)', 'Suelo húmedo · Sol · 19:00 (atardecer)'],
+          catsEs: ['ENCENDIDO (largo)', 'CORTO', 'APAGADO'], tipEs: TIP_GARTEN_ES },
+        { id: 'k4_garten2', st: 1, type: 'sort', rules: true, sit: RULES_GARTEN, q: 'Was macht der Rasensprenger?',
+          rows: [['Boden trocken · Sonne · 12:00 Uhr (Mittag)', 'KURZ'], ['Boden trocken · Regen · 19:00 Uhr (Abend)', 'AUS']],
+          cats: ['AN (lang)', 'KURZ', 'AUS'], tip: TIP_GARTEN,
+          sitEs: RULES_GARTEN_ES, rowsEs: ['Suelo seco · Sol · 12:00 (mediodía)', 'Suelo seco · Lluvia · 19:00 (atardecer)'],
           catsEs: ['ENCENDIDO (largo)', 'CORTO', 'APAGADO'], tipEs: TIP_GARTEN_ES },
         { id: 'k4_g_handy', st: 2, type: 'gap', text: 'Das Handy lädt nur, wenn das Kabel steckt ___ der Strom eingeschaltet ist.', a: ['und'],
           hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Lädt das Handy schon, wenn nur eines davon stimmt?' },
@@ -736,11 +745,11 @@
           hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Was passiert mit dem Zopf, wenn eine der zwei Zutaten fehlt?' },
         { id: 'k4_g_pause', st: 2, type: 'gap', text: 'Die Pause ist im Schulhaus, wenn es regnet ___ wenn es sehr kalt ist.', a: ['oder'],
           hint: 'Muss beides stimmen? Dann «und». Reicht eines? Dann «oder».', tip: 'Bleibt die Klasse schon drinnen, wenn nur eines davon stimmt?' },
-        { id: 'k4_g_gang', st: 2, type: 'gap', sit: RULES_GANG, text: 'Es ist hell. Jemand bewegt sich. Das Licht ist ___.', a: ['AUS'], bank: ['AN', 'AUS'],
+        { id: 'k4_g_gang', st: 2, type: 'gap', rules: true, sit: RULES_GANG, text: 'Es ist hell. Jemand bewegt sich. Das Licht ist ___.', a: ['AUS'], bank: ['AN', 'AUS'],
           hint: 'Prüfe Regel 1: Stimmen wirklich beide Teile?', tip: TIP_GANG },
-        { id: 'k4_g_spr1', st: 2, type: 'gap', sit: RULES_GARTEN, text: 'Boden trocken · Sonne · 12:00 Uhr (Mittag). Der Sprenger ist ___.', a: ['KURZ'], bank: ['AN (lang)', 'KURZ', 'AUS'],
+        { id: 'k4_g_spr1', st: 2, type: 'gap', rules: true, sit: RULES_GARTEN, text: 'Boden trocken · Sonne · 12:00 Uhr (Mittag). Der Sprenger ist ___.', a: ['KURZ'], bank: ['AN (lang)', 'KURZ', 'AUS'],
           hint: 'Prüfe zuerst die Regel AUS. Dann schau auf die Uhrzeit.', tip: TIP_GARTEN },
-        { id: 'k4_g_spr2', st: 2, type: 'gap', sit: RULES_GARTEN, text: 'Boden trocken · Regen · 19:00 Uhr (Abend). Der Sprenger ist ___.', a: ['AUS'], bank: ['AN (lang)', 'KURZ', 'AUS'],
+        { id: 'k4_g_spr2', st: 2, type: 'gap', rules: true, sit: RULES_GARTEN, text: 'Boden trocken · Regen · 19:00 Uhr (Abend). Der Sprenger ist ___.', a: ['AUS'], bank: ['AN (lang)', 'KURZ', 'AUS'],
           hint: 'Prüfe zuerst die Regel AUS.', tip: TIP_GARTEN },
         { id: 'k4_e_und', st: 3, type: 'open', q: 'Erkläre in eigenen Worten: Wann ist eine Bedingung mit UND wahr?',
           tip: 'Denk an die Regel fürs Gamen: Hausaufgaben fertig UND Zimmer aufgeräumt. Was passiert, wenn nur eines erledigt ist?',
@@ -1192,6 +1201,15 @@
     const BTN_SOFT = 'min-h-[52px] px-4 rounded-2xl border-2 border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-base font-bold';
     const BTN_SMALL = 'min-h-[44px] px-3 rounded-xl text-sm font-bold border';
     const DUNNO_BTN = 'mt-2 w-full min-h-[44px] rounded-xl text-sm font-semibold text-slate-500 hover:text-slate-700 underline underline-offset-2';
+    // Gleiche Drohne wie auf der Startansicht: fliegt nach einem richtig gebauten Quadrat einmal das Quadrat (Belohnung, unter 2 s)
+    const DRONE_REWARD = () => `<div class="flex justify-center pt-3"><svg class="drone-fly" viewBox="0 0 80 50" width="64" height="40" aria-hidden="true"><rect class="drone-prop" x="2" y="4" width="26" height="4" rx="2" fill="#94a3b8"/>
+              <rect class="drone-prop" x="52" y="4" width="26" height="4" rx="2" fill="#94a3b8"/>
+              <rect x="13" y="7" width="4" height="10" fill="#475569"/><rect x="63" y="7" width="4" height="10" fill="#475569"/>
+              <rect x="10" y="15" width="60" height="8" rx="4" fill="#475569"/>
+              <rect x="22" y="14" width="36" height="28" rx="12" fill="#0ea5e9"/>
+              <circle cx="33" cy="26" r="4" fill="#fff"/><circle cx="47" cy="26" r="4" fill="#fff"/>
+              <circle cx="34" cy="27" r="2" fill="#0f172a"/><circle cx="48" cy="27" r="2" fill="#0f172a"/>
+              <path d="M34 34 Q40 39 46 34" stroke="#0f172a" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>`;
     const DE_ONLY = '<p class="text-xs text-slate-500 mt-1" lang="es">Esta pregunta todavía está solo en alemán.</p>';
     function bar(pct, h = 'h-4') {
       return `<div class="${h} rounded-full bg-sky-100 border border-sky-200 overflow-hidden"><div class="bar h-full rounded-full bg-gradient-to-r from-sky-400 to-indigo-500" style="width:${pct}%"></div></div>`;
@@ -1279,6 +1297,7 @@
       if (Q.ok) {
         title = STREAK >= 5 && STREAK % 5 === 0 ? tr(`🔥 ${STREAK} richtig hintereinander!`, `🔥 ¡${STREAK} correctas seguidas!`) : Q.praise;
         if (it.type === 'gap' && Q.near) body = `<div class="text-base text-slate-700">${tr('So schreibt man es:', 'Se escribe así:')} <b>${esc(Q.form || L(it, 'a')[0])}</b></div>`;
+        if (it.type === 'order' && it.blocks) body = DRONE_REWARD();
         if (it.type === 'open') body = `<div class="text-base text-slate-700">${tr('Gut erklärt! Das hilft dir im Test.', '¡Bien explicado! Esto te ayuda en el examen.')}</div>`;
       } else {
         title = Q.dontKnow ? tr('Kein Problem. So ist es richtig:', 'No pasa nada. Así es correcto:') : tr('Noch nicht ganz.', 'Todavía no del todo.');
@@ -1348,31 +1367,30 @@
         const n = it.steps.length;
         h += `<div class="rounded-2xl border-2 border-dashed border-sky-300 bg-sky-50/40 p-2 space-y-2 min-h-[64px]">${Q.placed.map((k, pos) => {
           const cls = done ? (k === pos ? 'border-emerald-400 bg-emerald-50' : 'border-yellow-400 bg-yellow-50') : 'border-sky-300 bg-white';
-          return `<button type="button" onclick="unplace('${pid}',${pos})" ${done ? 'disabled' : ''} class="w-full min-h-[48px] flex items-center gap-3 text-left rounded-xl border-2 ${cls} px-3 py-2"><span class="w-7 h-7 shrink-0 rounded-full bg-sky-600 text-white text-sm font-black flex items-center justify-center">${pos + 1}</span><span class="text-base font-semibold text-slate-900 wrap-any min-w-0">${stepHtml(it, k)}</span></button>`;
+          return `<button type="button" onclick="unplace('${pid}',${pos})" ${done ? 'disabled' : ''} class="w-full min-h-[44px] flex items-center gap-3 text-left rounded-xl border-2 ${cls} ${it.blocks ? 'sb-small px-2 py-1' : 'px-3 py-2'}"><span class="w-7 h-7 shrink-0 rounded-full bg-sky-600 text-white text-sm font-black flex items-center justify-center">${pos + 1}</span><span class="text-base font-semibold text-slate-900 wrap-any min-w-0">${stepHtml(it, k)}</span></button>`;
         }).join('')}${Q.placed.length < n && !done ? `<div class="text-sm text-slate-500 px-2 py-2">${Q.placed.length ? tr('Weiter: Was kommt als Nächstes?', 'Sigue: ¿qué viene después?') : tr('Was kommt zuerst? Tippe unten an.', '¿Qué va primero? Toca abajo.')}</div>` : ''}</div>`;
-        if (it.blocks && Q.placed.length) h += `<div class="mt-3 text-xs font-bold text-slate-500 uppercase tracking-wide">${tr('👀 So sieht dein Skript in Scratch aus:', '👀 Así se ve tu programa en Scratch:')}</div><div class="mt-1">${SB.script(SB.flag(), buildScript(Q.placed.map(k => stepObj(it, k))))}</div>`;
-        if (!done) {
-          const full = Q.placed.length >= n;
-          if (!full) h += `<div class="mt-3 ${it.blocks ? 'flex flex-wrap gap-2' : 'space-y-2'}">${Q.pool.map(k => `<button type="button" onclick="place('${pid}',${k})" class="${it.blocks ? 'max-w-full' : 'w-full'} min-h-[48px] text-left rounded-xl border-2 border-slate-300 bg-white hover:border-sky-400 px-3 py-2 text-base font-semibold text-slate-800 wrap-any">${stepHtml(it, k)}</button>`).join('')}</div>`;
-          else if (it.extra) h += `<div class="mt-3 text-sm text-slate-500" lang="de">Diese Blöcke bleiben übrig: ${Q.pool.length}</div>`;
-          if (Q.placed.length) h += `<div class="text-xs text-slate-500 mt-2">${tr('Falsch hingelegt? Tippe oben darauf, dann geht es zurück.', '¿Lo pusiste mal? Tócalo arriba y vuelve abajo.')}</div>`;
-          h += `<button type="button" onclick="checkOrder('${pid}')" ${full ? '' : 'disabled'} class="mt-3 w-full ${BTN_MAIN} ${full ? '' : 'opacity-40 cursor-not-allowed'}">${tr('✓ Prüfen', '✓ Comprobar')}</button>`;
-        }
+        const full = Q.placed.length >= n;
+        if (!done && !full) h += `<div class="mt-2 ${it.blocks ? 'flex flex-wrap gap-1.5' : 'space-y-2'}">${Q.pool.map(k => `<button type="button" onclick="place('${pid}',${k})" class="${it.blocks ? 'sb-small max-w-full px-1.5 py-1' : 'w-full px-3 py-2'} min-h-[44px] text-left rounded-xl border-2 border-slate-300 bg-white hover:border-sky-400 text-base font-semibold text-slate-800 wrap-any">${stepHtml(it, k)}</button>`).join('')}</div>`;
+        if (!done && Q.placed.length) h += `<div class="text-xs text-slate-500 mt-2">${tr('Falsch hingelegt? Tippe oben darauf, dann geht es zurück.', '¿Lo pusiste mal? Tócalo arriba y vuelve abajo.')}</div>`;
+        if (!done && full && it.extra) h += `<div class="mt-2 text-sm text-slate-500" lang="de">Diese Blöcke bleiben übrig: ${Q.pool.length}</div>`;
+        if (it.blocks && (full || done)) h += `<div class="mt-3 text-xs font-bold text-slate-500 uppercase tracking-wide">${tr('👀 So sieht dein Skript in Scratch aus:', '👀 Así se ve tu programa en Scratch:')}</div><div class="mt-1">${SB.script(SB.flag(), buildScript(Q.placed.map(k => stepObj(it, k))))}</div>`;
+        if (!done) h += `<button type="button" onclick="checkOrder('${pid}')" ${full ? '' : 'disabled'} class="mt-3 w-full ${BTN_MAIN} ${full ? '' : 'opacity-40 cursor-not-allowed'}">${tr('✓ Prüfen', '✓ Comprobar')}</button>`;
       }
       if (it.type === 'slots') {
         const fillText = {}, state = {};
         SLOTS.forEach((sl, i) => { if (Q.fill[sl] != null) fillText[sl] = flowCard(it.flow, Q.fill[sl]); if (done) state[sl] = Q.fill[sl] === i ? 'ok' : 'no'; });
-        h += `<div class="rounded-2xl bg-slate-50 border border-slate-200 p-2">${svgFlow(it.flow, { fill: fillText, tap: !done, sel: done ? null : Q.slotSel, state: done ? state : null })}</div>`;
+        h += `<div class="sm:grid sm:grid-cols-2 sm:gap-3 sm:items-start"><div class="rounded-2xl bg-slate-50 border border-slate-200 p-2">${svgFlow(it.flow, { fill: fillText, tap: !done, sel: done ? null : Q.slotSel, state: done ? state : null })}</div>`;
+        if (done) h += '</div>';
         if (!done) {
           const placed = SLOTS.map(sl => Q.fill[sl]);
           const free = Q.cards.filter(k => !placed.includes(k));
-          h += `<div class="mt-3 rounded-2xl border-2 border-dashed border-sky-200 bg-sky-50/50 p-3">
+          h += `<div class="mt-3 sm:mt-0"><div class="rounded-2xl border-2 border-dashed border-sky-200 bg-sky-50/50 p-3">
             <div class="text-sm font-bold text-sky-900 mb-2">${tr('🧰 Befehle', '🧰 Comandos')}</div>
             <div class="flex flex-wrap gap-2">${free.map(k => `<button type="button" data-card="${k}" onclick="tapCard(${k})" class="drag-card min-h-[44px] px-3 py-2 rounded-xl border-2 border-sky-300 bg-white hover:border-sky-500 text-sm sm:text-base font-bold text-sky-950 text-left wrap-any max-w-full">${esc(flowCard(it.flow, k))}</button>`).join('')}</div>
             ${placed.some(x => x != null) ? `<div class="text-xs text-slate-500 mt-2" lang="de">Falsch hingelegt? Tippe im Bild auf das Feld, dann kommt das Kärtchen zurück.</div>` : ''}
           </div>`;
           const full = !nextFree(Q);
-          h += `<button type="button" onclick="checkSlots('${pid}')" ${full ? '' : 'disabled'} class="mt-3 w-full ${BTN_MAIN} ${full ? '' : 'opacity-40 cursor-not-allowed'}">${tr('✓ Prüfen', '✓ Comprobar')}</button>`;
+          h += `<button type="button" onclick="checkSlots('${pid}')" ${full ? '' : 'disabled'} class="mt-3 w-full ${BTN_MAIN} ${full ? '' : 'opacity-40 cursor-not-allowed'}">${tr('✓ Prüfen', '✓ Comprobar')}</button></div></div>`;
         }
       }
       if (it.type === 'gap') {
@@ -1497,7 +1515,7 @@
           <div class="flex items-center justify-between gap-2 text-xs font-bold text-slate-500 mb-2">
             <span>${Q.review ? tr('🔁 Wiederholen', '🔁 Repasar') : `${st.icon} ${tr('Stufe', 'Nivel')} ${it.st}: ${L(st, 'label')}`}</span>
           </div>
-          ${it.sit ? `<div class="mb-3 rounded-2xl bg-sky-50 border-l-4 border-sky-500 px-3 py-2.5 text-base text-slate-800 leading-relaxed wrap-any space-y-0.5" lang="${langOf(it, 'sit')}">${it.sit.startsWith('<div') ? '' : '👉 '}${L(it, 'sit')}</div>` : ''}
+          ${it.sit ? `<div class="mb-3 rounded-2xl bg-sky-50 border-l-4 border-sky-500 px-3 py-2.5 ${it.rules ? 'text-sm sm:text-base leading-snug' : 'text-base leading-relaxed'} text-slate-800 wrap-any space-y-0.5" lang="${langOf(it, 'sit')}">${it.sit.startsWith('<div') ? '' : '👉 '}${L(it, 'sit')}</div>` : ''}
           ${rest ? `<div class="text-lg sm:text-xl font-black text-slate-900 leading-snug wrap-any" lang="${langOf(it, 'q')}">${rest}</div>` : ''}
           ${deOnly ? DE_ONLY : ''}
           ${/^(Tippe|Schreib|Erkläre|Nenne|Bring|Ordne|Wähle)\b/.test(it.q || '') && it.type !== 'slots' ? '<div class="mb-3"></div>' : hintFor(it)}
