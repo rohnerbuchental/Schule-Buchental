@@ -101,6 +101,8 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 
 **Adverbien (Grammatik-Pfad Unit 2, Thema «Adverbien», 6.11.2026):** Zuerst nur auswählen, ob der Satz ein Adjektiv oder ein Adverb braucht. Entscheiden muss man über die Bedeutung (beschreibt es eine Person oder Sache, oder wie jemand etwas tut?). So lenkt die Übung den Blick genau auf die Form, die man sonst überliest (strukturierter Input, VanPatten & Cadierno, 1993). Bei schwächeren Lernenden wirkt Input-Üben mit kurzer Regel eher stärker als sofortiges Schreiben; selber bilden kommt darum erst in Stufe 2 (Shintani, 2015). Dann very / quite / not very mit einem Balken (Punkte von 10), damit die Bedeutung sichtbar ist. Nur -ly und good → well, keine Sonderfälle (Cognitive Load).
 
+**Drei Lernpfade = drei Kompetenzen im Test (12.11.2026):** Pläne (6 Stufen), Adverbien «wie?» (5 Stufen), «Wie stark?» (3 Stufen). In jedem Pfad zuerst leicht (auswählen), dann Stufe für Stufe schwieriger (selber bilden), Neues einzeln (zuerst nur -ly, dann -ily/-bly/-ically, dann Ausnahmen; Cognitive Load, Sweller, 1988). Die **letzte Stufe ist genau im Format des Tests** (Verb in Klammer mit not und Frage; Adjektiv in Klammer; Satz neu schreiben mit Grad-Wort). Geübt wird so, wie später abgerufen wird: Lernen überträgt sich am besten, wenn Üben und Prüfen gleich ablaufen (transfer-appropriate processing, Morris, Bransford & Franks, 1977; für den Fremdsprachenunterricht Lightbown, 2008). Die Sätze sind kürzer und die Wörter bekannter als in der Evaluation des Lehrmittels (Wunsch Lehrperson, Niveau Real). Bei «Wie stark?» sind die Wörter in drei Gruppen (wenig, mittel, viel); pro Aufgabe kommt aus jeder Gruppe nur ein Wort, damit nur eine Antwort passt.
+
 ## 4 Erstsprache als Hilfe (Sprachwechsel Spanisch)
 
 Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spanisch umschalten (Wunsch Lehrperson, 6.11.2026).
@@ -142,7 +144,9 @@ Zwei Lernende sprechen fast nur Spanisch. Darum lässt sich jede Seite auf Spani
 - Kornell, N. (2009). Optimising learning using flashcards: Spacing is more effective than cramming. *Applied Cognitive Psychology, 23*(9), 1297–1317. https://doi.org/10.1002/acp.1537
 - Kulik, C.-L. C., Kulik, J. A., & Bangert-Drowns, R. L. (1990). Effectiveness of mastery learning programs: A meta-analysis. *Review of Educational Research, 60*(2), 265–299. https://doi.org/10.3102/00346543060002265
 - Krashen, S. D. (1982). *Principles and practice in second language acquisition*. Pergamon.
+- Lightbown, P. M. (2008). Transfer appropriate processing as a model for classroom second language acquisition. In Z. Han (Hrsg.), *Understanding second language process* (S. 27–44). Multilingual Matters.
 - Metcalfe, J. (2017). Learning from errors. *Annual Review of Psychology, 68*, 465–489. https://doi.org/10.1146/annurev-psych-010416-044022
+- Morris, C. D., Bransford, J. D., & Franks, J. J. (1977). Levels of processing versus transfer appropriate processing. *Journal of Verbal Learning and Verbal Behavior, 16*(5), 519–533. https://doi.org/10.1016/S0022-5371(77)80016-9
 - Nakata, T. (2011). Computer-assisted second language vocabulary learning in a paired-associate paradigm: A critical investigation of flashcard software. *Computer Assisted Language Learning, 24*(1), 17–38. https://doi.org/10.1080/09588221.2010.520675
 - Nation, I. S. P. (2013). *Learning vocabulary in another language* (2. Aufl.). Cambridge University Press.
 - Norris, J. M., & Ortega, L. (2000). Effectiveness of L2 instruction: A research synthesis and quantitative meta-analysis. *Language Learning, 50*(3), 417–528.

@@ -148,11 +148,12 @@
     <div id="view-grammatik" class="tab-view hidden space-y-5">
       <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-2">
         <div id="week-days-g" class="pb-2 mb-1 border-b border-slate-100"></div>
-        <!-- Thema wählen: Pläne (present continuous) oder Adverbien -->
+        <!-- Thema wählen: Pläne (present continuous), Adverbs of manner, Adverbs of degree = je eine Kompetenz im Test -->
         <div class="text-sm font-bold text-slate-700"><span data-l="de">Welches Thema?</span><span data-l="es" lang="es">¿Qué tema?</span></div>
-        <div class="grid grid-cols-2 gap-2 pb-2">
+        <div class="grid grid-cols-3 gap-2 pb-2">
           <button type="button" id="gt-btn-pc" onclick="setGTopic('pc')"></button>
-          <button type="button" id="gt-btn-adv" onclick="setGTopic('adv')"></button>
+          <button type="button" id="gt-btn-man" onclick="setGTopic('man')"></button>
+          <button type="button" id="gt-btn-deg" onclick="setGTopic('deg')"></button>
         </div>
         <div class="gt-pc space-y-2">
           <h2 class="text-lg font-bold text-slate-900"><span data-l="de">🧩 Pläne für die Zukunft</span><span data-l="es" lang="es">🧩 Planes para el futuro</span></h2>
@@ -160,32 +161,39 @@
           <p class="text-sm text-slate-700" data-l="es" lang="es">¿Algo ya está <b>acordado</b>? Entonces necesitas <b>am / is / are + verbo-ing</b>.</p>
           <div class="rounded-xl bg-sky-50 border border-sky-200 p-3 text-sm text-slate-800" lang="en"><b>We're flying</b> to London on Friday. <span class="text-slate-500" lang="de" data-l="de">= Wir fliegen am Freitag nach London (das ist abgemacht).</span><span class="text-slate-500" lang="es" data-l="es">= Volamos a Londres el viernes (ya está acordado).</span></div>
         </div>
-        <div class="gt-adv hidden space-y-2">
+        <div class="gt-man hidden space-y-2">
           <h2 class="text-lg font-bold text-slate-900"><span data-l="de">🏃 Wie macht man etwas?</span><span data-l="es" lang="es">🏃 ¿Cómo se hace algo?</span></h2>
           <p class="text-sm text-slate-700" data-l="de">Sagst du, <b>wie</b> jemand etwas macht? Dann brauchst du ein <b>Adverb</b>: meistens <b class="whitespace-nowrap">Adjektiv + -ly</b>.</p>
           <p class="text-sm text-slate-700" data-l="es" lang="es">¿Dices <b>cómo</b> alguien hace algo? Entonces necesitas un <b>adverbio</b>: casi siempre <b class="whitespace-nowrap">adjetivo + -ly</b>.</p>
           <div class="rounded-xl bg-sky-50 border border-sky-200 p-3 text-sm text-slate-800" lang="en">She is a <b>calm</b> person. She talks <b>calmly</b>. <span class="text-slate-500" lang="de" data-l="de">= Sie ist ruhig. Sie spricht ruhig.</span><span class="text-slate-500" lang="es" data-l="es">= Es una persona tranquila. Habla con calma.</span></div>
         </div>
+        <div class="gt-deg hidden space-y-2">
+          <h2 class="text-lg font-bold text-slate-900"><span data-l="de">🌡️ Wie stark ist etwas?</span><span data-l="es" lang="es">🌡️ ¿Qué tan fuerte es algo?</span></h2>
+          <p class="text-sm text-slate-700" data-l="de">Mit <b>a bit, quite, very, extremely …</b> sagst du, <b>wie stark</b> etwas ist. Das Wort steht <b>vor dem Adjektiv</b>.</p>
+          <p class="text-sm text-slate-700" data-l="es" lang="es">Con <b>a bit, quite, very, extremely …</b> dices <b>qué tan fuerte</b> es algo. La palabra va <b>delante del adjetivo</b>.</p>
+          <div class="rounded-xl bg-sky-50 border border-sky-200 p-3 text-sm text-slate-800" lang="en">The day was <b>rather</b> warm. <span class="text-slate-500" lang="de" data-l="de">= Der Tag war ziemlich warm.</span><span class="text-slate-500" lang="es" data-l="es">= El día fue bastante cálido.</span></div>
+        </div>
       </section>
 
       <!-- Aufgabe 3: Grammatik-Pfad «present continuous für Abmachungen» (erkennen → auswählen → Satz bauen → schreiben) | FS1E.5.D.1.c -->
-      <!-- Aufgabe 4: Grammatik-Pfad «Adverbien» (Adjektiv oder Adverb erkennen → Adverb schreiben → very / quite / not very) | FS1E.5.D.1.c -->
+      <!-- Aufgabe 4: Grammatik-Pfad «Adverbs of manner» (Adjektiv oder Adverb → -ly → -ily / -bly / -ically → Ausnahmen → wie im Test) | FS1E.5.D.1.c -->
+      <!-- Aufgabe 5: Grammatik-Pfad «Adverbs of degree» (wie stark? → wo steht das Wort? → Satz neu schreiben wie im Test) | FS1E.5.D.1.c -->
       <section id="task-gram" data-task="gram" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
         <div>
           <h2 class="text-lg font-bold text-slate-900"><span data-l="de">Grammatik-Pfad</span><span data-l="es" lang="es">Ruta de gramática</span></h2>
-          <p class="gt-pc text-sm text-slate-600" data-l="de">4 Stufen, vom Auswählen bis zum Schreiben. Fehler sind okay: Der Satz kommt einfach nochmals.</p>
-          <p class="gt-pc text-sm text-slate-600" data-l="es" lang="es">4 niveles, de elegir a escribir. Equivocarse está bien: la frase simplemente vuelve.</p>
-          <p class="gt-adv hidden text-sm text-slate-600" data-l="de">3 Stufen, vom Auswählen bis zum Schreiben. Fehler sind okay: Der Satz kommt einfach nochmals.</p>
-          <p class="gt-adv hidden text-sm text-slate-600" data-l="es" lang="es">3 niveles, de elegir a escribir. Equivocarse está bien: la frase simplemente vuelve.</p>
+          <p class="text-sm text-slate-600" data-l="de">Zuerst leicht, dann Stufe für Stufe schwieriger. Die letzte Stufe ist wie im Test. Fehler sind okay: Der Satz kommt einfach nochmals.</p>
+          <p class="text-sm text-slate-600" data-l="es" lang="es">Primero fácil, después cada nivel un poco más difícil. El último nivel es como en el examen. Equivocarse está bien: la frase simplemente vuelve.</p>
         </div>
         <div id="gram-progress"></div>
         <div id="body-gram"></div>
         <div id="tip-gram" class="hidden rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-sm text-slate-800 leading-relaxed">
           <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-800 mb-1"><span data-l="de">💡 Tipp</span><span data-l="es" lang="es">💡 Pista</span></div>
-          <span class="gt-pc" data-l="de">Frag dich zuerst: Wer macht es? Schau dann in die Tabelle in der Theorie. Wie bei einem Zug mit zwei Wagen: Zuerst kommt der Wagen «am / is / are», dann der Wagen «Verb + ing».</span>
-          <span class="gt-pc" data-l="es" lang="es">Pregúntate primero: ¿quién lo hace? Después mira la tabla de la teoría. Como un tren con dos vagones: primero va el vagón «am / is / are», después el vagón «verbo + ing».</span>
-          <span class="gt-adv hidden" data-l="de">Frag dich: Beschreibt das Wort eine <b>Person oder Sache</b> (ein … Fahrer, das Spiel war …)? Oder sagt es, <b>wie jemand etwas tut</b> (fährt …, singt …)? Wie im Sport: Das Adjektiv beschreibt den Spieler, das Adverb beschreibt, wie er spielt. Bei very / quite / not very: Schau die Punkte an. Sind es viele, mittel viele oder wenige?</span>
-          <span class="gt-adv hidden" data-l="es" lang="es">Pregúntate: ¿la palabra describe a una <b>persona o cosa</b> (un conductor …, el partido fue …)? ¿O dice <b>cómo alguien hace algo</b> (conduce …, canta …)? Como en el deporte: el adjetivo describe al jugador, el adverbio describe cómo juega. Con very / quite / not very: mira los puntos. ¿Son muchos, más o menos o pocos?</span>
+          <span class="gt-pc" data-l="de">Frag dich zuerst: Wer macht es? Schau dann in die Tabelle in der Theorie. Wie bei einem Zug mit zwei Wagen: Zuerst kommt der Wagen «am / is / are», dann der Wagen «Verb + ing». Bei «not» kommt «not» zwischen die Wagen. Bei einer Frage tauschen der Wagen «am / is / are» und die Person den Platz.</span>
+          <span class="gt-pc" data-l="es" lang="es">Pregúntate primero: ¿quién lo hace? Después mira la tabla de la teoría. Como un tren con dos vagones: primero va el vagón «am / is / are», después el vagón «verbo + ing». Con «not», «not» va entre los vagones. En una pregunta, el vagón «am / is / are» y la persona cambian de sitio.</span>
+          <span class="gt-man hidden" data-l="de">Frag dich: Beschreibt das Wort eine <b>Person oder Sache</b> (ein … Fahrer, das Spiel war …)? Oder sagt es, <b>wie jemand etwas tut</b> (fährt …, singt …)? Wie im Sport: Das Adjektiv beschreibt den Spieler, das Adverb beschreibt, wie er spielt. Beim Schreiben: Schau zuerst den Schluss vom Adjektiv an. Ist es eine Ausnahme aus der Theorie?</span>
+          <span class="gt-man hidden" data-l="es" lang="es">Pregúntate: ¿la palabra describe a una <b>persona o cosa</b> (un conductor …, el partido fue …)? ¿O dice <b>cómo alguien hace algo</b> (conduce …, canta …)? Como en el deporte: el adjetivo describe al jugador, el adverbio describe cómo juega. Al escribir: mira primero el final del adjetivo. ¿Es una excepción de la teoría?</span>
+          <span class="gt-deg hidden" data-l="de">Denk an einen Lautstärke-Regler: wenig (a bit, not very), mittel (quite, rather, relatively), viel (very, extremely). Schau die Punkte an: Sind es wenige, mittel viele oder viele? Das Wort kommt immer direkt vor das Wort, das es beschreibt (cold, old, well …).</span>
+          <span class="gt-deg hidden" data-l="es" lang="es">Piensa en el botón del volumen: poco (a bit, not very), medio (quite, rather, relatively), mucho (very, extremely). Mira los puntos: ¿son pocos, en el medio o muchos? La palabra va siempre justo delante de la palabra que describe (cold, old, well …).</span>
         </div>
         <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
           <button type="button" onclick="toggleTip('gram')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900"><span data-l="de">💡 Tipp</span><span data-l="es" lang="es">💡 Pista</span></button>
@@ -196,8 +204,8 @@
 
       <!-- Theorie Grammatik (kurz, zugeklappt) -->
       <details id="theory-g" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer"><span class="gt-pc" data-l="de">📖 Theorie: Pläne mit am / is / are + Verb-ing</span><span class="gt-pc" data-l="es" lang="es">📖 Teoría: planes con am / is / are + verbo-ing</span><span class="gt-adv hidden" data-l="de">📖 Theorie: Adverbien</span><span class="gt-adv hidden" data-l="es" lang="es">📖 Teoría: adverbios</span></summary>
-        <div class="gt-adv hidden mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
+        <summary class="text-base font-bold text-slate-900 cursor-pointer"><span class="gt-pc" data-l="de">📖 Theorie: Pläne mit am / is / are + Verb-ing</span><span class="gt-pc" data-l="es" lang="es">📖 Teoría: planes con am / is / are + verbo-ing</span><span class="gt-man hidden" data-l="de">📖 Theorie: Adverbien (wie?)</span><span class="gt-man hidden" data-l="es" lang="es">📖 Teoría: adverbios (¿cómo?)</span><span class="gt-deg hidden" data-l="de">📖 Theorie: Wie stark?</span><span class="gt-deg hidden" data-l="es" lang="es">📖 Teoría: ¿qué tan fuerte?</span></summary>
+        <div class="gt-man hidden mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
           <p data-l="de"><b>Adjektiv:</b> beschreibt eine Person oder Sache. <span lang="en">She is a <b>calm</b> person.</span></p>
           <p data-l="es" lang="es"><b>Adjetivo:</b> describe a una persona o cosa. <span lang="en">She is a <b>calm</b> person.</span></p>
           <p data-l="de"><b>Adverb:</b> sagt, <b>wie</b> jemand etwas tut. Es steht nach dem Verb oder am Satzende. <span lang="en">She talks <b>calmly</b>.</span></p>
@@ -205,16 +213,28 @@
           <table class="w-full text-sm border border-slate-200 rounded-lg overflow-hidden" lang="en">
             <tbody>
               <tr class="border-b border-slate-200"><td class="p-2 font-bold"><span lang="de" data-l="de">meistens</span><span lang="es" data-l="es">casi siempre</span></td><td class="p-2">calm → calm<b>ly</b>, nice → nice<b>ly</b></td></tr>
-              <tr><td class="p-2 font-bold"><span lang="de" data-l="de">Ausnahme</span><span lang="es" data-l="es">excepción</span></td><td class="p-2">good → <b>well</b></td></tr>
+              <tr class="border-b border-slate-200"><td class="p-2 font-bold">-y → -ily</td><td class="p-2">heav<b>y</b> → heav<b>ily</b></td></tr>
+              <tr class="border-b border-slate-200"><td class="p-2 font-bold">-le → -ly</td><td class="p-2">gent<b>le</b> → gent<b>ly</b></td></tr>
+              <tr><td class="p-2 font-bold">-ic → -ically</td><td class="p-2">mag<b>ic</b> → mag<b>ically</b></td></tr>
             </tbody>
           </table>
-          <p data-l="de"><b>Wie stark?</b> <span lang="en"><b>very</b></span> = sehr, <span lang="en"><b>quite</b></span> = ziemlich, <span lang="en"><b>not very</b></span> = nicht sehr. Das Wort steht vor dem Adjektiv.</p>
-          <p data-l="es" lang="es"><b>¿Cuánto?</b> <span lang="en"><b>very</b></span> = muy, <span lang="en"><b>quite</b></span> = bastante, <span lang="en"><b>not very</b></span> = no muy. La palabra va delante del adjetivo.</p>
+          <p data-l="de"><b>Ausnahmen</b> (auswendig lernen):</p>
+          <p data-l="es" lang="es"><b>Excepciones</b> (apréndelas de memoria):</p>
           <table class="w-full text-sm border border-slate-200 rounded-lg overflow-hidden" lang="en">
             <tbody>
-              <tr class="border-b border-slate-200"><td class="p-2 font-bold whitespace-nowrap">9–10</td><td class="p-2">It was <b>very</b> nice.</td></tr>
-              <tr class="border-b border-slate-200"><td class="p-2 font-bold whitespace-nowrap">5–7</td><td class="p-2">It was <b>quite</b> nice.</td></tr>
-              <tr><td class="p-2 font-bold whitespace-nowrap">1–3</td><td class="p-2">It was <b>not very</b> nice.</td></tr>
+              <tr class="border-b border-slate-200"><td class="p-2">good → <b>well</b></td><td class="p-2">fast → <b>fast</b></td><td class="p-2">hard → <b>hard</b></td></tr>
+              <tr><td class="p-2">late → <b>late</b></td><td class="p-2">early → <b>early</b></td><td class="p-2"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="gt-deg hidden mt-3 space-y-3 text-sm text-slate-700 leading-relaxed">
+          <p data-l="de"><b>Wie stark?</b> Das Wort steht <b>direkt vor dem Adjektiv</b> (oder vor dem Adverb). <span lang="en">It was <b>extremely</b> warm. She sings <b>very</b> nicely.</span></p>
+          <p data-l="es" lang="es"><b>¿Qué tan fuerte?</b> La palabra va <b>justo delante del adjetivo</b> (o del adverbio). <span lang="en">It was <b>extremely</b> warm. She sings <b>very</b> nicely.</span></p>
+          <table class="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+            <tbody>
+              <tr class="border-b border-slate-200"><td class="p-2 font-bold whitespace-nowrap">8–10</td><td class="p-2" lang="en"><b>extremely</b>, <b>very</b></td><td class="p-2"><span data-l="de">äusserst, sehr</span><span data-l="es" lang="es">extremadamente, muy</span></td></tr>
+              <tr class="border-b border-slate-200"><td class="p-2 font-bold whitespace-nowrap">4–7</td><td class="p-2" lang="en"><b>quite</b>, <b>rather</b>, <b>relatively</b></td><td class="p-2"><span data-l="de">ziemlich, recht, relativ</span><span data-l="es" lang="es">bastante, más bien, relativamente</span></td></tr>
+              <tr><td class="p-2 font-bold whitespace-nowrap">1–3</td><td class="p-2" lang="en"><b>a bit</b>, <b>not very</b></td><td class="p-2"><span data-l="de">ein bisschen, nicht sehr</span><span data-l="es" lang="es">un poco, no muy</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -228,7 +248,8 @@
               <tr><td class="p-2 font-bold">we / you / they</td><td class="p-2"><b>are</b> ('re) reading</td></tr>
             </tbody>
           </table>
-          <p><b><span data-l="de">Frage:</span><span data-l="es" lang="es">Pregunta:</span></b> <span lang="en">When <b>are</b> you <b>leaving</b> on Monday? – I'm <b>leaving</b> at 8 am.</span></p>
+          <p><b><span data-l="de">nicht:</span><span data-l="es" lang="es">no:</span></b> <span lang="en">I'm <b>not</b> reading. He <b>isn't</b> (is not) reading. They <b>aren't</b> (are not) reading.</span></p>
+          <p><b><span data-l="de">Frage:</span><span data-l="es" lang="es">Pregunta:</span></b> <span lang="en">When <b>are</b> you <b>leaving</b> on Monday? – I'm <b>leaving</b> at 8 am.</span> <span data-l="de">In der Frage kommt am / is / are vor die Person.</span><span data-l="es" lang="es">En la pregunta, am / is / are va delante de la persona.</span></p>
           <p data-l="de"><b>-ing:</b> <span lang="en">read → reading, fly → flying.</span> Endet das Verb auf -e, fällt das e weg: <span lang="en">ride → riding</span>.</p>
           <p data-l="es" lang="es"><b>-ing:</b> <span lang="en">read → reading, fly → flying.</span> Si el verbo termina en -e, la e se quita: <span lang="en">ride → riding</span>.</p>
         </div>
@@ -663,11 +684,15 @@
       get case() { return tr('Fast richtig! Nur die Gross- und Kleinschreibung stimmt noch nicht:', '¡Casi correcto! Solo las mayúsculas y minúsculas no están bien todavía:'); },
       get letter() { return tr('Fast richtig! Nur ein Buchstabe stimmt noch nicht:', '¡Casi correcto! Solo una letra no está bien todavía:'); },
       get ending() { return tr('Fast richtig! Achte auf die Endung:', '¡Casi correcto! Fíjate en el final:'); },
-      get well() { return tr('Fast richtig! Achte auf die Ausnahme:', '¡Casi correcto! Fíjate en la excepción:'); }
+      get well() { return tr('Fast richtig! Achte auf die Ausnahme:', '¡Casi correcto! Fíjate en la excepción:'); },
+      get irr() { return tr('Fast richtig! Achte auf die Ausnahme:', '¡Casi correcto! Fíjate en la excepción:'); },
+      get order() { return tr('Fast richtig! Nur die Reihenfolge stimmt noch nicht:', '¡Casi correcto! Solo el orden no está bien todavía:'); }
     };
     function missTip(m, dir, right) {
       if (!m) return '';
       if (m.type === 'case') return caseTip(dir);
+      if (m.type === 'irr') return tr(`Ausnahme: «${right}» bleibt gleich, ohne -ly.`, `Excepción: «${right}» se queda igual, sin -ly.`);
+      if (m.type === 'order') return tr('Das Wort (very, quite …) steht direkt vor dem Adjektiv oder Adverb.', 'La palabra (very, quite …) va justo delante del adjetivo o adverbio.');
       if (m.type === 'well') return tr('Ausnahme: good wird zu well (nicht «goodly»).', 'Excepción: good se convierte en well (no «goodly»).');
       if (m.type === 'ending') return /ly$/.test(right) ? tr('Wie macht man etwas? Dann braucht es -ly.', '¿Cómo se hace algo? Entonces hace falta -ly.') : /ing$/.test(right) ? tr('Nach am / is / are kommt das Verb mit -ing.', 'Después de am / is / are, el verbo va con -ing.') : tr('Schau den Schluss vom Wort genau an.', 'Mira bien el final de la palabra.');
       return tr('Schau das Wort genau an und schreib es einmal richtig ab.', 'Mira bien la palabra y cópiala una vez correctamente.');
@@ -679,7 +704,7 @@
     // SPEICHERN (jeder Zugriff in try/catch)
     // ==========================================================
     const SAVE_KEY = 'ow2u2_lernpfad';
-    const STATE = { part: 't1', tab: 'woerter', path: {}, medal: {}, tests: {}, testOpen: {}, days: [], gram: null, gramAdv: null, gtopic: 'pc', pathSplit: true };
+    const STATE = { part: 't1', tab: 'woerter', path: {}, medal: {}, tests: {}, testOpen: {}, days: [], gram: null, gramMan: null, gramDeg: null, gtopic: 'pc', pathSplit: true };
     function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(STATE)); } catch (e) {} }
     function load() {
       try {
@@ -700,8 +725,18 @@
         if (Array.isArray(s.days)) STATE.days = s.days.filter(d => typeof d === 'string').slice(-60);
         if (s.tab === 'woerter' || s.tab === 'grammatik') STATE.tab = s.tab;
         if (s.gram && typeof s.gram === 'object') STATE.gram = s.gram;
-        if (s.gramAdv && typeof s.gramAdv === 'object') STATE.gramAdv = s.gramAdv;
-        if (s.gtopic === 'pc' || s.gtopic === 'adv') STATE.gtopic = s.gtopic;
+        if (s.gramMan && typeof s.gramMan === 'object') STATE.gramMan = s.gramMan;
+        if (s.gramDeg && typeof s.gramDeg === 'object') STATE.gramDeg = s.gramDeg;
+        // Früher ein Thema «Adverbien» (bis 12.11.2026): Stufe 1 (Adjektiv oder Adverb) und -ly übernehmen
+        if (!s.gramMan && s.gramAdv && typeof s.gramAdv === 'object' && s.gramAdv.done && typeof s.gramAdv.done === 'object') {
+          const done = {};
+          Object.keys(s.gramAdv.done).filter(id => /^pick\d+$/.test(id)).forEach(id => { done[id] = true; });
+          const stage = Math.min(Number(s.gramAdv.stage) || 0, 2);
+          if (stage >= 2) G_TOPICS.man.items.form.forEach((_, i) => { done['form' + i] = true; });
+          STATE.gramMan = { stage, done, queue: [], rev: 0, revDue: 0, revQueue: [] };
+        }
+        if (['pc', 'man', 'deg'].includes(s.gtopic)) STATE.gtopic = s.gtopic;
+        else if (s.gtopic === 'adv') STATE.gtopic = 'man';
       } catch (e) {}
     }
 
@@ -1277,14 +1312,20 @@
     // Mehrere Themen im Reiter Grammatik. Jedes Thema hat eigene Stufen, Sätze und einen eigenen Speicherplatz.
     const G_TOPICS = {
       pc: {
-        store: 'gram', reviewKey: 'write',
-        get label() { return tr('Pläne', 'Planes'); }, sub: 'am / is / are + -ing',
+        store: 'gram', reviewKey: 'test',
+        get label() { return tr('Pläne', 'Planes'); }, sub: 'is + -ing',
         get doneText() { return tr('Du kannst Pläne mit am / is / are + Verb-ing bilden.', 'Ya sabes formar planes con am / is / are + verbo-ing.'); },
         stages: [
           { key: 'be', type: 'mc', get label() { return tr('am / is / are auswählen', 'elegir am / is / are'); }, example: '<b>He is</b> playing tennis on Monday.' },
           { key: 'ing', type: 'mc', get label() { return tr('Verb + ing auswählen', 'elegir verbo + ing'); }, example: 'I am <b>reading</b> a book tonight.' },
           { key: 'build', type: 'tiles', get label() { return tr('Satz bauen', 'construir la frase'); }, example: 'She · is · reading · a book · tonight' },
-          { key: 'write', type: 'write', get label() { return tr('Selber schreiben', 'escribirlo tú'); }, example: 'He ___ (read) a book tonight. → <b>is reading</b>' }
+          { key: 'write', type: 'write', get label() { return tr('Selber schreiben', 'escribirlo tú'); }, example: 'He ___ (read) a book tonight. → <b>is reading</b>' },
+          { key: 'neg', type: 'mc', get label() { return tr('nicht und Fragen', 'no y preguntas'); }, example: 'She ___ (not / ride) today. → <b>isn’t riding</b> · When ___ (you / fly)? → <b>are you flying</b>' },
+          { key: 'test', type: 'write', test: true, get label() { return tr('Wie im Test', 'como en el examen'); }, example: 'He ___ (not / read) tonight. → <b>isn’t reading</b> · When ___ (they / leave)? → <b>are they leaving</b>',
+            get placeholder() { return tr('am / is / are (+ not) + Verb-ing …', 'am / is / are (+ not) + verbo-ing …'); },
+            hint: (r, it) => /\bnot\b/.test(r) ? tr('am / is / are + not + Verb-ing.', 'am / is / are + not + verbo-ing.')
+              : /\(\s*\S+.*\/.*\)/.test(it.data[0]) ? tr('Frage: zuerst am / is / are, dann die Person, dann Verb-ing.', 'Pregunta: primero am / is / are, después la persona, después verbo-ing.')
+              : `${tr('Beginnt mit', 'Empieza por')} «${r.split(' ')[0]} …»` }
         ],
         items: {
           be: [
@@ -1320,18 +1361,48 @@
             ['We ___ (watch) the Highland Games on Saturday.', 'are watching'], ['My cousin ___ (play) ice hockey on Friday.', 'is playing'],
             ['They ___ (go) to the swimming pool tonight.', 'are going'], ['Ben ___ (call) his aunt tonight.', 'is calling'],
             ['I ___ (help) my mum in the garden on Wednesday.', 'am helping'], ['We ___ (eat) pizza on Sunday.', 'are eating']
+          ],
+          // [Satz, [richtig, falsch, falsch]]: nicht = am / is / are + not + -ing; Frage = am / is / are vor der Person (Evaluation LS1)
+          neg: [
+            ['Tom ___ (not / come) to the party on Friday.', ['isn’t coming', 'doesn’t coming', 'isn’t come']],
+            ['We ___ (not / play) football on Saturday.', ['aren’t playing', 'don’t playing', 'aren’t play']],
+            ['I ___ (not / work) tomorrow.', ['am not working', 'don’t working', 'am not work']],
+            ['My parents ___ (not / go) to the concert tonight.', ['aren’t going', 'don’t going', 'aren’t go']],
+            ['When ___ (you / leave) on Monday?', ['are you leaving', 'you are leaving', 'do you leaving']],
+            ['What time ___ (they / arrive)?', ['are they arriving', 'they are arriving', 'are they arrive']],
+            ['Where ___ (Lea / meet) her friends tonight?', ['is Lea meeting', 'Lea is meeting', 'does Lea meeting']],
+            ['Who ___ (you / invite) to your party?', ['are you inviting', 'you are inviting', 'are you invite']]
+          ],
+          // Endstufe wie Evaluation LS1 / Test Unit 1 A3: Verb in Klammer, auch Verneinung und Frage mit Person. Kurze Einzelsätze.
+          test: [
+            ['We ___ (start) with brunch at 11 am.', 'are starting'],
+            ['The Browns ___ (not / come) on Saturday.', 'are not coming'],
+            ['What time ___ (they / arrive)?', 'are they arriving'],
+            ['I ___ (visit) the castle at 2 pm.', 'am visiting'],
+            ['My sister ___ (not / play) in the match tomorrow.', 'is not playing'],
+            ['Where ___ (we / have) dinner tonight?', 'are we having'],
+            ['Mia ___ (meet) her friends at the station at 5 pm.', 'is meeting'],
+            ['I ___ (not / go) to school on Monday.', 'am not going'],
+            ['Who ___ (Tom / invite) to his party?', 'is Tom inviting']
           ]
         }
       },
-      // Adverbien (CB 5, 10; LC L2.3–L2.5). Nur -ly und good → well; very / quite / not very. Keine Sonderfälle (-y, -le, -ic, fast, hard).
-      adv: {
-        store: 'gramAdv', reviewKey: 'form',
-        get label() { return tr('Adverbien', 'Adverbios'); }, sub: 'slowly, well, very',
-        get doneText() { return tr('Du kannst sagen, wie jemand etwas macht und wie stark etwas ist.', 'Ya sabes decir cómo alguien hace algo y cuánto es algo.'); },
+      // Adverbs of manner (CB 5; LC L2.3–L2.4; LZ3–4): Adjektiv oder Adverb, -ly, -ily / -bly / -ically, Ausnahmen, dann wie im Test (Evaluation LS2/LS3, vereinfacht)
+      man: {
+        store: 'gramMan', reviewKey: 'test',
+        get label() { return tr('Adverbien', 'Adverbios'); }, sub: 'slowly, well',
+        get doneText() { return tr('Du kannst Adverbien bilden und sagen, wie jemand etwas macht.', 'Ya sabes formar adverbios y decir cómo alguien hace algo.'); },
         stages: [
           { key: 'pick', type: 'mc', get label() { return tr('Adjektiv oder Adverb?', '¿adjetivo o adverbio?'); }, example: 'She is a <b>calm</b> person. She talks <b>calmly</b>.' },
-          { key: 'form', type: 'write', get label() { return tr('Adverb schreiben', 'escribir el adverbio'); }, example: 'She talks ___ (calm). → <b>calmly</b>', get placeholder() { return tr('Adjektiv + -ly …', 'adjetivo + -ly …'); }, hint: r => r === 'well' ? tr('Achte auf die Ausnahme (siehe 📖 Theorie).', 'Fíjate en la excepción (mira 📖 Teoría).') : tr('Adjektiv + -ly.', 'Adjetivo + -ly.') },
-          { key: 'deg', type: 'mc', label: 'very / quite / not very', get example() { return tr('Wie schön? 9 von 10', '¿Qué tan bonito? 9 de 10') + ' → It was <b>very</b> nice.'; } }
+          { key: 'form', type: 'write', get label() { return tr('Adverb mit -ly', 'adverbio con -ly'); }, example: 'She talks ___ (calm). → <b>calmly</b>', get placeholder() { return tr('Adjektiv + -ly …', 'adjetivo + -ly …'); }, hint: () => tr('Adjektiv + -ly.', 'Adjetivo + -ly.') },
+          { key: 'spell', type: 'write', get label() { return tr('-ily, -bly, -ically', '-ily, -bly, -ically'); }, example: 'heav<b>y</b> → heav<b>ily</b> · gent<b>le</b> → gent<b>ly</b> · mag<b>ic</b> → mag<b>ically</b>', get placeholder() { return tr('Adverb …', 'adverbio …'); },
+            hint: (r, it) => it.data[2] === 'y' ? tr('Endet auf -y: y wird zu -ily (heavy → heavily).', 'Termina en -y: la y pasa a -ily (heavy → heavily).')
+              : it.data[2] === 'le' ? tr('Endet auf -le: e weg, dann -y (gentle → gently).', 'Termina en -le: quita la e y pon -y (gentle → gently).')
+              : tr('Endet auf -ic: dazu -ally (magic → magically).', 'Termina en -ic: añade -ally (magic → magically).') },
+          { key: 'irr', type: 'write', get label() { return tr('Ausnahmen', 'excepciones'); }, example: 'good → <b>well</b> · fast → <b>fast</b> · hard → <b>hard</b> · late → <b>late</b> · early → <b>early</b>', get placeholder() { return tr('Adverb …', 'adverbio …'); },
+            hint: r => r === 'well' ? tr('Ausnahme: Bei good heisst das Adverb ganz anders (siehe 📖 Theorie).', 'Excepción: con good el adverbio es muy distinto (mira 📖 Teoría).') : tr('Ausnahme: Hier gibt es kein -ly.', 'Excepción: aquí no hay -ly.') },
+          { key: 'test', type: 'write', test: true, get label() { return tr('Wie im Test', 'como en el examen'); }, example: 'She talks ___ (calm). → <b>calmly</b> · They play ___ (good). → <b>well</b>', get placeholder() { return tr('Adverb …', 'adverbio …'); },
+            hint: r => ['well', 'fast', 'hard', 'late', 'early'].includes(r) ? tr('Achtung, eine Ausnahme (siehe 📖 Theorie).', 'Ojo, es una excepción (mira 📖 Teoría).') : tr('Adjektiv + -ly. Schau den Schluss vom Adjektiv an (-y, -le, -ic?).', 'Adjetivo + -ly. Mira el final del adjetivo (¿-y, -le, -ic?).') }
         ],
         items: {
           // [Satz, [richtig, falsch]]
@@ -1342,26 +1413,81 @@
             ['It was a ___ game.', ['bad', 'badly']], ['Our team played ___ on Saturday.', ['badly', 'bad']],
             ['Mia is a ___ singer.', ['good', 'well']], ['Mia sings ___.', ['well', 'good']]
           ],
-          // [Satz mit Adjektiv in Klammer, Adverb]
+          // [Satz mit Adjektiv in Klammer, Adverb]: nur Adjektiv + -ly
           form: [
             ['Lea runs ___ (quick) to the bus stop.', 'quickly'], ['The children laugh ___ (loud).', 'loudly'],
             ['Please carry the box ___ (careful).', 'carefully'], ['My dad sings ___ (bad).', 'badly'],
-            ['Ben plays the guitar ___ (good).', 'well'], ['The band played ___ (brilliant) at the fête.', 'brilliantly'],
-            ['The old man walks ___ (slow).', 'slowly'], ['She dances ___ (beautiful).', 'beautifully'],
-            ['My grandma cooks ___ (good).', 'well']
+            ['The band played ___ (brilliant) at the fête.', 'brilliantly'], ['The old man walks ___ (slow).', 'slowly'],
+            ['She dances ___ (beautiful).', 'beautifully'], ['Please close the door ___ (quiet).', 'quietly']
           ],
-          // [Satz, [richtig, …], Punkte von 10, Frage Deutsch, Frage Spanisch]. very = 9–10, quite = 5–7, not very = 1–3
-          // Die Frage mit den Punkten gehört zur Aufgabe: Ohne sie würde jedes Wort passen (Rückmeldung Lehrperson 12.11.2026).
-          deg: [
-            ['Mia was ___ good at darts.', ['very', 'quite', 'not very'], 10, 'Wie gut war Mia im Darts?', '¿Qué tan bien jugó Mia a los dardos?'],
-            ['Ben was ___ good at football.', ['quite', 'very', 'not very'], 6, 'Wie gut war Ben im Fussball?', '¿Qué tan bien jugó Ben al fútbol?'],
-            ['Tom was ___ good at chess.', ['not very', 'very', 'quite'], 2, 'Wie gut war Tom im Schach?', '¿Qué tan bien jugó Tom al ajedrez?'],
-            ['The concert was ___ loud.', ['very', 'quite', 'not very'], 9, 'Wie laut war das Konzert?', '¿Qué tan fuerte fue el concierto?'],
-            ['The film was ___ funny.', ['quite', 'very', 'not very'], 5, 'Wie lustig war der Film?', '¿Qué tan divertida fue la película?'],
-            ['The hill was ___ high.', ['not very', 'very', 'quite'], 1, 'Wie hoch war der Hügel?', '¿Qué tan alta era la colina?'],
-            ['The water in the lake was ___ cold.', ['very', 'quite', 'not very'], 9, 'Wie kalt war das Wasser im See?', '¿Qué tan fría estaba el agua del lago?'],
-            ['The test was ___ easy.', ['quite', 'very', 'not very'], 7, 'Wie einfach war der Test?', '¿Qué tan fácil fue el examen?'],
-            ['The game was ___ difficult.', ['not very', 'very', 'quite'], 3, 'Wie schwierig war das Spiel?', '¿Qué tan difícil fue el juego?']
+          // [Satz, Adverb, Regel]: y → ily, le → ly, ic → ically (CB 5 D/E)
+          spell: [
+            ['Lea smiled ___ (happy).', 'happily', 'y'], ['We found the way ___ (easy).', 'easily', 'y'],
+            ['The dog barked ___ (angry).', 'angrily', 'y'], ['The children played ___ (noisy).', 'noisily', 'y'],
+            ['My brother sings ___ (terrible).', 'terribly', 'le'], ['Sit ___ (comfortable) on the sofa.', 'comfortably', 'le'],
+            ['He explained the game ___ (simple).', 'simply', 'le'], ['The band played ___ (fantastic).', 'fantastically', 'ic'],
+            ['I ___ (basic) like all sports.', 'basically', 'ic']
+          ],
+          // Ausnahmen (LC L2.4): good → well, fast, hard, late, early
+          irr: [
+            ['Ben plays the guitar ___ (good).', 'well'], ['Moira runs ___ (fast).', 'fast'],
+            ['The players train ___ (hard).', 'hard'], ['Tom arrived ___ (late) at the fête.', 'late'],
+            ['We got up ___ (early) on Saturday.', 'early'], ['My grandma cooks ___ (good).', 'well'],
+            ['The man drives too ___ (fast).', 'fast'], ['You must work ___ (hard) for the test.', 'hard']
+          ],
+          // Wie im Test (Evaluation LS2/LS3): alles gemischt, kurze Einzelsätze, bekannte Wörter
+          test: [
+            ['The festival takes place ___ (regular) in May.', 'regularly'], ['The team ___ (careful) carries the barrel.', 'carefully'],
+            ['The barrel gets ___ (terrible) hot.', 'terribly'], ['The children wait ___ (impatient).', 'impatiently'],
+            ['The parents watch ___ (nervous).', 'nervously'], ['The children run ___ (fast) around the church.', 'fast'],
+            ['The crowd sings ___ (happy).', 'happily'], ['They swing the balls ___ (wild).', 'wildly'],
+            ['The children do their job ___ (good).', 'well'], ['Spring comes ___ (early) this year.', 'early']
+          ]
+        }
+      },
+      // Adverbs of degree (CB 10; LC L2.5; LZ5): Wie stark? → Wo steht das Wort? → Satz neu schreiben wie im Test (Evaluation LS4, vereinfacht)
+      // Stärke-Gruppen: wenig (a bit, not very) · mittel (quite, rather, relatively) · viel (very, extremely). Pro Aufgabe aus jeder Gruppe nur ein Wort,
+      // darum nie quite / rather / relatively gegeneinander und nie very gegen extremely.
+      deg: {
+        store: 'gramDeg', reviewKey: 'test',
+        get label() { return tr('Wie stark?', '¿Qué tan fuerte?'); }, sub: 'quite, very',
+        get doneText() { return tr('Du kannst sagen, wie stark etwas ist, und setzt das Wort an die richtige Stelle.', 'Ya sabes decir qué tan fuerte es algo y pones la palabra en el sitio correcto.'); },
+        stages: [
+          { key: 'mean', type: 'mc', get label() { return tr('Wie stark?', '¿qué tan fuerte?'); }, get example() { return tr('Wie warm? 10 von 10', '¿Qué tan cálido? 10 de 10') + ' → It was <b>extremely</b> warm.'; } },
+          { key: 'pos', type: 'tiles', get label() { return tr('Wo steht das Wort?', '¿dónde va la palabra?'); }, example: 'The day · was · <b>rather</b> · warm', get tilesHint() { return tr('Das Wort (very, quite …) steht direkt vor dem Adjektiv oder Adverb.', 'La palabra (very, quite …) va justo delante del adjetivo o adverbio.'); } },
+          { key: 'test', type: 'rewrite', test: true, get label() { return tr('Wie im Test', 'como en el examen'); }, example: 'The day was warm. <i>(rather)</i> → <b>The day was rather warm.</b>', get placeholder() { return tr('Ganzer Satz …', 'Frase entera …'); },
+            hint: (r, it) => tr(`«${it.data[2]}» kommt direkt vor das Adjektiv oder Adverb. Beginnt mit «${r.split(' ').slice(0, 2).join(' ')} …»`, `«${it.data[2]}» va justo delante del adjetivo o adverbio. Empieza por «${r.split(' ').slice(0, 2).join(' ')} …»`) }
+        ],
+        items: {
+          // [Satz, [richtig, …], Punkte von 10, Frage Deutsch, Frage Spanisch]. Die Frage mit den Punkten gehört zur Aufgabe, sonst passt jedes Wort.
+          mean: [
+            ['The water was ___ cold.', ['extremely', 'quite', 'a bit'], 10, 'Wie kalt war das Wasser?', '¿Qué tan fría estaba el agua?'],
+            ['Mia was ___ good at darts.', ['very', 'relatively', 'not very'], 9, 'Wie gut war Mia im Darts?', '¿Qué tan bien jugó Mia a los dardos?'],
+            ['The test was ___ easy.', ['rather', 'very', 'not very'], 6, 'Wie einfach war der Test?', '¿Qué tan fácil fue el examen?'],
+            ['The film was ___ boring.', ['a bit', 'extremely', 'quite'], 3, 'Wie langweilig war der Film?', '¿Qué tan aburrida fue la película?'],
+            ['Tom was ___ good at chess.', ['not very', 'very', 'rather'], 2, 'Wie gut war Tom im Schach?', '¿Qué tan bien jugó Tom al ajedrez?'],
+            ['The concert was ___ loud.', ['extremely', 'rather', 'a bit'], 10, 'Wie laut war das Konzert?', '¿Qué tan fuerte fue el concierto?'],
+            ['The hill was ___ high.', ['quite', 'very', 'not very'], 5, 'Wie hoch war der Hügel?', '¿Qué tan alta era la colina?'],
+            ['I was ___ tired after the race.', ['a bit', 'very', 'relatively'], 2, 'Wie müde warst du nach dem Rennen?', '¿Qué tan cansado estabas después de la carrera?'],
+            ['The Highland Games are ___ old.', ['relatively', 'extremely', 'a bit'], 6, 'Wie alt sind die Highland Games?', '¿Qué tan antiguos son los Highland Games?']
+          ],
+          // Satz bauen: Grad-Wort vor dem Adjektiv (oder vor dem Adverb)
+          pos: [
+            { t: ['the castle', 'is', 'rather', 'old'] }, { t: ['the bagpipes', 'sound', 'a bit', 'strange'] },
+            { t: ['the water', 'was', 'extremely', 'cold'] }, { t: ['Moira', 'plays', 'very', 'well'] },
+            { t: ['the test', 'was', 'relatively', 'easy'] }, { t: ['we', 'were', 'quite', 'tired'] },
+            { t: ['they', 'drove', 'rather', 'fast'] }
+          ],
+          // Wie im Test (Evaluation LS4): [Satz, neuer Satz, Wort]
+          test: [
+            ['Scottish traditions are interesting.', 'Scottish traditions are rather interesting.', 'rather'],
+            ['The Highland Games are old.', 'The Highland Games are relatively old.', 'relatively'],
+            ['The caber is heavy.', 'The caber is extremely heavy.', 'extremely'],
+            ['The sword dance is difficult.', 'The sword dance is quite difficult.', 'quite'],
+            ['The bagpipes sound strange.', 'The bagpipes sound a bit strange.', 'a bit'],
+            ['You have to be brave.', 'You have to be very brave.', 'very'],
+            ['Moira plays the bagpipes well.', 'Moira plays the bagpipes extremely well.', 'extremely'],
+            ['The weather was cold.', 'The weather was rather cold.', 'rather']
           ]
         }
       }
@@ -1371,8 +1497,7 @@
     function applyGTopic(t) {
       GT = G_TOPICS[t] ? t : 'pc';
       G_STAGES = G_TOPICS[GT].stages; G_ITEMS = G_TOPICS[GT].items; G_ALL = gAllOf(GT);
-      document.querySelectorAll('.gt-pc').forEach(el => el.classList.toggle('hidden', GT !== 'pc'));
-      document.querySelectorAll('.gt-adv').forEach(el => el.classList.toggle('hidden', GT !== 'adv'));
+      Object.keys(G_TOPICS).forEach(t => document.querySelectorAll('.gt-' + t).forEach(el => el.classList.toggle('hidden', GT !== t)));
     }
     G_ALL = gAllOf('pc');
     const gItem = id => { const key = id.replace(/\d+$/, ''), i = Number(id.match(/\d+$/)[0]); return { key, i, data: G_ITEMS[key][i], stage: G_STAGES.findIndex(s => s.key === key) }; };
@@ -1416,11 +1541,21 @@
       const it = gItem(G.id);
       if (it.key === 'be') G.opts = shuffle(it.data[0].startsWith('___') ? ['Am', 'Is', 'Are'] : ['am', 'is', 'are']);
       else if (G_STAGES[it.stage].type === 'mc') G.opts = shuffle(it.data[1]);   // erste Antwort in der Liste = richtig
-      if (it.key === 'build') G.pool = shuffle(it.data.t.map((t, k) => k));
+      if (G_STAGES[it.stage].type === 'tiles') G.pool = shuffle(it.data.t.map((t, k) => k));
     }
     const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
     const gRight = it => it.key === 'be' ? (it.data[0].startsWith('___') ? cap(it.data[1]) : it.data[1])
-      : Array.isArray(it.data[1]) ? it.data[1][0] : G_STAGES[it.stage].type === 'write' ? it.data[1] : cap(it.data.t.join(' ')) + (it.data.q ? '?' : '.');
+      : Array.isArray(it.data[1]) ? it.data[1][0] : ['write', 'rewrite'].includes(G_STAGES[it.stage].type) ? it.data[1] : cap(it.data.t.join(' ')) + (it.data.q ? '?' : '.');
+    // Erlaubte Kurzformen: «am meeting» = «'m meeting», «are not coming» = «aren't coming» = «'re not coming». In Fragen keine Kurzform («are they arriving»).
+    function gForms(a, sentence) {
+      if (/\?/.test(String(sentence || ''))) return [a];
+      const f = [a];
+      const neg = { am: ["'m not"], is: ["isn't", "'s not"], are: ["aren't", "'re not"] }, pos = { am: "'m", is: "'s", are: "'re" };
+      const m = a.match(/^(am|is|are) not (.+)$/);
+      if (m) neg[m[1]].forEach(x => f.push(x + ' ' + m[2]));
+      else { const p = a.match(/^(am|is|are) (.+)$/); if (p) f.push(pos[p[1]] + ' ' + p[2]); }
+      return f;
+    }
     // Schreiben: «am meeting» oder «'m meeting». Gross/Klein zählt (loose = nur für den Hinweis «Fast!»), Leerzeichen egal
     function gWriteOk(answer, input, sentence, loose) {
       const n = x => { const t = String(x || '').replace(/[’‘´`]/g, "'").replace(/[.!?,;:]+/g, ' ').replace(/\s+/g, ' ').trim(); return loose ? t.toLowerCase() : t; };
@@ -1430,12 +1565,25 @@
       // Subjekt aus dem Satz darf mitgeschrieben werden: «I'm meeting», «Lea's visiting», «I am meeting»
       const subj = n(String(sentence || '').split('___')[0]);
       if (subj && u.toLowerCase().startsWith(subj.toLowerCase())) u = u.slice(subj.length).trim();
-      const short = a.replace(/^am /, "'m ").replace(/^is /, "'s ").replace(/^are /, "'re ");
-      return u === a || u === short;
+      return gForms(a, sentence).includes(u);
+    }
+    // Satz neu schreiben (Adverbs of degree, wie im Test): ganzer Satz, Gross/Klein zählt, Schlusspunkt egal
+    function gRewriteOk(answer, input, loose) {
+      const n = x => { const t = String(x || '').replace(/[’‘´`]/g, "'").replace(/\s+/g, ' ').trim().replace(/\s*[.!]+$/, ''); return loose ? t.toLowerCase() : t; };
+      return !!n(input) && n(input) === n(answer);
     }
     // Fast richtig beim Schreiben: Gross/Klein, ein Buchstabe oder die Endung (z.B. «is visit»)
-    function gMiss(d, ans) {
+    function gMiss(d, ans, type) {
+      if (type === 'rewrite') {
+        if (gRewriteOk(d[1], ans)) return null;
+        if (gRewriteOk(d[1], ans, true)) return { type: 'case' };
+        const w = x => String(x || '').toLowerCase().replace(/[.!?,]/g, ' ').split(/\s+/).filter(Boolean);
+        const a = w(d[1]), u = w(ans);
+        if (a.length === u.length && a.slice().sort().join(' ') === u.slice().sort().join(' ')) return { type: 'order' };
+        return nearType([a.join(' ')], u.join(' '));
+      }
       if (gWriteOk(d[1], ans, d[0])) return null;
+      if (['fast', 'hard', 'late', 'early'].includes(d[1]) && /^\s*(fastly|hardly|lately|earlily|earlyly)\s*$/i.test(ans)) return { type: 'irr' };
       if (d[1] === 'well' && /good/i.test(ans)) return { type: 'well' };
       if (gWriteOk(d[1], ans, d[0], true)) return { type: 'case' };
       const n = x => String(x || '').toLowerCase().replace(/[’‘´`]/g, "'").replace(/[.!?,;:]+/g, ' ').replace(/\s+/g, ' ').trim();
@@ -1443,7 +1591,7 @@
       const subj = n(String(d[0]).split('___')[0]);
       if (subj && u.startsWith(subj)) u = u.slice(subj.length).trim();
       const a = n(d[1]);
-      return nearType([a, a.replace(/^am /, "'m ").replace(/^is /, "'s ").replace(/^are /, "'re ")], u);
+      return nearType(gForms(a, d[0]), u);
     }
     function gTilesOk(it, placed) {
       const words = placed.map(k => it.data.t[k]);
@@ -1488,6 +1636,14 @@
       G.nudge = -1;
       gAnswer(true, G.opts[i], false);
     }
+    // Hinweis bei «Fast richtig» (ein Satz)
+    function gNudgeText(m, right, type) {
+      if (m.type === 'case') return type === 'rewrite' ? tr('Der Satz beginnt mit einem Grossbuchstaben.', 'La frase empieza con mayúscula.') : tr('Achte auf Gross- und Kleinschreibung.', 'Fíjate en las mayúsculas y minúsculas.');
+      if (m.type === 'letter') return tr('Ein Buchstabe stimmt noch nicht.', 'Una letra todavía no está bien.');
+      if (m.type === 'irr') return tr('Das ist eine Ausnahme: Hier gibt es kein -ly.', 'Es una excepción: aquí no hay -ly.');
+      if (m.type === 'well') return tr('Ausnahme: Bei good heisst das Adverb ganz anders.', 'Excepción: con good el adverbio es muy distinto.');
+      return missTip(m, 'de2en', right);
+    }
     function gPickDontKnow() { if (G.phase !== 'ask') return; G.pick = -1; G.nudge = -1; gAnswer(false, '', true); }
     // Kurzer Grund, warum die gewählte Antwort nicht passt (ein Satz)
     function gWhyNot(it, o) {
@@ -1496,10 +1652,14 @@
         : x === 'is' ? tr('«is» passt zu einer Person oder Sache (he, she, it).', '«is» va con una persona o cosa (he, she, it).')
         : tr('«are» passt zu you, we, they.', '«are» va con you, we, they.');
       if (it.key === 'ing') return tr('Nach am / is / are kommt das Verb mit -ing.', 'Después de am / is / are va el verbo con -ing.');
+      if (it.key === 'neg') return /\b(do|does|don’t|doesn’t)\b/.test(x) ? tr('Bei Plänen braucht es am / is / are, nicht do / does.', 'Para planes hace falta am / is / are, no do / does.')
+        : !/ing\b/.test(x) ? tr('Das Verb braucht -ing.', 'El verbo necesita -ing.')
+        : tr('In der Frage kommt am / is / are vor die Person.', 'En la pregunta, am / is / are va delante de la persona.');
       if (it.key === 'pick') return /ly$/.test(x) || x === 'well' ? tr(`«${o}» sagt, wie jemand etwas tut.`, `«${o}» dice cómo alguien hace algo.`)
         : tr(`«${o}» beschreibt eine Person oder Sache.`, `«${o}» describe a una persona o cosa.`);
-      if (it.key === 'deg') return x === 'very' ? tr('very = 9 bis 10 Punkte.', 'very = 9 a 10 puntos.')
-        : x === 'quite' ? tr('quite = 5 bis 7 Punkte.', 'quite = 5 a 7 puntos.') : tr('not very = 1 bis 3 Punkte.', 'not very = 1 a 3 puntos.');
+      if (it.key === 'mean') return ['very', 'extremely'].includes(x) ? tr(`«${o}» heisst: viel (8 bis 10 Punkte).`, `«${o}» significa: mucho (8 a 10 puntos).`)
+        : ['a bit', 'not very'].includes(x) ? tr(`«${o}» heisst: wenig (1 bis 3 Punkte).`, `«${o}» significa: poco (1 a 3 puntos).`)
+        : tr(`«${o}» heisst: mittel (4 bis 7 Punkte).`, `«${o}» significa: medio (4 a 7 puntos).`);
       return '';
     }
     function gPlace(k) { if (G.phase !== 'ask' || !G.pool.includes(k)) return; G.pool = G.pool.filter(x => x !== k); G.placed.push(k); renderGram(); }
@@ -1509,15 +1669,19 @@
       if (G.phase !== 'ask') return;
       const inp = $('g-in'), ans = dontKnow ? '' : (inp ? inp.value : '');
       if (!dontKnow && !ans.trim()) { if (inp) inp.focus(); return; }
-      const d = gItem(G.id).data, ok = !dontKnow && gWriteOk(d[1], ans, d[0]);
-      G.miss = ok || dontKnow ? null : gMiss(d, ans);
+      const it = gItem(G.id), d = it.data, type = G_STAGES[it.stage].type;
+      const ok = !dontKnow && (type === 'rewrite' ? gRewriteOk(d[1], ans) : gWriteOk(d[1], ans, d[0]));
+      // Fast richtig: nicht die Lösung zeigen, kurzer Hinweis, nochmals probieren (wie bei der Auswahl)
+      const miss = ok || dontKnow ? null : gMiss(d, ans, type);
+      if (miss) { G.tried.push('w'); G.miss = miss; renderGram(true); if ($('g-in')) $('g-in').value = ans; return; }
+      G.miss = null;
       gAnswer(ok, ans, dontKnow);
     }
     // Hilfe vor der Lösung: beim Bauen das erste Wort, beim Schreiben «am / is / are»
     function gHint() {
       if (G.phase !== 'ask' || G.hint) return;
       const it = gItem(G.id);
-      if (it.key === 'build') { G.pool = G.pool.concat(G.placed); G.placed = [0]; G.pool = G.pool.filter(x => x !== 0); }
+      if (G_STAGES[it.stage].type === 'tiles') { G.pool = G.pool.concat(G.placed); G.placed = [0]; G.pool = G.pool.filter(x => x !== 0); }
       const val = $('g-in') ? $('g-in').value : '';
       G.hint = true;
       renderGram(true);
@@ -1540,7 +1704,7 @@
     function gPause() { if (G.phase !== 'etappe') return; G.phase = 'pause'; renderGram(true); }
     function gSentence(it, fill) {
       // Lücke hervorheben oder mit der Lösung füllen
-      const s = it.data[0];
+      const s = fill ? it.data[0].replace(/\s*\(.*?\)/, '') : it.data[0];
       const gap = fill ? `<b class="text-emerald-800">${esc(fill)}</b>` : '<span class="inline-block min-w-[3.5rem] border-b-2 border-sky-500 align-bottom">&nbsp;</span>';
       return esc(s).replace('___', gap);
     }
@@ -1551,8 +1715,8 @@
         if (!b) return;
         const on = t === GT, all = gAllOf(t), st = GS(t);
         const n = all.filter(id => st.done[id]).length;
-        b.innerHTML = `<span class="block text-base font-black">${esc(G_TOPICS[t].label)}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}" lang="en">${esc(G_TOPICS[t].sub)}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}">🧩 ${n}/${all.length}</span>`;
-        b.className = 'px-3 py-2.5 rounded-xl border-2 text-center transition ' + (on ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50');
+        b.innerHTML = `<span class="block text-sm sm:text-base font-black wrap-any">${esc(G_TOPICS[t].label)}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}" lang="en">${esc(G_TOPICS[t].sub)}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}">🧩 ${n}/${all.length}</span>`;
+        b.className = 'px-1.5 py-2.5 rounded-xl border-2 text-center transition ' + (on ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50');
         b.setAttribute('aria-pressed', on);
       });
     }
@@ -1567,6 +1731,8 @@
       save();
       renderGram();
       renderHeader();
+      // Auf dem Handy liegt die Aufgabe sonst unter dem Bildrand
+      setTimeout(() => $('task-gram').scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
     }
     function renderGram(keepFocus) {
       renderGTopics();
@@ -1596,8 +1762,8 @@
       } else {
         const it = gItem(G.id), st = G_STAGES[it.stage], right = gRight(it);
         let html = `
-          <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2 gap-2"><span>${G.review ? `🔁 ${tr('Wiederholen', 'Repasar')}: ${G_STAGES.find(x => x.key === G_TOPICS[GT].reviewKey).label}` : `${tr('Stufe', 'Nivel')} ${it.stage + 1}: ${st.label}`}</span><span class="shrink-0">${G.streak >= 3 ? '🔥 ' + G.streak : ''}</span></div>
-          ${G.review ? '' : `<div class="mb-2 text-xs text-slate-600" lang="en"><span class="font-bold" lang="${LANG}">${tr('Beispiel', 'Ejemplo')}:</span> ${st.example}</div>`}`;
+          <div class="flex items-center justify-between text-sm font-semibold text-slate-600 mb-2 gap-2"><span>${G.review ? `🔁 ${tr('Wiederholen', 'Repasar')}: ${G_STAGES.find(x => x.key === G_TOPICS[GT].reviewKey).label}` : `${tr('Stufe', 'Nivel')} ${it.stage + 1}: ${st.label}`}</span><span class="shrink-0">${G.streak >= 3 ? '🔥 ' + G.streak : ''}</span></div>
+          ${G.review ? '' : `<div class="mb-2 text-sm text-slate-600" lang="en"><span class="font-bold" lang="${LANG}">${tr('Beispiel', 'Ejemplo')}:</span> ${st.example}</div>`}`;
         if (st.type === 'mc') {
           // Wie stark? (very / quite / not very): Frage mit Punkten von 10 steht in der Satzkarte, sonst würde jedes Wort passen
           const pts = it.data[2];
@@ -1605,8 +1771,8 @@
               <div class="text-sm font-bold text-slate-700">${esc(tr(it.data[3], it.data[4]))}</div>
               <div class="mt-1.5 flex items-center gap-2"><span class="shrink-0 px-2 py-0.5 rounded-lg bg-sky-600 text-white text-sm font-black">${pts} ${tr('von', 'de')} 10</span><span class="flex-1 grid grid-cols-10 gap-0.5" aria-hidden="true">${Array.from({ length: 10 }, (_, k) => `<span class="h-3 rounded-sm ${k < pts ? 'bg-sky-500' : 'bg-white border border-sky-200'}"></span>`).join('')}</span></div>
             </div>` : '';
-          html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4">${scale}<div class="text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' ? right : '')}</div></div>
-            <div class="mt-3 grid ${G.opts.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-2">${G.opts.map((o, i) => {
+          html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4">${scale}<div class="text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' && G.ok ? right : '')}</div></div>
+            <div class="mt-3 grid ${G.opts.some(o => o.length > 11) ? 'grid-cols-1' : G.opts.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-2">${G.opts.map((o, i) => {
               const tried = (G.tried || []).includes(i);
               let cls = tried ? 'bg-yellow-50 border-yellow-300 text-slate-400 line-through' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50';
               if (G.phase === 'answered' && !tried) cls = o.toLowerCase() === right.toLowerCase() ? 'bg-emerald-100 border-emerald-500 text-emerald-900' : 'bg-white border-slate-200 text-slate-400';
@@ -1614,7 +1780,7 @@
             }).join('')}</div>`;
           if (G.phase === 'ask') {
             if (G.nudge >= 0 && G.opts[G.nudge]) html += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> ${esc(gWhyNot(it, G.opts[G.nudge]))} ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
-            html += `<button type="button" onclick="gPickDontKnow()" class="mt-2 w-full px-3 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 ${tr('Weiss ich nicht', 'No lo sé')}</button>`;
+            html += `<button type="button" onclick="gPickDontKnow()" class="mt-4 mx-auto block min-h-[44px] px-5 rounded-xl text-sm font-semibold border-2 border-dashed border-slate-300 bg-transparent text-slate-500 hover:bg-slate-50">🤷 ${tr('Weiss ich nicht', 'No lo sé')}</button>`;
           }
         } else if (st.type === 'tiles') {
           const words = it.data.t;
@@ -1625,20 +1791,23 @@
             <div class="mt-2 flex flex-wrap gap-2" lang="en">${G.pool.map(k => `<button type="button" onclick="gPlace(${k})" ${G.phase !== 'ask' ? 'disabled' : ''} class="px-3 py-2 rounded-lg bg-white border-2 border-slate-300 text-base font-bold text-slate-800 hover:bg-slate-50">${esc(words[k])}</button>`).join('')}</div>`;
           if (G.phase === 'ask') html += `
             <div class="mt-3 space-y-2">
-              ${G.hint ? `<div class="text-sm font-bold text-sky-800">💡 ${tr('Das erste Wort steht schon da.', 'La primera palabra ya está puesta.')}</div>` : `<button type="button" onclick="gHint()" class="text-sm font-bold text-sky-700 underline">💡 ${tr('Hilfe: erstes Wort', 'Ayuda: primera palabra')}</button>`}
+              ${G.hint ? `<div class="text-sm font-bold text-sky-800">💡 ${st.tilesHint ? esc(st.tilesHint) + ' ' : ''}${tr('Das erste Wort steht schon da.', 'La primera palabra ya está puesta.')}</div>` : `<button type="button" onclick="gHint()" class="min-h-[44px] px-3 rounded-xl text-sm font-bold border-2 border-yellow-300 bg-yellow-50 text-yellow-900">💡 ${tr('Hilfe: erstes Wort', 'Ayuda: primera palabra')}</button>`}
               <div class="grid grid-cols-2 gap-2">
                 <button type="button" onclick="gCheckTiles(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 ${tr('Weiss ich nicht', 'No lo sé')}</button>
                 <button type="button" onclick="gCheckTiles()" ${G.pool.length ? 'disabled' : ''} class="px-3 py-3 rounded-xl text-sm font-bold text-white ${G.pool.length ? 'bg-slate-300' : 'bg-emerald-600 hover:bg-emerald-700'}">✓ ${tr('Prüfen', 'Comprobar')}</button>
               </div>
             </div>`;
         } else {
-          html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4 text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' ? right : '')}</div>`;
+          html += st.type === 'rewrite'
+            ? `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4 space-y-2"><div class="text-sm font-semibold text-slate-700">${tr('Schreib den Satz neu, mit dem Wort', 'Escribe la frase de nuevo con la palabra')} <b class="inline-block px-2 py-0.5 rounded-lg bg-slate-200 text-slate-800" lang="en">${esc(it.data[2])}</b></div><div class="text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${esc(G.phase === 'answered' && G.ok ? right : it.data[0])}</div></div>`
+            : `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4 text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' && G.ok ? right : '')}</div>`;
           if (G.phase === 'ask') html += `
             <div class="mt-3 space-y-2">
               <input id="g-in" type="text" placeholder="${st.placeholder || tr('am / is / are + Verb-ing …', 'am / is / are + verbo-ing …')}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" lang="en"
                 onkeydown="if(event.key==='Enter'){event.preventDefault();gWrite(false);}"
                 class="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-3 text-lg font-semibold text-slate-800">
-              ${G.hint ? `<div class="text-sm font-bold text-sky-800">💡 ${st.hint ? esc(st.hint(right)) : `${tr('Beginnt mit', 'Empieza por')} «${esc(right.split(' ')[0])} …»`}</div>` : `<button type="button" onclick="gHint()" class="text-sm font-bold text-sky-700 underline">💡 ${st.hint ? tr('Hilfe', 'Ayuda') : tr('Hilfe: erstes Wort', 'Ayuda: primera palabra')}</button>`}
+              ${G.miss ? `<div class="rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 pop" role="status"><b>${tr('Fast richtig!', '¡Casi!')}</b> ${esc(gNudgeText(G.miss, right, st.type))} ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>` : ''}
+              ${G.hint ? `<div class="text-sm font-bold text-sky-800">💡 ${st.hint ? esc(st.hint(right, it)) : `${tr('Beginnt mit', 'Empieza por')} «${esc(right.split(' ')[0])} …»`}</div>` : `<button type="button" onclick="gHint()" class="min-h-[44px] px-3 rounded-xl text-sm font-bold border-2 border-yellow-300 bg-yellow-50 text-yellow-900">💡 ${st.hint ? tr('Hilfe', 'Ayuda') : tr('Hilfe: erstes Wort', 'Ayuda: primera palabra')}</button>`}
               <div class="grid grid-cols-2 gap-2">
                 <button type="button" onclick="gWrite(true)" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 ${tr('Weiss ich nicht', 'No lo sé')}</button>
                 <button type="button" onclick="gWrite(false)" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">✓ ${tr('Prüfen', 'Comprobar')}</button>
@@ -1646,13 +1815,13 @@
             </div>`;
         }
         if (G.phase === 'answered') {
-          const full = st.type === 'tiles' ? right : it.data[0].replace('___', right).replace(/\s*\(.*?\)/, '');
+          const full = st.type === 'tiles' || st.type === 'rewrite' ? right : it.data[0].replace('___', right).replace(/\s*\(.*?\)/, '');
           html += `
             <div class="feedback-box mt-3 rounded-2xl border-2 ${G.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-3 space-y-1.5 pop">
               <div class="text-base font-black ${G.ok ? 'text-emerald-800' : 'text-amber-900'}">${G.ok ? (G.streak >= 5 && G.streak % 5 === 0 ? tr(`🔥 ${G.streak} richtig hintereinander!`, `🔥 ¡${G.streak} correctas seguidas!`) : G.praise) : (G.dontKnow ? tr('So heisst es:', 'Se dice así:') : G.miss ? MISS_TITLE[G.miss.type] : tr('Noch nicht ganz. Richtig ist:', 'Todavía no del todo. Lo correcto es:'))}</div>
-              <div class="flex items-center gap-2 flex-wrap"><span class="text-base font-bold text-slate-900 wrap-any" lang="en">${esc(full)}</span></div>
-              ${!G.ok && G.ans && st.type !== 'mc' ? `<div class="text-xs text-slate-600 wrap-any">${tr('Deine Antwort', 'Tu respuesta')}: <span class="font-semibold">${esc(G.ans)}</span></div>` : ''}
-              ${!G.ok && G.miss ? `<div class="text-xs font-semibold text-amber-900">${missTip(G.miss, 'de2en', right)}</div>` : ''}
+              ${G.ok && st.type !== 'tiles' ? '' : `<div class="flex items-center gap-2 flex-wrap"><span class="text-base font-bold text-slate-900 wrap-any" lang="en">${esc(full)}</span></div>`}
+              ${!G.ok && G.ans && st.type !== 'mc' ? `<div class="text-sm text-slate-600 wrap-any">${tr('Deine Antwort', 'Tu respuesta')}: <span class="font-semibold">${esc(G.ans)}</span></div>` : ''}
+              ${!G.ok && G.miss ? `<div class="text-sm font-semibold text-amber-900">${missTip(G.miss, 'de2en', right)}</div>` : ''}
               ${!G.ok ? `<div class="text-xs text-slate-600">${tr('Kein Problem: Der Satz kommt gleich nochmals.', 'No pasa nada: la frase vuelve enseguida.')}</div>` : ''}
             </div>
             <button type="button" id="g-next" onclick="gNext()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">${tr('Weiter →', 'Seguir →')}</button>`;
