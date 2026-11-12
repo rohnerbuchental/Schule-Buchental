@@ -192,8 +192,8 @@
           <span class="gt-pc" data-l="es" lang="es">Pregúntate primero: ¿quién lo hace? Después mira la tabla de la teoría. Como un tren con dos vagones: primero va el vagón «am / is / are», después el vagón «verbo + ing». Con «not», «not» va entre los vagones. En una pregunta, el vagón «am / is / are» y la persona cambian de sitio.</span>
           <span class="gt-man hidden" data-l="de">Frag dich: Beschreibt das Wort eine <b>Person oder Sache</b> (ein … Fahrer, das Spiel war …)? Oder sagt es, <b>wie jemand etwas tut</b> (fährt …, singt …)? Wie im Sport: Das Adjektiv beschreibt den Spieler, das Adverb beschreibt, wie er spielt. Beim Schreiben: Schau zuerst den Schluss vom Adjektiv an. Ist es eine Ausnahme aus der Theorie?</span>
           <span class="gt-man hidden" data-l="es" lang="es">Pregúntate: ¿la palabra describe a una <b>persona o cosa</b> (un conductor …, el partido fue …)? ¿O dice <b>cómo alguien hace algo</b> (conduce …, canta …)? Como en el deporte: el adjetivo describe al jugador, el adverbio describe cómo juega. Al escribir: mira primero el final del adjetivo. ¿Es una excepción de la teoría?</span>
-          <span class="gt-deg hidden" data-l="de">Denk an einen Lautstärke-Regler: wenig (a bit), mittel (quite), viel (very), ganz viel (extremely). Schau die Punkte an: Sind es wenige, mittel viele oder viele? Das Wort kommt immer direkt vor das Wort, das es stärker macht (cold, old, well …).</span>
-          <span class="gt-deg hidden" data-l="es" lang="es">Piensa en el botón del volumen: poco (a bit), medio (quite), mucho (very), muchísimo (extremely). Mira los puntos: ¿son pocos, en el medio o muchos? La palabra va siempre justo delante de la palabra que hace más fuerte (cold, old, well …).</span>
+          <span class="gt-deg hidden" data-l="de">Denk an einen Lautstärke-Regler: wenig (a bit, not very), mittel (quite, rather, relatively), viel (very, extremely). Schau die Punkte an: Sind es wenige, mittel viele oder viele? Das Wort kommt immer direkt vor das Wort, das es beschreibt (cold, old, well …).</span>
+          <span class="gt-deg hidden" data-l="es" lang="es">Piensa en el botón del volumen: poco (a bit, not very), medio (quite, rather, relatively), mucho (very, extremely). Mira los puntos: ¿son pocos, en el medio o muchos? La palabra va siempre justo delante de la palabra que describe (cold, old, well …).</span>
         </div>
         <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
           <button type="button" onclick="toggleTip('gram')" class="px-3 py-2 rounded-xl text-xs font-bold border bg-yellow-50 border-yellow-300 text-yellow-900"><span data-l="de">💡 Tipp</span><span data-l="es" lang="es">💡 Pista</span></button>
@@ -692,7 +692,7 @@
       if (!m) return '';
       if (m.type === 'case') return caseTip(dir);
       if (m.type === 'irr') return tr(`Ausnahme: «${right}» bleibt gleich, ohne -ly.`, `Excepción: «${right}» se queda igual, sin -ly.`);
-      if (m.type === 'order') return tr('Das Wort (very, quite …) steht direkt vor dem Adjektiv.', 'La palabra (very, quite …) va justo delante del adjetivo.');
+      if (m.type === 'order') return tr('Das Wort (very, quite …) steht direkt vor dem Adjektiv oder Adverb.', 'La palabra (very, quite …) va justo delante del adjetivo o adverbio.');
       if (m.type === 'well') return tr('Ausnahme: good wird zu well (nicht «goodly»).', 'Excepción: good se convierte en well (no «goodly»).');
       if (m.type === 'ending') return /ly$/.test(right) ? tr('Wie macht man etwas? Dann braucht es -ly.', '¿Cómo se hace algo? Entonces hace falta -ly.') : /ing$/.test(right) ? tr('Nach am / is / are kommt das Verb mit -ing.', 'Después de am / is / are, el verbo va con -ing.') : tr('Schau den Schluss vom Wort genau an.', 'Mira bien el final de la palabra.');
       return tr('Schau das Wort genau an und schreib es einmal richtig ab.', 'Mira bien la palabra y cópiala una vez correctamente.');
@@ -1454,9 +1454,9 @@
         get doneText() { return tr('Du kannst sagen, wie stark etwas ist, und setzt das Wort an die richtige Stelle.', 'Ya sabes decir qué tan fuerte es algo y pones la palabra en el sitio correcto.'); },
         stages: [
           { key: 'mean', type: 'mc', get label() { return tr('Wie stark?', '¿qué tan fuerte?'); }, get example() { return tr('Wie warm? 10 von 10', '¿Qué tan cálido? 10 de 10') + ' → It was <b>extremely</b> warm.'; } },
-          { key: 'pos', type: 'tiles', get label() { return tr('Wo steht das Wort?', '¿dónde va la palabra?'); }, example: 'The day · was · <b>rather</b> · warm', get tilesHint() { return tr('Das Wort (very, quite …) steht direkt vor dem Adjektiv.', 'La palabra (very, quite …) va justo delante del adjetivo.'); } },
+          { key: 'pos', type: 'tiles', get label() { return tr('Wo steht das Wort?', '¿dónde va la palabra?'); }, example: 'The day · was · <b>rather</b> · warm', get tilesHint() { return tr('Das Wort (very, quite …) steht direkt vor dem Adjektiv oder Adverb.', 'La palabra (very, quite …) va justo delante del adjetivo o adverbio.'); } },
           { key: 'test', type: 'rewrite', test: true, get label() { return tr('Wie im Test', 'como en el examen'); }, example: 'The day was warm. <i>(rather)</i> → <b>The day was rather warm.</b>', get placeholder() { return tr('Ganzer Satz …', 'Frase entera …'); },
-            hint: (r, it) => tr(`«${it.data[2]}» kommt direkt vor das Adjektiv. Beginnt mit «${r.split(' ').slice(0, 2).join(' ')} …»`, `«${it.data[2]}» va justo delante del adjetivo. Empieza por «${r.split(' ').slice(0, 2).join(' ')} …»`) }
+            hint: (r, it) => tr(`«${it.data[2]}» kommt direkt vor das Adjektiv oder Adverb. Beginnt mit «${r.split(' ').slice(0, 2).join(' ')} …»`, `«${it.data[2]}» va justo delante del adjetivo o adverbio. Empieza por «${r.split(' ').slice(0, 2).join(' ')} …»`) }
         ],
         items: {
           // [Satz, [richtig, …], Punkte von 10, Frage Deutsch, Frage Spanisch]. Die Frage mit den Punkten gehört zur Aufgabe, sonst passt jedes Wort.
@@ -1640,6 +1640,8 @@
     function gNudgeText(m, right, type) {
       if (m.type === 'case') return type === 'rewrite' ? tr('Der Satz beginnt mit einem Grossbuchstaben.', 'La frase empieza con mayúscula.') : tr('Achte auf Gross- und Kleinschreibung.', 'Fíjate en las mayúsculas y minúsculas.');
       if (m.type === 'letter') return tr('Ein Buchstabe stimmt noch nicht.', 'Una letra todavía no está bien.');
+      if (m.type === 'irr') return tr('Das ist eine Ausnahme: Hier gibt es kein -ly.', 'Es una excepción: aquí no hay -ly.');
+      if (m.type === 'well') return tr('Ausnahme: Bei good heisst das Adverb ganz anders.', 'Excepción: con good el adverbio es muy distinto.');
       return missTip(m, 'de2en', right);
     }
     function gPickDontKnow() { if (G.phase !== 'ask') return; G.pick = -1; G.nudge = -1; gAnswer(false, '', true); }
