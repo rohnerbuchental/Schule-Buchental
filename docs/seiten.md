@@ -36,6 +36,7 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - **Spanisch:** Oberfläche (Knöpfe, Rückmeldungen, Feiern) spanisch wie RZG. Übernommene Aufgaben haben spanische Felder (`qEs`, `optsEs`, `sitEs`, `rowsEs`, `catsEs`, `tipEs`), Scratch-Blöcke und das Postdrohnen-Diagramm sind zweisprachig. Seit 11.11.2026 alles übersetzt, auch `whyNotEs` (Zuordnen: Schlüssel = deutsche Spalte), `textEs`/`aEs`/`bankEs`/`hintEs`, `containsEs` (spanische Wortteile zählen zusätzlich), `keysEs`/`labelsEs`/`starterEs`/`modelEs`. Licht im Gang: ENCENDIDA/APAGADA, Rasensprenger: ENCENDIDO (largo)/CORTO/APAGADO. Fehlt bei einer neuen Aufgabe ein `…Es`-Feld, zeigt die spanische Ansicht Deutsch mit «Esta pregunta todavía está solo en alemán.».
 
 ## Deutsch-Hub (Novemberschnee): Besonderheiten
+- **Abgeschlossen:** Kachel auf der Startseite entfernt (12.11.2026, Wunsch Lehrperson 11.11.). Datei bleibt online, ist aber nicht mehr verlinkt.
 - Aufgaben 1–8 über die ganze Seite durchnummeriert. 1, 2, 3, 5, 7 geben Punkte (34 P., aus `TASKS`). 4, 6, 8 sind offene Fragen mit Hilfe-Treppe und Musterlösung, ohne Punkte. Keine Test-Simulation.
 - Gespeichert unter `ns_…` (offene Texte: `ns_open`).
 - Von der Lehrperson bestätigt: Meinungsfrage 6 «Ist Lina mitschuldig?» bleibt. In Aufgabe 8 stehen die Beispiele (147, KESB, Schlupfhuus …) nur in der Musterlösung, nicht in der Frage.
