@@ -868,7 +868,7 @@
       const review = isDue(w);
       // Wiederholung: einmal schreiben (lange Ausdrücke: Englisch → Deutsch)
       const stage = review ? (w.noType ? 2 : 3) : Math.min(levelOf(w), STAGES.length - 1);
-      Object.assign(Q, { id: w.id, stage, review, hint: false, phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1 });
+      Object.assign(Q, { id: w.id, stage, review, hint: false, phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1, tried: [], nudge: -1 });
       Q.opts = STAGES[stage].type === 'mc' ? mcOptions(w, STAGES[stage].dir) : [];
     }
     // Wort nach der Antwort einreihen
@@ -892,15 +892,17 @@
     }
     function answer(ok, ans, dontKnow, miss) {
       const w = BY_ID[Q.id];
-      applyResult(w, ok);
-      Object.assign(Q, { phase: 'answered', ok, ans, dontKnow, miss: miss || null, mastered: ok && !Q.review && isMastered(w) });
+      // Erst nach einem falschen Versuch richtig: Lob, aber keine Stufe höher; das Wort kommt nach 2 anderen nochmals
+      const retry = ok && (Q.tried || []).length > 0, got = ok && !retry;
+      applyResult(w, got);
+      Object.assign(Q, { phase: 'answered', ok, ans, dontKnow, miss: miss || null, mastered: got && !Q.review && isMastered(w) });
       STREAK = ok ? STREAK + 1 : 0;
       SESSION.answers++;
-      if (ok) SESSION.right++;
-      Q.praise = ok ? praise() : '';
+      if (got) SESSION.right++;
+      Q.praise = retry ? tr('✔ Jetzt stimmt’s! Gut nachgedacht.', '✔ ¡Ahora sí! Bien pensado.') : ok ? praise() : '';
       markToday();
       if (Q.mastered) noteMastered(w);
-      placeWord(w.id, ok);
+      placeWord(w.id, got);
       save();
       renderPfad(true);
       renderParts();
@@ -911,11 +913,20 @@
         setTimeout(() => { if (Q.token === t && Q.phase === 'answered') nextQuestion(); }, Q.mastered ? 1400 : (STAGES[Q.stage].type === 'mc' ? 700 : 1100));
       }
     }
+    // Falsch gewählt: nicht die Lösung zeigen. Antwort durchstreichen, kurz sagen, was das gewählte Wort heisst, nochmals probieren (didaktik.md 1b)
     function pickOption(i) {
-      if (Q.phase !== 'ask' || !Q.opts[i]) return;
+      if (Q.phase !== 'ask' || !Q.opts[i] || (Q.tried || []).includes(i)) return;
       const w = BY_ID[Q.id], dir = STAGES[Q.stage].dir;
       Q.pick = i;
-      answer(Q.opts[i] === answerText(w, dir), Q.opts[i], false);
+      if (Q.opts[i] !== answerText(w, dir)) { Q.tried.push(i); Q.nudge = i; renderPfad(); return; }
+      Q.nudge = -1;
+      answer(true, Q.opts[i], false);
+    }
+    function pickDontKnow() { if (Q.phase !== 'ask') return; Q.pick = -1; Q.nudge = -1; answer(false, '', true); }
+    // Kurzer Grund: Was heisst das gewählte Wort?
+    function whyNotWord(o, dir) {
+      const x = WORDS.find(v => answerText(v, dir) === o);
+      return x ? tr(`«${o}» heisst «${askText(x, dir)}».`, `«${o}» significa «${askText(x, dir)}».`) : '';
     }
     function submitWrite(dontKnow) {
       if (Q.phase !== 'ask') return;
@@ -1034,14 +1045,15 @@
       const right = answerText(w, st.dir);
       if (st.type === 'mc') {
         html += `<div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">${Q.opts.map((o, i) => {
-          let cls = 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50';
-          if (Q.phase === 'answered') {
-            if (o === right) cls = 'bg-emerald-100 border-emerald-500 text-emerald-900';
-            else if (i === Q.pick) cls = 'bg-amber-50 border-amber-400 text-amber-900';
-            else cls = 'bg-white border-slate-200 text-slate-400';
-          }
-          return `<button type="button" onclick="pickOption(${i})" ${Q.phase !== 'ask' ? 'disabled' : ''} lang="${st.dir === 'de2en' ? 'en' : LANG}" class="w-full min-h-[3.25rem] px-3 py-2.5 rounded-xl border-2 text-base font-bold text-left wrap-any transition ${cls}">${esc(o)}</button>`;
+          const tried = (Q.tried || []).includes(i);
+          let cls = tried ? 'bg-yellow-50 border-yellow-300 text-slate-400 line-through' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50';
+          if (Q.phase === 'answered' && !tried) cls = o === right ? 'bg-emerald-100 border-emerald-500 text-emerald-900' : 'bg-white border-slate-200 text-slate-400';
+          return `<button type="button" onclick="pickOption(${i})" ${Q.phase !== 'ask' || tried ? 'disabled' : ''} lang="${st.dir === 'de2en' ? 'en' : LANG}" class="w-full min-h-[3.25rem] px-3 py-2.5 rounded-xl border-2 text-base font-bold text-left wrap-any transition ${cls}">${esc(o)}</button>`;
         }).join('')}</div>`;
+        if (Q.phase === 'ask') {
+          if (Q.nudge >= 0 && Q.opts[Q.nudge]) html += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> ${esc(whyNotWord(Q.opts[Q.nudge], st.dir))} ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
+          html += `<button type="button" onclick="pickDontKnow()" class="mt-2 w-full px-3 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 ${tr('Weiss ich nicht', 'No lo sé')}</button>`;
+        }
       } else if (Q.phase === 'ask') {
         html += `
           <div class="mt-3 space-y-2">
@@ -1319,7 +1331,7 @@
         stages: [
           { key: 'pick', type: 'mc', get label() { return tr('Adjektiv oder Adverb?', '¿adjetivo o adverbio?'); }, example: 'She is a <b>calm</b> person. She talks <b>calmly</b>.' },
           { key: 'form', type: 'write', get label() { return tr('Adverb schreiben', 'escribir el adverbio'); }, example: 'She talks ___ (calm). → <b>calmly</b>', get placeholder() { return tr('Adjektiv + -ly …', 'adjetivo + -ly …'); }, hint: r => r === 'well' ? tr('Achte auf die Ausnahme (siehe 📖 Theorie).', 'Fíjate en la excepción (mira 📖 Teoría).') : tr('Adjektiv + -ly.', 'Adjetivo + -ly.') },
-          { key: 'deg', type: 'mc', label: 'very / quite / not very', get example() { return tr('9 von 10', '9 de 10') + ' → It was <b>very</b> nice.'; } }
+          { key: 'deg', type: 'mc', label: 'very / quite / not very', get example() { return tr('Wie schön? 9 von 10', '¿Qué tan bonito? 9 de 10') + ' → It was <b>very</b> nice.'; } }
         ],
         items: {
           // [Satz, [richtig, falsch]]
@@ -1338,13 +1350,18 @@
             ['The old man walks ___ (slow).', 'slowly'], ['She dances ___ (beautiful).', 'beautifully'],
             ['My grandma cooks ___ (good).', 'well']
           ],
-          // [Satz, [richtig, …], Punkte von 10]. very = 9–10, quite = 5–7, not very = 1–3
+          // [Satz, [richtig, …], Punkte von 10, Frage Deutsch, Frage Spanisch]. very = 9–10, quite = 5–7, not very = 1–3
+          // Die Frage mit den Punkten gehört zur Aufgabe: Ohne sie würde jedes Wort passen (Rückmeldung Lehrperson 12.11.2026).
           deg: [
-            ['Mia was ___ good at darts.', ['very', 'quite', 'not very'], 10], ['Ben was ___ good at football.', ['quite', 'very', 'not very'], 6],
-            ['Tom was ___ good at chess.', ['not very', 'very', 'quite'], 2], ['The concert was ___ loud.', ['very', 'quite', 'not very'], 9],
-            ['The film was ___ funny.', ['quite', 'very', 'not very'], 5], ['The hill was ___ high.', ['not very', 'very', 'quite'], 1],
-            ['The water in the lake was ___ cold.', ['very', 'quite', 'not very'], 9], ['The test was ___ easy.', ['quite', 'very', 'not very'], 7],
-            ['The game was ___ difficult.', ['not very', 'very', 'quite'], 3]
+            ['Mia was ___ good at darts.', ['very', 'quite', 'not very'], 10, 'Wie gut war Mia im Darts?', '¿Qué tan bien jugó Mia a los dardos?'],
+            ['Ben was ___ good at football.', ['quite', 'very', 'not very'], 6, 'Wie gut war Ben im Fussball?', '¿Qué tan bien jugó Ben al fútbol?'],
+            ['Tom was ___ good at chess.', ['not very', 'very', 'quite'], 2, 'Wie gut war Tom im Schach?', '¿Qué tan bien jugó Tom al ajedrez?'],
+            ['The concert was ___ loud.', ['very', 'quite', 'not very'], 9, 'Wie laut war das Konzert?', '¿Qué tan fuerte fue el concierto?'],
+            ['The film was ___ funny.', ['quite', 'very', 'not very'], 5, 'Wie lustig war der Film?', '¿Qué tan divertida fue la película?'],
+            ['The hill was ___ high.', ['not very', 'very', 'quite'], 1, 'Wie hoch war der Hügel?', '¿Qué tan alta era la colina?'],
+            ['The water in the lake was ___ cold.', ['very', 'quite', 'not very'], 9, 'Wie kalt war das Wasser im See?', '¿Qué tan fría estaba el agua del lago?'],
+            ['The test was ___ easy.', ['quite', 'very', 'not very'], 7, 'Wie einfach war der Test?', '¿Qué tan fácil fue el examen?'],
+            ['The game was ___ difficult.', ['not very', 'very', 'quite'], 3, 'Wie schwierig war das Spiel?', '¿Qué tan difícil fue el juego?']
           ]
         }
       }
@@ -1380,7 +1397,7 @@
     }
     function gNew() {
       const s = GS();
-      G.hint = false; G.pick = -1; G.ans = ''; G.ok = false; G.dontKnow = false; G.miss = null; G.placed = []; G.pool = [];
+      G.hint = false; G.pick = -1; G.ans = ''; G.ok = false; G.dontKnow = false; G.miss = null; G.placed = []; G.pool = []; G.tried = []; G.nudge = -1;
       // Wiederholung an späteren Tagen: 4 Sätze schreiben
       if (gReviewDue()) {
         const rk = G_TOPICS[GT].reviewKey;
@@ -1437,18 +1454,20 @@
     }
     function gAnswer(ok, ans, dontKnow) {
       const s = GS(), id = G.id;
+      // Erst nach einem falschen Versuch richtig: Lob, aber der Satz kommt nach 2 anderen nochmals
+      const retry = ok && (G.tried || []).length > 0, got = ok && !retry;
       G.phase = 'answered'; G.ok = ok; G.ans = ans; G.dontKnow = dontKnow;
-      G.praise = ok ? praise() : '';
+      G.praise = retry ? tr('✔ Jetzt stimmt’s! Gut nachgedacht.', '✔ ¡Ahora sí! Bien pensado.') : ok ? praise() : '';
       G.streak = ok ? G.streak + 1 : 0;
-      G.answers++; if (ok) G.right++;
+      G.answers++; if (got) G.right++;
       markToday();
       if (G.review) {
         s.revQueue = s.revQueue.filter(x => x !== id);
-        if (!ok) s.revQueue.splice(Math.min(2, s.revQueue.length), 0, id);
+        if (!got) s.revQueue.splice(Math.min(2, s.revQueue.length), 0, id);
         if (!s.revQueue.length) { s.rev++; s.revDue = s.rev < REVIEW_DAYS.length ? Date.now() + REVIEW_DAYS[s.rev] * DAY - EARLY : 0; }
       } else {
         s.queue = s.queue.filter(x => x !== id);
-        if (ok) s.done[id] = true;
+        if (got) s.done[id] = true;
         else s.queue.splice(Math.min(2, s.queue.length), 0, id);
       }
       save();
@@ -1460,11 +1479,28 @@
         setTimeout(() => { if (G.token === t && G.phase === 'answered') gNext(); }, G_STAGES[gItem(id).stage].type === 'mc' ? 800 : 1300);
       }
     }
+    // Falsch gewählt: nicht die Lösung zeigen. Antwort durchstreichen, kurzer Grund, nochmals probieren (didaktik.md 1b)
     function gPick(i) {
-      if (G.phase !== 'ask' || !G.opts[i]) return;
+      if (G.phase !== 'ask' || !G.opts[i] || (G.tried || []).includes(i)) return;
       const it = gItem(G.id);
       G.pick = i;
-      gAnswer(G.opts[i].toLowerCase() === gRight(it).toLowerCase(), G.opts[i], false);
+      if (G.opts[i].toLowerCase() !== gRight(it).toLowerCase()) { G.tried.push(i); G.nudge = i; renderGram(); return; }
+      G.nudge = -1;
+      gAnswer(true, G.opts[i], false);
+    }
+    function gPickDontKnow() { if (G.phase !== 'ask') return; G.pick = -1; G.nudge = -1; gAnswer(false, '', true); }
+    // Kurzer Grund, warum die gewählte Antwort nicht passt (ein Satz)
+    function gWhyNot(it, o) {
+      const x = o.toLowerCase();
+      if (it.key === 'be') return x === 'am' ? tr('«am» passt nur zu I.', '«am» solo va con I.')
+        : x === 'is' ? tr('«is» passt zu einer Person oder Sache (he, she, it).', '«is» va con una persona o cosa (he, she, it).')
+        : tr('«are» passt zu you, we, they.', '«are» va con you, we, they.');
+      if (it.key === 'ing') return tr('Nach am / is / are kommt das Verb mit -ing.', 'Después de am / is / are va el verbo con -ing.');
+      if (it.key === 'pick') return /ly$/.test(x) || x === 'well' ? tr(`«${o}» sagt, wie jemand etwas tut.`, `«${o}» dice cómo alguien hace algo.`)
+        : tr(`«${o}» beschreibt eine Person oder Sache.`, `«${o}» describe a una persona o cosa.`);
+      if (it.key === 'deg') return x === 'very' ? tr('very = 9 bis 10 Punkte.', 'very = 9 a 10 puntos.')
+        : x === 'quite' ? tr('quite = 5 bis 7 Punkte.', 'quite = 5 a 7 puntos.') : tr('not very = 1 bis 3 Punkte.', 'not very = 1 a 3 puntos.');
+      return '';
     }
     function gPlace(k) { if (G.phase !== 'ask' || !G.pool.includes(k)) return; G.pool = G.pool.filter(x => x !== k); G.placed.push(k); renderGram(); }
     function gUnplace(pos) { if (G.phase !== 'ask') return; const k = G.placed[pos]; if (k === undefined) return; G.placed.splice(pos, 1); G.pool.push(k); renderGram(); }
@@ -1563,15 +1599,23 @@
           <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2 gap-2"><span>${G.review ? `🔁 ${tr('Wiederholen', 'Repasar')}: ${G_STAGES.find(x => x.key === G_TOPICS[GT].reviewKey).label}` : `${tr('Stufe', 'Nivel')} ${it.stage + 1}: ${st.label}`}</span><span class="shrink-0">${G.streak >= 3 ? '🔥 ' + G.streak : ''}</span></div>
           ${G.review ? '' : `<div class="mb-2 text-xs text-slate-600" lang="en"><span class="font-bold" lang="${LANG}">${tr('Beispiel', 'Ejemplo')}:</span> ${st.example}</div>`}`;
         if (st.type === 'mc') {
-          // Wie stark? (very / quite / not very): Punkte von 10 als Balken
+          // Wie stark? (very / quite / not very): Frage mit Punkten von 10 steht in der Satzkarte, sonst würde jedes Wort passen
           const pts = it.data[2];
-          if (typeof pts === 'number') html += `<div class="mb-2 flex items-center gap-2 text-sm font-bold text-slate-700"><span class="shrink-0">${pts} ${tr('von', 'de')} 10</span><span class="flex-1 grid grid-cols-10 gap-0.5" aria-hidden="true">${Array.from({ length: 10 }, (_, k) => `<span class="h-4 rounded-sm ${k < pts ? 'bg-sky-500' : 'bg-slate-200'}"></span>`).join('')}</span></div>`;
-          html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4 text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' ? right : '')}</div>
+          const scale = typeof pts === 'number' ? `<div class="mb-3 pb-3 border-b-2 border-dashed border-sky-200" lang="${LANG}">
+              <div class="text-sm font-bold text-slate-700">${esc(tr(it.data[3], it.data[4]))}</div>
+              <div class="mt-1.5 flex items-center gap-2"><span class="shrink-0 px-2 py-0.5 rounded-lg bg-sky-600 text-white text-sm font-black">${pts} ${tr('von', 'de')} 10</span><span class="flex-1 grid grid-cols-10 gap-0.5" aria-hidden="true">${Array.from({ length: 10 }, (_, k) => `<span class="h-3 rounded-sm ${k < pts ? 'bg-sky-500' : 'bg-white border border-sky-200'}"></span>`).join('')}</span></div>
+            </div>` : '';
+          html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4">${scale}<div class="text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' ? right : '')}</div></div>
             <div class="mt-3 grid ${G.opts.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-2">${G.opts.map((o, i) => {
-              let cls = 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50';
-              if (G.phase === 'answered') cls = o.toLowerCase() === right.toLowerCase() ? 'bg-emerald-100 border-emerald-500 text-emerald-900' : i === G.pick ? 'bg-amber-50 border-amber-400 text-amber-900' : 'bg-white border-slate-200 text-slate-400';
-              return `<button type="button" onclick="gPick(${i})" ${G.phase !== 'ask' ? 'disabled' : ''} lang="en" class="min-h-[3.25rem] px-2 py-2.5 rounded-xl border-2 text-base font-bold wrap-any transition ${cls}">${esc(o)}</button>`;
+              const tried = (G.tried || []).includes(i);
+              let cls = tried ? 'bg-yellow-50 border-yellow-300 text-slate-400 line-through' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50';
+              if (G.phase === 'answered' && !tried) cls = o.toLowerCase() === right.toLowerCase() ? 'bg-emerald-100 border-emerald-500 text-emerald-900' : 'bg-white border-slate-200 text-slate-400';
+              return `<button type="button" onclick="gPick(${i})" ${G.phase !== 'ask' || tried ? 'disabled' : ''} lang="en" class="min-h-[3.25rem] px-2 py-2.5 rounded-xl border-2 text-base font-bold wrap-any transition ${cls}">${esc(o)}</button>`;
             }).join('')}</div>`;
+          if (G.phase === 'ask') {
+            if (G.nudge >= 0 && G.opts[G.nudge]) html += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> ${esc(gWhyNot(it, G.opts[G.nudge]))} ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
+            html += `<button type="button" onclick="gPickDontKnow()" class="mt-2 w-full px-3 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">🤷 ${tr('Weiss ich nicht', 'No lo sé')}</button>`;
+          }
         } else if (st.type === 'tiles') {
           const words = it.data.t;
           html += `<div class="text-sm font-semibold text-slate-700 mb-1">${tr('Tipp die Wörter in der richtigen Reihenfolge an:', 'Toca las palabras en el orden correcto:')}</div>
