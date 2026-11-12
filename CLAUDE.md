@@ -12,7 +12,7 @@ Alles andere liegt in der **privaten Ablage** (siehe unten).
 | Datei | Thema |
 |---|---|
 | `connected_3_scratch_trainingshub.html` | Informatik, Connected 3 «Abheben mit Algorithmen» (Scratch): Lernpfad in 4 Teilen (Algorithmus & Ablaufdiagramm, Schleifen, eigene Blöcke & Fehler, UND/ODER) |
-| `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» |
+| `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» (abgeschlossen: Kachel auf der Startseite entfernt 12.11.2026, Datei bleibt) |
 | `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 (abgeschlossen: Kachel auf der Startseite entfernt 11.11.2026, Datei bleibt) |
 | `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter-Lernpfad, 3 Grammatik-Lernpfade: Pläne, Adverbien, Wie stark?) |
 | `RZG Vulkane Erdbeben Tsunamis.html` | RZG, Dynamik der Erde, Test 2: Lernpfad in 4 Teilen (Vulkane entstehen, Aufbau & Ausbrüche, Erdbeben, Tsunamis) |
