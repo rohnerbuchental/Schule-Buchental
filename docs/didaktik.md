@@ -47,7 +47,7 @@ Viele Schülerinnen und Schüler lernen nicht gern, haben schlechte Erfahrungen 
 - Am besten **zum Stoff**: Antippen zeigt etwas, das man lernen soll (Vulkan bricht aus: Magma steigt aus der Magmakammer; Drohne fliegt das Quadrat).
 - Sonst **als Belohnung nach einer Etappe** oder auf der Startansicht, nie mitten in einer Aufgabe und nie neben einer Grafik, mit der man gerade arbeitet.
 - Bewegt sich nur nach Antippen, kurz (unter 2 Sekunden), dann wieder ruhig. `prefers-reduced-motion` beachten.
-- Beispiele: Vulkan bricht aus (RZG, Startansicht, zum Stoff); Drohne (Scratch); Baumstamm-Werfen an den Highland Games (Englisch Unit 2, Belohnung nach Etappe/Stufe, mit dem Wort «toss» aus dem Wortschatz).
+- Beispiele: Vulkan bricht aus (RZG, Startansicht, zum Stoff); Drohne (Scratch); Baumstamm-Werfen und Highland-Tanz (Englisch Unit 2, Belohnung nach Etappe bzw. Stufe, mit dem Wort «toss» aus dem Wortschatz).
 
 ## 2 Wörter lernen (Lernpfad)
 
