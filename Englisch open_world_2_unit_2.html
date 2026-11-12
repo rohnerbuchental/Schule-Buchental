@@ -1319,7 +1319,7 @@
         stages: [
           { key: 'pick', type: 'mc', get label() { return tr('Adjektiv oder Adverb?', '¿adjetivo o adverbio?'); }, example: 'She is a <b>calm</b> person. She talks <b>calmly</b>.' },
           { key: 'form', type: 'write', get label() { return tr('Adverb schreiben', 'escribir el adverbio'); }, example: 'She talks ___ (calm). → <b>calmly</b>', get placeholder() { return tr('Adjektiv + -ly …', 'adjetivo + -ly …'); }, hint: r => r === 'well' ? tr('Achte auf die Ausnahme (siehe 📖 Theorie).', 'Fíjate en la excepción (mira 📖 Teoría).') : tr('Adjektiv + -ly.', 'Adjetivo + -ly.') },
-          { key: 'deg', type: 'mc', label: 'very / quite / not very', get example() { return tr('9 von 10', '9 de 10') + ' → It was <b>very</b> nice.'; } }
+          { key: 'deg', type: 'mc', label: 'very / quite / not very', get example() { return tr('Wie schön? 9 von 10', '¿Qué tan bonito? 9 de 10') + ' → It was <b>very</b> nice.'; } }
         ],
         items: {
           // [Satz, [richtig, falsch]]
@@ -1338,13 +1338,18 @@
             ['The old man walks ___ (slow).', 'slowly'], ['She dances ___ (beautiful).', 'beautifully'],
             ['My grandma cooks ___ (good).', 'well']
           ],
-          // [Satz, [richtig, …], Punkte von 10]. very = 9–10, quite = 5–7, not very = 1–3
+          // [Satz, [richtig, …], Punkte von 10, Frage Deutsch, Frage Spanisch]. very = 9–10, quite = 5–7, not very = 1–3
+          // Die Frage mit den Punkten gehört zur Aufgabe: Ohne sie würde jedes Wort passen (Rückmeldung Lehrperson 12.11.2026).
           deg: [
-            ['Mia was ___ good at darts.', ['very', 'quite', 'not very'], 10], ['Ben was ___ good at football.', ['quite', 'very', 'not very'], 6],
-            ['Tom was ___ good at chess.', ['not very', 'very', 'quite'], 2], ['The concert was ___ loud.', ['very', 'quite', 'not very'], 9],
-            ['The film was ___ funny.', ['quite', 'very', 'not very'], 5], ['The hill was ___ high.', ['not very', 'very', 'quite'], 1],
-            ['The water in the lake was ___ cold.', ['very', 'quite', 'not very'], 9], ['The test was ___ easy.', ['quite', 'very', 'not very'], 7],
-            ['The game was ___ difficult.', ['not very', 'very', 'quite'], 3]
+            ['Mia was ___ good at darts.', ['very', 'quite', 'not very'], 10, 'Wie gut war Mia im Darts?', '¿Qué tan bien jugó Mia a los dardos?'],
+            ['Ben was ___ good at football.', ['quite', 'very', 'not very'], 6, 'Wie gut war Ben im Fussball?', '¿Qué tan bien jugó Ben al fútbol?'],
+            ['Tom was ___ good at chess.', ['not very', 'very', 'quite'], 2, 'Wie gut war Tom im Schach?', '¿Qué tan bien jugó Tom al ajedrez?'],
+            ['The concert was ___ loud.', ['very', 'quite', 'not very'], 9, 'Wie laut war das Konzert?', '¿Qué tan fuerte fue el concierto?'],
+            ['The film was ___ funny.', ['quite', 'very', 'not very'], 5, 'Wie lustig war der Film?', '¿Qué tan divertida fue la película?'],
+            ['The hill was ___ high.', ['not very', 'very', 'quite'], 1, 'Wie hoch war der Hügel?', '¿Qué tan alta era la colina?'],
+            ['The water in the lake was ___ cold.', ['very', 'quite', 'not very'], 9, 'Wie kalt war das Wasser im See?', '¿Qué tan fría estaba el agua del lago?'],
+            ['The test was ___ easy.', ['quite', 'very', 'not very'], 7, 'Wie einfach war der Test?', '¿Qué tan fácil fue el examen?'],
+            ['The game was ___ difficult.', ['not very', 'very', 'quite'], 3, 'Wie schwierig war das Spiel?', '¿Qué tan difícil fue el juego?']
           ]
         }
       }
@@ -1563,10 +1568,13 @@
           <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2 gap-2"><span>${G.review ? `🔁 ${tr('Wiederholen', 'Repasar')}: ${G_STAGES.find(x => x.key === G_TOPICS[GT].reviewKey).label}` : `${tr('Stufe', 'Nivel')} ${it.stage + 1}: ${st.label}`}</span><span class="shrink-0">${G.streak >= 3 ? '🔥 ' + G.streak : ''}</span></div>
           ${G.review ? '' : `<div class="mb-2 text-xs text-slate-600" lang="en"><span class="font-bold" lang="${LANG}">${tr('Beispiel', 'Ejemplo')}:</span> ${st.example}</div>`}`;
         if (st.type === 'mc') {
-          // Wie stark? (very / quite / not very): Punkte von 10 als Balken
+          // Wie stark? (very / quite / not very): Frage mit Punkten von 10 steht in der Satzkarte, sonst würde jedes Wort passen
           const pts = it.data[2];
-          if (typeof pts === 'number') html += `<div class="mb-2 flex items-center gap-2 text-sm font-bold text-slate-700"><span class="shrink-0">${pts} ${tr('von', 'de')} 10</span><span class="flex-1 grid grid-cols-10 gap-0.5" aria-hidden="true">${Array.from({ length: 10 }, (_, k) => `<span class="h-4 rounded-sm ${k < pts ? 'bg-sky-500' : 'bg-slate-200'}"></span>`).join('')}</span></div>`;
-          html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4 text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' ? right : '')}</div>
+          const scale = typeof pts === 'number' ? `<div class="mb-3 pb-3 border-b-2 border-dashed border-sky-200" lang="${LANG}">
+              <div class="text-sm font-bold text-slate-700">${esc(tr(it.data[3], it.data[4]))}</div>
+              <div class="mt-1.5 flex items-center gap-2"><span class="shrink-0 px-2 py-0.5 rounded-lg bg-sky-600 text-white text-sm font-black">${pts} ${tr('von', 'de')} 10</span><span class="flex-1 grid grid-cols-10 gap-0.5" aria-hidden="true">${Array.from({ length: 10 }, (_, k) => `<span class="h-3 rounded-sm ${k < pts ? 'bg-sky-500' : 'bg-white border border-sky-200'}"></span>`).join('')}</span></div>
+            </div>` : '';
+          html += `<div class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4">${scale}<div class="text-lg font-bold text-slate-900 leading-relaxed wrap-any" lang="en">${gSentence(it, G.phase === 'answered' ? right : '')}</div></div>
             <div class="mt-3 grid ${G.opts.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-2">${G.opts.map((o, i) => {
               let cls = 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50';
               if (G.phase === 'answered') cls = o.toLowerCase() === right.toLowerCase() ? 'bg-emerald-100 border-emerald-500 text-emerald-900' : i === G.pick ? 'bg-amber-50 border-amber-400 text-amber-900' : 'bg-white border-slate-200 text-slate-400';
