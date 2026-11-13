@@ -1230,6 +1230,7 @@
           <div class="rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/60 p-5 text-center space-y-2">
             <div class="text-3xl">📝</div>
             <p class="text-sm text-slate-700">${tr(`Hast du die Wörter im Lernpfad geübt? Dann teste dich wie in der Prüfung: ${t.a.length} Wörter Deutsch → Englisch und ${t.b.length} Wörter Englisch → Deutsch.`, `¿Has practicado las palabras en la ruta de aprendizaje? Entonces ponte a prueba como en el examen: ${t.a.length} palabras español → inglés y ${t.b.length} palabras inglés → español.`)}</p>
+            <p class="text-xs text-slate-600">${tr(`Wie in der Prüfung kommen nicht alle ${partWords(STATE.part).length} Wörter, sondern ${t.a.length + t.b.length}, zufällig gewählt. Alle Wörter übst du im Lernpfad oben.`, `Como en el examen, no salen todas las ${partWords(STATE.part).length} palabras, sino ${t.a.length + t.b.length}, elegidas al azar. Todas las palabras las practicas en la ruta de arriba.`)}</p>
             <button type="button" onclick="openTest()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('▶ Wörtertest starten', '▶ Empezar la prueba')}</button>
           </div>`;
         $('fb-test').innerHTML = '';
@@ -1238,6 +1239,7 @@
       const head = (txt, n) => `<div class="flex items-center justify-between gap-2 bg-slate-100 rounded-lg px-3 py-2 mb-2"><h3 class="text-sm font-black text-slate-800">${txt}</h3><span class="text-xs font-bold text-slate-600">${n} ${tr('P.', 'p.')}</span></div>`;
       $('body-test').innerHTML = `
         <div class="space-y-5">
+          <p class="text-xs text-slate-600">${tr(`${t.a.length + t.b.length} von ${partWords(STATE.part).length} Wörtern, zufällig. «🔀 Nochmals üben» gibt andere Wörter.`, `${t.a.length + t.b.length} de ${partWords(STATE.part).length} palabras, al azar. «🔀 Practicar otra vez» da otras palabras.`)}</p>
           <div>${head(tr('Teil A: Deutsch → Englisch', 'Parte A: español → inglés'), t.a.length)}<div class="space-y-2">${t.a.map((it, i) => testRow('a', it, i + 1, t)).join('')}</div></div>
           <div>${head(tr('Teil B: Englisch → Deutsch', 'Parte B: inglés → español'), t.b.length)}<div class="space-y-2">${t.b.map((it, i) => testRow('b', it, t.a.length + i + 1, t)).join('')}</div></div>
         </div>`;
