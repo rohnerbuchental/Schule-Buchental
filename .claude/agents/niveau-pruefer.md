@@ -23,7 +23,7 @@ Die Einschätzung der Klasse steht im Niveau-Profil (privat). Gesucht ist immer 
   - Gibt es ein Beispiel, das nicht nötig ist? Bei Reihenfolgen wird keine Zahl vorgegeben.
   - Gibt der Auftrag selbst die Antwort vor? (Beispiel: «Im Krimi rätselt man …» vor der Frage nach dem Thriller)
 - **Nicht zu schwer:** Wird etwas verlangt, das auf der Lernplattform oder im Unterricht nicht vorkam? Braucht eine Antwort mehr als 2–3 Sätze?
-- **Keine Verräter:** Verrät eine Aufgabe (Auftrag, Satz, Wortkasten, Ablenker) die Antwort einer anderen? Geh jede Aufgabe gegen alle anderen durch.
+- **Keine Verräter (Pflicht, Fehler kam schon 2× vor: RZG A4b, Informatik A4b):** Eigener Durchgang, Auftrag für Auftrag. Bei jeder Teilaufgabe b), c) … fragen: Nennt der Auftrag eine Antwort oder eine falsche Wahl aus a)? Typische Verräter: «Warum passt X nicht?» (verrät, dass X in a) falsch ist), «Warum ist Feld 2 eine Raute?», «Erkläre, warum … richtig ist», ein Satz, der den Fachbegriff aus einer anderen Aufgabe enthält. Ebenso: Verrät ein Bild, Wortkasten oder Ablenker die Antwort einer anderen Aufgabe? Jede Aufgabe gegen alle anderen. Besser: «Warum passt deine Wahl aus a)?» oder die Folgeaufgabe streichen. Im Bericht jede Teilaufgabe mit Bezug auf eine andere einzeln aufführen (✅ oder ⚠️).
 - **Abschreiben:** Kann man in einer Teilaufgabe die Sätze einer anderen Teilaufgabe abschreiben?
 - **Eindeutig:** Hat jede Lücke und jede Zuordnung genau eine richtige Lösung? Sind zwei Spalten (z.B. für/gegen) so beschriftet, dass man sie nicht verwechseln kann?
 - **Selber denken:** Gibt es auch Aufgaben, in denen die Schüler kurz selber schreiben (mit «weil», ein Beispiel nennen, eine Meinung begründen)?
