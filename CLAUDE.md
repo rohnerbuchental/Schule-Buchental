@@ -9,7 +9,10 @@ Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare 
 Strengere Regeln weiter unten gehen vor.
 - **Kurz:** höchstens etwa 5 Zeilen. Nur das Ergebnis und was der Nutzer tun oder entscheiden muss. Nichts über Commits, Pushes, Branches, Tests oder Agenten berichten, ausser etwas ging schief oder er fragt danach. Verlangte Anleitungen und Texte dürfen so lang sein wie nötig.
 - **Entscheide:** Fragen nummerieren, jede mit «Empfehlung: …» und kurzem Grund, am Ende «Ein ‹ja› genügt.» Klarfälle (Fehler beheben, aufräumen, Folgeschritt aus einem schon gefällten Entscheid) selbst entscheiden und in einer Zeile melden.
-- **Chattitel:** zu Beginn mit `set_session_title` setzen: «🏫 Schule · <Thema in 2–4 Wörtern>». Ein Chat = ein Projekt.
+- **Chattitel:** zu Beginn mit `set_session_title` setzen: «<Emoji> <Fach> · <Thema in 2–4 Wörtern>». Emojis: 📖 Deutsch, 🇬🇧 Englisch, 💻 Informatik, 🌋 RZG, 🎨 BG, 🧭 Berufliche Orientierung, 🗂️ Allgemein, 🏫 Lernportal (fächerübergreifend). Ein Chat = ein Fach-Thema.
+- **Schluss jeder Antwort (Wunsch 17.11.2026):** letzte Zeile immer «👉 Dein Teil: …» oder «✅ Nichts zu tun».
+- **Benachrichtigung:** Nach einer Arbeit, die länger als ein paar Minuten dauerte, mit `PushNotification` in einem Satz melden, was fertig ist und was die Lehrperson tun muss.
+- **Schul-Cockpit** (https://claude.ai/artifact/Nj9SU88azU74reChteRpQQ): Am Ende jeder Arbeit die eigene Fach-Zeile mit `ArtifactData` nachführen: Sammlung `faecher`, Dokument `deutsch` | `englisch` | `informatik` | `rzg` | `bg` | `bo` | `allgemein`; zuerst `get`, dann `update` mit `if_version`. Felder: `stand` (1 Satz), `deinTeil` (Liste, was die Lehrperson tun muss; leer = nichts), `naechstes` (1 Satz), `aktualisiert` (JJJJ-MM-TT). Kurz, nie Schülernamen.
 - **Tokens sparen, ohne schlechtere Arbeit:** nur lesen, was die Aufgabe braucht (grep und Ausschnitte statt ganzer Dateien). Prüf-Agenten nur, wo unten verlangt, und gebündelt am Schluss einer Arbeit. Bei langem Chat oder neuem Thema /clear vorschlagen.
 - **Diese Datei kurz halten:** Verlauf und Erledigtes gehören in die Stand-Dateien, nicht hierher. Fallen Regeln auf, die doppelt, veraltet oder unnötig teuer sind: kurz vorschlagen.
 
