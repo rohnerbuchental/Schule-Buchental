@@ -330,17 +330,18 @@
     };
 
     // Deutsch → Englisch: weitere richtige Schreibweisen (alt), Zusatz zur Frage (hint).
-    // noType = langer Ausdruck: wird nie auf Englisch geschrieben (nur ausgewählt).
+    // noType = langer Ausdruck: wird nie auf Englisch geschrieben (nur ausgewählt). Seit 17.11.2026 nicht mehr verwendet:
+    // Lehrperson will jedes Wort in beiden Richtungen geschrieben haben.
     const EXTRA = {
       'bagpipes': { alt: ['bagpipe'] },
       'prize': { hint: 'beim Gewinnen' },
       'heavy': { hint: 'Gewicht' },
       'noon': { alt: ['midday'] },
       'be allowed to': { alt: ['be allowed'] },
-      "find one's way (to)": { noType: true },
-      'in the top left-hand corner': { noType: true },
-      'knock down / knock over': { noType: true },
-      'tell someone the way': { noType: true },
+      "find one's way (to)": { alt: ["find one's way", "find one's way to", 'find your way', 'find your way to'] },
+      'in the top left-hand corner': { alt: ['top left-hand corner', 'in the top left corner', 'top left corner'] },
+      'knock down / knock over': { alt: ['knock down', 'knock over', 'knock over / knock down', 'knock down or knock over', 'knock down, knock over'] },
+      'tell someone the way': { alt: ['tell somebody the way'] },
       'require': { hint: 'nicht «need»' },
       'space': { hint: 'freier Platz' }
     };
@@ -530,7 +531,6 @@
     // ==========================================================
     const ACTIVE_N = 7;               // so viele Wörter sind im Lernpfad gleichzeitig dran
     const ETAPPE_N = 10;              // nach so vielen Antworten: «Etappe geschafft» (weitermachen oder Pause)
-    const TEST_A = 10, TEST_B = 10;   // Test: Deutsch → Englisch, Englisch → Deutsch
     const STAGES = [
       { dir: 'en2de', type: 'mc', get label() { return tr('Englisch → Deutsch auswählen', 'elegir inglés → español'); } },
       { dir: 'de2en', type: 'mc', get label() { return tr('Deutsch → Englisch auswählen', 'elegir español → inglés'); } },
@@ -1137,22 +1137,17 @@
     // Jede Sprache hat ihren eigenen Test (sonst würden deutsche Antworten nach dem Umschalten spanisch bewertet)
     const tKey = (part = STATE.part) => ES() ? part + '_es' : part;
     const T = () => STATE.tests[tKey()];
+    // Wunsch Lehrperson 17.11.2026: In jedem Durchgang kommt JEDES Wort des Teils in beiden Richtungen (Teil A und Teil B), neu gemischt.
+    // Damit Teil B die Antworten von Teil A nicht verrät: zuerst nur Teil A, dann wird Teil A zugeklappt und Teil B kommt. Geprüft wird am Schluss.
     function newTest(part) {
-      const words = partWords(part);
-      const a = [], block = new Set();
-      for (const w of shuffle(words.filter(x => !x.noType))) {
-        if (a.length >= TEST_A) break;
-        if (block.has(w.id)) continue;
-        a.push(w);
-        [w.id, ...related(w, TYPE_IDS), ...related(w, FAMILY_IDS)].forEach(id => block.add(id));
-      }
-      const b = shuffle(words.filter(w => !block.has(w.id))).slice(0, TEST_B);
-      return { a: a.map(w => ({ w: w.id, ans: '' })), b: b.map(w => ({ w: w.id, ans: '' })), checked: false, warned: false };
+      const ids = shuffle(partWords(part)).map(w => w.id);
+      return { a: ids.map(id => ({ w: id, ans: '' })), b: shuffle(ids).map(id => ({ w: id, ans: '' })), step: 'a', checked: false, warned: false };
     }
     const testBOk = it => l1Ok(BY_ID[it.w], it.ans);
     function validTest(t, part) {
-      const ok = list => Array.isArray(list) && list.length > 0 && list.every(it => it && BY_ID[it.w] && BY_ID[it.w].part === part && typeof it.ans === 'string');
-      return t && ok(t.a) && ok(t.b);
+      const all = partWords(part).map(w => w.id).sort().join();
+      const ok = list => Array.isArray(list) && list.every(it => it && BY_ID[it.w] && typeof it.ans === 'string') && list.map(it => it.w).sort().join() === all;
+      return t && ok(t.a) && ok(t.b) && (t.step === 'a' || t.step === 'b');   // alter Test mit 20 zufälligen Wörtern: neuer Test
     }
     // Gespeicherten Test behalten, aber bei jedem Laden neu mischen
     function ensureTest(part) {
@@ -1165,9 +1160,21 @@
       const it = t[key].find(x => x.w === id);
       if (it) { it.ans = val; save(); }
     }
+    // Teil A fertig: Teil A zuklappen, Teil B zeigen
+    function nextTestPart() {
+      const t = T();
+      if (t.checked || t.step !== 'a') return;
+      const empty = t.a.filter(it => !it.ans.trim()).length;
+      if (empty && !t.warnedA) { t.warnedA = true; save(); renderTest(); return; }
+      t.step = 'b';
+      save();
+      renderTest();
+      const first = document.querySelector('#body-test .test-in');
+      if (first) { first.focus(); first.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }
     function checkTest() {
       const t = T();
-      if (t.checked) return;
+      if (t.checked || t.step !== 'b') return;
       const empty = [...t.a, ...t.b].filter(it => !it.ans.trim()).length;
       if (empty && !t.warned) { t.warned = true; save(); renderTest(); return; }
       t.checked = true;
@@ -1229,25 +1236,39 @@
         $('body-test').innerHTML = `
           <div class="rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/60 p-5 text-center space-y-2">
             <div class="text-3xl">📝</div>
-            <p class="text-sm text-slate-700">${tr(`Hast du die Wörter im Lernpfad geübt? Dann teste dich wie in der Prüfung: ${t.a.length} Wörter Deutsch → Englisch und ${t.b.length} Wörter Englisch → Deutsch.`, `¿Has practicado las palabras en la ruta de aprendizaje? Entonces ponte a prueba como en el examen: ${t.a.length} palabras español → inglés y ${t.b.length} palabras inglés → español.`)}</p>
+            <p class="text-sm text-slate-700">${tr(`Hast du die Wörter im Lernpfad geübt? Dann teste dich: Alle ${t.a.length} Wörter kommen dran, zuerst Deutsch → Englisch (Teil A), dann Englisch → Deutsch (Teil B).`, `¿Has practicado las palabras en la ruta de aprendizaje? Entonces ponte a prueba: salen las ${t.a.length} palabras, primero español → inglés (parte A), después inglés → español (parte B).`)}</p>
             <button type="button" onclick="openTest()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('▶ Wörtertest starten', '▶ Empezar la prueba')}</button>
           </div>`;
         $('fb-test').innerHTML = '';
         return;
       }
       const head = (txt, n) => `<div class="flex items-center justify-between gap-2 bg-slate-100 rounded-lg px-3 py-2 mb-2"><h3 class="text-sm font-black text-slate-800">${txt}</h3><span class="text-xs font-bold text-slate-600">${n} ${tr('P.', 'p.')}</span></div>`;
-      $('body-test').innerHTML = `
-        <div class="space-y-5">
-          <div>${head(tr('Teil A: Deutsch → Englisch', 'Parte A: español → inglés'), t.a.length)}<div class="space-y-2">${t.a.map((it, i) => testRow('a', it, i + 1, t)).join('')}</div></div>
-          <div>${head(tr('Teil B: Englisch → Deutsch', 'Parte B: inglés → español'), t.b.length)}<div class="space-y-2">${t.b.map((it, i) => testRow('b', it, t.a.length + i + 1, t)).join('')}</div></div>
+      const partA = `<div>${head(tr('Teil A: Deutsch → Englisch', 'Parte A: español → inglés'), t.a.length)}<div class="space-y-2">${t.a.map((it, i) => testRow('a', it, i + 1, t)).join('')}</div></div>`;
+      const partB = `<div>${head(tr('Teil B: Englisch → Deutsch', 'Parte B: inglés → español'), t.b.length)}<div class="space-y-2">${t.b.map((it, i) => testRow('b', it, t.a.length + i + 1, t)).join('')}</div></div>`;
+      const emptyA = t.a.filter(it => !it.ans.trim()).length;
+      // Teil A: nur Teil A und «Weiter zu Teil B». Teil B: Teil A zugeklappt (sonst verrät Teil B die Antworten). Geprüft: beide Teile.
+      $('body-test').innerHTML = t.checked ? `<div class="space-y-5">${partA}${partB}</div>`
+        : t.step === 'a' ? `
+        <div class="space-y-4">
+          <p class="text-xs font-semibold text-slate-600">${tr(`Schritt 1 von 2 · Alle ${t.a.length} Wörter kommen dran.`, `Paso 1 de 2 · Salen las ${t.a.length} palabras.`)}</p>
+          ${partA}
+          ${t.warnedA && emptyA ? `<div class="text-sm font-bold text-amber-700">${tr(`Noch ${emptyA} leer. Füll alles aus oder drück nochmals auf «Weiter zu Teil B».`, `Faltan ${emptyA}. Completa todo o toca otra vez «Seguir con la parte B».`)}</div>` : ''}
+          <button type="button" onclick="nextTestPart()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('Weiter zu Teil B ▶', 'Seguir con la parte B ▶')}</button>
+        </div>`
+        : `
+        <div class="space-y-4">
+          <div class="rounded-xl border border-emerald-300 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-900">${tr(`✔ Teil A gemacht (${t.a.length - emptyA} von ${t.a.length} ausgefüllt). Er wird am Schluss zusammen mit Teil B geprüft.`, `✔ Parte A hecha (${t.a.length - emptyA} de ${t.a.length} completadas). Se corrige al final junto con la parte B.`)}</div>
+          <p class="text-xs font-semibold text-slate-600">${tr('Schritt 2 von 2', 'Paso 2 de 2')}</p>
+          ${partB}
         </div>`;
       const btn = $('check-test');
+      btn.classList.toggle('hidden', !t.checked && t.step === 'a');
       btn.disabled = t.checked;
       btn.classList.toggle('opacity-50', t.checked);
       const fb = $('fb-test');
       if (!t.checked) {
         const empty = [...t.a, ...t.b].filter(it => !it.ans.trim()).length;
-        fb.innerHTML = t.warned && empty ? `<div class="text-sm font-bold text-amber-700">${tr(`Noch ${empty} leer. Füll alles aus oder drück nochmals auf «Test prüfen».`, `Faltan ${empty}. Completa todo o toca otra vez «Corregir la prueba».`)}</div>` : '';
+        fb.innerHTML = t.step === 'b' && t.warned && empty ? `<div class="text-sm font-bold text-amber-700">${tr(`Noch ${empty} leer. Füll alles aus oder drück nochmals auf «Test prüfen».`, `Faltan ${empty}. Completa todo o toca otra vez «Corregir la prueba».`)}</div>` : '';
         return;
       }
       const pts = TASKS.test.score(), max = TASKS.test.max, m = medalOf(pts, max);
@@ -1895,7 +1916,7 @@
       save();
     }
 
-    Object.assign(window, { setLang, setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, continuePfad, pausePfad, giveHint, openTest, testInput, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, switchTab, gPick, gPlace, gUnplace, gCheckTiles, gWrite, gHint, gNext, gContinue, gPause, openTheoryG, backToTaskG, setGTopic });
+    Object.assign(window, { setLang, setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, continuePfad, pausePfad, giveHint, openTest, testInput, testEnter, nextTestPart, checkTest, toggleTip, openTheory, backToTask, retryTask, switchTab, gPick, gPlace, gUnplace, gCheckTiles, gWrite, gHint, gNext, gContinue, gPause, openTheoryG, backToTaskG, setGTopic });
 
     // Start sobald das HTML da ist
     document.addEventListener('DOMContentLoaded', function () {
