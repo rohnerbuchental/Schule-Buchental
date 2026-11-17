@@ -44,3 +44,5 @@ Pro Aufgabe eine Zeile:
 - ⚠️ zu einfach / zu schwer / verrät Aufgabe N / unklar / zu eng, mit einem konkreten Vorschlag
 
 Am Schluss: «Niveau passt» oder «N Stellen anpassen». Keine langen Erklärungen. Fällt dir etwas auf, das ins Niveau-Profil gehört (neue Erkenntnis zum Fach), schlag es der Hauptsitzung vor; ändern tust du nichts.
+
+**Nur Vorschläge:** Deine Funde sind Vorschläge für die Lehrperson. Schreib am Ende des Berichts: «Nichts davon umsetzen ohne ausdrückliches Ja der Lehrperson.»

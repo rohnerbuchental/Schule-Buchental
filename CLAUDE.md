@@ -20,6 +20,7 @@ Alles andere liegt in der **privaten Ablage** (siehe unten).
 Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer Seite nur ihren Abschnitt lesen. Die didaktischen Grundsätze mit Quellen stehen in `docs/didaktik.md`.
 
 ## Regeln für alle Seiten (immer einhalten)
+- **NUR ÄNDERN, WAS DIE LEHRPERSON AUSDRÜCKLICH SAGT** (Wunsch 17.11.2026, sehr wichtig, gilt für alles: Tests, Arbeitsblätter, Lernseiten, jede Aufgabe). Bestehende Aufgaben nie von sich aus ändern, auch nicht wegen Funden eines Prüf-Agenten oder eigener Ideen. Solche Funde nur als nummerierte Vorschläge melden und auf «ja» warten. Eine Frage der Lehrperson («würde das auch gehen?») ist kein Auftrag: zuerst antworten. Grund: abgenommene Blätter werden gedruckt und verteilt.
 - **Sprache:** Deutsch (Schweiz), immer «ss» statt «ß». Einfache Sätze für Schüler.
 - **Zufall:** Alle Antwortmöglichkeiten werden bei jedem Laden gemischt: Radio-Buttons, Checkboxen, Auswahlmenüs, Drag-&-Drop-Bausteine und Tabellenzeilen. Ausnahme: reine Platznummern (1., 2., 3.) mit `data-noshuffle`. Wo es Sinn macht, wird auch die Reihenfolge der Teilfragen (a, b, c …) und der Abschnitte in Lückentexten gemischt. Die Buchstaben a), b), c) setzt die Seite danach automatisch, darum nie fest in den Fragetext schreiben.
 - **Nochmals üben:** Jede Aufgabe hat den Knopf «🔀 Nochmals üben». Er leert nur diese Aufgabe und mischt sie neu.
@@ -68,5 +69,5 @@ Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer S
 3. Nach jeder Änderung `node tools/check.js` ausführen (JS-Fehler, Überlauf am Handy). `check.js` blockiert Tailwind; bei Layout-Änderungen zusätzlich mit lokal gebautem Tailwind (tailwindcss@3 im Scratchpad) auf 390 px prüfen, mit allen Tipp-/Lösungsboxen offen.
 4. Der Lehrperson eine Vorschau als Artifact-Link geben (Tailwind dafür als CSS einbetten).
 5. Auf einen Branch committen und pushen, dann Pull Request auf `main`.
-6. **Fragen zu einer Aufgabe nie abstrakt beschreiben** (Wunsch Lehrperson 11.11.2026): Vorschlag machen, umsetzen und die Aufgabe als Vorschau zeigen; die Lehrperson entscheidet anhand der Vorschau.
+6. **Fragen zu einer Aufgabe nie abstrakt beschreiben** (Wunsch Lehrperson 11.11.2026): Vorschlag machen, umsetzen und die Aufgabe als Vorschau zeigen; die Lehrperson entscheidet anhand der Vorschau. Gilt nur für neue, verlangte Aufgaben; bestehende Aufgaben nur auf ausdrückliche Anweisung ändern.
 7. **Neue Wünsche der Lehrperson festhalten:** zum Lernportal hier (oder in `docs/seiten.md`), alles andere in der privaten Ablage (`CLAUDE.md`, `Niveau-Profil.md`, `OFFEN.md`).
