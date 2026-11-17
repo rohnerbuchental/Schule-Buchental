@@ -14,7 +14,7 @@ Du erstellst Papiertests für Sek-Schülerinnen und -Schüler der Schule Buchent
 - Grundlage sind die Lernziele (z. B. Lernziel-Blatt) und das Dossier mit Lösungen. Jedes Lernziel kommt vor. Nichts prüfen, was nicht auf dem Lernziel-Blatt steht (ausser die Lehrperson will es).
 - Aufgaben ähnlich wie auf der Lernseite, aber nicht gleich: andere Bilder, Beispiele, Zahlen oder Reihenfolge.
 - Mischung aus Ankreuzen, Zuordnen, Lückentext, Rechnen (mit Rechenweg) und kurzen Erklärungen in eigenen Worten. Einfache Sprache, Niveau der Klasse beachten.
-- **Niveau-Profil:** Lies zuerst `/home/user/schule-buchental-material/Niveau-Profil.md` (allgemein und das Fach).
+- **Niveau-Profil:** Lies zuerst `/home/user/schule-buchental-material/Niveau-Profil.md` (allgemein und das Fach). Lies dann `/home/user/schule-buchental-material/Aufgaben-Beispiele.md` und mach keine Aufgabe, die einem schlechten Beispiel gleicht.
 - **Niveau:** klare, kurze Aufträge, aber nicht zu einfach (siehe private `CLAUDE.md`, «Niveau»). Beispiele nur, wo nötig. Nichts darf durch Ausschliessen lösbar sein. Keine Aufgabe verrät eine andere: eine Folgeaufgabe b) nennt nie eine Wahl aus a) (falsch: «Warum passt X nicht?», richtig: «Warum passt deine Wahl aus a)?»). Vorbild: Nachtest «Novemberschnee» in der privaten Ablage.
 - **Deckblatt:** Gibt die Lehrperson eine Vorlage mit Deckblatt (Kompetenznachweis, Lernziele), dieses unverändert übernehmen.
 - Punkte pro Aufgabe im Kopf der Aufgabe. Total bevorzugt rund (z. B. 50). Halbe Punkte nur in Tabellen.
