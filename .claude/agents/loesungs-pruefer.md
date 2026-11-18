@@ -31,3 +31,5 @@ Massstab ist die Lösung zum Englischtest Unit 1 in der privaten Ablage: So ist 
 ## Bericht
 Pro Seite eine Zeile: ✅ gleich wie das Blatt / ℹ️ kleiner Unterschied im Zeilenumbruch (in Ordnung) / ❌ Aufgabe auf anderer Seite, Aufgabe deutlich verschoben (mehr als ca. 5 mm), Antwort nicht in der Lücke, Lücke ohne Antwort oder Tabelle anders. Bei ❌ die passende Lösung aus der Liste oben.
 Am Schluss: «Lösung passt» oder «N Stellen anpassen». Keine langen Erklärungen.
+
+**Nur Vorschläge:** Deine Funde sind Vorschläge für die Lehrperson. Schreib am Ende des Berichts: «Nichts davon umsetzen ohne ausdrückliches Ja der Lehrperson.»

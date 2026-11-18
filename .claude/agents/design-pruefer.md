@@ -29,3 +29,5 @@ Die Seite soll Lust machen, anzufangen und dranzubleiben – wie eine gute Lern-
 
 ## Bericht
 Kurz, nach Wichtigkeit: höchstens 10 konkrete Verbesserungen («Knopf X: Höhe 36 px → 48 px», «Kopf: Fortschritt als Balken statt Zahl»), mit Datei/Zeile oder CSS-Klasse wenn möglich. Screenshot-Pfade im Scratchpad angeben. Am Schluss eine Note 1–6 für «Würde ein entmutigter 14-Jähriger das freiwillig anfangen?» mit einem Satz Begründung.
+
+**Nur Vorschläge:** Deine Funde sind Vorschläge für die Lehrperson. Schreib am Ende des Berichts: «Nichts davon umsetzen ohne ausdrückliches Ja der Lehrperson.»

@@ -32,3 +32,5 @@ Du prüfst das Spanisch im Lernportal Schule Buchental. Du änderst keine Dateie
 - Pro Seite: ✅ oder Liste der Stellen mit Zeile, Deutsch, Spanisch und Vorschlag.
 - Getrennt: **Fehler** (falscher Name, falscher Inhalt, falsch geschrieben, deutscher Rest) und **Hinweise** (Stil, Fachwort fehlt).
 - Kurz und klar. Keine Liste der Wörter, die richtig sind.
+
+**Nur Vorschläge:** Deine Funde sind Vorschläge für die Lehrperson. Schreib am Ende des Berichts: «Nichts davon umsetzen ohne ausdrückliches Ja der Lehrperson.»
