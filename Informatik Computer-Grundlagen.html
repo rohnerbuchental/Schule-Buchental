@@ -28,18 +28,17 @@
     svg .zone:hover > :first-child { filter: brightness(1.12); }
     @media (prefers-reduced-motion: reduce) { .pop, .bump { animation: none; } .fly-star { display: none; } .bar { transition: none; } }
     /* Wolke zum Antippen auf der Startansicht (docs/didaktik.md 1c): bewegt sich nur nach Antippen, 1.6 s */
-    .cloud-btn { -webkit-tap-highlight-color: transparent; }
-    .cloud-btn:focus-visible { outline: 3px solid #4f46e5; outline-offset: 3px; }
-    .cloudsvg .c-file { transform-box: fill-box; transform-origin: center; }
-    .cloudsvg .c-check { opacity: 0; }
-    .cloudsvg .c-eye { transform-box: fill-box; transform-origin: center; }
-    .cloudsvg.save .c-file { animation: cFile 1.6s ease-in-out forwards; }
-    .cloudsvg.save .c-check { animation: cCheck 1.6s ease-out forwards; }
-    .cloudsvg.save .c-eye { animation: cEye 1.6s; }
+    .anim-btn { -webkit-tap-highlight-color: transparent; }
+    .anim-btn:focus-visible { outline: 3px solid #4f46e5; outline-offset: 3px; }
+    .animsvg .c-file, .animsvg .c-eye { transform-box: fill-box; transform-origin: center; }
+    .animsvg .c-check { opacity: 0; }
+    .animsvg.go .c-file { animation: cFile 1.6s ease-in-out forwards; }
+    .animsvg.go .c-check { animation: cCheck 1.6s ease-out forwards; }
+    .animsvg.go .c-eye { animation: cEye 1.6s; }
     @keyframes cFile { 0% { transform: translateY(0) scale(1); opacity: 1; } 55% { transform: translateY(-48px) scale(0.6); opacity: 1; } 70%, 100% { transform: translateY(-50px) scale(0.3); opacity: 0; } }
     @keyframes cCheck { 0%, 65% { opacity: 0; } 80%, 100% { opacity: 1; } }
     @keyframes cEye { 0%, 55% { transform: scale(1); } 65%, 90% { transform: scale(1.5); } 100% { transform: scale(1); } }
-    @media (prefers-reduced-motion: reduce) { .cloudsvg.save .c-file { animation: none; opacity: 0; } .cloudsvg.save .c-check { animation: none; opacity: 1; } .cloudsvg.save .c-eye { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .animsvg.go .c-file { animation: none; opacity: 0; } .animsvg.go .c-check { animation: none; opacity: 1; } .animsvg.go .c-eye { animation: none; } }
     /* Sprachwechsel: feste Texte stehen doppelt (data-l="de" / data-l="es") */
     html[lang="es"] [data-l="de"], html:not([lang="es"]) [data-l="es"] { display: none !important; }
     html:not([lang="es"]) .lang-btn[data-setlang="de"], html[lang="es"] .lang-btn[data-setlang="es"] { background: #fff; color: #0f172a; }
@@ -56,38 +55,37 @@
         <h1 class="text-base sm:text-xl font-black leading-tight"><span data-l="de">Computer-Grundlagen</span></h1>
       </div>
       <div id="star-box" class="shrink-0 bg-white/15 border border-white/25 rounded-xl px-2.5 py-1 text-sm font-black" title="Sterne: 3 pro Teil">
-        ⭐ <span id="star-count" class="inline-block">0</span><span class="text-white/75 font-bold">/<span id="star-max">9</span></span>
+        ⭐ <span id="star-count" class="inline-block">0</span><span class="text-white/75 font-bold">/<span id="star-max">6</span></span>
       </div>
     </div>
-    <nav id="nav" class="max-w-3xl mx-auto px-2 pb-2 grid grid-cols-4 gap-1 text-[11px] sm:text-xs font-bold">
+    <nav id="nav" class="max-w-3xl mx-auto px-2 pb-2 grid grid-cols-3 gap-1 text-[11px] sm:text-xs font-bold">
       <button type="button" id="nav-home" onclick="switchTab('home')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">🏠</span><span data-l="de">Start</span></button>
       <button type="button" id="nav-k1" onclick="switchTab('k1')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">📁</span><span data-l="de">Dateien</span></button>
-      <button type="button" id="nav-k2" onclick="switchTab('k2')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">📥</span><span data-l="de">Download</span></button>
-      <button type="button" id="nav-k3" onclick="switchTab('k3')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">📝</span><span data-l="de">Word</span></button>
+      <button type="button" id="nav-k2" onclick="switchTab('k2')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">📥</span><span data-l="de">Download & Teams</span></button>
     </nav>
   </header>
 
   <main class="max-w-3xl w-full mx-auto p-4 sm:p-6 flex-1">
 
-    <!-- ÜBERSICHT: 3 Teile = 3 Lektionen -->
+    <!-- ÜBERSICHT -->
     <div id="view-home" class="view space-y-4">
       <section class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
-        <h2 class="text-xl font-black text-slate-900"><span data-l="de">Fit am Computer</span> 💻</h2>
-        <p class="text-base text-slate-600 mt-1" data-l="de">3 Teile, einer pro Lektion. Jeder Teil hat 3 Stufen: <b>erkennen</b>, <b>ergänzen</b>, <b>am Laptop machen</b>. Fehler sind okay: Die Aufgabe kommt einfach später nochmals.</p>
+        <h2 class="text-xl font-black text-slate-900"><span data-l="de">Fit am Computer 💻</span></h2>
+        <p class="text-base text-slate-600 mt-1" data-l="de">2 Teile, einer pro Lektion. Jeder Teil hat 3 Stufen: <b>erkennen</b>, <b>ergänzen</b>, <b>am Laptop machen</b>. Fehler sind okay: Die Aufgabe kommt einfach später nochmals. Danach geht es weiter mit dem <b>Word-Führerschein</b>.</p>
         <!-- Kleine Animation zum Stoff (docs/didaktik.md 1c): Datei fliegt in die Wolke = in OneDrive speichern -->
         <div class="mt-3 flex items-center gap-3">
-          <button type="button" id="cloud-btn" onclick="saveToCloud()" class="cloud-btn shrink-0 w-28 rounded-2xl bg-sky-50 border border-sky-100 overflow-hidden" aria-label="Antippen: Datei in OneDrive speichern">
-            <svg id="cloudsvg" class="cloudsvg block w-full h-auto" viewBox="0 0 120 100" aria-hidden="true" focusable="false">
+          <button type="button" onclick="playAnim()" class="anim-btn shrink-0 w-28 rounded-2xl bg-sky-50 border border-sky-100 overflow-hidden" aria-label="Antippen: Datei in OneDrive speichern">
+            <svg id="animsvg" class="animsvg block w-full h-auto" viewBox="0 0 120 100" aria-hidden="true" focusable="false">
               <path d="M38 46 Q20 46 20 33 Q20 21 34 20 Q38 6 56 6 Q71 6 77 18 Q98 18 98 33 Q98 46 80 46 Z" fill="#3b82f6"/>
               <circle class="c-eye" cx="48" cy="28" r="2.8" fill="#0f172a"/><circle class="c-eye" cx="70" cy="28" r="2.8" fill="#0f172a"/>
-              <path class="c-smile" d="M52 36 Q59 41 66 36" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M52 36 Q59 41 66 36" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
               <g class="c-file"><rect x="48" y="66" width="22" height="28" rx="3" fill="#fff" stroke="#2563eb" stroke-width="2.5"/><text x="53" y="86" font-size="13" font-weight="900" fill="#2563eb">W</text></g>
               <path class="c-check" d="M84 64 L90 70 L102 56" stroke="#059669" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <div class="min-w-0 text-base text-slate-700">
             <p class="font-bold"><span data-l="de">👆 Tipp die Wolke an!</span></p>
-            <p id="cloud-info" class="hidden text-sm text-slate-600 mt-1"><span data-l="de">Gespeichert in <b>OneDrive</b>: braucht kaum Platz auf dem Laptop und ist auch in Teams und auf dem Handy da.</span></p>
+            <p id="anim-info" class="hidden text-sm text-slate-600 mt-1"><span data-l="de">Gespeichert in <b>OneDrive</b>: braucht kaum Platz auf dem Laptop und ist auch in Teams und auf dem Handy da.</span></p>
           </div>
         </div>
         <button type="button" id="continue-btn" onclick="continueLearning()" class="w-full mt-4 min-h-[56px] rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-black shadow-sm">▶ Hier weitermachen</button>
@@ -122,8 +120,7 @@
       </details>
       <div id="reset-k1"></div>
     </section>
-
-    <!-- Teil 2 «Download, Screenshot, Teams» (Lektion 2, Missionen M4–M5) -->
+    <!-- Teil 2 «Download, Screenshot, Teams» (Lektion 2, Missionen M4–M6) -->
     <section id="view-k2" class="view hidden space-y-4">
       <div id="card-k2" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
         <div id="head-k2"></div>
@@ -142,29 +139,6 @@
       </details>
       <div id="reset-k2"></div>
     </section>
-
-    <!-- Teil 3 «Word» (Lektion 3, Missionen M6–M8) -->
-    <section id="view-k3" class="view hidden space-y-4">
-      <div id="card-k3" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
-        <div id="head-k3"></div>
-        <div id="body-k3"></div>
-      </div>
-      <details id="theory-k3" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Word</span></summary>
-        <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
-          <li><b>Zuerst markieren, dann ändern.</b> Markieren: Maus drücken, gedrückt halten, über den Text ziehen.</li>
-          <li><b>Reiter «Start»:</b> F = fett · K = kursiv (schräg) · U = unterstrichen · A = Schriftfarbe · Zahl = Schriftgrösse.</li>
-          <li><b>Bild einfügen:</b> Reiter «Einfügen» → «Bilder». Grösse ändern: Bild anklicken und an einer <b>Ecke</b> ziehen.</li>
-          <li><b>Hoppla?</b> Ctrl + Z macht den letzten Schritt rückgängig.</li>
-          <li><b>Als PDF speichern:</b> Datei → Speichern unter (oder «Kopie speichern») → Ordner wählen → bei «Dateityp» <b>PDF</b> → Speichern. Umbenennen in «.pdf» macht kein PDF!</li>
-          <li><b>Warum PDF?</b> Ein PDF sieht auf jedem Gerät gleich aus. Gut zum Abgeben.</li>
-        </ul>
-        <div id="theory-k3-svg" class="mt-3 max-w-md mx-auto"></div>
-        <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span></button>
-      </details>
-      <div id="reset-k3"></div>
-    </section>
-
   </main>
 
   <footer class="text-center text-xs text-slate-500 py-6 px-4"><span data-l="de">Schule Buchental · Informatik Computer-Grundlagen · Kein Zeitdruck, keine Noten: nur üben.</span></footer>
@@ -242,7 +216,7 @@
       <text x="160" y="125" font-size="13" fill="#0f172a">Steckbrief.docx</text>
     </svg>`;
     // Word-Menüband (vereinfacht): Reiter und Knöpfe F K U; Beschriftung nur in der Theorie (sonst verrät sie die Antwort)
-    const SVG_WORD = (lab) => `<svg viewBox="0 0 360 ${lab ? 120 : 104}" class="w-full h-auto" role="img" aria-label="Menüband von Word mit den Reitern Datei, Start, Einfügen und den Knöpfen F, K, U">
+    const SVG_WORD = (lab) => `<svg viewBox="0 0 360 ${lab ? 120 : 104}" class="w-full h-auto" role="img" aria-label="Menüband von Word mit den Reitern Datei, Start, Einfügen und den Knöpfen F, K, U, A und Textmarker">
       <rect x="2" y="2" width="356" height="${lab ? 116 : 100}" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
       <rect x="2" y="2" width="356" height="30" rx="10" fill="#2563eb"/><rect x="2" y="22" width="356" height="10" fill="#2563eb"/>
       <text x="14" y="22" font-size="13" font-weight="700" fill="#fff">Word</text>
@@ -250,7 +224,7 @@
       <text x="64" y="52" font-size="13" font-weight="800" fill="#1d4ed8">Start</text><rect x="62" y="56" width="36" height="3" fill="#1d4ed8"/>
       <text x="114" y="52" font-size="13" fill="#334155">Einfügen</text>
       <text x="184" y="52" font-size="13" fill="#334155">Layout</text>
-      <text x="240" y="52" font-size="13" fill="#334155">Ansicht</text>
+      <text x="240" y="52" font-size="13" fill="#334155">Überprüfen</text><text x="318" y="52" font-size="13" fill="#334155">Ansicht</text>
       <line x1="10" y1="62" x2="350" y2="62" stroke="#e2e8f0"/>
       <rect x="14" y="72" width="110" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1"/><text x="20" y="89" font-size="12" fill="#334155">Arial</text>
       <rect x="130" y="72" width="36" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1"/><text x="138" y="89" font-size="12" fill="#334155">12</text>
@@ -258,13 +232,14 @@
       <rect x="208" y="72" width="26" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="216" y="90" font-size="15" font-style="italic" fill="#0f172a">K</text>
       <rect x="238" y="72" width="26" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="245" y="90" font-size="15" text-decoration="underline" fill="#0f172a">U</text>
       <rect x="268" y="72" width="26" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="275" y="89" font-size="14" font-weight="800" fill="#dc2626">A</text><rect x="273" y="91" width="16" height="3" fill="#dc2626"/>
-      ${lab ? '<text x="14" y="112" font-size="10" fill="#64748b">Schriftart</text><text x="128" y="112" font-size="10" fill="#64748b">Grösse</text><text x="178" y="112" font-size="10" fill="#64748b">fett · kursiv · unterstrichen · Farbe</text>' : ''}
+      <rect x="298" y="72" width="30" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="304" y="88" font-size="13" font-weight="700" fill="#0f172a">ab</text><rect x="302" y="91" width="22" height="3" fill="#facc15"/>
+      ${lab ? '<text x="14" y="112" font-size="10" fill="#64748b">Schriftart</text><text x="128" y="112" font-size="10" fill="#64748b">Grösse</text><text x="178" y="112" font-size="10" fill="#64748b">fett · kursiv · unterstrichen · Farbe · Textmarker</text>' : ''}
     </svg>`;
     const PICS = { cloud: ICON_CLOUD, folder: ICON_FOLDER, trash: ICON_TRASH, download: ICON_DOWNLOAD, explorer: SVG_EXPLORER, word: SVG_WORD };
-    const VORLAGE = 'dateien/Steckbrief_Vorlage.docx';
+    const VORLAGE = 'dateien/Lektion2_Vorlage.docx';
 
     // ==============================================================
-    // TEILE UND AUFGABEN (Inhalt = Missionsblatt Computer-Grundlagen, Missionen M1–M8)
+    // TEILE UND AUFGABEN (Inhalt = Missionsblatt Computer-Grundlagen, Missionen M1–M6)
     // st: Stufe 1 erkennen · 2 selber ergänzen · 3 am Laptop (Mission)
     // nr: Mission(en) auf dem Missionsblatt
     // Typen: mc (erste Antwort ist richtig, wird gemischt; picOpts = Bilder als Antworten),
@@ -275,8 +250,7 @@
     // ==============================================================
     const PARTS = [
       { id: 'k1', emoji: '📁', title: 'Dateien & OneDrive', lz: 'Lektion 1', nrs: 'M1–M3', sub: 'Ordner, speichern unter, umbenennen, verschieben' },
-      { id: 'k2', emoji: '📥', title: 'Download, Screenshot, Teams', lz: 'Lektion 2', nrs: 'M4–M5', sub: 'Downloads finden, Screenshot, in Teams abgeben' },
-      { id: 'k3', emoji: '📝', title: 'Word', lz: 'Lektion 3', nrs: 'M6–M8', sub: 'Text gestalten, Bild einfügen, als PDF speichern' }
+      { id: 'k2', emoji: '📥', title: 'Download, Screenshot, Teams', lz: 'Lektion 2', nrs: 'M4–M6', sub: 'Downloads finden, Screenshot, in Teams abgeben' }
     ];
     const STAGES = [
       { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus.' },
@@ -344,7 +318,7 @@
           help: ['Die Datei ist geöffnet? Schliess sie zuerst in Word. Offene Dateien kann man nicht umbenennen.', 'Hinter dem Namen steht «.docx»? Lass das stehen und ändere nur den Teil davor.', 'Du findest die Datei nicht mehr? Schau zuerst in «Deutsch» und in «Informatik».'],
           proof: 'Deutsch_Uebung ist im Ordner Deutsch und nicht mehr im Ordner Informatik.' }
       ],
-      // ---------- Teil 2: Download, Screenshot, Teams (Lektion 2, M4–M5 und M8) ----------
+      // ---------- Teil 2: Download, Screenshot, Teams (Lektion 2, M4–M6) ----------
       k2: [
         { id: 'k2_dl', st: 1, nr: ['M4'], type: 'mc', first: true, q: 'Du lädst eine Datei aus dem Internet herunter. Wo findest du sie meistens?',
           opts: ['Im Ordner Downloads', 'In OneDrive', 'Im Papierkorb', 'In Teams'],
@@ -371,7 +345,7 @@
           whyNot: [null, 'Du musst ihn zuerst einfügen.', 'Das druckt.', 'Dann ist der Screenshot weg.'],
           tip: 'Der Screenshot ist in der Zwischenablage, wie etwas Kopiertes. Wie fügst du Kopiertes ein?',
           why: 'Der Screenshot ist in der Zwischenablage. Mit Ctrl + V fügst du ihn ein.' },
-        { id: 'k2_abgeben', st: 1, nr: ['M8'], type: 'mc', q: 'Du hast in Teams bei der Aufgabe deine Datei angehängt. Die Lehrperson sieht sie aber noch nicht. Was fehlt?',
+        { id: 'k2_abgeben', st: 1, nr: ['M6'], type: 'mc', q: 'Du hast in Teams bei der Aufgabe deine Datei angehängt. Die Lehrperson sieht sie aber noch nicht. Was fehlt?',
           opts: ['Auf «Abgeben» klicken', 'Die Datei umbenennen', 'Die Datei nochmals anhängen', 'Teams schliessen'],
           whyNot: [null, 'Der Name ist nicht das Problem.', 'Sie ist schon angehängt.', 'Dann passiert gar nichts.'],
           tip: 'Anhängen ist wie den Brief ins Couvert stecken. Was fehlt noch?',
@@ -380,7 +354,7 @@
           rows: [['Ctrl + C', 'kopieren'], ['Ctrl + V', 'einfügen'], ['Ctrl + Z', 'rückgängig'], ['Windows + Shift + S', 'Screenshot']],
           cats: ['kopieren', 'einfügen', 'rückgängig', 'Screenshot', 'drucken'],
           tip: 'Z steht ganz links unten: «Hoppla, zurück». V liegt neben C: zuerst kopieren, dann einfügen.' },
-        { id: 'k2_teams', st: 2, nr: ['M8'], type: 'order', q: 'Du gibst in Teams eine Aufgabe ab. Bring die Schritte in die richtige Reihenfolge.',
+        { id: 'k2_teams', st: 2, nr: ['M6'], type: 'order', q: 'Du gibst in Teams eine Aufgabe ab. Bring die Schritte in die richtige Reihenfolge.',
           steps: ['Teams öffnen und auf «Aufgaben» klicken', 'Die richtige Aufgabe anklicken', 'Auf «+ Arbeit hinzufügen» klicken', 'Die Datei aus OneDrive wählen', 'Auf «Abgeben» klicken'],
           tip: 'Zuerst suchst du die Aufgabe. Abgeben kommt ganz am Schluss.' },
         { id: 'k2_gap', st: 2, nr: ['M4'], type: 'gap', text: 'Heruntergeladene Dateien landen zuerst im Ordner ___.',
@@ -388,67 +362,16 @@
           why: 'Der Ordner heisst Downloads.' },
         { id: 'k2_m4', st: 3, nr: ['M4'], type: 'mission', q: 'Mission M4: Download holen und aufräumen',
           link: VORLAGE,
-          steps: ['Tippe oben auf <b>📥 Vorlage «Steckbrief» herunterladen</b>.', 'Öffne den Explorer. Klicke links auf <b>Downloads</b>. Findest du <b>Steckbrief_Vorlage</b>?', 'Klicke sie an. Drück <b>Ctrl + X</b>.', 'Öffne <b>OneDrive › Schule › Informatik</b>. Drück <b>Ctrl + V</b>.'],
+          steps: ['Tippe oben auf <b>📥 Vorlage herunterladen</b>.', 'Öffne den Explorer. Klicke links auf <b>Downloads</b>. Findest du <b>Lektion2_Vorlage</b>?', 'Klicke sie an. Drück <b>Ctrl + X</b>.', 'Öffne <b>OneDrive › Schule › Informatik</b>. Drück <b>Ctrl + V</b>.'],
           help: ['Der Browser fragt, ob du die Datei behalten willst? Klicke auf «Behalten».', 'Nichts in Downloads? Im Browser oben rechts auf den Pfeil ⬇ klicken, dann «In Ordner anzeigen».'],
           proof: 'Die Vorlage ist in Informatik und nicht mehr in Downloads.' },
         { id: 'k2_m5', st: 3, nr: ['M5'], type: 'mission', q: 'Mission M5: Screenshot einfügen',
-          steps: ['Lass den Explorer mit dem Ordner <b>Informatik</b> offen.', 'Drück <b>Windows + Shift + S</b>. Zieh mit der Maus ein Rechteck um das Explorer-Fenster.', 'Öffne die <b>Steckbrief_Vorlage</b> (Doppelklick). Klicke in die Zeile unter «Mein Screenshot».', 'Drück <b>Ctrl + V</b>. Speichere mit <b>Ctrl + S</b>.'],
+          steps: ['Lass den Explorer mit dem Ordner <b>Informatik</b> offen.', 'Drück <b>Windows + Shift + S</b>. Zieh mit der Maus ein Rechteck um das Explorer-Fenster.', 'Öffne die <b>Lektion2_Vorlage</b> (Doppelklick). Klicke in die leere Zeile unter «Mein Screenshot».', 'Drück <b>Ctrl + V</b>. Speichere mit <b>Ctrl + S</b>.'],
           help: ['Es passiert nichts nach Ctrl + V? Mach den Screenshot nochmals und klicke danach zuerst ins Dokument.', 'Das Bild ist riesig? Klicke es an und zieh an einer Ecke.'],
-          proof: 'Im Steckbrief ist jetzt ein Bild von deinem Ordner Informatik.' }
-      ],
-      // ---------- Teil 3: Word (Lektion 3, M6–M8) ----------
-      k3: [
-        { id: 'k3_mark', st: 1, nr: ['M6'], type: 'mc', first: true, q: 'Du willst den Titel grösser machen. Was machst du zuerst?',
-          opts: ['Den Titel markieren', 'Die Datei schliessen', 'Ein Bild einfügen', 'Ctrl + P drücken'],
-          whyNot: [null, 'Dann kannst du nichts mehr ändern.', 'Das hat mit dem Titel nichts zu tun.', 'Das druckt.'],
-          tip: 'Word muss wissen, welcher Text gemeint ist.',
-          why: 'Zuerst markieren, dann ändern.' },
-        { id: 'k3_fett', st: 1, nr: ['M6'], type: 'mc', pic: 'word', q: 'Du hast ein Wort markiert. Es soll fett werden. Welchen Knopf klickst du?',
-          opts: ['F', 'K', 'U', 'A'],
-          whyNot: [null, 'K macht die Schrift schräg (kursiv).', 'U unterstreicht.', 'A ändert die Farbe.'],
-          tip: 'Fett beginnt mit welchem Buchstaben?',
-          why: 'F wie fett.' },
-        { id: 'k3_bild', st: 1, nr: ['M7'], type: 'mc', q: 'Wo fügst du in Word ein Bild ein?',
-          opts: ['Einfügen › Bilder', 'Start › Fett', 'Datei › Drucken', 'Ansicht › Zoom'],
-          whyNot: [null, 'Das macht Text fett.', 'Das druckt das Dokument.', 'Das macht nur die Ansicht grösser.'],
-          tip: 'Ein Bild kommt neu ins Dokument hinein. Welcher Reiter passt dazu?',
-          why: 'Reiter «Einfügen», dann «Bilder».' },
-        { id: 'k3_undo', st: 1, nr: ['M6'], type: 'mc', q: 'Hoppla! Du hast aus Versehen einen ganzen Abschnitt gelöscht. Was hilft sofort?',
-          opts: ['Ctrl + Z', 'Ctrl + P', 'Alles neu schreiben', 'Word schliessen'],
-          whyNot: [null, 'Das druckt.', 'Das geht, aber es gibt einen schnelleren Weg.', 'Dann ist vielleicht noch mehr weg.'],
-          tip: 'Es gibt eine Taste für «zurück». Sie steht ganz links unten.',
-          why: 'Ctrl + Z macht den letzten Schritt rückgängig.' },
-        { id: 'k3_pdf', st: 1, nr: ['M8'], type: 'mc', q: 'Du gibst ein Dokument ab. Es soll auf jedem Gerät gleich aussehen. Welches Format nimmst du?',
-          opts: ['PDF', 'Word (.docx)', 'Excel (.xlsx)', 'Text im Chat'],
-          whyNot: [null, 'Auf einem anderen Gerät kann es verrutschen.', 'Das ist für Tabellen.', 'Dann fehlen Bilder und Gestaltung.'],
-          tip: 'Ein Format sieht aus wie ein gedrucktes Blatt, auf jedem Gerät gleich.',
-          why: 'Ein PDF sieht überall gleich aus.' },
-        { id: 'k3_pdfwie', st: 1, nr: ['M8'], type: 'mc', q: 'Wie machst du aus einem Word-Dokument ein PDF?',
-          opts: ['Datei › Speichern unter › Dateityp PDF', 'Datei umbenennen in «.pdf»', 'Einen Screenshot machen', 'Einfügen › Bilder'],
-          whyNot: [null, 'Ein neuer Name ändert die Datei nicht. Sie geht dann nicht mehr auf.', 'Dann hast du nur ein Bild.', 'Das fügt ein Bild ein.'],
-          tip: 'Beim Speichern kannst du auswählen, was für eine Datei entsteht.',
-          why: 'Beim Speichern unter «Dateityp» PDF wählen.' },
-        { id: 'k3_fku', st: 2, nr: ['M6'], type: 'sort', q: 'Was macht welcher Knopf? Ordne zu.',
-          rows: [['F', 'fett'], ['K', 'kursiv (schräg)'], ['U', 'unterstrichen']],
-          cats: ['fett', 'kursiv (schräg)', 'unterstrichen', 'grösser'],
-          tip: 'Die Buchstaben sind die Anfänge der Wörter: F…, K…, U….' },
-        { id: 'k3_order', st: 2, nr: ['M8'], type: 'order', q: 'Du speicherst dein Dokument als PDF. Bring die Schritte in die richtige Reihenfolge.',
-          steps: ['Auf «Datei» klicken', '«Speichern unter» wählen', 'Den Ordner wählen', 'Bei «Dateityp» PDF wählen', 'Auf «Speichern» klicken'],
-          tip: 'Zuerst das Menü «Datei». Was du speicherst (PDF), wählst du, bevor du auf «Speichern» klickst.' },
-        { id: 'k3_gap', st: 2, nr: ['M7'], type: 'gap', text: 'Ein Bild fügst du über den Reiter ___ ein.',
-          a: ['Einfügen'], tip: 'Das Bild kommt neu ins Dokument hinein. Der Reiter heisst gleich wie dieses Tun-Wort.',
-          why: 'Reiter «Einfügen», dann «Bilder».' },
-        { id: 'k3_m6', st: 3, nr: ['M6'], type: 'mission', q: 'Mission M6: Steckbrief gestalten',
-          steps: ['Öffne die <b>Steckbrief_Vorlage</b> in OneDrive › Schule › Informatik.', 'Schreib zu jedem Punkt einen Satz über ein Hobby.', 'Markiere den Titel. Mach ihn <b>fett</b> und <b>grösser</b> (z.B. 20).', 'Markiere ein Wort, das dir wichtig ist. Gib ihm eine <b>Farbe</b> (Knopf A).'],
-          help: ['Markieren: Maus links vom ersten Buchstaben drücken, gedrückt halten, bis zum Ende ziehen.', 'Etwas falsch? Ctrl + Z macht es rückgängig.'],
-          proof: 'Der Titel ist fett und gross, ein Wort hat eine Farbe.' },
-        { id: 'k3_m7', st: 3, nr: ['M7'], type: 'mission', q: 'Mission M7: Bild einfügen',
-          steps: ['Klicke in die Zeile unter «Mein Bild».', 'Klicke auf <b>Einfügen</b> → <b>Bilder</b>. Wähle ein Bild zu deinem Hobby (z.B. «Stockbilder»).', 'Ist das Bild zu gross? Klicke es an und zieh an einer <b>Ecke</b>.', 'Speichere mit <b>Ctrl + S</b>.'],
-          help: ['Zieh immer an der Ecke, nicht an der Seite. Sonst wird das Bild verzogen.', 'Kein Bild gefunden? Nimm ein eigenes Foto oder frag deine Lehrperson.'],
-          proof: 'Im Steckbrief ist ein Bild zu deinem Hobby, nicht verzogen.' },
-        { id: 'k3_m8', st: 3, nr: ['M8'], type: 'mission', q: 'Abschluss-Mission M8: Als PDF abgeben',
-          steps: ['Klicke auf <b>Datei</b> → <b>Speichern unter</b> (oder <b>Kopie speichern</b>). Wähle den Ordner <b>Informatik</b>.', 'Schreib als Namen <b>Informatik_Steckbrief</b>. Wähle bei Dateityp <b>PDF</b>. Speichern.', 'Öffne <b>Teams</b> → <b>Aufgaben</b> → «Computer-Grundlagen». Klicke auf <b>+ Arbeit hinzufügen</b> und wähle das PDF aus OneDrive.', 'Klicke auf <b>Abgeben</b>. Steht jetzt «Abgegeben»?'],
-          help: ['Kein «Speichern unter»? Dann heisst es «Kopie speichern». Das ist das Gleiche.', 'Du findest die Aufgabe in Teams nicht? Frag deine Lehrperson.', 'Falsche Datei abgegeben? Klicke auf «Abgabe rückgängig machen» und mach es nochmals.'],
+          proof: 'In der Vorlage ist jetzt ein Bild von deinem Ordner Informatik.' },
+        { id: 'k2_m6', st: 3, nr: ['M6'], type: 'mission', q: 'Mission M6: In Teams abgeben',
+          steps: ['Schliess Word. Öffne <b>Teams</b> und klicke auf <b>Aufgaben</b>.', 'Klicke auf die Aufgabe «Computer-Grundlagen».', 'Klicke auf <b>+ Arbeit hinzufügen</b>. Wähle aus OneDrive › Schule › Informatik die <b>Lektion2_Vorlage</b>.', 'Klicke auf <b>Abgeben</b>. Steht jetzt «Abgegeben»?'],
+          help: ['Du findest die Aufgabe nicht? Frag deine Lehrperson.', 'Falsche Datei abgegeben? Klicke auf «Abgabe rückgängig machen» und mach es nochmals.'],
           proof: 'In Teams steht bei der Aufgabe: Abgegeben ✔' }
       ]
     };
@@ -680,7 +603,7 @@
       save();
       renderPart(pid, true);
       renderHeader();
-      if (ok && BY_ID[id].type !== 'mission') {   // nach einer Mission: erst weiter, wenn das Kind tippt (Missionsblatt abhaken)
+      if (ok && BY_ID[id].type !== 'mission') {   // nach einer Mission: erst weiter, wenn das Kind tippt (Blatt abhaken)
         const t = ++Q.token, type = BY_ID[id].type;
         setTimeout(() => { if (Q.token === t && Q.phase === 'answered') nextQ(pid); }, type === 'mc' || type === 'tap' ? 1800 : 2200);
       }
@@ -856,7 +779,7 @@
       const any = PARTS.some(p => TASKS[p.id].score() > 0);
       $('continue-btn').textContent = nx ? (revDue(nx) ? `🔁 ${tr('Kurz wiederholen', 'Repasar un poco')}: ${L(PART_BY_ID[nx], 'title')}` : any ? `▶ ${tr('Hier weitermachen', 'Seguir aquí')}: ${L(PART_BY_ID[nx], 'title')}` : tr('▶ Los geht’s: Teil 1', '▶ ¡Vamos! Parte 1')) : tr('🔁 Etwas auffrischen', '🔁 Refrescar algo');
       const allDone = PARTS.every(p => isMastered(p.id));
-      $('home-done').innerHTML = allDone ? `<div class="rounded-3xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-1"><div class="text-4xl">🏆</div><div class="text-lg font-black text-slate-900">${'Alle 3 Teile gemeistert!'}</div><div class="text-base text-slate-700">${'Super! Du kannst jetzt mit Dateien, OneDrive, Teams und Word umgehen. Die Wiederholungen in den nächsten Tagen halten es frisch.'}</div></div>` : '';
+      $('home-done').innerHTML = allDone ? `<div class="rounded-3xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-1"><div class="text-4xl">🏆</div><div class="text-lg font-black text-slate-900">${'Alle Teile gemeistert!'}</div><div class="text-base text-slate-700">${'Super! Du kannst jetzt mit Dateien, OneDrive und Teams umgehen. Weiter geht es mit dem Word-Führerschein.'}</div></div>` : '';
       $('home-tiles').innerHTML = PARTS.map((p, i) => {
         const pct = pctOf(p.id), m = isMastered(p.id), due = revDue(p.id), st = starsOf(p.id);
         const badge = due ? `<span class="text-xs font-bold px-2 py-1 rounded-full bg-sky-100 text-sky-800 border border-sky-200">${tr('🔁 heute wiederholen', '🔁 repasar hoy')}</span>`
@@ -874,7 +797,7 @@
           </div>
           <div class="flex items-center justify-between gap-2 flex-wrap">${starsHtml(st)}${badge}</div>
           ${bar(pct, 'h-3')}
-          <div class="text-xs text-slate-500">📄 Missionsblatt: ${p.nrs}</div>
+          <div class="text-xs text-slate-500">📄 Missionen ${p.nrs}</div>
         </button>`;
       }).join('');
     }
@@ -908,7 +831,7 @@
         title = STREAK >= 5 && STREAK % 5 === 0 ? tr(`🔥 ${STREAK} richtig hintereinander!`, `🔥 ¡${STREAK} correctas seguidas!`) : Q.praise;
         if (it.type === 'gap' && Q.near) body = `<div class="text-base text-slate-700">${tr('So schreibt man es:', 'Se escribe así:')} <b>${esc(Q.form || L(it, 'a')[0])}</b></div>`;
         if (it.type === 'open') body = `<div class="text-base text-slate-700">${tr('Gut erklärt! Das hilft dir im Test.', '¡Bien explicado! Esto te ayuda en el examen.')}</div>`;
-        if (it.type === 'mission') { title = `🎉 Mission ${esc(it.nr.join(' + '))} geschafft!`; body = `<div class="text-base text-slate-700">Stark, das hast du am echten Laptop gemacht! Hake die Mission auf deinem <b>Missionsblatt</b> ab ✔. Dann tippe auf «Weiter».</div>`; }
+        if (it.type === 'mission') { title = `🎉 Mission ${esc(it.nr.join(' + '))} geschafft!`; body = `<div class="text-base text-slate-700">Stark, das hast du am echten Laptop gemacht! Hake die Mission auf deinem <b>Blatt</b> ab ✔. Dann tippe auf «Weiter».</div>`; }
       } else {
         title = Q.dontKnow ? tr('Kein Problem. So ist es richtig:', 'No pasa nada. Así es correcto:') : tr('Noch nicht ganz.', 'Todavía no del todo.');
         if (it.type === 'mc') body = `<div class="text-base text-slate-800">${tr('Richtig ist:', 'Lo correcto es:')} <b>${it.picOpts ? esc(L(it, 'right')) : esc(L(it, 'opts')[0])}</b></div>`;
@@ -1039,7 +962,7 @@
       }
       if (it.type === 'mission') {
         const ticks = STATE.ticks[it.id] || [], left = it.steps.filter((_, i) => !ticks[i]).length;
-        if (it.link && !done) h += `<a href="${it.link}" download class="mb-3 flex items-center justify-center gap-2 w-full min-h-[52px] px-4 rounded-2xl border-2 border-indigo-300 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 text-base font-black">📥 Vorlage «Steckbrief» herunterladen</a>`;
+        if (it.link && !done) h += `<a href="${it.link}" download class="mb-3 flex items-center justify-center gap-2 w-full min-h-[52px] px-4 rounded-2xl border-2 border-indigo-300 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 text-base font-black">${esc(it.linkText || '📥 Vorlage herunterladen')}</a>`;
         h += `<ol class="space-y-2">${it.steps.map((st, i) => {
           const on = done || !!ticks[i];
           return `<li><button type="button" onclick="missionTick('${pid}',${i})" ${done ? 'disabled' : ''} aria-pressed="${on}" class="w-full min-h-[56px] flex items-start gap-3 text-left rounded-2xl border-2 px-3 py-3 ${on ? 'border-emerald-400 bg-emerald-50' : 'border-slate-300 bg-white hover:border-indigo-400'}"><span class="w-8 h-8 shrink-0 rounded-lg border-2 ${on ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300 bg-white text-slate-500'} flex items-center justify-center text-base font-black">${on ? '✓' : i + 1}</span><span class="text-base text-slate-800 leading-snug wrap-any pt-1">${st}</span></button></li>`;
@@ -1188,20 +1111,19 @@
     // START
     // ==============================================================
     Object.assign(window, { setLang, switchTab, continueLearning, pick, tapZone, choose, checkSort, place, unplace, checkOrder, submitGap, gapHint, bankPick,
-      dontKnow, saveDraft, openHelp, selfRate, toggleTip, nextQ, continuePart, pausePart, startExtra, askReset, cancelReset, doReset, openTheory, backToTask, saveToCloud, missionTick, missionHelp, missionDone });
-    // Wolke auf der Startansicht: Antippen = Datei fliegt hinein (1.6 s), danach wieder ruhig
-    let cloudTimer = null;
-    function saveToCloud() {
-      const v = $('cloudsvg'); if (!v) return;
-      v.classList.remove('save'); void v.getBoundingClientRect();
-      v.classList.add('save');
-      clearTimeout(cloudTimer);
-      cloudTimer = setTimeout(() => { v.classList.remove('save'); const i = $('cloud-info'); if (i) i.classList.remove('hidden'); }, 1700);
+      dontKnow, saveDraft, openHelp, selfRate, toggleTip, nextQ, continuePart, pausePart, startExtra, askReset, cancelReset, doReset, openTheory, backToTask, playAnim, missionTick, missionHelp, missionDone });
+    // Kleine Animation auf der Startansicht: nur nach Antippen, danach wieder ruhig
+    let animTimer = null;
+    function playAnim() {
+      const v = $('animsvg'); if (!v) return;
+      v.classList.remove('go'); void v.getBoundingClientRect();
+      v.classList.add('go');
+      clearTimeout(animTimer);
+      animTimer = setTimeout(() => { v.classList.remove('go'); const i = $('anim-info'); if (i) i.classList.remove('hidden'); }, 2200);
     }
     // Bilder in der Theorie (in der aktuellen Sprache, nach dem Umschalten neu)
     function renderTheory() {
       $('theory-k1-svg').innerHTML = SVG_EXPLORER();
-      $('theory-k3-svg').innerHTML = SVG_WORD(true);
     }
     document.addEventListener('DOMContentLoaded', function () {
       load();
