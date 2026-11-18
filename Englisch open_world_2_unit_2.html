@@ -49,7 +49,7 @@
         <div class="text-[11px] font-bold tracking-wider uppercase text-emerald-200">Open World 2 · Unit 2</div>
         <h1 class="text-lg sm:text-xl font-bold leading-tight">Weird and wonderful games</h1>
       </div>
-      <div id="header-count" class="shrink-0 bg-white/10 px-2.5 py-1 rounded-xl border border-white/15 text-xs font-bold" title="Gemeisterte Wörter">
+      <div id="header-count" class="shrink-0 bg-white/10 px-2.5 py-1 rounded-xl border border-white/15 text-xs font-bold" title="Sterne">
         <span id="header-icon">⭐</span> <span id="header-known" class="inline-block">0</span>
       </div>
     </div>
@@ -76,8 +76,8 @@
     <section id="task-pfad" data-task="pfad" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
       <div>
         <h2 class="text-lg font-bold text-slate-900">1 · <span data-l="de">Lernpfad</span><span data-l="es" lang="es">Ruta de aprendizaje</span></h2>
-        <p class="text-sm text-slate-600" data-l="de">Jedes Wort geht durch 4 Stufen. Dann ist es gemeistert ⭐ Fehler sind okay: Das Wort kommt einfach nochmals.</p>
-        <p class="text-sm text-slate-600" data-l="es" lang="es">Cada palabra pasa por 4 niveles. Después la dominas ⭐ Equivocarse está bien: la palabra simplemente vuelve.</p>
+        <p class="text-sm text-slate-600" data-l="de">3 Stufen: zuerst auswählen, dann Englisch → Deutsch schreiben, dann Deutsch → Englisch schreiben. Jede Stufe gibt einen ⭐, alle 3 Sterne = Medaille 🏅. Fehler sind okay: Das Wort kommt einfach nochmals.</p>
+        <p class="text-sm text-slate-600" data-l="es" lang="es">3 niveles: primero elegir, después escribir inglés → español, después español → inglés. Cada nivel da una ⭐, las 3 estrellas = medalla 🏅. Equivocarse está bien: la palabra simplemente vuelve.</p>
       </div>
       <div id="pfad-progress"></div>
       <div id="body-pfad"></div>
@@ -330,17 +330,18 @@
     };
 
     // Deutsch → Englisch: weitere richtige Schreibweisen (alt), Zusatz zur Frage (hint).
-    // noType = langer Ausdruck: wird nie auf Englisch geschrieben (nur ausgewählt).
+    // noType = langer Ausdruck: wird nie auf Englisch geschrieben (nur ausgewählt). Seit 17.11.2026 nicht mehr verwendet:
+    // Lehrperson will jedes Wort in beiden Richtungen geschrieben haben.
     const EXTRA = {
       'bagpipes': { alt: ['bagpipe'] },
       'prize': { hint: 'beim Gewinnen' },
       'heavy': { hint: 'Gewicht' },
       'noon': { alt: ['midday'] },
       'be allowed to': { alt: ['be allowed'] },
-      "find one's way (to)": { noType: true },
-      'in the top left-hand corner': { noType: true },
-      'knock down / knock over': { noType: true },
-      'tell someone the way': { noType: true },
+      "find one's way (to)": { alt: ["find one's way", "find one's way to", 'find your way', 'find your way to'] },
+      'in the top left-hand corner': { alt: ['top left-hand corner', 'in the top left corner', 'top left corner'] },
+      'knock down / knock over': { alt: ['knock down', 'knock over', 'knock over / knock down', 'knock down or knock over', 'knock down, knock over'] },
+      'tell someone the way': { alt: ['tell somebody the way'] },
       'require': { hint: 'nicht «need»' },
       'space': { hint: 'freier Platz' }
     };
@@ -530,7 +531,6 @@
     // ==========================================================
     const ACTIVE_N = 7;               // so viele Wörter sind im Lernpfad gleichzeitig dran
     const ETAPPE_N = 10;              // nach so vielen Antworten: «Etappe geschafft» (weitermachen oder Pause)
-    const TEST_A = 10, TEST_B = 10;   // Test: Deutsch → Englisch, Englisch → Deutsch
     const STAGES = [
       { dir: 'en2de', type: 'mc', get label() { return tr('Englisch → Deutsch auswählen', 'elegir inglés → español'); } },
       { dir: 'de2en', type: 'mc', get label() { return tr('Deutsch → Englisch auswählen', 'elegir español → inglés'); } },
@@ -775,7 +775,7 @@
         const on = p === STATE.part, words = partWords(p);
         const done = words.filter(w => isMastered(w, p)).length;
         const b = $('part-btn-' + p);
-        b.innerHTML = `<span class="block text-base font-black">${PARTS[p].label}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}">${PARTS[p].page} · ⭐ ${done}/${words.length}</span>`;
+        b.innerHTML = `<span class="block text-base font-black">${PARTS[p].label}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}">${PARTS[p].page} · ${wStars(p) >= 3 ? '🏅' : starsMini(wStars(p))}</span>`;
         b.className = 'px-3 py-2.5 rounded-xl border-2 text-center transition ' + (on ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50');
         b.setAttribute('aria-pressed', on);
       });
@@ -807,6 +807,21 @@
       const r = P(part).rev[w.id];
       return isMastered(w, part) && !!r && r.n < REVIEW_DAYS.length && Number(r.due) <= Date.now();
     }
+    // BELOHNUNG (Entscheid Lehrperson 18.11.2026, gleich auf allen Lernseiten): ⭐ pro Stufe, 🏅 pro fertigem Lernpfad, 🏆 wenn alle Lernpfade des Themas fertig sind.
+    // Wörter: 3 Stufen für alle Wörter zusammen: 1 auswählen (beide Richtungen), 2 Englisch → Deutsch schreiben, 3 Deutsch → Englisch schreiben.
+    const W_TARGETS = [2, 3, 4];
+    const W_STAGE_LABEL = () => [tr('Auswählen', 'Elegir'), tr('Englisch → Deutsch schreiben', 'Escribir inglés → español'), tr('Deutsch → Englisch schreiben', 'Escribir español → inglés')];
+    const wStars = (part = STATE.part) => { const ws = partWords(part); let k = 0; while (k < W_TARGETS.length && ws.every(w => levelOf(w, part) >= Math.min(W_TARGETS[k], maxLevel(w)))) k++; return k; };
+    const wTarget = (part = STATE.part) => W_TARGETS[wStars(part)] || 99;
+    const starsMini = (n, max = 3) => Array.from({ length: max }, (_, k) => k < n ? '⭐' : '<span class="opacity-25 grayscale">⭐</span>').join('');
+    function themeStars() {
+      let n = 0, max = 0;
+      Object.keys(PARTS).forEach(p => { n += wStars(p); max += W_TARGETS.length; });
+      Object.keys(G_TOPICS).forEach(t => { n += Math.min(GS(t).stage, G_TOPICS[t].stages.length); max += G_TOPICS[t].stages.length; });
+      return { n, max };
+    }
+    const pathsLeft = () => Object.keys(PARTS).filter(p => wStars(p) < W_TARGETS.length).length + Object.keys(G_TOPICS).filter(t => GS(t).stage < G_TOPICS[t].stages.length).length;
+    const trophyLine = () => pathsLeft() ? tr(`Noch ${pathsLeft()} ${pathsLeft() === 1 ? 'Lernpfad' : 'Lernpfade'} bis zum Pokal 🏆.`, `Faltan ${pathsLeft()} ${pathsLeft() === 1 ? 'ruta' : 'rutas'} para la copa 🏆.`) : tr('🏆 Pokal! Du hast alle Lernpfade von Unit 2 geschafft.', '🏆 ¡Copa! Has superado todas las rutas de la Unit 2.');
     const reviewsLeft = (part = STATE.part) => partWords(part).some(w => { const r = P(part).rev[w.id]; return isMastered(w, part) && r && r.n < REVIEW_DAYS.length; });
     // Nächste Wiederholung planen
     function schedule(w) {
@@ -816,7 +831,8 @@
     }
     function refill(part = STATE.part) {
       const p = P(part);
-      const open = w => !isMastered(w, part) || isDue(w, part);
+      const goal = wTarget(part);
+      const open = w => (!isMastered(w, part) && levelOf(w, part) < goal) || isDue(w, part);
       p.queue = [...new Set(p.queue.filter(id => BY_ID[id] && BY_ID[id].part === part && open(BY_ID[id])))];
       const waiting = partWords(part).filter(w => open(w) && !p.queue.includes(w.id));
       // zuerst Wiederholungen, dann angefangene, dann neue Wörter
@@ -903,14 +919,14 @@
       const review = isDue(w);
       // Wiederholung: einmal schreiben (lange Ausdrücke: Englisch → Deutsch)
       const stage = review ? (w.noType ? 2 : 3) : Math.min(levelOf(w), STAGES.length - 1);
-      Object.assign(Q, { id: w.id, stage, review, hint: false, phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1, tried: [], nudge: -1 });
+      Object.assign(Q, { starUp: 0, id: w.id, stage, review, hint: false, phase: 'ask', ok: false, ans: '', dontKnow: false, mastered: false, pick: -1, tried: [], nudge: -1 });
       Q.opts = STAGES[stage].type === 'mc' ? mcOptions(w, STAGES[stage].dir) : [];
     }
     // Wort nach der Antwort einreihen
     function placeWord(id, ok) {
       const p = P(), w = BY_ID[id];
       p.queue = p.queue.filter(x => x !== id);
-      if (isMastered(w) && !isDue(w)) { refill(); return; }
+      if ((isMastered(w) || levelOf(w) >= wTarget()) && !isDue(w)) { refill(); return; }
       if (ok) p.queue.push(id);                                  // ans Ende
       else p.queue.splice(Math.min(2, p.queue.length), 0, id);   // nach 2 anderen Wörtern nochmals
     }
@@ -929,7 +945,9 @@
       const w = BY_ID[Q.id];
       // Erst nach einem falschen Versuch richtig: Lob, aber keine Stufe höher; das Wort kommt nach 2 anderen nochmals
       const retry = ok && (Q.tried || []).length > 0, got = ok && !retry;
+      const starsBefore = wStars();
       applyResult(w, got);
+      Q.starUp = wStars() > starsBefore ? wStars() : 0;
       Object.assign(Q, { phase: 'answered', ok, ans, dontKnow, miss: miss || null, mastered: got && !Q.review && isMastered(w) });
       STREAK = ok ? STREAK + 1 : 0;
       SESSION.answers++;
@@ -941,9 +959,9 @@
       save();
       renderPfad(true);
       renderParts();
-      if (Q.mastered) setTimeout(() => flyStar(document.querySelector('#body-pfad .feedback-box')), 60);
-      // Richtig: automatisch weiter (Auswahl schneller als Schreiben)
-      if (ok) {
+      if (Q.starUp) { setTimeout(() => flyStar(document.querySelector('#body-pfad .feedback-box')), 60); renderTest(); }
+      // Richtig: automatisch weiter (Auswahl schneller als Schreiben). Neue Stufe geschafft: stehen bleiben, damit man den Stern sieht.
+      if (ok && !Q.starUp) {
         const t = ++Q.token;
         setTimeout(() => { if (Q.token === t && Q.phase === 'answered') nextQuestion(); }, Q.mastered ? 1400 : (STAGES[Q.stage].type === 'mc' ? 700 : 1100));
       }
@@ -975,7 +993,9 @@
       if (Q.phase !== 'answered' || Q.ok || Q.dontKnow || STAGES[Q.stage].dir !== 'en2de' || STAGES[Q.stage].type !== 'write') return;
       const w = BY_ID[Q.id];
       if (Q.review) P().level[w.id] = maxLevel(w);               // Rückstufung zurücknehmen
+      const starsBefore = wStars();
       applyResult(w, true);
+      Q.starUp = wStars() > starsBefore ? wStars() : 0;
       Q.ok = true;
       Q.mastered = !Q.review && isMastered(w);
       Q.praise = praise();
@@ -985,7 +1005,7 @@
       save();
       renderPfad(true);
       renderParts();
-      if (Q.mastered) setTimeout(() => flyStar(document.querySelector('#body-pfad .feedback-box')), 60);
+      if (Q.starUp) { setTimeout(() => flyStar(document.querySelector('#body-pfad .feedback-box')), 60); renderTest(); }
     }
     function nextQuestion() {
       if (Q.phase !== 'answered') return;
@@ -1018,16 +1038,18 @@
       // Balken wächst mit jedem richtigen Schritt (nicht erst, wenn ein Wort ganz fertig ist)
       const steps = words.reduce((a, w) => a + levelOf(w), 0), allSteps = words.reduce((a, w) => a + maxLevel(w), 0);
       const pct = Math.round(steps / allSteps * 100);
-      const status = dueN ? `🔁 ${tr('heute wiederholen', 'repasar hoy')}: ${dueN}` : `⭐ ${done} ${tr('von', 'de')} ${words.length} ${tr('gemeistert', 'dominadas')}`;
+      const ws = wStars();
+      const status = dueN ? `🔁 ${tr('heute wiederholen', 'repasar hoy')}: ${dueN}` : ws >= 3 ? `🏅 ${tr('gemeistert', 'dominada')}` : `${tr('Stufe', 'Nivel')} ${ws + 1} ${tr('von', 'de')} 3: ${W_STAGE_LABEL()[ws]}`;
       $('pfad-progress').innerHTML = `
         <div class="flex justify-between items-end text-sm font-bold text-slate-700 mb-1 gap-2">
           <span>${tr('Fortschritt', 'Progreso')}: ${pct} %</span>
           <span class="text-xs font-semibold text-slate-500 text-right">${status}</span>
         </div>
         <div class="h-4 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all" style="width:${pct}%"></div></div>
+        <div class="mt-2 flex gap-1.5">${W_STAGE_LABEL().map((l, k) => `<span class="flex-1 min-w-0 text-center text-[11px] font-bold rounded-lg px-1 py-1 ${k < ws ? 'bg-emerald-100 text-emerald-800' : k === ws ? 'bg-sky-100 text-sky-800 ring-1 ring-sky-300' : 'bg-slate-100 text-slate-400'}">${k < ws ? '⭐' : k + 1} ${l}</span>`).join('')}</div>
         <details id="sammlung" class="mt-2 rounded-xl border border-emerald-200 bg-emerald-50/50 px-3 py-2" ${SAMMLUNG_OPEN ? 'open' : ''} ontoggle="SAMMLUNG_OPEN=this.open">
-          <summary class="text-sm font-bold text-emerald-900 cursor-pointer">⭐ ${tr('Meine Sammlung', 'Mi colección')}: ${done} ${done === 1 ? tr('Wort', 'palabra') : tr('Wörter', 'palabras')}</summary>
-          <div class="mt-2 flex flex-wrap gap-1.5">${words.filter(w => isMastered(w)).map(w => `<span title="${esc(mean(w))}" class="px-2.5 py-1 rounded-full bg-white border border-emerald-300 text-xs font-bold text-emerald-800 ${SESSION.newMastered.includes(w.en) ? 'ring-2 ring-amber-300' : ''}">⭐ ${esc(w.en)}</span>`).join('') || `<span class="text-xs text-slate-600">${tr('Hier sammelst du jedes Wort, das du gemeistert hast.', 'Aquí reúnes cada palabra que ya dominas.')}</span>`}</div>
+          <summary class="text-sm font-bold text-emerald-900 cursor-pointer">📚 ${tr('Meine Sammlung', 'Mi colección')}: ${done} ${done === 1 ? tr('Wort', 'palabra') : tr('Wörter', 'palabras')}</summary>
+          <div class="mt-2 flex flex-wrap gap-1.5">${words.filter(w => isMastered(w)).map(w => `<span title="${esc(mean(w))}" class="px-2.5 py-1 rounded-full bg-white border border-emerald-300 text-xs font-bold text-emerald-800 ${SESSION.newMastered.includes(w.en) ? 'ring-2 ring-amber-300' : ''}">✔ ${esc(w.en)}</span>`).join('') || `<span class="text-xs text-slate-600">${tr('Hier sammelst du jedes Wort, das du gemeistert hast.', 'Aquí reúnes cada palabra que ya dominas.')}</span>`}</div>
           ${done ? `<div class="mt-1.5 text-[11px] text-slate-500">${tr('Gelber Rand = heute neu.', 'Borde amarillo = nueva de hoy.')}</div>` : ''}
         </details>`;
       const box = $('body-pfad');
@@ -1036,7 +1058,7 @@
           <div class="rounded-2xl border-2 border-sky-300 bg-sky-50 p-5 text-center space-y-2 pop">
             <div class="text-4xl">🎉</div>
             <div class="text-lg font-black text-slate-900">${tr('Etappe geschafft!', '¡Etapa superada!')}</div>
-            <div class="text-sm text-slate-700">${SESSION.answers} ${tr('Antworten, davon', 'respuestas,')} ${SESSION.right} ${tr('richtig', 'correctas')}. ${SESSION.newMastered.length ? `${tr('Heute neu gemeistert', 'Nuevas dominadas hoy')}: <b>${SESSION.newMastered.map(esc).join(', ')}</b> ⭐` : tr('Deine Wörter sind auf gutem Weg: Bald kommen die ersten Sterne.', 'Tus palabras van por buen camino: pronto llegan las primeras estrellas.')}</div>
+            <div class="text-sm text-slate-700">${SESSION.answers} ${tr('Antworten, davon', 'respuestas,')} ${SESSION.right} ${tr('richtig', 'correctas')}. ${SESSION.newMastered.length ? `${tr('Heute neu gemeistert', 'Nuevas dominadas hoy')}: <b>${SESSION.newMastered.map(esc).join(', ')}</b> ✔` : tr('Deine Wörter sind auf gutem Weg: Bald kommt der nächste Stern.', 'Tus palabras van por buen camino: pronto llegan las primeras estrellas.')}</div>
             <div class="grid grid-cols-2 gap-2 pt-1">
               <button type="button" onclick="pausePfad()" class="px-3 py-3 rounded-xl text-sm font-bold border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50">${tr('Für heute fertig', 'Terminar por hoy')}</button>
               <button type="button" id="next-btn" onclick="continuePfad()" class="px-3 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white">${tr('Weiter üben →', 'Seguir practicando →')}</button>
@@ -1054,9 +1076,11 @@
       if (Q.phase === 'done') {
         box.innerHTML = `
           <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-2 pop">
-            <div class="text-5xl">🏆</div>
-            <div class="text-lg font-black text-slate-900">${tr(`Alle ${words.length} Wörter gemeistert!`, `¡Dominas las ${words.length} palabras!`)}</div>
-            <div class="text-sm text-slate-700">${tr('Super! Mach jetzt den Wörtertest wie in der Prüfung.', '¡Genial! Ahora haz la prueba de vocabulario como en el examen.')}</div>
+            <div class="text-5xl">${pathsLeft() ? '🏅' : '🏆'}</div>
+            <div class="text-2xl">${starsMini(3)}</div>
+            <div class="text-lg font-black text-slate-900">${tr(`Lernpfad ${PARTS[STATE.part].label} gemeistert!`, `¡Ruta de la ${PARTS[STATE.part].label.toLowerCase()} dominada!`)}</div>
+            <div class="text-sm text-slate-700">${tr(`Du kannst alle ${words.length} Wörter. Du bekommst die Medaille 🏅. Teste dich jetzt im Wörtertest.`, `Sabes las ${words.length} palabras. Recibes la medalla 🏅. Ahora ponte a prueba.`)}</div>
+            <div class="text-sm font-bold text-slate-800">${trophyLine()}</div>
             ${reviewsLeft() ? `<div class="text-sm text-slate-700">${tr('🔁 In den nächsten Tagen kommen die Wörter kurz zum Wiederholen. So bleiben sie im Kopf.', '🔁 En los próximos días las palabras vuelven brevemente para repasar. Así se quedan en la cabeza.')}</div>` : ''}
             <button type="button" onclick="document.getElementById('task-test').scrollIntoView({behavior:'smooth'})" class="mt-1 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('Zum Wörtertest ↓', 'A la prueba ↓')}</button>
             ${ES() ? `<div class="mt-2 rounded-xl border border-sky-200 bg-white p-3 text-sm text-slate-700 text-left">👉 <b>Siguiente paso:</b> la prueba en clase es en alemán. Aprende ahora las mismas palabras en inglés y alemán: cambia arriba a «Deutsch». Tus estrellas en español se quedan guardadas.</div>` : ''}
@@ -1104,7 +1128,7 @@
       }
       if (Q.phase === 'answered') {
         const write = st.type === 'write';
-        const title = Q.mastered ? tr(`⭐ Gemeistert! «${esc(w.en)}» kommt in deine Sammlung.`, `⭐ ¡Dominada! «${esc(w.en)}» va a tu colección.`) : Q.ok ? (Q.review ? tr('✔ Sitzt noch!', '✔ ¡Todavía te la sabes!') : (STREAK >= 5 && STREAK % 5 === 0 ? tr(`🔥 ${STREAK} richtig hintereinander!`, `🔥 ¡${STREAK} correctas seguidas!`) : (Q.praise || tr('✔ Richtig!', '✔ ¡Correcto!')))) : (Q.dontKnow ? tr('So heisst es:', 'Se dice así:') : Q.miss ? MISS_TITLE[Q.miss.type] : tr('Noch nicht ganz. Richtig ist:', 'Todavía no del todo. Lo correcto es:'));
+        const title = Q.starUp ? tr(`⭐ Stufe ${Q.starUp} geschafft! Du bekommst einen Stern.`, `⭐ ¡Nivel ${Q.starUp} superado! Recibes una estrella.`) : Q.mastered ? tr(`✔ Gelernt! «${esc(w.en)}» kommt in deine Sammlung.`, `✔ ¡Aprendida! «${esc(w.en)}» va a tu colección.`) : Q.ok ? (Q.review ? tr('✔ Sitzt noch!', '✔ ¡Todavía te la sabes!') : (STREAK >= 5 && STREAK % 5 === 0 ? tr(`🔥 ${STREAK} richtig hintereinander!`, `🔥 ¡${STREAK} correctas seguidas!`) : (Q.praise || tr('✔ Richtig!', '✔ ¡Correcto!')))) : (Q.dontKnow ? tr('So heisst es:', 'Se dice así:') : Q.miss ? MISS_TITLE[Q.miss.type] : tr('Noch nicht ganz. Richtig ist:', 'Todavía no del todo. Lo correcto es:'));
         const calm = Q.review ? tr('Vergessen ist normal. Du übst es gleich nochmals.', 'Olvidar es normal. La practicas otra vez enseguida.') : tr('Kein Problem: Das Wort kommt gleich nochmals.', 'No pasa nada: la palabra vuelve enseguida.');
         html += `
           <div class="feedback-box mt-3 rounded-2xl border-2 ${Q.ok ? 'border-emerald-400 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-3 space-y-1.5 pop">
@@ -1137,22 +1161,17 @@
     // Jede Sprache hat ihren eigenen Test (sonst würden deutsche Antworten nach dem Umschalten spanisch bewertet)
     const tKey = (part = STATE.part) => ES() ? part + '_es' : part;
     const T = () => STATE.tests[tKey()];
+    // Wunsch Lehrperson 17.11.2026: In jedem Durchgang kommt JEDES Wort des Teils in beiden Richtungen (Teil A und Teil B), neu gemischt.
+    // Damit Teil B die Antworten von Teil A nicht verrät: zuerst nur Teil A, dann wird Teil A zugeklappt und Teil B kommt. Geprüft wird am Schluss.
     function newTest(part) {
-      const words = partWords(part);
-      const a = [], block = new Set();
-      for (const w of shuffle(words.filter(x => !x.noType))) {
-        if (a.length >= TEST_A) break;
-        if (block.has(w.id)) continue;
-        a.push(w);
-        [w.id, ...related(w, TYPE_IDS), ...related(w, FAMILY_IDS)].forEach(id => block.add(id));
-      }
-      const b = shuffle(words.filter(w => !block.has(w.id))).slice(0, TEST_B);
-      return { a: a.map(w => ({ w: w.id, ans: '' })), b: b.map(w => ({ w: w.id, ans: '' })), checked: false, warned: false };
+      const ids = shuffle(partWords(part)).map(w => w.id);
+      return { a: ids.map(id => ({ w: id, ans: '' })), b: shuffle(ids).map(id => ({ w: id, ans: '' })), step: 'a', checked: false, warned: false };
     }
     const testBOk = it => l1Ok(BY_ID[it.w], it.ans);
     function validTest(t, part) {
-      const ok = list => Array.isArray(list) && list.length > 0 && list.every(it => it && BY_ID[it.w] && BY_ID[it.w].part === part && typeof it.ans === 'string');
-      return t && ok(t.a) && ok(t.b);
+      const all = partWords(part).map(w => w.id).sort().join();
+      const ok = list => Array.isArray(list) && list.every(it => it && BY_ID[it.w] && typeof it.ans === 'string') && list.map(it => it.w).sort().join() === all;
+      return t && ok(t.a) && ok(t.b) && (t.step === 'a' || t.step === 'b');   // alter Test mit 20 zufälligen Wörtern: neuer Test
     }
     // Gespeicherten Test behalten, aber bei jedem Laden neu mischen
     function ensureTest(part) {
@@ -1165,15 +1184,24 @@
       const it = t[key].find(x => x.w === id);
       if (it) { it.ans = val; save(); }
     }
+    // Teil A fertig: Teil A zuklappen, Teil B zeigen
+    function nextTestPart() {
+      const t = T();
+      if (t.checked || t.step !== 'a') return;
+      const empty = t.a.filter(it => !it.ans.trim()).length;
+      if (empty && !t.warnedA) { t.warnedA = true; save(); renderTest(); return; }
+      t.step = 'b';
+      save();
+      renderTest();
+      const first = document.querySelector('#body-test .test-in');
+      if (first) { first.focus(); first.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }
     function checkTest() {
       const t = T();
-      if (t.checked) return;
+      if (t.checked || t.step !== 'b') return;
       const empty = [...t.a, ...t.b].filter(it => !it.ans.trim()).length;
       if (empty && !t.warned) { t.warned = true; save(); renderTest(); return; }
       t.checked = true;
-      const m = medalOf(TASKS.test.score(), TASKS.test.max);
-      const old = MEDALS.findIndex(x => x.name === STATE.medal[tKey()]);
-      if (m && (old < 0 || MEDALS.indexOf(m) < old)) STATE.medal[tKey()] = m.name;
       save();
       renderTest();
       $('fb-test').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1229,38 +1257,49 @@
         $('body-test').innerHTML = `
           <div class="rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/60 p-5 text-center space-y-2">
             <div class="text-3xl">📝</div>
-            <p class="text-sm text-slate-700">${tr(`Hast du die Wörter im Lernpfad geübt? Dann teste dich wie in der Prüfung: ${t.a.length} Wörter Deutsch → Englisch und ${t.b.length} Wörter Englisch → Deutsch.`, `¿Has practicado las palabras en la ruta de aprendizaje? Entonces ponte a prueba como en el examen: ${t.a.length} palabras español → inglés y ${t.b.length} palabras inglés → español.`)}</p>
-            <p class="text-xs text-slate-600">${tr(`Wie in der Prüfung kommen nicht alle ${partWords(STATE.part).length} Wörter, sondern ${t.a.length + t.b.length}, zufällig gewählt. Alle Wörter übst du im Lernpfad oben.`, `Como en el examen, no salen todas las ${partWords(STATE.part).length} palabras, sino ${t.a.length + t.b.length}, elegidas al azar. Todas las palabras las practicas en la ruta de arriba.`)}</p>
+            <p class="text-sm font-bold text-slate-900">${tr(`Zuerst den Lernpfad oben machen, bis du alle 3 ⭐ hast. Erst dann den Wörtertest.`, `Primero haz la ruta de aprendizaje de arriba, hasta que tengas las 3 ⭐. Después, la prueba.`)} <span class="whitespace-nowrap">(${wStars() >= 3 ? '🏅' : starsMini(wStars())})</span></p>
+            <p class="text-sm text-slate-700">${tr(`Im Wörtertest kommen alle ${t.a.length} Wörter dran, zuerst Deutsch → Englisch (Teil A), dann Englisch → Deutsch (Teil B).`, `En la prueba salen las ${t.a.length} palabras, primero español → inglés (parte A), después inglés → español (parte B).`)}</p>
             <button type="button" onclick="openTest()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('▶ Wörtertest starten', '▶ Empezar la prueba')}</button>
           </div>`;
         $('fb-test').innerHTML = '';
         return;
       }
       const head = (txt, n) => `<div class="flex items-center justify-between gap-2 bg-slate-100 rounded-lg px-3 py-2 mb-2"><h3 class="text-sm font-black text-slate-800">${txt}</h3><span class="text-xs font-bold text-slate-600">${n} ${tr('P.', 'p.')}</span></div>`;
-      $('body-test').innerHTML = `
-        <div class="space-y-5">
-          <p class="text-xs text-slate-600">${tr(`${t.a.length + t.b.length} von ${partWords(STATE.part).length} Wörtern, zufällig. «🔀 Nochmals üben» gibt andere Wörter.`, `${t.a.length + t.b.length} de ${partWords(STATE.part).length} palabras, al azar. «🔀 Practicar otra vez» da otras palabras.`)}</p>
-          <div>${head(tr('Teil A: Deutsch → Englisch', 'Parte A: español → inglés'), t.a.length)}<div class="space-y-2">${t.a.map((it, i) => testRow('a', it, i + 1, t)).join('')}</div></div>
-          <div>${head(tr('Teil B: Englisch → Deutsch', 'Parte B: inglés → español'), t.b.length)}<div class="space-y-2">${t.b.map((it, i) => testRow('b', it, t.a.length + i + 1, t)).join('')}</div></div>
+      const partA = `<div>${head(tr('Teil A: Deutsch → Englisch', 'Parte A: español → inglés'), t.a.length)}<div class="space-y-2">${t.a.map((it, i) => testRow('a', it, i + 1, t)).join('')}</div></div>`;
+      const partB = `<div>${head(tr('Teil B: Englisch → Deutsch', 'Parte B: inglés → español'), t.b.length)}<div class="space-y-2">${t.b.map((it, i) => testRow('b', it, t.a.length + i + 1, t)).join('')}</div></div>`;
+      const emptyA = t.a.filter(it => !it.ans.trim()).length;
+      // Teil A: nur Teil A und «Weiter zu Teil B». Teil B: Teil A zugeklappt (sonst verrät Teil B die Antworten). Geprüft: beide Teile.
+      $('body-test').innerHTML = t.checked ? `<div class="space-y-5">${partA}${partB}</div>`
+        : t.step === 'a' ? `
+        <div class="space-y-4">
+          <p class="text-xs font-semibold text-slate-600">${tr(`Schritt 1 von 2 · Alle ${t.a.length} Wörter kommen dran.`, `Paso 1 de 2 · Salen las ${t.a.length} palabras.`)}</p>
+          ${partA}
+          ${t.warnedA && emptyA ? `<div class="text-sm font-bold text-amber-700">${tr(`Noch ${emptyA} leer. Füll alles aus oder drück nochmals auf «Weiter zu Teil B».`, `Faltan ${emptyA}. Completa todo o toca otra vez «Seguir con la parte B».`)}</div>` : ''}
+          <button type="button" onclick="nextTestPart()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('Weiter zu Teil B ▶', 'Seguir con la parte B ▶')}</button>
+        </div>`
+        : `
+        <div class="space-y-4">
+          <div class="rounded-xl border border-emerald-300 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-900">${tr(`✔ Teil A gemacht (${t.a.length - emptyA} von ${t.a.length} ausgefüllt). Er wird am Schluss zusammen mit Teil B geprüft.`, `✔ Parte A hecha (${t.a.length - emptyA} de ${t.a.length} completadas). Se corrige al final junto con la parte B.`)}</div>
+          <p class="text-xs font-semibold text-slate-600">${tr('Schritt 2 von 2', 'Paso 2 de 2')}</p>
+          ${partB}
         </div>`;
       const btn = $('check-test');
+      btn.classList.toggle('hidden', !t.checked && t.step === 'a');
       btn.disabled = t.checked;
       btn.classList.toggle('opacity-50', t.checked);
       const fb = $('fb-test');
       if (!t.checked) {
         const empty = [...t.a, ...t.b].filter(it => !it.ans.trim()).length;
-        fb.innerHTML = t.warned && empty ? `<div class="text-sm font-bold text-amber-700">${tr(`Noch ${empty} leer. Füll alles aus oder drück nochmals auf «Test prüfen».`, `Faltan ${empty}. Completa todo o toca otra vez «Corregir la prueba».`)}</div>` : '';
+        fb.innerHTML = t.step === 'b' && t.warned && empty ? `<div class="text-sm font-bold text-amber-700">${tr(`Noch ${empty} leer. Füll alles aus oder drück nochmals auf «Test prüfen».`, `Faltan ${empty}. Completa todo o toca otra vez «Corregir la prueba».`)}</div>` : '';
         return;
       }
-      const pts = TASKS.test.score(), max = TASKS.test.max, m = medalOf(pts, max);
-      const grade = gradeOf(pts, max), pass = pts >= passPoints(max);
-      const best = MEDALS.find(x => x.name === STATE.medal[tKey()]);
+      // Entscheid Lehrperson 18.11.2026: keine Medaille, keine Note, nur «X von Y richtig» (Medaillen gibt es nur im Lernpfad)
+      const pts = TASKS.test.score(), max = TASKS.test.max, all = pts >= max;
       fb.innerHTML = `
-        <div class="rounded-2xl border-2 ${pass ? 'border-emerald-300 bg-emerald-50' : 'border-amber-300 bg-amber-50'} p-4 space-y-1 pop">
-          <div class="text-lg font-black text-slate-900">${m ? m.icon + ' ' : ''}${fmt(pts)} ${tr('von', 'de')} ${max} ${tr('Punkten · Note', 'puntos · Nota')} ${grade.toFixed(1)}</div>
-          <div class="text-sm ${pass ? 'text-emerald-800' : 'text-amber-900'}">${pass ? tr('✅ Bestanden', '✅ Aprobado') : tr('Noch nicht ganz. Übe die gelben Wörter im Lernpfad, dann klappt es.', 'Todavía no del todo. Practica las palabras amarillas en la ruta de aprendizaje y lo conseguirás.')} (${tr('bestanden ab', 'para aprobar hacen falta')} ${passPoints(max)} ${tr('Punkten', 'puntos')})</div>
-          ${best ? `<div class="text-xs text-slate-600">${tr('Deine beste Medaille in', 'Tu mejor medalla en la')} ${ES() ? PARTS[STATE.part].label.toLowerCase() : PARTS[STATE.part].label}: ${best.icon} ${medalName(best)}</div>` : ''}
-          <div class="text-xs text-slate-600">${tr('Gelb = noch üben. Mit «🔀 Nochmals üben» bekommst du einen neuen Test.', 'Amarillo = practicar más. Con «🔀 Practicar otra vez» recibes una prueba nueva.')}</div>
+        <div class="rounded-2xl border-2 ${all ? 'border-emerald-300 bg-emerald-50' : 'border-sky-300 bg-sky-50'} p-4 space-y-1 pop">
+          <div class="text-lg font-black text-slate-900">${fmt(pts)} ${tr('von', 'de')} ${max} ${tr('richtig', 'correctas')}</div>
+          <div class="text-sm text-slate-700">${all ? tr('Super, alles richtig!', '¡Súper, todo correcto!') : tr('Gut geübt! Die gelben Wörter übst du nochmals, dann sitzen sie.', '¡Bien practicado! Las palabras amarillas las practicas otra vez y se te quedan.')}</div>
+          <div class="text-xs text-slate-600">${tr('Mit «🔀 Nochmals üben» kommen alle Wörter neu gemischt.', 'Con «🔀 Practicar otra vez» salen todas las palabras en otro orden.')}</div>
         </div>`;
     }
 
@@ -1269,11 +1308,10 @@
     // ==========================================================
     // Zähler oben: Wörter (⭐) oder Grammatik (🧩), je nach Reiter
     function renderHeader() {
-      const g = STATE.tab === 'grammatik';
-      const icon = $('header-icon');
-      if (icon) icon.textContent = g ? '🧩' : '⭐';
-      $('header-known').textContent = g ? `${TASKS.gram.score()} / ${TASKS.gram.max}` : `${TASKS.pfad.score()} / ${TASKS.pfad.max}`;
-      $('header-count').title = g ? tr('Geschaffte Grammatik-Sätze', 'Frases de gramática superadas') : tr('Gemeisterte Wörter', 'Palabras dominadas');
+      const t = themeStars(), icon = $('header-icon');
+      if (icon) icon.textContent = pathsLeft() ? '⭐' : '🏆';
+      $('header-known').textContent = `${t.n} / ${t.max}`;
+      $('header-count').title = tr('Sterne in Unit 2: einer pro Stufe. Alle Lernpfade geschafft = Pokal 🏆', 'Estrellas de la Unit 2: una por nivel. Todas las rutas = copa 🏆');
     }
     // Umschalter Deutsch | Español: alles neu zeichnen, Fortschritt bleibt gleich
     function setLang(l) {
@@ -1717,7 +1755,7 @@
         if (!b) return;
         const on = t === GT, all = gAllOf(t), st = GS(t);
         const n = all.filter(id => st.done[id]).length;
-        b.innerHTML = `<span class="block text-sm sm:text-base font-black wrap-any">${esc(G_TOPICS[t].label)}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}" lang="en">${esc(G_TOPICS[t].sub)}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}">🧩 ${n}/${all.length}</span>`;
+        b.innerHTML = `<span class="block text-sm sm:text-base font-black wrap-any">${esc(G_TOPICS[t].label)}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}" lang="en">${esc(G_TOPICS[t].sub)}</span><span class="block text-xs font-semibold ${on ? 'text-emerald-100' : 'text-slate-500'}">${st.stage >= G_TOPICS[t].stages.length ? '🏅' : `⭐ ${st.stage}/${G_TOPICS[t].stages.length}`}</span>`;
         b.className = 'px-1.5 py-2.5 rounded-xl border-2 text-center transition ' + (on ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50');
         b.setAttribute('aria-pressed', on);
       });
@@ -1740,7 +1778,7 @@
       renderGTopics();
       const s = GS(), total = TASKS.gram.max, done = TASKS.gram.score();
       const pct = Math.round(done / total * 100);
-      const stageTxt = s.stage >= G_STAGES.length ? tr('🏆 alle Stufen geschafft', '🏆 todos los niveles superados') : `${tr('Stufe', 'Nivel')} ${s.stage + 1} ${tr('von', 'de')} ${G_STAGES.length}`;
+      const stageTxt = s.stage >= G_STAGES.length ? tr('🏅 gemeistert', '🏅 dominada') : `${tr('Stufe', 'Nivel')} ${s.stage + 1} ${tr('von', 'de')} ${G_STAGES.length}`;
       $('gram-progress').innerHTML = `
         <div class="flex justify-between items-end text-sm font-bold text-slate-700 mb-1 gap-2"><span>${tr('Fortschritt', 'Progreso')}: ${pct} %</span><span class="text-xs font-semibold text-slate-500">${stageTxt}</span></div>
         <div class="h-4 rounded-full bg-slate-100 border border-slate-200 overflow-hidden"><div class="h-full bg-gradient-to-r from-sky-400 to-sky-600 transition-all" style="width:${pct}%"></div></div>
@@ -1759,7 +1797,7 @@
       } else if (G.phase === 'done') {
         const more = s.rev < REVIEW_DAYS.length;
         const other = Object.keys(G_TOPICS).find(t => t !== GT && GS(t).stage < G_TOPICS[t].stages.length);
-        box.innerHTML = card('🏆', tr('Grammatik-Pfad geschafft!', '¡Ruta de gramática superada!'), G_TOPICS[GT].doneText + ' ' + (more ? tr('In den nächsten Tagen kommen 4 Sätze zum Wiederholen.', 'En los próximos días vuelven 4 frases para repasar.') : tr('Auch die Wiederholungen sind geschafft.', 'También has terminado los repasos.')),
+        box.innerHTML = card(pathsLeft() ? '🏅' : '🏆', tr('Lernpfad gemeistert! Du bekommst die Medaille 🏅', '¡Ruta dominada! Recibes la medalla 🏅'), `<span class="text-2xl">${starsMini(G_STAGES.length, G_STAGES.length)}</span><br>` + G_TOPICS[GT].doneText + ' <b>' + trophyLine() + '</b> ' + (more ? tr('In den nächsten Tagen kommen 4 Sätze zum Wiederholen.', 'En los próximos días vuelven 4 frases para repasar.') : tr('Auch die Wiederholungen sind geschafft.', 'También has terminado los repasos.')),
           other ? `<button type="button" onclick="setGTopic('${other}')" class="mt-1 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">${tr('Zum Thema', 'Al tema')} «${esc(G_TOPICS[other].label)}» →</button>` : '');
       } else {
         const it = gItem(G.id), st = G_STAGES[it.stage], right = gRight(it);
@@ -1897,7 +1935,7 @@
       save();
     }
 
-    Object.assign(window, { setLang, setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, continuePfad, pausePfad, giveHint, openTest, testInput, testEnter, checkTest, toggleTip, openTheory, backToTask, retryTask, switchTab, gPick, gPlace, gUnplace, gCheckTiles, gWrite, gHint, gNext, gContinue, gPause, openTheoryG, backToTaskG, setGTopic });
+    Object.assign(window, { setLang, setPart, pickOption, submitWrite, overrideAnswer, nextQuestion, continuePfad, pausePfad, giveHint, openTest, testInput, testEnter, nextTestPart, checkTest, toggleTip, openTheory, backToTask, retryTask, switchTab, gPick, gPlace, gUnplace, gCheckTiles, gWrite, gHint, gNext, gContinue, gPause, openTheoryG, backToTaskG, setGTopic });
 
     // Start sobald das HTML da ist
     document.addEventListener('DOMContentLoaded', function () {

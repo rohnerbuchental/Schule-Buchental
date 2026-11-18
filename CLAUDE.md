@@ -5,6 +5,17 @@ Statische Lernseiten (eine HTML-Datei pro Thema) für Sek-Schülerinnen und -Sch
 Die Schüler bekommen nur die Startseite: https://rohnerbuchental.github.io/Schule-Buchental/ (GitHub Pages). Neue Seiten darum immer als Kachel in `index.html` eintragen.
 Die Lehrperson (Repo-Besitzer) schreibt Deutsch (Schweiz) und will kurze, klare Antworten.
 
+## Antworten und Tokens (Wunsch 14.11.2026, gilt in allen Projekten)
+Strengere Regeln weiter unten gehen vor.
+- **Kurz:** höchstens etwa 5 Zeilen. Nur das Ergebnis und was der Nutzer tun oder entscheiden muss. Nichts über Commits, Pushes, Branches, Tests oder Agenten berichten, ausser etwas ging schief oder er fragt danach. Verlangte Anleitungen und Texte dürfen so lang sein wie nötig.
+- **Entscheide:** Fragen nummerieren, jede mit «Empfehlung: …» und kurzem Grund, am Ende «Ein ‹ja› genügt.» Klarfälle (Fehler beheben, aufräumen, Folgeschritt aus einem schon gefällten Entscheid) selbst entscheiden und in einer Zeile melden.
+- **Chattitel:** zu Beginn mit `set_session_title` setzen: «<Emoji> <Fach> · <Thema in 2–4 Wörtern>». Emojis: 📖 Deutsch, 🇬🇧 Englisch, 💻 Informatik, 🌋 RZG, 🎨 BG, 🧭 Berufliche Orientierung, 🗂️ Allgemein, 🏫 Lernportal (fächerübergreifend). Ein Chat = ein Fach-Thema.
+- **Schluss jeder Antwort (Wunsch 17.11.2026):** letzte Zeile immer «👉 Dein Teil: …» oder «✅ Nichts zu tun».
+- **Benachrichtigung:** Nach einer Arbeit, die länger als ein paar Minuten dauerte, mit `PushNotification` in einem Satz melden, was fertig ist und was die Lehrperson tun muss.
+- **Schul-Cockpit** (https://claude.ai/artifact/Nj9SU88azU74reChteRpQQ): Am Ende jeder Arbeit die eigene Fach-Zeile mit `ArtifactData` nachführen: Sammlung `faecher`, Dokument `deutsch` | `englisch` | `informatik` | `rzg` | `bg` | `bo` | `allgemein`; zuerst `get`, dann `update` mit `if_version`. Felder: `stand` (1 Satz), `deinTeil` (Liste, was die Lehrperson tun muss; leer = nichts), `naechstes` (1 Satz), `aktualisiert` (JJJJ-MM-TT). Kurz, nie Schülernamen.
+- **Tokens sparen, ohne schlechtere Arbeit:** nur lesen, was die Aufgabe braucht (grep und Ausschnitte statt ganzer Dateien). Prüf-Agenten nur, wo unten verlangt, und gebündelt am Schluss einer Arbeit. Bei langem Chat oder neuem Thema /clear vorschlagen.
+- **Diese Datei kurz halten:** Verlauf und Erledigtes gehören in die Stand-Dateien, nicht hierher. Fallen Regeln auf, die doppelt, veraltet oder unnötig teuer sind: kurz vorschlagen.
+
 **Dieses Repo ist öffentlich** (GitHub Pages geht mit dem Gratis-Konto nur so). Darum steht hier nichts über die Klasse, keine Tests, keine Lösungen, keine Namen.
 Alles andere liegt in der **privaten Ablage** (siehe unten).
 
@@ -15,6 +26,8 @@ Alles andere liegt in der **privaten Ablage** (siehe unten).
 | `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» (abgeschlossen: Kachel auf der Startseite entfernt 12.11.2026, Datei bleibt) |
 | `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 (abgeschlossen: Kachel auf der Startseite entfernt 11.11.2026, Datei bleibt) |
 | `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter-Lernpfad, 3 Grammatik-Lernpfade: Pläne, Adverbien, Wie stark?) |
+| `Informatik Computer-Grundlagen.html` | Informatik, Exkurs Computer-Grundlagen (Windows 11, OneDrive, Teams): Lernpfad in 2 Teilen = 2 Lektionen, Stufe 3 «Am Laptop» mit Missionen M1–M6. Vorschau seit 18.11.2026, Kachel erst nach Freigabe |
+| `Informatik Word-Fuehrerschein.html` | Informatik, Word-Führerschein: 5 Teile = 5 Lektionen (Schrift, Absatz & Überschriften, Bild & Tabelle, Seite & Prüfen, Papier/Drucken/PDF), Missionen W1.1–W5.3 mit Übungsdateien in `dateien/`. Vorschau seit 18.11.2026, Kachel erst nach Freigabe |
 | `RZG Vulkane Erdbeben Tsunamis.html` | RZG, Dynamik der Erde, Test 2: Lernpfad in 4 Teilen (Vulkane entstehen, Aufbau & Ausbrüche, Erdbeben, Tsunamis) |
 
 Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer Seite nur ihren Abschnitt lesen. Die didaktischen Grundsätze mit Quellen stehen in `docs/didaktik.md`.
@@ -35,6 +48,7 @@ Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer S
 - **Nicht überladen (Wunsch Lehrperson):** Wenige, klare Aufgaben, die genau das üben, was im Test kommt. Lieber eine einfache Seite als viele Spiele. Spiel-Elemente nur leicht (Fortschritt, Medaille).
 - **Angstfrei (Wunsch Lehrperson, sehr wichtig):** Kein Zeitdruck, keine Rangliste, Fehler kosten nichts (Aufgabe kommt nochmals), «Weiss ich nicht» erlaubt. Sprache «Noch nicht ganz» statt «Falsch», Gelb statt Rot. Probetests sind Übung.
 - **Jede Lernseite ist ein angstfreier Lernpfad (Wunsch Lehrperson 11.11.2026, sehr wichtig):** Gilt für jede neue und jede umgebaute Seite. Vorbild ist der **Lernpfad RZG** (Lehrperson 11.11.2026: «der Weg für alle, die folgen»; vorher Englisch Unit 2): kleine Etappen, zuerst erkennen (auswählen), dann selber bilden, falsche Aufgaben kommen später nochmals, Fortschritt und Sterne pro Teil, Lob, kein Prüfungsgefühl. Die Seite deckt **genau die Lernziele bzw. Kompetenzen des Tests** ab, nicht mehr und nicht weniger. Sie muss ansprechend aussehen, damit schwache Lernende sie freiwillig benutzen: nach jedem Neu- oder Umbau den Agenten `design-pruefer` einsetzen. Ein Probetest mit Punkten und Note ist nicht nötig.
+- **Belohnung, auf allen Seiten gleich (Entscheid Lehrperson 18.11.2026):** ⭐ pro geschaffter Stufe, 🏅 Medaille «gemeistert» pro fertigem Lernpfad (alle Sterne), 🏆 Pokal, wenn alle Lernpfade des Themas fertig sind. Nur mit Fleiss erreichbar (Fehler kosten nichts), nie für Leistung. Kein Bronze/Silber/Gold, keine Medaille im Probetest. Muster: RZG.
 - **Falsche Antwort bei Auswahlaufgaben (Wunsch Lehrperson 11.11.2026, jeder Lernpfad):** Nicht die Lösung zeigen. Die gewählte Antwort durchstreichen, **sehr kurz** (ein Satz, wenige Wörter) sagen, warum sie nicht passt, und nochmals probieren lassen («Noch nicht. … Probier nochmals!»). Kein langer Text, die Schüler lesen ihn nicht. Nur «Weiss ich nicht» zeigt die Lösung. Muster: Scratch-Hub `whyNot`. Quellen in `docs/didaktik.md` (Rückmeldung bei falscher Antwort).
 - **Kleine Animation zum Antippen (Wunsch Lehrperson 11.11.2026):** Wo es passt, pro Teil eine kleine witzige Animation (CSS/SVG), am besten zum Stoff (Vulkan bricht aus, Drohne fliegt) oder als Belohnung nach einer Etappe; nie mitten in einer Aufgabe. Regeln und Quellen in `docs/didaktik.md` 1c.
 - **Begründet mit Quellen (Wunsch Lehrperson):** Jede Übungsform folgt `docs/didaktik.md` (Abrufen üben, verteiltes Üben, sofortige Rückmeldung, erst erkennen dann selber bilden, wenig auf einmal). Eine neue Übungsform nur mit Quelle; die Begründung dort nachtragen. Der Lehrperson bei neuen Aufgaben kurz sagen, welches Prinzip dahinter steht.

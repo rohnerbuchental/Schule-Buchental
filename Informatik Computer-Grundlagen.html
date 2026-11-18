@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informatik · Computer-Grundlagen · Lernpfad</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    input:focus, textarea:focus { outline: none; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3); }
+    .wrap-any { overflow-wrap: anywhere; }
+    button:focus, [role="button"]:focus { outline: none; }
+    button:focus-visible, [role="button"]:focus-visible, summary:focus-visible { outline: 3px solid #818cf8; outline-offset: 2px; }
+    @media (max-width: 639px) { .pic svg { max-height: 200px; } .pic svg.ring-map { max-height: none; } }
+    [id^="body-"] { scroll-margin-top: 8.5rem; }
+    [id^="card-"], [id^="theory-"] { scroll-margin-top: 8.5rem; }
+    @keyframes pop { 0% { transform: scale(0.96); } 60% { transform: scale(1.03); } 100% { transform: scale(1); } }
+    .pop { animation: pop 0.25s ease-out; }
+    .fly-star { position: fixed; z-index: 60; font-size: 2rem; pointer-events: none; transition: transform 0.8s cubic-bezier(.5,-0.3,.6,1), opacity 0.8s; }
+    @keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+    .bump { animation: bump 0.45s ease-out; }
+    .bar { transition: width 0.6s ease-out; }
+    svg .zone { cursor: pointer; }
+    svg .zone:hover > :first-child { filter: brightness(1.12); }
+    @media (prefers-reduced-motion: reduce) { .pop, .bump { animation: none; } .fly-star { display: none; } .bar { transition: none; } }
+    /* Wolke zum Antippen auf der Startansicht (docs/didaktik.md 1c): bewegt sich nur nach Antippen, 1.6 s */
+    .anim-btn { -webkit-tap-highlight-color: transparent; }
+    .anim-btn:focus-visible { outline: 3px solid #4f46e5; outline-offset: 3px; }
+    .animsvg .c-file, .animsvg .c-eye { transform-box: fill-box; transform-origin: center; }
+    .animsvg .c-check { opacity: 0; }
+    .animsvg.go .c-file { animation: cFile 1.6s ease-in-out forwards; }
+    .animsvg.go .c-check { animation: cCheck 1.6s ease-out forwards; }
+    .animsvg.go .c-eye { animation: cEye 1.6s; }
+    @keyframes cFile { 0% { transform: translateY(0) scale(1); opacity: 1; } 55% { transform: translateY(-48px) scale(0.6); opacity: 1; } 70%, 100% { transform: translateY(-50px) scale(0.3); opacity: 0; } }
+    @keyframes cCheck { 0%, 65% { opacity: 0; } 80%, 100% { opacity: 1; } }
+    @keyframes cEye { 0%, 55% { transform: scale(1); } 65%, 90% { transform: scale(1.5); } 100% { transform: scale(1); } }
+    @media (prefers-reduced-motion: reduce) { .animsvg.go .c-file { animation: none; opacity: 0; } .animsvg.go .c-check { animation: none; opacity: 1; } .animsvg.go .c-eye { animation: none; } }
+    /* Sprachwechsel: feste Texte stehen doppelt (data-l="de" / data-l="es") */
+    html[lang="es"] [data-l="de"], html:not([lang="es"]) [data-l="es"] { display: none !important; }
+    html:not([lang="es"]) .lang-btn[data-setlang="de"], html[lang="es"] .lang-btn[data-setlang="es"] { background: #fff; color: #0f172a; }
+  </style>
+</head>
+<body class="bg-stone-100 text-slate-800 min-h-screen flex flex-col antialiased">
+
+  <!-- Kopf (Spanisch kommt erst nach der Freigabe der deutschen Fassung) -->
+  <header class="sticky top-0 z-40 bg-gradient-to-r from-indigo-700 via-indigo-600 to-violet-500 text-white shadow-md">
+    <div class="max-w-3xl mx-auto px-4 py-2.5 flex items-center gap-3">
+      <a href="index.html" class="text-2xl p-2 bg-white/15 rounded-2xl shrink-0" title="Zur Startseite">💻</a>
+      <div class="min-w-0 flex-1">
+        <div class="text-[11px] font-bold tracking-wider uppercase text-indigo-100"><span data-l="de">Informatik · Exkurs</span></div>
+        <h1 class="text-base sm:text-xl font-black leading-tight"><span data-l="de">Computer-Grundlagen</span></h1>
+      </div>
+      <div id="star-box" class="shrink-0 bg-white/15 border border-white/25 rounded-xl px-2.5 py-1 text-sm font-black" title="Sterne: 3 pro Teil">
+        ⭐ <span id="star-count" class="inline-block">0</span><span class="text-white/75 font-bold">/<span id="star-max">6</span></span>
+      </div>
+    </div>
+    <nav id="nav" class="max-w-3xl mx-auto px-2 pb-2 grid grid-cols-3 gap-1 text-[11px] sm:text-xs font-bold">
+      <button type="button" id="nav-home" onclick="switchTab('home')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">🏠</span><span data-l="de">Start</span></button>
+      <button type="button" id="nav-k1" onclick="switchTab('k1')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">📁</span><span data-l="de">Dateien</span></button>
+      <button type="button" id="nav-k2" onclick="switchTab('k2')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">📥</span><span data-l="de">Download & Teams</span></button>
+    </nav>
+  </header>
+
+  <main class="max-w-3xl w-full mx-auto p-4 sm:p-6 flex-1">
+
+    <!-- ÜBERSICHT -->
+    <div id="view-home" class="view space-y-4">
+      <section class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
+        <h2 class="text-xl font-black text-slate-900"><span data-l="de">Fit am Computer 💻</span></h2>
+        <p class="text-base text-slate-600 mt-1" data-l="de">2 Teile, einer pro Lektion. Jeder Teil hat 3 Stufen: <b>erkennen</b>, <b>ergänzen</b>, <b>am Laptop machen</b>. Fehler sind okay: Die Aufgabe kommt einfach später nochmals. Danach geht es weiter mit dem <b>Word-Führerschein</b>.</p>
+        <!-- Kleine Animation zum Stoff (docs/didaktik.md 1c): Datei fliegt in die Wolke = in OneDrive speichern -->
+        <div class="mt-3 flex items-center gap-3">
+          <button type="button" onclick="playAnim()" class="anim-btn shrink-0 w-28 rounded-2xl bg-sky-50 border border-sky-100 overflow-hidden" aria-label="Antippen: Datei in OneDrive speichern">
+            <svg id="animsvg" class="animsvg block w-full h-auto" viewBox="0 0 120 100" aria-hidden="true" focusable="false">
+              <path d="M38 46 Q20 46 20 33 Q20 21 34 20 Q38 6 56 6 Q71 6 77 18 Q98 18 98 33 Q98 46 80 46 Z" fill="#3b82f6"/>
+              <circle class="c-eye" cx="48" cy="28" r="2.8" fill="#0f172a"/><circle class="c-eye" cx="70" cy="28" r="2.8" fill="#0f172a"/>
+              <path d="M52 36 Q59 41 66 36" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <g class="c-file"><rect x="48" y="66" width="22" height="28" rx="3" fill="#fff" stroke="#2563eb" stroke-width="2.5"/><text x="53" y="86" font-size="13" font-weight="900" fill="#2563eb">W</text></g>
+              <path class="c-check" d="M84 64 L90 70 L102 56" stroke="#059669" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="min-w-0 text-base text-slate-700">
+            <p class="font-bold"><span data-l="de">👆 Tipp die Wolke an!</span></p>
+            <p id="anim-info" class="hidden text-sm text-slate-600 mt-1"><span data-l="de">Gespeichert in <b>OneDrive</b>: braucht kaum Platz auf dem Laptop und ist auch in Teams und auf dem Handy da.</span></p>
+          </div>
+        </div>
+        <button type="button" id="continue-btn" onclick="continueLearning()" class="w-full mt-4 min-h-[56px] rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-black shadow-sm">▶ Hier weitermachen</button>
+        <div id="week-days" class="mt-4 pt-3 border-t border-slate-100"></div>
+      </section>
+      <div id="home-done"></div>
+      <div id="home-tiles" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      <p class="text-sm text-slate-500 text-center px-2" data-l="de">💾 Dein Fortschritt bleibt auf diesem Gerät gespeichert. Niemand ausser dir sieht ihn.</p>
+    </div>
+
+    <!-- Teil 1 «Dateien & OneDrive» (Lektion 1, Missionen M1–M3) -->
+    <section id="view-k1" class="view hidden space-y-4">
+      <div id="card-k1" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div id="head-k1"></div>
+        <div id="body-k1"></div>
+      </div>
+      <details id="theory-k1" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Dateien und OneDrive</span></summary>
+        <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
+          <li><b>OneDrive</b> ist dein Speicher in der Cloud (Office-Konto, Zeichen: blaue Wolke ☁). Dein Laptop hat wenig Platz: Schularbeiten immer in OneDrive speichern. Du findest sie auch in Teams, auf office.com und auf dem Handy.</li>
+          <li><b>Datei-Explorer:</b> gelber Ordner unten in der Leiste (oder Windows-Taste ⊞ + E).</li>
+          <li><b>Pfad lesen:</b> «OneDrive › Schule › Informatik» heisst: Der Ordner Informatik liegt im Ordner Schule, und der liegt in OneDrive.</li>
+          <li><b>Ordner machen:</b> Explorer → links «OneDrive» → oben «+ Neu» → «Ordner» → Namen schreiben → Enter.</li>
+          <li><b>Speichern unter:</b> Datei → Speichern unter → Ordner wählen → Namen schreiben → Speichern. Nur «Speichern» behält Namen und Ort.</li>
+          <li><b>Guter Name:</b> Fach und Thema, z.B. «Informatik_Steckbrief». Nicht «Dokument1».</li>
+          <li><b>Umbenennen:</b> Datei anklicken → <b>F2</b> → neuer Name → Enter. Die Endung (.docx) stehen lassen.</li>
+          <li><b>Verschieben:</b> Datei anklicken → <b>Ctrl + X</b> (ausschneiden) → anderen Ordner öffnen → <b>Ctrl + V</b> (einfügen). Mit Ctrl + C (kopieren) hast du die Datei zweimal.</li>
+          <li><b>Endungen:</b> .docx = Word · .pdf = PDF · .jpg / .png = Bild · .xlsx = Excel.</li>
+        </ul>
+        <div id="theory-k1-svg" class="mt-3 max-w-md mx-auto"></div>
+        <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span></button>
+      </details>
+      <div id="reset-k1"></div>
+    </section>
+    <!-- Teil 2 «Download, Screenshot, Teams» (Lektion 2, Missionen M4–M6) -->
+    <section id="view-k2" class="view hidden space-y-4">
+      <div id="card-k2" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div id="head-k2"></div>
+        <div id="body-k2"></div>
+      </div>
+      <details id="theory-k2" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Download, Screenshot, Teams</span></summary>
+        <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
+          <li><b>Herunterladen (Download):</b> Die Datei landet im Ordner <b>Downloads</b> (Explorer → links «Downloads»).</li>
+          <li><b>Aufräumen:</b> Wichtiges von Downloads nach OneDrive › Schule verschieben (Ctrl + X, Ctrl + V). Altes in Downloads löschen: So bleibt Platz auf dem Laptop.</li>
+          <li><b>Screenshot:</b> <b>Windows + Shift + S</b> → mit der Maus ein Rechteck aufziehen. Das Bild ist jetzt in der Zwischenablage → ins Dokument klicken → <b>Ctrl + V</b>.</li>
+          <li><b>Wichtige Tasten:</b> Ctrl + C kopieren · Ctrl + V einfügen · Ctrl + X ausschneiden · Ctrl + Z rückgängig · Ctrl + S speichern.</li>
+          <li><b>In Teams abgeben:</b> Teams → «Aufgaben» → Aufgabe anklicken → «+ Arbeit hinzufügen» → Datei aus OneDrive wählen → <b>«Abgeben»</b>. Erst nach «Abgeben» sieht die Lehrperson deine Arbeit.</li>
+        </ul>
+        <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span></button>
+      </details>
+      <div id="reset-k2"></div>
+    </section>
+  </main>
+
+  <footer class="text-center text-xs text-slate-500 py-6 px-4"><span data-l="de">Schule Buchental · Informatik Computer-Grundlagen · Kein Zeitdruck, keine Noten: nur üben.</span></footer>
+
+  <script>
+    // ==============================================================
+    // SPRACHE. Gespeichert für alle Seiten unter «lernportal_lang».
+    // Spanisch seit 11.11.2026: feste Texte im HTML mit data-l, Texte aus dem Skript mit tr(),
+    // Aufgaben mit Feldern …Es (qEs, optsEs, aEs …) über L(). Fortschritt gemeinsam für beide Sprachen.
+    // ==============================================================
+    const LANG_KEY = 'lernportal_lang';
+    let LANG = 'de';
+    // Spanisch folgt nach der Freigabe der deutschen Fassung (Regel Lernportal)
+    const tr = (de, es) => LANG === 'es' ? es : de;
+    const L = (o, k) => LANG === 'es' && o[k + 'Es'] != null ? o[k + 'Es'] : o[k];   // Feld der Aufgabe in der aktuellen Sprache
+    const nudgeText = (it, n) => n && typeof n === 'object' ? (L(it, 'whyNot') || [])[n.why] || '' : n;   // kurzer Grund (whyNot / whyNotEs)
+    const TITLE = { de: 'Informatik · Computer-Grundlagen · Lernpfad', es: 'Informatik · Computer-Grundlagen · Lernpfad' };
+    let READY = false;
+    // Attribute ohne <span>: title / aria-label (data-es-…)
+    function applyLangAttrs(root) {
+      ['title', 'aria-label'].forEach(attr => {
+        (root || document).querySelectorAll(`[data-es-${attr}]`).forEach(el => {
+          if (!el.hasAttribute('data-de-' + attr)) el.setAttribute('data-de-' + attr, el.getAttribute(attr) || '');
+          el.setAttribute(attr, el.getAttribute((LANG === 'es' ? 'data-es-' : 'data-de-') + attr));
+        });
+      });
+    }
+    function setLang(l) {
+      LANG = l === 'es' ? 'es' : 'de';
+      document.documentElement.lang = LANG;
+      document.title = TITLE[LANG];
+      document.querySelectorAll('.lang-btn').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setlang === LANG)));
+      applyLangAttrs();
+      if (!READY) return;
+      // Alles neu zeichnen, der Fortschritt bleibt gleich
+      renderTheory();
+      Object.values(QS).forEach(Q => { if (Q.praise) Q.praise = praise(); });
+      if (STATE.view === 'home') renderHome(); else renderPart(STATE.view);
+      renderHeader();
+    }
+
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+      return a;
+    }
+
+    // ==============================================================
+    // BILDER (selbst gezeichnet, Inline-SVG; keine Bildschirmfotos von Microsoft)
+    // ==============================================================
+    const VZ = {}, VZ_ES = {};
+    function svgVulkan() { return ''; }
+    const ICON = (inner, label) => `<svg viewBox="0 0 100 80" class="w-full h-auto max-h-[110px]" role="img" aria-label="${label}">${inner}</svg>`;
+    const ICON_CLOUD = () => ICON(`<path d="M28 62 Q10 62 10 47 Q10 33 25 32 Q29 14 48 14 Q64 14 70 28 Q90 28 90 46 Q90 62 72 62 Z" fill="#3b82f6"/><path d="M28 62 Q10 62 10 47 Q10 33 25 32" fill="none" stroke="#1d4ed8" stroke-width="3"/>`, 'Wolke');
+    const ICON_FOLDER = () => ICON(`<path d="M12 20 H40 L47 28 H88 V66 H12 Z" fill="#f59e0b"/><path d="M12 32 H88 V66 H12 Z" fill="#fbbf24"/>`, 'gelber Ordner');
+    const ICON_TRASH = () => ICON(`<rect x="30" y="24" width="40" height="46" rx="4" fill="#94a3b8"/><rect x="24" y="16" width="52" height="8" rx="3" fill="#64748b"/><rect x="43" y="10" width="14" height="6" rx="2" fill="#64748b"/><path d="M40 32 V62 M50 32 V62 M60 32 V62" stroke="#e2e8f0" stroke-width="3"/>`, 'Papierkorb');
+    const ICON_DOWNLOAD = () => ICON(`<path d="M50 10 V48" stroke="#0f766e" stroke-width="9" stroke-linecap="round"/><path d="M30 34 L50 54 L70 34" fill="none" stroke="#0f766e" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><rect x="18" y="62" width="64" height="8" rx="4" fill="#0f766e"/>`, 'Pfeil nach unten');
+    // Datei-Explorer (vereinfacht): Pfad oben, links die Orte, rechts die Dateien
+    const SVG_EXPLORER = () => `<svg viewBox="0 0 360 200" class="w-full h-auto" role="img" aria-label="Datei-Explorer mit dem Pfad OneDrive, Schule, Informatik">
+      <rect x="2" y="2" width="356" height="196" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+      <rect x="2" y="2" width="356" height="30" rx="10" fill="#e2e8f0"/><rect x="2" y="22" width="356" height="10" fill="#e2e8f0"/>
+      <text x="14" y="22" font-size="13" font-weight="700" fill="#334155">Datei-Explorer</text>
+      <rect x="12" y="40" width="336" height="26" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="22" y="58" font-size="13" font-weight="700" fill="#0f172a">☁ OneDrive  ›  Schule  ›  Informatik</text>
+      <rect x="12" y="74" width="110" height="116" rx="6" fill="#f1f5f9"/>
+      <text x="22" y="96" font-size="12" fill="#334155">🖥 Desktop</text>
+      <text x="22" y="118" font-size="12" fill="#334155">⬇ Downloads</text>
+      <text x="22" y="140" font-size="12" fill="#334155">🖼 Bilder</text>
+      <rect x="16" y="150" width="102" height="24" rx="5" fill="#dbeafe"/><text x="22" y="167" font-size="12" font-weight="700" fill="#1d4ed8">☁ OneDrive</text>
+      <text x="136" y="96" font-size="11" font-weight="700" fill="#64748b">Name</text>
+      <line x1="136" y1="103" x2="344" y2="103" stroke="#e2e8f0"/>
+      <rect x="136" y="110" width="16" height="20" rx="2" fill="#2563eb"/><text x="140" y="124" font-size="10" font-weight="800" fill="#fff">W</text>
+      <text x="160" y="125" font-size="13" fill="#0f172a">Steckbrief.docx</text>
+    </svg>`;
+    // Word-Menüband (vereinfacht): Reiter und Knöpfe F K U; Beschriftung nur in der Theorie (sonst verrät sie die Antwort)
+    const SVG_WORD = (lab) => `<svg viewBox="0 0 360 ${lab ? 120 : 104}" class="w-full h-auto" role="img" aria-label="Menüband von Word mit den Reitern Datei, Start, Einfügen und den Knöpfen F, K, U, A und Textmarker">
+      <rect x="2" y="2" width="356" height="${lab ? 116 : 100}" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+      <rect x="2" y="2" width="356" height="30" rx="10" fill="#2563eb"/><rect x="2" y="22" width="356" height="10" fill="#2563eb"/>
+      <text x="14" y="22" font-size="13" font-weight="700" fill="#fff">Word</text>
+      <text x="14" y="52" font-size="13" fill="#334155">Datei</text>
+      <text x="64" y="52" font-size="13" font-weight="800" fill="#1d4ed8">Start</text><rect x="62" y="56" width="36" height="3" fill="#1d4ed8"/>
+      <text x="114" y="52" font-size="13" fill="#334155">Einfügen</text>
+      <text x="184" y="52" font-size="13" fill="#334155">Layout</text>
+      <text x="240" y="52" font-size="13" fill="#334155">Überprüfen</text><text x="318" y="52" font-size="13" fill="#334155">Ansicht</text>
+      <line x1="10" y1="62" x2="350" y2="62" stroke="#e2e8f0"/>
+      <rect x="14" y="72" width="110" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1"/><text x="20" y="89" font-size="12" fill="#334155">Arial</text>
+      <rect x="130" y="72" width="36" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1"/><text x="138" y="89" font-size="12" fill="#334155">12</text>
+      <rect x="178" y="72" width="26" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="186" y="90" font-size="15" font-weight="900" fill="#0f172a">F</text>
+      <rect x="208" y="72" width="26" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="216" y="90" font-size="15" font-style="italic" fill="#0f172a">K</text>
+      <rect x="238" y="72" width="26" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="245" y="90" font-size="15" text-decoration="underline" fill="#0f172a">U</text>
+      <rect x="268" y="72" width="26" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="275" y="89" font-size="14" font-weight="800" fill="#dc2626">A</text><rect x="273" y="91" width="16" height="3" fill="#dc2626"/>
+      <rect x="298" y="72" width="30" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="304" y="88" font-size="13" font-weight="700" fill="#0f172a">ab</text><rect x="302" y="91" width="22" height="3" fill="#facc15"/>
+      ${lab ? '<text x="14" y="112" font-size="10" fill="#64748b">Schriftart</text><text x="128" y="112" font-size="10" fill="#64748b">Grösse</text><text x="178" y="112" font-size="10" fill="#64748b">fett · kursiv · unterstrichen · Farbe · Textmarker</text>' : ''}
+    </svg>`;
+    const PICS = { cloud: ICON_CLOUD, folder: ICON_FOLDER, trash: ICON_TRASH, download: ICON_DOWNLOAD, explorer: SVG_EXPLORER, word: SVG_WORD };
+    const VORLAGE = 'dateien/Lektion2_Vorlage.docx';
+
+    // ==============================================================
+    // TEILE UND AUFGABEN (Inhalt = Missionsblatt Computer-Grundlagen, Missionen M1–M6)
+    // st: Stufe 1 erkennen · 2 selber ergänzen · 3 am Laptop (Mission)
+    // nr: Mission(en) auf dem Missionsblatt
+    // Typen: mc (erste Antwort ist richtig, wird gemischt; picOpts = Bilder als Antworten),
+    //        sort (jede Zeile einer Spalte zuordnen), order (Reihenfolge antippen),
+    //        gap (Wort schreiben, a = richtige Formen), mission (am Laptop: Schritte abhaken, dann «geschafft»)
+    // first: true = leichter Einstieg, kommt im Teil zuerst
+    // Spanisch: noch nicht (erst nach Freigabe der deutschen Fassung)
+    // ==============================================================
+    const PARTS = [
+      { id: 'k1', emoji: '📁', title: 'Dateien & OneDrive', lz: 'Lektion 1', nrs: 'M1–M3', sub: 'Ordner, speichern unter, umbenennen, verschieben' },
+      { id: 'k2', emoji: '📥', title: 'Download, Screenshot, Teams', lz: 'Lektion 2', nrs: 'M4–M6', sub: 'Downloads finden, Screenshot, in Teams abgeben' }
+    ];
+    const STAGES = [
+      { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus.' },
+      { icon: '✏️', label: 'Ergänzen', intro: 'Jetzt baust du die Reihenfolge oder schreibst ein Wort. Es gibt Hilfe.' },
+      { icon: '💻', label: 'Am Laptop', intro: 'Jetzt machst du es selber am Laptop. Hake jeden Schritt ab.' }
+    ];
+    const ITEMS = {
+      // ---------- Teil 1: Dateien & OneDrive (Lektion 1, M1–M3) ----------
+      k1: [
+        { id: 'k1_wo', st: 1, nr: ['M1'], type: 'mc', first: true, q: 'Dein Laptop hat wenig Speicher. Wo speicherst du deine Schularbeiten?',
+          opts: ['In OneDrive', 'Auf dem Desktop', 'Im Papierkorb', 'Im Ordner Downloads'],
+          whyNot: [null, 'Das braucht Platz auf dem Laptop.', 'Dort wird gelöscht.', 'Dort landet, was du herunterlädst.'],
+          tip: 'Was ist dein Speicher im Office-Konto, in der Cloud?',
+          why: 'OneDrive speichert in der Cloud. Das braucht kaum Platz auf dem Laptop.' },
+        { id: 'k1_icon', st: 1, nr: ['M1'], type: 'mc', picOpts: true, right: 'die Wolke', q: 'Welches Zeichen gehört zu OneDrive?',
+          opts: ['cloud', 'folder', 'trash', 'download'],
+          whyNot: [null, 'Das ist ein normaler Ordner.', 'Das ist der Papierkorb.', 'Das ist der Pfeil für Downloads.'],
+          tip: 'OneDrive speichert «in der Cloud». Was heisst «cloud» auf Deutsch?',
+          why: 'OneDrive hat eine blaue Wolke als Zeichen.' },
+        { id: 'k1_pfad', st: 1, nr: ['M1'], type: 'mc', pic: 'explorer', q: 'Schau oben die Zeile mit den Pfeilen › an. Wo liegt die Datei «Steckbrief»?',
+          opts: ['Im Ordner Informatik, und der liegt im Ordner Schule', 'Im Ordner Schule, und der liegt im Ordner Informatik', 'Auf dem Desktop', 'Im Ordner Downloads'],
+          whyNot: [null, 'Lies die Zeile von links nach rechts.', 'Oben steht nicht Desktop.', 'Downloads steht nur links in der Liste.'],
+          tip: 'Lies die Zeile oben von links nach rechts: zuerst der grosse Ordner, dann der Ordner darin.',
+          why: 'OneDrive › Schule › Informatik: Der Ordner Informatik liegt im Ordner Schule.' },
+        { id: 'k1_name', st: 1, nr: ['M2'], type: 'mc', q: 'Welcher Dateiname ist am besten?',
+          opts: ['Informatik_Steckbrief', 'Dokument1', 'neu neu final 2', 'asdfgh'],
+          whyNot: [null, 'Später weisst du nicht, was drin ist.', 'Welches ist dann das richtige?', 'Daraus versteht niemand etwas.'],
+          tip: 'In einem Monat suchst du die Datei. Welcher Name sagt dir sofort Fach und Thema?',
+          why: 'Ein guter Name sagt Fach und Thema.' },
+        { id: 'k1_unter', st: 1, nr: ['M2'], type: 'mc', q: 'Du willst selber wählen, wo die Datei hinkommt und wie sie heisst. Was klickst du?',
+          opts: ['Speichern unter', 'Speichern', 'Drucken', 'Schliessen'],
+          whyNot: [null, 'Das behält Name und Ort.', 'Das macht ein Blatt Papier.', 'Dann ist die Datei zu.'],
+          tip: 'Es gibt zwei Arten zu speichern. Bei welcher fragt der Computer «wohin?» und «welcher Name?»?',
+          why: '«Speichern unter»: Du wählst Ordner und Namen.' },
+        { id: 'k1_word', st: 1, nr: ['M2'], type: 'mc', q: 'Welche Datei ist ein Word-Dokument?',
+          opts: ['Steckbrief.docx', 'Steckbrief.pdf', 'Steckbrief.jpg', 'Steckbrief.xlsx'],
+          whyNot: [null, 'Das ist ein PDF.', 'Das ist ein Bild.', 'Das ist eine Excel-Tabelle.'],
+          tip: 'Schau auf die Buchstaben nach dem Punkt. «doc» heisst Dokument.',
+          why: '.docx ist die Endung von Word.' },
+        { id: 'k1_move', st: 1, nr: ['M3'], type: 'mc', q: 'Du willst eine Datei in einen anderen Ordner verschieben. Welche Tasten nimmst du?',
+          opts: ['Ctrl + X, dann im neuen Ordner Ctrl + V', 'Ctrl + C, dann im neuen Ordner Ctrl + V', 'Ctrl + Z', 'Ctrl + P'],
+          whyNot: [null, 'Dann hast du eine Kopie: Die Datei gibt es zweimal.', 'Das macht etwas rückgängig.', 'Das druckt.'],
+          tip: 'C heisst kopieren. X ist wie eine Schere: ausschneiden.',
+          why: 'Ctrl + X schneidet aus, Ctrl + V fügt ein. Dann ist die Datei nur noch im neuen Ordner.' },
+        { id: 'k1_ordner', st: 2, nr: ['M1'], type: 'order', q: 'Du machst in OneDrive einen neuen Ordner. Bring die Schritte in die richtige Reihenfolge.',
+          steps: ['Datei-Explorer öffnen (gelber Ordner unten)', 'Links auf «OneDrive» klicken', 'Oben auf «+ Neu» und dann «Ordner» klicken', 'Den Namen schreiben', 'Enter drücken'],
+          tip: 'Zuerst musst du den Explorer offen haben. Und der Name kommt, bevor du bestätigst.' },
+        { id: 'k1_endung', st: 2, nr: ['M2'], type: 'sort', q: 'Was für eine Datei ist es? Ordne zu.',
+          rows: [['Ferien.jpg', 'Bild'], ['Brief.docx', 'Word'], ['Noten-Liste.xlsx', 'Excel'], ['Anleitung.pdf', 'PDF']],
+          cats: ['Bild', 'Word', 'Excel', 'PDF', 'Video'],
+          tip: 'Schau nur auf die Buchstaben nach dem Punkt: doc = Dokument, xls = Tabelle, jpg = Foto.' },
+        { id: 'k1_f2', st: 2, nr: ['M3'], type: 'gap', text: 'Du hast eine Datei angeklickt. Mit der Taste ___ kannst du sie schnell umbenennen.',
+          a: ['F2', 'F 2'], tip: 'Es ist eine Taste ganz oben auf der Tastatur, mit F und einer Zahl.',
+          why: 'Datei anklicken, F2 drücken, neuen Namen schreiben, Enter.' },
+        { id: 'k1_m1', st: 3, nr: ['M1'], type: 'mission', q: 'Mission M1: Baue deine Ordner',
+          steps: ['Öffne den <b>Datei-Explorer</b> (gelber Ordner unten in der Leiste).', 'Klicke links auf <b>OneDrive</b>.', 'Klicke oben auf <b>+ Neu</b> → <b>Ordner</b>. Schreib <b>Schule</b>. Drück Enter.', 'Öffne den Ordner <b>Schule</b> (Doppelklick). Mach darin den Ordner <b>Informatik</b>.'],
+          help: ['Kein gelber Ordner unten? Drück die Windows-Taste ⊞ und E zusammen.', 'Kein «OneDrive» links? Frag die Lehrperson: Dann bist du noch nicht angemeldet.', 'Falscher Name? Ordner anklicken, F2, neu schreiben.'],
+          proof: 'Oben steht: OneDrive › Schule › Informatik.' },
+        { id: 'k1_m2', st: 3, nr: ['M2'], type: 'mission', q: 'Mission M2: Speichern unter',
+          steps: ['Öffne <b>Word</b> und klicke auf <b>Leeres Dokument</b>.', 'Schreib: <i>Das ist mein erstes Dokument.</i>', 'Klicke auf <b>Datei</b> → <b>Speichern unter</b>. Wähle <b>OneDrive › Schule › Informatik</b>.', 'Schreib als Namen <b>Informatik_Uebung</b>. Klicke auf <b>Speichern</b>.'],
+          help: ['Du siehst den Ordner nicht? Klicke im Fenster auf «Durchsuchen» oder «Weitere Speicherorte».', 'Du hast schon auf «Speichern» geklickt? Kein Problem: Mach einfach nochmals «Speichern unter».'],
+          proof: 'Im Explorer liegt jetzt in OneDrive › Schule › Informatik die Datei Informatik_Uebung.' },
+        { id: 'k1_m3', st: 3, nr: ['M3'], type: 'mission', q: 'Mission M3: Umbenennen und verschieben',
+          steps: ['Geh im Explorer zu <b>OneDrive › Schule</b>. Mach dort den Ordner <b>Deutsch</b>.', 'Öffne den Ordner <b>Informatik</b>. Klicke die Datei <b>Informatik_Uebung</b> an. Drück <b>F2</b> und schreib <b>Deutsch_Uebung</b>. Enter.', 'Hoppla, die Datei ist jetzt im falschen Ordner! Drück <b>Ctrl + X</b> (ausschneiden).', 'Öffne den Ordner <b>Deutsch</b>. Drück <b>Ctrl + V</b> (einfügen).'],
+          help: ['Die Datei ist geöffnet? Schliess sie zuerst in Word. Offene Dateien kann man nicht umbenennen.', 'Hinter dem Namen steht «.docx»? Lass das stehen und ändere nur den Teil davor.', 'Du findest die Datei nicht mehr? Schau zuerst in «Deutsch» und in «Informatik».'],
+          proof: 'Deutsch_Uebung ist im Ordner Deutsch und nicht mehr im Ordner Informatik.' }
+      ],
+      // ---------- Teil 2: Download, Screenshot, Teams (Lektion 2, M4–M6) ----------
+      k2: [
+        { id: 'k2_dl', st: 1, nr: ['M4'], type: 'mc', first: true, q: 'Du lädst eine Datei aus dem Internet herunter. Wo findest du sie meistens?',
+          opts: ['Im Ordner Downloads', 'In OneDrive', 'Im Papierkorb', 'In Teams'],
+          whyNot: [null, 'Dorthin musst du sie zuerst verschieben.', 'Dort landen gelöschte Dateien.', 'Teams speichert keine Downloads.'],
+          tip: 'Herunterladen heisst auf Englisch «download».',
+          why: 'Heruntergeladene Dateien landen im Ordner Downloads.' },
+        { id: 'k2_wichtig', st: 1, nr: ['M4'], type: 'mc', q: 'Im Ordner Downloads ist eine Datei, die du für die Schule brauchst. Was machst du?',
+          opts: ['In OneDrive › Schule verschieben', 'Im Ordner Downloads lassen', 'In den Papierkorb ziehen', 'Umbenennen in «Download»'],
+          whyNot: [null, 'Dort braucht sie Platz auf dem Laptop.', 'Dann ist sie weg.', 'Dann weisst du nicht, was drin ist.'],
+          tip: 'Wo sind deine Schulsachen sicher und brauchen keinen Platz auf dem Laptop?',
+          why: 'Wichtiges gehört in OneDrive. Der Ordner Downloads bleibt so leer.' },
+        { id: 'k2_voll', st: 1, nr: ['M4'], type: 'mc', q: 'Dein Laptop meldet: «Speicher fast voll». Was hilft?',
+          opts: ['Alte Downloads löschen', 'Mehr Tabs im Browser öffnen', 'Den Bildschirm heller machen', 'Noch ein Spiel installieren'],
+          whyNot: [null, 'Tabs brauchen keinen Speicherplatz für Dateien.', 'Das braucht nur Strom.', 'Das braucht noch mehr Platz.'],
+          tip: 'Was nimmt Platz weg? Und was kannst du wegwerfen?',
+          why: 'Im Ordner Downloads liegt oft viel Altes. Löschen schafft Platz.' },
+        { id: 'k2_shot', st: 1, nr: ['M5'], type: 'mc', q: 'Mit welchen Tasten machst du einen Screenshot von einem Teil des Bildschirms?',
+          opts: ['Windows + Shift + S', 'Ctrl + Z', 'Alt + F4', 'Ctrl + P'],
+          whyNot: [null, 'Das macht etwas rückgängig.', 'Das schliesst das Fenster.', 'Das druckt.'],
+          tip: 'S wie «Screenshot». Dazu die Windows-Taste ⊞ und die Taste für grosse Buchstaben ⇧.',
+          why: 'Windows + Shift + S, dann mit der Maus einen Bereich aufziehen.' },
+        { id: 'k2_wo', st: 1, nr: ['M5'], type: 'mc', q: 'Du hast den Screenshot gemacht. Wie kommt er in dein Word-Dokument?',
+          opts: ['Ins Dokument klicken, Ctrl + V', 'Er ist schon automatisch drin', 'Ctrl + P drücken', 'Den Laptop neu starten'],
+          whyNot: [null, 'Du musst ihn zuerst einfügen.', 'Das druckt.', 'Dann ist der Screenshot weg.'],
+          tip: 'Der Screenshot ist in der Zwischenablage, wie etwas Kopiertes. Wie fügst du Kopiertes ein?',
+          why: 'Der Screenshot ist in der Zwischenablage. Mit Ctrl + V fügst du ihn ein.' },
+        { id: 'k2_abgeben', st: 1, nr: ['M6'], type: 'mc', q: 'Du hast in Teams bei der Aufgabe deine Datei angehängt. Die Lehrperson sieht sie aber noch nicht. Was fehlt?',
+          opts: ['Auf «Abgeben» klicken', 'Die Datei umbenennen', 'Die Datei nochmals anhängen', 'Teams schliessen'],
+          whyNot: [null, 'Der Name ist nicht das Problem.', 'Sie ist schon angehängt.', 'Dann passiert gar nichts.'],
+          tip: 'Anhängen ist wie den Brief ins Couvert stecken. Was fehlt noch?',
+          why: 'Erst nach «Abgeben» sieht die Lehrperson deine Arbeit.' },
+        { id: 'k2_tasten', st: 2, nr: ['M3', 'M5'], type: 'sort', q: 'Was machen diese Tasten? Ordne zu.',
+          rows: [['Ctrl + C', 'kopieren'], ['Ctrl + V', 'einfügen'], ['Ctrl + Z', 'rückgängig'], ['Windows + Shift + S', 'Screenshot']],
+          cats: ['kopieren', 'einfügen', 'rückgängig', 'Screenshot', 'drucken'],
+          tip: 'Z steht ganz links unten: «Hoppla, zurück». V liegt neben C: zuerst kopieren, dann einfügen.' },
+        { id: 'k2_teams', st: 2, nr: ['M6'], type: 'order', q: 'Du gibst in Teams eine Aufgabe ab. Bring die Schritte in die richtige Reihenfolge.',
+          steps: ['Teams öffnen und auf «Aufgaben» klicken', 'Die richtige Aufgabe anklicken', 'Auf «+ Arbeit hinzufügen» klicken', 'Die Datei aus OneDrive wählen', 'Auf «Abgeben» klicken'],
+          tip: 'Zuerst suchst du die Aufgabe. Abgeben kommt ganz am Schluss.' },
+        { id: 'k2_gap', st: 2, nr: ['M4'], type: 'gap', text: 'Heruntergeladene Dateien landen zuerst im Ordner ___.',
+          a: ['Downloads', 'Download'], tip: 'Herunterladen heisst auf Englisch …?',
+          why: 'Der Ordner heisst Downloads.' },
+        { id: 'k2_m4', st: 3, nr: ['M4'], type: 'mission', q: 'Mission M4: Download holen und aufräumen',
+          link: VORLAGE,
+          steps: ['Tippe oben auf <b>📥 Vorlage herunterladen</b>.', 'Öffne den Explorer. Klicke links auf <b>Downloads</b>. Findest du <b>Lektion2_Vorlage</b>?', 'Klicke sie an. Drück <b>Ctrl + X</b>.', 'Öffne <b>OneDrive › Schule › Informatik</b>. Drück <b>Ctrl + V</b>.'],
+          help: ['Der Browser fragt, ob du die Datei behalten willst? Klicke auf «Behalten».', 'Nichts in Downloads? Im Browser oben rechts auf den Pfeil ⬇ klicken, dann «In Ordner anzeigen».'],
+          proof: 'Die Vorlage ist in Informatik und nicht mehr in Downloads.' },
+        { id: 'k2_m5', st: 3, nr: ['M5'], type: 'mission', q: 'Mission M5: Screenshot einfügen',
+          steps: ['Lass den Explorer mit dem Ordner <b>Informatik</b> offen.', 'Drück <b>Windows + Shift + S</b>. Zieh mit der Maus ein Rechteck um das Explorer-Fenster.', 'Öffne die <b>Lektion2_Vorlage</b> (Doppelklick). Klicke in die leere Zeile unter «Mein Screenshot».', 'Drück <b>Ctrl + V</b>. Speichere mit <b>Ctrl + S</b>.'],
+          help: ['Es passiert nichts nach Ctrl + V? Mach den Screenshot nochmals und klicke danach zuerst ins Dokument.', 'Das Bild ist riesig? Klicke es an und zieh an einer Ecke.'],
+          proof: 'In der Vorlage ist jetzt ein Bild von deinem Ordner Informatik.' },
+        { id: 'k2_m6', st: 3, nr: ['M6'], type: 'mission', q: 'Mission M6: In Teams abgeben',
+          steps: ['Schliess Word. Öffne <b>Teams</b> und klicke auf <b>Aufgaben</b>.', 'Klicke auf die Aufgabe «Computer-Grundlagen».', 'Klicke auf <b>+ Arbeit hinzufügen</b>. Wähle aus OneDrive › Schule › Informatik die <b>Lektion2_Vorlage</b>.', 'Klicke auf <b>Abgeben</b>. Steht jetzt «Abgegeben»?'],
+          help: ['Du findest die Aufgabe nicht? Frag deine Lehrperson.', 'Falsche Datei abgegeben? Klicke auf «Abgabe rückgängig machen» und mach es nochmals.'],
+          proof: 'In Teams steht bei der Aufgabe: Abgegeben ✔' }
+      ]
+    };
+    const BANKS = {};
+    const BANKS_ES = {};
+    const BY_ID = {};
+    PARTS.forEach(p => ITEMS[p.id].forEach(it => { it.part = p.id; BY_ID[it.id] = it; }));
+    const PART_BY_ID = Object.fromEntries(PARTS.map(p => [p.id, p]));
+
+    // ==============================================================
+    // EINE STELLE FÜR DEN FORTSCHRITT: TASKS (pro Teil max und score())
+    // Kein Probetest mit Punkten und Note (Entscheid Lehrperson 11.11.2026).
+    // score() = Aufgaben, die schon einmal richtig gelöst wurden.
+    // ==============================================================
+    const TASKS = Object.fromEntries(PARTS.map(p => [p.id, {
+      max: ITEMS[p.id].length,
+      score: () => ITEMS[p.id].filter(it => PS(p.id).done[it.id]).length
+    }]));
+
+    // ==============================================================
+    // SPEICHERN (eigener Schlüssel, jeder Zugriff in try/catch)
+    // ==============================================================
+    const SAVE_KEY = 'info_grundlagen_pfad';
+    const ETAPPE_N = 10;            // nach so vielen Antworten: «Etappe geschafft»
+    const REVIEW_DAYS = [1, 3];     // Wiederholen nach 1 Tag und nach weiteren 3 Tagen
+    const REVIEW_N = 4;             // so viele gemischte Aufgaben pro Wiederholung
+    const DAY = 864e5, EARLY = 4 * 36e5;   // «morgen» = schon nach 20 Stunden
+    const STATE = { parts: {}, days: [], last: null, view: 'home', drafts: {}, ticks: {} };
+    function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(STATE)); } catch (e) {} }
+    function load() {
+      try {
+        const s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
+        if (!s || typeof s !== 'object') return;
+        if (s.parts && typeof s.parts === 'object') STATE.parts = s.parts;
+        if (Array.isArray(s.days)) STATE.days = s.days.filter(d => typeof d === 'string').slice(-60);
+        if (PART_BY_ID[s.last]) STATE.last = s.last;
+        if (s.view === 'home' || PART_BY_ID[s.view]) STATE.view = s.view;
+        if (s.drafts && typeof s.drafts === 'object') STATE.drafts = s.drafts;
+        if (s.ticks && typeof s.ticks === 'object') STATE.ticks = s.ticks;
+      } catch (e) {}
+    }
+    function PS(pid) {
+      let s = STATE.parts[pid];
+      if (!s || typeof s !== 'object') s = STATE.parts[pid] = {};
+      if (!s.done || typeof s.done !== 'object') s.done = {};
+      if (!Array.isArray(s.queue)) s.queue = [];
+      if (!Array.isArray(s.revQueue)) s.revQueue = [];
+      s.rev = Number(s.rev) || 0;
+      s.revDue = Number(s.revDue) || 0;
+      return s;
+    }
+    // Aktuelle Stufe = erste Stufe mit einer offenen Aufgabe (3 = alles geschafft)
+    function curStage(pid) {
+      const s = PS(pid);
+      for (let k = 0; k < STAGES.length; k++) if (ITEMS[pid].some(it => it.st === k + 1 && !s.done[it.id])) return k;
+      return STAGES.length;
+    }
+    const isMastered = pid => curStage(pid) >= STAGES.length;
+    const starsOf = pid => Math.min(curStage(pid), STAGES.length);
+    const totalStars = () => PARTS.reduce((a, p) => a + starsOf(p.id), 0);
+    const revDue = pid => { const s = PS(pid); return isMastered(pid) && s.rev < REVIEW_DAYS.length && s.revDue > 0 && s.revDue <= Date.now(); };
+
+    // ==============================================================
+    // LERNPFAD
+    // Pro Teil 3 Stufen nacheinander. Jede Aufgabe einmal richtig = erledigt.
+    // Noch nicht richtig = kommt nach 2 anderen Aufgaben nochmals.
+    // Stufe fertig = Stern. Teil fertig = Medaille. Danach Wiederholung nach 1 und 3 Tagen (je 4 Aufgaben).
+    // ==============================================================
+    const QS = {};             // aktuelle Frage pro Teil (nicht gespeichert, beim Laden neu gemischt)
+    const EXTRA = {};          // freiwilliges Auffrischen (nicht gespeichert)
+    let STREAK = 0;
+    const SESSION = { answers: 0, etappe: 0, lastPraise: '' };
+    let CONFIRM_RESET = null;
+    const PRAISE = ['Richtig!', 'Genau!', 'Stark!', 'Super!', 'Sitzt!', 'Perfekt!', 'Klasse!', 'Bravo!', 'Toll gemacht!'];
+    const PRAISE_ES = ['¡Correcto!', '¡Exacto!', '¡Genial!', '¡Súper!', '¡Lo tienes!', '¡Perfecto!', '¡Muy bien!', '¡Bravo!', '¡Bien hecho!'];
+    function praise() {
+      const PR = LANG === 'es' ? PRAISE_ES : PRAISE;
+      let t = PR[Math.floor(Math.random() * PR.length)];
+      if (t === SESSION.lastPraise) t = PR[(PR.indexOf(t) + 1) % PR.length];
+      SESSION.lastPraise = t;
+      return '✔ ' + t;
+    }
+    function refill(pid) {
+      const s = PS(pid), k = curStage(pid);
+      if (k >= STAGES.length) { s.queue = []; return; }
+      const open = ITEMS[pid].filter(it => it.st === k + 1 && !s.done[it.id]);
+      s.queue = [...new Set(s.queue.filter(id => open.some(it => it.id === id)))];
+      const missing = open.filter(it => !s.queue.includes(it.id));
+      const fresh = !ITEMS[pid].some(it => s.done[it.id]) && !s.queue.length;
+      const add = fresh ? missing.filter(it => it.first).concat(shuffle(missing.filter(it => !it.first))) : shuffle(missing);
+      add.forEach(it => s.queue.push(it.id));
+    }
+    function pickReview(pid) {
+      const its = ITEMS[pid].filter(it => !it.first && it.type !== 'mission');
+      const open = shuffle(its.filter(it => it.type === 'open')).slice(0, 1);
+      const rest = shuffle(its.filter(it => it.type !== 'open')).slice(0, REVIEW_N - open.length);
+      return rest.concat(open).map(it => it.id);      // Erklären kommt zuletzt
+    }
+    function freshQ(pid) {
+      return { pid, id: null, phase: 'ask', review: null, ok: false, dontKnow: false, after: null, token: 0, tip: false, pick: null, tried: [], nudge: '', sortHint: null,
+        opts: [], rows: [], cats: [], sel: {}, pool: [], placed: [], hint: false, ans: '', near: false,
+        help: { tip: false, check: null, model: false }, warn: '' };
+    }
+    function newQuestion(pid) {
+      const Q = QS[pid] = freshQ(pid), s = PS(pid);
+      let id = null;
+      if (EXTRA[pid] && EXTRA[pid].length) { Q.review = 'extra'; id = EXTRA[pid][0]; }
+      else if (revDue(pid)) {
+        if (!s.revQueue.length || s.revQueue.some(x => !BY_ID[x])) { s.revQueue = pickReview(pid); save(); }
+        Q.review = 'rev'; id = s.revQueue[0];
+      } else if (isMastered(pid)) { Q.phase = 'mastered'; return Q; }
+      else { refill(pid); id = s.queue[0]; }
+      const it = BY_ID[id];
+      Q.id = id;
+      if (it.type === 'mc') Q.opts = shuffle(it.opts.map((t, i) => ({ t, i, ok: i === 0 })));   // i: Text in der aktuellen Sprache
+      if (it.type === 'sort') { Q.rows = shuffle(it.rows.map((r, i) => i)); Q.cats = it.keepCats ? it.cats.slice() : shuffle(it.cats); }
+      if (it.type === 'gap' && it.bank) Q.bank = shuffle(BANKS[it.bank].map((_, i) => i));
+      if (it.type === 'order') { Q.pool = shuffle(it.steps.map((_, i) => i)); if (Q.pool.every((x, i) => x === i)) Q.pool.reverse(); }
+      return Q;
+    }
+    const curQ = pid => QS[pid] || newQuestion(pid);
+
+    // Übungstage: auf diesem Gerät, nie «Serie verloren»
+    const dayKey = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    function markToday() {
+      const k = dayKey(new Date());
+      if (!STATE.days.includes(k)) { STATE.days.push(k); STATE.days = STATE.days.slice(-60); }
+    }
+    function renderWeek() {
+      const now = new Date(), monday = new Date(now);
+      monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+      const names = tr(['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'], ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá', 'Do']);
+      let n = 0;
+      const cells = names.map((nm, i) => {
+        const d = new Date(monday); d.setDate(monday.getDate() + i);
+        const done = STATE.days.includes(dayKey(d)), today = dayKey(d) === dayKey(now);
+        if (done) n++;
+        return `<div class="flex flex-col items-center gap-0.5"><span class="text-[11px] font-semibold ${today ? 'text-slate-900' : 'text-slate-500'}">${nm}</span><span class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-black ${done ? 'bg-emerald-500 text-white' : today ? 'border-2 border-indigo-400 text-indigo-600' : 'bg-slate-100 text-slate-300'}">${done ? '✓' : ''}</span></div>`;
+      }).join('');
+      $('week-days').innerHTML = `<div class="flex items-center justify-between gap-2 flex-wrap"><span class="text-sm font-bold text-slate-600">${tr('Diese Woche geübt', 'Practicado esta semana')}${n ? `: ${n} ${n === 1 ? tr('Tag', 'día') : tr('Tage', 'días')}` : ''}</span><div class="flex gap-1.5">${cells}</div></div>`;
+    }
+    // Stern fliegt zum Zähler oben
+    function flyStar(fromEl) {
+      try {
+        const target = $('star-count');
+        if (!fromEl || !target || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+        const a = fromEl.getBoundingClientRect(), t = target.getBoundingClientRect();
+        const star = document.createElement('span');
+        star.className = 'fly-star';
+        star.textContent = '⭐';
+        star.style.left = (a.left + a.width / 2 - 16) + 'px';
+        star.style.top = (a.top + 8) + 'px';
+        document.body.appendChild(star);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          star.style.transform = `translate(${t.left - a.left - a.width / 2 + 16}px, ${t.top - a.top - 8}px) scale(0.5)`;
+          star.style.opacity = '0.3';
+        }));
+        setTimeout(() => { star.remove(); target.classList.remove('bump'); void target.offsetWidth; target.classList.add('bump'); }, 820);
+      } catch (e) {}
+    }
+
+    // ---------- Antworten prüfen ----------
+    // Spanisch: Akzente egal (á = a, ñ = n), Artikel am Anfang egal (el, la, los, las, un, una)
+    const deAccent = s => String(s || '').toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/\u00df/g, 'ss')
+      .replace(/[áà]/g, 'a').replace(/[éè]/g, 'e').replace(/[íì]/g, 'i').replace(/[óò]/g, 'o').replace(/[úù]/g, 'u').replace(/ñ/g, 'n');
+    const norm = s => deAccent(s)
+      .replace(/[^a-z0-9]+/g, ' ').trim().replace(/^(der|die|das|den|dem|ein|eine|einen|es|el|la|los|las|un|una|unos|unas) /, '').replace(/ /g, '');
+    const normText = s => ' ' + deAccent(s)
+      .replace(/[^a-z0-9]+/g, ' ').trim() + ' ';
+    function dist(a, b) {
+      const m = a.length, n = b.length, d = Array.from({ length: m + 1 }, (_, i) => [i]);
+      for (let j = 1; j <= n; j++) d[0][j] = j;
+      for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++)
+        d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      return d[m][n];
+    }
+    // Rechtschreibung zählt im Test nicht: ein (bei langen Wörtern zwei) Tippfehler sind okay
+    // Auf Spanisch gelten die spanischen und die deutschen Formen; form = so schreibt man es (erste Form der passenden Sprache)
+    function gapCheck(it, input) {
+      const x = norm(input);
+      if (!x) return { ok: false };
+      const lists = LANG === 'es' && it.aEs ? [it.aEs, it.a] : [it.a];
+      for (const l of lists) if (l.some(f => norm(f) === x)) return { ok: true, near: false, form: l[0] };
+      for (const l of lists) if (l.some(f => { const y = norm(f), d = dist(x, y); return (y.length >= 5 && d <= 1) || (y.length >= 10 && d <= 2); })) return { ok: true, near: true, form: l[0] };
+      return { ok: false };
+    }
+    // Schlüsselwörter suchen; Satzanfänge zählen nicht. Auf Spanisch zählen deutsche und spanische Wörter.
+    // Ergebnis: [Nummer des Schlüssels, gefunden] (die Leitfrage wird beim Zeichnen in der aktuellen Sprache geholt)
+    function openCheck(it, text) {
+      let t = normText(text);
+      const es = LANG === 'es' && it.keysEs;
+      (es ? [it.starter, it.starterEs] : [it.starter]).forEach(stt => stt.split('\n').forEach(line => {
+        const st = normText(line.split('…')[0]).trim();
+        if (st.length > 2) t = t.replace(' ' + st + ' ', ' ');
+      }));
+      return it.keys.map(([, parts], i) => [i, (es ? parts.concat(it.keysEs[i]) : parts).some(p => t.includes(p))]);
+    }
+    const keyLabel = (it, i) => LANG === 'es' && it.labelsEs ? it.labelsEs[i] : it.keys[i][0];
+
+    function answer(pid, ok, dontKnow) {
+      const Q = curQ(pid), s = PS(pid), id = Q.id, before = curStage(pid);
+      // Erst nach falschem Versuch richtig: Lob, aber die Aufgabe kommt später nochmals (Wunsch Lehrperson: was falsch war, kommt wieder)
+      const retry = ok && !!((Q.tried || []).length || Q.sortHint || Object.keys(Q.rowTried || {}).length);
+      if (Q.review) {
+        const rq = Q.review === 'rev' ? s.revQueue : EXTRA[pid];
+        const i = rq.indexOf(id); if (i >= 0) rq.splice(i, 1);
+        if (!ok || retry) rq.splice(Math.min(2, rq.length), 0, id);
+        if (!rq.length) {
+          if (Q.review === 'rev') { s.rev++; s.revDue = s.rev < REVIEW_DAYS.length ? Date.now() + REVIEW_DAYS[s.rev] * DAY - EARLY : 0; }
+          Q.after = 'reviewDone';
+        }
+      } else {
+        s.queue = s.queue.filter(x => x !== id);
+        if (ok && !retry) s.done[id] = true;
+        else s.queue.splice(Math.min(2, s.queue.length), 0, id);   // nach 2 anderen nochmals
+        const after = curStage(pid);
+        if (after > before) {
+          Q.after = after >= STAGES.length ? 'partDone' : 'stageDone';
+          if (after >= STAGES.length) { s.rev = 0; s.revDue = Date.now() + REVIEW_DAYS[0] * DAY - EARLY; s.revQueue = []; }
+        }
+      }
+      Object.assign(Q, { phase: 'answered', ok, dontKnow: !!dontKnow });
+      STREAK = ok ? STREAK + 1 : 0;
+      SESSION.answers++;
+      Q.praise = ok ? ((Q.tried || []).length || Q.sortHint ? tr('✔ Jetzt stimmt’s! Gut nachgedacht.', '✔ ¡Ahora sí! Bien pensado.') : praise()) : '';
+      if (BY_ID[id].type === 'open') delete STATE.drafts[id];
+      STATE.last = pid;
+      markToday();
+      save();
+      renderPart(pid, true);
+      renderHeader();
+      if (ok && BY_ID[id].type !== 'mission') {   // nach einer Mission: erst weiter, wenn das Kind tippt (Blatt abhaken)
+        const t = ++Q.token, type = BY_ID[id].type;
+        setTimeout(() => { if (Q.token === t && Q.phase === 'answered') nextQ(pid); }, type === 'mc' || type === 'tap' ? 1800 : 2200);
+      }
+    }
+    function nextQ(pid) {
+      const Q = curQ(pid);
+      if (Q.phase !== 'answered') return;
+      Q.token++;
+      if (Q.after) {
+        Q.phase = Q.after;
+        renderPart(pid, true);
+        if (Q.phase === 'stageDone' || Q.phase === 'partDone') setTimeout(() => flyStar(document.querySelector(`#body-${pid} .celebrate`)), 80);
+        return;
+      }
+      if (SESSION.answers % ETAPPE_N === 0 && SESSION.etappe !== SESSION.answers) {
+        SESSION.etappe = SESSION.answers;
+        Q.phase = 'etappe';
+        renderPart(pid, true);
+        return;
+      }
+      newQuestion(pid);
+      renderPart(pid, true);
+    }
+    function continuePart(pid) { newQuestion(pid); renderPart(pid, true); scrollToCard(pid); }
+    function pausePart(pid) { const Q = curQ(pid); if (Q.phase !== 'etappe') return; Q.phase = 'pause'; renderPart(pid, true); }
+    function startExtra(pid) { EXTRA[pid] = pickReview(pid); continuePart(pid); }
+
+    // ---------- Eingaben pro Aufgabentyp ----------
+    function pick(pid, i) {
+      const Q = curQ(pid);
+      if (Q.phase !== 'ask' || !Q.opts[i]) return;
+      Q.pick = i;
+      // Falsch und es gibt einen kurzen Grund: nicht die Lösung zeigen, sondern Grund nennen und nochmals probieren lassen
+      const it = BY_ID[Q.id], o = Q.opts[i];
+      if (!o.ok && it.whyNot && it.whyNot[o.i]) {
+        if (!Q.tried.includes(i)) Q.tried.push(i);
+        Q.nudge = { why: o.i };   // Index: Grund steht nach dem Umschalten in der neuen Sprache
+        renderPart(pid);
+        return;
+      }
+      answer(pid, o.ok, false);
+    }
+    function tapZone(z) {
+      const pid = STATE.view, Q = QS[pid];
+      if (!Q || Q.phase !== 'ask' || BY_ID[Q.id].type !== 'tap') return;
+      Q.pick = z;
+      answer(pid, z === BY_ID[Q.id].zone, false);
+    }
+    function choose(pid, r, c) {
+      const Q = curQ(pid);
+      if (Q.phase !== 'ask') return;
+      Q.sel[r] = c;
+      renderPart(pid);
+    }
+    function checkSort(pid) {
+      const Q = curQ(pid), it = BY_ID[Q.id];
+      if (Q.phase !== 'ask' || Object.keys(Q.sel).length < it.rows.length) return;
+      const nOk = it.rows.filter((row, r) => Q.sel[r] === row[1]).length;
+      // Beim ersten Fehlversuch nur sagen, wie viele stimmen, und nochmals probieren lassen
+      if (nOk < it.rows.length && !Q.sortHint) { Q.sortHint = { n: nOk, of: it.rows.length }; renderPart(pid); return; }
+      answer(pid, nOk === it.rows.length, false);
+    }
+    function place(pid, k) {
+      const Q = curQ(pid);
+      if (Q.phase !== 'ask' || !Q.pool.includes(k)) return;
+      Q.pool = Q.pool.filter(x => x !== k); Q.placed.push(k);
+      renderPart(pid);
+    }
+    function unplace(pid, pos) {
+      const Q = curQ(pid);
+      if (Q.phase !== 'ask' || Q.placed[pos] === undefined) return;
+      const k = Q.placed.splice(pos, 1)[0]; Q.pool.push(k);
+      renderPart(pid);
+    }
+    function checkOrder(pid) {
+      const Q = curQ(pid);
+      if (Q.phase !== 'ask' || Q.pool.length) return;
+      answer(pid, Q.placed.every((k, i) => k === i), false);
+    }
+    function submitGap(pid, dontKnow) {
+      const Q = curQ(pid), it = BY_ID[Q.id];
+      if (Q.phase !== 'ask') return;
+      const inp = $('gap-in'), val = dontKnow ? '' : (inp ? inp.value : '');
+      if (!dontKnow && !val.trim()) { if (inp) inp.focus(); return; }
+      const r = gapCheck(it, val);
+      Q.ans = val; Q.near = !!r.near; Q.form = r.form;
+      answer(pid, !dontKnow && r.ok, dontKnow);
+    }
+    function bankPick(w) { const inp = $('gap-in'); if (inp) { inp.value = w; inp.focus(); } }
+    function gapHint(pid) {
+      const Q = curQ(pid), inp = $('gap-in'), val = inp ? inp.value : '';
+      if (Q.phase !== 'ask' || Q.hint) return;
+      Q.hint = true; renderPart(pid, true);
+      if ($('gap-in')) $('gap-in').value = val;
+    }
+    function dontKnow(pid) {
+      const Q = curQ(pid), it = BY_ID[Q.id];
+      if (Q.phase !== 'ask') return;
+      if (it.type === 'gap') return submitGap(pid, true);
+      if (it.type === 'open') { Q.help.model = true; Q.dontKnow = true; renderPart(pid); return; }
+      answer(pid, false, true);
+    }
+    // Erklären: Hilfe-Treppe
+    function saveDraft(id, v) { STATE.drafts[id] = String(v).slice(0, 2000); save(); }
+    function openHelp(pid, step) {
+      const Q = curQ(pid), it = BY_ID[Q.id];
+      if (Q.phase !== 'ask') return;
+      const ta = $('open-in'), val = ta ? ta.value : '';
+      Q.warn = '';
+      if (step === 1) Q.help.tip = !Q.help.tip;
+      if (step === 2) {
+        const v = val.trim() ? val.replace(/\s+$/, '') + '\n' + L(it, 'starter') : L(it, 'starter');
+        saveDraft(it.id, v);
+      }
+      if (step === 3) {
+        if (!val.trim()) Q.warn = true;   // Text kommt beim Zeichnen (Sprache)
+        else { saveDraft(it.id, val); Q.help.check = openCheck(it, val); }
+      }
+      if (step === 4) { saveDraft(it.id, val); Q.help.model = true; }
+      renderPart(pid);
+      const box = Q.warn ? $('help-warn') : $('help-' + step);
+      if (box) box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      if (step === 2 && $('open-in')) { const t = $('open-in'); t.focus(); t.setSelectionRange(t.value.length, t.value.length); }
+    }
+    function selfRate(pid, ok) {
+      const Q = curQ(pid);
+      if (Q.phase !== 'ask' || !Q.help.model) return;
+      answer(pid, ok, Q.dontKnow);
+    }
+    // Mission am Laptop: Schritte abhaken, dann «geschafft» (Selbstauskunft; geprüft wird die Abgabe in Teams)
+    function missionTick(pid, i) { const Q = curQ(pid); if (Q.phase !== 'ask') return; const tk = STATE.ticks[Q.id] = STATE.ticks[Q.id] || []; tk[i] = !tk[i]; save(); renderPart(pid); }   // Häkchen bleiben gespeichert (Wechsel zu Explorer, Word, Teams)
+    function missionHelp(pid) { const Q = curQ(pid); if (Q.phase !== 'ask') return; Q.help.tip = !Q.help.tip; renderPart(pid); const b = $('help-1'); if (b) b.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+    function missionDone(pid) { const Q = curQ(pid), it = BY_ID[Q.id]; const tk = STATE.ticks[Q.id] || []; if (Q.phase !== 'ask' || !it.steps.every((_, i) => tk[i])) return; delete STATE.ticks[Q.id]; answer(pid, true); }
+    function toggleTip(pid) { const Q = curQ(pid); Q.tip = !Q.tip; renderPart(pid); if ($('tip-box')) $('tip-box').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+
+    // ==============================================================
+    // ANZEIGE
+    // ==============================================================
+    const BTN_MAIN = 'min-h-[52px] px-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-base font-black shadow-sm';
+    const BTN_SOFT = 'min-h-[52px] px-4 rounded-2xl border-2 border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-base font-bold';
+    const BTN_SMALL = 'min-h-[44px] px-3 rounded-xl text-sm font-bold border';
+    const DUNNO_BTN = 'mt-2 w-full min-h-[44px] rounded-xl text-sm font-semibold text-slate-500 hover:text-slate-700 underline underline-offset-2';
+    function bar(pct, h = 'h-4') {
+      return `<div class="${h} rounded-full bg-indigo-100 border border-indigo-200 overflow-hidden"><div class="bar h-full rounded-full bg-gradient-to-r from-violet-400 to-indigo-500" style="width:${pct}%"></div></div>`;
+    }
+    function starsHtml(n, size = 'text-xl') {
+      return `<span class="${size} tracking-tight" aria-label="${n} ${tr('von 3 Sternen', 'de 3 estrellas')}">${[0, 1, 2].map(k => k < n ? '⭐' : '<span class="opacity-25 grayscale">⭐</span>').join('')}</span>`;
+    }
+    const pctOf = pid => Math.round(TASKS[pid].score() / TASKS[pid].max * 100);
+    const nrText = it => `📄 ${it.type === 'mission' ? 'Mission' : 'zu Mission'} ${it.nr.join(' + ')}`;
+
+    function renderHeader() {
+      $('star-count').textContent = totalStars();
+      $('star-box').classList.toggle('invisible', totalStars() === 0);
+      $('star-max').textContent = PARTS.length * STAGES.length;
+      ['home', ...PARTS.map(p => p.id)].forEach(v => {
+        const b = $('nav-' + v);
+        if (!b) return;
+        b.className = 'nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight ' + (STATE.view === v ? 'bg-white text-indigo-800 shadow-sm' : 'text-white/95 hover:bg-white/15');
+        b.setAttribute('aria-current', STATE.view === v ? 'page' : 'false');
+      });
+    }
+    function nextPartId() {
+      const due = PARTS.find(p => revDue(p.id));
+      if (due) return due.id;
+      if (STATE.last && !isMastered(STATE.last)) return STATE.last;
+      const open = PARTS.find(p => !isMastered(p.id));
+      return open ? open.id : null;
+    }
+    function renderHome() {
+      renderWeek();
+      const nx = nextPartId();
+      const any = PARTS.some(p => TASKS[p.id].score() > 0);
+      $('continue-btn').textContent = nx ? (revDue(nx) ? `🔁 ${tr('Kurz wiederholen', 'Repasar un poco')}: ${L(PART_BY_ID[nx], 'title')}` : any ? `▶ ${tr('Hier weitermachen', 'Seguir aquí')}: ${L(PART_BY_ID[nx], 'title')}` : tr('▶ Los geht’s: Teil 1', '▶ ¡Vamos! Parte 1')) : tr('🔁 Etwas auffrischen', '🔁 Refrescar algo');
+      const allDone = PARTS.every(p => isMastered(p.id));
+      $('home-done').innerHTML = allDone ? `<div class="rounded-3xl border-2 border-emerald-300 bg-emerald-50 p-5 text-center space-y-1"><div class="text-4xl">🏆</div><div class="text-lg font-black text-slate-900">${'Alle Teile gemeistert!'}</div><div class="text-base text-slate-700">${'Super! Du kannst jetzt mit Dateien, OneDrive und Teams umgehen. Weiter geht es mit dem Word-Führerschein.'}</div></div>` : '';
+      $('home-tiles').innerHTML = PARTS.map((p, i) => {
+        const pct = pctOf(p.id), m = isMastered(p.id), due = revDue(p.id), st = starsOf(p.id);
+        const badge = due ? `<span class="text-xs font-bold px-2 py-1 rounded-full bg-sky-100 text-sky-800 border border-sky-200">${tr('🔁 heute wiederholen', '🔁 repasar hoy')}</span>`
+          : m ? `<span class="text-xs font-bold px-2 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">${tr('🏅 gemeistert', '🏅 dominada')}</span>`
+          : pct ? `<span class="text-xs font-bold px-2 py-1 rounded-full bg-indigo-100 text-indigo-800 border border-indigo-200">${tr(`Stufe ${curStage(p.id) + 1} von 3`, `Nivel ${curStage(p.id) + 1} de 3`)}</span>` : `<span class="text-xs font-bold px-2 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">${tr('neu', 'nueva')}</span>`;
+        return `
+        <button type="button" onclick="switchTab('${p.id}')" class="text-left bg-white rounded-3xl p-4 shadow-sm border-2 ${due ? 'border-sky-300' : m ? 'border-emerald-300' : 'border-indigo-100 hover:border-indigo-300'} transition space-y-3 min-h-[48px]">
+          <div class="flex items-start gap-3">
+            <span class="text-3xl w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center shrink-0">${m ? '🏅' : p.emoji}</span>
+            <div class="min-w-0 flex-1">
+              <div class="text-xs font-bold uppercase tracking-wider text-indigo-700">${tr('Teil', 'Parte')} ${i + 1} · ${p.lz}</div>
+              <div class="text-lg font-black text-slate-900 leading-tight">${L(p, 'title')}</div>
+              <div class="text-sm text-slate-500 leading-snug">${L(p, 'sub')}</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between gap-2 flex-wrap">${starsHtml(st)}${badge}</div>
+          ${bar(pct, 'h-3')}
+          <div class="text-xs text-slate-500">📄 Missionen ${p.nrs}</div>
+        </button>`;
+      }).join('');
+    }
+    function continueLearning() {
+      const nx = nextPartId();
+      if (nx) { switchTab(nx); return; }
+      const p = PARTS[Math.floor(Math.random() * PARTS.length)].id;
+      EXTRA[p] = pickReview(p); newQuestion(p); switchTab(p);
+    }
+
+    function renderPartHead(pid) {
+      const p = PART_BY_ID[pid], k = curStage(pid), pct = pctOf(pid), Q = curQ(pid);
+      const steps = STAGES.map((s, i) => {
+        const done = i < k, now = i === k && !Q.review;
+        return `<div class="flex-1 min-w-0 rounded-lg px-1 py-1 text-center border-2 text-xs sm:text-sm font-bold whitespace-nowrap ${done ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : now ? 'bg-indigo-50 border-indigo-400 text-indigo-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">${done ? '⭐' : s.icon} ${L(s, 'label')}</div>`;
+      }).join('');
+      $('head-' + pid).innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="text-2xl shrink-0">${p.emoji}</span>
+          <h2 class="text-lg sm:text-xl font-black text-slate-900 leading-tight flex-1 min-w-0">${L(p, 'title')}</h2>
+          ${starsHtml(starsOf(pid), 'text-base shrink-0')}
+        </div>
+        <div class="mt-2 flex items-center gap-2"><div class="flex-1">${bar(pct, 'h-3')}</div><span class="text-sm font-bold text-slate-600 shrink-0">${pct ? pct + ' %' : tr('Los geht’s!', '¡Vamos!')}</span></div>
+        <div class="mt-2 flex gap-1">${steps}</div>`;
+    }
+
+    function feedbackHtml(pid, Q, it) {
+      const okBox = 'border-emerald-400 bg-emerald-50', noBox = 'border-yellow-400 bg-yellow-50';
+      let title, body = '';
+      if (Q.ok) {
+        title = STREAK >= 5 && STREAK % 5 === 0 ? tr(`🔥 ${STREAK} richtig hintereinander!`, `🔥 ¡${STREAK} correctas seguidas!`) : Q.praise;
+        if (it.type === 'gap' && Q.near) body = `<div class="text-base text-slate-700">${tr('So schreibt man es:', 'Se escribe así:')} <b>${esc(Q.form || L(it, 'a')[0])}</b></div>`;
+        if (it.type === 'open') body = `<div class="text-base text-slate-700">${tr('Gut erklärt! Das hilft dir im Test.', '¡Bien explicado! Esto te ayuda en el examen.')}</div>`;
+        if (it.type === 'mission') { title = `🎉 Mission ${esc(it.nr.join(' + '))} geschafft!`; body = `<div class="text-base text-slate-700">Stark, das hast du am echten Laptop gemacht! Hake die Mission auf deinem <b>Blatt</b> ab ✔. Dann tippe auf «Weiter».</div>`; }
+      } else {
+        title = Q.dontKnow ? tr('Kein Problem. So ist es richtig:', 'No pasa nada. Así es correcto:') : tr('Noch nicht ganz.', 'Todavía no del todo.');
+        if (it.type === 'mc') body = `<div class="text-base text-slate-800">${tr('Richtig ist:', 'Lo correcto es:')} <b>${it.picOpts ? esc(L(it, 'right')) : esc(L(it, 'opts')[0])}</b></div>`;
+        if (it.type === 'tap') body = `<div class="text-base text-slate-800">${tr(`Die <b>${esc(VZ[it.zone])}</b> ist grün umrandet.`, `Mira el borde verde: es <b>${esc(VZ_ES[it.zone])}</b>.`)}</div>`;
+        if (it.type === 'sort') body = `<div class="text-base text-slate-800">${tr('Schau die Zeilen an: Die richtige Antwort ist grün.', 'Mira las filas: la respuesta correcta está en verde.')}</div>`;
+        if (it.type === 'order') body = `<div class="text-base text-slate-800">${tr('So ist die richtige Reihenfolge:', 'Este es el orden correcto:')}</div><ol class="list-decimal pl-5 text-base text-slate-800 space-y-0.5">${L(it, 'steps').map(s => `<li>${esc(s)}</li>`).join('')}</ol>`;
+        if (it.type === 'gap') body = `<div class="text-base text-slate-800">${tr('Richtig ist:', 'Lo correcto es:')} <b>${esc(L(it, 'a')[0])}</b>${L(it, 'also') ? ` <span class="text-sm text-slate-600">(${esc(L(it, 'also'))})</span>` : ''}</div>${Q.ans && !Q.dontKnow ? `<div class="text-sm text-slate-600 wrap-any">${tr('Deine Antwort:', 'Tu respuesta:')} ${esc(Q.ans)}</div>` : ''}`;
+        if (it.type === 'open') { title = tr('Gut, dass du ehrlich bist.', '¡Qué bien que seas sincero!'); body = `<div class="text-base text-slate-700">${tr('Lies die Musterlösung nochmals. Die Frage kommt später wieder.', 'Lee otra vez la respuesta modelo. La pregunta vuelve a salir más tarde.')}</div>`; }
+        if (it.why) body += `<div class="text-base text-slate-700">💡 ${esc(L(it, 'why'))}</div>`;
+        body += `<div class="text-sm text-slate-600">${Q.review ? tr('Vergessen ist normal. Du übst es gleich nochmals.', 'Olvidar es normal. Enseguida lo practicas otra vez.') : tr('Fehler kosten nichts: Diese Aufgabe kommt bald nochmals.', 'Los errores no cuestan nada: esta tarea vuelve a salir pronto.')}</div>`;
+      }
+      return `
+        <div class="feedback-box mt-4 rounded-2xl border-2 ${Q.ok ? okBox : noBox} p-4 space-y-1.5 pop" role="status">
+          <div class="text-lg font-black ${Q.ok ? 'text-emerald-800' : 'text-yellow-900'}">${title}</div>${body}
+        </div>
+        <button type="button" id="next-btn" onclick="nextQ('${pid}')" class="mt-3 w-full ${Q.ok ? 'min-h-[52px] px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-base font-black' : BTN_MAIN}">${tr('Weiter →', 'Seguir →')}</button>`;
+    }
+
+    function askHtml(pid, Q, it) {
+      const done = Q.phase !== 'ask';
+      let h = '';
+      if (it.type === 'mc') {
+        if (it.pic && PICS[it.pic]) h += `<div class="pic rounded-2xl bg-sky-50/50 border border-sky-100 p-2 mb-3">${PICS[it.pic]()}</div>`;
+        if (it.picOpts) {
+          h += `<div class="grid grid-cols-2 gap-3">${Q.opts.map((o, i) => {
+            let cls = 'border-slate-300 bg-white hover:border-indigo-400';
+            const tried = !done && Q.tried.includes(i);
+            if (done) cls = o.ok ? 'border-emerald-500 bg-emerald-50' : i === Q.pick ? 'border-yellow-400 bg-yellow-50' : 'border-slate-200 bg-white opacity-60';
+            else if (tried) cls = 'border-yellow-300 bg-yellow-50 opacity-50';
+            return `<button type="button" onclick="pick('${pid}',${i})" ${done || tried ? 'disabled' : ''} class="rounded-2xl border-2 p-2 ${cls}"><div class="text-sm font-bold text-slate-600 ${tried ? 'line-through' : ''}">${tr('Bild', 'Imagen')} ${i + 1}</div>${PICS[o.t]()}</button>`;
+          }).join('')}</div>`;
+        } else {
+          h += `<div class="grid grid-cols-1 gap-2">${Q.opts.map((o, i) => {
+            let cls = 'bg-white border-slate-300 text-slate-800 hover:border-indigo-400 hover:bg-indigo-50/40';
+            const tried = !done && Q.tried.includes(i);
+            if (done) cls = o.ok ? 'bg-emerald-50 border-emerald-500 text-emerald-900' : i === Q.pick ? 'bg-yellow-50 border-yellow-400 text-yellow-900' : 'bg-white border-slate-200 text-slate-400';
+            else if (tried) cls = 'bg-yellow-50 border-yellow-300 text-slate-400 line-through';
+            return `<button type="button" onclick="pick('${pid}',${i})" ${done || tried ? 'disabled' : ''} class="w-full min-h-[52px] px-4 py-2.5 rounded-2xl border-2 text-base font-bold text-left wrap-any transition ${cls}">${done && o.ok ? '✔ ' : ''}${esc(L(it, 'opts')[o.i])}</button>`;
+          }).join('')}</div>`;
+        }
+        if (!done && Q.nudge) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 wrap-any pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> <span lang="${LANG === 'es' && !it.whyNotEs ? 'de' : LANG}">${esc(nudgeText(it, Q.nudge))}</span> ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
+      }
+      if (it.type === 'tap') {
+        const o = { tap: !done };
+        if (done) { o.right = it.zone; if (Q.pick && Q.pick !== it.zone) o.wrong = Q.pick; }
+        h += `<div class="pic rounded-2xl bg-indigo-50/40 border border-indigo-100 p-2">${svgVulkan(o)}</div>`;
+      }
+      if (it.type === 'sort') {
+        h += `<div class="space-y-2.5">${Q.rows.map(r => {
+          const right = it.rows[r][1], text = LANG === 'es' && it.rowsEs ? it.rowsEs[r] : it.rows[r][0], sel = Q.sel[r];
+          const catText = c => LANG === 'es' && it.catsEs ? it.catsEs[it.cats.indexOf(c)] : c;   // gespeichert wird die deutsche Kategorie
+          const rowCls = done ? (sel === right ? 'border-emerald-300 bg-emerald-50/60' : 'border-yellow-300 bg-yellow-50/70') : 'border-slate-200 bg-slate-50';
+          return `<div class="rounded-2xl border-2 ${rowCls} p-3">
+            <div class="text-base font-semibold text-slate-900 wrap-any mb-2">${esc(text)}</div>
+            <div class="flex flex-wrap gap-2">${Q.cats.map(c => {
+              let cls = sel === c ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white border-slate-300 text-slate-700 hover:border-indigo-400';
+              if (done) cls = c === right ? 'bg-emerald-600 border-emerald-600 text-white' : sel === c ? 'bg-yellow-100 border-yellow-400 text-yellow-900' : 'bg-white border-slate-200 text-slate-400';
+              return `<button type="button" onclick="choose('${pid}',${r},'${esc(c)}')" ${done ? 'disabled' : ''} class="min-h-[44px] px-3 py-1.5 rounded-xl border-2 text-sm sm:text-base font-bold wrap-any ${cls}">${done && c === right ? '✔ ' : ''}${esc(catText(c))}</button>`;
+            }).join('')}</div></div>`;
+        }).join('')}</div>`;
+        if (!done) {
+          const all = Object.keys(Q.sel).length >= it.rows.length, sh = Q.sortHint;
+          if (sh) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 wrap-any pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> ${tr(`${sh.n} von ${sh.of} ${sh.n === 1 ? 'stimmt' : 'stimmen'}.`, `${sh.n} de ${sh.of} ${sh.n === 1 ? 'está bien' : 'están bien'}.`)} ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
+          h += `<button type="button" onclick="checkSort('${pid}')" ${all ? '' : 'disabled'} class="mt-3 w-full ${BTN_MAIN} ${all ? '' : 'opacity-40 cursor-not-allowed'}">${tr('✓ Prüfen', '✓ Comprobar')}</button>`;
+        }
+      }
+      if (it.type === 'order') {
+        const n = it.steps.length;
+        h += `<div class="rounded-2xl border-2 border-dashed border-indigo-300 bg-indigo-50/40 p-2 space-y-2 min-h-[64px]">${Q.placed.map((k, pos) => {
+          const cls = done ? (k === pos ? 'border-emerald-400 bg-emerald-50' : 'border-yellow-400 bg-yellow-50') : 'border-indigo-300 bg-white';
+          return `<button type="button" onclick="unplace('${pid}',${pos})" ${done ? 'disabled' : ''} class="w-full min-h-[48px] flex items-center gap-3 text-left rounded-xl border-2 ${cls} px-3 py-2"><span class="w-7 h-7 shrink-0 rounded-full bg-indigo-600 text-white text-sm font-black flex items-center justify-center">${pos + 1}</span><span class="text-base font-semibold text-slate-900 wrap-any">${esc(L(it, 'steps')[k])}</span></button>`;
+        }).join('')}${Q.placed.length < n && !done ? `<div class="text-sm text-slate-500 px-2 py-2">${Q.placed.length ? tr('Weiter: Was kommt als Nächstes?', 'Sigue: ¿qué viene después?') : tr('Was kommt zuerst? Tippe unten an.', '¿Qué va primero? Toca abajo.')}</div>` : ''}</div>`;
+        if (!done) {
+          h += `<div class="mt-3 space-y-2">${Q.pool.map(k => `<button type="button" onclick="place('${pid}',${k})" class="w-full min-h-[48px] text-left rounded-xl border-2 border-slate-300 bg-white hover:border-indigo-400 px-3 py-2 text-base font-semibold text-slate-800 wrap-any">${esc(L(it, 'steps')[k])}</button>`).join('')}</div>`;
+          if (Q.placed.length) h += `<div class="text-xs text-slate-500 mt-2">${tr('Falsch hingelegt? Tippe oben darauf, dann geht es zurück.', '¿Lo pusiste mal? Tócalo arriba y vuelve abajo.')}</div>`;
+          h += `<button type="button" onclick="checkOrder('${pid}')" ${Q.pool.length ? 'disabled' : ''} class="mt-3 w-full ${BTN_MAIN} ${Q.pool.length ? 'opacity-40 cursor-not-allowed' : ''}">${tr('✓ Prüfen', '✓ Comprobar')}</button>`;
+        }
+      }
+      if (it.type === 'gap') {
+        if (it.pic && it.pic.startsWith('vk:')) h += `<div class="pic rounded-2xl bg-indigo-50/40 border border-indigo-100 p-2 mb-3">${svgVulkan({ mark: it.pic.slice(3) })}</div>`;
+        const parts = L(it, 'text').split('___'), ans0 = L(it, 'a')[0];
+        h += `<div class="text-lg font-semibold text-slate-900 leading-relaxed wrap-any">${esc(parts[0])}<span class="inline-block min-w-[5rem] border-b-4 border-indigo-400 mx-1 text-center text-indigo-700">${done ? esc(Q.ok ? (Q.near ? (Q.form || ans0) : Q.ans) : ans0) : '&nbsp;?&nbsp;'}</span>${esc(parts[1] || '')}</div>`;
+        if (!done && it.bank) h += `<div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-3"><div class="text-sm font-bold text-slate-600 mb-2">${tr('Wortkasten: Tippe ein Wort an.', 'Caja de palabras: toca una palabra.')}</div><div class="flex flex-wrap gap-2">${Q.bank.map(k => (LANG === 'es' ? BANKS_ES : BANKS)[it.bank][k]).map(w => `<button type="button" onclick="bankPick('${esc(w)}')" class="min-h-[44px] px-3 rounded-xl border-2 border-slate-300 bg-white hover:border-indigo-400 text-base font-bold text-slate-800">${esc(w)}</button>`).join('')}</div></div>`;
+        if (!done) {
+          h += `
+            <div class="mt-3 space-y-2">
+              <input id="gap-in" type="text" placeholder="${tr('Wort schreiben …', 'Escribe la palabra …')}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+                onkeydown="if(event.key==='Enter'){event.preventDefault();submitGap('${pid}',false);}"
+                class="w-full bg-white border-2 border-slate-300 rounded-2xl px-4 py-3 text-lg font-semibold text-slate-800">
+              ${Q.hint ? `<div class="text-base font-bold text-sky-800">💡 ${tr(`Das Wort beginnt mit «${esc(ans0.charAt(0))}» und hat ${ans0.length} Buchstaben.`, ans0.includes(' ') ? `La respuesta empieza con «${esc(ans0.charAt(0))}» y tiene ${ans0.replace(/ /g, '').length} letras (${ans0.split(' ').length} palabras).` : `La palabra empieza con «${esc(ans0.charAt(0))}» y tiene ${ans0.length} letras.`)}</div>` : `<button type="button" onclick="gapHint('${pid}')" class="min-h-[44px] text-base font-bold text-sky-700 underline">${tr('💡 Hilfe: erster Buchstabe', '💡 Ayuda: primera letra')}</button>`}
+              <button type="button" onclick="submitGap('${pid}',false)" class="w-full ${BTN_MAIN}">${tr('✓ Prüfen', '✓ Comprobar')}</button>
+            </div>`;
+        }
+      }
+      if (it.type === 'open') {
+        const draft = STATE.drafts[it.id] || '';
+        if (!done) {
+          h += `<textarea id="open-in" rows="5" oninput="saveDraft('${it.id}', this.value)" placeholder="${tr('Schreib hier deine Antwort in 2 bis 4 kurzen Sätzen …', 'Escribe aquí tu respuesta en 2 a 4 frases cortas …')}" class="w-full bg-white border-2 border-slate-300 rounded-2xl px-4 py-3 text-base text-slate-800 leading-relaxed">${esc(draft)}</textarea>`;
+          const stepBtn = (n, label, on) => `<button type="button" onclick="openHelp('${pid}',${n})" class="min-h-[48px] px-3 py-2 rounded-xl border-2 text-sm font-bold text-left ${on ? 'bg-sky-100 border-sky-400 text-sky-900' : 'bg-white border-sky-200 text-sky-800 hover:bg-sky-50'}"><span class="inline-flex w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-black items-center justify-center mr-1">${n}</span>${label}</button>`;
+          h += `<div class="mt-3 text-sm font-bold text-slate-600">${tr('Hilfe-Treppe: Nimm so viel Hilfe, wie du brauchst.', 'Escalera de ayuda: toma toda la ayuda que necesites.')}</div>
+            <div class="mt-1.5 grid grid-cols-2 gap-2">
+              ${stepBtn(1, tr('💡 Tipp und Wörter', '💡 Pista y palabras'), Q.help.tip)}${stepBtn(2, tr('✏️ Satzanfang', '✏️ Inicio de frase'), false)}${stepBtn(3, tr('🔍 Antwort prüfen', '🔍 Revisar respuesta'), !!Q.help.check)}${stepBtn(4, tr('📗 Musterlösung', '📗 Respuesta modelo'), Q.help.model)}
+            </div>`;
+          if (Q.warn) h += `<div id="help-warn" class="mt-2 rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-base text-yellow-900">${tr('Schreib zuerst ein, zwei Sätze. Dann prüft die Seite deine Antwort.', 'Primero escribe una o dos frases. Después la página revisa tu respuesta.')}</div>`;
+          if (Q.help.tip) h += `<div id="help-1" class="mt-2 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 space-y-2"><div class="text-base text-slate-800">💡 ${esc(L(it, 'tip'))}</div><div class="text-sm font-bold text-slate-600">${tr('Diese Wörter helfen dir:', 'Estas palabras te ayudan:')}</div><div class="flex flex-wrap gap-1.5">${shuffle(L(it, 'words')).map(w => `<span class="px-2.5 py-1 rounded-full bg-white border border-yellow-300 text-sm font-semibold text-slate-800">${esc(w)}</span>`).join('')}</div></div>`;
+          if (Q.help.check) {
+            const found = Q.help.check.filter(x => x[1]).length, need = it.need || it.keys.length;
+            h += `<div id="help-3" class="mt-2 rounded-2xl border border-sky-200 bg-sky-50 p-3 space-y-1">
+              <div class="text-base font-bold text-slate-800">${found >= need ? tr('👍 Sehr gut! Das Wichtigste ist drin.', '👍 ¡Muy bien! Lo más importante está.') : tr('Das hast du schon:', 'Esto ya lo tienes:')}</div>
+              ${Q.help.check.map(([i, ok]) => `<div class="text-base ${ok ? 'text-emerald-800' : 'text-slate-500'}">${ok ? '✔' : '☐'} ${esc(keyLabel(it, i))}</div>`).join('')}
+              ${found < need ? `<div class="text-sm text-slate-600">${tr('Darüber kannst du noch weiterschreiben: Ergänze, was noch fehlt (☐). Dann prüf nochmals.', 'Puedes seguir escribiendo: completa lo que falta (☐). Después revisa otra vez.')}</div>` : `<div class="text-sm text-slate-600">${tr('Vergleiche jetzt mit der Musterlösung (4).', 'Ahora compara con la respuesta modelo (4).')}</div>`}
+            </div>`;
+          }
+          if (Q.help.model) {
+            h += `<div id="help-4" class="mt-2 rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-3 space-y-2">
+              <div class="text-sm font-bold uppercase tracking-wider text-emerald-800">${tr('📗 Musterlösung', '📗 Respuesta modelo')}</div>
+              <div class="text-base text-slate-800 leading-relaxed">${esc(L(it, 'model'))}</div>
+              <div class="text-sm font-bold text-slate-700 pt-1">${tr('Vergleiche mit deiner Antwort. Hast du das Wichtigste?', 'Compara con tu respuesta. ¿Tienes lo más importante?')}</div>
+              <div class="grid grid-cols-2 gap-2">
+                ${draft.trim() && !Q.dontKnow ? `<button type="button" onclick="selfRate('${pid}',true)" class="min-h-[52px] px-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-base font-black">${tr('✔ Hab ich so', '✔ Lo tengo así')}</button>` : ''}
+                <button type="button" onclick="selfRate('${pid}',false)" class="${BTN_SOFT} ${draft.trim() && !Q.dontKnow ? '' : 'col-span-2'}">${tr('↻ Noch nicht, später nochmals', '↻ Todavía no, otra vez más tarde')}</button>
+              </div>
+            </div>`;
+          } else {
+            h += `<button type="button" onclick="dontKnow('${pid}')" class="${DUNNO_BTN}">${tr('🤷 Weiss ich nicht', '🤷 No lo sé')}</button>`;
+          }
+        }
+      }
+      if (it.type === 'mission') {
+        const ticks = STATE.ticks[it.id] || [], left = it.steps.filter((_, i) => !ticks[i]).length;
+        if (it.link && !done) h += `<a href="${it.link}" download class="mb-3 flex items-center justify-center gap-2 w-full min-h-[52px] px-4 rounded-2xl border-2 border-indigo-300 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 text-base font-black">${esc(it.linkText || '📥 Vorlage herunterladen')}</a>`;
+        h += `<ol class="space-y-2">${it.steps.map((st, i) => {
+          const on = done || !!ticks[i];
+          return `<li><button type="button" onclick="missionTick('${pid}',${i})" ${done ? 'disabled' : ''} aria-pressed="${on}" class="w-full min-h-[56px] flex items-start gap-3 text-left rounded-2xl border-2 px-3 py-3 ${on ? 'border-emerald-400 bg-emerald-50' : 'border-slate-300 bg-white hover:border-indigo-400'}"><span class="w-8 h-8 shrink-0 rounded-lg border-2 ${on ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300 bg-white text-slate-500'} flex items-center justify-center text-base font-black">${on ? '✓' : i + 1}</span><span class="text-base text-slate-800 leading-snug wrap-any pt-1">${st}</span></button></li>`;
+        }).join('')}</ol>`;
+        if (it.proof) h += !left || done ? `<div class="mt-3 rounded-2xl border-2 border-sky-300 bg-sky-50 px-4 py-2.5 text-base text-slate-800 pop"><b>🔍 Schau nach:</b> ${esc(it.proof)}</div>` : `<div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-base text-slate-600">🔍 ${esc(it.proof)}</div>`;
+        if (!done) {
+          if (Q.help.tip) h += `<div id="help-1" class="mt-3 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 space-y-1.5">${it.help.map(x => `<div class="text-base text-slate-800">💡 ${esc(x)}</div>`).join('')}<div class="text-base text-slate-700 font-semibold">🙋 Immer noch nicht? Frag deine Banknachbarin, deinen Banknachbarn oder die Lehrperson. Das ist völlig okay.</div></div>`;
+          h += left ? `<div class="mt-3 w-full min-h-[52px] px-4 rounded-2xl border-2 border-slate-200 bg-slate-100 text-slate-600 text-base font-bold flex items-center justify-center">Noch ${left} ${left === 1 ? 'Schritt' : 'Schritte'} abhaken</div>`
+            : `<button type="button" onclick="missionDone('${pid}')" class="mt-3 w-full min-h-[56px] px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-black shadow-sm pop">✔ Mission geschafft!</button>`;
+          h += `<button type="button" onclick="missionHelp('${pid}')" class="mt-2 w-full ${BTN_SOFT}">${Q.help.tip ? 'Hilfe zuklappen' : '🆘 Ich komme nicht weiter'}</button>`;
+        }
+      }
+      return h;
+    }
+
+    function renderPart(pid, keepFocus) {
+      renderPartHead(pid);
+      const Q = curQ(pid), box = $('body-' + pid), p = PART_BY_ID[pid];
+      const nextP = PARTS[PARTS.indexOf(p) + 1];
+      const celebrate = (emoji, title, text, buttons, color = 'emerald') => `
+        <div class="celebrate rounded-3xl border-2 ${color === 'sky' ? 'border-sky-300 bg-sky-50' : 'border-emerald-300 bg-emerald-50'} p-5 text-center space-y-2 pop">
+          <div class="text-5xl">${emoji}</div>
+          <div class="text-xl font-black text-slate-900">${title}</div>
+          <div class="text-base text-slate-700">${text}</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">${buttons}</div>
+        </div>`;
+      const homeBtn = `<button type="button" onclick="switchTab('home')" class="${BTN_SOFT}">${tr('🏠 Zur Übersicht', '🏠 Al resumen')}</button>`;
+      if (Q.phase === 'etappe') {
+        box.innerHTML = celebrate('🎉', tr('Etappe geschafft!', '¡Etapa lograda!'), tr(`Du hast ${SESSION.answers} Aufgaben gemacht. Dieser Teil ist schon zu <b>${pctOf(pid)} %</b> geschafft. Weiter oder Pause?`, `Hiciste ${SESSION.answers} tareas. Esta parte ya está lograda en un <b>${pctOf(pid)} %</b>. ¿Sigues o haces una pausa?`),
+          `<button type="button" onclick="pausePart('${pid}')" class="${BTN_SOFT}">${tr('Für heute fertig', 'Listo por hoy')}</button><button type="button" id="next-btn" onclick="continuePart('${pid}')" class="${BTN_MAIN}">${tr('Weiter üben →', 'Seguir practicando →')}</button>`, 'sky');
+      } else if (Q.phase === 'pause') {
+        box.innerHTML = celebrate('👍', tr('Super gemacht!', '¡Muy bien hecho!'), tr('Dein Fortschritt ist gespeichert. Komm morgen wieder: 10 Minuten reichen.', 'Tu progreso está guardado. Vuelve mañana: 10 minutos bastan.'),
+          `${homeBtn}<button type="button" id="next-btn" onclick="continuePart('${pid}')" class="${BTN_MAIN}">${tr('Doch weiter üben', 'Mejor sigo practicando')}</button>`);
+      } else if (Q.phase === 'stageDone') {
+        const k = curStage(pid);
+        box.innerHTML = celebrate('⭐', tr(`Stufe ${k} geschafft!`, `¡Nivel ${k} logrado!`), tr(`Du bekommst einen Stern. Jetzt kommt <b>Stufe ${k + 1}: ${STAGES[k].label}</b>. ${STAGES[k].intro}`, `Recibes una estrella. Ahora viene el <b>nivel ${k + 1}: ${STAGES[k].labelEs}</b>. ${STAGES[k].introEs}`),
+          `${homeBtn}<button type="button" id="next-btn" onclick="continuePart('${pid}')" class="${BTN_MAIN}">${tr(`Weiter zu Stufe ${k + 1} →`, `Al nivel ${k + 1} →`)}</button>`);
+      } else if (Q.phase === 'partDone') {
+        box.innerHTML = celebrate('🏅', tr('Teil gemeistert!', '¡Parte dominada!'), `${starsHtml(3, 'text-2xl')}<br>${`Du hast die Missionen ${p.nrs} geschafft. Morgen kommen 4 Aufgaben zum Wiederholen. So bleibt es im Kopf.`}`,
+          `${homeBtn}${nextP ? `<button type="button" id="next-btn" onclick="switchTab('${nextP.id}')" class="${BTN_MAIN}">${tr('Weiter zu Teil', 'A la parte')} ${PARTS.indexOf(nextP) + 1} →</button>` : `<button type="button" id="next-btn" onclick="switchTab('home')" class="${BTN_MAIN}">${tr('Fertig', 'Terminado')} 🏆</button>`}`);
+      } else if (Q.phase === 'reviewDone') {
+        const s = PS(pid);
+        const more = Q.review === 'rev' && s.rev < REVIEW_DAYS.length ? tr('In 3 Tagen kommt noch eine kurze Wiederholung.', 'En 3 días viene otro repaso corto.') : tr('Das sitzt!', '¡Ya lo sabes!');
+        box.innerHTML = celebrate('🔁', tr('Wiederholung geschafft!', '¡Repaso logrado!'), `${more}`,
+          `${homeBtn}<button type="button" id="next-btn" onclick="startExtra('${pid}')" class="${BTN_MAIN}">${tr('Noch 4 Aufgaben', '4 tareas más')}</button>`);
+      } else if (Q.phase === 'mastered') {
+        const s = PS(pid);
+        const nd = Math.max(1, Math.round((s.revDue + EARLY - Date.now()) / DAY)), many = Math.round((s.revDue + EARLY - Date.now()) / DAY) > 1;
+        const when = s.rev < REVIEW_DAYS.length && s.revDue ? tr(`Nächste Wiederholung: ${nd} ${many ? 'Tage' : 'Tag'} nach dem letzten Üben.`, `Próximo repaso: ${nd} ${many ? 'días' : 'día'} después de la última práctica.`) : tr('Alle Wiederholungen sind gemacht.', 'Hiciste todos los repasos.');
+        box.innerHTML = celebrate('🏅', tr('Diesen Teil hast du gemeistert!', '¡Dominaste esta parte!'), `${starsHtml(3, 'text-2xl')}<br>${when}`,
+          `${homeBtn}<button type="button" id="next-btn" onclick="startExtra('${pid}')" class="${BTN_MAIN}">${tr('🔁 4 Aufgaben auffrischen', '🔁 Refrescar 4 tareas')}</button>`);
+      } else {
+        const it = BY_ID[Q.id], st = STAGES[it.st - 1];
+        const hint = tr({ mc: 'Tippe auf die richtige Antwort.', tap: 'Tippe im Bild auf die richtige Stelle.', sort: 'Tippe bei jeder Zeile die passende Antwort an.', order: 'Tippe die Sätze in der richtigen Reihenfolge an.', gap: 'Schreib das fehlende Wort.', open: 'Erkläre in eigenen Worten.', mission: 'Mach es am Laptop. Hake jeden Schritt ab, wenn du ihn gemacht hast.' },
+          { mc: 'Toca la respuesta correcta.', tap: 'Toca el lugar correcto en la imagen.', sort: 'Toca en cada fila la respuesta que corresponde.', order: 'Toca las frases en el orden correcto.', gap: 'Escribe la palabra que falta.', open: 'Explica con tus propias palabras.' })[it.type];
+        const verb = tr({ mc: 'Tippe', tap: 'Tippe', sort: 'Tippe', order: 'Tippe', gap: 'Schreib', open: 'Erkläre', mission: 'Mach' }, { mc: 'Toca', tap: 'Toca', sort: 'Toca', order: 'Toca', gap: 'Escribe', open: 'Explica' })[it.type];
+        const rest = it.type === 'gap' ? '' : esc(L(it, 'q') || '');
+        let html = `
+          <div class="flex items-center justify-between gap-2 text-xs font-bold text-slate-500 mb-2">
+            <span>${Q.review ? tr('🔁 Wiederholen', '🔁 Repasar') : `${st.icon} ${tr('Stufe', 'Nivel')} ${it.st}: ${L(st, 'label')}`}</span>
+            <span class="flex items-center gap-2"><span class="px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800">${nrText(it)}</span></span>
+          </div>
+          ${rest ? `<div class="text-lg sm:text-xl font-black text-slate-900 leading-snug wrap-any">${rest}</div>` : ''}
+          ${/^(Tippe|Schreib|Erkläre|Nenne|Bring|Ordne|Wähle)\b/.test(it.q || '') ? '<div class="mb-3"></div>' : `<div class="text-base text-slate-600 mt-1 mb-3"><b class="text-slate-800">${verb}</b>${hint.slice(verb.length)}</div>`}
+          ${askHtml(pid, Q, it)}`;
+        if (Q.phase === 'answered') html += feedbackHtml(pid, Q, it);
+        if (Q.phase === 'ask' && it.type !== 'open' && it.type !== 'mission') {
+          html += `
+            <div class="mt-3 flex flex-wrap gap-2">
+              <button type="button" onclick="toggleTip('${pid}')" class="${BTN_SMALL} ${Q.tip ? 'bg-yellow-100' : 'bg-yellow-50'} border-yellow-300 text-yellow-900">${tr('💡 Tipp', '💡 Pista')}</button>
+              <button type="button" onclick="openTheory()" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700">${tr('📖 Theorie', '📖 Teoría')}</button>
+            </div>
+            ${Q.tip ? `<div id="tip-box" class="mt-2 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 text-base text-slate-800 leading-relaxed">💡 ${esc(L(it, 'tip'))}</div>` : ''}
+            <button type="button" onclick="dontKnow('${pid}')" class="${DUNNO_BTN}">${tr('🤷 Weiss ich nicht', '🤷 No lo sé')}</button>`;
+        } else if (Q.phase === 'ask') {
+          html += `<div class="mt-3 flex flex-wrap gap-2"><button type="button" onclick="openTheory()" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700">${tr('📖 Theorie', '📖 Teoría')}</button></div>`;
+        }
+        box.innerHTML = html;
+      }
+      renderReset(pid);
+      if (keepFocus) {
+        const f = Q.phase === 'ask' ? ($('gap-in') || null) : $('next-btn');
+        if (f) f.focus({ preventScroll: true });
+        // Rückmeldung bzw. Feier ganz sichtbar machen
+        if (Q.phase !== 'ask') { const fb = box.querySelector('.feedback-box, .celebrate'); const nb = $('next-btn'); if (fb) fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); if (nb) setTimeout(() => nb.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 50); }
+        else showTop(pid);
+      }
+    }
+
+    // «Nochmals üben»: ganzer Teil von vorne, mit Rückfrage
+    function renderReset(pid) {
+      const any = TASKS[pid].score() > 0;
+      $('reset-' + pid).innerHTML = CONFIRM_RESET === pid ? `
+        <div class="rounded-3xl border-2 border-yellow-300 bg-yellow-50 p-4 space-y-3">
+          <div class="text-base font-bold text-slate-900">${tr('Diesen Teil wirklich von vorne üben?', '¿De verdad quieres practicar esta parte desde el principio?')}</div>
+          <div class="text-base text-slate-700">${tr('Die Sterne und der Fortschritt in diesem Teil gehen dabei weg. Die anderen Teile bleiben.', 'Las estrellas y el progreso de esta parte se borran. Las otras partes se quedan.')}</div>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" onclick="cancelReset()" class="${BTN_SOFT}">${tr('Abbrechen', 'Cancelar')}</button>
+            <button type="button" onclick="doReset('${pid}')" class="${BTN_MAIN}">${tr('Ja, neu starten', 'Sí, empezar de nuevo')}</button>
+          </div>
+        </div>` : `<div class="text-center"><button type="button" onclick="askReset('${pid}')" ${any ? '' : 'disabled'} class="min-h-[44px] px-3 text-sm font-semibold text-slate-500 hover:text-slate-700 underline underline-offset-2 ${any ? '' : 'opacity-40 cursor-not-allowed'}">${tr('🔀 Nochmals üben (diesen Teil von vorne)', '🔀 Practicar otra vez (esta parte desde el principio)')}</button></div>`;
+    }
+    function askReset(pid) { CONFIRM_RESET = pid; renderReset(pid); }
+    function cancelReset() { const pid = CONFIRM_RESET; CONFIRM_RESET = null; if (pid) renderReset(pid); }
+    function doReset(pid) {
+      delete STATE.parts[pid];
+      ITEMS[pid].forEach(it => { delete STATE.drafts[it.id]; delete STATE.ticks[it.id]; });
+      delete EXTRA[pid];
+      CONFIRM_RESET = null;
+      save();
+      newQuestion(pid);
+      renderPart(pid);
+      renderHeader();
+      scrollToCard(pid);
+    }
+
+    function showTop(pid) { const b = $('body-' + pid); if (b && b.getBoundingClientRect().top < 120) b.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    function scrollToCard(pid) { const c = $('card-' + pid); if (c && c.getBoundingClientRect().top < 0) c.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    function openTheory() {
+      const d = $('theory-' + STATE.view);
+      if (!d) return;
+      d.open = true;
+      d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    function backToTask() { const c = $('card-' + STATE.view); if (c) c.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+    function switchTab(view) {
+      if (view !== 'home' && !PART_BY_ID[view]) view = 'home';
+      STATE.view = view;
+      CONFIRM_RESET = null;
+      document.querySelectorAll('.view').forEach(el => el.classList.toggle('hidden', el.id !== 'view-' + view));
+      if (view === 'home') renderHome();
+      else {
+        STATE.last = view;
+        const Q = curQ(view);
+        // Wiederholung ist fällig, aber eine alte Frage steht noch da: neu holen
+        if ((Q.phase === 'mastered' && revDue(view)) || (!Q.review && Q.phase === 'ask' && revDue(view))) newQuestion(view);
+        renderPart(view);
+      }
+      renderHeader();
+      save();
+      window.scrollTo({ top: 0 });
+    }
+
+    // ==============================================================
+    // START
+    // ==============================================================
+    Object.assign(window, { setLang, switchTab, continueLearning, pick, tapZone, choose, checkSort, place, unplace, checkOrder, submitGap, gapHint, bankPick,
+      dontKnow, saveDraft, openHelp, selfRate, toggleTip, nextQ, continuePart, pausePart, startExtra, askReset, cancelReset, doReset, openTheory, backToTask, playAnim, missionTick, missionHelp, missionDone });
+    // Kleine Animation auf der Startansicht: nur nach Antippen, danach wieder ruhig
+    let animTimer = null;
+    function playAnim() {
+      const v = $('animsvg'); if (!v) return;
+      v.classList.remove('go'); void v.getBoundingClientRect();
+      v.classList.add('go');
+      clearTimeout(animTimer);
+      animTimer = setTimeout(() => { v.classList.remove('go'); const i = $('anim-info'); if (i) i.classList.remove('hidden'); }, 2200);
+    }
+    // Bilder in der Theorie (in der aktuellen Sprache, nach dem Umschalten neu)
+    function renderTheory() {
+      $('theory-k1-svg').innerHTML = SVG_EXPLORER();
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      load();
+      setLang(LANG);
+      renderTheory();
+      READY = true;
+      switchTab(STATE.view);
+    });
+  </script>
+</body>
+</html>
