@@ -942,6 +942,7 @@
       renderPfad(true);
       renderParts();
       if (Q.mastered) setTimeout(() => flyStar(document.querySelector('#body-pfad .feedback-box')), 60);
+      if (Q.mastered) renderTest();   // Stern-Zähler im Hinweis beim Wörtertest
       // Richtig: automatisch weiter (Auswahl schneller als Schreiben)
       if (ok) {
         const t = ++Q.token;
@@ -986,6 +987,7 @@
       renderPfad(true);
       renderParts();
       if (Q.mastered) setTimeout(() => flyStar(document.querySelector('#body-pfad .feedback-box')), 60);
+      if (Q.mastered) renderTest();   // Stern-Zähler im Hinweis beim Wörtertest
     }
     function nextQuestion() {
       if (Q.phase !== 'answered') return;
@@ -1236,7 +1238,8 @@
         $('body-test').innerHTML = `
           <div class="rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/60 p-5 text-center space-y-2">
             <div class="text-3xl">📝</div>
-            <p class="text-sm text-slate-700">${tr(`Hast du die Wörter im Lernpfad geübt? Dann teste dich: Alle ${t.a.length} Wörter kommen dran, zuerst Deutsch → Englisch (Teil A), dann Englisch → Deutsch (Teil B).`, `¿Has practicado las palabras en la ruta de aprendizaje? Entonces ponte a prueba: salen las ${t.a.length} palabras, primero español → inglés (parte A), después inglés → español (parte B).`)}</p>
+            <p class="text-sm font-bold text-slate-900">${tr(`Zuerst den Lernpfad oben machen, bis alle Wörter einen ⭐ haben. Erst dann den Wörtertest.`, `Primero haz la ruta de aprendizaje de arriba, hasta que todas las palabras tengan una ⭐. Después, la prueba.`)} <span class="whitespace-nowrap">(⭐ ${TASKS.pfad.score()}/${TASKS.pfad.max})</span></p>
+            <p class="text-sm text-slate-700">${tr(`Im Wörtertest kommen alle ${t.a.length} Wörter dran, zuerst Deutsch → Englisch (Teil A), dann Englisch → Deutsch (Teil B).`, `En la prueba salen las ${t.a.length} palabras, primero español → inglés (parte A), después inglés → español (parte B).`)}</p>
             <button type="button" onclick="openTest()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold">${tr('▶ Wörtertest starten', '▶ Empezar la prueba')}</button>
           </div>`;
         $('fb-test').innerHTML = '';
