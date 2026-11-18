@@ -334,7 +334,7 @@
         { id: 'k1_m1', st: 3, nr: ['M1'], type: 'mission', q: 'Mission M1: Baue deine Ordner',
           steps: ['Öffne den <b>Datei-Explorer</b> (gelber Ordner unten in der Leiste).', 'Klicke links auf <b>OneDrive</b>.', 'Klicke oben auf <b>+ Neu</b> → <b>Ordner</b>. Schreib <b>Schule</b>. Drück Enter.', 'Öffne den Ordner <b>Schule</b> (Doppelklick). Mach darin den Ordner <b>Informatik</b>.'],
           help: ['Kein gelber Ordner unten? Drück die Windows-Taste ⊞ und E zusammen.', 'Kein «OneDrive» links? Frag die Lehrperson: Dann bist du noch nicht angemeldet.', 'Falscher Name? Ordner anklicken, F2, neu schreiben.'],
-          proof: 'Am Schluss steht oben: OneDrive › Schule › Informatik.' },
+          proof: 'Oben steht: OneDrive › Schule › Informatik.' },
         { id: 'k1_m2', st: 3, nr: ['M2'], type: 'mission', q: 'Mission M2: Speichern unter',
           steps: ['Öffne <b>Word</b> und klicke auf <b>Leeres Dokument</b>.', 'Schreib: <i>Das ist mein erstes Dokument.</i>', 'Klicke auf <b>Datei</b> → <b>Speichern unter</b>. Wähle <b>OneDrive › Schule › Informatik</b>.', 'Schreib als Namen <b>Informatik_Uebung</b>. Klicke auf <b>Speichern</b>.'],
           help: ['Du siehst den Ordner nicht? Klicke im Fenster auf «Durchsuchen» oder «Weitere Speicherorte».', 'Du hast schon auf «Speichern» geklickt? Kein Problem: Mach einfach nochmals «Speichern unter».'],
@@ -342,7 +342,7 @@
         { id: 'k1_m3', st: 3, nr: ['M3'], type: 'mission', q: 'Mission M3: Umbenennen und verschieben',
           steps: ['Geh im Explorer zu <b>OneDrive › Schule</b>. Mach dort den Ordner <b>Deutsch</b>.', 'Öffne den Ordner <b>Informatik</b>. Klicke die Datei <b>Informatik_Uebung</b> an. Drück <b>F2</b> und schreib <b>Deutsch_Uebung</b>. Enter.', 'Hoppla, die Datei ist jetzt im falschen Ordner! Drück <b>Ctrl + X</b> (ausschneiden).', 'Öffne den Ordner <b>Deutsch</b>. Drück <b>Ctrl + V</b> (einfügen).'],
           help: ['Die Datei ist geöffnet? Schliess sie zuerst in Word. Offene Dateien kann man nicht umbenennen.', 'Hinter dem Namen steht «.docx»? Lass das stehen und ändere nur den Teil davor.', 'Du findest die Datei nicht mehr? Schau zuerst in «Deutsch» und in «Informatik».'],
-          proof: 'Kontrolle: Deutsch_Uebung ist im Ordner Deutsch und nicht mehr im Ordner Informatik.' }
+          proof: 'Deutsch_Uebung ist im Ordner Deutsch und nicht mehr im Ordner Informatik.' }
       ],
       // ---------- Teil 2: Download, Screenshot, Teams (Lektion 2, M4–M5 und M8) ----------
       k2: [
@@ -387,9 +387,10 @@
           a: ['Downloads', 'Download'], tip: 'Herunterladen heisst auf Englisch …?',
           why: 'Der Ordner heisst Downloads.' },
         { id: 'k2_m4', st: 3, nr: ['M4'], type: 'mission', q: 'Mission M4: Download holen und aufräumen',
-          steps: [`Klicke hier: <a href="${VORLAGE}" download class="underline font-bold text-indigo-700">📥 Vorlage «Steckbrief» herunterladen</a>`, 'Öffne den Explorer. Klicke links auf <b>Downloads</b>. Findest du <b>Steckbrief_Vorlage</b>?', 'Klicke sie an. Drück <b>Ctrl + X</b>.', 'Öffne <b>OneDrive › Schule › Informatik</b>. Drück <b>Ctrl + V</b>.'],
+          link: VORLAGE,
+          steps: ['Tippe oben auf <b>📥 Vorlage «Steckbrief» herunterladen</b>.', 'Öffne den Explorer. Klicke links auf <b>Downloads</b>. Findest du <b>Steckbrief_Vorlage</b>?', 'Klicke sie an. Drück <b>Ctrl + X</b>.', 'Öffne <b>OneDrive › Schule › Informatik</b>. Drück <b>Ctrl + V</b>.'],
           help: ['Der Browser fragt, ob du die Datei behalten willst? Klicke auf «Behalten».', 'Nichts in Downloads? Im Browser oben rechts auf den Pfeil ⬇ klicken, dann «In Ordner anzeigen».'],
-          proof: 'Kontrolle: Die Vorlage ist in Informatik und nicht mehr in Downloads.' },
+          proof: 'Die Vorlage ist in Informatik und nicht mehr in Downloads.' },
         { id: 'k2_m5', st: 3, nr: ['M5'], type: 'mission', q: 'Mission M5: Screenshot einfügen',
           steps: ['Lass den Explorer mit dem Ordner <b>Informatik</b> offen.', 'Drück <b>Windows + Shift + S</b>. Zieh mit der Maus ein Rechteck um das Explorer-Fenster.', 'Öffne die <b>Steckbrief_Vorlage</b> (Doppelklick). Klicke in die Zeile unter «Mein Screenshot».', 'Drück <b>Ctrl + V</b>. Speichere mit <b>Ctrl + S</b>.'],
           help: ['Es passiert nichts nach Ctrl + V? Mach den Screenshot nochmals und klicke danach zuerst ins Dokument.', 'Das Bild ist riesig? Klicke es an und zieh an einer Ecke.'],
@@ -475,7 +476,7 @@
     const REVIEW_DAYS = [1, 3];     // Wiederholen nach 1 Tag und nach weiteren 3 Tagen
     const REVIEW_N = 4;             // so viele gemischte Aufgaben pro Wiederholung
     const DAY = 864e5, EARLY = 4 * 36e5;   // «morgen» = schon nach 20 Stunden
-    const STATE = { parts: {}, days: [], last: null, view: 'home', drafts: {} };
+    const STATE = { parts: {}, days: [], last: null, view: 'home', drafts: {}, ticks: {} };
     function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(STATE)); } catch (e) {} }
     function load() {
       try {
@@ -486,6 +487,7 @@
         if (PART_BY_ID[s.last]) STATE.last = s.last;
         if (s.view === 'home' || PART_BY_ID[s.view]) STATE.view = s.view;
         if (s.drafts && typeof s.drafts === 'object') STATE.drafts = s.drafts;
+        if (s.ticks && typeof s.ticks === 'object') STATE.ticks = s.ticks;
       } catch (e) {}
     }
     function PS(pid) {
@@ -548,7 +550,7 @@
     function freshQ(pid) {
       return { pid, id: null, phase: 'ask', review: null, ok: false, dontKnow: false, after: null, token: 0, tip: false, pick: null, tried: [], nudge: '', sortHint: null,
         opts: [], rows: [], cats: [], sel: {}, pool: [], placed: [], hint: false, ans: '', near: false,
-        help: { tip: false, check: null, model: false }, warn: '', ticks: [] };
+        help: { tip: false, check: null, model: false }, warn: '' };
     }
     function newQuestion(pid) {
       const Q = QS[pid] = freshQ(pid), s = PS(pid);
@@ -678,9 +680,9 @@
       save();
       renderPart(pid, true);
       renderHeader();
-      if (ok) {
+      if (ok && BY_ID[id].type !== 'mission') {   // nach einer Mission: erst weiter, wenn das Kind tippt (Missionsblatt abhaken)
         const t = ++Q.token, type = BY_ID[id].type;
-        setTimeout(() => { if (Q.token === t && Q.phase === 'answered') nextQ(pid); }, type === 'mc' || type === 'tap' ? 1800 : type === 'mission' ? 2600 : 2200);
+        setTimeout(() => { if (Q.token === t && Q.phase === 'answered') nextQ(pid); }, type === 'mc' || type === 'tap' ? 1800 : 2200);
       }
     }
     function nextQ(pid) {
@@ -809,9 +811,9 @@
       answer(pid, ok, Q.dontKnow);
     }
     // Mission am Laptop: Schritte abhaken, dann «geschafft» (Selbstauskunft; geprüft wird die Abgabe in Teams)
-    function missionTick(pid, i) { const Q = curQ(pid); if (Q.phase !== 'ask') return; Q.ticks[i] = !Q.ticks[i]; renderPart(pid); }
+    function missionTick(pid, i) { const Q = curQ(pid); if (Q.phase !== 'ask') return; const tk = STATE.ticks[Q.id] = STATE.ticks[Q.id] || []; tk[i] = !tk[i]; save(); renderPart(pid); }   // Häkchen bleiben gespeichert (Wechsel zu Explorer, Word, Teams)
     function missionHelp(pid) { const Q = curQ(pid); if (Q.phase !== 'ask') return; Q.help.tip = !Q.help.tip; renderPart(pid); const b = $('help-1'); if (b) b.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
-    function missionDone(pid) { const Q = curQ(pid), it = BY_ID[Q.id]; if (Q.phase !== 'ask' || !it.steps.every((_, i) => Q.ticks[i])) return; answer(pid, true); }
+    function missionDone(pid) { const Q = curQ(pid), it = BY_ID[Q.id]; const tk = STATE.ticks[Q.id] || []; if (Q.phase !== 'ask' || !it.steps.every((_, i) => tk[i])) return; delete STATE.ticks[Q.id]; answer(pid, true); }
     function toggleTip(pid) { const Q = curQ(pid); Q.tip = !Q.tip; renderPart(pid); if ($('tip-box')) $('tip-box').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
 
     // ==============================================================
@@ -828,7 +830,7 @@
       return `<span class="${size} tracking-tight" aria-label="${n} ${tr('von 3 Sternen', 'de 3 estrellas')}">${[0, 1, 2].map(k => k < n ? '⭐' : '<span class="opacity-25 grayscale">⭐</span>').join('')}</span>`;
     }
     const pctOf = pid => Math.round(TASKS[pid].score() / TASKS[pid].max * 100);
-    const nrText = it => `📄 Mission ${it.nr.join(' + ')}`;
+    const nrText = it => `📄 ${it.type === 'mission' ? 'Mission' : 'zu Mission'} ${it.nr.join(' + ')}`;
 
     function renderHeader() {
       $('star-count').textContent = totalStars();
@@ -887,7 +889,7 @@
       const p = PART_BY_ID[pid], k = curStage(pid), pct = pctOf(pid), Q = curQ(pid);
       const steps = STAGES.map((s, i) => {
         const done = i < k, now = i === k && !Q.review;
-        return `<div class="flex-1 min-w-0 rounded-lg px-1 py-1 text-center border-2 text-[11px] sm:text-xs font-bold whitespace-nowrap ${done ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : now ? 'bg-indigo-50 border-indigo-400 text-indigo-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">${done ? '⭐' : s.icon} ${L(s, 'label')}</div>`;
+        return `<div class="flex-1 min-w-0 rounded-lg px-1 py-1 text-center border-2 text-xs sm:text-sm font-bold whitespace-nowrap ${done ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : now ? 'bg-indigo-50 border-indigo-400 text-indigo-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">${done ? '⭐' : s.icon} ${L(s, 'label')}</div>`;
       }).join('');
       $('head-' + pid).innerHTML = `
         <div class="flex items-center gap-2">
@@ -906,7 +908,7 @@
         title = STREAK >= 5 && STREAK % 5 === 0 ? tr(`🔥 ${STREAK} richtig hintereinander!`, `🔥 ¡${STREAK} correctas seguidas!`) : Q.praise;
         if (it.type === 'gap' && Q.near) body = `<div class="text-base text-slate-700">${tr('So schreibt man es:', 'Se escribe así:')} <b>${esc(Q.form || L(it, 'a')[0])}</b></div>`;
         if (it.type === 'open') body = `<div class="text-base text-slate-700">${tr('Gut erklärt! Das hilft dir im Test.', '¡Bien explicado! Esto te ayuda en el examen.')}</div>`;
-        if (it.type === 'mission') body = `<div class="text-base text-slate-700">Hake die Mission ${esc(it.nr.join(' + '))} auf deinem Missionsblatt ab. ✔</div>`;
+        if (it.type === 'mission') { title = `🎉 Mission ${esc(it.nr.join(' + '))} geschafft!`; body = `<div class="text-base text-slate-700">Stark, das hast du am echten Laptop gemacht! Hake die Mission auf deinem <b>Missionsblatt</b> ab ✔. Dann tippe auf «Weiter».</div>`; }
       } else {
         title = Q.dontKnow ? tr('Kein Problem. So ist es richtig:', 'No pasa nada. Así es correcto:') : tr('Noch nicht ganz.', 'Todavía no del todo.');
         if (it.type === 'mc') body = `<div class="text-base text-slate-800">${tr('Richtig ist:', 'Lo correcto es:')} <b>${it.picOpts ? esc(L(it, 'right')) : esc(L(it, 'opts')[0])}</b></div>`;
@@ -1036,16 +1038,18 @@
         }
       }
       if (it.type === 'mission') {
+        const ticks = STATE.ticks[it.id] || [], left = it.steps.filter((_, i) => !ticks[i]).length;
+        if (it.link && !done) h += `<a href="${it.link}" download class="mb-3 flex items-center justify-center gap-2 w-full min-h-[52px] px-4 rounded-2xl border-2 border-indigo-300 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 text-base font-black">📥 Vorlage «Steckbrief» herunterladen</a>`;
         h += `<ol class="space-y-2">${it.steps.map((st, i) => {
-          const on = !!Q.ticks[i];
+          const on = done || !!ticks[i];
           return `<li><button type="button" onclick="missionTick('${pid}',${i})" ${done ? 'disabled' : ''} aria-pressed="${on}" class="w-full min-h-[56px] flex items-start gap-3 text-left rounded-2xl border-2 px-3 py-3 ${on ? 'border-emerald-400 bg-emerald-50' : 'border-slate-300 bg-white hover:border-indigo-400'}"><span class="w-8 h-8 shrink-0 rounded-lg border-2 ${on ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300 bg-white text-slate-500'} flex items-center justify-center text-base font-black">${on ? '✓' : i + 1}</span><span class="text-base text-slate-800 leading-snug wrap-any pt-1">${st}</span></button></li>`;
         }).join('')}</ol>`;
-        if (it.proof) h += `<div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-base text-slate-700">🔍 ${esc(it.proof)}</div>`;
+        if (it.proof) h += !left || done ? `<div class="mt-3 rounded-2xl border-2 border-sky-300 bg-sky-50 px-4 py-2.5 text-base text-slate-800 pop"><b>🔍 Schau nach:</b> ${esc(it.proof)}</div>` : `<div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-base text-slate-600">🔍 ${esc(it.proof)}</div>`;
         if (!done) {
-          const all = it.steps.every((_, i) => Q.ticks[i]);
-          if (Q.help.tip) h += `<div id="help-1" class="mt-3 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 space-y-1.5">${it.help.map(x => `<div class="text-base text-slate-800">💡 ${esc(x)}</div>`).join('')}<div class="text-sm text-slate-600">Immer noch nicht? Frag deine Banknachbarin, deinen Banknachbarn oder die Lehrperson. Das ist völlig okay.</div></div>`;
-          h += `<button type="button" onclick="missionDone('${pid}')" ${all ? '' : 'disabled'} class="mt-3 w-full ${BTN_MAIN} ${all ? '' : 'opacity-40 cursor-not-allowed'}">${all ? '✔ Mission geschafft!' : 'Hake zuerst alle Schritte ab'}</button>`;
-          h += `<button type="button" onclick="missionHelp('${pid}')" class="mt-2 w-full ${BTN_SOFT}">🆘 Ich komme nicht weiter</button>`;
+          if (Q.help.tip) h += `<div id="help-1" class="mt-3 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 space-y-1.5">${it.help.map(x => `<div class="text-base text-slate-800">💡 ${esc(x)}</div>`).join('')}<div class="text-base text-slate-700 font-semibold">🙋 Immer noch nicht? Frag deine Banknachbarin, deinen Banknachbarn oder die Lehrperson. Das ist völlig okay.</div></div>`;
+          h += left ? `<div class="mt-3 w-full min-h-[52px] px-4 rounded-2xl border-2 border-slate-200 bg-slate-100 text-slate-600 text-base font-bold flex items-center justify-center">Noch ${left} ${left === 1 ? 'Schritt' : 'Schritte'} abhaken</div>`
+            : `<button type="button" onclick="missionDone('${pid}')" class="mt-3 w-full min-h-[56px] px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-black shadow-sm pop">✔ Mission geschafft!</button>`;
+          h += `<button type="button" onclick="missionHelp('${pid}')" class="mt-2 w-full ${BTN_SOFT}">${Q.help.tip ? 'Hilfe zuklappen' : '🆘 Ich komme nicht weiter'}</button>`;
         }
       }
       return h;
@@ -1142,7 +1146,7 @@
     function cancelReset() { const pid = CONFIRM_RESET; CONFIRM_RESET = null; if (pid) renderReset(pid); }
     function doReset(pid) {
       delete STATE.parts[pid];
-      ITEMS[pid].forEach(it => delete STATE.drafts[it.id]);
+      ITEMS[pid].forEach(it => { delete STATE.drafts[it.id]; delete STATE.ticks[it.id]; });
       delete EXTRA[pid];
       CONFIRM_RESET = null;
       save();
