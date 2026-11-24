@@ -66,8 +66,8 @@
     <div class="max-w-3xl mx-auto px-4 py-2.5 flex items-center gap-3">
       <a href="index.html" class="text-2xl p-2 bg-white/15 rounded-2xl shrink-0" title="Zur Startseite">💻</a>
       <div class="min-w-0 flex-1">
-        <div class="text-[11px] font-bold tracking-wider uppercase text-indigo-100"><span data-l="de">Informatik · Exkurs</span><span data-l="es" lang="es">Informática · Excurso</span></div>
-        <h1 class="text-base sm:text-xl font-black leading-tight"><span data-l="de">Computer-Grundlagen</span><span data-l="es" lang="es">Lo básico del ordenador</span></h1>
+        <div class="text-[11px] font-bold tracking-wider uppercase text-indigo-100"><span data-l="de">Informatik · Exkurs</span><span data-l="es" lang="es">Informática · Tema extra</span></div>
+        <h1 class="text-base sm:text-xl font-black leading-tight"><span data-l="de">Computer-Grundlagen</span><span data-l="es" lang="es">Lo básico de la computadora</span></h1>
       </div>
       <div id="star-box" class="shrink-0 bg-white/15 border border-white/25 rounded-xl px-2.5 py-1 text-sm font-black" title="Sterne: 3 pro Teil">
         ⭐ <span id="star-count" class="inline-block">0</span><span class="text-white/75 font-bold">/<span id="star-max">6</span></span>
@@ -85,7 +85,7 @@
     <!-- ÜBERSICHT -->
     <div id="view-home" class="view space-y-4">
       <section class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
-        <h2 class="text-xl font-black text-slate-900"><span data-l="de">Fit am Computer 💻</span><span data-l="es" lang="es">En forma con el ordenador 💻</span></h2>
+        <h2 class="text-xl font-black text-slate-900"><span data-l="de">Fit am Computer 💻</span><span data-l="es" lang="es">En forma con la computadora 💻</span></h2>
         <p class="text-base text-slate-600 mt-1" data-l="de">2 Teile, einer pro Lektion. Jeder Teil hat 3 Stufen: <b>erkennen</b>, <b>ergänzen</b>, <b>am Laptop machen</b>. Fehler sind okay: Die Aufgabe kommt einfach später nochmals.</p>
         <p class="text-base text-slate-600 mt-1" data-l="es" lang="es">2 partes, una por clase. Cada parte tiene 3 niveles: <b>reconocer</b>, <b>completar</b>, <b>hacerlo en el portátil</b>. Equivocarse está bien: la tarea simplemente vuelve a salir más tarde.</p>
         <!-- Kleine Animation zum Stoff (docs/didaktik.md 1c): Datei fliegt in die Wolke = in OneDrive speichern -->
@@ -101,7 +101,7 @@
           </button>
           <div class="min-w-0 text-base text-slate-700">
             <p class="font-bold"><span data-l="de">👆 Tipp die Wolke an!</span><span data-l="es" lang="es">👆 ¡Toca la nube!</span></p>
-            <p id="anim-info" class="hidden text-sm text-slate-600 mt-1"><span data-l="de">Gespeichert in <b>OneDrive</b>: braucht kaum Platz auf dem Laptop und ist auch in Teams und auf dem Handy da.</span><span data-l="es" lang="es">Guardado en <b>OneDrive</b>: casi no ocupa espacio en el portátil y también está en Teams y en el móvil.</span></p>
+            <p id="anim-info" class="hidden text-sm text-slate-600 mt-1"><span data-l="de">Gespeichert in <b>OneDrive</b>: braucht kaum Platz auf dem Laptop und ist auch in Teams und auf dem Handy da.</span><span data-l="es" lang="es">Guardado en <b>OneDrive</b>: casi no ocupa espacio en el portátil y también está en Teams y en el teléfono.</span></p>
           </div>
         </div>
         <button type="button" id="continue-btn" onclick="continueLearning()" class="w-full mt-4 min-h-[56px] rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-black shadow-sm">▶ Hier weitermachen</button>
@@ -134,16 +134,16 @@
           <li><b>ZIP-Datei:</b> ein Paket mit mehreren Dateien. Auspacken: Rechtsklick › <b>Alle extrahieren</b> › Extrahieren. Danach die ZIP-Datei löschen.</li>
         </ul>
         <ul data-l="es" lang="es" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
-          <li><b>OneDrive</b> es tu memoria en la nube (cuenta de Office, símbolo: nube azul ☁). Tu portátil tiene poco espacio: guarda siempre los trabajos de la escuela en OneDrive. También los encuentras en Teams, en office.com y en el móvil.</li>
+          <li><b>OneDrive</b> es tu memoria en la nube (cuenta de Office, símbolo: nube azul ☁). Tu portátil tiene poco espacio: guarda siempre los trabajos de la escuela en OneDrive. También los encuentras en Teams, en office.com y en el teléfono.</li>
           <li><b>Explorador de archivos</b> <span lang="de">(Datei-Explorer)</span>: carpeta amarilla abajo en la barra (o tecla Windows ⊞ + E).</li>
           <li><b>Leer la ruta:</b> «OneDrive › Schule › Informatik» quiere decir: la carpeta Informatik está dentro de la carpeta Schule, y esta está en OneDrive.</li>
           <li><b>Hacer una carpeta:</b> explorador → a la izquierda «OneDrive» → arriba «+ Neu» → «Ordner» → escribir el nombre → Enter.</li>
           <li><b>Guardar como</b> <span lang="de">(Speichern unter)</span>: «Datei» → «Speichern unter» → elegir la carpeta → escribir el nombre → «Speichern». Solo «Speichern» deja el mismo nombre y lugar.</li>
           <li><b>Buen nombre:</b> asignatura y tema, por ejemplo «Informatik_Steckbrief». No «Dokument1».</li>
-          <li><b>Cambiar el nombre</b> <span lang="de">(umbenennen)</span>: clic en el archivo → <b>F2</b> → nombre nuevo → Enter. Deja la terminación (.docx).</li>
+          <li><b>Cambiar el nombre</b> <span lang="de">(umbenennen)</span>: clic en el archivo → <b>F2</b> → nombre nuevo → Enter. Deja la extensión (.docx).</li>
           <li><b>Mover</b> <span lang="de">(verschieben)</span>: clic en el archivo → <b>Ctrl + X</b> (cortar) → abrir la otra carpeta → <b>Ctrl + V</b> (pegar). Con Ctrl + C (copiar) tienes el archivo dos veces.</li>
-          <li><b>Terminaciones:</b> .docx = Word · .pdf = PDF · .jpg / .png = imagen · .xlsx = Excel.</li>
-          <li><b>Archivo ZIP:</b> un paquete con varios archivos. Para abrirlo: clic derecho › <b>Alle extrahieren</b> › Extrahieren. Después borra el archivo ZIP.</li>
+          <li><b>Extensiones:</b> .docx = Word · .pdf = PDF · .jpg / .png = imagen · .xlsx = Excel.</li>
+          <li><b>Archivo ZIP:</b> un paquete con varios archivos. Para extraerlo: clic derecho › <b>Alle extrahieren</b> › Extrahieren. Después borra el archivo ZIP.</li>
         </ul>
         <div id="theory-k1-svg" class="mt-3 max-w-md mx-auto"></div>
         <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span><span data-l="es" lang="es">↩ Volver a la tarea</span></button>
@@ -192,7 +192,7 @@
     const tr = (de, es) => LANG === 'es' ? es : de;
     const L = (o, k) => LANG === 'es' && o[k + 'Es'] != null ? o[k + 'Es'] : o[k];   // Feld der Aufgabe in der aktuellen Sprache
     const nudgeText = (it, n) => n && typeof n === 'object' ? (L(it, 'whyNot') || [])[n.why] || '' : n;   // kurzer Grund (whyNot / whyNotEs)
-    const TITLE = { de: 'Informatik · Computer-Grundlagen · Lernpfad', es: 'Informática · Lo básico del ordenador · Ruta de aprendizaje' };
+    const TITLE = { de: 'Informatik · Computer-Grundlagen · Lernpfad', es: 'Informática · Lo básico de la computadora · Ruta de aprendizaje' };
     let READY = false;
     // Attribute ohne <span>: title / aria-label (data-es-…)
     function applyLangAttrs(root) {
@@ -466,7 +466,7 @@
         tipEs: 'OneDrive guarda «en la nube» (en inglés: cloud).', whyEs: 'OneDrive tiene una nube azul como símbolo.' },
       k1_pfad: { qEs: 'Mira arriba la línea con las flechas ›. ¿Dónde está el archivo «Steckbrief»?',
         optsEs: ['En la carpeta Informatik, que está en la carpeta Schule', 'En la carpeta Schule, que está en la carpeta Informatik', 'En el escritorio', 'En la carpeta Downloads'],
-        whyNotEs: [null, 'Lee la línea de izquierda a derecha.', 'Arriba no pone «Desktop».', '«Downloads» solo está a la izquierda, en la lista.'],
+        whyNotEs: [null, 'Lee la línea de izquierda a derecha.', 'Arriba no dice «Desktop» (escritorio).', '«Downloads» solo está a la izquierda, en la lista.'],
         tipEs: 'Lee la línea de arriba de izquierda a derecha: primero la carpeta grande, después la carpeta que está dentro.',
         whyEs: 'OneDrive › Schule › Informatik: la carpeta Informatik está dentro de la carpeta Schule.' },
       k1_name: { qEs: '¿Qué nombre de archivo es el mejor?',
@@ -475,10 +475,10 @@
       k1_unter: { qEs: 'Quieres elegir tú dónde va el archivo y cómo se llama. ¿Dónde haces clic?',
         optsEs: ['«Speichern unter» (guardar como)', '«Speichern» (guardar)', '«Drucken» (imprimir)', '«Schliessen» (cerrar)'],
         whyNotEs: [null, 'Eso deja el mismo nombre y el mismo lugar.', 'Eso hace una hoja de papel.', 'Entonces el archivo se cierra.'],
-        tipEs: 'Hay dos maneras de guardar. ¿En cuál pregunta el ordenador «¿dónde?» y «¿qué nombre?»?', whyEs: '«Speichern unter» (guardar como): eliges la carpeta y el nombre.' },
+        tipEs: 'Hay dos maneras de guardar. ¿En cuál pregunta la computadora «¿dónde?» y «¿qué nombre?»?', whyEs: '«Speichern unter» (guardar como): eliges la carpeta y el nombre.' },
       k1_word: { qEs: '¿Qué archivo es un documento de Word?',
         whyNotEs: [null, 'Es un PDF.', 'Es una imagen.', 'Es una tabla de Excel.'],
-        tipEs: 'Mira las letras después del punto. «doc» significa documento.', whyEs: '.docx es la terminación de Word.' },
+        tipEs: 'Mira las letras después del punto. «doc» significa documento.', whyEs: '.docx es la extensión de Word.' },
       k1_move: { qEs: 'Quieres mover un archivo a otra carpeta. ¿Qué teclas usas?',
         optsEs: ['Ctrl + X, después en la carpeta nueva Ctrl + V', 'Ctrl + C, después en la carpeta nueva Ctrl + V', 'Ctrl + Z', 'Ctrl + P'],
         whyNotEs: [null, 'Así haces una copia: el archivo está dos veces.', 'Eso deshace algo.', 'Eso imprime.'],
@@ -487,32 +487,32 @@
         optsEs: ['Un paquete con varios archivos dentro', 'Una sola foto', 'Un virus', 'Un documento de Word'],
         whyNotEs: [null, 'Una foto termina en .jpg o .png.', 'ZIP no es un virus. Pero descarga solo archivos de páginas conocidas.', 'Word termina en .docx.'],
         tipEs: 'Imagina un paquete donde hay varias cosas guardadas.', whyEs: 'Un archivo ZIP es un paquete. Dentro hay varios archivos juntos.' },
-      k1_extr: { qEs: '¿Cómo abres un archivo ZIP para poder trabajar con los archivos?',
+      k1_extr: { qEs: '¿Cómo extraes (desempaquetas) un archivo ZIP para poder trabajar con los archivos?',
         optsEs: ['Clic derecho › «Alle extrahieren» (extraer todo)', 'Cambiar el nombre a «Ordner»', 'Moverlo a la papelera', 'Ctrl + P'],
-        whyNotEs: [null, 'Un nombre nuevo no abre nada.', 'Entonces todo desaparece.', 'Eso imprime.'],
-        tipEs: 'En el ordenador, desempaquetar se dice «extraer».', whyEs: 'Clic derecho en el archivo ZIP › «Alle extrahieren». Así tienes una carpeta normal.' },
+        whyNotEs: [null, 'Un nombre nuevo no extrae nada.', 'Entonces todo desaparece.', 'Eso imprime.'],
+        tipEs: 'En la computadora, desempaquetar se dice «extraer».', whyEs: 'Clic derecho en el archivo ZIP › «Alle extrahieren». Así tienes una carpeta normal.' },
       k1_ordner: { qEs: 'Haces una carpeta nueva en OneDrive. Pon los pasos en el orden correcto.',
-        stepsEs: ['Abrir el explorador de archivos (carpeta amarilla abajo)', 'Hacer clic a la izquierda en «OneDrive»', 'Hacer clic arriba en «+ Neu» y después en «Ordner»', 'Escribir el nombre', 'Pulsar Enter'],
+        stepsEs: ['Abrir el explorador de archivos (carpeta amarilla abajo)', 'Hacer clic a la izquierda en «OneDrive»', 'Hacer clic arriba en «+ Neu» y después en «Ordner»', 'Escribir el nombre', 'Presionar Enter'],
         tipEs: 'Primero tienes que abrir el explorador. Y el nombre va antes de confirmar.' },
       k1_endung: { qEs: '¿Qué tipo de archivo es? Relaciona.', catsEs: ['Imagen', 'Word', 'Excel', 'PDF', 'Vídeo'],
         tipEs: 'Mira solo las letras después del punto: doc = documento, xls = tabla, jpg = foto.' },
       k1_f2: { textEs: 'Has hecho clic en un archivo. Con la tecla ___ puedes cambiarle el nombre rápido.',
         tipEs: 'Es una tecla de la fila de arriba del teclado, con F y un número.', whyEs: 'Clic en el archivo, F2, escribir el nombre nuevo, Enter.' },
       k1_m1: { qEs: 'Misión M1: Crea tus carpetas',
-        stepsEs: ['Abre el <b>explorador de archivos</b> (carpeta amarilla abajo en la barra).', 'Haz clic a la izquierda en <b>OneDrive</b>.', 'Haz clic arriba en <b>+ Neu</b> → <b>Ordner</b>. Escribe <b>Schule</b>. Pulsa Enter.', 'Abre la carpeta <b>Schule</b> (doble clic). Dentro haz la carpeta <b>Informatik</b>.'],
-        helpEs: ['¿No hay carpeta amarilla abajo? Pulsa juntas la tecla Windows ⊞ y la E.', '¿No ves «OneDrive» a la izquierda? Pregunta a tu profe: todavía no has iniciado sesión.', '¿Nombre equivocado? Clic en la carpeta, F2, escribir de nuevo.'],
-        proofEs: 'Arriba pone: OneDrive › Schule › Informatik.' },
+        stepsEs: ['Abre el <b>explorador de archivos</b> (carpeta amarilla abajo en la barra).', 'Haz clic a la izquierda en <b>OneDrive</b>.', 'Haz clic arriba en <b>+ Neu</b> → <b>Ordner</b>. Escribe <b>Schule</b>. Presiona Enter.', 'Abre la carpeta <b>Schule</b> (doble clic). Dentro haz la carpeta <b>Informatik</b>.'],
+        helpEs: ['¿No hay carpeta amarilla abajo? Presiona juntas la tecla Windows ⊞ y la E.', '¿No ves «OneDrive» a la izquierda? Pregunta a tu profe: todavía no has iniciado sesión.', '¿Nombre equivocado? Clic en la carpeta, F2, escribir de nuevo.'],
+        proofEs: 'Arriba dice: OneDrive › Schule › Informatik.' },
       k1_m2: { qEs: 'Misión M2: Guardar como',
         stepsEs: ['Abre <b>Word</b> y haz clic en <b>Leeres Dokument</b> (documento en blanco).', 'Escribe: <i>Das ist mein erstes Dokument.</i>', 'Haz clic en <b>Datei</b> → <b>Speichern unter</b>. Elige <b>OneDrive › Schule › Informatik</b>.', 'Escribe como nombre <b>Informatik_Uebung</b>. Haz clic en <b>Speichern</b>.'],
         helpEs: ['¿No ves la carpeta? Haz clic en la ventana en «Durchsuchen» o «Weitere Speicherorte».', '¿Ya hiciste clic en «Speichern»? No pasa nada: haz otra vez «Speichern unter».'],
         proofEs: 'En el explorador, en OneDrive › Schule › Informatik, ahora está el archivo Informatik_Uebung.' },
       k1_m3: { qEs: 'Misión M3: Cambiar el nombre y mover',
-        stepsEs: ['En el explorador, ve a <b>OneDrive › Schule</b>. Haz allí la carpeta <b>Deutsch</b>.', 'Abre la carpeta <b>Informatik</b>. Haz clic en el archivo <b>Informatik_Uebung</b>. Pulsa <b>F2</b> y escribe <b>Deutsch_Uebung</b>. Enter.', '¡Uy, ahora el archivo está en la carpeta equivocada! Pulsa <b>Ctrl + X</b> (cortar).', 'Abre la carpeta <b>Deutsch</b>. Pulsa <b>Ctrl + V</b> (pegar).'],
-        helpEs: ['¿El archivo está abierto? Ciérralo primero en Word. Los archivos abiertos no se pueden renombrar.', '¿Detrás del nombre pone «.docx»? Déjalo y cambia solo la parte de delante.', '¿No encuentras el archivo? Mira primero en «Deutsch» y en «Informatik».'],
+        stepsEs: ['En el explorador, ve a <b>OneDrive › Schule</b>. Haz allí la carpeta <b>Deutsch</b>.', 'Abre la carpeta <b>Informatik</b>. Haz clic en el archivo <b>Informatik_Uebung</b>. Presiona <b>F2</b> y escribe <b>Deutsch_Uebung</b>. Enter.', '¡Uy, ahora el archivo está en la carpeta equivocada! Presiona <b>Ctrl + X</b> (cortar).', 'Abre la carpeta <b>Deutsch</b>. Presiona <b>Ctrl + V</b> (pegar).'],
+        helpEs: ['¿El archivo está abierto? Ciérralo primero en Word. Los archivos abiertos no se pueden renombrar.', '¿Detrás del nombre dice «.docx»? Déjalo y cambia solo la parte de delante.', '¿No encuentras el archivo? Mira primero en «Deutsch» y en «Informatik».'],
         proofEs: 'Deutsch_Uebung está en la carpeta Deutsch y ya no en la carpeta Informatik.' },
       k1_m4: { qEs: 'Misión M4: Reto ¡a ordenar!', linkTextEs: '📥 Descargar «Chaos-Ordner»',
-        stepsEs: ['Toca arriba en <b>📥 Descargar «Chaos-Ordner»</b>.', 'En el explorador, en <b>Downloads</b>: clic derecho en <b>Chaos-Ordner.zip</b> › <b>Alle extrahieren</b> › Extrahieren.', 'Mueve la carpeta <b>Chaos-Ordner</b> a <b>OneDrive › Schule</b> (Ctrl + X, Ctrl + V).', 'En <b>Schule</b> haz las carpetas que faltan: <b>Englisch</b>, <b>RZG</b>, <b>BG</b> (Deutsch e Informatik ya las tienes).', 'En el Chaos-Ordner abre cada archivo un momento: arriba pone de qué trata. Ciérralo otra vez.', 'Dale a cada archivo un <b>buen nombre</b> (F2), por ejemplo <b>Deutsch_Aufsatz_Ferientag</b>.', 'Mueve cada archivo a la <b>carpeta correcta</b> (Ctrl + X, Ctrl + V). Un archivo está dos veces: borra la copia.', 'Al final el Chaos-Ordner está vacío: <b>bórralo</b>. Borra también <b>Chaos-Ordner.zip</b> en Downloads.'],
-        helpEs: ['¿El archivo no se deja renombrar? Ciérralo primero (cierra Word, Excel o la ventana de la imagen).', 'Un buen nombre tiene asignatura y tema: Englisch_Woerter_Unit2, RZG_Skizze_Vulkan …', 'La terminación (.docx, .pdf, .jpg) la dejas.', '¿Cuál es la copia? El archivo que empieza con «Kopie von».'],
+        stepsEs: ['Toca arriba en <b>📥 Descargar «Chaos-Ordner»</b>.', 'En el explorador, en <b>Downloads</b>: clic derecho en <b>Chaos-Ordner.zip</b> › <b>Alle extrahieren</b> › Extrahieren.', 'Mueve la carpeta <b>Chaos-Ordner</b> a <b>OneDrive › Schule</b> (Ctrl + X, Ctrl + V).', 'En <b>Schule</b> haz las carpetas que faltan: <b>Englisch</b>, <b>RZG</b>, <b>BG</b> (Deutsch e Informatik ya las tienes).', 'En el Chaos-Ordner abre cada archivo un momento: arriba dice de qué trata. Ciérralo otra vez.', 'Dale a cada archivo un <b>buen nombre</b> (F2), por ejemplo <b>Deutsch_Aufsatz_Ferientag</b>.', 'Mueve cada archivo a la <b>carpeta correcta</b> (Ctrl + X, Ctrl + V). Un archivo está dos veces: borra la copia.', 'Al final el Chaos-Ordner está vacío: <b>bórralo</b>. Borra también <b>Chaos-Ordner.zip</b> en Downloads.'],
+        helpEs: ['¿El archivo no se deja renombrar? Ciérralo primero (cierra Word, Excel o la ventana de la imagen).', 'Un buen nombre tiene asignatura y tema: Englisch_Woerter_Unit2, RZG_Skizze_Vulkan …', 'La extensión (.docx, .pdf, .jpg) la dejas.', '¿Cuál es la copia? El archivo que empieza con «Kopie von».'],
         proofEs: 'En Deutsch hay 3 archivos más, en Englisch 3, en RZG 2, en Informatik 2, en BG 1. Todos con la asignatura en el nombre. Ya no hay Chaos-Ordner.' },
       k2_dl: { qEs: 'Descargas un archivo de internet. ¿Dónde lo encuentras casi siempre?',
         optsEs: ['En la carpeta Downloads', 'En OneDrive', 'En la papelera', 'En Teams'],
@@ -530,7 +530,7 @@
         whyNotEs: [null, 'Eso deshace algo.', 'Eso cierra la ventana.', 'Eso imprime.'],
         tipEs: 'S de «screenshot» (captura). Además la tecla Windows ⊞ y la tecla de mayúsculas ⇧.', whyEs: 'Windows + Shift + S, después marcas una zona con el ratón.' },
       k2_wo: { qEs: 'Ya hiciste la captura. ¿Cómo llega a tu documento de Word?',
-        optsEs: ['Clic en el documento, Ctrl + V', 'Ya está dentro automáticamente', 'Pulsar Ctrl + P', 'Reiniciar el portátil'],
+        optsEs: ['Clic en el documento, Ctrl + V', 'Ya está dentro automáticamente', 'Presionar Ctrl + P', 'Reiniciar el portátil'],
         whyNotEs: [null, 'Primero la tienes que pegar.', 'Eso imprime.', 'Entonces la captura se pierde.'],
         tipEs: 'La captura está en el portapapeles, como algo copiado. ¿Cómo pegas algo copiado?', whyEs: 'La captura está en el portapapeles. Con Ctrl + V la pegas.' },
       k2_abgeben: { qEs: 'En Teams añadiste tu archivo a la tarea. Pero tu profe todavía no lo ve. ¿Qué falta?',
@@ -544,17 +544,17 @@
         tipEs: 'Primero buscas la tarea. Entregar va al final de todo.' },
       k2_gap: { textEs: 'Los archivos descargados van primero a la carpeta ___.', tipEs: 'Descargar en inglés se dice …', whyEs: 'La carpeta se llama Downloads.' },
       k2_m4: { qEs: 'Misión M5: Descargar y ordenar', linkTextEs: '📥 Descargar la plantilla',
-        stepsEs: ['Toca arriba en <b>📥 Descargar la plantilla</b>.', 'Abre el explorador. Haz clic a la izquierda en <b>Downloads</b>. ¿Encuentras <b>Lektion2_Vorlage</b>?', 'Haz clic en ella. Pulsa <b>Ctrl + X</b>.', 'Abre <b>OneDrive › Schule › Informatik</b>. Pulsa <b>Ctrl + V</b>.'],
+        stepsEs: ['Toca arriba en <b>📥 Descargar la plantilla</b>.', 'Abre el explorador. Haz clic a la izquierda en <b>Downloads</b>. ¿Encuentras <b>Lektion2_Vorlage</b>?', 'Haz clic en ella. Presiona <b>Ctrl + X</b>.', 'Abre <b>OneDrive › Schule › Informatik</b>. Presiona <b>Ctrl + V</b>.'],
         helpEs: ['¿El navegador pregunta si quieres conservar el archivo? Haz clic en «Behalten» (conservar).', '¿No hay nada en Downloads? En el navegador, arriba a la derecha, haz clic en la flecha ⬇ y después en «In Ordner anzeigen».'],
         proofEs: 'La plantilla está en Informatik y ya no en Downloads.' },
       k2_m5: { qEs: 'Misión M6: Pegar una captura de pantalla',
-        stepsEs: ['Deja abierto el explorador con la carpeta <b>Informatik</b>.', 'Pulsa <b>Windows + Shift + S</b>. Con el ratón marca un rectángulo alrededor de la ventana del explorador.', 'Abre la <b>Lektion2_Vorlage</b> (doble clic). Haz clic en la línea vacía debajo de «Mein Screenshot».', 'Pulsa <b>Ctrl + V</b>. Guarda con <b>Ctrl + S</b>.'],
+        stepsEs: ['Deja abierto el explorador con la carpeta <b>Informatik</b>.', 'Presiona <b>Windows + Shift + S</b>. Con el ratón marca un rectángulo alrededor de la ventana del explorador.', 'Abre la <b>Lektion2_Vorlage</b> (doble clic). Haz clic en la línea vacía debajo de «Mein Screenshot».', 'Presiona <b>Ctrl + V</b>. Guarda con <b>Ctrl + S</b>.'],
         helpEs: ['¿No pasa nada después de Ctrl + V? Haz la captura otra vez y después haz clic primero en el documento.', '¿La imagen es enorme? Haz clic en ella y tira de una esquina.'],
         proofEs: 'En la plantilla ahora hay una imagen de tu carpeta Informatik.' },
       k2_m6: { qEs: 'Misión M7: Entregar en Teams',
-        stepsEs: ['Cierra Word. Abre <b>Teams</b> y haz clic en <b>Aufgaben</b> (tareas).', 'Haz clic en la tarea «Computer-Grundlagen».', 'Haz clic en <b>+ Arbeit hinzufügen</b>. Elige en OneDrive › Schule › Informatik la <b>Lektion2_Vorlage</b>.', 'Haz clic en <b>Abgeben</b>. ¿Ahora pone «Abgegeben» (entregado)?'],
+        stepsEs: ['Cierra Word. Abre <b>Teams</b> y haz clic en <b>Aufgaben</b> (tareas).', 'Haz clic en la tarea «Computer-Grundlagen».', 'Haz clic en <b>+ Arbeit hinzufügen</b>. Elige en OneDrive › Schule › Informatik la <b>Lektion2_Vorlage</b>.', 'Haz clic en <b>Abgeben</b>. ¿Ahora dice «Abgegeben» (entregado)?'],
         helpEs: ['¿No encuentras la tarea? Pregunta a tu profe.', '¿Entregaste el archivo equivocado? Haz clic en «Abgabe rückgängig machen» y hazlo otra vez.'],
-        proofEs: 'En Teams, en la tarea, pone: Abgegeben ✔' }
+        proofEs: 'En Teams, en la tarea, dice: Abgegeben ✔' }
     };
     Object.values(ITEMS).flat().forEach(it => Object.assign(it, ITEMS_ES[it.id] || {}));
     const EX_ES = {
@@ -566,7 +566,7 @@
       move: 'Ctrl + X corta, como unas tijeras. Ctrl + C copia: entonces el archivo está dos veces. Ctrl + V pega en el lugar nuevo.',
       ordner: 'Carpeta nueva: en el explorador, arriba «+ Neu» › «Ordner», escribir el nombre, Enter.',
       f2: 'Cambiar el nombre: clic en el archivo, tecla F2, escribir el nombre nuevo, Enter.',
-      zip: 'Un archivo ZIP es un paquete con varios archivos. Para abrirlo: clic derecho › «Alle extrahieren».',
+      zip: 'Un archivo ZIP es un paquete con varios archivos. Para extraerlo: clic derecho › «Alle extrahieren».',
       downloads: 'Lo que descargas de internet va a la carpeta «Downloads».',
       platz: 'Mueve lo importante a OneDrive y borra lo viejo en Downloads. Así queda espacio en el portátil.',
       shot: 'Captura: Windows + Shift + S, después marca un rectángulo con el ratón. La imagen está en el portapapeles.',
@@ -1036,7 +1036,7 @@
         if (it.type === 'sort') body = `<div class="text-base text-slate-800">${tr('Schau die Zeilen an: Die richtige Antwort ist grün.', 'Mira las filas: la respuesta correcta está en verde.')}</div>`;
         if (it.type === 'order') body = `<div class="text-base text-slate-800">${tr('So ist die richtige Reihenfolge:', 'Este es el orden correcto:')}</div><ol class="list-decimal pl-5 text-base text-slate-800 space-y-0.5">${L(it, 'steps').map(s => `<li>${esc(s)}</li>`).join('')}</ol>`;
         if (it.type === 'gap') body = `<div class="text-base text-slate-800">${tr('Richtig ist:', 'Lo correcto es:')} <b>${esc(L(it, 'a')[0])}</b>${L(it, 'also') ? ` <span class="text-sm text-slate-600">(${esc(L(it, 'also'))})</span>` : ''}</div>${Q.ans && !Q.dontKnow ? `<div class="text-sm text-slate-600 wrap-any">${tr('Deine Antwort:', 'Tu respuesta:')} ${esc(Q.ans)}</div>` : ''}`;
-        if (it.type === 'open') { title = tr('Gut, dass du ehrlich bist.', '¡Qué bien que seas sincero!'); body = `<div class="text-base text-slate-700">${tr('Lies die Musterlösung nochmals. Die Frage kommt später wieder.', 'Lee otra vez la respuesta modelo. La pregunta vuelve a salir más tarde.')}</div>`; }
+        if (it.type === 'open') { title = tr('Gut, dass du ehrlich bist.', '¡Qué bien que lo digas con sinceridad!'); body = `<div class="text-base text-slate-700">${tr('Lies die Musterlösung nochmals. Die Frage kommt später wieder.', 'Lee otra vez la respuesta modelo. La pregunta vuelve a salir más tarde.')}</div>`; }
         if (it.why) body += `<div class="text-base text-slate-700">💡 ${esc(L(it, 'why'))}</div>`;
         body += `<div class="text-sm text-slate-600">${Q.review ? tr('Vergessen ist normal. Du übst es gleich nochmals.', 'Olvidar es normal. Enseguida lo practicas otra vez.') : tr('Fehler kosten nichts: Diese Aufgabe kommt bald nochmals.', 'Los errores no cuestan nada: esta tarea vuelve a salir pronto.')}</div>`;
       }
@@ -1188,7 +1188,7 @@
         </div>`;
       const homeBtn = `<button type="button" onclick="switchTab('home')" class="${BTN_SOFT}">${tr('🏠 Zur Übersicht', '🏠 Al resumen')}</button>`;
       if (Q.phase === 'etappe') {
-        box.innerHTML = celebrate('🎉', tr('Etappe geschafft!', '¡Etapa lograda!'), tr(`Du hast ${SESSION.answers} Aufgaben gemacht. Dieser Teil ist schon zu <b>${pctOf(pid)} %</b> geschafft. Weiter oder Pause?`, `Hiciste ${SESSION.answers} tareas. Esta parte ya está lograda en un <b>${pctOf(pid)} %</b>. ¿Sigues o haces una pausa?`),
+        box.innerHTML = celebrate('🎉', tr('Etappe geschafft!', '¡Etapa lograda!'), tr(`Du hast ${SESSION.answers} Aufgaben gemacht. Dieser Teil ist schon zu <b>${pctOf(pid)} %</b> geschafft. Weiter oder Pause?`, `Hiciste ${SESSION.answers} tareas. Ya llevas el <b>${pctOf(pid)} %</b> de esta parte. ¿Sigues o haces una pausa?`),
           `<button type="button" onclick="pausePart('${pid}')" class="${BTN_SOFT}">${tr('Für heute fertig', 'Listo por hoy')}</button><button type="button" id="next-btn" onclick="continuePart('${pid}')" class="${BTN_MAIN}">${tr('Weiter üben →', 'Seguir practicando →')}</button>`, 'sky');
       } else if (Q.phase === 'pause') {
         box.innerHTML = celebrate('👍', tr('Super gemacht!', '¡Muy bien hecho!'), tr('Dein Fortschritt ist gespeichert. Komm morgen wieder: 10 Minuten reichen.', 'Tu progreso está guardado. Vuelve mañana: 10 minutos bastan.'),
