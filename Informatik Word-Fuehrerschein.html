@@ -44,7 +44,8 @@
 </head>
 <body class="bg-stone-100 text-slate-800 min-h-screen flex flex-col antialiased">
 
-  <!-- Kopf (Spanisch kommt erst nach der Freigabe der deutschen Fassung) -->
+
+  <!-- Kopf -->
   <header class="sticky top-0 z-40 bg-gradient-to-r from-indigo-700 via-indigo-600 to-violet-500 text-white shadow-md">
     <div class="max-w-3xl mx-auto px-4 py-2.5 flex items-center gap-3">
       <a href="index.html" class="text-2xl p-2 bg-white/15 rounded-2xl shrink-0" title="Zur Startseite">📝</a>
@@ -980,7 +981,7 @@
       return `<span class="${size} tracking-tight" aria-label="${n} ${tr('von 3 Sternen', 'de 3 estrellas')}">${[0, 1, 2].map(k => k < n ? '⭐' : '<span class="opacity-25 grayscale">⭐</span>').join('')}</span>`;
     }
     const pctOf = pid => Math.round(TASKS[pid].score() / TASKS[pid].max * 100);
-    const nrText = it => `📄 ${it.type === 'mission' ? 'Mission' : 'zu Mission'} ${it.nr.join(' + ')}`;
+    const nrText = it => `📄 ${it.type === 'mission' ? tr('Mission', 'Misión') : tr('zu Mission', 'para misión')} ${it.nr.join(' + ')}`;
 
     function renderHeader() {
       $('star-count').textContent = totalStars();
@@ -1017,14 +1018,14 @@
           <div class="flex items-start gap-3">
             <span class="text-3xl w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center shrink-0">${m ? '🏅' : p.emoji}</span>
             <div class="min-w-0 flex-1">
-              <div class="text-xs font-bold uppercase tracking-wider text-indigo-700">${tr('Teil', 'Parte')} ${i + 1} · ${p.lz}</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-indigo-700">${tr('Teil', 'Parte')} ${i + 1} · ${L(p, 'lz')}</div>
               <div class="text-lg font-black text-slate-900 leading-tight">${L(p, 'title')}</div>
               <div class="text-sm text-slate-500 leading-snug">${L(p, 'sub')}</div>
             </div>
           </div>
           <div class="flex items-center justify-between gap-2 flex-wrap">${starsHtml(st)}${badge}</div>
           ${bar(pct, 'h-3')}
-          <div class="text-xs text-slate-500">📄 Missionen ${p.nrs}</div>
+          <div class="text-xs text-slate-500">📄 ${tr('Missionen', 'Misiones')} ${p.nrs}</div>
         </button>`;
       }).join('');
     }
@@ -1058,7 +1059,7 @@
         title = STREAK >= 5 && STREAK % 5 === 0 ? tr(`🔥 ${STREAK} richtig hintereinander!`, `🔥 ¡${STREAK} correctas seguidas!`) : Q.praise;
         if (it.type === 'gap' && Q.near) body = `<div class="text-base text-slate-700">${tr('So schreibt man es:', 'Se escribe así:')} <b>${esc(Q.form || L(it, 'a')[0])}</b></div>`;
         if (it.type === 'open') body = `<div class="text-base text-slate-700">${tr('Gut erklärt! Das hilft dir im Test.', '¡Bien explicado! Esto te ayuda en el examen.')}</div>`;
-        if (it.type === 'mission') { title = `🎉 Mission ${esc(it.nr.join(' + '))} geschafft!`; body = `<div class="text-base text-slate-700">Stark, das hast du am echten Laptop gemacht! Hake die Mission auf deinem <b>Blatt</b> ab ✔. Dann tippe auf «Weiter».</div>`; }
+        if (it.type === 'mission') { title = tr(`🎉 Mission ${esc(it.nr.join(' + '))} geschafft!`, `🎉 ¡Misión ${esc(it.nr.join(' + '))} cumplida!`); body = `<div class="text-base text-slate-700">${tr('Stark, das hast du am echten Laptop gemacht! Hake die Mission auf deinem <b>Blatt</b> ab ✔. Dann tippe auf «Weiter».', '¡Genial, lo hiciste en el portátil de verdad! Marca la misión en tu <b>hoja</b> ✔. Después toca «Seguir».')}</div>`; }
       } else {
         title = Q.dontKnow ? tr('Kein Problem. So ist es richtig:', 'No pasa nada. Así es correcto:') : tr('Noch nicht ganz.', 'Todavía no del todo.');
         if (it.type === 'mc') body = `<div class="text-base text-slate-800">${tr('Richtig ist:', 'Lo correcto es:')} <b>${it.picOpts ? esc(L(it, 'right')) : esc(L(it, 'opts')[0])}</b></div>`;
@@ -1189,17 +1190,17 @@
       }
       if (it.type === 'mission') {
         const ticks = STATE.ticks[it.id] || [], left = it.steps.filter((_, i) => !ticks[i]).length;
-        if (it.link && !done) h += `<a href="${it.link}" download class="mb-3 flex items-center justify-center gap-2 w-full min-h-[52px] px-4 rounded-2xl border-2 border-indigo-300 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 text-base font-black">${esc(it.linkText || '📥 Vorlage herunterladen')}</a>`;
-        h += `<ol class="space-y-2">${it.steps.map((st, i) => {
+        if (it.link && !done) h += `<a href="${it.link}" download class="mb-3 flex items-center justify-center gap-2 w-full min-h-[52px] px-4 rounded-2xl border-2 border-indigo-300 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 text-base font-black">${esc(L(it, 'linkText') || tr('📥 Vorlage herunterladen', '📥 Descargar la plantilla'))}</a>`;
+        h += `<ol class="space-y-2">${L(it, 'steps').map((st, i) => {
           const on = done || !!ticks[i];
           return `<li><button type="button" onclick="missionTick('${pid}',${i})" ${done ? 'disabled' : ''} aria-pressed="${on}" class="w-full min-h-[56px] flex items-start gap-3 text-left rounded-2xl border-2 px-3 py-3 ${on ? 'border-emerald-400 bg-emerald-50' : 'border-slate-300 bg-white hover:border-indigo-400'}"><span class="w-8 h-8 shrink-0 rounded-lg border-2 ${on ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300 bg-white text-slate-500'} flex items-center justify-center text-base font-black">${on ? '✓' : i + 1}</span><span class="text-base text-slate-800 leading-snug wrap-any pt-1">${st}</span></button></li>`;
         }).join('')}</ol>`;
-        if (it.proof) h += !left || done ? `<div class="mt-3 rounded-2xl border-2 border-sky-300 bg-sky-50 px-4 py-2.5 text-base text-slate-800 pop"><b>🔍 Schau nach:</b> ${esc(it.proof)}</div>` : `<div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-base text-slate-600">🔍 ${esc(it.proof)}</div>`;
+        if (it.proof) h += !left || done ? `<div class="mt-3 rounded-2xl border-2 border-sky-300 bg-sky-50 px-4 py-2.5 text-base text-slate-800 pop"><b>${tr('🔍 Schau nach:', '🔍 Comprueba:')}</b> ${esc(L(it, 'proof'))}</div>` : `<div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-base text-slate-600">🔍 ${esc(L(it, 'proof'))}</div>`;
         if (!done) {
-          if (Q.help.tip) h += `<div id="help-1" class="mt-3 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 space-y-1.5">${it.help.map(x => `<div class="text-base text-slate-800">💡 ${esc(x)}</div>`).join('')}<div class="text-base text-slate-700 font-semibold">🙋 Immer noch nicht? Frag deine Banknachbarin, deinen Banknachbarn oder die Lehrperson. Das ist völlig okay.</div></div>`;
-          h += left ? `<div class="mt-3 w-full min-h-[52px] px-4 rounded-2xl border-2 border-slate-200 bg-slate-100 text-slate-600 text-base font-bold flex items-center justify-center">Noch ${left} ${left === 1 ? 'Schritt' : 'Schritte'} abhaken</div>`
-            : `<button type="button" onclick="missionDone('${pid}')" class="mt-3 w-full min-h-[56px] px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-black shadow-sm pop">✔ Mission geschafft!</button>`;
-          h += `<button type="button" onclick="missionHelp('${pid}')" class="mt-2 w-full ${BTN_SOFT}">${Q.help.tip ? 'Hilfe zuklappen' : '🆘 Ich komme nicht weiter'}</button>`;
+          if (Q.help.tip) h += `<div id="help-1" class="mt-3 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 space-y-1.5">${L(it, 'help').map(x => `<div class="text-base text-slate-800">💡 ${esc(x)}</div>`).join('')}<div class="text-base text-slate-700 font-semibold">${tr('🙋 Immer noch nicht? Frag deine Banknachbarin, deinen Banknachbarn oder die Lehrperson. Das ist völlig okay.', '🙋 ¿Todavía no? Pregunta a tu compañera, a tu compañero o a tu profe. No pasa nada.')}</div></div>`;
+          h += left ? `<div class="mt-3 w-full min-h-[52px] px-4 rounded-2xl border-2 border-slate-200 bg-slate-100 text-slate-600 text-base font-bold flex items-center justify-center">${tr(`Noch ${left} ${left === 1 ? 'Schritt' : 'Schritte'} abhaken`, `Faltan ${left} ${left === 1 ? 'paso' : 'pasos'} por marcar`)}</div>`
+            : `<button type="button" onclick="missionDone('${pid}')" class="mt-3 w-full min-h-[56px] px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-black shadow-sm pop">${tr('✔ Mission geschafft!', '✔ ¡Misión cumplida!')}</button>`;
+          h += `<button type="button" onclick="missionHelp('${pid}')" class="mt-2 w-full ${BTN_SOFT}">${Q.help.tip ? tr('Hilfe zuklappen', 'Cerrar la ayuda') : tr('🆘 Ich komme nicht weiter', '🆘 No sé seguir')}</button>`;
         }
       }
       return h;
@@ -1228,7 +1229,7 @@
         box.innerHTML = celebrate('⭐', tr(`Stufe ${k} geschafft!`, `¡Nivel ${k} logrado!`), tr(`Du bekommst einen Stern. Jetzt kommt <b>Stufe ${k + 1}: ${STAGES[k].label}</b>. ${STAGES[k].intro}`, `Recibes una estrella. Ahora viene el <b>nivel ${k + 1}: ${STAGES[k].labelEs}</b>. ${STAGES[k].introEs}`),
           `${homeBtn}<button type="button" id="next-btn" onclick="continuePart('${pid}')" class="${BTN_MAIN}">${tr(`Weiter zu Stufe ${k + 1} →`, `Al nivel ${k + 1} →`)}</button>`);
       } else if (Q.phase === 'partDone') {
-        box.innerHTML = celebrate('🏅', tr('Teil gemeistert!', '¡Parte dominada!'), `${starsHtml(3, 'text-2xl')}<br>${`Du hast die Missionen ${p.nrs} geschafft. Morgen kommen 4 Aufgaben zum Wiederholen. So bleibt es im Kopf.`}`,
+        box.innerHTML = celebrate('🏅', tr('Teil gemeistert!', '¡Parte dominada!'), `${starsHtml(3, 'text-2xl')}<br>${tr(`Du hast die Missionen ${p.nrs} geschafft. Morgen kommen 4 Aufgaben zum Wiederholen. So bleibt es im Kopf.`, `Cumpliste las misiones ${p.nrs}. Mañana vienen 4 tareas para repasar. Así no se olvida.`)}`,
           `${homeBtn}${nextP ? `<button type="button" id="next-btn" onclick="switchTab('${nextP.id}')" class="${BTN_MAIN}">${tr('Weiter zu Teil', 'A la parte')} ${PARTS.indexOf(nextP) + 1} →</button>` : `<button type="button" id="next-btn" onclick="switchTab('home')" class="${BTN_MAIN}">${tr('Fertig', 'Terminado')} 🏆</button>`}`);
       } else if (Q.phase === 'reviewDone') {
         const s = PS(pid);
@@ -1244,8 +1245,8 @@
       } else {
         const it = BY_ID[Q.id], st = STAGES[it.st - 1];
         const hint = tr({ mc: 'Tippe auf die richtige Antwort.', tap: 'Tippe im Bild auf die richtige Stelle.', sort: 'Tippe bei jeder Zeile die passende Antwort an.', order: 'Tippe die Sätze in der richtigen Reihenfolge an.', gap: 'Schreib das fehlende Wort.', open: 'Erkläre in eigenen Worten.', mission: 'Mach es am Laptop. Hake jeden Schritt ab, wenn du ihn gemacht hast.' },
-          { mc: 'Toca la respuesta correcta.', tap: 'Toca el lugar correcto en la imagen.', sort: 'Toca en cada fila la respuesta que corresponde.', order: 'Toca las frases en el orden correcto.', gap: 'Escribe la palabra que falta.', open: 'Explica con tus propias palabras.' })[it.type];
-        const verb = tr({ mc: 'Tippe', tap: 'Tippe', sort: 'Tippe', order: 'Tippe', gap: 'Schreib', open: 'Erkläre', mission: 'Mach' }, { mc: 'Toca', tap: 'Toca', sort: 'Toca', order: 'Toca', gap: 'Escribe', open: 'Explica' })[it.type];
+          { mc: 'Toca la respuesta correcta.', tap: 'Toca el lugar correcto en la imagen.', sort: 'Toca en cada fila la respuesta que corresponde.', order: 'Toca las frases en el orden correcto.', gap: 'Escribe la palabra que falta.', open: 'Explica con tus propias palabras.', mission: 'Hazlo en el portátil. Marca cada paso cuando lo hayas hecho.' })[it.type];
+        const verb = tr({ mc: 'Tippe', tap: 'Tippe', sort: 'Tippe', order: 'Tippe', gap: 'Schreib', open: 'Erkläre', mission: 'Mach' }, { mc: 'Toca', tap: 'Toca', sort: 'Toca', order: 'Toca', gap: 'Escribe', open: 'Explica', mission: 'Hazlo' })[it.type];
         const rest = it.type === 'gap' ? '' : esc(L(it, 'q') || '');
         let html = `
           <div class="flex items-center justify-between gap-2 text-xs font-bold text-slate-500 mb-2">
@@ -1260,9 +1261,9 @@
           html += `
             <div class="mt-3 flex flex-wrap gap-2">
               <button type="button" onclick="toggleTip('${pid}')" class="${BTN_SMALL} ${Q.tip ? 'bg-yellow-100' : 'bg-yellow-50'} border-yellow-300 text-yellow-900">${tr('💡 Tipp', '💡 Pista')}</button>
-              <button type="button" onclick="${it.ex ? `toggleEx('${pid}')` : 'openTheory()'}" class="${BTN_SMALL} ${Q.ex ? 'bg-sky-100 border-sky-300' : 'bg-white border-slate-300'} text-slate-700">📖 Kurz erklärt</button>
+              <button type="button" onclick="${it.ex ? `toggleEx('${pid}')` : 'openTheory()'}" class="${BTN_SMALL} ${Q.ex ? 'bg-sky-100 border-sky-300' : 'bg-white border-slate-300'} text-slate-700">${tr('📖 Kurz erklärt', '📖 Explicado en breve')}</button>
             </div>
-            ${Q.ex && it.ex ? `<div id="ex-box" class="mt-2 rounded-2xl border border-sky-200 bg-sky-50 p-3 text-base text-slate-800 leading-relaxed">📖 ${esc(EX[it.ex])} <button type="button" onclick="openTheory()" class="ml-1 text-sm font-semibold text-sky-800 underline underline-offset-2">Alles lesen</button></div>` : ''}
+            ${Q.ex && it.ex ? `<div id="ex-box" class="mt-2 rounded-2xl border border-sky-200 bg-sky-50 p-3 text-base text-slate-800 leading-relaxed">📖 ${esc((LANG === 'es' && typeof EX_ES !== 'undefined' && EX_ES[it.ex]) || EX[it.ex])} <button type="button" onclick="openTheory()" class="ml-1 text-sm font-semibold text-sky-800 underline underline-offset-2">${tr('Alles lesen', 'Leer todo')}</button></div>` : ''}
             ${Q.tip ? `<div id="tip-box" class="mt-2 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 text-base text-slate-800 leading-relaxed">💡 ${esc(L(it, 'tip'))}</div>` : ''}
             <button type="button" onclick="dontKnow('${pid}')" class="${DUNNO_BTN}">${tr('🤷 Weiss ich nicht', '🤷 No lo sé')}</button>`;
         } else if (Q.phase === 'ask') {
