@@ -261,59 +261,59 @@
     const ITEMS = {
       // ---------- Teil 1: Dateien & OneDrive (Lektion 1, M1–M3) ----------
       k1: [
-        { id: 'k1_wo', st: 1, nr: ['M1'], type: 'mc', first: true, q: 'Dein Laptop hat wenig Speicher. Wo speicherst du deine Schularbeiten?',
+        { id: 'k1_wo', ex: 'onedrive', st: 1, nr: ['M1'], type: 'mc', first: true, q: 'Dein Laptop hat wenig Speicher. Wo speicherst du deine Schularbeiten?',
           opts: ['In OneDrive', 'Auf dem Desktop', 'Im Papierkorb', 'Im Ordner Downloads'],
           whyNot: [null, 'Das braucht Platz auf dem Laptop.', 'Dort wird gelöscht.', 'Dort landet, was du herunterlädst.'],
           tip: 'Was ist dein Speicher im Office-Konto, in der Cloud?',
           why: 'OneDrive speichert in der Cloud. Das braucht kaum Platz auf dem Laptop.' },
-        { id: 'k1_icon', st: 1, nr: ['M1'], type: 'mc', picOpts: true, right: 'die Wolke', q: 'Welches Zeichen gehört zu OneDrive?',
+        { id: 'k1_icon', ex: 'onedrive', st: 1, nr: ['M1'], type: 'mc', picOpts: true, right: 'die Wolke', q: 'Welches Zeichen gehört zu OneDrive?',
           opts: ['cloud', 'folder', 'trash', 'download'],
           whyNot: [null, 'Das ist ein normaler Ordner.', 'Das ist der Papierkorb.', 'Das ist der Pfeil für Downloads.'],
           tip: 'OneDrive speichert «in der Cloud». Was heisst «cloud» auf Deutsch?',
           why: 'OneDrive hat eine blaue Wolke als Zeichen.' },
-        { id: 'k1_pfad', st: 1, nr: ['M1'], type: 'mc', pic: 'explorer', q: 'Schau oben die Zeile mit den Pfeilen › an. Wo liegt die Datei «Steckbrief»?',
+        { id: 'k1_pfad', ex: 'pfad', st: 1, nr: ['M1'], type: 'mc', pic: 'explorer', q: 'Schau oben die Zeile mit den Pfeilen › an. Wo liegt die Datei «Steckbrief»?',
           opts: ['Im Ordner Informatik, und der liegt im Ordner Schule', 'Im Ordner Schule, und der liegt im Ordner Informatik', 'Auf dem Desktop', 'Im Ordner Downloads'],
           whyNot: [null, 'Lies die Zeile von links nach rechts.', 'Oben steht nicht Desktop.', 'Downloads steht nur links in der Liste.'],
           tip: 'Lies die Zeile oben von links nach rechts: zuerst der grosse Ordner, dann der Ordner darin.',
           why: 'OneDrive › Schule › Informatik: Der Ordner Informatik liegt im Ordner Schule.' },
-        { id: 'k1_name', st: 1, nr: ['M2'], type: 'mc', q: 'Welcher Dateiname ist am besten?',
+        { id: 'k1_name', ex: 'name', st: 1, nr: ['M2'], type: 'mc', q: 'Welcher Dateiname ist am besten?',
           opts: ['Informatik_Steckbrief', 'Dokument1', 'neu neu final 2', 'asdfgh'],
           whyNot: [null, 'Später weisst du nicht, was drin ist.', 'Welches ist dann das richtige?', 'Daraus versteht niemand etwas.'],
           tip: 'In einem Monat suchst du die Datei. Welcher Name sagt dir sofort Fach und Thema?',
           why: 'Ein guter Name sagt Fach und Thema.' },
-        { id: 'k1_unter', st: 1, nr: ['M2'], type: 'mc', q: 'Du willst selber wählen, wo die Datei hinkommt und wie sie heisst. Was klickst du?',
+        { id: 'k1_unter', ex: 'speichern', st: 1, nr: ['M2'], type: 'mc', q: 'Du willst selber wählen, wo die Datei hinkommt und wie sie heisst. Was klickst du?',
           opts: ['Speichern unter', 'Speichern', 'Drucken', 'Schliessen'],
           whyNot: [null, 'Das behält Name und Ort.', 'Das macht ein Blatt Papier.', 'Dann ist die Datei zu.'],
           tip: 'Es gibt zwei Arten zu speichern. Bei welcher fragt der Computer «wohin?» und «welcher Name?»?',
           why: '«Speichern unter»: Du wählst Ordner und Namen.' },
-        { id: 'k1_word', st: 1, nr: ['M2'], type: 'mc', q: 'Welche Datei ist ein Word-Dokument?',
+        { id: 'k1_word', ex: 'endung', st: 1, nr: ['M2'], type: 'mc', q: 'Welche Datei ist ein Word-Dokument?',
           opts: ['Steckbrief.docx', 'Steckbrief.pdf', 'Steckbrief.jpg', 'Steckbrief.xlsx'],
           whyNot: [null, 'Das ist ein PDF.', 'Das ist ein Bild.', 'Das ist eine Excel-Tabelle.'],
           tip: 'Schau auf die Buchstaben nach dem Punkt. «doc» heisst Dokument.',
           why: '.docx ist die Endung von Word.' },
-        { id: 'k1_move', st: 1, nr: ['M3'], type: 'mc', q: 'Du willst eine Datei in einen anderen Ordner verschieben. Welche Tasten nimmst du?',
+        { id: 'k1_move', ex: 'move', st: 1, nr: ['M3'], type: 'mc', q: 'Du willst eine Datei in einen anderen Ordner verschieben. Welche Tasten nimmst du?',
           opts: ['Ctrl + X, dann im neuen Ordner Ctrl + V', 'Ctrl + C, dann im neuen Ordner Ctrl + V', 'Ctrl + Z', 'Ctrl + P'],
           whyNot: [null, 'Dann hast du eine Kopie: Die Datei gibt es zweimal.', 'Das macht etwas rückgängig.', 'Das druckt.'],
-          tip: 'C heisst kopieren. X ist wie eine Schere: ausschneiden.',
+          tip: 'Verschieben heisst: Am alten Ort ist die Datei nachher nicht mehr da.',
           why: 'Ctrl + X schneidet aus, Ctrl + V fügt ein. Dann ist die Datei nur noch im neuen Ordner.' },
-        { id: 'k1_zip', st: 1, nr: ['M4'], type: 'mc', q: 'Du hast «Chaos-Ordner.zip» heruntergeladen. Was ist eine ZIP-Datei?',
+        { id: 'k1_zip', ex: 'zip', st: 1, nr: ['M4'], type: 'mc', q: 'Du hast «Chaos-Ordner.zip» heruntergeladen. Was ist eine ZIP-Datei?',
           opts: ['Ein Paket mit mehreren Dateien darin', 'Ein einzelnes Foto', 'Ein Virus', 'Ein Word-Dokument'],
           whyNot: [null, 'Ein Foto endet mit .jpg oder .png.', 'ZIP ist kein Virus. Aber lade nur Dateien von bekannten Seiten herunter.', 'Word endet mit .docx.'],
           tip: 'Stell dir ein Paket vor, in dem mehrere Sachen eingepackt sind.',
           why: 'Eine ZIP-Datei ist ein Paket. Darin sind mehrere Dateien zusammengepackt.' },
-        { id: 'k1_extr', st: 1, nr: ['M4'], type: 'mc', q: 'Wie packst du eine ZIP-Datei aus, damit du mit den Dateien arbeiten kannst?',
+        { id: 'k1_extr', ex: 'zip', st: 1, nr: ['M4'], type: 'mc', q: 'Wie packst du eine ZIP-Datei aus, damit du mit den Dateien arbeiten kannst?',
           opts: ['Rechtsklick › Alle extrahieren', 'Umbenennen in «Ordner»', 'In den Papierkorb ziehen', 'Ctrl + P'],
           whyNot: [null, 'Ein neuer Name packt nichts aus.', 'Dann ist alles weg.', 'Das druckt.'],
           tip: 'Auspacken heisst am Computer «extrahieren».',
           why: 'Rechtsklick auf die ZIP-Datei › Alle extrahieren. Dann gibt es einen normalen Ordner.' },
-        { id: 'k1_ordner', st: 2, nr: ['M1'], type: 'order', q: 'Du machst in OneDrive einen neuen Ordner. Bring die Schritte in die richtige Reihenfolge.',
+        { id: 'k1_ordner', ex: 'ordner', st: 2, nr: ['M1'], type: 'order', q: 'Du machst in OneDrive einen neuen Ordner. Bring die Schritte in die richtige Reihenfolge.',
           steps: ['Datei-Explorer öffnen (gelber Ordner unten)', 'Links auf «OneDrive» klicken', 'Oben auf «+ Neu» und dann «Ordner» klicken', 'Den Namen schreiben', 'Enter drücken'],
           tip: 'Zuerst musst du den Explorer offen haben. Und der Name kommt, bevor du bestätigst.' },
-        { id: 'k1_endung', st: 2, nr: ['M2'], type: 'sort', q: 'Was für eine Datei ist es? Ordne zu.',
+        { id: 'k1_endung', ex: 'endung', st: 2, nr: ['M2'], type: 'sort', q: 'Was für eine Datei ist es? Ordne zu.',
           rows: [['Ferien.jpg', 'Bild'], ['Brief.docx', 'Word'], ['Noten-Liste.xlsx', 'Excel'], ['Anleitung.pdf', 'PDF']],
           cats: ['Bild', 'Word', 'Excel', 'PDF', 'Video'],
           tip: 'Schau nur auf die Buchstaben nach dem Punkt: doc = Dokument, xls = Tabelle, jpg = Foto.' },
-        { id: 'k1_f2', st: 2, nr: ['M3'], type: 'gap', text: 'Du hast eine Datei angeklickt. Mit der Taste ___ kannst du sie schnell umbenennen.',
+        { id: 'k1_f2', ex: 'f2', st: 2, nr: ['M3'], type: 'gap', text: 'Du hast eine Datei angeklickt. Mit der Taste ___ kannst du sie schnell umbenennen.',
           a: ['F2', 'F 2'], tip: 'Es ist eine Taste ganz oben auf der Tastatur, mit F und einer Zahl.',
           why: 'Datei anklicken, F2 drücken, neuen Namen schreiben, Enter.' },
         { id: 'k1_m1', st: 3, nr: ['M1'], type: 'mission', q: 'Mission M1: Baue deine Ordner',
@@ -335,44 +335,44 @@
       ],
       // ---------- Teil 2: Download, Screenshot, Teams (Lektion 2, M5–M7) ----------
       k2: [
-        { id: 'k2_dl', st: 1, nr: ['M5'], type: 'mc', first: true, q: 'Du lädst eine Datei aus dem Internet herunter. Wo findest du sie meistens?',
+        { id: 'k2_dl', ex: 'downloads', st: 1, nr: ['M5'], type: 'mc', first: true, q: 'Du lädst eine Datei aus dem Internet herunter. Wo findest du sie meistens?',
           opts: ['Im Ordner Downloads', 'In OneDrive', 'Im Papierkorb', 'In Teams'],
           whyNot: [null, 'Dorthin musst du sie zuerst verschieben.', 'Dort landen gelöschte Dateien.', 'Teams speichert keine Downloads.'],
           tip: 'Herunterladen heisst auf Englisch «download».',
           why: 'Heruntergeladene Dateien landen im Ordner Downloads.' },
-        { id: 'k2_wichtig', st: 1, nr: ['M5'], type: 'mc', q: 'Im Ordner Downloads ist eine Datei, die du für die Schule brauchst. Was machst du?',
+        { id: 'k2_wichtig', ex: 'platz', st: 1, nr: ['M5'], type: 'mc', q: 'Im Ordner Downloads ist eine Datei, die du für die Schule brauchst. Was machst du?',
           opts: ['In OneDrive › Schule verschieben', 'Im Ordner Downloads lassen', 'In den Papierkorb ziehen', 'Umbenennen in «Download»'],
           whyNot: [null, 'Dort braucht sie Platz auf dem Laptop.', 'Dann ist sie weg.', 'Dann weisst du nicht, was drin ist.'],
           tip: 'Wo sind deine Schulsachen sicher und brauchen keinen Platz auf dem Laptop?',
           why: 'Wichtiges gehört in OneDrive. Der Ordner Downloads bleibt so leer.' },
-        { id: 'k2_voll', st: 1, nr: ['M5'], type: 'mc', q: 'Dein Laptop meldet: «Speicher fast voll». Was hilft?',
+        { id: 'k2_voll', ex: 'platz', st: 1, nr: ['M5'], type: 'mc', q: 'Dein Laptop meldet: «Speicher fast voll». Was hilft?',
           opts: ['Alte Downloads löschen', 'Mehr Tabs im Browser öffnen', 'Den Bildschirm heller machen', 'Noch ein Spiel installieren'],
           whyNot: [null, 'Tabs brauchen keinen Speicherplatz für Dateien.', 'Das braucht nur Strom.', 'Das braucht noch mehr Platz.'],
           tip: 'Was nimmt Platz weg? Und was kannst du wegwerfen?',
           why: 'Im Ordner Downloads liegt oft viel Altes. Löschen schafft Platz.' },
-        { id: 'k2_shot', st: 1, nr: ['M6'], type: 'mc', q: 'Mit welchen Tasten machst du einen Screenshot von einem Teil des Bildschirms?',
+        { id: 'k2_shot', ex: 'shot', st: 1, nr: ['M6'], type: 'mc', q: 'Mit welchen Tasten machst du einen Screenshot von einem Teil des Bildschirms?',
           opts: ['Windows + Shift + S', 'Ctrl + Z', 'Alt + F4', 'Ctrl + P'],
           whyNot: [null, 'Das macht etwas rückgängig.', 'Das schliesst das Fenster.', 'Das druckt.'],
           tip: 'S wie «Screenshot». Dazu die Windows-Taste ⊞ und die Taste für grosse Buchstaben ⇧.',
           why: 'Windows + Shift + S, dann mit der Maus einen Bereich aufziehen.' },
-        { id: 'k2_wo', st: 1, nr: ['M6'], type: 'mc', q: 'Du hast den Screenshot gemacht. Wie kommt er in dein Word-Dokument?',
+        { id: 'k2_wo', ex: 'shot', st: 1, nr: ['M6'], type: 'mc', q: 'Du hast den Screenshot gemacht. Wie kommt er in dein Word-Dokument?',
           opts: ['Ins Dokument klicken, Ctrl + V', 'Er ist schon automatisch drin', 'Ctrl + P drücken', 'Den Laptop neu starten'],
           whyNot: [null, 'Du musst ihn zuerst einfügen.', 'Das druckt.', 'Dann ist der Screenshot weg.'],
           tip: 'Der Screenshot ist in der Zwischenablage, wie etwas Kopiertes. Wie fügst du Kopiertes ein?',
           why: 'Der Screenshot ist in der Zwischenablage. Mit Ctrl + V fügst du ihn ein.' },
-        { id: 'k2_abgeben', st: 1, nr: ['M7'], type: 'mc', q: 'Du hast in Teams bei der Aufgabe deine Datei angehängt. Die Lehrperson sieht sie aber noch nicht. Was fehlt?',
+        { id: 'k2_abgeben', ex: 'teams', st: 1, nr: ['M7'], type: 'mc', q: 'Du hast in Teams bei der Aufgabe deine Datei angehängt. Die Lehrperson sieht sie aber noch nicht. Was fehlt?',
           opts: ['Auf «Abgeben» klicken', 'Die Datei umbenennen', 'Die Datei nochmals anhängen', 'Teams schliessen'],
           whyNot: [null, 'Der Name ist nicht das Problem.', 'Sie ist schon angehängt.', 'Dann passiert gar nichts.'],
           tip: 'Anhängen ist wie den Brief ins Couvert stecken. Was fehlt noch?',
           why: 'Erst nach «Abgeben» sieht die Lehrperson deine Arbeit.' },
-        { id: 'k2_tasten', st: 2, nr: ['M3', 'M6'], type: 'sort', q: 'Was machen diese Tasten? Ordne zu.',
+        { id: 'k2_tasten', ex: 'tasten', st: 2, nr: ['M3', 'M6'], type: 'sort', q: 'Was machen diese Tasten? Ordne zu.',
           rows: [['Ctrl + C', 'kopieren'], ['Ctrl + V', 'einfügen'], ['Ctrl + Z', 'rückgängig'], ['Windows + Shift + S', 'Screenshot']],
           cats: ['kopieren', 'einfügen', 'rückgängig', 'Screenshot', 'drucken'],
           tip: 'Z steht ganz links unten: «Hoppla, zurück». V liegt neben C: zuerst kopieren, dann einfügen.' },
-        { id: 'k2_teams', st: 2, nr: ['M7'], type: 'order', q: 'Du gibst in Teams eine Aufgabe ab. Bring die Schritte in die richtige Reihenfolge.',
+        { id: 'k2_teams', ex: 'teams', st: 2, nr: ['M7'], type: 'order', q: 'Du gibst in Teams eine Aufgabe ab. Bring die Schritte in die richtige Reihenfolge.',
           steps: ['Teams öffnen und auf «Aufgaben» klicken', 'Die richtige Aufgabe anklicken', 'Auf «+ Arbeit hinzufügen» klicken', 'Die Datei aus OneDrive wählen', 'Auf «Abgeben» klicken'],
           tip: 'Zuerst suchst du die Aufgabe. Abgeben kommt ganz am Schluss.' },
-        { id: 'k2_gap', st: 2, nr: ['M5'], type: 'gap', text: 'Heruntergeladene Dateien landen zuerst im Ordner ___.',
+        { id: 'k2_gap', ex: 'downloads', st: 2, nr: ['M5'], type: 'gap', text: 'Heruntergeladene Dateien landen zuerst im Ordner ___.',
           a: ['Downloads', 'Download'], tip: 'Herunterladen heisst auf Englisch …?',
           why: 'Der Ordner heisst Downloads.' },
         { id: 'k2_m4', st: 3, nr: ['M5'], type: 'mission', q: 'Mission M5: Download holen und aufräumen',
@@ -389,6 +389,23 @@
           help: ['Du findest die Aufgabe nicht? Frag deine Lehrperson.', 'Falsche Datei abgegeben? Klicke auf «Abgabe rückgängig machen» und mach es nochmals.'],
           proof: 'In Teams steht bei der Aufgabe: Abgegeben ✔' }
       ]
+    };
+    // Kurz erklärt: nur der Teil der Theorie, der zu dieser Frage passt (Wunsch Lehrperson 24.11.2026)
+    const EX = {
+      "onedrive": "OneDrive ist dein Speicher in der Cloud (blaue Wolke ☁). Er braucht kaum Platz auf dem Laptop.",
+      "pfad": "Den Pfad liest du von links nach rechts: «OneDrive › Schule › Informatik» heisst, Informatik liegt in Schule.",
+      "name": "Ein guter Dateiname sagt Fach und Thema, z.B. «Deutsch_Aufsatz».",
+      "speichern": "«Speichern unter»: Du wählst Ordner und Namen. «Speichern»: Name und Ort bleiben gleich.",
+      "endung": "Die Buchstaben nach dem Punkt zeigen die Art: .docx Word · .pdf PDF · .jpg Bild · .xlsx Excel.",
+      "move": "Ctrl + X schneidet aus, wie eine Schere. Ctrl + C kopiert: Dann gibt es die Datei zweimal. Ctrl + V fügt am neuen Ort ein.",
+      "ordner": "Neuer Ordner: im Explorer oben «+ Neu» › «Ordner», Namen schreiben, Enter.",
+      "f2": "Umbenennen: Datei anklicken, Taste F2, neuen Namen schreiben, Enter.",
+      "zip": "Eine ZIP-Datei ist ein Paket mit mehreren Dateien. Auspacken: Rechtsklick › «Alle extrahieren».",
+      "downloads": "Was du aus dem Internet herunterlädst, landet im Ordner «Downloads».",
+      "platz": "Wichtiges nach OneDrive verschieben, Altes in Downloads löschen. So bleibt Platz auf dem Laptop.",
+      "shot": "Screenshot: Windows + Shift + S, dann mit der Maus ein Rechteck ziehen. Das Bild ist jetzt in der Zwischenablage.",
+      "tasten": "Ctrl + C kopieren · Ctrl + V einfügen · Ctrl + Z rückgängig · Windows + Shift + S Screenshot.",
+      "teams": "In Teams: Aufgaben › Aufgabe anklicken › «+ Arbeit hinzufügen» › Datei wählen › «Abgeben». Erst nach «Abgeben» sieht die Lehrperson die Arbeit."
     };
     const BANKS = {};
     const BANKS_ES = {};
@@ -752,6 +769,7 @@
     function missionTick(pid, i) { const Q = curQ(pid); if (Q.phase !== 'ask') return; const tk = STATE.ticks[Q.id] = STATE.ticks[Q.id] || []; tk[i] = !tk[i]; save(); renderPart(pid); }   // Häkchen bleiben gespeichert (Wechsel zu Explorer, Word, Teams)
     function missionHelp(pid) { const Q = curQ(pid); if (Q.phase !== 'ask') return; Q.help.tip = !Q.help.tip; renderPart(pid); const b = $('help-1'); if (b) b.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
     function missionDone(pid) { const Q = curQ(pid), it = BY_ID[Q.id]; const tk = STATE.ticks[Q.id] || []; if (Q.phase !== 'ask' || !it.steps.every((_, i) => tk[i])) return; delete STATE.ticks[Q.id]; answer(pid, true); }
+    function toggleEx(pid) { const Q = curQ(pid); Q.ex = !Q.ex; renderPart(pid); const b = $('ex-box'); if (b) b.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
     function toggleTip(pid) { const Q = curQ(pid); Q.tip = !Q.tip; renderPart(pid); if ($('tip-box')) $('tip-box').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
 
     // ==============================================================
@@ -1048,8 +1066,9 @@
           html += `
             <div class="mt-3 flex flex-wrap gap-2">
               <button type="button" onclick="toggleTip('${pid}')" class="${BTN_SMALL} ${Q.tip ? 'bg-yellow-100' : 'bg-yellow-50'} border-yellow-300 text-yellow-900">${tr('💡 Tipp', '💡 Pista')}</button>
-              <button type="button" onclick="openTheory()" class="${BTN_SMALL} bg-white border-slate-300 text-slate-700">${tr('📖 Theorie', '📖 Teoría')}</button>
+              <button type="button" onclick="${it.ex ? `toggleEx('${pid}')` : 'openTheory()'}" class="${BTN_SMALL} ${Q.ex ? 'bg-sky-100 border-sky-300' : 'bg-white border-slate-300'} text-slate-700">📖 Kurz erklärt</button>
             </div>
+            ${Q.ex && it.ex ? `<div id="ex-box" class="mt-2 rounded-2xl border border-sky-200 bg-sky-50 p-3 text-base text-slate-800 leading-relaxed">📖 ${esc(EX[it.ex])} <button type="button" onclick="openTheory()" class="ml-1 text-sm font-semibold text-sky-800 underline underline-offset-2">Alles lesen</button></div>` : ''}
             ${Q.tip ? `<div id="tip-box" class="mt-2 rounded-2xl border border-yellow-300 bg-yellow-50 p-3 text-base text-slate-800 leading-relaxed">💡 ${esc(L(it, 'tip'))}</div>` : ''}
             <button type="button" onclick="dontKnow('${pid}')" class="${DUNNO_BTN}">${tr('🤷 Weiss ich nicht', '🤷 No lo sé')}</button>`;
         } else if (Q.phase === 'ask') {
@@ -1126,7 +1145,7 @@
     // START
     // ==============================================================
     Object.assign(window, { setLang, switchTab, continueLearning, pick, tapZone, choose, checkSort, place, unplace, checkOrder, submitGap, gapHint, bankPick,
-      dontKnow, saveDraft, openHelp, selfRate, toggleTip, nextQ, continuePart, pausePart, startExtra, askReset, cancelReset, doReset, openTheory, backToTask, playAnim, missionTick, missionHelp, missionDone });
+      dontKnow, saveDraft, openHelp, selfRate, toggleTip, nextQ, continuePart, pausePart, startExtra, askReset, cancelReset, doReset, openTheory, backToTask, playAnim, missionTick, missionHelp, missionDone, toggleEx });
     // Kleine Animation auf der Startansicht: nur nach Antippen, danach wieder ruhig
     let animTimer = null;
     function playAnim() {
