@@ -26,7 +26,7 @@ Alles andere liegt in der **privaten Ablage** (siehe unten).
 | `Deutsch Novemberschnee.html` | Deutsch, Lektüre «Novemberschnee» (abgeschlossen: Kachel auf der Startseite entfernt 12.11.2026, Datei bleibt) |
 | `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 (abgeschlossen: Kachel auf der Startseite entfernt 11.11.2026, Datei bleibt) |
 | `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 «Weird and wonderful games» (Wörter-Lernpfad, 3 Grammatik-Lernpfade: Pläne, Adverbien, Wie stark?) |
-| `Informatik Computer-Grundlagen.html` | Informatik, Exkurs Computer-Grundlagen (Windows 11, OneDrive, Teams): Lernpfad in 2 Teilen = 2 Lektionen, Stufe 3 «Am Laptop» mit Missionen M1–M6. Vorschau seit 18.11.2026, Kachel erst nach Freigabe |
+| `Informatik Computer-Grundlagen.html` | Informatik, Exkurs Computer-Grundlagen (Windows 11, OneDrive, Teams): Lernpfad in 2 Teilen = 2 Lektionen, Stufe 3 «Am Laptop» mit Missionen M1–M7 (M4 Aufräum-Challenge mit `dateien/Chaos-Ordner.zip`). Vorschau seit 18.11.2026, Kachel erst nach Freigabe |
 | `Informatik Word-Fuehrerschein.html` | Informatik, Word-Führerschein: 5 Teile = 5 Lektionen (Schrift, Absatz & Überschriften, Bild & Tabelle, Seite & Prüfen, Papier/Drucken/PDF), Missionen W1.1–W5.3 mit Übungsdateien in `dateien/`. Vorschau seit 18.11.2026, Kachel erst nach Freigabe |
 | `RZG Vulkane Erdbeben Tsunamis.html` | RZG, Dynamik der Erde, Test 2: Lernpfad in 4 Teilen (Vulkane entstehen, Aufbau & Ausbrüche, Erdbeben, Tsunamis) |
 

@@ -96,7 +96,7 @@
       <p class="text-sm text-slate-500 text-center px-2" data-l="de">💾 Dein Fortschritt bleibt auf diesem Gerät gespeichert. Niemand ausser dir sieht ihn.</p>
     </div>
 
-    <!-- Teil 1 «Dateien & OneDrive» (Lektion 1, Missionen M1–M3) -->
+    <!-- Teil 1 «Dateien & OneDrive» (Lektion 1, Missionen M1–M4) -->
     <section id="view-k1" class="view hidden space-y-4">
       <div id="card-k1" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
         <div id="head-k1"></div>
@@ -114,13 +114,14 @@
           <li><b>Umbenennen:</b> Datei anklicken → <b>F2</b> → neuer Name → Enter. Die Endung (.docx) stehen lassen.</li>
           <li><b>Verschieben:</b> Datei anklicken → <b>Ctrl + X</b> (ausschneiden) → anderen Ordner öffnen → <b>Ctrl + V</b> (einfügen). Mit Ctrl + C (kopieren) hast du die Datei zweimal.</li>
           <li><b>Endungen:</b> .docx = Word · .pdf = PDF · .jpg / .png = Bild · .xlsx = Excel.</li>
+          <li><b>ZIP-Datei:</b> ein Paket mit mehreren Dateien. Auspacken: Rechtsklick › <b>Alle extrahieren</b> › Extrahieren. Danach die ZIP-Datei löschen.</li>
         </ul>
         <div id="theory-k1-svg" class="mt-3 max-w-md mx-auto"></div>
         <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span></button>
       </details>
       <div id="reset-k1"></div>
     </section>
-    <!-- Teil 2 «Download, Screenshot, Teams» (Lektion 2, Missionen M4–M6) -->
+    <!-- Teil 2 «Download, Screenshot, Teams» (Lektion 2, Missionen M5–M7) -->
     <section id="view-k2" class="view hidden space-y-4">
       <div id="card-k2" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
         <div id="head-k2"></div>
@@ -239,7 +240,7 @@
     const VORLAGE = 'dateien/Lektion2_Vorlage.docx';
 
     // ==============================================================
-    // TEILE UND AUFGABEN (Inhalt = Missionsblatt Computer-Grundlagen, Missionen M1–M6)
+    // TEILE UND AUFGABEN (Inhalt = Missionsblatt Computer-Grundlagen, Missionen M1–M7)
     // st: Stufe 1 erkennen · 2 selber ergänzen · 3 am Laptop (Mission)
     // nr: Mission(en) auf dem Missionsblatt
     // Typen: mc (erste Antwort ist richtig, wird gemischt; picOpts = Bilder als Antworten),
@@ -249,8 +250,8 @@
     // Spanisch: noch nicht (erst nach Freigabe der deutschen Fassung)
     // ==============================================================
     const PARTS = [
-      { id: 'k1', emoji: '📁', title: 'Dateien & OneDrive', lz: 'Lektion 1', nrs: 'M1–M3', sub: 'Ordner, speichern unter, umbenennen, verschieben' },
-      { id: 'k2', emoji: '📥', title: 'Download, Screenshot, Teams', lz: 'Lektion 2', nrs: 'M4–M6', sub: 'Downloads finden, Screenshot, in Teams abgeben' }
+      { id: 'k1', emoji: '📁', title: 'Dateien & OneDrive', lz: 'Lektion 1', nrs: 'M1–M4', sub: 'Ordner, speichern unter, umbenennen, verschieben, aufräumen' },
+      { id: 'k2', emoji: '📥', title: 'Download, Screenshot, Teams', lz: 'Lektion 2', nrs: 'M5–M7', sub: 'Downloads finden, Screenshot, in Teams abgeben' }
     ];
     const STAGES = [
       { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus.' },
@@ -295,6 +296,16 @@
           whyNot: [null, 'Dann hast du eine Kopie: Die Datei gibt es zweimal.', 'Das macht etwas rückgängig.', 'Das druckt.'],
           tip: 'C heisst kopieren. X ist wie eine Schere: ausschneiden.',
           why: 'Ctrl + X schneidet aus, Ctrl + V fügt ein. Dann ist die Datei nur noch im neuen Ordner.' },
+        { id: 'k1_zip', st: 1, nr: ['M4'], type: 'mc', q: 'Du hast «Chaos-Ordner.zip» heruntergeladen. Was ist eine ZIP-Datei?',
+          opts: ['Ein Paket mit mehreren Dateien darin', 'Ein einzelnes Foto', 'Ein Virus', 'Ein Word-Dokument'],
+          whyNot: [null, 'Ein Foto endet mit .jpg oder .png.', 'ZIP ist kein Virus. Aber lade nur Dateien von bekannten Seiten herunter.', 'Word endet mit .docx.'],
+          tip: 'Stell dir ein Paket vor, in dem mehrere Sachen eingepackt sind.',
+          why: 'Eine ZIP-Datei ist ein Paket. Darin sind mehrere Dateien zusammengepackt.' },
+        { id: 'k1_extr', st: 1, nr: ['M4'], type: 'mc', q: 'Wie packst du eine ZIP-Datei aus, damit du mit den Dateien arbeiten kannst?',
+          opts: ['Rechtsklick › Alle extrahieren', 'Umbenennen in «Ordner»', 'In den Papierkorb ziehen', 'Ctrl + P'],
+          whyNot: [null, 'Ein neuer Name packt nichts aus.', 'Dann ist alles weg.', 'Das druckt.'],
+          tip: 'Auspacken heisst am Computer «extrahieren».',
+          why: 'Rechtsklick auf die ZIP-Datei › Alle extrahieren. Dann gibt es einen normalen Ordner.' },
         { id: 'k1_ordner', st: 2, nr: ['M1'], type: 'order', q: 'Du machst in OneDrive einen neuen Ordner. Bring die Schritte in die richtige Reihenfolge.',
           steps: ['Datei-Explorer öffnen (gelber Ordner unten)', 'Links auf «OneDrive» klicken', 'Oben auf «+ Neu» und dann «Ordner» klicken', 'Den Namen schreiben', 'Enter drücken'],
           tip: 'Zuerst musst du den Explorer offen haben. Und der Name kommt, bevor du bestätigst.' },
@@ -316,60 +327,64 @@
         { id: 'k1_m3', st: 3, nr: ['M3'], type: 'mission', q: 'Mission M3: Umbenennen und verschieben',
           steps: ['Geh im Explorer zu <b>OneDrive › Schule</b>. Mach dort den Ordner <b>Deutsch</b>.', 'Öffne den Ordner <b>Informatik</b>. Klicke die Datei <b>Informatik_Uebung</b> an. Drück <b>F2</b> und schreib <b>Deutsch_Uebung</b>. Enter.', 'Hoppla, die Datei ist jetzt im falschen Ordner! Drück <b>Ctrl + X</b> (ausschneiden).', 'Öffne den Ordner <b>Deutsch</b>. Drück <b>Ctrl + V</b> (einfügen).'],
           help: ['Die Datei ist geöffnet? Schliess sie zuerst in Word. Offene Dateien kann man nicht umbenennen.', 'Hinter dem Namen steht «.docx»? Lass das stehen und ändere nur den Teil davor.', 'Du findest die Datei nicht mehr? Schau zuerst in «Deutsch» und in «Informatik».'],
-          proof: 'Deutsch_Uebung ist im Ordner Deutsch und nicht mehr im Ordner Informatik.' }
+          proof: 'Deutsch_Uebung ist im Ordner Deutsch und nicht mehr im Ordner Informatik.' },
+        { id: 'k1_m4', st: 3, nr: ['M4'], type: 'mission', q: 'Mission M4: Aufräum-Challenge', link: 'dateien/Chaos-Ordner.zip', linkText: '📥 Chaos-Ordner herunterladen',
+          steps: ['Tippe oben auf <b>📥 Chaos-Ordner herunterladen</b>.', 'Im Explorer bei <b>Downloads</b>: Rechtsklick auf <b>Chaos-Ordner.zip</b> › <b>Alle extrahieren</b> › Extrahieren.', 'Verschiebe den Ordner <b>Chaos-Ordner</b> nach <b>OneDrive › Schule</b> (Ctrl + X, Ctrl + V).', 'Mach in <b>Schule</b> die fehlenden Fach-Ordner: <b>Englisch</b>, <b>RZG</b>, <b>BG</b> (Deutsch und Informatik hast du schon).', 'Öffne im Chaos-Ordner jede Datei kurz: Oben steht, worum es geht. Schliess sie wieder.', 'Gib jeder Datei einen <b>guten Namen</b> (F2), z.B. <b>Deutsch_Aufsatz_Ferientag</b>.', 'Verschiebe jede Datei in den <b>richtigen Fach-Ordner</b> (Ctrl + X, Ctrl + V). Eine Datei gibt es doppelt: Lösch die Kopie.', 'Am Schluss ist der Chaos-Ordner leer: <b>Lösch ihn</b>. Lösch auch <b>Chaos-Ordner.zip</b> in Downloads.'],
+          help: ['Datei lässt sich nicht umbenennen? Schliess sie zuerst (Word, Excel oder Bild-Fenster zu).', 'Ein guter Name hat Fach und Thema: Englisch_Woerter_Unit2, RZG_Skizze_Vulkan …', 'Die Endung (.docx, .pdf, .jpg) lässt du stehen.', 'Welche ist die Kopie? Die Datei, die mit «Kopie von» beginnt.'],
+          proof: 'In Deutsch 3 Dateien mehr, in Englisch 3, RZG 2, Informatik 2, BG 1. Alle mit Fach im Namen. Kein Chaos-Ordner mehr.' }
       ],
-      // ---------- Teil 2: Download, Screenshot, Teams (Lektion 2, M4–M6) ----------
+      // ---------- Teil 2: Download, Screenshot, Teams (Lektion 2, M5–M7) ----------
       k2: [
-        { id: 'k2_dl', st: 1, nr: ['M4'], type: 'mc', first: true, q: 'Du lädst eine Datei aus dem Internet herunter. Wo findest du sie meistens?',
+        { id: 'k2_dl', st: 1, nr: ['M5'], type: 'mc', first: true, q: 'Du lädst eine Datei aus dem Internet herunter. Wo findest du sie meistens?',
           opts: ['Im Ordner Downloads', 'In OneDrive', 'Im Papierkorb', 'In Teams'],
           whyNot: [null, 'Dorthin musst du sie zuerst verschieben.', 'Dort landen gelöschte Dateien.', 'Teams speichert keine Downloads.'],
           tip: 'Herunterladen heisst auf Englisch «download».',
           why: 'Heruntergeladene Dateien landen im Ordner Downloads.' },
-        { id: 'k2_wichtig', st: 1, nr: ['M4'], type: 'mc', q: 'Im Ordner Downloads ist eine Datei, die du für die Schule brauchst. Was machst du?',
+        { id: 'k2_wichtig', st: 1, nr: ['M5'], type: 'mc', q: 'Im Ordner Downloads ist eine Datei, die du für die Schule brauchst. Was machst du?',
           opts: ['In OneDrive › Schule verschieben', 'Im Ordner Downloads lassen', 'In den Papierkorb ziehen', 'Umbenennen in «Download»'],
           whyNot: [null, 'Dort braucht sie Platz auf dem Laptop.', 'Dann ist sie weg.', 'Dann weisst du nicht, was drin ist.'],
           tip: 'Wo sind deine Schulsachen sicher und brauchen keinen Platz auf dem Laptop?',
           why: 'Wichtiges gehört in OneDrive. Der Ordner Downloads bleibt so leer.' },
-        { id: 'k2_voll', st: 1, nr: ['M4'], type: 'mc', q: 'Dein Laptop meldet: «Speicher fast voll». Was hilft?',
+        { id: 'k2_voll', st: 1, nr: ['M5'], type: 'mc', q: 'Dein Laptop meldet: «Speicher fast voll». Was hilft?',
           opts: ['Alte Downloads löschen', 'Mehr Tabs im Browser öffnen', 'Den Bildschirm heller machen', 'Noch ein Spiel installieren'],
           whyNot: [null, 'Tabs brauchen keinen Speicherplatz für Dateien.', 'Das braucht nur Strom.', 'Das braucht noch mehr Platz.'],
           tip: 'Was nimmt Platz weg? Und was kannst du wegwerfen?',
           why: 'Im Ordner Downloads liegt oft viel Altes. Löschen schafft Platz.' },
-        { id: 'k2_shot', st: 1, nr: ['M5'], type: 'mc', q: 'Mit welchen Tasten machst du einen Screenshot von einem Teil des Bildschirms?',
+        { id: 'k2_shot', st: 1, nr: ['M6'], type: 'mc', q: 'Mit welchen Tasten machst du einen Screenshot von einem Teil des Bildschirms?',
           opts: ['Windows + Shift + S', 'Ctrl + Z', 'Alt + F4', 'Ctrl + P'],
           whyNot: [null, 'Das macht etwas rückgängig.', 'Das schliesst das Fenster.', 'Das druckt.'],
           tip: 'S wie «Screenshot». Dazu die Windows-Taste ⊞ und die Taste für grosse Buchstaben ⇧.',
           why: 'Windows + Shift + S, dann mit der Maus einen Bereich aufziehen.' },
-        { id: 'k2_wo', st: 1, nr: ['M5'], type: 'mc', q: 'Du hast den Screenshot gemacht. Wie kommt er in dein Word-Dokument?',
+        { id: 'k2_wo', st: 1, nr: ['M6'], type: 'mc', q: 'Du hast den Screenshot gemacht. Wie kommt er in dein Word-Dokument?',
           opts: ['Ins Dokument klicken, Ctrl + V', 'Er ist schon automatisch drin', 'Ctrl + P drücken', 'Den Laptop neu starten'],
           whyNot: [null, 'Du musst ihn zuerst einfügen.', 'Das druckt.', 'Dann ist der Screenshot weg.'],
           tip: 'Der Screenshot ist in der Zwischenablage, wie etwas Kopiertes. Wie fügst du Kopiertes ein?',
           why: 'Der Screenshot ist in der Zwischenablage. Mit Ctrl + V fügst du ihn ein.' },
-        { id: 'k2_abgeben', st: 1, nr: ['M6'], type: 'mc', q: 'Du hast in Teams bei der Aufgabe deine Datei angehängt. Die Lehrperson sieht sie aber noch nicht. Was fehlt?',
+        { id: 'k2_abgeben', st: 1, nr: ['M7'], type: 'mc', q: 'Du hast in Teams bei der Aufgabe deine Datei angehängt. Die Lehrperson sieht sie aber noch nicht. Was fehlt?',
           opts: ['Auf «Abgeben» klicken', 'Die Datei umbenennen', 'Die Datei nochmals anhängen', 'Teams schliessen'],
           whyNot: [null, 'Der Name ist nicht das Problem.', 'Sie ist schon angehängt.', 'Dann passiert gar nichts.'],
           tip: 'Anhängen ist wie den Brief ins Couvert stecken. Was fehlt noch?',
           why: 'Erst nach «Abgeben» sieht die Lehrperson deine Arbeit.' },
-        { id: 'k2_tasten', st: 2, nr: ['M3', 'M5'], type: 'sort', q: 'Was machen diese Tasten? Ordne zu.',
+        { id: 'k2_tasten', st: 2, nr: ['M3', 'M6'], type: 'sort', q: 'Was machen diese Tasten? Ordne zu.',
           rows: [['Ctrl + C', 'kopieren'], ['Ctrl + V', 'einfügen'], ['Ctrl + Z', 'rückgängig'], ['Windows + Shift + S', 'Screenshot']],
           cats: ['kopieren', 'einfügen', 'rückgängig', 'Screenshot', 'drucken'],
           tip: 'Z steht ganz links unten: «Hoppla, zurück». V liegt neben C: zuerst kopieren, dann einfügen.' },
-        { id: 'k2_teams', st: 2, nr: ['M6'], type: 'order', q: 'Du gibst in Teams eine Aufgabe ab. Bring die Schritte in die richtige Reihenfolge.',
+        { id: 'k2_teams', st: 2, nr: ['M7'], type: 'order', q: 'Du gibst in Teams eine Aufgabe ab. Bring die Schritte in die richtige Reihenfolge.',
           steps: ['Teams öffnen und auf «Aufgaben» klicken', 'Die richtige Aufgabe anklicken', 'Auf «+ Arbeit hinzufügen» klicken', 'Die Datei aus OneDrive wählen', 'Auf «Abgeben» klicken'],
           tip: 'Zuerst suchst du die Aufgabe. Abgeben kommt ganz am Schluss.' },
-        { id: 'k2_gap', st: 2, nr: ['M4'], type: 'gap', text: 'Heruntergeladene Dateien landen zuerst im Ordner ___.',
+        { id: 'k2_gap', st: 2, nr: ['M5'], type: 'gap', text: 'Heruntergeladene Dateien landen zuerst im Ordner ___.',
           a: ['Downloads', 'Download'], tip: 'Herunterladen heisst auf Englisch …?',
           why: 'Der Ordner heisst Downloads.' },
-        { id: 'k2_m4', st: 3, nr: ['M4'], type: 'mission', q: 'Mission M4: Download holen und aufräumen',
+        { id: 'k2_m4', st: 3, nr: ['M5'], type: 'mission', q: 'Mission M5: Download holen und aufräumen',
           link: VORLAGE,
           steps: ['Tippe oben auf <b>📥 Vorlage herunterladen</b>.', 'Öffne den Explorer. Klicke links auf <b>Downloads</b>. Findest du <b>Lektion2_Vorlage</b>?', 'Klicke sie an. Drück <b>Ctrl + X</b>.', 'Öffne <b>OneDrive › Schule › Informatik</b>. Drück <b>Ctrl + V</b>.'],
           help: ['Der Browser fragt, ob du die Datei behalten willst? Klicke auf «Behalten».', 'Nichts in Downloads? Im Browser oben rechts auf den Pfeil ⬇ klicken, dann «In Ordner anzeigen».'],
           proof: 'Die Vorlage ist in Informatik und nicht mehr in Downloads.' },
-        { id: 'k2_m5', st: 3, nr: ['M5'], type: 'mission', q: 'Mission M5: Screenshot einfügen',
+        { id: 'k2_m5', st: 3, nr: ['M6'], type: 'mission', q: 'Mission M6: Screenshot einfügen',
           steps: ['Lass den Explorer mit dem Ordner <b>Informatik</b> offen.', 'Drück <b>Windows + Shift + S</b>. Zieh mit der Maus ein Rechteck um das Explorer-Fenster.', 'Öffne die <b>Lektion2_Vorlage</b> (Doppelklick). Klicke in die leere Zeile unter «Mein Screenshot».', 'Drück <b>Ctrl + V</b>. Speichere mit <b>Ctrl + S</b>.'],
           help: ['Es passiert nichts nach Ctrl + V? Mach den Screenshot nochmals und klicke danach zuerst ins Dokument.', 'Das Bild ist riesig? Klicke es an und zieh an einer Ecke.'],
           proof: 'In der Vorlage ist jetzt ein Bild von deinem Ordner Informatik.' },
-        { id: 'k2_m6', st: 3, nr: ['M6'], type: 'mission', q: 'Mission M6: In Teams abgeben',
+        { id: 'k2_m6', st: 3, nr: ['M7'], type: 'mission', q: 'Mission M7: In Teams abgeben',
           steps: ['Schliess Word. Öffne <b>Teams</b> und klicke auf <b>Aufgaben</b>.', 'Klicke auf die Aufgabe «Computer-Grundlagen».', 'Klicke auf <b>+ Arbeit hinzufügen</b>. Wähle aus OneDrive › Schule › Informatik die <b>Lektion2_Vorlage</b>.', 'Klicke auf <b>Abgeben</b>. Steht jetzt «Abgegeben»?'],
           help: ['Du findest die Aufgabe nicht? Frag deine Lehrperson.', 'Falsche Datei abgegeben? Klicke auf «Abgabe rückgängig machen» und mach es nochmals.'],
           proof: 'In Teams steht bei der Aufgabe: Abgegeben ✔' }
