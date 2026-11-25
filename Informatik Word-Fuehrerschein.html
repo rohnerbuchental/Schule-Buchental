@@ -1119,7 +1119,7 @@
       if (Q.phase !== 'ask' || Object.keys(Q.sel).length < it.rows.length) return;
       const nOk = it.rows.filter((row, r) => Q.sel[r] === row[1]).length;
       // Beim ersten Fehlversuch nur sagen, wie viele stimmen, und nochmals probieren lassen
-      if (nOk < it.rows.length && !Q.sortHint) { Q.sortHint = { n: nOk, of: it.rows.length }; renderPart(pid); return; }
+      if (nOk < it.rows.length && !Q.sortHint) { const ok = it.rows.map((row, r) => Q.sel[r] === row[1] ? r : -1).filter(r => r >= 0); it.rows.forEach((row, r) => { if (!ok.includes(r)) delete Q.sel[r]; }); Q.sortHint = { n: nOk, of: it.rows.length, ok }; renderPart(pid); return; }
       answer(pid, nOk === it.rows.length, false);
     }
     function place(pid, k) {
@@ -1340,18 +1340,19 @@
         h += `<div class="space-y-2.5">${Q.rows.map(r => {
           const right = it.rows[r][1], text = LANG === 'es' && it.rowsEs ? it.rowsEs[r] : it.rows[r][0], sel = Q.sel[r];
           const catText = c => LANG === 'es' && it.catsEs ? it.catsEs[it.cats.indexOf(c)] : c;   // gespeichert wird die deutsche Kategorie
-          const rowCls = done ? (sel === right ? 'border-emerald-300 bg-emerald-50/60' : 'border-yellow-300 bg-yellow-50/70') : 'border-slate-200 bg-slate-50';
+          const fixed = !done && Q.sortHint && (Q.sortHint.ok || []).includes(r);
+          const rowCls = done || fixed ? (sel === right ? 'border-emerald-300 bg-emerald-50/60' : 'border-yellow-300 bg-yellow-50/70') : 'border-slate-200 bg-slate-50';
           return `<div class="rounded-2xl border-2 ${rowCls} p-3">
             <div class="text-base font-semibold text-slate-900 wrap-any mb-2">${esc(text)}</div>
             <div class="flex flex-wrap gap-2">${Q.cats.map(c => {
               let cls = sel === c ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white border-slate-300 text-slate-700 hover:border-indigo-400';
-              if (done) cls = c === right ? 'bg-emerald-600 border-emerald-600 text-white' : sel === c ? 'bg-yellow-100 border-yellow-400 text-yellow-900' : 'bg-white border-slate-200 text-slate-400';
-              return `<button type="button" onclick="choose('${pid}',${r},'${esc(c)}')" ${done ? 'disabled' : ''} class="min-h-[44px] px-3 py-1.5 rounded-xl border-2 text-sm sm:text-base font-bold wrap-any ${cls}">${done && c === right ? '✔ ' : ''}${esc(catText(c))}</button>`;
+              if (done || fixed) cls = c === right ? 'bg-emerald-600 border-emerald-600 text-white' : sel === c ? 'bg-yellow-100 border-yellow-400 text-yellow-900' : 'bg-white border-slate-200 text-slate-400';
+              return `<button type="button" onclick="choose('${pid}',${r},'${esc(c)}')" ${done || fixed ? 'disabled' : ''} class="min-h-[44px] px-3 py-1.5 rounded-xl border-2 text-sm sm:text-base font-bold wrap-any ${cls}">${(done || fixed) && c === right ? '✔ ' : ''}${esc(catText(c))}</button>`;
             }).join('')}</div></div>`;
         }).join('')}</div>`;
         if (!done) {
           const all = Object.keys(Q.sel).length >= it.rows.length, sh = Q.sortHint;
-          if (sh) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 wrap-any pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> ${tr(`${sh.n} von ${sh.of} ${sh.n === 1 ? 'stimmt' : 'stimmen'}.`, `${sh.n} de ${sh.of} ${sh.n === 1 ? 'está bien' : 'están bien'}.`)} ${tr('Probier nochmals!', '¡Prueba otra vez!')}</div>`;
+          if (sh) h += `<div class="mt-3 rounded-2xl border-2 border-yellow-400 bg-yellow-50 px-4 py-2.5 text-base text-yellow-900 wrap-any pop" role="status"><b>${tr('Noch nicht.', 'Todavía no.')}</b> ${tr(`${sh.n} von ${sh.of} ${sh.n === 1 ? 'stimmt' : 'stimmen'}.`, `${sh.n} de ${sh.of} ${sh.n === 1 ? 'está bien' : 'están bien'}.`)} ${tr('Die grünen stimmen. Probier die anderen nochmals!', 'Las verdes están bien. ¡Prueba las otras otra vez!')}</div>`;
           h += `<button type="button" onclick="checkSort('${pid}')" ${all ? '' : 'disabled'} class="mt-3 w-full ${BTN_MAIN} ${all ? '' : 'opacity-40 cursor-not-allowed'}">${tr('✓ Prüfen', '✓ Comprobar')}</button>`;
         }
       }
