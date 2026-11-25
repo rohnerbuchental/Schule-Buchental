@@ -385,11 +385,12 @@
       { icon: '💻', label: 'Am Laptop', intro: 'Jetzt machst du es selber in Word. Hake jeden Schritt ab.' }
     ];
     // Speichern wie in den Computer-Grundlagen gelernt (Wunsch Lehrperson 25.11.2026): eigener Ordner, guter Name (Fach_Thema), oft Ctrl + S
-    const DL = (file, name) => [`Tippe oben auf <b>📥 Übungsdatei herunterladen</b>.`, `Verschiebe <b>Word_${file}</b> aus Downloads in deinen Ordner <b>OneDrive › Schule › Informatik › Word</b> (Ctrl + X, Ctrl + V).`, `Benenne sie um (F2): <b>Informatik_${name}</b>. Öffne sie mit <b>Doppelklick</b>: Sie geht in der <b>Word-App</b> auf, nicht im Browser.`];
+    // Übungsdatei kommt per Mail (Wunsch Lehrperson 25.11.2026: selber speichern); der Knopf ist nur für «keine Mail»
+    const DL = (file, name) => [`Öffne in <b>Outlook</b> die Mail von deiner Lehrperson. Beim Anhang <b>Word_${file}</b>: Pfeil ▾ › <b>Herunterladen</b>.`, `Verschiebe <b>Word_${file}</b> aus Downloads in deinen Ordner <b>OneDrive › Schule › Informatik › Word</b> (Ctrl + X, Ctrl + V).`, `Benenne sie um (F2): <b>Informatik_${name}</b>. Öffne sie mit <b>Doppelklick</b>: Sie geht in der <b>Word-App</b> auf, nicht im Browser.`];
     // Schluss jeder Lektion (Wunsch Lehrperson 25.11.2026): eigener Satz (jede Datei ist anders), speichern, prüfen, in Teams in den Abgabeordner
     const FERTIG = name => [`Schreib ganz unten einen <b>eigenen Satz</b>: <i>Das kann ich jetzt: …</i>`, `<b>Ctrl + S</b>, Word schliessen. Liegt <b>Informatik_${name}</b> in <b>Informatik › Word</b>? Dann lade sie in Teams in deinen <b>Abgabeordner</b> hoch. 👍`];
     const ABG_HELP = 'Wo ist dein Abgabeordner? In Teams, so wie es deine Lehrperson gezeigt hat. Arbeite an deiner eigenen Datei: So lernst du es wirklich.';
-    const DL_HELP = 'Datei nicht in Downloads? Im Browser oben rechts auf den Pfeil ⬇ klicken, dann «In Ordner anzeigen».';
+    const DL_HELP = 'Keine Mail gefunden? Schau im Posteingang nach «Word». Sonst den Knopf «Keine Mail? Datei hier holen» oben nehmen. Datei nicht in Downloads? Im Browser oben rechts auf den Pfeil ⬇ › «In Ordner anzeigen».';
     const REN_HELP = 'Umbenennen geht nicht? Die Datei ist noch offen: zuerst in Word schliessen. Lass «.docx» am Schluss stehen.';
     const APP_HELP = 'Word ist im Browser aufgegangen? Oben rechts auf «Bearbeitung» ▾ › «In Desktop-App öffnen». Oder im Explorer: Rechtsklick auf die Datei › Öffnen mit › Word.';
     const AUF_HELP = 'Vergessen, wie es geht? Tippe auf «📖 Kurz erklärt» oder übe nochmals in den Teilen vorher.';
@@ -445,7 +446,7 @@
           tip: 'Zuerst muss Word wissen, was rot werden soll.' },
         { id: 'w1_gap', ex: 'schrift', st: 2, nr: ['W1.1'], type: 'gap', text: 'Im Menüband steht «Arial» und «12». Die Zahl 12 ist die ___.',
           a: ['Schriftgrösse', 'Schriftgröße', 'Grösse', 'Schriftgrad'], tip: 'Je höher die Zahl, desto grösser die Schrift.', why: '12 ist die Schriftgrösse.' },
-        { id: 'w1_m1', st: 3, nr: ['W1.1'], type: 'mission', q: 'Mission W1.1: Ordner und Datei', link: F('W1_Rheinfall'), linkText: '📥 Übungsdatei herunterladen',
+        { id: 'w1_m1', st: 3, nr: ['W1.1'], type: 'mission', q: 'Mission W1.1: Ordner und Datei', link: F('W1_Rheinfall'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: ['Öffne den Explorer: <b>OneDrive › Schule › Informatik</b>. Mach einen neuen Ordner <b>Word</b> (Rechtsklick › Neu › Ordner). Hier kommen alle Word-Dateien hinein.', ...DL('W1_Rheinfall', 'Rheinfall'), 'Schau oben: Siehst du <b>keine</b> Adresszeile vom Browser? Dann bist du in der Word-App. 👍'],
           help: [DL_HELP, REN_HELP, APP_HELP],
           proof: 'In Informatik › Word liegt «Informatik_Rheinfall». Sie ist in der Word-App offen.' },
@@ -493,7 +494,7 @@
           tip: 'Zuerst muss Word wissen, welcher Text gemeint ist.' },
         { id: 'w2_gap', ex: 'liste', st: 2, nr: ['W2.3'], type: 'gap', text: 'Eine Liste mit 1. 2. 3. heisst ___.',
           a: ['Nummerierung', 'Nummerieren', 'nummerierte Liste'], tip: 'Es kommt von «Nummer».', why: 'Nummerierung.' },
-        { id: 'w2_m1', st: 3, nr: ['W2.1'], type: 'mission', q: 'Mission W2.1: Aufwärmen', link: F('W2_Rezept'), linkText: '📥 Übungsdatei herunterladen',
+        { id: 'w2_m1', st: 3, nr: ['W2.1'], type: 'mission', q: 'Mission W2.1: Aufwärmen', link: F('W2_Rezept'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W2_Rezept', 'Rezept'), 'Titel «Schoggikuchen»: <b>andere Schriftart</b>, Grösse <b>26</b>, <b>fett</b>, eine <b>Farbe</b>.', 'Mach «180 Grad» und «25 Minuten» <b>fett</b>. Hebe «Achtung, heiss!» <b>gelb</b> hervor. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
           proof: 'Datei «Informatik_Rezept» in Informatik › Word. Titel gestaltet, 2 Stellen fett, eine gelb.' },
@@ -545,7 +546,7 @@
           tip: 'Zuerst muss Word wissen, welche Zeile gemeint ist.' },
         { id: 'w3_gap', ex: 'tab', st: 2, nr: ['W3.3'], type: 'gap', text: 'Damit Zahlen genau untereinander stehen, drückst du die ___-Taste.',
           a: ['Tab', 'Tabulator', 'Tabulatortaste', 'Tabtaste'], tip: 'Die Taste links neben dem Q.', why: 'Die Tab-Taste (Tabulator).' },
-        { id: 'w3_m1', st: 3, nr: ['W3.1'], type: 'mission', q: 'Mission W3.1: Aufwärmen', link: F('W3_Projekt'), linkText: '📥 Übungsdatei herunterladen',
+        { id: 'w3_m1', st: 3, nr: ['W3.1'], type: 'mission', q: 'Mission W3.1: Aufwärmen', link: F('W3_Projekt'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W3_Projekt', 'Klassenlager'), 'Mach in der Einleitung «Klassenlager» <b>gelb</b> und «eine Woche» <b>fett</b>. Der Text unter «Das Haus»: <b>Blocksatz</b>.', 'Ctrl + A, <b>Zeilenabstand 1,5</b>. Mach aus dem Programm (Morgen, Nachmittag, Abend) eine <b>Aufzählung</b>. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
           proof: 'Datei «Informatik_Klassenlager» in Informatik › Word. Ein Wort gelb, eines fett, Blocksatz, Zeilenabstand 1,5, Programm mit Punkten.' },
@@ -601,7 +602,7 @@
           tip: 'Zuerst sagst du Word, was weg soll, dann, was neu kommt.' },
         { id: 'w4_gap', ex: 'sprache', st: 2, nr: ['W4.3'], type: 'gap', text: 'Rechtschreibung, Sprache und Wörter zählen findest du im Reiter ___.',
           a: ['Überprüfen', 'Ueberpruefen', 'Uberprufen'], tip: 'Es beginnt mit Ü. Du prüfst deinen Text.', why: 'Reiter «Überprüfen».' },
-        { id: 'w4_m1', st: 3, nr: ['W4.1'], type: 'mission', q: 'Mission W4.1: Aufwärmen', link: F('W4_Einladung'), linkText: '📥 Übungsdatei herunterladen',
+        { id: 'w4_m1', st: 3, nr: ['W4.1'], type: 'mission', q: 'Mission W4.1: Aufwärmen', link: F('W4_Einladung'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W4_Einladung', 'Einladung'), 'Titel: Formatvorlage <b>Titel</b>, <b>zentriert</b>. Mach «12. Juni» <b>fett und rot</b>.', 'Mach aus den drei Programmpunkten eine <b>Aufzählung</b>. Ganzer Text: <b>Zeilenabstand 1,5</b>. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
           proof: 'Datei «Informatik_Einladung» in Informatik › Word. Titel in der Mitte, Datum fett und rot, Programm mit Punkten.' },
@@ -653,7 +654,7 @@
           tip: 'Bevor du die Grösse änderst, muss das Bild da sein.' },
         { id: 'w5_gap', ex: 'bild', st: 2, nr: ['W5.2'], type: 'gap', text: 'Damit ein Bild nicht verzogen wird, ziehst du an einer ___.',
           a: ['Ecke'], tip: 'Ein Bild hat vier davon.', why: 'An einer Ecke.' },
-        { id: 'w5_m1', st: 3, nr: ['W5.1'], type: 'mission', q: 'Mission W5.1: Aufwärmen', link: F('W5_Igel'), linkText: '📥 Übungsdatei herunterladen',
+        { id: 'w5_m1', st: 3, nr: ['W5.1'], type: 'mission', q: 'Mission W5.1: Aufwärmen', link: F('W5_Igel'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W5_Igel', 'Igel'), 'Gib «Der Igel» die Formatvorlage <b>Titel</b>. Mach mit <b>Ctrl + H</b> aus jedem «Igl» ein «Igel».', 'Ctrl + A, <b>Zeilenabstand 1,5</b>, <b>Blocksatz</b>. Mach «Winterschlaf» und «Stacheln» <b>fett und kursiv</b>. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
           proof: 'Datei «Informatik_Igel» in Informatik › Word. Titel, nirgends mehr «Igl», Blocksatz, 2 Wörter fett und kursiv.' },
@@ -705,7 +706,7 @@
           tip: 'Schreiben kannst du erst, wenn die Tabelle da ist.' },
         { id: 'w6_gap', ex: 'tabelle', st: 2, nr: ['W6.2'], type: 'gap', text: 'Eine Tabelle besteht aus Zeilen und ___.',
           a: ['Spalten', 'Spalte'], tip: 'Zeilen liegen waagrecht. Was steht senkrecht?', why: 'Zeilen und Spalten.' },
-        { id: 'w6_m1', st: 3, nr: ['W6.1'], type: 'mission', q: 'Mission W6.1: Aufwärmen', link: F('W6_Tiere'), linkText: '📥 Übungsdatei herunterladen',
+        { id: 'w6_m1', st: 3, nr: ['W6.1'], type: 'mission', q: 'Mission W6.1: Aufwärmen', link: F('W6_Tiere'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W6_Tiere', 'Tiere'), 'Titel: Formatvorlage <b>Titel</b>. Der Text darunter: <b>Blocksatz</b>, Zeilenabstand <b>1,5</b>. Mach <b>alle Tiernamen</b> im Text <b>fett</b>.', 'Füge ein <b>Bild</b> von einem Tier ein: kleiner ziehen, <b>Quadratisch</b>. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
           proof: 'Datei «Informatik_Tiere» in Informatik › Word. Titel, Blocksatz, Tiernamen fett, ein Bild mit Text daneben.' },
@@ -769,11 +770,11 @@
           tip: 'Was für eine Datei entsteht, wählst du, bevor du auf «Speichern» klickst.' },
         { id: 'w7_gap', ex: 'kopf', st: 2, nr: ['W7.2'], type: 'gap', text: 'Die Seitenzahl steht unten auf der Seite in der ___.',
           a: ['Fusszeile', 'Fußzeile', 'Fusszeilen'], tip: 'Oben ist die Kopfzeile. Und unten, bei den Füssen?', why: 'In der Fusszeile.' },
-        { id: 'w7_m1', st: 3, nr: ['W7.1'], type: 'mission', q: 'Mission W7.1: Aufwärmen (Plakat)', link: F('W7_Plakat'), linkText: '📥 Übungsdatei herunterladen',
+        { id: 'w7_m1', st: 3, nr: ['W7.1'], type: 'mission', q: 'Mission W7.1: Aufwärmen (Plakat)', link: F('W7_Plakat'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W7_Plakat', 'Plakat'), '<b>Layout › Ausrichtung › Querformat</b>. <b>Layout › Seitenränder › Schmal</b>.', 'Titel: Grösse <b>48</b>, <b>fett</b>, eine <b>Farbe</b>, <b>zentriert</b>. Alles andere auch <b>zentriert</b>, Datum und Zeit <b>gelb</b>.', 'Mach aus «Spiele · Musik · Essen» eine <b>Aufzählung</b> mit 3 Zeilen. Füge ein <b>Bild</b> ein (Vor den Text) und schieb es an einen schönen Ort.', ...FERTIG('Plakat')],
           help: [ABG_HELP, DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
           proof: 'Plakat quer mit schmalem Rand, Titel gross in der Mitte, Datum gelb, Liste, ein Bild. Die Datei liegt in Informatik › Word.' },
-        { id: 'w7_m2', st: 3, nr: ['W7.2'], type: 'mission', q: 'Mission W7.2: Kopfzeile, Seitenzahl, neue Seite', link: F('W7_Projekt'), linkText: '📥 Projektarbeit herunterladen',
+        { id: 'w7_m2', st: 3, nr: ['W7.2'], type: 'mission', q: 'Mission W7.2: Kopfzeile, Seitenzahl, neue Seite', link: F('W7_Projekt'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W7_Projekt', 'Projektarbeit'), 'Klicke vor «Packliste» und drück <b>Ctrl + Enter</b>: Die Packliste beginnt auf einer neuen Seite.', '<b>Einfügen › Kopfzeile › Leer</b>. Schreib deinen <b>Vornamen</b> hinein.', '<b>Einfügen › Seitenzahl › Seitenende</b> › einfache Zahl in der Mitte. Dann «Kopf- und Fusszeile schliessen». Ctrl + S.'],
           help: [DL_HELP, REN_HELP, 'Zurück in den Text? Doppelklick in den normalen Text oder Esc.'],
           proof: 'Die Packliste ist auf einer eigenen Seite. Oben steht dein Vorname, unten die Seitenzahl.' },
