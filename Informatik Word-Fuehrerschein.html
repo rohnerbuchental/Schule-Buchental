@@ -54,16 +54,18 @@
         <h1 class="text-base sm:text-xl font-black leading-tight"><span data-l="de">Word-Führerschein</span></h1>
       </div>
       <div id="star-box" class="shrink-0 bg-white/15 border border-white/25 rounded-xl px-2.5 py-1 text-sm font-black" title="Sterne: 3 pro Teil">
-        ⭐ <span id="star-count" class="inline-block">0</span><span class="text-white/75 font-bold">/<span id="star-max">15</span></span>
+        ⭐ <span id="star-count" class="inline-block">0</span><span class="text-white/75 font-bold">/<span id="star-max">21</span></span>
       </div>
     </div>
-    <nav id="nav" class="max-w-3xl mx-auto px-2 pb-2 grid grid-cols-6 gap-1 text-[11px] sm:text-xs font-bold">
+    <nav id="nav" class="max-w-3xl mx-auto px-2 pb-2 grid grid-cols-8 gap-1 text-[11px] sm:text-xs font-bold">
       <button type="button" id="nav-home" onclick="switchTab('home')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">🏠</span><span data-l="de">Start</span></button>
       <button type="button" id="nav-k1" onclick="switchTab('k1')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">🔤</span><span data-l="de">Schrift</span></button>
       <button type="button" id="nav-k2" onclick="switchTab('k2')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">📏</span><span data-l="de">Absatz</span></button>
-      <button type="button" id="nav-k3" onclick="switchTab('k3')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">🖼️</span><span data-l="de">Bild</span></button>
+      <button type="button" id="nav-k3" onclick="switchTab('k3')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">🏷️</span><span data-l="de">Titel</span></button>
       <button type="button" id="nav-k4" onclick="switchTab('k4')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">🔍</span><span data-l="de">Prüfen</span></button>
-      <button type="button" id="nav-k5" onclick="switchTab('k5')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">🖨️</span><span data-l="de">PDF</span></button>
+      <button type="button" id="nav-k5" onclick="switchTab('k5')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">🖼️</span><span data-l="de">Bild</span></button>
+      <button type="button" id="nav-k6" onclick="switchTab('k6')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">📋</span><span data-l="de">Tabelle</span></button>
+      <button type="button" id="nav-k7" onclick="switchTab('k7')" class="nav-btn min-h-[48px] rounded-xl flex flex-col items-center justify-center leading-tight"><span class="text-lg">📄</span><span data-l="de">Seite</span></button>
     </nav>
   </header>
 
@@ -73,7 +75,7 @@
     <div id="view-home" class="view space-y-4">
       <section class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
         <h2 class="text-xl font-black text-slate-900"><span data-l="de">Dein Word-Führerschein 📝</span></h2>
-        <p class="text-base text-slate-600 mt-1" data-l="de">5 Teile, einer pro Lektion. Ab Lektion 2 beginnt jede mit <b>Aufwärmen</b>: Da übst du alles von vorher nochmals. Denn einmal machen heisst noch nicht können. Fehler sind okay: Die Aufgabe kommt einfach später nochmals.</p>
+        <p class="text-base text-slate-600 mt-1" data-l="de">7 Teile, einer pro Lektion, immer in der <b>Word-App</b>. Fehler sind okay: Die Aufgabe kommt später nochmals.</p>
         <!-- Kleine Animation zum Stoff (docs/didaktik.md 1c): ein Wort wird gestaltet (fett, grösser, Farbe, Textmarker) -->
         <div class="mt-3 flex items-center gap-3">
           <button type="button" onclick="playAnim()" class="anim-btn shrink-0 w-28 rounded-2xl bg-sky-50 border border-sky-100 overflow-hidden" aria-label="Antippen: ein Wort gestalten">
@@ -105,6 +107,7 @@
       <details id="theory-k1" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
         <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Schrift</span></summary>
         <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
+          <li><b>Immer die Word-App:</b> Datei im Explorer mit Doppelklick öffnen. Ist Word im Browser aufgegangen (oben die Adresszeile)? Oben rechts «Bearbeitung» ▾ → «In Desktop-App öffnen». Nur die App hat alle Knöpfe.</li>
           <li><b>Zuerst markieren, dann ändern.</b> Ein Wort: Doppelklick. Ein Satz: Maus drücken und ziehen. Alles: <b>Ctrl + A</b>.</li>
           <li><b>Schriftart:</b> Reiter Start, Feld mit dem Namen der Schrift (z.B. «Arial») → Pfeil ▾ → andere Schrift wählen.</li>
           <li><b>Schriftgrösse:</b> Feld mit der Zahl (z.B. 12) → grössere Zahl = grössere Schrift. Man kann auch eine Zahl hineinschreiben und Enter drücken.</li>
@@ -117,56 +120,55 @@
       </details>
       <div id="reset-k1"></div>
     </section>
-    <!-- Teil W2 «Absatz & Überschriften» -->
+    <!-- Teil W2 «Absatz» -->
     <section id="view-k2" class="view hidden space-y-4">
       <div id="card-k2" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
         <div id="head-k2"></div>
         <div id="body-k2"></div>
       </div>
       <details id="theory-k2" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Absatz und Überschriften</span></summary>
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Absatz</span></summary>
         <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
+          <li><b>Ausrichten:</b> Start → Gruppe Absatz: <b>linksbündig</b> (normal), <b>zentriert</b> (Mitte, gut für Titel), rechtsbündig, <b>Blocksatz</b> (links und rechts gerade, wie in der Zeitung).</li>
           <li><b>Zeilenabstand</b> = Platz zwischen den Zeilen. Text markieren → Start → Knopf «Zeilen- und Absatzabstand» (Linien mit Pfeilen ↕) → z.B. 1,5.</li>
-          <li><b>Überschriften:</b> In die Zeile klicken → Start → Formatvorlagen → <b>Überschrift 1</b> (Kapitel) oder <b>Überschrift 2</b> (Teil im Kapitel).</li>
-          <li><b>Warum?</b> Word erkennt echte Überschriften: Sie stehen im <b>Navigationsbereich</b> (Ansicht → Navigationsbereich) und später im Inhaltsverzeichnis (Referenzen → Inhaltsverzeichnis). Wichtig für Projektarbeiten.</li>
-          <li><b>Tabulator:</b> Die <b>Tab-Taste</b> ⇥ (links neben Q) springt weiter. So stehen Zahlen genau untereinander. Nie viele Leerschläge machen!</li>
-          <li>Zu weit gesprungen? Mit der Rücktaste ⌫ einen Tab löschen.</li>
+          <li><b>Aufzählung</b> (Punkte •): Reihenfolge egal, z.B. Zutaten. <b>Nummerierung</b> (1. 2. 3.): Reihenfolge wichtig, z.B. Schritte. Zeilen markieren → Start → Knopf.</li>
+          <li><b>Format übertragen</b> (Pinsel, Start ganz links): in das schöne Wort klicken → Pinsel → über das andere Wort fahren. Doppelklick auf den Pinsel: für mehrere Stellen.</li>
         </ul>
+        <div id="theory-k2-svg" class="mt-3 max-w-md mx-auto"></div>
         <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span></button>
       </details>
       <div id="reset-k2"></div>
     </section>
-    <!-- Teil W3 «Bild & Tabelle» -->
+    <!-- Teil W3 «Überschriften» -->
     <section id="view-k3" class="view hidden space-y-4">
       <div id="card-k3" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
         <div id="head-k3"></div>
         <div id="body-k3"></div>
       </div>
       <details id="theory-k3" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Bild und Tabelle</span></summary>
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Überschriften und Tabulator</span></summary>
         <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
-          <li><b>Bild einfügen:</b> Einfügen → Bilder → Dieses Gerät, Stockbilder oder Onlinebilder.</li>
-          <li><b>Grösse:</b> Bild anklicken, an einer <b>Ecke</b> ziehen (nicht an der Seite, sonst wird es verzogen).</li>
-          <li><b>Wie fliesst der Text?</b> Bild anklicken → Symbol <b>Layoutoptionen</b> daneben (oder Bildformat → Textumbruch):</li>
-          <li><b>Mit Text in Zeile:</b> Das Bild steht wie ein grosser Buchstabe in der Zeile (so kommt es neu herein). <b>Quadratisch:</b> Der Text fliesst um das Bild herum. <b>Hinter den Text:</b> Das Bild ist wie ein Hintergrund. <b>Vor den Text:</b> Das Bild liegt über dem Text und verdeckt ihn.</li>
-          <li><b>Tabelle:</b> Einfügen → Tabelle → Kästchen färben (z.B. 3 × 4) → klicken. <b>Spalten</b> stehen senkrecht, <b>Zeilen</b> liegen waagrecht.</li>
-          <li>In der Tabelle springst du mit der <b>Tab-Taste</b> in die nächste Zelle. In der letzten Zelle macht Tab eine neue Zeile.</li>
+          <li><b>Formatvorlagen</b> (Start → Formatvorlagen): <b>Titel</b> = Name der ganzen Arbeit, <b>Überschrift 1</b> = Kapitel, <b>Überschrift 2</b> = Teil im Kapitel. In die Zeile klicken, dann die Vorlage wählen.</li>
+          <li><b>Warum?</b> Word erkennt echte Überschriften: Sie stehen im <b>Navigationsbereich</b> (Ansicht → Navigationsbereich) und später im Inhaltsverzeichnis. Wichtig für Projektarbeiten.</li>
+          <li><b>Tabulator:</b> Die <b>Tab-Taste</b> ⇥ (links neben Q) springt weiter. So stehen Zahlen genau untereinander. Nie viele Leerschläge machen!</li>
+          <li><b>¶ (Alle anzeigen):</b> zeigt versteckte Zeichen: · = Leerschlag, → = Tab, ¶ = Enter. Gedruckt werden sie nie.</li>
         </ul>
-        <div id="theory-k3-svg" class="mt-3 max-w-md mx-auto"></div>
         <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span></button>
       </details>
       <div id="reset-k3"></div>
     </section>
-    <!-- Teil W4 «Seite & Prüfen» -->
+    <!-- Teil W4 «Bearbeiten & Prüfen» -->
     <section id="view-k4" class="view hidden space-y-4">
       <div id="card-k4" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
         <div id="head-k4"></div>
         <div id="body-k4"></div>
       </div>
       <details id="theory-k4" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Seite und Prüfen</span></summary>
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Bearbeiten und Prüfen</span></summary>
         <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
-          <li><b>Hochformat / Querformat:</b> Layout → Ausrichtung. Hochformat = höher als breit. Querformat = breiter als hoch.</li>
+          <li><b>Suchen:</b> Ctrl + F → Wort eintippen. Links siehst du jede Stelle.</li>
+          <li><b>Ersetzen:</b> Ctrl + H (oder Start → Ersetzen) → «Suchen nach» → «Ersetzen durch» → <b>Alle ersetzen</b>.</li>
+          <li><b>Verschieben:</b> markieren → Ctrl + X (ausschneiden) → hinklicken → Ctrl + V. <b>Kopieren:</b> Ctrl + C statt Ctrl + X, dann gibt es es zweimal.</li>
           <li><b>Rote Wellenlinie:</b> Word kennt das Wort nicht, vielleicht ein Fehler. Rechtsklick auf das Wort → Vorschlag wählen. Oder Überprüfen → Editor (F7). Du entscheidest: Nicht jeder Vorschlag stimmt.</li>
           <li><b>Fast alles rot?</b> Dann ist die Sprache falsch. Ctrl + A → Überprüfen → Sprache → «Sprache für die Korrekturhilfen festlegen» → <b>Deutsch (Schweiz)</b> → OK. Dann prüft Word mit «ss» statt «ß».</li>
           <li><b>Wörter zählen:</b> unten links in der Leiste (z.B. «287 Wörter») oder Überprüfen → Wörter zählen.</li>
@@ -175,25 +177,64 @@
       </details>
       <div id="reset-k4"></div>
     </section>
-    <!-- Teil W5 «Papier, Drucken, PDF» -->
+    <!-- Teil W5 «Bild» -->
     <section id="view-k5" class="view hidden space-y-4">
       <div id="card-k5" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
         <div id="head-k5"></div>
         <div id="body-k5"></div>
       </div>
       <details id="theory-k5" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
-        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Papier, Drucken, PDF</span></summary>
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Bild</span></summary>
         <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
-          <li><b>A4</b> = normales Schulblatt, 21 × 29,7 cm. <b>A3</b> = doppelt so gross (zwei A4 nebeneinander), gut für Plakate. <b>A5</b> = halb so gross wie A4.</li>
-          <li><b>Papierformat einstellen:</b> Layout → Format. (Layout → Ausrichtung ist Hoch- oder Querformat.)</li>
-          <li><b>Achtung:</b> Ist das Dokument A3, aber im Drucker nur A4-Papier, wird es verkleinert oder abgeschnitten.</li>
-          <li><b>Drucken:</b> Ctrl + P (oder Datei → Drucken). Rechts ist die <b>Vorschau</b>: Erst prüfen, dann drucken. Hier wählst du auch Drucker, Anzahl Kopien und Papier.</li>
-          <li><b>Als PDF speichern:</b> Datei → Speichern unter (oder «Kopie speichern») → Ordner → Dateityp <b>PDF</b> → Speichern. Oder Datei → Exportieren → PDF/XPS-Dokument erstellen. Umbenennen in «.pdf» macht kein PDF!</li>
+          <li><b>Bild einfügen:</b> Einfügen → Bilder → Dieses Gerät, Stockbilder oder Onlinebilder.</li>
+          <li><b>Grösse:</b> Bild anklicken, an einer <b>Ecke</b> ziehen (nicht an der Seite, sonst wird es verzogen).</li>
+          <li><b>Wie fliesst der Text?</b> Bild anklicken → Symbol <b>Layoutoptionen</b> daneben (oder Bildformat → Textumbruch):</li>
+          <li><b>Mit Text in Zeile:</b> wie ein grosser Buchstabe in der Zeile (so kommt es neu herein, lässt sich schlecht schieben). <b>Quadratisch:</b> Der Text fliesst herum. <b>Hinter den Text:</b> wie ein Hintergrund. <b>Vor den Text:</b> liegt obenauf und lässt sich <b>frei verschieben</b>.</li>
         </ul>
         <div id="theory-k5-svg" class="mt-3 max-w-md mx-auto"></div>
         <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span></button>
       </details>
       <div id="reset-k5"></div>
+    </section>
+    <!-- Teil W6 «Tabelle» -->
+    <section id="view-k6" class="view hidden space-y-4">
+      <div id="card-k6" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div id="head-k6"></div>
+        <div id="body-k6"></div>
+      </div>
+      <details id="theory-k6" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Tabelle</span></summary>
+        <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
+          <li><b>Tabelle machen:</b> Einfügen → Tabelle → Kästchen färben (z.B. 3 × 4) → klicken. <b>Spalten</b> stehen senkrecht, <b>Zeilen</b> liegen waagrecht.</li>
+          <li><b>Schreiben:</b> Mit der <b>Tab-Taste</b> in die nächste Zelle. In der letzten Zelle macht Tab eine neue Zeile.</li>
+          <li><b>Zeile oder Spalte dazu:</b> Rechtsklick in eine Zelle → Einfügen → Zeilen oberhalb / unterhalb, Spalten links / rechts.</li>
+          <li><b>Breite:</b> die Linie zwischen zwei Spalten mit der Maus ziehen.</li>
+          <li><b>Farbe:</b> Zellen markieren → Reiter <b>Tabellenentwurf</b> → Schattierung. (Der Reiter erscheint nur, wenn du in der Tabelle bist.)</li>
+        </ul>
+        <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span></button>
+      </details>
+      <div id="reset-k6"></div>
+    </section>
+    <!-- Teil W7 «Seite & Abgabe» -->
+    <section id="view-k7" class="view hidden space-y-4">
+      <div id="card-k7" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div id="head-k7"></div>
+        <div id="body-k7"></div>
+      </div>
+      <details id="theory-k7" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
+        <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Seite und Abgabe</span></summary>
+        <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
+          <li><b>Hochformat / Querformat:</b> Layout → Ausrichtung. <b>Papier</b> (A4 = Schulblatt, A3 = doppelt so gross): Layout → Format.</li>
+          <li><b>Seitenränder</b> = der leere Platz aussen herum: Layout → Seitenränder → Schmal, Normal, Breit.</li>
+          <li><b>Neue Seite:</b> Ctrl + Enter (Seitenumbruch). Nie viele Male Enter: Sonst verrutscht alles, wenn du oben etwas änderst.</li>
+          <li><b>Kopfzeile</b> (oben) und <b>Fusszeile</b> (unten) stehen auf jeder Seite: Einfügen → Kopfzeile / Fusszeile. <b>Seitenzahl:</b> Einfügen → Seitenzahl → Seitenende. Zurück in den Text: Doppelklick in den Text oder Esc.</li>
+          <li><b>Vorschau und Drucken:</b> Ctrl + P. Rechts ist die Vorschau: Erst prüfen, dann drucken.</li>
+          <li><b>Als PDF speichern:</b> Datei → Speichern unter (oder «Kopie speichern») → Ordner → Dateityp <b>PDF</b> → Speichern. Umbenennen in «.pdf» macht kein PDF!</li>
+        </ul>
+        <div id="theory-k7-svg" class="mt-3 max-w-md mx-auto"></div>
+        <button type="button" onclick="backToTask()" class="mt-3 min-h-[44px] px-4 rounded-xl text-sm font-bold border bg-white border-slate-300 text-slate-700"><span data-l="de">↩ Zurück zur Aufgabe</span></button>
+      </details>
+      <div id="reset-k7"></div>
     </section>
   </main>
 
@@ -308,33 +349,53 @@
     const SPELL = () => `<svg viewBox="0 0 300 60" class="w-full h-auto max-h-[90px]" role="img" aria-label="Satz, ein Wort ist rot unterstrichen"><text x="10" y="34" font-size="20" fill="#0f172a">Wir laden euch zum</text><text x="206" y="34" font-size="20" fill="#0f172a">Fesst</text><path d="M206 40 q3 4 6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0" stroke="#dc2626" stroke-width="2" fill="none"/><text x="262" y="34" font-size="20" fill="#0f172a">ein.</text></svg>`;
     const STATUS = () => `<svg viewBox="0 0 320 50" class="w-full h-auto max-h-[70px]" role="img" aria-label="Leiste ganz unten in Word"><rect x="2" y="10" width="316" height="30" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="12" y="30" font-size="13" fill="#334155">Seite 1 von 2</text><text x="112" y="30" font-size="13" font-weight="700" fill="#0f172a">287 Wörter</text><text x="206" y="30" font-size="13" fill="#334155">Deutsch (Schweiz)</text></svg>`;
     const PAPER = () => `<svg viewBox="0 0 240 150" class="w-full h-auto max-h-[170px]" role="img" aria-label="A3 ist so gross wie zwei A4-Blätter nebeneinander"><rect x="10" y="10" width="130" height="92" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/><line x1="75" y1="10" x2="75" y2="102" stroke="#4f46e5" stroke-dasharray="4 3"/><text x="28" y="60" font-size="14" font-weight="800" fill="#3730a3">A4</text><text x="94" y="60" font-size="14" font-weight="800" fill="#3730a3">A4</text><text x="56" y="122" font-size="13" font-weight="800" fill="#0f172a">A3 (quer)</text><rect x="160" y="10" width="65" height="92" fill="#fff" stroke="#64748b" stroke-width="2"/><text x="180" y="60" font-size="14" font-weight="800" fill="#334155">A4</text><text x="164" y="122" font-size="11" fill="#334155">21 × 29,7 cm</text></svg>`;
+    // neu 25.11.2026: Ausrichtung, Listen, Seitenränder, Kopf- und Fusszeile
+    const RAG = (x, y, ws, gap, mode) => ws.map((w, i) => `<rect x="${mode === 'c' ? x + (84 - w) / 2 : x}" y="${y + i * gap}" width="${w}" height="4" rx="2" fill="#94a3b8"/>`).join('');
+    const AL_L = () => PAGE(RAG(18, 14, [84, 62, 78, 50, 80, 66, 40], 11, 'l'), 'Text links ausgerichtet, rechts ungleich lang');
+    const AL_C = () => PAGE(RAG(18, 14, [84, 62, 78, 50, 80, 66, 40], 11, 'c'), 'Text zentriert, alle Zeilen in der Mitte');
+    const AL_J = () => PAGE(RAG(18, 14, [84, 84, 84, 84, 84, 84, 40], 11, 'l'), 'Blocksatz, alle Zeilen gleich lang');
+    const LIST_B = () => PAGE([0, 1, 2, 3].map(i => `<circle cx="24" cy="${22 + i * 18}" r="3.5" fill="#334155"/><rect x="34" y="${20 + i * 18}" width="${60 - i * 6}" height="4" rx="2" fill="#94a3b8"/>`).join(''), 'Liste mit Punkten');
+    const LIST_N = () => PAGE([0, 1, 2, 3].map(i => `<text x="18" y="${26 + i * 18}" font-size="11" font-weight="700" fill="#334155">${i + 1}.</text><rect x="34" y="${20 + i * 18}" width="${60 - i * 6}" height="4" rx="2" fill="#94a3b8"/>`).join(''), 'Liste mit Nummern');
+    const MARGIN = m => PAGE(`<rect x="${10 + m}" y="${4 + m}" width="${100 - 2 * m}" height="${92 - 2 * m}" fill="none" stroke="#a5b4fc" stroke-dasharray="3 2"/>${LINES(10 + m + 3, 4 + m + 5, 100 - 2 * m - 6, Math.floor((92 - 2 * m - 8) / 9), 9)}`, m > 10 ? 'breiter Rand' : 'schmaler Rand');
+    const M_WIDE = () => MARGIN(18), M_NARROW = () => MARGIN(5);
+    const HEADFOOT = () => PAGE(`<rect x="12" y="6" width="96" height="12" fill="#e0e7ff"/><text x="18" y="15" font-size="8" fill="#3730a3">Projektarbeit</text>${LINES(18, 26, 84, 6, 9)}<rect x="12" y="82" width="96" height="12" fill="#e0e7ff"/><text x="56" y="91" font-size="9" font-weight="700" fill="#3730a3">1</text>`, 'Seite mit Kopfzeile oben und Seitenzahl unten');
     const PICS = { word: SVG_WORD, wrap_sq: WRAP_SQ, wrap_inline: WRAP_INLINE, wrap_behind: WRAP_BEHIND, wrap_front: WRAP_FRONT,
-      sp10: SP_10, sp15: SP_15, sp20: SP_20, portrait: PORTRAIT, landscape: LANDSCAPE, square: SQUARE, table: TABLE, spell: SPELL, status: STATUS, paper: PAPER };
+      sp10: SP_10, sp15: SP_15, sp20: SP_20, portrait: PORTRAIT, landscape: LANDSCAPE, square: SQUARE, table: TABLE, spell: SPELL, status: STATUS, paper: PAPER,
+      al_l: AL_L, al_c: AL_C, al_j: AL_J, list_b: LIST_B, list_n: LIST_N, m_wide: M_WIDE, m_narrow: M_NARROW, headfoot: HEADFOOT };
     const F = n => `dateien/Word_${n}.docx`;
 
     // ==============================================================
-    // WORD-FÜHRERSCHEIN: 5 Teile = 5 Lektionen (Wunsch Lehrperson 18.11.2026: viel üben und wiederholen)
-    // Jede Lektion: eine Aufwärm-Mission mit allem Früheren, dann neue Missionen mit eigener Übungsdatei.
+    // WORD-FÜHRERSCHEIN: 7 Teile = 7 Lektionen (Wunsch Lehrperson 18.11.2026: viel üben und wiederholen;
+    // 25.11.2026: Gerüst ECDL-Liste Textverarbeitung, alles Alltagspraktische, nur Seriendruck und Spezielles weg; immer Desktop-App)
+    // Jede Lektion: ab W2 eine Aufwärm-Mission mit allem Früheren, dann neue Missionen mit eigener Übungsdatei.
     // st: 1 erkennen · 2 ergänzen · 3 am Laptop (Mission). nr: Mission(en) auf der Führerschein-Karte.
     // ==============================================================
     const PARTS = [
-      { id: 'k1', emoji: '🔤', title: 'Schrift', lz: 'Lektion W1', nrs: 'W1.1–W1.2', sub: 'Schriftart, Schriftgrösse, fett, kursiv, Farbe, Textmarker' },
-      { id: 'k2', emoji: '📏', title: 'Absatz & Überschriften', lz: 'Lektion W2', nrs: 'W2.1–W2.3', sub: 'Zeilenabstand, Überschriften, Tabulator' },
-      { id: 'k3', emoji: '🖼️', title: 'Bild & Tabelle', lz: 'Lektion W3', nrs: 'W3.1–W3.3', sub: 'Bild einfügen und wie der Text fliesst, Tabelle' },
-      { id: 'k4', emoji: '🔍', title: 'Seite & Prüfen', lz: 'Lektion W4', nrs: 'W4.1–W4.3', sub: 'Hoch- und Querformat, Rechtschreibung, Sprache, Wörter zählen' },
-      { id: 'k5', emoji: '🖨️', title: 'Papier, Drucken, PDF', lz: 'Lektion W5', nrs: 'W5.1–W5.3', sub: 'A4 und A3, drucken, als PDF speichern' }
+      { id: 'k1', emoji: '🔤', title: 'Schrift', lz: 'Lektion W1', nrs: 'W1.1–W1.2', sub: 'Word-App öffnen, Schriftart, Schriftgrösse, fett, kursiv, Farbe' },
+      { id: 'k2', emoji: '📏', title: 'Absatz', lz: 'Lektion W2', nrs: 'W2.1–W2.3', sub: 'Ausrichten, Zeilenabstand, Aufzählung, Nummerierung' },
+      { id: 'k3', emoji: '🏷️', title: 'Überschriften', lz: 'Lektion W3', nrs: 'W3.1–W3.3', sub: 'Titel, Überschrift 1 und 2, Tabulator' },
+      { id: 'k4', emoji: '🔍', title: 'Bearbeiten & Prüfen', lz: 'Lektion W4', nrs: 'W4.1–W4.3', sub: 'Suchen und Ersetzen, verschieben, Rechtschreibung' },
+      { id: 'k5', emoji: '🖼️', title: 'Bild', lz: 'Lektion W5', nrs: 'W5.1–W5.3', sub: 'Bild einfügen, Grösse, wie der Text fliesst, frei verschieben' },
+      { id: 'k6', emoji: '📋', title: 'Tabelle', lz: 'Lektion W6', nrs: 'W6.1–W6.3', sub: 'Tabelle machen, Zeilen dazu, Breite, Farbe' },
+      { id: 'k7', emoji: '📄', title: 'Seite & Abgabe', lz: 'Lektion W7', nrs: 'W7.1–W7.3', sub: 'Querformat, Seitenränder, Kopf- und Fusszeile, PDF' }
     ];
     const STAGES = [
       { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus.' },
       { icon: '✏️', label: 'Ergänzen', intro: 'Jetzt baust du die Reihenfolge, ordnest zu oder schreibst ein Wort. Es gibt Hilfe.' },
       { icon: '💻', label: 'Am Laptop', intro: 'Jetzt machst du es selber in Word. Hake jeden Schritt ab.' }
     ];
-    const DL = (n, name) => [`Tippe oben auf <b>📥 Übungsdatei herunterladen</b>.`, `Verschiebe <b>${name}</b> aus Downloads nach <b>OneDrive › Schule › Informatik</b> (Ctrl + X, Ctrl + V). Öffne sie dort.`];
+    const DL = (n, name) => [`Tippe oben auf <b>📥 Übungsdatei herunterladen</b>.`, `Verschiebe <b>${name}</b> aus Downloads nach <b>OneDrive › Schule › Informatik</b> (Ctrl + X, Ctrl + V). Öffne sie dort mit <b>Doppelklick</b>: Sie geht in der <b>Word-App</b> auf, nicht im Browser.`];
     const DL_HELP = 'Datei nicht in Downloads? Im Browser oben rechts auf den Pfeil ⬇ klicken, dann «In Ordner anzeigen».';
+    const APP_HELP = 'Word ist im Browser aufgegangen? Oben rechts auf «Bearbeitung» ▾ › «In Desktop-App öffnen». Oder im Explorer: Rechtsklick auf die Datei › Öffnen mit › Word.';
+    const AUF_HELP = 'Vergessen, wie es geht? Tippe auf «📖 Kurz erklärt» oder übe nochmals in den Teilen vorher.';
     const ITEMS = {
       // ---------- W1: Schrift ----------
       k1: [
-        { id: 'w1_mark', ex: 'markieren', st: 1, nr: ['W1.1'], type: 'mc', first: true, q: 'Du willst ein Wort ändern. Was machst du zuerst?',
+        { id: 'w1_app', ex: 'app', st: 1, nr: ['W1.1'], type: 'mc', q: 'Word ist im Browser aufgegangen. Woran siehst du das?',
+          opts: ['Oben ist die Adresszeile vom Browser', 'Oben steht der Name der Datei', 'Es gibt den Reiter Start', 'Der Text ist schwarz'],
+          whyNot: [null, 'Den Namen sieht man in beiden.', 'Das Menüband gibt es in beiden.', 'Schwarz ist der Text in beiden.'],
+          tip: 'Was gibt es nur im Browser (Edge, Chrome)?', why: 'Im Browser siehst du die Adresszeile. Dann: «In Desktop-App öffnen». In der App gibt es alle Knöpfe.' },
+        { id: 'w1_mark', ex: 'markieren', st: 1, nr: ['W1.1'], type: 'mc', q: 'Du willst ein Wort ändern. Was machst du zuerst?',
           opts: ['Das Wort markieren', 'Auf «Speichern» klicken', 'Das Wort löschen', 'Word neu starten'],
           whyNot: [null, 'Das speichert nur.', 'Dann ist es weg.', 'Das hilft nicht.'],
           tip: 'Word muss wissen, welches Wort gemeint ist.', why: 'Zuerst markieren, dann ändern.' },
@@ -342,7 +403,7 @@
           opts: ['Doppelklick auf das Wort', 'Einmal klicken', 'Ctrl + A', 'Rechtsklick'],
           whyNot: [null, 'Dann blinkt nur der Strich im Wort.', 'Das markiert den ganzen Text.', 'Das öffnet ein Menü.'],
           tip: 'Zweimal schnell hintereinander …', why: 'Doppelklick markiert ein Wort. Ctrl + A markiert alles.' },
-        { id: 'w1_art', ex: 'schrift', st: 1, nr: ['W1.1'], type: 'mc', pic: 'word', q: 'Wo änderst du die Schriftart?',
+        { id: 'w1_art', ex: 'schrift', st: 1, nr: ['W1.1'], type: 'mc', first: true, pic: 'word', q: 'Wo änderst du die Schriftart?',
           opts: ['Im Feld mit «Arial»', 'Im Feld mit «12»', 'Beim Knopf F', 'Beim Knopf A'],
           whyNot: [null, 'Die Zahl ist die Grösse.', 'F macht fett.', 'A ändert die Farbe.'],
           tip: 'Arial, Calibri, Times: Das sind Namen von Schriften.', why: '«Arial» ist der Name der Schrift. Dort wählst du eine andere.' },
@@ -358,6 +419,10 @@
           opts: ['ab mit dem gelben Strich', 'A mit dem roten Strich', 'F', 'U'],
           whyNot: [null, 'Das färbt nur die Buchstaben, nicht den Hintergrund.', 'F macht fett.', 'U unterstreicht.'],
           tip: 'Ein Knopf färbt die Buchstaben, ein anderer den Hintergrund. Welcher sieht aus wie ein Leuchtstift?', why: 'Der Textmarker (ab, gelber Strich) färbt den Hintergrund.' },
+        { id: 'w1_zurueck', ex: 'markieren', st: 1, nr: ['W1.2'], type: 'mc', q: 'Hoppla, du hast aus Versehen den ganzen Text gelöscht. Was hilft sofort?',
+          opts: ['Ctrl + Z', 'Ctrl + S', 'Ctrl + A', 'Word schliessen'],
+          whyNot: [null, 'Das speichert den leeren Text.', 'Das markiert nur alles.', 'Dann ist es vielleicht ganz weg.'],
+          tip: 'Es gibt eine Taste, die den letzten Schritt zurücknimmt.', why: 'Ctrl + Z macht rückgängig. Ganz ohne Stress.' },
         { id: 'w1_sort', ex: 'fku', st: 2, nr: ['W1.2'], type: 'sort', q: 'Was macht welcher Knopf? Ordne zu.',
           rows: [['F', 'fett'], ['K', 'kursiv (schräg)'], ['U', 'unterstrichen'], ['A (roter Strich)', 'Schriftfarbe'], ['ab (gelber Strich)', 'Textmarker (Hintergrund)']],
           cats: ['fett', 'kursiv (schräg)', 'unterstrichen', 'Schriftfarbe', 'Textmarker (Hintergrund)', 'grösser'],
@@ -367,18 +432,26 @@
           tip: 'Zuerst muss Word wissen, was rot werden soll.' },
         { id: 'w1_gap', ex: 'schrift', st: 2, nr: ['W1.1'], type: 'gap', text: 'Im Menüband steht «Arial» und «12». Die Zahl 12 ist die ___.',
           a: ['Schriftgrösse', 'Schriftgröße', 'Grösse', 'Schriftgrad'], tip: 'Je höher die Zahl, desto grösser die Schrift.', why: '12 ist die Schriftgrösse.' },
-        { id: 'w1_m1', st: 3, nr: ['W1.1'], type: 'mission', q: 'Mission W1.1: Der Titel', link: F('W1_Rheinfall'), linkText: '📥 Übungsdatei herunterladen',
-          steps: [...DL('W1', 'Word_W1_Rheinfall'), 'Markiere den Titel «Der Rheinfall». Wähle eine <b>andere Schriftart</b>.', 'Mach den Titel <b>grösser</b> (24) und <b>fett</b>. Speichere mit <b>Ctrl + S</b>.'],
-          help: [DL_HELP, 'Schriftart: Klicke beim Feld «Arial» auf den Pfeil ▾ und wähle eine Schrift aus der Liste.', 'Zahl 24 nicht in der Liste? Klicke ins Feld, schreib 24, drück Enter.'],
-          proof: 'Der Titel ist gross, fett und in einer anderen Schrift.' },
+        { id: 'w1_m1', st: 3, nr: ['W1.1'], type: 'mission', q: 'Mission W1.1: Word-App und Titel', link: F('W1_Rheinfall'), linkText: '📥 Übungsdatei herunterladen',
+          steps: [...DL('W1', 'Word_W1_Rheinfall'), 'Schau oben: Siehst du <b>keine</b> Adresszeile vom Browser? Dann bist du in der Word-App. 👍', 'Markiere den Titel «Der Rheinfall». Wähle eine <b>andere Schriftart</b>, Grösse <b>24</b> und <b>fett</b>. Speichere mit <b>Ctrl + S</b>.'],
+          help: [DL_HELP, APP_HELP, 'Zahl 24 nicht in der Liste? Klicke ins Feld, schreib 24, drück Enter.'],
+          proof: 'Word ist als App offen. Der Titel ist gross, fett und in einer anderen Schrift.' },
         { id: 'w1_m2', st: 3, nr: ['W1.2'], type: 'mission', q: 'Mission W1.2: Den Text gestalten',
-          steps: ['Mach <b>alle Zahlen</b> im Text <b>fett</b> (Doppelklick auf die Zahl, dann F).', 'Mach das Wort «Schaffhausen» <b>kursiv</b>.', 'Hebe den Satz mit dem Schiff <b>gelb</b> hervor (Textmarker ab).', 'Gib dem letzten Satz eine <b>Schriftfarbe</b> deiner Wahl. Speichere mit <b>Ctrl + S</b>.'],
+          steps: ['Mach <b>alle Zahlen</b> im Text <b>fett</b> (Doppelklick auf die Zahl, dann F).', 'Mach das Wort «Schaffhausen» <b>kursiv</b> und <b>unterstrichen</b>.', 'Hebe den Satz mit dem Schiff <b>gelb</b> hervor (Textmarker ab).', 'Gib dem letzten Satz eine <b>Schriftfarbe</b> deiner Wahl. Speichere mit <b>Ctrl + S</b>.'],
           help: ['Einen ganzen Satz markieren: Maus vor das erste Wort, gedrückt halten, bis zum Punkt ziehen.', 'Falsch gemacht? Ctrl + Z macht den letzten Schritt rückgängig.'],
-          proof: 'Zahlen fett, Schaffhausen kursiv, ein Satz gelb, ein Satz farbig.' }
+          proof: 'Zahlen fett, Schaffhausen kursiv und unterstrichen, ein Satz gelb, ein Satz farbig.' }
       ],
-      // ---------- W2: Absatz & Überschriften ----------
+      // ---------- W2: Absatz ----------
       k2: [
-        { id: 'w2_was', ex: 'zeilen', st: 1, nr: ['W2.2'], type: 'mc', first: true, q: 'Was ist der Zeilenabstand?',
+        { id: 'w2_zentr', ex: 'ausrichten', st: 1, nr: ['W2.2'], type: 'mc', first: true, picOpts: true, right: 'das Blatt, bei dem alle Zeilen in der Mitte stehen', q: 'Welcher Text ist zentriert?',
+          opts: ['al_c', 'al_l', 'al_j'],
+          whyNot: [null, 'Hier beginnen alle Zeilen links.', 'Hier sind alle Zeilen gleich lang: Blocksatz.'],
+          tip: 'Zentriert = in der Mitte. Schau, wo die Zeilen beginnen.', why: 'Zentriert: Jede Zeile steht in der Mitte. Gut für Titel.' },
+        { id: 'w2_block', ex: 'ausrichten', st: 1, nr: ['W2.2'], type: 'mc', picOpts: true, right: 'das Blatt, bei dem links und rechts alle Zeilen gerade aufhören (Blocksatz)', q: 'Bei welchem Text sind links UND rechts alle Zeilen gerade (Blocksatz)?',
+          opts: ['al_j', 'al_l', 'al_c'],
+          whyNot: [null, 'Hier ist der rechte Rand ungleich.', 'Hier ist der Text in der Mitte.'],
+          tip: 'Blocksatz sieht aus wie ein Block, wie in einer Zeitung.', why: 'Blocksatz: Alle Zeilen sind gleich lang, nur die letzte nicht.' },
+        { id: 'w2_was', ex: 'zeilen', st: 1, nr: ['W2.2'], type: 'mc', q: 'Was ist der Zeilenabstand?',
           opts: ['Der Platz zwischen zwei Zeilen', 'Der Platz zwischen zwei Buchstaben', 'Der Rand links und rechts', 'Die Grösse der Schrift'],
           whyNot: [null, 'Es geht um Zeilen, nicht um Buchstaben.', 'Das ist der Seitenrand.', 'Das ist die Schriftgrösse.'],
           tip: 'Das Wort sagt es: Abstand zwischen …', why: 'Zeilenabstand = Platz zwischen den Zeilen.' },
@@ -386,119 +459,107 @@
           opts: ['sp20', 'sp15', 'sp10'],
           whyNot: [null, 'Da gibt es noch eines mit mehr Platz.', 'Da sind die Zeilen eng.'],
           tip: 'Schau, wo zwischen den Zeilen am meisten weiss ist.', why: 'Grosser Zeilenabstand = viel Platz zwischen den Zeilen.' },
-        { id: 'w2_tab', ex: 'tab', st: 1, nr: ['W2.3'], type: 'mc', q: 'In einer Liste sollen die Zahlen genau untereinander stehen. Was drückst du zwischen Wort und Zahl?',
-          opts: ['Die Tab-Taste ⇥', 'Viele Male die Leertaste', 'Enter', 'Ctrl + Z'],
-          whyNot: [null, 'Dann stehen die Zahlen fast nie genau untereinander.', 'Dann kommt die Zahl auf die nächste Zeile.', 'Das macht rückgängig.'],
-          tip: 'Die Taste links neben dem Q, mit zwei Pfeilen.', why: 'Die Tab-Taste springt zum nächsten Tabstopp. So steht alles genau untereinander.' },
-        { id: 'w2_warum', ex: 'ueber', st: 1, nr: ['W2.2'], type: 'mc', q: 'Warum nimmst du für Kapitel-Titel «Überschrift 1» und machst sie nicht nur fett und gross?',
-          opts: ['Word erkennt sie als Überschrift', 'Dann ist die Schrift rot', 'Dann zählt Word sie nicht', 'Das ist genau das Gleiche'],
-          whyNot: [null, 'Die Farbe ist nicht der Grund.', 'Gezählt werden alle Wörter.', 'Fett und gross sieht nur so aus. Word erkennt es nicht.'],
-          tip: 'Denk an eine lange Projektarbeit mit Inhaltsverzeichnis.', why: 'Nur echte Überschriften erscheinen im Inhaltsverzeichnis und im Navigationsbereich.' },
-        { id: 'w2_wo', ex: 'ueber', st: 1, nr: ['W2.2'], type: 'mc', q: 'Wo findest du «Überschrift 1»?',
-          opts: ['Start › Formatvorlagen', 'Einfügen › Bilder', 'Layout › Ausrichtung', 'Datei › Drucken'],
-          whyNot: [null, 'Dort fügst du Bilder ein.', 'Das dreht die Seite quer.', 'Das druckt.'],
-          tip: 'Es ist im gleichen Reiter wie fett und kursiv.', why: 'Reiter Start, rechts bei den Formatvorlagen.' },
-        { id: 'w2_ue2', ex: 'ueber', st: 1, nr: ['W2.2'], type: 'mc', q: 'Deine Projektarbeit hat das Kapitel «Das Haus». Darin gibt es den Teil «Die Zimmer». Welche Überschrift bekommt «Die Zimmer»?',
-          opts: ['Überschrift 2', 'Überschrift 1', 'Titel', 'Standard'],
-          whyNot: [null, 'Das ist für die Kapitel selbst.', 'Das ist nur für den Titel ganz oben.', 'Dann ist es normaler Text.'],
-          tip: '«Die Zimmer» ist ein Teil im Kapitel, eine Stufe tiefer.', why: 'Kapitel = Überschrift 1, Teil im Kapitel = Überschrift 2.' },
-        { id: 'w2_sort', ex: 'ueber', st: 2, nr: ['W2.2', 'W2.3'], type: 'sort', q: 'Was brauchst du wofür? Ordne zu.',
-          rows: [['Zahlen in einer Liste genau untereinander', 'Tab-Taste'], ['Mehr Platz zwischen den Zeilen', 'Zeilenabstand'], ['Titel eines Kapitels', 'Überschrift 1'], ['Teil in einem Kapitel', 'Überschrift 2']],
-          cats: ['Tab-Taste', 'Zeilenabstand', 'Überschrift 1', 'Überschrift 2', 'Leertaste'],
-          tip: 'Kapitel ist die grosse Stufe, Teil die kleinere.' },
+        { id: 'w2_aufz', ex: 'liste', st: 1, nr: ['W2.3'], type: 'mc', q: 'Bei einem Rezept sind die Schritte wichtig: zuerst, dann, danach. Welche Liste passt?',
+          opts: ['Nummerierung (1. 2. 3.)', 'Aufzählung mit Punkten', 'Gar keine Liste', 'Eine Tabelle'],
+          whyNot: [null, 'Punkte zeigen keine Reihenfolge.', 'Mit einer Liste findet man den nächsten Schritt schneller.', 'Für eine Reihenfolge braucht es keine Tabelle.'],
+          tip: 'Was zeigt dir, welcher Schritt zuerst kommt?', why: 'Reihenfolge wichtig = Nummerierung. Nicht wichtig (z.B. Zutaten) = Aufzählung mit Punkten.' },
+        { id: 'w2_pinsel', ex: 'pinsel', st: 1, nr: ['W2.3'], type: 'mc', q: 'Ein Wort ist schon rot und fett. Ein anderes Wort soll genau gleich aussehen. Welcher Knopf hilft?',
+          opts: ['Der Pinsel «Format übertragen»', 'Ctrl + Z', 'Der Knopf U', 'Zeilenabstand'],
+          whyNot: [null, 'Das macht rückgängig.', 'U unterstreicht nur.', 'Das ist der Platz zwischen den Zeilen.'],
+          tip: 'Mit welchem Werkzeug malt man etwas an?', why: 'Format übertragen: schönes Wort anklicken, Pinsel, dann über das andere Wort fahren.' },
+        { id: 'w2_sort', ex: 'liste', st: 2, nr: ['W2.2', 'W2.3'], type: 'sort', q: 'Was brauchst du wofür? Ordne zu.',
+          rows: [['Titel in der Mitte', 'Zentriert'], ['Mehr Platz zwischen den Zeilen', 'Zeilenabstand'], ['Zutaten für einen Kuchen', 'Aufzählung mit Punkten'], ['Schritte, die nacheinander kommen', 'Nummerierung']],
+          cats: ['Zentriert', 'Zeilenabstand', 'Aufzählung mit Punkten', 'Nummerierung', 'Leertaste'],
+          tip: 'Reihenfolge wichtig: Zahlen. Reihenfolge egal: Punkte.' },
         { id: 'w2_order', ex: 'zeilen', st: 2, nr: ['W2.2'], type: 'order', q: 'Du machst den ganzen Text mit Zeilenabstand 1,5. Bring die Schritte in die richtige Reihenfolge.',
           steps: ['Ctrl + A drücken (alles markieren)', 'Im Reiter Start auf den Knopf «Zeilen- und Absatzabstand» klicken', '1,5 wählen'],
           tip: 'Zuerst muss Word wissen, welcher Text gemeint ist.' },
-        { id: 'w2_gap', ex: 'tab', st: 2, nr: ['W2.3'], type: 'gap', text: 'Damit Zahlen genau untereinander stehen, drückst du die ___-Taste.',
+        { id: 'w2_gap', ex: 'liste', st: 2, nr: ['W2.3'], type: 'gap', text: 'Eine Liste mit 1. 2. 3. heisst ___.',
+          a: ['Nummerierung', 'Nummerieren', 'nummerierte Liste'], tip: 'Es kommt von «Nummer».', why: 'Nummerierung.' },
+        { id: 'w2_m1', st: 3, nr: ['W2.1'], type: 'mission', q: 'Mission W2.1: Aufwärmen', link: F('W2_Rezept'), linkText: '📥 Übungsdatei herunterladen',
+          steps: [...DL('W2', 'Word_W2_Rezept'), 'Titel «Schoggikuchen»: <b>andere Schriftart</b>, Grösse <b>26</b>, <b>fett</b>, eine <b>Farbe</b>.', 'Mach «180 Grad» <b>fett</b> und hebe «Achtung, heiss!» <b>gelb</b> hervor.'],
+          help: [DL_HELP, APP_HELP, AUF_HELP],
+          proof: 'Titel gross, fett, farbig. «180 Grad» fett, «Achtung, heiss!» gelb.' },
+        { id: 'w2_m2', st: 3, nr: ['W2.2'], type: 'mission', q: 'Mission W2.2: Ausrichten und Zeilenabstand',
+          steps: ['Klicke in den Titel. Start › <b>Zentriert</b>.', 'Markiere den Text unter «So geht’s». Start › <b>Blocksatz</b>.', 'Ctrl + A, dann <b>Zeilenabstand 1,5</b>.', 'Speichere mit <b>Ctrl + S</b>.'],
+          help: ['Die Knöpfe fürs Ausrichten sind im Reiter Start, Gruppe «Absatz»: 4 kleine Knöpfe mit Strichen.', 'Der Knopf für den Zeilenabstand hat Linien und zwei Pfeile ↕.'],
+          proof: 'Titel in der Mitte, Text als Block, mehr Platz zwischen den Zeilen.' },
+        { id: 'w2_m3', st: 3, nr: ['W2.3'], type: 'mission', q: 'Mission W2.3: Listen und Pinsel',
+          steps: ['Markiere die 5 Zutaten. Start › <b>Aufzählungszeichen</b> (Punkte).', 'Markiere die Schritte unter «So geht’s». Start › <b>Nummerierung</b> (1. 2. 3.).', 'Mach «Zutaten» <b>fett und blau</b>.', 'Klicke in «Zutaten», dann auf den <b>Pinsel</b> (Format übertragen), dann über «So geht’s» fahren. Ctrl + S.'],
+          help: ['Die Knöpfe für Listen sind im Reiter Start, links oben in der Gruppe «Absatz».', 'Pinsel nicht gefunden? Reiter Start, ganz links, unter «Einfügen».'],
+          proof: 'Zutaten mit Punkten, Schritte mit 1. 2. 3., beide Zwischentitel fett und blau.' }
+      ],
+      // ---------- W3: Überschriften & Tabulator ----------
+      k3: [
+        { id: 'w3_warum', ex: 'ueber', st: 1, nr: ['W3.2'], type: 'mc', first: true, q: 'Warum nimmst du für Kapitel-Titel «Überschrift 1» und machst sie nicht nur fett und gross?',
+          opts: ['Word erkennt sie als Überschrift', 'Dann ist die Schrift rot', 'Dann zählt Word sie nicht', 'Das ist genau das Gleiche'],
+          whyNot: [null, 'Die Farbe ist nicht der Grund.', 'Gezählt werden alle Wörter.', 'Fett und gross sieht nur so aus. Word erkennt es nicht.'],
+          tip: 'Denk an eine lange Projektarbeit mit Inhaltsverzeichnis.', why: 'Nur echte Überschriften erscheinen im Inhaltsverzeichnis und im Navigationsbereich.' },
+        { id: 'w3_wo', ex: 'ueber', st: 1, nr: ['W3.2'], type: 'mc', q: 'Wo findest du «Überschrift 1»?',
+          opts: ['Start › Formatvorlagen', 'Einfügen › Bilder', 'Layout › Ausrichtung', 'Datei › Drucken'],
+          whyNot: [null, 'Dort fügst du Bilder ein.', 'Das dreht die Seite quer.', 'Das druckt.'],
+          tip: 'Es ist im gleichen Reiter wie fett und kursiv.', why: 'Reiter Start, rechts bei den Formatvorlagen.' },
+        { id: 'w3_titel', ex: 'ueber', st: 1, nr: ['W3.2'], type: 'mc', q: 'Ganz oben steht der Name deiner Projektarbeit: «Unser Klassenlager». Welche Formatvorlage passt?',
+          opts: ['Titel', 'Überschrift 2', 'Standard', 'Aufzählung'],
+          whyNot: [null, 'Das ist für einen Teil in einem Kapitel.', 'Dann ist es normaler Text.', 'Das ist eine Liste, keine Vorlage für Titel.'],
+          tip: 'Der Name der ganzen Arbeit kommt nur einmal vor, ganz oben.', why: '«Titel» = Name der ganzen Arbeit. Kapitel = Überschrift 1.' },
+        { id: 'w3_ue2', ex: 'ueber', st: 1, nr: ['W3.2'], type: 'mc', q: 'Deine Projektarbeit hat das Kapitel «Das Haus». Darin gibt es den Teil «Die Zimmer». Welche Überschrift bekommt «Die Zimmer»?',
+          opts: ['Überschrift 2', 'Überschrift 1', 'Titel', 'Standard'],
+          whyNot: [null, 'Das ist für die Kapitel selbst.', 'Das ist nur für den Titel ganz oben.', 'Dann ist es normaler Text.'],
+          tip: '«Die Zimmer» ist ein Teil im Kapitel, eine Stufe tiefer.', why: 'Kapitel = Überschrift 1, Teil im Kapitel = Überschrift 2.' },
+        { id: 'w3_tab', ex: 'tab', st: 1, nr: ['W3.3'], type: 'mc', q: 'In einer Liste sollen die Zahlen genau untereinander stehen. Was drückst du zwischen Wort und Zahl?',
+          opts: ['Die Tab-Taste ⇥', 'Viele Male die Leertaste', 'Enter', 'Ctrl + Z'],
+          whyNot: [null, 'Dann stehen die Zahlen fast nie genau untereinander.', 'Dann kommt die Zahl auf die nächste Zeile.', 'Das macht rückgängig.'],
+          tip: 'Die Taste links neben dem Q, mit zwei Pfeilen.', why: 'Die Tab-Taste springt zum nächsten Tabstopp. So steht alles genau untereinander.' },
+        { id: 'w3_zeichen', ex: 'tab', st: 1, nr: ['W3.3'], type: 'mc', q: 'Du willst sehen, wo Leerschläge und Tabs sind. Welcher Knopf zeigt sie?',
+          opts: ['¶ (Alle anzeigen)', 'F', 'Ctrl + P', 'Zoom'],
+          whyNot: [null, 'F macht fett.', 'Das druckt.', 'Das macht nur grösser.'],
+          tip: 'Der Knopf sieht aus wie ein umgedrehtes P.', why: '¶ zeigt versteckte Zeichen: · ist ein Leerschlag, → ist ein Tab. Gedruckt werden sie nicht.' },
+        { id: 'w3_sort', ex: 'ueber', st: 2, nr: ['W3.2', 'W3.3'], type: 'sort', q: 'Was brauchst du wofür? Ordne zu.',
+          rows: [['Name der ganzen Arbeit, ganz oben', 'Titel'], ['Titel eines Kapitels', 'Überschrift 1'], ['Teil in einem Kapitel', 'Überschrift 2'], ['Zahlen in einer Liste genau untereinander', 'Tab-Taste']],
+          cats: ['Titel', 'Überschrift 1', 'Überschrift 2', 'Tab-Taste', 'Leertaste'],
+          tip: 'Titel ist die grösste Stufe, dann Kapitel, dann Teil.' },
+        { id: 'w3_order', ex: 'ueber', st: 2, nr: ['W3.2'], type: 'order', q: 'Die Zeile «Einleitung» soll eine Überschrift werden. Bring die Schritte in die richtige Reihenfolge.',
+          steps: ['In die Zeile «Einleitung» klicken', 'Reiter Start öffnen', 'Bei den Formatvorlagen «Überschrift 1» klicken'],
+          tip: 'Zuerst muss Word wissen, welche Zeile gemeint ist.' },
+        { id: 'w3_gap', ex: 'tab', st: 2, nr: ['W3.3'], type: 'gap', text: 'Damit Zahlen genau untereinander stehen, drückst du die ___-Taste.',
           a: ['Tab', 'Tabulator', 'Tabulatortaste', 'Tabtaste'], tip: 'Die Taste links neben dem Q.', why: 'Die Tab-Taste (Tabulator).' },
-        { id: 'w2_m1', st: 3, nr: ['W2.1'], type: 'mission', q: 'Mission W2.1: Aufwärmen', link: F('W2_Projekt'), linkText: '📥 Übungsdatei herunterladen',
-          steps: [...DL('W2', 'Word_W2_Projekt'), 'Titel ganz oben: <b>andere Schriftart</b>, Grösse <b>22</b>, <b>fett</b>.', 'Hebe in der Einleitung das Wort «Klassenlager» <b>gelb</b> hervor.'],
-          help: [DL_HELP, 'Vergessen, wie es geht? Tippe auf «📖 Theorie» oder schau im Teil «Schrift» nach.'],
-          proof: 'Titel gross, fett, andere Schrift. Ein Wort gelb.' },
-        { id: 'w2_m2', st: 3, nr: ['W2.2'], type: 'mission', q: 'Mission W2.2: Überschriften und Zeilenabstand',
-          steps: ['Klicke in die Zeile «Einleitung». Klicke bei Start › Formatvorlagen auf <b>Überschrift 1</b>.', 'Mach das Gleiche bei «Das Haus», «Das Programm» und «Packliste».', 'Klicke in die Zeile «Die Zimmer». Wähle <b>Überschrift 2</b>.', 'Ctrl + A, dann <b>Zeilenabstand 1,5</b>. Schau bei Ansicht › <b>Navigationsbereich</b>: Siehst du links deine Kapitel?'],
-          help: ['«Überschrift 2» nicht zu sehen? Bei den Formatvorlagen auf den kleinen Pfeil ▾ klicken.', 'Der Knopf für den Zeilenabstand hat Linien und zwei Pfeile ↕.'],
+        { id: 'w3_m1', st: 3, nr: ['W3.1'], type: 'mission', q: 'Mission W3.1: Aufwärmen', link: F('W3_Projekt'), linkText: '📥 Übungsdatei herunterladen',
+          steps: [...DL('W3', 'Word_W3_Projekt'), 'Hebe in der Einleitung das Wort «Klassenlager» <b>gelb</b> hervor.', 'Ctrl + A, <b>Zeilenabstand 1,5</b>. Mach aus dem Programm (Morgen, Nachmittag, Abend) eine <b>Aufzählung</b>.'],
+          help: [DL_HELP, APP_HELP, AUF_HELP],
+          proof: 'Ein Wort gelb, Zeilenabstand 1,5, das Programm mit Punkten.' },
+        { id: 'w3_m2', st: 3, nr: ['W3.2'], type: 'mission', q: 'Mission W3.2: Titel und Überschriften',
+          steps: ['Klicke in die erste Zeile «Unser Klassenlager». Start › Formatvorlagen › <b>Titel</b>.', 'Klicke in «Einleitung». Wähle <b>Überschrift 1</b>. Mach das Gleiche bei «Das Haus», «Das Programm» und «Packliste».', 'Klicke in «Die Zimmer». Wähle <b>Überschrift 2</b>.', 'Ansicht › <b>Navigationsbereich</b>: Siehst du links deine Kapitel? Ctrl + S.'],
+          help: ['«Titel» oder «Überschrift 2» nicht zu sehen? Bei den Formatvorlagen auf den kleinen Pfeil ▾ klicken.', 'Im Navigationsbereich kannst du auf ein Kapitel klicken: Word springt hin.'],
           proof: 'Links im Navigationsbereich stehen die 4 Kapitel und «Die Zimmer» etwas eingerückt.' },
-        { id: 'w2_m3', st: 3, nr: ['W2.3'], type: 'mission', q: 'Mission W2.3: Packliste mit Tabulator',
-          steps: ['Geh zur Packliste. Zwischen Ding und Zahl sind viele <b>Leerschläge</b>.', 'Lösche bei «Schlafsack» die Leerschläge vor der Zahl.', 'Drück stattdessen die <b>Tab-Taste</b>, bis die Zahl ungefähr in der Mitte steht.', 'Mach es bei allen Zeilen so, bis <b>alle Zahlen genau untereinander</b> stehen. Ctrl + S.'],
+        { id: 'w3_m3', st: 3, nr: ['W3.3'], type: 'mission', q: 'Mission W3.3: Packliste mit Tabulator',
+          steps: ['Klicke auf <b>¶</b> (Start, Gruppe Absatz). Bei der Packliste siehst du viele Punkte · : Das sind <b>Leerschläge</b>.', 'Lösche bei «Schlafsack» die Leerschläge vor der Zahl. Drück stattdessen die <b>Tab-Taste</b>, bis die Zahl ungefähr in der Mitte steht.', 'Mach es bei allen Zeilen so, bis <b>alle Zahlen genau untereinander</b> stehen.', 'Klicke nochmals auf ¶: Die Zeichen sind wieder versteckt. Ctrl + S.'],
           help: ['Ein langes Wort braucht weniger Tabs als ein kurzes. Drück so oft, bis es passt.', 'Zu weit gesprungen? Mit der Rücktaste ⌫ einen Tab löschen.'],
           proof: 'Alle Zahlen der Packliste stehen genau untereinander.' }
       ],
-      // ---------- W3: Bild & Tabelle ----------
-      k3: [
-        { id: 'w3_wo', ex: 'bild', st: 1, nr: ['W3.2'], type: 'mc', first: true, q: 'Wo fügst du in Word ein Bild ein?',
-          opts: ['Einfügen › Bilder', 'Start › Fett', 'Datei › Drucken', 'Ansicht › Zoom'],
-          whyNot: [null, 'Das macht Text fett.', 'Das druckt.', 'Das macht nur die Ansicht grösser.'],
-          tip: 'Das Bild kommt neu ins Dokument hinein.', why: 'Reiter «Einfügen», dann «Bilder».' },
-        { id: 'w3_sq', ex: 'umbruch', st: 1, nr: ['W3.2'], type: 'mc', picOpts: true, right: 'das Bild, um das der Text herum fliesst (Quadratisch)', q: 'Bei welchem Blatt fliesst der Text um das Bild herum?',
-          opts: ['wrap_sq', 'wrap_inline', 'wrap_behind', 'wrap_front'],
-          whyNot: [null, 'Hier ist neben dem Bild fast alles leer.', 'Hier liegt der Text auf dem Bild.', 'Hier verdeckt das Bild den Text.'],
-          tip: 'Schau rechts neben dem Bild: Steht dort Text?', why: '«Quadratisch»: Der Text fliesst um das Bild herum.' },
-        { id: 'w3_behind', ex: 'umbruch', st: 1, nr: ['W3.2'], type: 'mc', pic: 'wrap_behind', q: 'Schau das Blatt an. Wie ist das Bild eingefügt?',
-          opts: ['Hinter den Text', 'Vor den Text', 'Quadratisch', 'Mit Text in Zeile'],
-          whyNot: [null, 'Dann wäre der Text verdeckt.', 'Dann würde der Text um das Bild herum fliessen.', 'Dann stünde das Bild in einer Zeile.'],
-          tip: 'Kannst du den Text noch lesen? Liegt er oben oder unten?', why: 'Der Text liegt über dem Bild: «Hinter den Text».' },
-        { id: 'w3_inline', ex: 'umbruch', st: 1, nr: ['W3.2'], type: 'mc', pic: 'wrap_inline', q: 'Schau das Blatt an. Das Bild steht in der Zeile wie ein grosser Buchstabe. Wie heisst diese Art?',
-          opts: ['Mit Text in Zeile', 'Quadratisch', 'Hinter den Text', 'Vor den Text'],
-          whyNot: [null, 'Dann stünde neben dem Bild Text.', 'Dann läge Text auf dem Bild.', 'Dann wäre Text verdeckt.'],
-          tip: 'Das Bild ist wie ein Buchstabe in der Zeile.', why: '«Mit Text in Zeile» ist die Einstellung, wenn man ein Bild neu einfügt.' },
-        { id: 'w3_layout', ex: 'umbruch', st: 1, nr: ['W3.2'], type: 'mc', q: 'Wo stellst du ein, wie der Text um das Bild fliesst?',
-          opts: ['Bild anklicken › Layoutoptionen', 'Start › Fett', 'Überprüfen › Sprache', 'Layout › Ausrichtung'],
-          whyNot: [null, 'Das macht Text fett.', 'Das ist für die Rechtschreibung.', 'Das dreht die ganze Seite.'],
-          tip: 'Klick das Bild an. Daneben erscheint ein kleines Symbol.', why: 'Bild anklicken, dann das Symbol «Layoutoptionen» daneben.' },
-        { id: 'w3_ecke', ex: 'bild', st: 1, nr: ['W3.2'], type: 'mc', q: 'Du machst ein Bild kleiner. Wo ziehst du?',
-          opts: ['An einer Ecke', 'An der Seite in der Mitte', 'In der Mitte des Bildes', 'Am Text daneben'],
-          whyNot: [null, 'Dann wird das Bild verzogen.', 'Dann verschiebst du es.', 'Das ändert das Bild nicht.'],
-          tip: 'Das Bild soll nicht schief oder verzogen werden.', why: 'An der Ecke ziehen: Das Bild bleibt gleich in der Form.' },
-        { id: 'w3_spalten', ex: 'tabelle', st: 1, nr: ['W3.3'], type: 'mc', pic: 'table', q: 'Wie viele Spalten hat diese Tabelle?',
-          opts: ['3', '4', '12', '7'],
-          whyNot: [null, 'Das sind die Zeilen.', 'Das sind alle Felder zusammen.', 'Zähl nur die Felder nebeneinander.'],
-          tip: 'Spalten stehen senkrecht, wie Säulen. Zeilen liegen waagrecht.', why: '3 Spalten (nebeneinander) und 4 Zeilen (untereinander).' },
-        { id: 'w3_tabende', ex: 'tabelle', st: 1, nr: ['W3.3'], type: 'mc', q: 'Du bist in der letzten Zelle einer Tabelle und drückst die Tab-Taste. Was passiert?',
-          opts: ['Es gibt eine neue Zeile', 'Die Tabelle wird gelöscht', 'Der Text wird fett', 'Gar nichts'],
-          whyNot: [null, 'Keine Angst, nichts wird gelöscht.', 'Tab hat nichts mit fett zu tun.', 'Probier es aus: Es passiert etwas.'],
-          tip: 'In der Tabelle springt Tab in die nächste Zelle. Und wenn es keine mehr gibt?', why: 'Tab in der letzten Zelle macht eine neue Zeile.' },
-        { id: 'w3_sort', ex: 'umbruch', st: 2, nr: ['W3.2'], type: 'sort', q: 'Welche Art passt? Ordne zu.',
-          rows: [['Der Text fliesst um das Bild herum', 'Quadratisch'], ['Das Bild ist wie ein Hintergrund', 'Hinter den Text'], ['Das Bild verdeckt den Text', 'Vor den Text'], ['Das Bild steht in der Zeile wie ein Buchstabe', 'Mit Text in Zeile']],
-          cats: ['Quadratisch', 'Hinter den Text', 'Vor den Text', 'Mit Text in Zeile', 'Querformat'],
-          tip: 'Hinter = das Bild ist hinten. Vor = das Bild ist vorne.' },
-        { id: 'w3_order', ex: 'tabelle', st: 2, nr: ['W3.3'], type: 'order', q: 'Du machst eine Tabelle mit 3 Spalten und 4 Zeilen. Bring die Schritte in die richtige Reihenfolge.',
-          steps: ['Auf «Einfügen» klicken', 'Auf «Tabelle» klicken', 'Mit der Maus 3 × 4 Kästchen färben und klicken', 'In die erste Zelle schreiben, mit Tab weiter'],
-          tip: 'Schreiben kannst du erst, wenn die Tabelle da ist.' },
-        { id: 'w3_gap', ex: 'tabelle', st: 2, nr: ['W3.3'], type: 'gap', text: 'Eine Tabelle besteht aus Zeilen und ___.',
-          a: ['Spalten', 'Spalte'], tip: 'Zeilen liegen waagrecht. Was steht senkrecht?', why: 'Zeilen und Spalten.' },
-        { id: 'w3_m1', st: 3, nr: ['W3.1'], type: 'mission', q: 'Mission W3.1: Aufwärmen', link: F('W3_Igel'), linkText: '📥 Übungsdatei herunterladen',
-          steps: [...DL('W3', 'Word_W3_Igel'), 'Gib dem Titel «Der Igel» die Formatvorlage <b>Überschrift 1</b>.', 'Ctrl + A, <b>Zeilenabstand 1,5</b>. Mach das Wort «Winterschlaf» <b>fett und kursiv</b>.'],
-          help: [DL_HELP, 'Vergessen? Tippe auf «📖 Theorie» oder übe nochmals in den Teilen «Schrift» und «Absatz».'],
-          proof: 'Titel als Überschrift 1, Zeilenabstand 1,5, Winterschlaf fett und kursiv.' },
-        { id: 'w3_m2', st: 3, nr: ['W3.2'], type: 'mission', q: 'Mission W3.2: Bild einfügen und Text fliessen lassen',
-          steps: ['Klicke an den Anfang des ersten Abschnitts. <b>Einfügen › Bilder › Stockbilder</b> (oder Onlinebilder). Such «Igel».', 'Mach das Bild kleiner: an einer <b>Ecke</b> ziehen.', 'Klicke auf das Symbol <b>Layoutoptionen</b> neben dem Bild. Wähle <b>Quadratisch</b>. Zieh das Bild an den rechten Rand.', 'Probier auch «Hinter den Text» und «Vor den Text» aus. Am Schluss wieder <b>Quadratisch</b>. Ctrl + S.'],
-          help: ['Kein Symbol neben dem Bild? Klicke das Bild einmal an. Oder: Reiter «Bildformat» › «Textumbruch».', 'Kein Stockbild? Nimm «Dieses Gerät» und ein eigenes Foto.'],
-          proof: 'Das Bild ist rechts, und der Text fliesst links daneben.' },
-        { id: 'w3_m3', st: 3, nr: ['W3.3'], type: 'mission', q: 'Mission W3.3: Tabelle',
-          steps: ['Klicke in die leere Zeile unter «Meine Lieblingstiere».', '<b>Einfügen › Tabelle</b>: 3 Spalten, 4 Zeilen.', 'Erste Zeile: <b>Tier · Wo es lebt · Was es frisst</b>. Mach diese Zeile <b>fett</b>.', 'Fülle 3 Tiere aus. Spring mit der <b>Tab-Taste</b> von Zelle zu Zelle. Ctrl + S.'],
-          help: ['Zu wenig Zeilen? In der letzten Zelle die Tab-Taste drücken.', 'Spalten = nebeneinander, Zeilen = untereinander.'],
-          proof: 'Die Tabelle hat 3 Spalten, eine fette erste Zeile und 3 Tiere.' }
-      ],
-      // ---------- W4: Seite & Prüfen ----------
+      // ---------- W4: Bearbeiten & Prüfen ----------
       k4: [
-        { id: 'w4_quer', ex: 'format', st: 1, nr: ['W4.3'], type: 'mc', first: true, picOpts: true, right: 'das Blatt, das breiter als hoch ist', q: 'Welches Blatt ist im Querformat?',
-          opts: ['landscape', 'portrait', 'square'],
-          whyNot: [null, 'Das ist höher als breit: Hochformat.', 'So ein Blatt gibt es in Word nicht.'],
-          tip: 'Quer = liegend, breiter als hoch.', why: 'Querformat: breiter als hoch.' },
-        { id: 'w4_wo', ex: 'format', st: 1, nr: ['W4.3'], type: 'mc', q: 'Wo stellst du Hochformat oder Querformat ein?',
-          opts: ['Layout › Ausrichtung', 'Start › Formatvorlagen', 'Einfügen › Bilder', 'Überprüfen › Wörter zählen'],
-          whyNot: [null, 'Dort sind die Überschriften.', 'Dort fügst du Bilder ein.', 'Das zählt nur Wörter.'],
-          tip: 'Es geht um das Aussehen der ganzen Seite.', why: 'Reiter Layout › Ausrichtung › Hochformat oder Querformat.' },
-        { id: 'w4_rot', ex: 'rot', st: 1, nr: ['W4.2'], type: 'mc', pic: 'spell', q: 'Ein Wort hat eine rote Wellenlinie. Was heisst das?',
+        { id: 'w4_suchen', ex: 'suchen', st: 1, nr: ['W4.2'], type: 'mc', first: true, q: 'Dein Text ist 3 Seiten lang. Du willst das Wort «Feuer» finden. Was geht am schnellsten?',
+          opts: ['Ctrl + F und «Feuer» eintippen', 'Alles von oben lesen', 'Ctrl + A', 'Ctrl + P'],
+          whyNot: [null, 'Das geht, dauert aber lange.', 'Das markiert alles.', 'Das druckt.'],
+          tip: 'F wie «finden».', why: 'Ctrl + F öffnet die Suche. Word zeigt dir jede Stelle.' },
+        { id: 'w4_ersetzen', ex: 'suchen', st: 1, nr: ['W4.2'], type: 'mc', q: 'Im Text steht 5-mal «Donnerstag». Das Fest ist aber am Freitag. Was machst du?',
+          opts: ['Ersetzen: «Donnerstag» durch «Freitag», dann «Alle ersetzen»', 'Jedes Wort einzeln löschen und neu schreiben', 'Den ganzen Text neu schreiben', 'Nichts, das merkt niemand'],
+          whyNot: [null, 'Das geht, aber du vergisst schnell eins.', 'Viel zu viel Arbeit.', 'Doch, die Gäste kommen sonst am falschen Tag.'],
+          tip: 'Word kann ein Wort überall auf einmal austauschen.', why: 'Start › Ersetzen (Ctrl + H). «Alle ersetzen» tauscht jedes Wort aus.' },
+        { id: 'w4_versch', ex: 'kopieren', st: 1, nr: ['W4.2'], type: 'mc', q: 'Ein Satz steht am falschen Ort. Er soll weiter unten stehen, oben aber weg sein. Welche Tasten?',
+          opts: ['Ctrl + X, dann Ctrl + V', 'Ctrl + C, dann Ctrl + V', 'Ctrl + Z', 'Ctrl + S'],
+          whyNot: [null, 'Dann steht der Satz zweimal da.', 'Das macht rückgängig.', 'Das speichert.'],
+          tip: 'X sieht aus wie eine Schere: Ausschneiden.', why: 'Ctrl + X schneidet aus, Ctrl + V fügt ein: verschoben. Ctrl + C kopiert: dann gibt es ihn zweimal.' },
+        { id: 'w4_rot', ex: 'rot', st: 1, nr: ['W4.3'], type: 'mc', pic: 'spell', q: 'Ein Wort hat eine rote Wellenlinie. Was heisst das?',
           opts: ['Word kennt das Wort nicht', 'Das Wort ist besonders wichtig', 'Das Wort ist ein Link', 'Das Wort ist fett'],
           whyNot: [null, 'Word unterstreicht nichts, weil es wichtig ist.', 'Links sind blau und gerade unterstrichen.', 'Fett ist dick, nicht unterstrichen.'],
-          tip: 'Lies das rote Wort genau.', why: 'Rote Wellenlinie: vielleicht ein Rechtschreibfehler.' },
-        { id: 'w4_alle', ex: 'sprache', st: 1, nr: ['W4.2'], type: 'mc', q: 'Fast jedes Wort in deinem deutschen Text ist rot unterstrichen. Was ist wohl falsch?',
+          tip: 'Lies das rote Wort genau.', why: 'Rote Wellenlinie: vielleicht ein Rechtschreibfehler. Rechtsklick zeigt Vorschläge.' },
+        { id: 'w4_alle', ex: 'sprache', st: 1, nr: ['W4.3'], type: 'mc', q: 'Fast jedes Wort in deinem deutschen Text ist rot unterstrichen. Was ist wohl falsch?',
           opts: ['Die Sprache ist falsch eingestellt', 'Du schreibst alles falsch', 'Der Text ist zu lang', 'Die Schrift ist zu klein'],
           whyNot: [null, 'So viele Fehler sind unwahrscheinlich.', 'Die Länge macht keine roten Linien.', 'Die Grösse macht keine roten Linien.'],
           tip: 'Word prüft deutsche Wörter mit einem englischen Wörterbuch …?', why: 'Wenn z.B. Englisch eingestellt ist, kennt Word die deutschen Wörter nicht.' },
-        { id: 'w4_sprache', ex: 'sprache', st: 1, nr: ['W4.2'], type: 'mc', q: 'Welche Sprache stellst du für deine Texte in der Schule ein?',
+        { id: 'w4_sprache', ex: 'sprache', st: 1, nr: ['W4.3'], type: 'mc', q: 'Welche Sprache stellst du für deine Texte in der Schule ein?',
           opts: ['Deutsch (Schweiz)', 'Deutsch (Deutschland)', 'Englisch (USA)', 'Französisch (Schweiz)'],
           whyNot: [null, 'Dann will Word «ß». In der Schweiz schreibt man «ss».', 'Dein Text ist deutsch.', 'Dein Text ist deutsch.'],
           tip: 'Deutsch, aber mit «ss» statt «ß».', why: 'Deutsch (Schweiz): Word prüft mit der Schweizer Rechtschreibung.' },
@@ -506,100 +567,214 @@
           opts: ['287', '1', '2', '300'],
           whyNot: [null, 'Das ist die Seite.', 'So viele Seiten sind es.', 'So viele sollten es werden.'],
           tip: 'Schau in der Leiste ganz unten, wo «Wörter» steht.', why: 'Unten links steht, wie viele Wörter der Text hat (auch: Überprüfen › Wörter zählen).' },
-        { id: 'w4_sort', ex: 'reiter', st: 2, nr: ['W4.2', 'W4.3'], type: 'sort', q: 'In welchem Reiter findest du es? Ordne zu.',
-          rows: [['Querformat', 'Layout'], ['Rechtschreibung prüfen', 'Überprüfen'], ['Wörter zählen', 'Überprüfen'], ['Tabelle', 'Einfügen'], ['Überschrift 1', 'Start']],
-          cats: ['Start', 'Einfügen', 'Layout', 'Überprüfen', 'Ansicht'],
-          tip: 'Alles, was Fehler sucht und zählt, ist beim «Überprüfen».' },
-        { id: 'w4_order', ex: 'sprache', st: 2, nr: ['W4.2'], type: 'order', q: 'Du stellst die Sprache auf Deutsch (Schweiz). Bring die Schritte in die richtige Reihenfolge.',
-          steps: ['Ctrl + A drücken (alles markieren)', 'Überprüfen › Sprache klicken', '«Sprache für die Korrekturhilfen festlegen» klicken', 'Deutsch (Schweiz) wählen und OK klicken'],
-          tip: 'Zuerst markieren, dann im Reiter suchen, am Schluss bestätigen.' },
-        { id: 'w4_gap', ex: 'reiter', st: 2, nr: ['W4.2'], type: 'gap', text: 'Rechtschreibung, Sprache und Wörter zählen findest du im Reiter ___.',
+        { id: 'w4_sort', ex: 'kopieren', st: 2, nr: ['W4.2', 'W4.3'], type: 'sort', q: 'Welche Tasten oder welcher Reiter? Ordne zu.',
+          rows: [['Ein Wort im Text finden', 'Ctrl + F'], ['Ein Wort überall austauschen', 'Ctrl + H (Ersetzen)'], ['Einen Satz verschieben', 'Ctrl + X, Ctrl + V'], ['Rechtschreibung und Sprache', 'Reiter Überprüfen']],
+          cats: ['Ctrl + F', 'Ctrl + H (Ersetzen)', 'Ctrl + X, Ctrl + V', 'Reiter Überprüfen', 'Ctrl + P'],
+          tip: 'F wie finden. X wie Schere.' },
+        { id: 'w4_order', ex: 'suchen', st: 2, nr: ['W4.2'], type: 'order', q: 'Du ersetzt überall «Donnerstag» durch «Freitag». Bring die Schritte in die richtige Reihenfolge.',
+          steps: ['Ctrl + H drücken (Ersetzen)', 'Bei «Suchen nach» Donnerstag schreiben', 'Bei «Ersetzen durch» Freitag schreiben', 'Auf «Alle ersetzen» klicken'],
+          tip: 'Zuerst sagst du Word, was weg soll, dann, was neu kommt.' },
+        { id: 'w4_gap', ex: 'sprache', st: 2, nr: ['W4.3'], type: 'gap', text: 'Rechtschreibung, Sprache und Wörter zählen findest du im Reiter ___.',
           a: ['Überprüfen', 'Ueberpruefen', 'Uberprufen'], tip: 'Es beginnt mit Ü. Du prüfst deinen Text.', why: 'Reiter «Überprüfen».' },
         { id: 'w4_m1', st: 3, nr: ['W4.1'], type: 'mission', q: 'Mission W4.1: Aufwärmen', link: F('W4_Einladung'), linkText: '📥 Übungsdatei herunterladen',
-          steps: [...DL('W4', 'Word_W4_Einladung'), 'Titel: <b>Überschrift 1</b>. Ganzer Text: <b>Zeilenabstand 1,5</b>.', 'Füge ein Bild ein (z.B. Ballone). Layoutoptionen: <b>Quadratisch</b>, an einer Ecke kleiner ziehen.'],
-          help: [DL_HELP, 'Vergessen? Tippe auf «📖 Theorie» oder übe nochmals im Teil «Bild & Tabelle».'],
-          proof: 'Titel als Überschrift 1, Zeilenabstand 1,5, Bild mit Text daneben.' },
-        { id: 'w4_m2', st: 3, nr: ['W4.2'], type: 'mission', q: 'Mission W4.2: Sprache und Rechtschreibung',
+          steps: [...DL('W4', 'Word_W4_Einladung'), 'Titel: Formatvorlage <b>Titel</b>, <b>zentriert</b>.', 'Mach aus den drei Programmpunkten eine <b>Aufzählung</b>. Ganzer Text: <b>Zeilenabstand 1,5</b>.'],
+          help: [DL_HELP, APP_HELP, AUF_HELP],
+          proof: 'Titel in der Mitte, Programm mit Punkten, Zeilenabstand 1,5.' },
+        { id: 'w4_m2', st: 3, nr: ['W4.2'], type: 'mission', q: 'Mission W4.2: Ersetzen und verschieben',
+          steps: ['Das Fest ist am <b>Freitag</b>, nicht am Donnerstag! Drück <b>Ctrl + H</b>.', 'Suchen nach: <b>Donnerstag</b> · Ersetzen durch: <b>Freitag</b> · <b>Alle ersetzen</b>. Wie viele hat Word ersetzt?', 'Der Satz «Wir freuen uns auf Sie!» steht ganz oben falsch. Markiere ihn, <b>Ctrl + X</b>.', 'Klicke vor «Herzliche Grüsse» und drück <b>Ctrl + V</b>. Ctrl + S.'],
+          help: ['Ctrl + H geht nicht? Start › ganz rechts › Ersetzen.', 'Ctrl + F zeigt links alle Stellen mit dem Wort. So kannst du prüfen, ob noch ein «Donnerstag» da ist.'],
+          proof: 'Überall steht Freitag. «Wir freuen uns auf Sie!» steht vor dem Gruss.' },
+        { id: 'w4_m3', st: 3, nr: ['W4.3'], type: 'mission', q: 'Mission W4.3: Sprache und Rechtschreibung',
           steps: ['Fast alles ist rot! Drück <b>Ctrl + A</b>.', '<b>Überprüfen › Sprache › Sprache für die Korrekturhilfen festlegen</b> → <b>Deutsch (Schweiz)</b> → OK.', 'Jetzt sind nur noch die echten Fehler rot. Klicke mit der <b>rechten Maustaste</b> auf ein rotes Wort und wähle die richtige Schreibweise.', 'Verbessere so <b>alle 6 Fehler</b>. Ctrl + S.'],
           help: ['Auch Überprüfen › Editor (oder F7) zeigt dir die Fehler nacheinander.', 'Word schlägt etwas Falsches vor? Du entscheidest. Nicht jeder Vorschlag stimmt.'],
-          proof: 'Keine roten Wellenlinien mehr.' },
-        { id: 'w4_m3', st: 3, nr: ['W4.3'], type: 'mission', q: 'Mission W4.3: Seite und Wörter',
-          steps: ['<b>Layout › Ausrichtung › Querformat</b>. Schau, wie sich die Seite verändert.', 'Stell zurück auf <b>Hochformat</b>.', 'Schau unten links: Wie viele <b>Wörter</b> hat der Text?', 'Schreib ganz unten: «Mein Text hat ___ Wörter.» mit der richtigen Zahl. Ctrl + S.'],
-          help: ['Keine Zahl unten links? Überprüfen › Wörter zählen.', 'Die Zahl ändert sich, wenn du den Satz schreibst. Das ist okay.'],
-          proof: 'Hochformat, und unten steht die Anzahl Wörter.' }
+          proof: 'Keine roten Wellenlinien mehr.' }
       ],
-      // ---------- W5: Papier, Drucken, PDF ----------
+      // ---------- W5: Bild ----------
       k5: [
-        { id: 'w5_a4', ex: 'papier', st: 1, nr: ['W5.2'], type: 'mc', first: true, q: 'Wie gross ist ein normales Schulblatt (A4)?',
-          opts: ['21 × 29,7 cm', '10 × 15 cm', '42 × 59,4 cm', '50 × 70 cm'],
-          whyNot: [null, 'Das ist eine Postkarte.', 'Das ist A2, ein grosses Plakat.', 'Das ist viel zu gross.'],
-          tip: 'Miss ein Blatt aus deinem Ordner. Etwa ein Lineal breit und etwas mehr hoch.', why: 'A4 = 21 × 29,7 cm.' },
-        { id: 'w5_a3', ex: 'papier', st: 1, nr: ['W5.2'], type: 'mc', pic: 'paper', q: 'Wie gross ist A3 im Vergleich zu A4?',
-          opts: ['Doppelt so gross', 'Halb so gross', 'Gleich gross', 'Zehnmal so gross'],
-          whyNot: [null, 'Halb so gross ist A5.', 'Schau das Bild an.', 'So gross ist es nicht.'],
-          tip: 'Wie viele A4-Blätter passen auf ein A3-Blatt?', why: 'A3 = zwei A4-Blätter nebeneinander. Gut für Plakate.' },
-        { id: 'w5_wo', ex: 'papier', st: 1, nr: ['W5.2'], type: 'mc', q: 'Wo stellst du A4 oder A3 ein?',
-          opts: ['Layout › Format', 'Layout › Ausrichtung', 'Start › Schriftgrösse', 'Einfügen › Tabelle'],
-          whyNot: [null, 'Das ist Hoch- oder Querformat.', 'Das ist nur die Schrift.', 'Das macht eine Tabelle.'],
-          tip: 'Papierformat …', why: 'Layout › Format: dort wählst du die Papiergrösse.' },
-        { id: 'w5_druck', ex: 'drucken', st: 1, nr: ['W5.2'], type: 'mc', q: 'Dein Plakat ist auf A3 eingestellt. Im Drucker ist nur A4-Papier. Was passiert meistens?',
-          opts: ['Es wird verkleinert oder abgeschnitten', 'Der Drucker klebt zwei Blätter zusammen', 'Es wird automatisch grösser', 'Es wird schöner'],
-          whyNot: [null, 'Das kann kein Drucker.', 'A4 ist kleiner als A3.', 'Leider nicht.'],
-          tip: 'A3 ist doppelt so gross wie das Papier im Drucker.', why: 'Es passt nicht: Es wird verkleinert oder abgeschnitten. Darum vor dem Drucken das Format prüfen.' },
-        { id: 'w5_ctrlp', ex: 'drucken', st: 1, nr: ['W5.2'], type: 'mc', q: 'Mit welchen Tasten öffnest du das Drucken-Fenster?',
-          opts: ['Ctrl + P', 'Ctrl + D', 'Ctrl + S', 'Ctrl + Z'],
-          whyNot: [null, 'Das ist nicht drucken.', 'Das speichert.', 'Das macht rückgängig.'],
-          tip: 'Drucken heisst auf Englisch «print».', why: 'Ctrl + P wie «print».' },
-        { id: 'w5_vorschau', ex: 'drucken', st: 1, nr: ['W5.2'], type: 'mc', q: 'Bevor du druckst: Wo siehst du, wie das Blatt aussehen wird?',
-          opts: ['In der Vorschau im Drucken-Fenster', 'Im Papierkorb', 'In Teams', 'Nirgends, man muss drucken'],
-          whyNot: [null, 'Dort sind gelöschte Dateien.', 'Teams druckt nicht.', 'Doch, das sieht man vorher.'],
-          tip: 'Das Drucken-Fenster zeigt rechts ein Bild der Seite.', why: 'Die Vorschau zeigt jede Seite. So sparst du Papier.' },
-        { id: 'w5_pdf', ex: 'pdf', st: 1, nr: ['W5.3'], type: 'mc', q: 'Wie machst du aus einem Word-Dokument ein PDF?',
-          opts: ['Speichern unter › Dateityp PDF', 'Datei umbenennen in «.pdf»', 'Einen Screenshot machen', 'Ctrl + P und A3 wählen'],
+        { id: 'w5_wo', ex: 'bild', st: 1, nr: ['W5.2'], type: 'mc', first: true, q: 'Wo fügst du in Word ein Bild ein?',
+          opts: ['Einfügen › Bilder', 'Start › Fett', 'Datei › Drucken', 'Ansicht › Zoom'],
+          whyNot: [null, 'Das macht Text fett.', 'Das druckt.', 'Das macht nur die Ansicht grösser.'],
+          tip: 'Das Bild kommt neu ins Dokument hinein.', why: 'Reiter «Einfügen», dann «Bilder».' },
+        { id: 'w5_ecke', ex: 'bild', st: 1, nr: ['W5.2'], type: 'mc', q: 'Du machst ein Bild kleiner. Wo ziehst du?',
+          opts: ['An einer Ecke', 'An der Seite in der Mitte', 'In der Mitte des Bildes', 'Am Text daneben'],
+          whyNot: [null, 'Dann wird das Bild verzogen.', 'Dann verschiebst du es.', 'Das ändert das Bild nicht.'],
+          tip: 'Das Bild soll nicht schief oder verzogen werden.', why: 'An der Ecke ziehen: Das Bild bleibt gleich in der Form.' },
+        { id: 'w5_sq', ex: 'umbruch', st: 1, nr: ['W5.2'], type: 'mc', picOpts: true, right: 'das Bild, um das der Text herum fliesst (Quadratisch)', q: 'Bei welchem Blatt fliesst der Text um das Bild herum?',
+          opts: ['wrap_sq', 'wrap_inline', 'wrap_behind', 'wrap_front'],
+          whyNot: [null, 'Hier ist neben dem Bild fast alles leer.', 'Hier liegt der Text auf dem Bild.', 'Hier verdeckt das Bild den Text.'],
+          tip: 'Schau rechts neben dem Bild: Steht dort Text?', why: '«Quadratisch»: Der Text fliesst um das Bild herum.' },
+        { id: 'w5_inline', ex: 'umbruch', st: 1, nr: ['W5.2'], type: 'mc', pic: 'wrap_inline', q: 'Schau das Blatt an. Das Bild steht in der Zeile wie ein grosser Buchstabe. Wie heisst diese Art?',
+          opts: ['Mit Text in Zeile', 'Quadratisch', 'Hinter den Text', 'Vor den Text'],
+          whyNot: [null, 'Dann stünde neben dem Bild Text.', 'Dann läge Text auf dem Bild.', 'Dann wäre Text verdeckt.'],
+          tip: 'Das Bild ist wie ein Buchstabe in der Zeile.', why: '«Mit Text in Zeile» ist die Einstellung, wenn man ein Bild neu einfügt. Darum lässt es sich schlecht verschieben.' },
+        { id: 'w5_frei', ex: 'frei', st: 1, nr: ['W5.3'], type: 'mc', q: 'Du willst ein Bild ganz frei herumschieben, irgendwohin auf die Seite. Welche Einstellung nimmst du?',
+          opts: ['Vor den Text', 'Mit Text in Zeile', 'Zentriert', 'Querformat'],
+          whyNot: [null, 'Dann klebt das Bild in der Zeile fest.', 'Das ist für Text, nicht für Bilder.', 'Das dreht die ganze Seite.'],
+          tip: 'Das Bild soll über allem liegen, wie ein Kleber auf dem Blatt.', why: '«Vor den Text»: Das Bild liegt obenauf und lässt sich überallhin schieben.' },
+        { id: 'w5_layout', ex: 'umbruch', st: 1, nr: ['W5.2'], type: 'mc', q: 'Wo stellst du ein, wie der Text um das Bild fliesst?',
+          opts: ['Bild anklicken › Layoutoptionen', 'Start › Fett', 'Überprüfen › Sprache', 'Layout › Ausrichtung'],
+          whyNot: [null, 'Das macht Text fett.', 'Das ist für die Rechtschreibung.', 'Das dreht die ganze Seite.'],
+          tip: 'Klick das Bild an. Daneben erscheint ein kleines Symbol.', why: 'Bild anklicken, dann das Symbol «Layoutoptionen» daneben.' },
+        { id: 'w5_sort', ex: 'umbruch', st: 2, nr: ['W5.2', 'W5.3'], type: 'sort', q: 'Welche Art passt? Ordne zu.',
+          rows: [['Der Text fliesst um das Bild herum', 'Quadratisch'], ['Das Bild ist wie ein Hintergrund', 'Hinter den Text'], ['Das Bild liegt obenauf, frei verschiebbar', 'Vor den Text'], ['Das Bild steht in der Zeile wie ein Buchstabe', 'Mit Text in Zeile']],
+          cats: ['Quadratisch', 'Hinter den Text', 'Vor den Text', 'Mit Text in Zeile', 'Querformat'],
+          tip: 'Hinter = das Bild ist hinten. Vor = das Bild ist vorne.' },
+        { id: 'w5_order', ex: 'bild', st: 2, nr: ['W5.2'], type: 'order', q: 'Du fügst ein Bild ein und lässt den Text herum fliessen. Bring die Schritte in die richtige Reihenfolge.',
+          steps: ['Einfügen › Bilder › Stockbilder', 'Ein Bild auswählen und einfügen', 'An einer Ecke kleiner ziehen', 'Layoutoptionen › Quadratisch'],
+          tip: 'Bevor du die Grösse änderst, muss das Bild da sein.' },
+        { id: 'w5_gap', ex: 'bild', st: 2, nr: ['W5.2'], type: 'gap', text: 'Damit ein Bild nicht verzogen wird, ziehst du an einer ___.',
+          a: ['Ecke'], tip: 'Ein Bild hat vier davon.', why: 'An einer Ecke.' },
+        { id: 'w5_m1', st: 3, nr: ['W5.1'], type: 'mission', q: 'Mission W5.1: Aufwärmen', link: F('W5_Igel'), linkText: '📥 Übungsdatei herunterladen',
+          steps: [...DL('W5', 'Word_W5_Igel'), 'Gib «Der Igel» die Formatvorlage <b>Titel</b>. Mach mit <b>Ctrl + H</b> aus jedem «Igl» ein «Igel».', 'Ctrl + A, <b>Zeilenabstand 1,5</b>. Mach das Wort «Winterschlaf» <b>fett und kursiv</b>.'],
+          help: [DL_HELP, APP_HELP, AUF_HELP],
+          proof: 'Titel, nirgends mehr «Igl», Zeilenabstand 1,5, Winterschlaf fett und kursiv.' },
+        { id: 'w5_m2', st: 3, nr: ['W5.2'], type: 'mission', q: 'Mission W5.2: Bild einfügen und Text fliessen lassen',
+          steps: ['Klicke an den Anfang des ersten Abschnitts. <b>Einfügen › Bilder › Stockbilder</b> (oder Onlinebilder). Such «Igel».', 'Mach das Bild kleiner: an einer <b>Ecke</b> ziehen.', 'Klicke auf das Symbol <b>Layoutoptionen</b> neben dem Bild. Wähle <b>Quadratisch</b>.', 'Zieh das Bild an den rechten Rand. Ctrl + S.'],
+          help: ['Kein Symbol neben dem Bild? Klicke das Bild einmal an. Oder: Reiter «Bildformat» › «Textumbruch».', 'Kein Stockbild? Nimm «Dieses Gerät» und ein eigenes Foto.'],
+          proof: 'Das Bild ist rechts, und der Text fliesst links daneben.' },
+        { id: 'w5_m3', st: 3, nr: ['W5.3'], type: 'mission', q: 'Mission W5.3: Frei verschieben',
+          steps: ['Füge ein <b>zweites Bild</b> ein, z.B. ein Blatt oder einen Apfel.', 'Layoutoptionen › <b>Vor den Text</b>. Schieb das Bild <b>frei</b> irgendwohin, z.B. neben den Titel.', 'Probier auch <b>Hinter den Text</b>: Jetzt liegt der Text darüber. Zurück auf <b>Vor den Text</b>.', 'Kein Platz? Mach das Bild an einer Ecke kleiner. Ctrl + S.'],
+          help: ['Das Bild lässt sich nicht schieben? Dann ist es noch «Mit Text in Zeile». Layoutoptionen ändern.', 'Bild hinter dem Text lässt sich nicht mehr anklicken? Ctrl + Z.'],
+          proof: 'Zwei Bilder: eines mit Text daneben, eines frei auf der Seite.' }
+      ],
+      // ---------- W6: Tabelle ----------
+      k6: [
+        { id: 'w6_spalten', ex: 'tabelle', st: 1, nr: ['W6.2'], type: 'mc', first: true, pic: 'table', q: 'Wie viele Spalten hat diese Tabelle?',
+          opts: ['3', '4', '12', '7'],
+          whyNot: [null, 'Das sind die Zeilen.', 'Das sind alle Felder zusammen.', 'Zähl nur die Felder nebeneinander.'],
+          tip: 'Spalten stehen senkrecht, wie Säulen. Zeilen liegen waagrecht.', why: '3 Spalten (nebeneinander) und 4 Zeilen (untereinander).' },
+        { id: 'w6_wo', ex: 'tabelle', st: 1, nr: ['W6.2'], type: 'mc', q: 'Wo machst du eine neue Tabelle?',
+          opts: ['Einfügen › Tabelle', 'Start › Formatvorlagen', 'Layout › Seitenränder', 'Überprüfen › Sprache'],
+          whyNot: [null, 'Dort sind die Überschriften.', 'Das ist der Rand der Seite.', 'Das ist für die Rechtschreibung.'],
+          tip: 'Die Tabelle kommt neu ins Dokument hinein, wie ein Bild.', why: 'Einfügen › Tabelle, dann Kästchen färben und klicken.' },
+        { id: 'w6_tabende', ex: 'tabelle', st: 1, nr: ['W6.3'], type: 'mc', q: 'Du bist in der letzten Zelle einer Tabelle und drückst die Tab-Taste. Was passiert?',
+          opts: ['Es gibt eine neue Zeile', 'Die Tabelle wird gelöscht', 'Der Text wird fett', 'Gar nichts'],
+          whyNot: [null, 'Keine Angst, nichts wird gelöscht.', 'Tab hat nichts mit fett zu tun.', 'Probier es aus: Es passiert etwas.'],
+          tip: 'In der Tabelle springt Tab in die nächste Zelle. Und wenn es keine mehr gibt?', why: 'Tab in der letzten Zelle macht eine neue Zeile.' },
+        { id: 'w6_zeile', ex: 'zeile', st: 1, nr: ['W6.3'], type: 'mc', q: 'Mitten in der Tabelle fehlt eine Zeile. Wie fügst du sie ein?',
+          opts: ['Rechtsklick in die Zelle › Einfügen › Zeilen unterhalb', 'Viele Male Enter drücken', 'Die Tabelle löschen und neu machen', 'Ctrl + Z'],
+          whyNot: [null, 'Dann wird nur die Zelle höher.', 'Viel zu viel Arbeit.', 'Das macht rückgängig.'],
+          tip: 'Ein Rechtsklick zeigt ein Menü mit vielen Möglichkeiten.', why: 'Rechtsklick › Einfügen › Zeilen oberhalb oder unterhalb. Genau so für Spalten.' },
+        { id: 'w6_breite', ex: 'zeile', st: 1, nr: ['W6.3'], type: 'mc', q: 'Eine Spalte ist zu schmal. Was machst du?',
+          opts: ['Die Linie zwischen zwei Spalten mit der Maus ziehen', 'Die Schrift kleiner machen', 'Mehr Leerschläge schreiben', 'Querformat einstellen'],
+          whyNot: [null, 'Dann ist es schwer zu lesen.', 'Das macht die Spalte nicht breiter.', 'Das ändert die ganze Seite.'],
+          tip: 'Fahr mit der Maus auf die Linie: Der Zeiger wird zu ⟺.', why: 'Linie zwischen den Spalten ziehen: links schmaler, rechts breiter.' },
+        { id: 'w6_farbe', ex: 'zeile', st: 1, nr: ['W6.3'], type: 'mc', q: 'Die erste Zeile soll einen hellblauen Hintergrund bekommen. Wo machst du das?',
+          opts: ['Tabellenentwurf › Schattierung', 'Start › Schriftfarbe', 'Einfügen › Bilder', 'Layout › Ausrichtung'],
+          whyNot: [null, 'Das färbt nur die Buchstaben.', 'Ein Bild ist keine Farbe.', 'Das dreht die Seite.'],
+          tip: 'Der Reiter erscheint nur, wenn du in der Tabelle bist.', why: 'In die Tabelle klicken, Zeile markieren › Tabellenentwurf › Schattierung.' },
+        { id: 'w6_sort', ex: 'zeile', st: 2, nr: ['W6.2', 'W6.3'], type: 'sort', q: 'Was machst du wofür? Ordne zu.',
+          rows: [['Neue Tabelle', 'Einfügen › Tabelle'], ['Neue Zeile am Ende', 'Tab in der letzten Zelle'], ['Spalte breiter', 'Linie ziehen'], ['Farbe als Hintergrund', 'Schattierung']],
+          cats: ['Einfügen › Tabelle', 'Tab in der letzten Zelle', 'Linie ziehen', 'Schattierung', 'Ctrl + P'],
+          tip: 'Schattierung = Farbe hinter dem Text.' },
+        { id: 'w6_order', ex: 'tabelle', st: 2, nr: ['W6.2'], type: 'order', q: 'Du machst eine Tabelle mit 3 Spalten und 4 Zeilen. Bring die Schritte in die richtige Reihenfolge.',
+          steps: ['Auf «Einfügen» klicken', 'Auf «Tabelle» klicken', 'Mit der Maus 3 × 4 Kästchen färben und klicken', 'In die erste Zelle schreiben, mit Tab weiter'],
+          tip: 'Schreiben kannst du erst, wenn die Tabelle da ist.' },
+        { id: 'w6_gap', ex: 'tabelle', st: 2, nr: ['W6.2'], type: 'gap', text: 'Eine Tabelle besteht aus Zeilen und ___.',
+          a: ['Spalten', 'Spalte'], tip: 'Zeilen liegen waagrecht. Was steht senkrecht?', why: 'Zeilen und Spalten.' },
+        { id: 'w6_m1', st: 3, nr: ['W6.1'], type: 'mission', q: 'Mission W6.1: Aufwärmen', link: F('W6_Tiere'), linkText: '📥 Übungsdatei herunterladen',
+          steps: [...DL('W6', 'Word_W6_Tiere'), 'Titel: Formatvorlage <b>Titel</b>. Der Text darunter: <b>Blocksatz</b>.', 'Füge ein <b>Bild</b> von einem Tier ein: kleiner ziehen, <b>Quadratisch</b>.'],
+          help: [DL_HELP, APP_HELP, AUF_HELP],
+          proof: 'Titel, Text als Block, ein Bild mit Text daneben.' },
+        { id: 'w6_m2', st: 3, nr: ['W6.2'], type: 'mission', q: 'Mission W6.2: Tabelle machen',
+          steps: ['Klicke in die leere Zeile unter «Meine Lieblingstiere».', '<b>Einfügen › Tabelle</b>: 3 Spalten, 4 Zeilen.', 'Erste Zeile: <b>Tier · Wo es lebt · Was es frisst</b>. Mach diese Zeile <b>fett</b>.', 'Fülle 3 Tiere aus. Spring mit der <b>Tab-Taste</b> von Zelle zu Zelle. Ctrl + S.'],
+          help: ['Spalten = nebeneinander, Zeilen = untereinander.', 'Kein Tier im Kopf? Igel, Fuchs, Biber, Murmeltier.'],
+          proof: 'Die Tabelle hat 3 Spalten, eine fette erste Zeile und 3 Tiere.' },
+        { id: 'w6_m3', st: 3, nr: ['W6.3'], type: 'mission', q: 'Mission W6.3: Tabelle verbessern',
+          steps: ['Klicke in die letzte Zelle, drück <b>Tab</b>: neue Zeile. Füge ein <b>4. Tier</b> dazu.', 'Rechtsklick in die Spalte «Was es frisst» › Einfügen › <b>Spalten rechts</b>. Titel: <b>Wie gross</b>. Ausfüllen.', 'Zieh die <b>Linie</b> zwischen zwei Spalten, damit alles schön Platz hat.', 'Markiere die erste Zeile › <b>Tabellenentwurf › Schattierung</b> › eine helle Farbe. Ctrl + S.'],
+          help: ['Kein Reiter «Tabellenentwurf»? Klicke zuerst in die Tabelle.', 'Falsch eingefügt? Ctrl + Z.'],
+          proof: '4 Tiere, 4 Spalten, erste Zeile farbig.' }
+      ],
+      // ---------- W7: Seite & Abgabe ----------
+      k7: [
+        { id: 'w7_quer', ex: 'format', st: 1, nr: ['W7.1'], type: 'mc', first: true, picOpts: true, right: 'das Blatt, das breiter als hoch ist', q: 'Welches Blatt ist im Querformat?',
+          opts: ['landscape', 'portrait', 'square'],
+          whyNot: [null, 'Das ist höher als breit: Hochformat.', 'So ein Blatt gibt es in Word nicht.'],
+          tip: 'Quer = liegend, breiter als hoch.', why: 'Querformat: breiter als hoch. Layout › Ausrichtung.' },
+        { id: 'w7_rand', ex: 'rand', st: 1, nr: ['W7.1'], type: 'mc', picOpts: true, right: 'das Blatt mit dem schmalen Rand', q: 'Auf dein Plakat soll möglichst viel passen. Welcher Rand ist besser?',
+          opts: ['m_narrow', 'm_wide'],
+          whyNot: [null, 'Hier geht viel Platz am Rand verloren.'],
+          tip: 'Wo ist weniger leerer Platz aussen herum?', why: 'Schmaler Rand = mehr Platz für Text. Layout › Seitenränder › Schmal.' },
+        { id: 'w7_randwo', ex: 'rand', st: 1, nr: ['W7.1'], type: 'mc', q: 'Wo stellst du die Seitenränder ein?',
+          opts: ['Layout › Seitenränder', 'Start › Zentriert', 'Einfügen › Tabelle', 'Ansicht › Zoom'],
+          whyNot: [null, 'Das schiebt nur den Text in die Mitte.', 'Das macht eine Tabelle.', 'Das ändert nur die Ansicht.'],
+          tip: 'Es geht um die ganze Seite, wie beim Querformat.', why: 'Layout › Seitenränder › z.B. Schmal oder Normal.' },
+        { id: 'w7_umbruch', ex: 'umbr', st: 1, nr: ['W7.2'], type: 'mc', q: 'Das Kapitel «Packliste» soll oben auf einer neuen Seite beginnen. Was machst du?',
+          opts: ['Davor klicken und Ctrl + Enter (Seitenumbruch)', 'Viele Male Enter drücken', 'Ein neues Dokument öffnen', 'Querformat einstellen'],
+          whyNot: [null, 'Wenn du oben etwas änderst, verrutscht alles.', 'Dann hast du zwei Dateien.', 'Das dreht nur die Seite.'],
+          tip: 'Es gibt einen Befehl, der sicher eine neue Seite macht.', why: 'Seitenumbruch (Ctrl + Enter oder Einfügen › Seitenumbruch). Er bleibt, auch wenn sich der Text oben ändert.' },
+        { id: 'w7_kopf', ex: 'kopf', st: 1, nr: ['W7.2'], type: 'mc', pic: 'headfoot', q: 'Schau das Blatt an. Was steht ganz unten in der Mitte?',
+          opts: ['Die Seitenzahl in der Fusszeile', 'Der Titel', 'Ein Fehler', 'Die Anzahl Wörter'],
+          whyNot: [null, 'Der Titel steht oben in der Kopfzeile.', 'Das gehört so.', 'Die Wörter stehen in der Leiste von Word, nicht auf dem Blatt.'],
+          tip: 'Was zählt Word auf jeder Seite selber?', why: 'Fusszeile unten: Seitenzahl. Kopfzeile oben: z.B. Titel oder Name. Sie stehen auf jeder Seite.' },
+        { id: 'w7_seitenzahl', ex: 'kopf', st: 1, nr: ['W7.2'], type: 'mc', q: 'Wie kommt auf jede Seite automatisch die richtige Seitenzahl?',
+          opts: ['Einfügen › Seitenzahl', 'Auf jede Seite eine Zahl schreiben', 'Ctrl + P', 'Start › Nummerierung'],
+          whyNot: [null, 'Wenn eine Seite dazukommt, stimmt nichts mehr.', 'Das druckt.', 'Das ist eine Liste mit 1. 2. 3. im Text.'],
+          tip: 'Word kann zählen. Du musst es nur einfügen.', why: 'Einfügen › Seitenzahl › Seitenende. Word zählt selber.' },
+        { id: 'w7_pdf', ex: 'pdf', st: 1, nr: ['W7.3'], type: 'mc', q: 'Wie machst du aus einem Word-Dokument ein PDF?',
+          opts: ['Speichern unter › Dateityp PDF', 'Datei umbenennen in «.pdf»', 'Einen Screenshot machen', 'Ctrl + P'],
           whyNot: [null, 'Ein neuer Name macht kein PDF. Die Datei geht dann nicht mehr auf.', 'Dann hast du nur ein Bild.', 'Das druckt auf Papier.'],
           tip: 'Beim Speichern kannst du auswählen, was für eine Datei entsteht.', why: 'Datei › Speichern unter (oder Kopie speichern) › Dateityp PDF.' },
-        { id: 'w5_sort', ex: 'papier', st: 2, nr: ['W5.2'], type: 'sort', q: 'Welches Papier ist das? Ordne zu.',
-          rows: [['Ein normales Schulblatt', 'A4'], ['Doppelt so gross wie A4, gut für Plakate', 'A3'], ['Halb so gross wie A4, wie ein kleines Heft', 'A5']],
-          cats: ['A3', 'A4', 'A5', 'A1'],
-          tip: 'Je grösser die Zahl, desto kleiner das Papier. A4 ist die Mitte.' },
-        { id: 'w5_order', ex: 'pdf', st: 2, nr: ['W5.3'], type: 'order', q: 'Du speicherst als PDF. Bring die Schritte in die richtige Reihenfolge.',
+        { id: 'w7_vorschau', ex: 'drucken', st: 1, nr: ['W7.3'], type: 'mc', q: 'Bevor du druckst oder abgibst: Wo siehst du, wie die Seiten aussehen werden?',
+          opts: ['Ctrl + P: in der Vorschau', 'Im Papierkorb', 'In Teams', 'Nirgends'],
+          whyNot: [null, 'Dort sind gelöschte Dateien.', 'Teams zeigt das nicht vorher.', 'Doch, das sieht man vorher.'],
+          tip: 'Das Drucken-Fenster zeigt rechts ein Bild der Seite.', why: 'Ctrl + P zeigt rechts die Vorschau. Erst schauen, dann drucken. Das spart Papier.' },
+        { id: 'w7_a3', ex: 'drucken', st: 1, nr: ['W7.3'], type: 'mc', pic: 'paper', q: 'Ein normales Schulblatt ist A4. Wie gross ist A3?',
+          opts: ['Doppelt so gross', 'Halb so gross', 'Gleich gross', 'Zehnmal so gross'],
+          whyNot: [null, 'Halb so gross ist A5.', 'Schau das Bild an.', 'So gross ist es nicht.'],
+          tip: 'Wie viele A4-Blätter passen auf ein A3-Blatt?', why: 'A3 = zwei A4-Blätter nebeneinander. Gut für Plakate. Einstellen: Layout › Format.' },
+        { id: 'w7_sort', ex: 'reiter', st: 2, nr: ['W7.1', 'W7.2'], type: 'sort', q: 'In welchem Reiter findest du es? Ordne zu.',
+          rows: [['Querformat', 'Layout'], ['Seitenränder', 'Layout'], ['Seitenzahl', 'Einfügen'], ['Kopfzeile', 'Einfügen'], ['Überschrift 1', 'Start']],
+          cats: ['Start', 'Einfügen', 'Layout', 'Überprüfen'],
+          tip: 'Was neu dazukommt, ist bei «Einfügen». Was die ganze Seite ändert, bei «Layout».' },
+        { id: 'w7_order', ex: 'pdf', st: 2, nr: ['W7.3'], type: 'order', q: 'Du speicherst als PDF. Bring die Schritte in die richtige Reihenfolge.',
           steps: ['Auf «Datei» klicken', '«Speichern unter» (oder «Kopie speichern») wählen', 'Den Ordner wählen', 'Bei «Dateityp» PDF wählen', 'Auf «Speichern» klicken'],
           tip: 'Was für eine Datei entsteht, wählst du, bevor du auf «Speichern» klickst.' },
-        { id: 'w5_gap', ex: 'pdf', st: 2, nr: ['W5.3'], type: 'gap', text: 'Ein Dokument, das auf jedem Gerät gleich aussieht, speicherst du als ___.',
-          a: ['PDF'], tip: 'Drei Buchstaben. So gibst du in Teams ab.', why: 'Als PDF.' },
-        { id: 'w5_m1', st: 3, nr: ['W5.1'], type: 'mission', q: 'Mission W5.1: Aufwärmen (Plakat)', link: F('W5_Plakat'), linkText: '📥 Übungsdatei herunterladen',
-          steps: [...DL('W5', 'Word_W5_Plakat'), '<b>Querformat</b>. Titel: Grösse <b>48</b>, <b>fett</b>, eine <b>Farbe</b>.', 'Hebe Datum und Zeit <b>gelb</b> hervor. Füge ein <b>Bild</b> ein (Quadratisch).'],
-          help: [DL_HELP, 'Vergessen? Tippe auf «📖 Theorie» oder übe nochmals in den früheren Teilen.'],
-          proof: 'Plakat quer, grosser farbiger Titel, Datum gelb, ein Bild.' },
-        { id: 'w5_m2', st: 3, nr: ['W5.2'], type: 'mission', q: 'Mission W5.2: A3 und Druckvorschau',
-          steps: ['<b>Layout › Format › A3</b>. Was passiert mit deinem Plakat?', 'Drück <b>Ctrl + P</b>. Schau die <b>Vorschau</b> an. Noch <b>nicht drucken</b>!', 'Schau, welches Papier dort steht (A3 oder A4).', 'Mit dem Pfeil oben links zurück. Stell wieder <b>A4</b> ein und mach das Plakat passend. Ctrl + S.'],
-          help: ['Format nicht gefunden? Reiter «Layout», ganz links bei «Seite einrichten».', 'Gedruckt wird nur, wenn deine Lehrperson es sagt.'],
-          proof: 'Das Plakat ist A4 quer, und in der Vorschau passt alles auf die Seite.' },
-        { id: 'w5_m3', st: 3, nr: ['W5.3'], type: 'mission', q: 'Mission W5.3: Als PDF abgeben',
-          steps: ['<b>Datei › Speichern unter</b> (oder Kopie speichern). Ordner <b>Informatik</b>.', 'Name: <b>Informatik_Plakat</b>. Dateityp: <b>PDF</b>. Speichern.', 'Teams › <b>Aufgaben</b> › «Word-Führerschein» › <b>+ Arbeit hinzufügen</b> › das PDF wählen.', 'Klicke auf <b>Abgeben</b>. Steht jetzt «Abgegeben»?'],
-          help: ['Kein «Speichern unter»? Dann heisst es «Kopie speichern». Das ist das Gleiche.', 'Auch möglich: Datei › Exportieren › PDF/XPS-Dokument erstellen.'],
+        { id: 'w7_gap', ex: 'kopf', st: 2, nr: ['W7.2'], type: 'gap', text: 'Die Seitenzahl steht unten auf der Seite in der ___.',
+          a: ['Fusszeile', 'Fußzeile', 'Fusszeilen'], tip: 'Oben ist die Kopfzeile. Und unten, bei den Füssen?', why: 'In der Fusszeile.' },
+        { id: 'w7_m1', st: 3, nr: ['W7.1'], type: 'mission', q: 'Mission W7.1: Aufwärmen (Plakat)', link: F('W7_Plakat'), linkText: '📥 Übungsdatei herunterladen',
+          steps: [...DL('W7', 'Word_W7_Plakat'), '<b>Layout › Ausrichtung › Querformat</b>. <b>Layout › Seitenränder › Schmal</b>.', 'Titel: Grösse <b>48</b>, <b>fett</b>, eine <b>Farbe</b>, <b>zentriert</b>. Füge ein <b>Bild</b> ein (Vor den Text) und schieb es an einen schönen Ort. Ctrl + S.'],
+          help: [DL_HELP, APP_HELP, AUF_HELP],
+          proof: 'Plakat quer mit schmalem Rand, grosser farbiger Titel in der Mitte, ein Bild.' },
+        { id: 'w7_m2', st: 3, nr: ['W7.2'], type: 'mission', q: 'Mission W7.2: Kopfzeile, Seitenzahl, neue Seite', link: F('W7_Projekt'), linkText: '📥 Projektarbeit herunterladen',
+          steps: ['Lade die <b>Projektarbeit</b> herunter, verschieb sie nach Informatik und öffne sie in der Word-App.', 'Klicke vor «Packliste» und drück <b>Ctrl + Enter</b>: Die Packliste beginnt auf einer neuen Seite.', '<b>Einfügen › Kopfzeile › Leer</b>. Schreib deinen <b>Vornamen</b> hinein.', '<b>Einfügen › Seitenzahl › Seitenende</b> › einfache Zahl in der Mitte. Dann «Kopf- und Fusszeile schliessen». Ctrl + S.'],
+          help: ['Zurück in den Text? Doppelklick in den normalen Text oder Esc.', 'Schau mit dem Mausrad nach unten: Hat jede Seite ihre Zahl?'],
+          proof: 'Die Packliste ist auf einer eigenen Seite. Oben steht dein Vorname, unten die Seitenzahl.' },
+        { id: 'w7_m3', st: 3, nr: ['W7.3'], type: 'mission', q: 'Mission W7.3: Als PDF abgeben',
+          steps: ['Drück <b>Ctrl + P</b> und schau die <b>Vorschau</b> an: Stimmt alles? Noch <b>nicht drucken</b>! Zurück mit dem Pfeil oben links.', '<b>Datei › Speichern unter</b> (oder Kopie speichern). Ordner <b>Informatik</b>. Name: <b>Informatik_Projekt</b>. Dateityp: <b>PDF</b>. Speichern.', 'Teams › <b>Aufgaben</b> › «Word-Führerschein» › <b>+ Arbeit hinzufügen</b> › das PDF wählen.', 'Klicke auf <b>Abgeben</b>. Steht jetzt «Abgegeben»?'],
+          help: ['Kein «Speichern unter»? Dann heisst es «Kopie speichern». Das ist das Gleiche.', 'Auch möglich: Datei › Exportieren › PDF/XPS-Dokument erstellen.', 'Gedruckt wird nur, wenn deine Lehrperson es sagt.'],
           proof: 'In Teams steht bei der Aufgabe: Abgegeben ✔' }
       ]
     };
     // Kurz erklärt: nur der Teil der Theorie, der zu dieser Frage passt (Wunsch Lehrperson 24.11.2026)
     const EX = {
-      "markieren": "Zuerst markieren, dann ändern. Ein Wort: Doppelklick. Einen Satz: Maus drücken und ziehen. Alles: Ctrl + A.",
+      "app": "In der Schule immer die Word-App (Desktop) nehmen, nicht Word im Browser: Nur die App hat alle Knöpfe. Im Browser: «Bearbeitung» ▾ › «In Desktop-App öffnen».",
+      "markieren": "Zuerst markieren, dann ändern. Ein Wort: Doppelklick. Einen Satz: Maus drücken und ziehen. Alles: Ctrl + A. Hoppla? Ctrl + Z macht rückgängig.",
       "schrift": "Schriftart = der Name der Schrift (z.B. Arial). Schriftgrösse = die Zahl daneben (z.B. 12).",
       "fku": "F = fett · K = kursiv (schräg) · U = unterstrichen.",
       "farbe": "A mit Farbstrich färbt die Buchstaben. ab mit gelbem Strich färbt den Hintergrund, wie ein Leuchtstift.",
+      "ausrichten": "Start › Gruppe Absatz: linksbündig, zentriert (Mitte), rechtsbündig, Blocksatz (links und rechts gerade).",
       "zeilen": "Zeilenabstand = Platz zwischen den Zeilen. Knopf mit Linien und Pfeilen ↕ im Reiter Start.",
-      "ueber": "Überschrift 1 = Kapitel, Überschrift 2 = Teil im Kapitel. Du findest sie bei Start › Formatvorlagen. Word erkennt sie als Überschriften.",
-      "tab": "Die Tab-Taste ⇥ (links neben Q) springt ein Stück weiter. So stehen Zahlen genau untereinander.",
-      "bild": "Bild: Einfügen › Bilder. Kleiner machen: an einer Ecke ziehen.",
-      "umbruch": "Bild anklicken › Layoutoptionen. Mit Text in Zeile: wie ein Buchstabe · Quadratisch: Text fliesst herum · Hinter den Text: wie ein Hintergrund · Vor den Text: verdeckt den Text.",
-      "tabelle": "Tabelle: Einfügen › Tabelle. Spalten stehen senkrecht, Zeilen liegen waagrecht. Die Tab-Taste springt in die nächste Zelle.",
-      "format": "Hochformat: höher als breit. Querformat: breiter als hoch. Einstellen: Layout › Ausrichtung.",
+      "liste": "Aufzählung = Liste mit Punkten (Reihenfolge egal). Nummerierung = Liste mit 1. 2. 3. (Reihenfolge wichtig). Beide im Reiter Start.",
+      "pinsel": "Format übertragen (Pinsel, Reiter Start ganz links): Wort mit dem schönen Aussehen anklicken, Pinsel, dann über das andere Wort fahren.",
+      "ueber": "Titel = Name der ganzen Arbeit. Überschrift 1 = Kapitel. Überschrift 2 = Teil im Kapitel. Alles bei Start › Formatvorlagen.",
+      "tab": "Die Tab-Taste ⇥ (links neben Q) springt ein Stück weiter. So stehen Zahlen genau untereinander. ¶ zeigt Leerschläge (·) und Tabs (→).",
+      "suchen": "Ctrl + F = ein Wort suchen. Ctrl + H = Ersetzen: «Suchen nach», «Ersetzen durch», dann «Alle ersetzen».",
+      "kopieren": "Ctrl + C kopieren (dann gibt es es zweimal). Ctrl + X ausschneiden (Schere). Ctrl + V einfügen. Verschieben = Ctrl + X, dann Ctrl + V.",
       "rot": "Rote Wellenlinie: Word kennt das Wort nicht. Rechtsklick darauf zeigt Vorschläge.",
       "sprache": "Ist fast alles rot, ist die Sprache falsch eingestellt. Überprüfen › Sprache › Deutsch (Schweiz): Dann gilt «ss» statt «ß».",
       "woerter": "Wie viele Wörter? Unten links in der Leiste steht es, oder Überprüfen › Wörter zählen.",
-      "reiter": "Start: Schrift, Überschriften · Einfügen: Bild, Tabelle · Layout: Ausrichtung, Format · Überprüfen: Rechtschreibung, Sprache, Wörter.",
-      "papier": "A4 = normales Schulblatt (21 × 29,7 cm). A3 = doppelt so gross. A5 = halb so gross. Einstellen: Layout › Format.",
-      "drucken": "Drucken: Ctrl + P (P wie «print»). Rechts ist die Vorschau. Ist das Dokument A3, im Drucker aber A4, wird es verkleinert oder abgeschnitten.",
+      "bild": "Bild: Einfügen › Bilder. Kleiner machen: an einer Ecke ziehen.",
+      "umbruch": "Bild anklicken › Layoutoptionen. Mit Text in Zeile: wie ein Buchstabe · Quadratisch: Text fliesst herum · Hinter den Text: wie ein Hintergrund · Vor den Text: liegt obenauf.",
+      "frei": "Frei verschieben: Layoutoptionen › «Vor den Text». Dann liegt das Bild obenauf und geht überallhin.",
+      "tabelle": "Tabelle: Einfügen › Tabelle. Spalten stehen senkrecht, Zeilen liegen waagrecht. Die Tab-Taste springt in die nächste Zelle.",
+      "zeile": "Zeile oder Spalte dazu: Rechtsklick › Einfügen. Breiter: Linie ziehen. Farbe: Tabellenentwurf › Schattierung.",
+      "format": "Hochformat: höher als breit. Querformat: breiter als hoch. Einstellen: Layout › Ausrichtung.",
+      "rand": "Seitenränder = der leere Platz aussen herum. Layout › Seitenränder › Schmal, Normal oder Breit.",
+      "umbr": "Neue Seite: Ctrl + Enter (Seitenumbruch). Nie viele Male Enter.",
+      "kopf": "Kopfzeile oben, Fusszeile unten: stehen auf jeder Seite. Einfügen › Kopfzeile oder Seitenzahl. Word zählt die Seiten selber.",
+      "reiter": "Start: Schrift, Absatz, Überschriften · Einfügen: Bild, Tabelle, Kopfzeile, Seitenzahl · Layout: Querformat, Seitenränder · Überprüfen: Rechtschreibung, Sprache.",
+      "drucken": "Ctrl + P: rechts ist die Vorschau. A4 = Schulblatt, A3 = doppelt so gross (Layout › Format).",
       "pdf": "PDF: Datei › Speichern unter (oder Kopie speichern) › bei Dateityp PDF wählen. Ein PDF sieht überall gleich aus. Umbenennen macht kein PDF."
     };
     const BANKS = {};
@@ -1352,7 +1527,7 @@
     }
     // Bilder in der Theorie (in der aktuellen Sprache, nach dem Umschalten neu)
     function renderTheory() {
-      $('theory-k1-svg').innerHTML = SVG_WORD(true); $('theory-k3-svg').innerHTML = `<div class="grid grid-cols-2 gap-3 text-center text-sm font-bold text-slate-700"><div>${WRAP_INLINE()}Mit Text in Zeile</div><div>${WRAP_SQ()}Quadratisch</div><div>${WRAP_BEHIND()}Hinter den Text</div><div>${WRAP_FRONT()}Vor den Text</div></div>`; $('theory-k5-svg').innerHTML = PAPER();
+      $('theory-k1-svg').innerHTML = SVG_WORD(true); $('theory-k2-svg').innerHTML = `<div class="grid grid-cols-3 gap-2 text-center text-sm font-bold text-slate-700"><div>${AL_L()}links</div><div>${AL_C()}zentriert</div><div>${AL_J()}Blocksatz</div><div>${SP_10()}Zeilenabstand 1,0</div><div>${SP_15()}1,5</div><div>${SP_20()}2,0</div></div>`; $('theory-k5-svg').innerHTML = `<div class="grid grid-cols-2 gap-3 text-center text-sm font-bold text-slate-700"><div>${WRAP_INLINE()}Mit Text in Zeile</div><div>${WRAP_SQ()}Quadratisch</div><div>${WRAP_BEHIND()}Hinter den Text</div><div>${WRAP_FRONT()}Vor den Text</div></div>`; $('theory-k7-svg').innerHTML = `<div class="grid grid-cols-3 gap-2 text-center text-sm font-bold text-slate-700"><div>${M_NARROW()}Rand schmal</div><div>${M_WIDE()}Rand breit</div><div>${HEADFOOT()}Kopf- und Fusszeile</div></div>`;
     }
     document.addEventListener('DOMContentLoaded', function () {
       load();
