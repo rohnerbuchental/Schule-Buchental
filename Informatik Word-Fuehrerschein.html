@@ -75,7 +75,7 @@
     <div id="view-home" class="view space-y-4">
       <section class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
         <h2 class="text-xl font-black text-slate-900"><span data-l="de">Dein Word-Führerschein 📝</span></h2>
-        <p class="text-base text-slate-600 mt-1" data-l="de">7 Teile, einer pro Lektion, immer in der <b>Word-App</b>. Fehler sind okay: Die Aufgabe kommt später nochmals.</p>
+        <p class="text-base text-slate-600 mt-1" data-l="de">7 Teile, einer pro Lektion. <b>Mach zuerst Word auf</b> und lass es offen: Dort probierst du alles aus. Fehler sind okay: Die Aufgabe kommt später nochmals.</p>
         <!-- Kleine Animation zum Stoff (docs/didaktik.md 1c): ein Wort wird gestaltet (fett, grösser, Farbe, Textmarker) -->
         <div class="mt-3 flex items-center gap-3">
           <button type="button" onclick="playAnim()" class="anim-btn shrink-0 w-28 rounded-2xl bg-sky-50 border border-sky-100 overflow-hidden" aria-label="Antippen: ein Wort gestalten">
@@ -101,6 +101,7 @@
     <!-- Teil W1 «Schrift» -->
     <section id="view-k1" class="view hidden space-y-4">
       <div id="card-k1" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k1"></div>
         <div id="body-k1"></div>
       </div>
@@ -123,6 +124,7 @@
     <!-- Teil W2 «Absatz» -->
     <section id="view-k2" class="view hidden space-y-4">
       <div id="card-k2" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k2"></div>
         <div id="body-k2"></div>
       </div>
@@ -142,6 +144,7 @@
     <!-- Teil W3 «Überschriften» -->
     <section id="view-k3" class="view hidden space-y-4">
       <div id="card-k3" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k3"></div>
         <div id="body-k3"></div>
       </div>
@@ -160,6 +163,7 @@
     <!-- Teil W4 «Bearbeiten & Prüfen» -->
     <section id="view-k4" class="view hidden space-y-4">
       <div id="card-k4" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k4"></div>
         <div id="body-k4"></div>
       </div>
@@ -180,6 +184,7 @@
     <!-- Teil W5 «Bild» -->
     <section id="view-k5" class="view hidden space-y-4">
       <div id="card-k5" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k5"></div>
         <div id="body-k5"></div>
       </div>
@@ -199,6 +204,7 @@
     <!-- Teil W6 «Tabelle» -->
     <section id="view-k6" class="view hidden space-y-4">
       <div id="card-k6" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k6"></div>
         <div id="body-k6"></div>
       </div>
@@ -218,6 +224,7 @@
     <!-- Teil W7 «Seite & Abgabe» -->
     <section id="view-k7" class="view hidden space-y-4">
       <div id="card-k7" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
+        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k7"></div>
         <div id="body-k7"></div>
       </div>
@@ -380,8 +387,8 @@
       { id: 'k7', emoji: '📄', title: 'Seite & Abgabe', lz: 'Lektion W7', nrs: 'W7.1–W7.4', sub: 'Querformat, Seitenränder, Kopf- und Fusszeile, PDF' }
     ];
     const STAGES = [
-      { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus.' },
-      { icon: '✏️', label: 'Ergänzen', intro: 'Jetzt baust du die Reihenfolge, ordnest zu oder schreibst ein Wort. Es gibt Hilfe.' },
+      { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus. 💻 Mach <b>Word</b> daneben auf: Dort kannst du jederzeit ausprobieren und nachschauen.' },
+      { icon: '✏️', label: 'Ergänzen', intro: 'Jetzt baust du die Reihenfolge, ordnest zu oder schreibst ein Wort. Probier es in Word aus, wenn du unsicher bist. Es gibt Hilfe.' },
       { icon: '💻', label: 'Am Laptop', intro: 'Jetzt machst du es selber in Word. Hake jeden Schritt ab.' }
     ];
     // Speichern (Wunsch Lehrperson 25.11.2026): in Teams im eigenen Ordner «Aufgabenbearbeitung» arbeiten, guter Name (Fach_Thema), oft Ctrl + S,
