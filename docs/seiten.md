@@ -85,6 +85,8 @@ Vor der Arbeit an einer Seite nur ihren Abschnitt lesen (`grep -n "^## " docs/se
 - **Gespeichert** unter `rzg2_pfad` (pro Teil erledigte Aufgaben, Warteschlange, Wiederholungen; Übungstage; Entwürfe der offenen Antworten). Alte Schlüssel `rzg_dyn2_*` werden nicht mehr gelesen. «🔀 Nochmals üben» setzt nur den Teil zurück, mit Rückfrage auf der Seite.
 - Grundlagen (privat): Dossier «Dynamik der Erde» mit Lösungen der Lehrperson und Lernziel-Blatt Teil 2. Teil 1 (Aufbau der Erde, Plattentektonik) war Test 1, nicht einbauen.
 
+**Regel «Falsche Antwort kommt nur beim Wörterlernen nochmals» (25.11.2026):** umgesetzt in Word-Führerschein und Englisch Unit 2 (Grammatik; Wörter-Lernpfad bleibt mit Nochmals). **RZG erst umstellen, wenn die Seite von der Lernplattform genommen wird** (Wunsch Lehrperson 25.11.). Scratch und Computer-Grundlagen: noch wie bisher, nicht verlangt.
+
 ## Computer-Grundlagen und Word-Führerschein: Besonderheiten
 - **Exkurs vor Kapitel 4 von connected 3** (Entscheid Lehrperson 18.11.2026). Geräte: Windows 11, wenig Speicher, gespeichert wird in OneDrive, abgegeben in Teams. 1 Lektion Informatik pro Woche; Anzahl Lektionen egal, Qualität zählt (Lehrperson 18.11.). Gerüst und Mechanik wie Lernpfad RZG (Sterne, Etappen, Wiederholung nach 1 und 3 Tagen), Farbe Indigo.
 - **Computer-Grundlagen:** 2 Teile = 2 Lektionen: 1 Dateien & OneDrive (M1–M4), 2 Download, Screenshot, Teams (M5–M7). Lehrperson 24.11.: M1–M3 allein füllen keine Lektion → M4 «Aufräum-Challenge»: `dateien/Chaos-Ordner.zip` (12 Dateien mit schlechten Namen, je erste Zeile = Fach und Thema; entpacken, Fach-Ordner, umbenennen, einsortieren, Doppel löschen; erstellt mit `make_chaos.py`). Vorlage `dateien/Lektion2_Vorlage.docx`.
