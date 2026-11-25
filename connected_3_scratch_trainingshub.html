@@ -1111,7 +1111,7 @@
       if (it.type === 'gap' && it.bank) Q.bank = shuffle(it.bank.map((_, i) => i));
       if (it.type === 'order') {
         const n = it.steps.length + (it.extra ? it.extra.length : 0);
-        Q.pool = shuffle([...Array(n).keys()]); if (Q.pool.every((x, i) => x === i)) Q.pool.reverse();
+        do { Q.pool = shuffle([...Array(n).keys()]); } while (Q.pool.length > 1 && Q.pool.some((x, i) => x === i));   // kein Schritt am richtigen Platz (Regel 25.11.2026)
       }
       if (it.type === 'slots') { Q.cards = shuffle([...Array(SLOTS.length + FLOWS[it.flow].extra.length).keys()]); SLOTS.forEach(sl => { Q.fill[sl] = null; }); }
       return Q;

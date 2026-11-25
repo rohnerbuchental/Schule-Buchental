@@ -685,7 +685,7 @@
       if (it.type === 'mc') Q.opts = shuffle(it.opts.map((t, i) => ({ t, i, ok: i === 0 })));   // i: Text in der aktuellen Sprache
       if (it.type === 'sort') { Q.rows = shuffle(it.rows.map((r, i) => i)); Q.cats = it.keepCats ? it.cats.slice() : shuffle(it.cats); }
       if (it.type === 'gap' && it.bank) Q.bank = shuffle(BANKS[it.bank].map((_, i) => i));
-      if (it.type === 'order') { do { Q.pool = shuffle(it.steps.map((_, i) => i)); } while (Q.pool.some((x, i) => x === i)); }
+      if (it.type === 'order') { do { Q.pool = shuffle(it.steps.map((_, i) => i)); } while (Q.pool.length > 1 && Q.pool.some((x, i) => x === i)); }   // kein Schritt am richtigen Platz (Regel 25.11.2026)
       return Q;
     }
     const curQ = pid => QS[pid] || newQuestion(pid);
@@ -859,7 +859,7 @@
       if (Q.phase !== 'ask' || Object.keys(Q.sel).length < it.rows.length) return;
       const nOk = it.rows.filter((row, r) => Q.sel[r] === row[1]).length;
       // Beim ersten Fehlversuch nur sagen, wie viele stimmen, und nochmals probieren lassen
-      if (nOk < it.rows.length && !Q.sortHint) { const ok = it.rows.map((row, r) => Q.sel[r] === row[1] ? r : -1).filter(r => r >= 0); it.rows.forEach((row, r) => { if (!ok.includes(r)) delete Q.sel[r]; }); Q.sortHint = { n: nOk, of: it.rows.length, ok }; renderPart(pid); return; }
+      if (nOk < it.rows.length && !Q.sortHint) { const ok = it.rows.map((row, r) => Q.sel[r] === row[1] ? r : -1).filter(r => r >= 0); it.rows.forEach((row, r) => { if (!ok.includes(r)) delete Q.sel[r]; }); Q.sortHint = { n: nOk, of: it.rows.length, ok }; renderPart(pid); return; }   // richtige bleiben grün (Regel 25.11.2026)
       answer(pid, nOk === it.rows.length, false);
     }
     function place(pid, k) {
