@@ -938,7 +938,7 @@
       if (it.type === 'mc') Q.opts = shuffle(it.opts.map((t, i) => ({ t, i, ok: i === 0 })));   // i: Text in der aktuellen Sprache
       if (it.type === 'sort') { Q.rows = shuffle(it.rows.map((r, i) => i)); Q.cats = it.keepCats ? it.cats.slice() : shuffle(it.cats); }
       if (it.type === 'gap' && it.bank) Q.bank = shuffle(BANKS[it.bank].map((_, i) => i));
-      if (it.type === 'order') { Q.pool = shuffle(it.steps.map((_, i) => i)); if (Q.pool.every((x, i) => x === i)) Q.pool.reverse(); }
+      if (it.type === 'order') { do { Q.pool = shuffle(it.steps.map((_, i) => i)); } while (Q.pool.some((x, i) => x === i)); }
       return Q;
     }
     const curQ = pid => QS[pid] || newQuestion(pid);
