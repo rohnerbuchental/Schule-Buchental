@@ -27,6 +27,10 @@
     svg .zone { cursor: pointer; }
     svg .zone:hover > :first-child { filter: brightness(1.12); }
     @media (prefers-reduced-motion: reduce) { .pop, .bump { animation: none; } .fly-star { display: none; } .bar { transition: none; } }
+    /* Kompakt (Wunsch Lehrperson 26.11.2026): Aufgabe bis «Tipp» auf einen Blick, auch am Laptop */
+    .pic svg { max-height: 120px; width: auto; max-width: 100%; margin: 0 auto; display: block; }
+    @media (min-width: 640px) { .mcopts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) { body { zoom: 0.85; } }   /* Laptop: alles etwas kleiner */
     /* «Hallo» zum Antippen (docs/didaktik.md 1c): wird gross, fett, farbig und gelb markiert, 1.8 s */
     .anim-btn { -webkit-tap-highlight-color: transparent; }
     .anim-btn:focus-visible { outline: 3px solid #4f46e5; outline-offset: 3px; }
@@ -101,7 +105,7 @@
     <!-- Teil W1 «Schrift» -->
     <section id="view-k1" class="view hidden space-y-4">
       <div id="card-k1" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
-        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
+        <div class="text-sm text-sky-800">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k1"></div>
         <div id="body-k1"></div>
       </div>
@@ -124,7 +128,7 @@
     <!-- Teil W2 «Absatz» -->
     <section id="view-k2" class="view hidden space-y-4">
       <div id="card-k2" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
-        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
+        <div class="text-sm text-sky-800">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k2"></div>
         <div id="body-k2"></div>
       </div>
@@ -144,7 +148,7 @@
     <!-- Teil W3 «Überschriften» -->
     <section id="view-k3" class="view hidden space-y-4">
       <div id="card-k3" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
-        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
+        <div class="text-sm text-sky-800">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k3"></div>
         <div id="body-k3"></div>
       </div>
@@ -163,7 +167,7 @@
     <!-- Teil W4 «Bearbeiten & Prüfen» -->
     <section id="view-k4" class="view hidden space-y-4">
       <div id="card-k4" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
-        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
+        <div class="text-sm text-sky-800">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k4"></div>
         <div id="body-k4"></div>
       </div>
@@ -184,7 +188,7 @@
     <!-- Teil W5 «Bild» -->
     <section id="view-k5" class="view hidden space-y-4">
       <div id="card-k5" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
-        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
+        <div class="text-sm text-sky-800">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k5"></div>
         <div id="body-k5"></div>
       </div>
@@ -204,7 +208,7 @@
     <!-- Teil W6 «Tabelle» -->
     <section id="view-k6" class="view hidden space-y-4">
       <div id="card-k6" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
-        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
+        <div class="text-sm text-sky-800">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k6"></div>
         <div id="body-k6"></div>
       </div>
@@ -224,7 +228,7 @@
     <!-- Teil W7 «Seite & Abgabe» -->
     <section id="view-k7" class="view hidden space-y-4">
       <div id="card-k7" class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-indigo-100 space-y-4">
-        <div class="rounded-2xl bg-sky-50 border border-sky-200 px-3 py-2 text-base text-slate-700">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
+        <div class="text-sm text-sky-800">💻 <b>Word offen?</b> Probier dort aus, wenn du unsicher bist.</div>
         <div id="head-k7"></div>
         <div id="body-k7"></div>
       </div>
@@ -1319,7 +1323,7 @@
             return `<button type="button" onclick="pick('${pid}',${i})" ${done || tried ? 'disabled' : ''} class="rounded-2xl border-2 p-2 ${cls}"><div class="text-sm font-bold text-slate-600 ${tried ? 'line-through' : ''}">${tr('Bild', 'Imagen')} ${i + 1}</div>${PICS[o.t]()}</button>`;
           }).join('')}</div>`;
         } else {
-          h += `<div class="grid grid-cols-1 gap-2">${Q.opts.map((o, i) => {
+          h += `<div class="mcopts grid grid-cols-1 gap-2">${Q.opts.map((o, i) => {
             let cls = 'bg-white border-slate-300 text-slate-800 hover:border-indigo-400 hover:bg-indigo-50/40';
             const tried = !done && Q.tried.includes(i);
             if (done) cls = o.ok ? 'bg-emerald-50 border-emerald-500 text-emerald-900' : i === Q.pick ? 'bg-yellow-50 border-yellow-400 text-yellow-900' : 'bg-white border-slate-200 text-slate-400';
