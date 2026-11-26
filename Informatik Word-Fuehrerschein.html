@@ -390,10 +390,11 @@
       { id: 'k6', emoji: '📋', title: 'Tabelle', lz: 'Lektion W6', nrs: 'W6.1–W6.4', sub: 'Tabelle machen, Zeilen dazu, Breite, Farbe' },
       { id: 'k7', emoji: '📄', title: 'Seite & Abgabe', lz: 'Lektion W7', nrs: 'W7.1–W7.4', sub: 'Querformat, Seitenränder, Kopf- und Fusszeile, PDF' }
     ];
+    // Stufen klar benannt (Wunsch Lehrperson 26.11.2026: «Erkennen, Ergänzen, Am Laptop» und Stern/Computer-Zeichen waren verwirrend)
     const STAGES = [
-      { icon: '👀', label: 'Erkennen', intro: 'Du wählst aus. 💻 Mach <b>Word</b> daneben auf: Dort kannst du jederzeit ausprobieren und nachschauen.' },
-      { icon: '✏️', label: 'Ergänzen', intro: 'Jetzt baust du die Reihenfolge, ordnest zu oder schreibst ein Wort. Probier es in Word aus, wenn du unsicher bist. Es gibt Hilfe.' },
-      { icon: '💻', label: 'Am Laptop', intro: 'Jetzt machst du es selber in Word. Hake jeden Schritt ab.' }
+      { icon: '1', label: 'Auswählen', intro: 'Du wählst die richtige Antwort aus. 💻 Mach <b>Word</b> daneben auf: Dort kannst du jederzeit ausprobieren und nachschauen.' },
+      { icon: '2', label: 'Ergänzen', intro: 'Jetzt ordnest du zu, bringst Schritte in die richtige Reihenfolge oder schreibst ein Wort. Probier es in Word aus, wenn du unsicher bist.' },
+      { icon: '3', label: 'In Word', intro: 'Jetzt machst du es selber in deiner Word-Datei. Hake jeden Schritt ab.' }
     ];
     // Speichern (Wunsch Lehrperson 25.11.2026): in Teams im eigenen Ordner «Aufgabenbearbeitung» arbeiten, guter Name (Fach_Thema), oft Ctrl + S,
     // am Schluss in den Ordner «Abgabe» (dort kann man nichts mehr löschen; die Lehrperson sieht beide Ordner und wer daran gearbeitet hat)
@@ -1279,8 +1280,8 @@
     function renderPartHead(pid) {
       const p = PART_BY_ID[pid], k = curStage(pid), pct = pctOf(pid), Q = curQ(pid);
       const steps = STAGES.map((s, i) => {
-        const done = i < k, now = i === k && !Q.review;
-        return `<div class="flex-1 min-w-0 rounded-lg px-1 py-1 text-center border-2 text-xs sm:text-sm font-bold whitespace-nowrap ${done ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : now ? 'bg-indigo-50 border-indigo-400 text-indigo-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">${done ? '⭐' : s.icon} ${L(s, 'label')}</div>`;
+        const cur = Q.id && BY_ID[Q.id] ? BY_ID[Q.id].st - 1 : k, done = i < k && i !== cur, now = i === cur && !Q.review;
+        return `<div class="flex-1 min-w-0 rounded-lg px-1 py-1 text-center border-2 text-xs sm:text-sm font-bold whitespace-nowrap ${done ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : now ? 'bg-indigo-50 border-indigo-400 text-indigo-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">${s.icon}. ${L(s, 'label')}${done ? ' ✓' : ''}</div>`;
       }).join('');
       $('head-' + pid).innerHTML = `
         <div class="flex items-center gap-2">
@@ -1486,13 +1487,13 @@
           `${homeBtn}<button type="button" id="next-btn" onclick="startExtra('${pid}')" class="${BTN_MAIN}">${tr('🔁 4 Aufgaben auffrischen', '🔁 Refrescar 4 tareas')}</button>`);
       } else {
         const it = BY_ID[Q.id], st = STAGES[it.st - 1];
-        const hint = tr({ mc: 'Tippe auf die richtige Antwort.', tap: 'Tippe im Bild auf die richtige Stelle.', sort: 'Tippe bei jeder Zeile die passende Antwort an.', order: 'Tippe die Sätze in der richtigen Reihenfolge an.', gap: 'Schreib das fehlende Wort.', open: 'Erkläre in eigenen Worten.', mission: 'Mach es am Laptop. Hake jeden Schritt ab, wenn du ihn gemacht hast.' },
+        const hint = tr({ mc: 'Tippe auf die richtige Antwort.', tap: 'Tippe im Bild auf die richtige Stelle.', sort: 'Tippe bei jeder Zeile die passende Antwort an.', order: 'Tippe die Sätze in der richtigen Reihenfolge an.', gap: 'Schreib das fehlende Wort.', open: 'Erkläre in eigenen Worten.', mission: 'Mach es in deiner Word-Datei. Hake jeden Schritt ab, wenn du ihn gemacht hast.' },
           { mc: 'Toca la respuesta correcta.', tap: 'Toca el lugar correcto en la imagen.', sort: 'Toca en cada fila la respuesta que corresponde.', order: 'Toca las frases en el orden correcto.', gap: 'Escribe la palabra que falta.', open: 'Explica con tus propias palabras.', mission: 'Hazlo en el portátil. Marca cada paso cuando lo hayas hecho.' })[it.type];
         const verb = tr({ mc: 'Tippe', tap: 'Tippe', sort: 'Tippe', order: 'Tippe', gap: 'Schreib', open: 'Erkläre', mission: 'Mach' }, { mc: 'Toca', tap: 'Toca', sort: 'Toca', order: 'Toca', gap: 'Escribe', open: 'Explica', mission: 'Hazlo' })[it.type];
         const rest = it.type === 'gap' ? '' : esc(L(it, 'q') || '');
         let html = `
           <div class="flex items-center justify-between gap-2 text-xs font-bold text-slate-500 mb-2">
-            <span>${Q.review ? tr('🔁 Wiederholen', '🔁 Repasar') : `${st.icon} ${tr('Stufe', 'Nivel')} ${it.st}: ${L(st, 'label')}`}</span>
+            <span>${Q.review ? tr('🔁 Wiederholen', '🔁 Repasar') : `${tr('Stufe', 'Nivel')} ${it.st}: ${L(st, 'label')}`}</span>
             <span class="flex items-center gap-2"><span class="px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800">${nrText(it)}</span></span>
           </div>
           ${rest ? `<div class="text-lg sm:text-xl font-black text-slate-900 leading-snug wrap-any">${rest}</div>` : ''}
