@@ -112,7 +112,7 @@
       <details id="theory-k1" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
         <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Schrift</span></summary>
         <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
-          <li><b>Immer die Word-App:</b> Datei im Explorer mit Doppelklick öffnen. Ist Word im Browser aufgegangen (oben die Adresszeile)? Oben rechts «Bearbeitung» ▾ → «In Desktop-App öffnen». Nur die App hat alle Knöpfe.</li>
+          <li><b>Immer die Word-App:</b> Datei im Explorer mit Doppelklick öffnen. Ist Word im Browser (Internet-Programm, z.B. Edge) aufgegangen (oben die Adresszeile)? Oben rechts «Bearbeitung» ▾ → «In Desktop-App öffnen». Nur die App hat alle Knöpfe.</li>
           <li><b>Zuerst markieren, dann ändern.</b> Ein Wort: Doppelklick. Ein Satz: Maus drücken und ziehen. Alles: <b>Ctrl + A</b>.</li>
           <li><b>Schriftart:</b> Reiter Start, Feld mit dem Namen der Schrift (z.B. «Arial») → Pfeil ▾ → andere Schrift wählen.</li>
           <li><b>Schriftgrösse:</b> Feld mit der Zahl (z.B. 12) → grössere Zahl = grössere Schrift. Man kann auch eine Zahl hineinschreiben und Enter drücken.</li>
@@ -398,21 +398,21 @@
     // Speichern (Wunsch Lehrperson 25.11.2026): in Teams im eigenen Ordner «Aufgabenbearbeitung» arbeiten, guter Name (Fach_Thema), oft Ctrl + S,
     // am Schluss in den Ordner «Abgabe» (dort kann man nichts mehr löschen; die Lehrperson sieht beide Ordner und wer daran gearbeitet hat)
     // Übungsdatei kommt per Mail (Wunsch Lehrperson 25.11.2026: selber speichern); der Knopf ist nur für «keine Mail»
-    const DL = (file, name) => [`Öffne in <b>Outlook</b> die Mail von deiner Lehrperson. Beim Anhang <b>Word_${file}</b>: Pfeil ▾ › <b>Herunterladen</b>.`, `Öffne <b>Teams</b> › deinen Ordner <b>Aufgabenbearbeitung</b> › <b>Hochladen</b> › <b>Word_${file}</b> aus Downloads.`, `In Teams: bei der Datei <b>⋯</b> › <b>Umbenennen</b>: <b>Informatik_${name}</b>. Dann <b>⋯</b> › Öffnen › <b>In App öffnen</b>: Sie geht in der <b>Word-App</b> auf, nicht im Browser.`];
+    const DL = (file, name) => [`Öffne in <b>Outlook</b> die Mail von deiner Lehrperson. Beim Anhang <b>Word_${file}</b>: Pfeil ▾ › <b>Herunterladen</b>.`, `Öffne <b>Teams</b> › deinen Ordner <b>Aufgabenbearbeitung</b> › <b>Hochladen</b> › <b>Word_${file}</b> aus Downloads.`, `In Teams: bei der Datei <b>⋯</b> › <b>Umbenennen</b>: <b>Informatik_${name}</b>. Dann <b>⋯</b> › Öffnen › <b>In App öffnen</b>: Sie geht in der <b>Word-App</b> auf, nicht im Browser (Internet-Programm, z.B. Edge).`];
     // Schluss jeder Lektion (Wunsch Lehrperson 25.11.2026): eigener Satz (jede Datei ist anders), speichern, prüfen, in Teams in den Abgabeordner
     const FERTIG = name => [`Schreib ganz unten einen <b>eigenen Satz</b>: <i>Das kann ich jetzt: …</i>`, `<b>Ctrl + S</b>, Word schliessen. In Teams bei <b>Informatik_${name}</b>: <b>⋯</b> › <b>Kopieren nach</b> › deinen Ordner <b>Abgabe</b>. Abgegeben! 👍`];
     const ABG_HELP = 'Wo sind «Aufgabenbearbeitung» und «Abgabe»? In Teams, so wie es deine Lehrperson gezeigt hat. Arbeite an deiner eigenen Datei: So lernst du es wirklich.';
-    const DL_HELP = 'Keine Mail gefunden? Schau im Posteingang nach «Word». Sonst den Knopf «Keine Mail? Datei hier holen» oben nehmen. Datei nicht in Downloads? Im Browser oben rechts auf den Pfeil ⬇ › «In Ordner anzeigen».';
-    const REN_HELP = 'Umbenennen geht nicht? Die Datei ist noch offen: zuerst Word schliessen. Lass «.docx» am Schluss stehen. Word im Browser aufgegangen? Oben «Bearbeitung» ▾ › «In Desktop-App öffnen».';
-    const APP_HELP = 'Word ist im Browser aufgegangen? Oben rechts auf «Bearbeitung» ▾ › «In Desktop-App öffnen». Oder im Explorer: Rechtsklick auf die Datei › Öffnen mit › Word.';
+    const DL_HELP = 'Keine Mail gefunden? Schau im Posteingang nach «Word». Sonst den Knopf «Keine Mail? Datei hier holen» oben nehmen. Datei nicht in Downloads? Im Browser (Internet-Programm, z.B. Edge) oben rechts auf den Pfeil ⬇ › «In Ordner anzeigen».';
+    const REN_HELP = 'Umbenennen geht nicht? Die Datei ist noch offen: zuerst Word schliessen. Lass «.docx» am Schluss stehen. Word im Browser (Internet-Programm, z.B. Edge) aufgegangen? Oben «Bearbeitung» ▾ › «In Desktop-App öffnen».';
+    const APP_HELP = 'Word ist im Browser (Internet-Programm, z.B. Edge) aufgegangen? Oben rechts auf «Bearbeitung» ▾ › «In Desktop-App öffnen». Oder im Explorer: Rechtsklick auf die Datei › Öffnen mit › Word.';
     const AUF_HELP = 'Vergessen, wie es geht? Tippe auf «📖 Kurz erklärt» oder übe nochmals in den Teilen vorher.';
     const ITEMS = {
       // ---------- W1: Schrift ----------
       k1: [
-        { id: 'w1_app', ex: 'app', st: 1, nr: ['W1.1'], type: 'mc', q: 'Word ist im Browser aufgegangen. Woran siehst du das?',
+        { id: 'w1_app', ex: 'app', st: 1, nr: ['W1.1'], type: 'mc', q: 'Word ist im Browser (Internet-Programm, z.B. Edge) aufgegangen. Woran siehst du das?',
           opts: ['Oben ist die Adresszeile vom Browser', 'Oben steht der Name der Datei', 'Es gibt den Reiter Start', 'Der Text ist schwarz'],
           whyNot: [null, 'Den Namen sieht man in beiden.', 'Das Menüband gibt es in beiden.', 'Schwarz ist der Text in beiden.'],
-          tip: 'Was gibt es nur im Browser (Edge, Chrome)?', why: 'Im Browser siehst du die Adresszeile. Dann: «In Desktop-App öffnen». In der App gibt es alle Knöpfe.' },
+          tip: 'Was gibt es nur im Browser (Internet-Programm, z.B. Edge)?', why: 'Im Browser siehst du die Adresszeile. Dann: «In Desktop-App öffnen». In der App gibt es alle Knöpfe.' },
         { id: 'w1_ort', ex: 'speichern', st: 1, nr: ['W1.1'], type: 'mc', q: 'Wo speicherst du deine Word-Dateien aus dem Word-Führerschein?',
           opts: ['In Teams im Ordner «Aufgabenbearbeitung»', 'Im Ordner Downloads', 'Auf dem Desktop', 'Im Papierkorb'],
           whyNot: [null, 'Dort landet alles durcheinander, was du herunterlädst.', 'Dort sieht es deine Lehrperson nicht.', 'Dort wird es gelöscht.'],
@@ -459,7 +459,7 @@
         { id: 'w1_gap', ex: 'schrift', st: 2, nr: ['W1.1'], type: 'gap', text: 'Im Menüband steht «Arial» und «12». Die Zahl 12 ist die ___.',
           a: ['Schriftgrösse', 'Schriftgröße', 'Grösse', 'Schriftgrad'], tip: 'Je höher die Zahl, desto grösser die Schrift.', why: '12 ist die Schriftgrösse.' },
         { id: 'w1_m1', st: 3, nr: ['W1.1'], type: 'mission', q: 'Mission W1.1: Datei holen und ablegen', link: F('W1_Rheinfall'), linkText: '📥 Keine Mail? Datei hier holen',
-          steps: [...DL('W1_Rheinfall', 'Rheinfall'), 'Schau oben: Siehst du <b>keine</b> Adresszeile vom Browser? Dann bist du in der Word-App. 👍'],
+          steps: [...DL('W1_Rheinfall', 'Rheinfall'), 'Schau oben: Siehst du <b>keine</b> Adresszeile vom Browser (Internet-Programm, z.B. Edge)? Dann bist du in der Word-App. 👍'],
           help: [DL_HELP, REN_HELP, APP_HELP, ABG_HELP],
           proof: 'In «Aufgabenbearbeitung» liegt «Informatik_Rheinfall». Sie ist in der Word-App offen.' },
         { id: 'w1_m2', st: 3, nr: ['W1.2'], type: 'mission', q: 'Mission W1.2: Titel und Text gestalten',
@@ -805,7 +805,7 @@
     for (const k in ITEMS) ITEMS[k].forEach(it => { if (it.type === 'mission' && ZIEL.includes(it.nr[0])) it.goal = `dateien/ziel/${it.nr[0]}.png`; });
     // Kurz erklärt: nur der Teil der Theorie, der zu dieser Frage passt (Wunsch Lehrperson 24.11.2026)
     const EX = {
-      "app": "In der Schule immer die Word-App (Desktop) nehmen, nicht Word im Browser: Nur die App hat alle Knöpfe. Im Browser: «Bearbeitung» ▾ › «In Desktop-App öffnen».",
+      "app": "In der Schule immer die Word-App (Desktop) nehmen, nicht Word im Browser (Internet-Programm, z.B. Edge): Nur die App hat alle Knöpfe. Im Browser (Internet-Programm, z.B. Edge): «Bearbeitung» ▾ › «In Desktop-App öffnen».",
       "speichern": "Du arbeitest in Teams im Ordner «Aufgabenbearbeitung». Guter Name = Fach_Thema, z.B. Informatik_Rheinfall. Oft Ctrl + S. Fertig: in den Ordner «Abgabe» kopieren.",
       "markieren": "Zuerst markieren, dann ändern. Ein Wort: Doppelklick. Einen Satz: Maus drücken und ziehen. Alles: Ctrl + A. Hoppla? Ctrl + Z macht rückgängig.",
       "schrift": "Schriftart = der Name der Schrift (z.B. Arial). Schriftgrösse = die Zahl daneben (z.B. 12).",
