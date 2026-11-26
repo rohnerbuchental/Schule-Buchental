@@ -83,7 +83,7 @@ Besonderheiten jeder Seite stehen in `docs/seiten.md`. Vor der Arbeit an einer S
 1. Änderungen am Lernportal nur hier im Repository machen. Keine Kopien mit anderen KI-Tools bearbeiten und wieder hochladen.
 2. Nicht ganze Dateien lesen: mit `grep -n "<!-- Aufgabe"` die Stelle suchen und nur diesen Abschnitt lesen (spart Tokens).
 3. Nach jeder Änderung `node tools/check.js` ausführen (JS-Fehler, Überlauf am Handy). `check.js` blockiert Tailwind; bei Layout-Änderungen zusätzlich mit lokal gebautem Tailwind (tailwindcss@3 im Scratchpad) auf 390 px prüfen, mit allen Tipp-/Lösungsboxen offen.
-4. Der Lehrperson eine Vorschau als Artifact-Link geben (Tailwind dafür als CSS einbetten).
+4. Der Lehrperson eine Vorschau als Artifact-Link geben (Tailwind dafür als CSS einbetten). **In jeder Vorschau** (Wunsch Lehrperson 26.11.2026, nur für sie, nie auf der Schülerseite): Leiste «◀ Zurück | Weiter ▶» zum Blättern durch alle Aufgaben (`tools/vorschau_blaettern.html` vor `</body>` einfügen); auf Wunsch auch Stufen schon abgehakt, damit sie direkt zu einer Stelle springen kann.
 5. Auf einen Branch committen und pushen, dann Pull Request auf `main`.
 6. **Fragen zu einer Aufgabe nie abstrakt beschreiben** (Wunsch Lehrperson 11.11.2026): Vorschlag machen, umsetzen und die Aufgabe als Vorschau zeigen; die Lehrperson entscheidet anhand der Vorschau. Gilt nur für neue, verlangte Aufgaben; bestehende Aufgaben nur auf ausdrückliche Anweisung ändern.
 7. **Neue Wünsche der Lehrperson festhalten:** zum Lernportal hier (oder in `docs/seiten.md`), alles andere in der privaten Ablage (`CLAUDE.md`, `Niveau-Profil.md`, `OFFEN.md`).
