@@ -657,7 +657,8 @@
       s.queue = [...new Set(s.queue.filter(id => open.some(it => it.id === id)))];
       const missing = open.filter(it => !s.queue.includes(it.id));
       const fresh = !ITEMS[pid].some(it => s.done[it.id]) && !s.queue.length;
-      const add = fresh ? missing.filter(it => it.first).concat(shuffle(missing.filter(it => !it.first))) : shuffle(missing);
+      const mix = a => a.some(it => it.type === 'mission') ? a : shuffle(a);
+      const add = fresh ? missing.filter(it => it.first).concat(mix(missing.filter(it => !it.first))) : mix(missing);
       add.forEach(it => s.queue.push(it.id));
     }
     function pickReview(pid) {
@@ -851,12 +852,12 @@
     function choose(pid, r, c) {
       const Q = curQ(pid);
       if (Q.phase !== 'ask') return;
-      Q.sel[r] = c;
+      Q.sel[r] = c; Q.lastAct = Date.now();
       renderPart(pid);
     }
     function checkSort(pid) {
       const Q = curQ(pid), it = BY_ID[Q.id];
-      if (Q.phase !== 'ask' || Object.keys(Q.sel).length < it.rows.length) return;
+      if (Q.phase !== 'ask' || Object.keys(Q.sel).length < it.rows.length || Date.now() - (Q.lastAct || 0) < 600) return;
       const nOk = it.rows.filter((row, r) => Q.sel[r] === row[1]).length;
       // Beim ersten Fehlversuch nur sagen, wie viele stimmen, und nochmals probieren lassen
       if (nOk < it.rows.length && !Q.sortHint) { const ok = it.rows.map((row, r) => Q.sel[r] === row[1] ? r : -1).filter(r => r >= 0); it.rows.forEach((row, r) => { if (!ok.includes(r)) delete Q.sel[r]; }); Q.sortHint = { n: nOk, of: it.rows.length, ok }; renderPart(pid); return; }   // richtige bleiben grün (Regel 25.11.2026)
@@ -865,7 +866,7 @@
     function place(pid, k) {
       const Q = curQ(pid);
       if (Q.phase !== 'ask' || !Q.pool.includes(k)) return;
-      Q.pool = Q.pool.filter(x => x !== k); Q.placed.push(k);
+      Q.pool = Q.pool.filter(x => x !== k); Q.placed.push(k); Q.lastAct = Date.now();
       renderPart(pid);
     }
     function unplace(pid, pos) {
@@ -876,7 +877,7 @@
     }
     function checkOrder(pid) {
       const Q = curQ(pid);
-      if (Q.phase !== 'ask' || Q.pool.length) return;
+      if (Q.phase !== 'ask' || Q.pool.length || Date.now() - (Q.lastAct || 0) < 600) return;
       answer(pid, Q.placed.every((k, i) => k === i), false);
     }
     function submitGap(pid, dontKnow) {
@@ -1061,7 +1062,7 @@
             return `<button type="button" onclick="pick('${pid}',${i})" ${done || tried ? 'disabled' : ''} class="rounded-2xl border-2 p-2 ${cls}"><div class="text-sm font-bold text-slate-600 ${tried ? 'line-through' : ''}">${tr('Bild', 'Imagen')} ${i + 1}</div>${PICS[o.t]()}</button>`;
           }).join('')}</div>`;
         } else {
-          h += `<div class="grid grid-cols-1 gap-2">${Q.opts.map((o, i) => {
+          h += `<div class="mcopts grid grid-cols-1 gap-2">${Q.opts.map((o, i) => {
             let cls = 'bg-white border-slate-300 text-slate-800 hover:border-indigo-400 hover:bg-indigo-50/40';
             const tried = !done && Q.tried.includes(i);
             if (done) cls = o.ok ? 'bg-emerald-50 border-emerald-500 text-emerald-900' : i === Q.pick ? 'bg-yellow-50 border-yellow-400 text-yellow-900' : 'bg-white border-slate-200 text-slate-400';
