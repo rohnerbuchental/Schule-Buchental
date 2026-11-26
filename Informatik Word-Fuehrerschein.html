@@ -398,10 +398,10 @@
     // Speichern (Wunsch Lehrperson 25.11.2026): in Teams im eigenen Ordner «Aufgabenbearbeitung» arbeiten, guter Name (Fach_Thema), oft Ctrl + S,
     // am Schluss in den Ordner «Abgabe» (dort kann man nichts mehr löschen; die Lehrperson sieht beide Ordner und wer daran gearbeitet hat)
     // Übungsdatei kommt per Mail (Wunsch Lehrperson 25.11.2026: selber speichern); der Knopf ist nur für «keine Mail»
-    const DL = (file, name) => [`Öffne in <b>Outlook</b> die Mail von deiner Lehrperson. Beim Anhang <b>Word_${file}</b>: Pfeil ▾ › <b>Herunterladen</b>.`, `Öffne <b>Teams</b> › deinen Ordner <b>Aufgabenbearbeitung</b> › <b>Hochladen</b> › <b>Word_${file}</b> aus Downloads.`, `In Teams: bei der Datei <b>⋯</b> › <b>Umbenennen</b>: <b>Informatik_${name}</b>. Dann <b>⋯</b> › Öffnen › <b>In App öffnen</b>: Sie geht in der <b>Word-App</b> auf, nicht im Browser (Internet-Programm, z.B. Edge).`];
+    const DL = (file, name) => [`Öffne in <b>Outlook</b> die Mail von deiner Lehrperson. Beim Anhang <b>Word_${file}</b>: Pfeil ▾ › <b>Herunterladen</b>.`, `Öffne <b>Teams</b> › <b>Aufgabenbearbeitung › MI › Word</b> › <b>Hochladen</b> › <b>Word_${file}</b> aus Downloads.`, `In Teams: bei der Datei <b>⋯</b> › <b>Umbenennen</b>: <b>Informatik_${name}</b>. Dann <b>⋯</b> › Öffnen › <b>In App öffnen</b>: Sie geht in der <b>Word-App</b> auf, nicht im Browser (Internet-Programm, z.B. Edge).`];
     // Schluss jeder Lektion (Wunsch Lehrperson 25.11.2026): eigener Satz (jede Datei ist anders), speichern, prüfen, in Teams in den Abgabeordner
     const FERTIG = name => [`Schreib ganz unten einen <b>eigenen Satz</b>: <i>Das kann ich jetzt: …</i>`, `<b>Ctrl + S</b>, Word schliessen. In Teams bei <b>Informatik_${name}</b>: <b>⋯</b> › <b>Kopieren nach</b> › deinen Ordner <b>Abgabe</b>. Abgegeben! 👍`];
-    const ABG_HELP = 'Wo sind «Aufgabenbearbeitung» und «Abgabe»? In Teams, so wie es deine Lehrperson gezeigt hat. Arbeite an deiner eigenen Datei: So lernst du es wirklich.';
+    const ABG_HELP = 'Wo sind «Aufgabenbearbeitung» und «Abgabe»? Ordner «MI» oder «Word» fehlt? Mach ihn mit + Neu › Ordner. In Teams, so wie es deine Lehrperson gezeigt hat. Arbeite an deiner eigenen Datei: So lernst du es wirklich.';
     const DL_HELP = 'Keine Mail gefunden? Schau im Posteingang nach «Word». Sonst den Knopf «Keine Mail? Datei hier holen» oben nehmen. Datei nicht in Downloads? Im Browser (Internet-Programm, z.B. Edge) oben rechts auf den Pfeil ⬇ › «In Ordner anzeigen».';
     const REN_HELP = 'Umbenennen geht nicht? Die Datei ist noch offen: zuerst Word schliessen. Lass «.docx» am Schluss stehen. Word im Browser (Internet-Programm, z.B. Edge) aufgegangen? Oben «Bearbeitung» ▾ › «In Desktop-App öffnen».';
     const APP_HELP = 'Word ist im Browser (Internet-Programm, z.B. Edge) aufgegangen? Oben rechts auf «Bearbeitung» ▾ › «In Desktop-App öffnen». Oder im Explorer: Rechtsklick auf die Datei › Öffnen mit › Word.';
@@ -414,9 +414,9 @@
           whyNot: [null, 'Den Namen sieht man in beiden.', 'Das Menüband gibt es in beiden.', 'Schwarz ist der Text in beiden.'],
           tip: 'Was gibt es nur im Browser (Internet-Programm, z.B. Edge)?', why: 'Im Browser siehst du die Adresszeile. Dann: «In Desktop-App öffnen». In der App gibt es alle Knöpfe.' },
         { id: 'w1_ort', ex: 'speichern', st: 1, nr: ['W1.1'], type: 'mc', q: 'Wo speicherst du deine Word-Dateien aus dem Word-Führerschein?',
-          opts: ['In Teams im Ordner «Aufgabenbearbeitung»', 'Im Ordner Downloads', 'Auf dem Desktop', 'Im Papierkorb'],
+          opts: ['In Teams in «Aufgabenbearbeitung › MI › Word»', 'Im Ordner Downloads', 'Auf dem Desktop', 'Im Papierkorb'],
           whyNot: [null, 'Dort landet alles durcheinander, was du herunterlädst.', 'Dort sieht es deine Lehrperson nicht.', 'Dort wird es gelöscht.'],
-          tip: 'Deine Lehrperson soll sehen, woran du arbeitest.', why: 'In Teams im Ordner «Aufgabenbearbeitung». Fertig? Dann kopierst du die Datei in «Abgabe».' },
+          tip: 'Deine Lehrperson soll sehen, woran du arbeitest.', why: 'In Teams in «Aufgabenbearbeitung › MI › Word». Fertig? Dann kopierst du die Datei in «Abgabe».' },
         { id: 'w1_name', ex: 'speichern', st: 1, nr: ['W1.1'], type: 'mc', q: 'Du lädst «Word_W1_Rheinfall» herunter. Wie benennst du sie um?',
           opts: ['Informatik_Rheinfall', 'Dokument1', 'neu neu final', 'asdf'],
           whyNot: [null, 'Später weisst du nicht, was drin ist.', 'Welches ist dann das richtige?', 'Daraus versteht niemand etwas.'],
@@ -459,16 +459,16 @@
         { id: 'w1_gap', ex: 'schrift', st: 2, nr: ['W1.1'], type: 'gap', text: 'Im Menüband steht «Arial» und «12». Die Zahl 12 ist die ___.',
           a: ['Schriftgrösse', 'Schriftgröße', 'Grösse', 'Schriftgrad'], tip: 'Je höher die Zahl, desto grösser die Schrift.', why: '12 ist die Schriftgrösse.' },
         { id: 'w1_m1', st: 3, nr: ['W1.1'], type: 'mission', q: 'Mission W1.1: Datei holen und ablegen', link: F('W1_Rheinfall'), linkText: '📥 Keine Mail? Datei hier holen',
-          steps: [...DL('W1_Rheinfall', 'Rheinfall'), 'Schau oben: Siehst du <b>keine</b> Adresszeile vom Browser (Internet-Programm, z.B. Edge)? Dann bist du in der Word-App. 👍'],
+          steps: ['Öffne <b>Teams</b> › deinen Ordner <b>Aufgabenbearbeitung</b>. Mach einen neuen Ordner <b>MI</b> (+ Neu › Ordner). Öffne MI und mach darin den Ordner <b>Word</b>.', ...DL('W1_Rheinfall', 'Rheinfall'), 'Schau oben: Siehst du <b>keine</b> Adresszeile vom Browser (Internet-Programm, z.B. Edge)? Dann bist du in der Word-App. 👍'],
           help: [DL_HELP, REN_HELP, APP_HELP, ABG_HELP],
-          proof: 'In «Aufgabenbearbeitung» liegt «Informatik_Rheinfall». Sie ist in der Word-App offen.' },
+          proof: 'In «Aufgabenbearbeitung › MI › Word» liegt «Informatik_Rheinfall». Sie ist in der Word-App offen.' },
         { id: 'w1_m2', st: 3, nr: ['W1.2'], type: 'mission', q: 'Mission W1.2: Titel und Text gestalten',
           steps: ['Titel «Der Rheinfall»: <b>andere Schriftart</b>, Grösse <b>24</b>, <b>fett</b>. Speichere mit <b>Ctrl + S</b>.', 'Mach <b>alle 4 Zahlen</b> im Text <b>fett</b> (Doppelklick auf die Zahl, dann F).', 'Mach die Wörter «Europa», «Schaffhausen» und «Rheinfall» im ersten Abschnitt <b>kursiv</b> und <b>unterstrichen</b>.', 'Hebe <b>2 Sätze</b> gelb hervor (Textmarker ab).', 'Gib <b>jedem Satz</b> im letzten Abschnitt eine <b>andere Schriftfarbe</b>. Ctrl + S.'],
           help: ['Einen ganzen Satz markieren: Maus vor das erste Wort, gedrückt halten, bis zum Punkt ziehen.', 'Falsch gemacht? Ctrl + Z macht den letzten Schritt rückgängig.'],
           proof: 'Titel gross und fett, 4 Zahlen fett, 3 Wörter kursiv und unterstrichen, 2 Sätze gelb, bunte Sätze.' },
         { id: 'w1_m3', st: 3, nr: ['W1.3'], type: 'mission', q: 'Mission W1.3: Nochmals: Der Säntis',
           steps: ['Scroll nach unten zum Teil 2 «Der Säntis».', 'Titel «Der Säntis»: <b>andere Schriftart</b>, Grösse <b>20</b>, <b>fett</b>, eine <b>Farbe</b>.', 'Mach <b>alle Zahlen fett</b> und alle <b>Ortsnamen kursiv</b> (Appenzell, Schwägalp, Bodensee).', 'Hebe den Satz mit dem Wetter <b>gelb</b> hervor. Mach das Wort «Rekord» <b>rot</b> und <b>unterstrichen</b>.', ...FERTIG('Rheinfall')],
-          help: [ABG_HELP, 'Vergessen, wie es geht? Tippe auf «📖 Kurz erklärt».', 'Word nicht mehr offen? Teams › Aufgabenbearbeitung › ⋯ › In App öffnen.'],
+          help: [ABG_HELP, 'Vergessen, wie es geht? Tippe auf «📖 Kurz erklärt».', 'Word nicht mehr offen? Teams › Aufgabenbearbeitung › MI › Word › ⋯ › In App öffnen.'],
           proof: 'Säntis-Titel gestaltet, Zahlen fett, Orte kursiv, ein Satz gelb, «Rekord» rot. Die Datei ist auch in «Abgabe».' }
       ],
       // ---------- W2: Absatz ----------
@@ -509,7 +509,7 @@
         { id: 'w2_m1', st: 3, nr: ['W2.1'], type: 'mission', q: 'Mission W2.1: Aufwärmen', link: F('W2_Rezept'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W2_Rezept', 'Rezept'), 'Titel «Schoggikuchen»: <b>andere Schriftart</b>, Grösse <b>26</b>, <b>fett</b>, eine <b>Farbe</b>.', 'Mach «180 Grad» und «25 Minuten» <b>fett</b>. Hebe «Achtung, heiss!» <b>gelb</b> hervor. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
-          proof: 'Datei «Informatik_Rezept» in «Aufgabenbearbeitung». Titel gestaltet, 2 Stellen fett, eine gelb.' },
+          proof: 'Datei «Informatik_Rezept» in «MI › Word». Titel gestaltet, 2 Stellen fett, eine gelb.' },
         { id: 'w2_m2', st: 3, nr: ['W2.2'], type: 'mission', q: 'Mission W2.2: Ausrichten und Zeilenabstand',
           steps: ['Klicke in den Titel. Start › <b>Zentriert</b>.', 'Klicke in den ersten Abschnitt. Start › <b>Blocksatz</b>. Mach das Gleiche beim Abschnitt unter «So geht’s».', 'Ctrl + A, dann <b>Zeilenabstand 1,5</b>.', 'Probier beim Titel auch <b>rechtsbündig</b> aus. Dann wieder <b>zentriert</b>. Ctrl + S.'],
           help: ['Die Knöpfe fürs Ausrichten sind im Reiter Start, Gruppe «Absatz»: 4 kleine Knöpfe mit Strichen.', 'Der Knopf für den Zeilenabstand hat Linien und zwei Pfeile ↕.'],
@@ -561,7 +561,7 @@
         { id: 'w3_m1', st: 3, nr: ['W3.1'], type: 'mission', q: 'Mission W3.1: Aufwärmen', link: F('W3_Projekt'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W3_Projekt', 'Klassenlager'), 'Mach in der Einleitung «Klassenlager» <b>gelb</b> und «eine Woche» <b>fett</b>. Der Text unter «Das Haus»: <b>Blocksatz</b>.', 'Ctrl + A, <b>Zeilenabstand 1,5</b>. Mach aus dem Programm (Morgen, Nachmittag, Abend) eine <b>Aufzählung</b>. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
-          proof: 'Datei «Informatik_Klassenlager» in «Aufgabenbearbeitung». Ein Wort gelb, eines fett, Blocksatz, Zeilenabstand 1,5, Programm mit Punkten.' },
+          proof: 'Datei «Informatik_Klassenlager» in «MI › Word». Ein Wort gelb, eines fett, Blocksatz, Zeilenabstand 1,5, Programm mit Punkten.' },
         { id: 'w3_m2', st: 3, nr: ['W3.2'], type: 'mission', q: 'Mission W3.2: Titel und Überschriften',
           steps: ['Klicke in die erste Zeile «Unser Klassenlager». Start › Formatvorlagen › <b>Titel</b>.', 'Klicke in «Einleitung». Wähle <b>Überschrift 1</b>. Mach das Gleiche bei «Das Haus», «Das Programm» und «Packliste».', 'Klicke in «Die Zimmer». Wähle <b>Überschrift 2</b>.', 'Ansicht › <b>Navigationsbereich</b>: Siehst du links deine Kapitel? Klicke auf «Packliste»: Word springt hin. Ctrl + S.'],
           help: ['«Titel» oder «Überschrift 2» nicht zu sehen? Bei den Formatvorlagen auf den kleinen Pfeil ▾ klicken.'],
@@ -617,7 +617,7 @@
         { id: 'w4_m1', st: 3, nr: ['W4.1'], type: 'mission', q: 'Mission W4.1: Aufwärmen', link: F('W4_Einladung'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W4_Einladung', 'Einladung'), 'Titel: Formatvorlage <b>Titel</b>, <b>zentriert</b>. Mach «12. Juni» <b>fett und rot</b>.', 'Mach aus den drei Programmpunkten eine <b>Aufzählung</b>. Ganzer Text: <b>Zeilenabstand 1,5</b>. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
-          proof: 'Datei «Informatik_Einladung» in «Aufgabenbearbeitung». Titel in der Mitte, Datum fett und rot, Programm mit Punkten.' },
+          proof: 'Datei «Informatik_Einladung» in «MI › Word». Titel in der Mitte, Datum fett und rot, Programm mit Punkten.' },
         { id: 'w4_m2', st: 3, nr: ['W4.2'], type: 'mission', q: 'Mission W4.2: Ersetzen und verschieben',
           steps: ['Das Fest ist am <b>Freitag</b>, nicht am Donnerstag! Drück <b>Ctrl + H</b>.', 'Suchen nach: <b>Donnerstag</b> · Ersetzen durch: <b>Freitag</b> · <b>Alle ersetzen</b>. Wie viele hat Word ersetzt?', 'Der Satz «Wir freuen uns auf Sie!» steht ganz oben falsch. Markiere ihn, <b>Ctrl + X</b>. Klicke vor «Herzliche Grüsse», <b>Ctrl + V</b>.', 'Kopiere «Musik von der Klasse» mit <b>Ctrl + C</b> und füg es ganz unten nochmals ein (<b>Ctrl + V</b>). Lösch es dann wieder. Ctrl + S.'],
           help: ['Ctrl + H geht nicht? Start › ganz rechts › Ersetzen.', 'Ctrl + F zeigt links alle Stellen mit dem Wort. So kannst du prüfen, ob noch ein «Donnerstag» da ist.'],
@@ -669,7 +669,7 @@
         { id: 'w5_m1', st: 3, nr: ['W5.1'], type: 'mission', q: 'Mission W5.1: Aufwärmen', link: F('W5_Igel'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W5_Igel', 'Igel'), 'Gib «Der Igel» die Formatvorlage <b>Titel</b>. Mach mit <b>Ctrl + H</b> aus jedem «Igl» ein «Igel».', 'Ctrl + A, <b>Zeilenabstand 1,5</b>, <b>Blocksatz</b>. Mach «Winterschlaf» und «Stacheln» <b>fett und kursiv</b>. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
-          proof: 'Datei «Informatik_Igel» in «Aufgabenbearbeitung». Titel, nirgends mehr «Igl», Blocksatz, 2 Wörter fett und kursiv.' },
+          proof: 'Datei «Informatik_Igel» in «MI › Word». Titel, nirgends mehr «Igl», Blocksatz, 2 Wörter fett und kursiv.' },
         { id: 'w5_m2', st: 3, nr: ['W5.2'], type: 'mission', q: 'Mission W5.2: Bild einfügen und Text fliessen lassen',
           steps: ['Klicke an den Anfang des ersten Abschnitts. <b>Einfügen › Bilder › Stockbilder</b> (oder Onlinebilder). Such «Igel».', 'Mach das Bild kleiner: an einer <b>Ecke</b> ziehen.', 'Klicke auf das Symbol <b>Layoutoptionen</b> neben dem Bild. Wähle <b>Quadratisch</b>.', 'Zieh das Bild an den rechten Rand. Ctrl + S.'],
           help: ['Kein Symbol neben dem Bild? Klicke das Bild einmal an. Oder: Reiter «Bildformat» › «Textumbruch».', 'Kein Stockbild? Nimm «Dieses Gerät» und ein eigenes Foto.'],
@@ -721,7 +721,7 @@
         { id: 'w6_m1', st: 3, nr: ['W6.1'], type: 'mission', q: 'Mission W6.1: Aufwärmen', link: F('W6_Tiere'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W6_Tiere', 'Tiere'), 'Titel: Formatvorlage <b>Titel</b>. Der Text darunter: <b>Blocksatz</b>, Zeilenabstand <b>1,5</b>. Mach <b>alle Tiernamen</b> im Text <b>fett</b>.', 'Füge ein <b>Bild</b> von einem Tier ein: kleiner ziehen, <b>Quadratisch</b>. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
-          proof: 'Datei «Informatik_Tiere» in «Aufgabenbearbeitung». Titel, Blocksatz, Tiernamen fett, ein Bild mit Text daneben.' },
+          proof: 'Datei «Informatik_Tiere» in «MI › Word». Titel, Blocksatz, Tiernamen fett, ein Bild mit Text daneben.' },
         { id: 'w6_m2', st: 3, nr: ['W6.2'], type: 'mission', q: 'Mission W6.2: Tabelle machen',
           steps: ['Klicke in die leere Zeile unter «Meine Lieblingstiere».', '<b>Einfügen › Tabelle</b>: 3 Spalten, 4 Zeilen.', 'Erste Zeile: <b>Tier · Wo es lebt · Was es frisst</b>. Mach diese Zeile <b>fett</b>.', 'Fülle 3 Tiere aus. Spring mit der <b>Tab-Taste</b> von Zelle zu Zelle. Ctrl + S.'],
           help: ['Spalten = nebeneinander, Zeilen = untereinander.', 'Kein Tier im Kopf? Igel, Fuchs, Biber, Murmeltier.'],
@@ -795,7 +795,7 @@
           help: [AUF_HELP, 'Eine leere Seite zu viel? Mit ¶ siehst du den Seitenumbruch. Lösch ihn mit der Rücktaste ⌫.'],
           proof: '3 Seiten, jede mit Vorname und «Projektarbeit» oben und der richtigen Seitenzahl unten.' },
         { id: 'w7_m4', st: 3, nr: ['W7.4'], type: 'mission', q: 'Mission W7.4: Als PDF abgeben',
-          steps: ['Drück <b>Ctrl + P</b> und schau die <b>Vorschau</b> an: Stimmt alles? Noch <b>nicht drucken</b>! Zurück mit dem Pfeil oben links.', '<b>Datei › Speichern unter</b> (oder Kopie speichern). Ordner: <b>Aufgabenbearbeitung</b>. Name: <b>Informatik_Projektarbeit</b>. Dateityp: <b>PDF</b>. Speichern.', 'Schau in Teams in «Aufgabenbearbeitung»: Jetzt gibt es die Projektarbeit <b>zweimal</b>, als Word (W) und als PDF.', 'Kopiere <b>beide</b> in deinen Ordner <b>Abgabe</b> (<b>⋯</b> › Kopieren nach). Geschafft: Du hast den Word-Führerschein! 🎉'],
+          steps: ['Drück <b>Ctrl + P</b> und schau die <b>Vorschau</b> an: Stimmt alles? Noch <b>nicht drucken</b>! Zurück mit dem Pfeil oben links.', '<b>Datei › Speichern unter</b> (oder Kopie speichern). Ordner: <b>Aufgabenbearbeitung › MI › Word</b>. Name: <b>Informatik_Projektarbeit</b>. Dateityp: <b>PDF</b>. Speichern.', 'Schau in Teams in «MI › Word»: Jetzt gibt es die Projektarbeit <b>zweimal</b>, als Word (W) und als PDF.', 'Kopiere <b>beide</b> in deinen Ordner <b>Abgabe</b> (<b>⋯</b> › Kopieren nach). Geschafft: Du hast den Word-Führerschein! 🎉'],
           help: [ABG_HELP, 'Kein «Speichern unter»? Dann heisst es «Kopie speichern». Das ist das Gleiche.', 'Auch möglich: Datei › Exportieren › PDF/XPS-Dokument erstellen.', 'Gedruckt wird nur, wenn deine Lehrperson es sagt.'],
           proof: 'In deinem Ordner «Abgabe» in Teams liegen das PDF und die Word-Datei.' }
       ]
@@ -806,7 +806,7 @@
     // Kurz erklärt: nur der Teil der Theorie, der zu dieser Frage passt (Wunsch Lehrperson 24.11.2026)
     const EX = {
       "app": "In der Schule immer die Word-App (Desktop) nehmen, nicht Word im Browser (Internet-Programm, z.B. Edge): Nur die App hat alle Knöpfe. Im Browser (Internet-Programm, z.B. Edge): «Bearbeitung» ▾ › «In Desktop-App öffnen».",
-      "speichern": "Du arbeitest in Teams im Ordner «Aufgabenbearbeitung». Guter Name = Fach_Thema, z.B. Informatik_Rheinfall. Oft Ctrl + S. Fertig: in den Ordner «Abgabe» kopieren.",
+      "speichern": "Du arbeitest in Teams in «Aufgabenbearbeitung › MI › Word». Guter Name = Fach_Thema, z.B. Informatik_Rheinfall. Oft Ctrl + S. Fertig: in den Ordner «Abgabe» kopieren.",
       "markieren": "Zuerst markieren, dann ändern. Ein Wort: Doppelklick. Einen Satz: Maus drücken und ziehen. Alles: Ctrl + A. Hoppla? Ctrl + Z macht rückgängig.",
       "schrift": "Schriftart = der Name der Schrift (z.B. Arial). Schriftgrösse = die Zahl daneben (z.B. 12).",
       "fku": "F = fett · K = kursiv (schräg) · U = unterstrichen.",
