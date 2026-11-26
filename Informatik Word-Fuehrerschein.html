@@ -401,6 +401,7 @@
     const DL = (file, name) => [`Öffne in <b>Outlook</b> die Mail von deiner Lehrperson. Beim Anhang <b>Word_${file}</b>: Pfeil ▾ › <b>Herunterladen</b>.`, `Öffne <b>Teams</b> › <b>Aufgabenbearbeitung › MI › Word</b> › <b>Hochladen</b> › <b>Word_${file}</b> aus Downloads.`, `In Teams: bei der Datei <b>⋯</b> › <b>Umbenennen</b>: <b>Informatik_${name}</b>. Dann <b>⋯</b> › Öffnen › <b>In App öffnen</b>: Sie geht in der <b>Word-App</b> auf, nicht im Browser (Internet-Programm, z.B. Edge).`];
     // Schluss jeder Lektion (Wunsch Lehrperson 25.11.2026): eigener Satz (jede Datei ist anders), speichern, prüfen, in Teams in den Abgabeordner
     const FERTIG = name => [`Schreib ganz unten einen <b>eigenen Satz</b>: <i>Das kann ich jetzt: …</i>`, `<b>Ctrl + S</b>, Word schliessen. In Teams bei <b>Informatik_${name}</b>: <b>⋯</b> › <b>Kopieren nach</b> › deinen Ordner <b>Abgabe</b>. Abgegeben! 👍`];
+    const ABGABE = name => FERTIG(name)[1];   // nur speichern und abgeben (ohne eigenen Satz)
     const ABG_HELP = 'Wo sind «Aufgabenbearbeitung» und «Abgabe»? Ordner «MI» oder «Word» fehlt? Mach ihn mit + Neu › Ordner. In Teams, so wie es deine Lehrperson gezeigt hat. Arbeite an deiner eigenen Datei: So lernst du es wirklich.';
     const DL_HELP = 'Keine Mail gefunden? Schau im Posteingang nach «Word». Sonst den Knopf «Keine Mail? Datei hier holen» oben nehmen. Datei nicht in Downloads? Im Browser (Internet-Programm, z.B. Edge) oben rechts auf den Pfeil ⬇ › «In Ordner anzeigen».';
     const REN_HELP = 'Umbenennen geht nicht? Die Datei ist noch offen: zuerst Word schliessen. Lass «.docx» am Schluss stehen. Word im Browser (Internet-Programm, z.B. Edge) aufgegangen? Oben «Bearbeitung» ▾ › «In Desktop-App öffnen».';
@@ -463,13 +464,13 @@
           help: [DL_HELP, REN_HELP, APP_HELP, ABG_HELP],
           proof: 'In «Aufgabenbearbeitung › MI › Word» liegt «Informatik_Rheinfall». Sie ist in der Word-App offen.' },
         { id: 'w1_m2', st: 3, nr: ['W1.2'], type: 'mission', q: 'Mission W1.2: Titel und Text gestalten',
-          steps: ['Titel «Der Rheinfall»: <b>andere Schriftart</b>, Grösse <b>24</b>, <b>fett</b>. Speichere mit <b>Ctrl + S</b>.', 'Arbeite nur im Text <b>«Der Rheinfall»</b> (bis «Teil 2»; Teil 2 kommt in W1.3). Mach dort <b>alle 4 Zahlen fett</b> (Doppelklick auf die Zahl, dann F).', 'Mach die Wörter «Europa», «Schaffhausen» und «Rheinfall» im ersten Abschnitt <b>kursiv</b> und <b>unterstrichen</b>.', 'Hebe <b>2 Sätze</b> gelb hervor (Textmarker ab).', 'Gib im Abschnitt «Jedes Jahr …» <b>jedem Satz</b> eine <b>andere Schriftfarbe</b>. Ctrl + S.'],
-          help: ['Einen ganzen Satz markieren: Maus vor das erste Wort, gedrückt halten, bis zum Punkt ziehen.', 'Falsch gemacht? Ctrl + Z macht den letzten Schritt rückgängig.'],
+          steps: ['Titel «Der Rheinfall»: <b>andere Schriftart</b>, Grösse <b>24</b>, <b>fett</b>. Speichere mit <b>Ctrl + S</b>.', 'Mach <b>alle 4 Zahlen</b> im Text <b>fett</b> (Doppelklick auf die Zahl, dann F).', 'Mach die Wörter «Europa», «Schaffhausen» und «Rheinfall» im ersten Abschnitt <b>kursiv</b> und <b>unterstrichen</b>.', 'Hebe <b>2 Sätze</b> gelb hervor (Textmarker ab).', 'Gib im Abschnitt «Jedes Jahr …» <b>jedem Satz</b> eine <b>andere Schriftfarbe</b>.', ABGABE('Rheinfall')],
+          help: [ABG_HELP, 'Einen ganzen Satz markieren: Maus vor das erste Wort, gedrückt halten, bis zum Punkt ziehen.', 'Falsch gemacht? Ctrl + Z macht den letzten Schritt rückgängig.'],
           proof: 'Titel gross und fett, 4 Zahlen fett, 3 Wörter kursiv und unterstrichen, 2 Sätze gelb, bunte Sätze.' },
-        { id: 'w1_m3', st: 3, nr: ['W1.3'], type: 'mission', q: 'Mission W1.3: Nochmals: Der Säntis',
-          steps: ['Scroll nach unten zum Teil 2 «Der Säntis».', 'Titel «Der Säntis»: <b>andere Schriftart</b>, Grösse <b>20</b>, <b>fett</b>, eine <b>Farbe</b>.', 'Mach <b>alle Zahlen fett</b> und alle <b>Ortsnamen kursiv</b> (Appenzell, Schwägalp, Bodensee).', 'Hebe den Satz mit dem Wetter <b>gelb</b> hervor. Mach das Wort «Rekord» <b>rot</b> und <b>unterstrichen</b>.', ...FERTIG('Rheinfall')],
-          help: [ABG_HELP, 'Vergessen, wie es geht? Tippe auf «📖 Kurz erklärt».', 'Word nicht mehr offen? Teams › Aufgabenbearbeitung › MI › Word › ⋯ › In App öffnen.'],
-          proof: 'Säntis-Titel gestaltet, Zahlen fett, Orte kursiv, ein Satz gelb, «Rekord» rot. Die Datei ist auch in «Abgabe».' }
+        { id: 'w1_m3', st: 3, nr: ['W1.3'], type: 'mission', q: 'Mission W1.3: Nochmals: Der Säntis', link: F('W1_Saentis'), linkText: '📥 Keine Mail? Datei hier holen',
+          steps: [...DL('W1_Saentis', 'Saentis'), 'Titel «Der Säntis»: <b>andere Schriftart</b>, Grösse <b>20</b>, <b>fett</b>, eine <b>Farbe</b>.', 'Mach <b>alle Zahlen fett</b> und alle <b>Ortsnamen kursiv</b> (Appenzell, Schwägalp, Bodensee).', 'Hebe den Satz mit dem Wetter <b>gelb</b> hervor. Mach das Wort «Rekord» <b>rot</b> und <b>unterstrichen</b>.', ...FERTIG('Saentis')],
+          help: [DL_HELP, REN_HELP, ABG_HELP, 'Vergessen, wie es geht? Tippe auf «📖 Kurz erklärt».', 'Word nicht mehr offen? Teams › Aufgabenbearbeitung › MI › Word › ⋯ › In App öffnen.'],
+          proof: 'Säntis-Titel gestaltet, Zahlen fett, Orte kursiv, ein Satz gelb, «Rekord» rot. Beide Dateien der Lektion sind in «Abgabe».' }
       ],
       // ---------- W2: Absatz ----------
       k2: [
@@ -515,13 +516,13 @@
           help: ['Die Knöpfe fürs Ausrichten sind im Reiter Start, Gruppe «Absatz»: 4 kleine Knöpfe mit Strichen.', 'Der Knopf für den Zeilenabstand hat Linien und zwei Pfeile ↕.'],
           proof: 'Titel in der Mitte, 2 Abschnitte als Block, mehr Platz zwischen den Zeilen.' },
         { id: 'w2_m3', st: 3, nr: ['W2.3'], type: 'mission', q: 'Mission W2.3: Listen und Pinsel',
-          steps: ['Markiere die 5 Zutaten. Start › <b>Aufzählungszeichen</b> (Punkte).', 'Markiere die 5 Schritte. Start › <b>Nummerierung</b> (1. 2. 3.).', 'Mach «Zutaten» <b>fett, blau, Grösse 16</b>.', 'Klicke in «Zutaten», dann auf den <b>Pinsel</b> (Format übertragen), dann über «So geht’s» fahren. Ctrl + S.'],
-          help: ['Die Knöpfe für Listen sind im Reiter Start, links oben in der Gruppe «Absatz».', 'Pinsel nicht gefunden? Reiter Start, ganz links, unter «Einfügen».'],
+          steps: ['Markiere die 5 Zutaten. Start › <b>Aufzählungszeichen</b> (Punkte).', 'Markiere die 5 Schritte. Start › <b>Nummerierung</b> (1. 2. 3.).', 'Mach «Zutaten» <b>fett, blau, Grösse 16</b>.', 'Klicke in «Zutaten», dann auf den <b>Pinsel</b> (Format übertragen), dann über «So geht’s» fahren.', ABGABE('Rezept')],
+          help: [ABG_HELP, 'Die Knöpfe für Listen sind im Reiter Start, links oben in der Gruppe «Absatz».', 'Pinsel nicht gefunden? Reiter Start, ganz links, unter «Einfügen».'],
           proof: 'Zutaten mit Punkten, Schritte mit 1. 2. 3., beide Zwischentitel gleich.' },
-        { id: 'w2_m4', st: 3, nr: ['W2.4'], type: 'mission', q: 'Mission W2.4: Nochmals: Fruchtsalat',
-          steps: ['Scroll nach unten zum Teil 2 «Fruchtsalat». Titel: <b>zentriert</b>, Grösse <b>22</b>, <b>fett</b>, eine <b>Farbe</b>.', 'Die Früchte: <b>Aufzählung</b>. Die Schritte: <b>Nummerierung</b>.', 'Der erste Abschnitt: <b>Blocksatz</b>. Mach «Früchte» schön und übertrag das Aussehen mit dem <b>Pinsel</b> auf «So geht’s».', 'Ctrl + A: <b>Zeilenabstand 1,5</b>.', ...FERTIG('Rezept')],
-          help: [ABG_HELP, AUF_HELP, 'Doppelklick auf den Pinsel: Dann kannst du ihn mehrmals brauchen. Esc beendet.'],
-          proof: 'Fruchtsalat: Titel in der Mitte, Punkte und Nummern, Zwischentitel gleich. Die Datei ist auch in «Abgabe».' }
+        { id: 'w2_m4', st: 3, nr: ['W2.4'], type: 'mission', q: 'Mission W2.4: Nochmals: Fruchtsalat', link: F('W2_Fruchtsalat'), linkText: '📥 Keine Mail? Datei hier holen',
+          steps: [...DL('W2_Fruchtsalat', 'Fruchtsalat'), 'Titel: <b>zentriert</b>, Grösse <b>22</b>, <b>fett</b>, eine <b>Farbe</b>.', 'Die Früchte: <b>Aufzählung</b>. Die Schritte: <b>Nummerierung</b>.', 'Der erste Abschnitt: <b>Blocksatz</b>. Mach «Früchte» schön und übertrag das Aussehen mit dem <b>Pinsel</b> auf «So geht’s».', 'Ctrl + A: <b>Zeilenabstand 1,5</b>.', ...FERTIG('Fruchtsalat')],
+          help: [DL_HELP, REN_HELP, ABG_HELP, AUF_HELP, 'Doppelklick auf den Pinsel: Dann kannst du ihn mehrmals brauchen. Esc beendet.'],
+          proof: 'Fruchtsalat: Titel in der Mitte, Punkte und Nummern, Zwischentitel gleich. Beide Dateien der Lektion sind in «Abgabe».' }
       ],
       // ---------- W3: Überschriften & Tabulator ----------
       k3: [
@@ -567,13 +568,13 @@
           help: ['«Titel» oder «Überschrift 2» nicht zu sehen? Bei den Formatvorlagen auf den kleinen Pfeil ▾ klicken.'],
           proof: 'Links im Navigationsbereich stehen die 4 Kapitel und «Die Zimmer» etwas eingerückt.' },
         { id: 'w3_m3', st: 3, nr: ['W3.3'], type: 'mission', q: 'Mission W3.3: Packliste mit Tabulator',
-          steps: ['Klicke auf <b>¶</b> (Start, Gruppe Absatz). Bei der Packliste siehst du viele Punkte · : Das sind <b>Leerschläge</b>.', 'Lösche bei «Schlafsack» die Leerschläge vor der Zahl. Drück stattdessen die <b>Tab-Taste</b>, bis die Zahl ungefähr in der Mitte steht.', 'Mach es bei <b>allen 6 Zeilen</b> so, bis alle Zahlen genau untereinander stehen.', 'Klicke nochmals auf ¶: Die Zeichen sind wieder versteckt. Ctrl + S.'],
-          help: ['Ein langes Wort braucht weniger Tabs als ein kurzes. Drück so oft, bis es passt.', 'Zu weit gesprungen? Mit der Rücktaste ⌫ einen Tab löschen.'],
+          steps: ['Klicke auf <b>¶</b> (Start, Gruppe Absatz). Bei der Packliste siehst du viele Punkte · : Das sind <b>Leerschläge</b>.', 'Lösche bei «Schlafsack» die Leerschläge vor der Zahl. Drück stattdessen die <b>Tab-Taste</b>, bis die Zahl ungefähr in der Mitte steht.', 'Mach es bei <b>allen 6 Zeilen</b> so, bis alle Zahlen genau untereinander stehen.', 'Klicke nochmals auf ¶: Die Zeichen sind wieder versteckt.', ABGABE('Klassenlager')],
+          help: [ABG_HELP, 'Ein langes Wort braucht weniger Tabs als ein kurzes. Drück so oft, bis es passt.', 'Zu weit gesprungen? Mit der Rücktaste ⌫ einen Tab löschen.'],
           proof: 'Alle Zahlen der Packliste stehen genau untereinander.' },
-        { id: 'w3_m4', st: 3, nr: ['W3.4'], type: 'mission', q: 'Mission W3.4: Nochmals: Die Schulreise',
-          steps: ['Scroll nach unten zum Teil 2. «Die Schulreise» bekommt <b>Überschrift 1</b>.', '«Am Morgen» und «Am Nachmittag» bekommen <b>Überschrift 2</b>. Schau im Navigationsbereich nach.', 'Bei den Kosten: Leerschläge weg, mit der <b>Tab-Taste</b> alle Franken-Beträge genau untereinander (4 Zeilen).', 'Mach «Total» <b>fett</b>.', ...FERTIG('Klassenlager')],
-          help: [ABG_HELP, AUF_HELP, 'Mit ¶ siehst du, wo noch Leerschläge sind.'],
-          proof: 'Im Navigationsbereich: «Die Schulreise» mit 2 Teilen. Die Beträge stehen untereinander. Die Datei ist auch in «Abgabe».' }
+        { id: 'w3_m4', st: 3, nr: ['W3.4'], type: 'mission', q: 'Mission W3.4: Nochmals: Die Schulreise', link: F('W3_Schulreise'), linkText: '📥 Keine Mail? Datei hier holen',
+          steps: [...DL('W3_Schulreise', 'Schulreise'), '«Die Schulreise» bekommt <b>Überschrift 1</b>.', '«Am Morgen» und «Am Nachmittag» bekommen <b>Überschrift 2</b>. Schau im Navigationsbereich nach.', 'Bei den Kosten: Leerschläge weg, mit der <b>Tab-Taste</b> alle Franken-Beträge genau untereinander (4 Zeilen).', 'Mach «Total» <b>fett</b>.', ...FERTIG('Schulreise')],
+          help: [DL_HELP, REN_HELP, ABG_HELP, AUF_HELP, 'Mit ¶ siehst du, wo noch Leerschläge sind.'],
+          proof: 'Im Navigationsbereich: «Die Schulreise» mit 2 Teilen. Die Beträge stehen untereinander. Beide Dateien der Lektion sind in «Abgabe».' }
       ],
       // ---------- W4: Bearbeiten & Prüfen ----------
       k4: [
@@ -623,13 +624,13 @@
           help: ['Ctrl + H geht nicht? Start › ganz rechts › Ersetzen.', 'Ctrl + F zeigt links alle Stellen mit dem Wort. So kannst du prüfen, ob noch ein «Donnerstag» da ist.'],
           proof: 'Überall steht Freitag. «Wir freuen uns auf Sie!» steht vor dem Gruss.' },
         { id: 'w4_m3', st: 3, nr: ['W4.3'], type: 'mission', q: 'Mission W4.3: Sprache und Rechtschreibung',
-          steps: ['Fast alles ist rot! Drück <b>Ctrl + A</b>.', '<b>Überprüfen › Sprache › Sprache für die Korrekturhilfen festlegen</b> → <b>Deutsch (Schweiz)</b> → OK.', 'Jetzt sind nur noch die echten Fehler rot. Klicke mit der <b>rechten Maustaste</b> auf ein rotes Wort und wähle die richtige Schreibweise.', 'Verbessere so <b>alle 6 Fehler</b> in der Einladung. Ctrl + S.'],
-          help: ['Auch Überprüfen › Editor (oder F7) zeigt dir die Fehler nacheinander.', 'Word schlägt etwas Falsches vor? Du entscheidest. Nicht jeder Vorschlag stimmt.'],
+          steps: ['Fast alles ist rot! Drück <b>Ctrl + A</b>.', '<b>Überprüfen › Sprache › Sprache für die Korrekturhilfen festlegen</b> → <b>Deutsch (Schweiz)</b> → OK.', 'Jetzt sind nur noch die echten Fehler rot. Klicke mit der <b>rechten Maustaste</b> auf ein rotes Wort und wähle die richtige Schreibweise.', 'Verbessere so <b>alle 6 Fehler</b> in der Einladung.', ABGABE('Einladung')],
+          help: [ABG_HELP, 'Auch Überprüfen › Editor (oder F7) zeigt dir die Fehler nacheinander.', 'Word schlägt etwas Falsches vor? Du entscheidest. Nicht jeder Vorschlag stimmt.'],
           proof: 'In der Einladung keine roten Wellenlinien mehr.' },
-        { id: 'w4_m4', st: 3, nr: ['W4.4'], type: 'mission', q: 'Mission W4.4: Nochmals: Velotag',
-          steps: ['Scroll nach unten zum Teil 2 «Velotag». Der Velotag ist am <b>Dienstag</b>: Ersetze mit <b>Ctrl + H</b> jeden «Montag» durch «Dienstag».', 'Such mit <b>Ctrl + F</b> das Wort «Helm». Wie oft kommt es vor?', 'Der Satz «Bitte bringt einen Helm mit.» steht zuoberst falsch. Verschieb ihn mit <b>Ctrl + X</b> / <b>Ctrl + V</b> ans Ende.', 'Verbessere die <b>4 Fehler</b> im Velotag (rote Wellenlinie, Rechtsklick).', ...FERTIG('Einladung')],
-          help: [ABG_HELP, AUF_HELP, 'Noch alles rot? Dann gilt die Sprache noch nicht für Teil 2: Ctrl + A und nochmals Deutsch (Schweiz) einstellen.'],
-          proof: 'Velotag: überall Dienstag, Helm-Satz am Ende, keine roten Wellenlinien. Die Datei ist auch in «Abgabe».' }
+        { id: 'w4_m4', st: 3, nr: ['W4.4'], type: 'mission', q: 'Mission W4.4: Nochmals: Velotag', link: F('W4_Velotag'), linkText: '📥 Keine Mail? Datei hier holen',
+          steps: [...DL('W4_Velotag', 'Velotag'), 'Fast alles rot? Stell wie in W4.3 die Sprache auf <b>Deutsch (Schweiz)</b>.', 'Der Velotag ist am <b>Dienstag</b>: Ersetze mit <b>Ctrl + H</b> jeden «Montag» durch «Dienstag».', 'Such mit <b>Ctrl + F</b> das Wort «Helm». Wie oft kommt es vor?', 'Der Satz «Bitte bringt einen Helm mit.» steht zuoberst falsch. Verschieb ihn mit <b>Ctrl + X</b> / <b>Ctrl + V</b> ans Ende.', 'Verbessere die <b>4 Fehler</b> (rote Wellenlinie, Rechtsklick).', ...FERTIG('Velotag')],
+          help: [DL_HELP, REN_HELP, ABG_HELP, AUF_HELP, 'Sprache vergessen? Ctrl + A › Überprüfen › Sprache › Deutsch (Schweiz).'],
+          proof: 'Velotag: überall Dienstag, Helm-Satz am Ende, keine roten Wellenlinien. Beide Dateien der Lektion sind in «Abgabe».' }
       ],
       // ---------- W5: Bild ----------
       k5: [
@@ -675,13 +676,13 @@
           help: ['Kein Symbol neben dem Bild? Klicke das Bild einmal an. Oder: Reiter «Bildformat» › «Textumbruch».', 'Kein Stockbild? Nimm «Dieses Gerät» und ein eigenes Foto.'],
           proof: 'Das Bild ist rechts, und der Text fliesst links daneben.' },
         { id: 'w5_m3', st: 3, nr: ['W5.3'], type: 'mission', q: 'Mission W5.3: Frei verschieben',
-          steps: ['Füge ein <b>zweites Bild</b> ein, z.B. ein Blatt oder einen Apfel.', 'Layoutoptionen › <b>Vor den Text</b>. Schieb das Bild <b>frei</b> irgendwohin, z.B. neben den Titel.', 'Probier auch <b>Hinter den Text</b>: Jetzt liegt der Text darüber. Zurück auf <b>Vor den Text</b>.', 'Kein Platz? Mach das Bild an einer Ecke kleiner. Ctrl + S.'],
-          help: ['Das Bild lässt sich nicht schieben? Dann ist es noch «Mit Text in Zeile». Layoutoptionen ändern.', 'Bild hinter dem Text lässt sich nicht mehr anklicken? Ctrl + Z.'],
+          steps: ['Füge ein <b>zweites Bild</b> ein, z.B. ein Blatt oder einen Apfel.', 'Layoutoptionen › <b>Vor den Text</b>. Schieb das Bild <b>frei</b> irgendwohin, z.B. neben den Titel.', 'Probier auch <b>Hinter den Text</b>: Jetzt liegt der Text darüber. Zurück auf <b>Vor den Text</b>.', 'Kein Platz? Mach das Bild an einer Ecke kleiner.', ABGABE('Igel')],
+          help: [ABG_HELP, 'Das Bild lässt sich nicht schieben? Dann ist es noch «Mit Text in Zeile». Layoutoptionen ändern.', 'Bild hinter dem Text lässt sich nicht mehr anklicken? Ctrl + Z.'],
           proof: 'Zwei Bilder: eines mit Text daneben, eines frei auf der Seite.' },
-        { id: 'w5_m4', st: 3, nr: ['W5.4'], type: 'mission', q: 'Mission W5.4: Nochmals: Das Eichhörnchen',
-          steps: ['Scroll nach unten zum Teil 2 «Das Eichhörnchen». Füge ein Bild von einem <b>Eichhörnchen</b> ein.', 'An einer <b>Ecke</b> kleiner ziehen. <b>Quadratisch</b>. Schieb es an den <b>linken</b> Rand.', 'Füge ein Bild von einer <b>Nuss</b> ein: <b>Vor den Text</b>, frei neben den Titel schieben.', 'Mach den Titel «Das Eichhörnchen» <b>zentriert</b> und <b>braun</b>.', ...FERTIG('Igel')],
-          help: [ABG_HELP, AUF_HELP, 'Bild springt herum? Ctrl + Z und nochmals in Ruhe ziehen.'],
-          proof: 'Eichhörnchen links mit Text daneben, Nuss frei beim Titel. Die Datei ist auch in «Abgabe».' }
+        { id: 'w5_m4', st: 3, nr: ['W5.4'], type: 'mission', q: 'Mission W5.4: Nochmals: Das Eichhörnchen', link: F('W5_Eichhoernchen'), linkText: '📥 Keine Mail? Datei hier holen',
+          steps: [...DL('W5_Eichhoernchen', 'Eichhoernchen'), 'Füge ein Bild von einem <b>Eichhörnchen</b> ein.', 'An einer <b>Ecke</b> kleiner ziehen. <b>Quadratisch</b>. Schieb es an den <b>linken</b> Rand.', 'Füge ein Bild von einer <b>Nuss</b> ein: <b>Vor den Text</b>, frei neben den Titel schieben.', 'Mach den Titel «Das Eichhörnchen» <b>zentriert</b> und <b>braun</b>.', ...FERTIG('Eichhoernchen')],
+          help: [DL_HELP, REN_HELP, ABG_HELP, AUF_HELP, 'Bild springt herum? Ctrl + Z und nochmals in Ruhe ziehen.'],
+          proof: 'Eichhörnchen links mit Text daneben, Nuss frei beim Titel. Beide Dateien der Lektion sind in «Abgabe».' }
       ],
       // ---------- W6: Tabelle ----------
       k6: [
@@ -727,13 +728,13 @@
           help: ['Spalten = nebeneinander, Zeilen = untereinander.', 'Kein Tier im Kopf? Igel, Fuchs, Biber, Murmeltier.'],
           proof: 'Die Tabelle hat 3 Spalten, eine fette erste Zeile und 3 Tiere.' },
         { id: 'w6_m3', st: 3, nr: ['W6.3'], type: 'mission', q: 'Mission W6.3: Tabelle verbessern',
-          steps: ['Klicke in die letzte Zelle, drück <b>Tab</b>: neue Zeile. Füge ein <b>4. Tier</b> dazu.', 'Rechtsklick in die Spalte «Was es frisst» › Einfügen › <b>Spalten rechts</b>. Titel: <b>Wie gross</b>. Ausfüllen.', 'Zieh die <b>Linie</b> zwischen zwei Spalten, damit alles schön Platz hat.', 'Markiere die erste Zeile › <b>Tabellenentwurf › Schattierung</b> › eine helle Farbe. Ctrl + S.'],
-          help: ['Kein Reiter «Tabellenentwurf»? Klicke zuerst in die Tabelle.', 'Falsch eingefügt? Ctrl + Z.'],
+          steps: ['Klicke in die letzte Zelle, drück <b>Tab</b>: neue Zeile. Füge ein <b>4. Tier</b> dazu.', 'Rechtsklick in die Spalte «Was es frisst» › Einfügen › <b>Spalten rechts</b>. Titel: <b>Wie gross</b>. Ausfüllen.', 'Zieh die <b>Linie</b> zwischen zwei Spalten, damit alles schön Platz hat.', 'Markiere die erste Zeile › <b>Tabellenentwurf › Schattierung</b> › eine helle Farbe.', ABGABE('Tiere')],
+          help: [ABG_HELP, 'Kein Reiter «Tabellenentwurf»? Klicke zuerst in die Tabelle.', 'Falsch eingefügt? Ctrl + Z.'],
           proof: '4 Tiere, 4 Spalten, erste Zeile farbig.' },
-        { id: 'w6_m4', st: 3, nr: ['W6.4'], type: 'mission', q: 'Mission W6.4: Nochmals: Mein Stundenplan',
-          steps: ['Scroll nach unten zu «Mein Stundenplan». Klicke in die leere Zeile darunter.', '<b>Einfügen › Tabelle</b>: <b>6 Spalten</b>, 4 Zeilen. Erste Zeile: Zeit · Mo · Di · Mi · Do · Fr.', 'Fülle 2 Zeilen aus (mit <b>Tab</b>). Füge mit <b>Rechtsklick › Einfügen</b> eine Zeile dazu.', 'Spalte «Zeit» schmaler ziehen. Erste Zeile <b>fett</b> mit <b>Schattierung</b>.', ...FERTIG('Tiere')],
-          help: [ABG_HELP, AUF_HELP, 'Stundenplan nicht im Kopf? Erfinde einfach Fächer.'],
-          proof: 'Stundenplan mit 6 Spalten, erste Zeile farbig. Die Datei ist auch in «Abgabe».' }
+        { id: 'w6_m4', st: 3, nr: ['W6.4'], type: 'mission', q: 'Mission W6.4: Nochmals: Mein Stundenplan', link: F('W6_Stundenplan'), linkText: '📥 Keine Mail? Datei hier holen',
+          steps: [...DL('W6_Stundenplan', 'Stundenplan'), 'Klicke in die leere Zeile unter «Mein Stundenplan». <b>Einfügen › Tabelle</b>: <b>6 Spalten</b>, 4 Zeilen. Erste Zeile: Zeit · Mo · Di · Mi · Do · Fr.', 'Fülle 2 Zeilen aus (mit <b>Tab</b>). Füge mit <b>Rechtsklick › Einfügen</b> eine Zeile dazu.', 'Spalte «Zeit» schmaler ziehen. Erste Zeile <b>fett</b> mit <b>Schattierung</b>.', ...FERTIG('Stundenplan')],
+          help: [DL_HELP, REN_HELP, ABG_HELP, AUF_HELP, 'Stundenplan nicht im Kopf? Erfinde einfach Fächer.'],
+          proof: 'Stundenplan mit 6 Spalten, erste Zeile farbig. Beide Dateien der Lektion sind in «Abgabe».' }
       ],
       // ---------- W7: Seite & Abgabe ----------
       k7: [
@@ -785,7 +786,7 @@
         { id: 'w7_m1', st: 3, nr: ['W7.1'], type: 'mission', q: 'Mission W7.1: Aufwärmen (Plakat)', link: F('W7_Plakat'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W7_Plakat', 'Plakat'), '<b>Layout › Ausrichtung › Querformat</b>. <b>Layout › Seitenränder › Schmal</b>.', 'Titel: Grösse <b>48</b>, <b>fett</b>, eine <b>Farbe</b>, <b>zentriert</b>. Alles andere auch <b>zentriert</b>, Datum und Zeit <b>gelb</b>.', 'Mach aus «Spiele · Musik · Essen» eine <b>Aufzählung</b> mit 3 Zeilen. Füge ein <b>Bild</b> ein (Vor den Text) und schieb es an einen schönen Ort.', ...FERTIG('Plakat')],
           help: [ABG_HELP, DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
-          proof: 'Plakat quer mit schmalem Rand, Titel gross in der Mitte, Datum gelb, Liste, ein Bild. Die Datei ist auch in «Abgabe».' },
+          proof: 'Plakat quer mit schmalem Rand, Titel gross in der Mitte, Datum gelb, Liste, ein Bild. Beide Dateien der Lektion sind in «Abgabe».' },
         { id: 'w7_m2', st: 3, nr: ['W7.2'], type: 'mission', q: 'Mission W7.2: Kopfzeile, Seitenzahl, neue Seite', link: F('W7_Projekt'), linkText: '📥 Keine Mail? Datei hier holen',
           steps: [...DL('W7_Projekt', 'Projektarbeit'), 'Klicke vor «Packliste» und drück <b>Ctrl + Enter</b>: Die Packliste beginnt auf einer neuen Seite.', '<b>Einfügen › Kopfzeile › Leer</b>. Schreib deinen <b>Vornamen</b> hinein.', '<b>Einfügen › Seitenzahl › Seitenende</b> › einfache Zahl in der Mitte. Dann «Kopf- und Fusszeile schliessen». Ctrl + S.'],
           help: [DL_HELP, REN_HELP, 'Zurück in den Text? Doppelklick in den normalen Text oder Esc.'],
