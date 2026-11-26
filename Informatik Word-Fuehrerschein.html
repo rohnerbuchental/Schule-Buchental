@@ -801,6 +801,13 @@
           proof: 'In deinem Ordner «Abgabe» in Teams liegen das PDF und die Word-Datei.' }
       ]
     };
+    // Jede Mission sagt am Anfang, welche Datei offen sein muss (Wunsch Lehrperson 26.11.2026: sonst verwirrend)
+    const DATEI = { k1: 'Rheinfall', k2: 'Rezept', k3: 'Klassenlager', k4: 'Einladung', k5: 'Igel', k6: 'Tiere', k7: 'Projektarbeit' };
+    for (const k in ITEMS) ITEMS[k].forEach(it => {
+      if (it.type !== 'mission') return;
+      it.q = it.q.replace(/^(Mission W\d\.\d): /, `$1 · Datei «Informatik_${DATEI[k]}»: `);
+      if (!it.link) it.steps.unshift(`Öffne deine Datei <b>Informatik_${DATEI[k]}</b> in der <b>Word-App</b>: Teams › Aufgabenbearbeitung › MI › Word › bei der Datei <b>⋯</b> › Öffnen › <b>In App öffnen</b>. (Ist sie schon offen? Dann gleich weiter.)`);
+    });
     // Zielbild pro Mission (Wunsch Lehrperson 25.11.2026: selber erkennen, ob es richtig ist), erstellt mit make_zielbilder.py
     const ZIEL = ['W1.2','W1.3','W2.1','W2.2','W2.3','W2.4','W3.1','W3.2','W3.3','W3.4','W4.1','W4.2','W4.3','W4.4','W5.1','W5.2','W5.3','W5.4','W6.1','W6.2','W6.3','W6.4','W7.1','W7.2','W7.3'];
     for (const k in ITEMS) ITEMS[k].forEach(it => { if (it.type === 'mission' && ZIEL.includes(it.nr[0])) it.goal = `dateien/ziel/${it.nr[0]}.png`; });
