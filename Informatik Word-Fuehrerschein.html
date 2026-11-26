@@ -112,7 +112,7 @@
       <details id="theory-k1" class="bg-white rounded-3xl p-5 shadow-sm border border-indigo-100">
         <summary class="text-base font-bold text-slate-900 cursor-pointer min-h-[44px] py-2"><span data-l="de">📖 So geht’s: Schrift</span></summary>
         <ul data-l="de" class="mt-3 space-y-2 text-base text-slate-700 leading-relaxed list-disc pl-5">
-          <li><b>Immer die Word-App:</b> Datei im Explorer mit Doppelklick öffnen. Ist Word im Browser (Internet-Programm, z.B. Edge) aufgegangen (oben die Adresszeile)? Oben rechts «Bearbeitung» ▾ → «In Desktop-App öffnen». Nur die App hat alle Knöpfe.</li>
+          <li><b>Immer die Word-App:</b> In Teams bei der Datei ⋯ › Öffnen › In App öffnen. Ist Word im Browser (Internet-Programm, z.B. Edge) aufgegangen (oben die Adresszeile)? Oben rechts «Bearbeitung» ▾ → «In Desktop-App öffnen». Nur die App hat alle Knöpfe.</li>
           <li><b>Zuerst markieren, dann ändern.</b> Ein Wort: Doppelklick. Ein Satz: Maus drücken und ziehen. Alles: <b>Ctrl + A</b>.</li>
           <li><b>Schriftart:</b> Reiter Start, Feld mit dem Namen der Schrift (z.B. «Arial») → Pfeil ▾ → andere Schrift wählen.</li>
           <li><b>Schriftgrösse:</b> Feld mit der Zahl (z.B. 12) → grössere Zahl = grössere Schrift. Man kann auch eine Zahl hineinschreiben und Enter drücken.</li>
@@ -406,7 +406,7 @@
     const ABG_HELP = 'Wo sind «Aufgabenbearbeitung» und «Abgabe»? Ordner «MI» oder «Word» fehlt? Mach ihn mit + Neu › Ordner. In Teams, so wie es deine Lehrperson gezeigt hat. Arbeite an deiner eigenen Datei: So lernst du es wirklich.';
     const DL_HELP = 'Keine Mail gefunden? Schau im Posteingang nach «Word». Sonst den Knopf «Keine Mail? Datei hier holen» oben nehmen. Datei nicht in Downloads? Im Browser (Internet-Programm, z.B. Edge) oben rechts auf den Pfeil ⬇ › «In Ordner anzeigen».';
     const REN_HELP = 'Umbenennen geht nicht? Die Datei ist noch offen: zuerst Word schliessen. Lass «.docx» am Schluss stehen. Word im Browser (Internet-Programm, z.B. Edge) aufgegangen? Oben «Bearbeitung» ▾ › «In Desktop-App öffnen».';
-    const APP_HELP = 'Word ist im Browser (Internet-Programm, z.B. Edge) aufgegangen? Oben rechts auf «Bearbeitung» ▾ › «In Desktop-App öffnen». Oder im Explorer: Rechtsklick auf die Datei › Öffnen mit › Word.';
+    const APP_HELP = 'Word ist im Browser (Internet-Programm, z.B. Edge) aufgegangen? Oben rechts auf «Bearbeitung» ▾ › «In Desktop-App öffnen». Oder in Teams: bei der Datei ⋯ › Öffnen › In App öffnen.';
     const AUF_HELP = 'Vergessen, wie es geht? Tippe auf «📖 Kurz erklärt» oder übe nochmals in den Teilen vorher.';
     const ITEMS = {
       // ---------- W1: Schrift ----------
@@ -565,11 +565,11 @@
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
           proof: '«Informatik_Klassenlager» liegt in MI › Word. Ein Wort gelb, eines fett, Zeilenabstand 1,5, Programm mit Punkten.' },
         { id: 'w3_m2', st: 3, nr: ['W3.2'], type: 'mission', q: 'Mission W3.2: Titel und Überschriften',
-          steps: ['Klicke in die erste Zeile «Unser Klassenlager». Start › Formatvorlagen › <b>Titel</b>.', 'Gib diesen <b>3 Kapiteln</b> die <b>Überschrift 1</b>: Einleitung, Das Haus, Das Programm. (Packliste und Kosten kommen später.)', '«Die Zimmer» ist ein Teil im Kapitel «Das Haus». Gib ihm <b>Überschrift 2</b>. («Das Essen» kommt später.)', 'Ansicht › <b>Navigationsbereich</b>: Siehst du links deine Kapitel? Klicke auf «Das Programm»: Word springt hin. Ctrl + S.'],
+          steps: ['Klicke in die erste Zeile «Unser Klassenlager». Start › Formatvorlagen (fertige Muster für Titel und Überschriften) › <b>Titel</b>.', 'Gib diesen <b>3 Kapiteln</b> die <b>Überschrift 1</b>: Einleitung, Das Haus, Das Programm. (Packliste und Kosten kommen später.)', '«Die Zimmer» ist ein Teil im Kapitel «Das Haus». Gib ihm <b>Überschrift 2</b>. («Das Essen» kommt später.)', 'Ansicht › <b>Navigationsbereich</b> (Liste der Kapitel links): Siehst du links deine Kapitel? Klicke auf «Das Programm»: Word springt hin. Ctrl + S.'],
           help: ['«Titel» oder «Überschrift 2» nicht zu sehen? Bei den Formatvorlagen auf den kleinen Pfeil ▾ klicken.'],
           proof: 'Links im Navigationsbereich stehen 3 Kapitel. «Die Zimmer» ist etwas eingerückt.' },
         { id: 'w3_m3', st: 3, nr: ['W3.3'], type: 'mission', q: 'Mission W3.3: Packliste mit Tabulator',
-          steps: ['Klicke auf <b>¶</b> (Start, Gruppe Absatz). In der Packliste siehst du viele Punkte · : Das sind <b>Leerschläge</b>.', 'Lösche bei «Schlafsack» die Leerschläge vor der Zahl. Drück stattdessen die <b>Tab-Taste</b>, bis die Zahl ungefähr in der Mitte steht.', 'Mach es bei <b>allen 6 Zeilen</b> der Packliste so, bis alle Zahlen genau untereinander stehen.', 'Ctrl + S.'],
+          steps: ['Klicke auf <b>¶</b> (Start, Gruppe Absatz). In der Packliste siehst du viele Punkte · : Das sind <b>Leerschläge</b>.', 'Lösche bei «Schlafsack» die Leerschläge vor der Zahl. Drück stattdessen die <b>Tab-Taste</b>, 1- bis 3-mal, bis die Zahl rechts von allen Wörtern steht.', 'Mach es bei <b>allen 6 Zeilen</b> der Packliste so, bis alle Zahlen genau untereinander stehen.', 'Ctrl + S.'],
           help: ['Ein langes Wort braucht weniger Tabs als ein kurzes. Drück so oft, bis es passt.', 'Zu weit gesprungen? Mit der Rücktaste ⌫ einen Tab löschen.'],
           proof: 'Alle Zahlen der Packliste stehen genau untereinander.' },
         { id: 'w3_m4', st: 3, nr: ['W3.4'], type: 'mission', q: 'Mission W3.4: Nochmals, im gleichen Projekt',
@@ -583,8 +583,8 @@
           opts: ['Ctrl + F und «Feuer» eintippen', 'Alles von oben lesen', 'Ctrl + A', 'Ctrl + P'],
           whyNot: [null, 'Das geht, dauert aber lange.', 'Das markiert alles.', 'Das druckt.'],
           tip: 'F wie «finden».', why: 'Ctrl + F öffnet die Suche. Word zeigt dir jede Stelle.' },
-        { id: 'w4_ersetzen', ex: 'suchen', st: 1, nr: ['W4.2'], type: 'mc', q: 'Im Text steht 5-mal «Donnerstag». Das Fest ist aber am Freitag. Was machst du?',
-          opts: ['Ersetzen: «Donnerstag» durch «Freitag», dann «Alle ersetzen»', 'Jedes Wort einzeln löschen und neu schreiben', 'Den ganzen Text neu schreiben', 'Nichts, das merkt niemand'],
+        { id: 'w4_ersetzen', ex: 'suchen', st: 1, nr: ['W4.2'], type: 'mc', q: 'Im Text steht 3-mal «Donnerstag». Das Fest ist aber am Freitag. Was machst du?',
+          opts: ['Ctrl + H und «Alle ersetzen»', 'Jedes Wort einzeln neu schreiben', 'Den ganzen Text neu schreiben', 'Nichts, das merkt niemand'],
           whyNot: [null, 'Das geht, aber du vergisst schnell eins.', 'Viel zu viel Arbeit.', 'Doch, die Gäste kommen sonst am falschen Tag.'],
           tip: 'Word kann ein Wort überall auf einmal austauschen.', why: 'Start › Ersetzen (Ctrl + H). «Alle ersetzen» tauscht jedes Wort aus.' },
         { id: 'w4_versch', ex: 'kopieren', st: 1, nr: ['W4.2'], type: 'mc', q: 'Ein Satz steht am falschen Ort. Er soll weiter unten stehen, oben aber weg sein. Welche Tasten?',
@@ -629,7 +629,7 @@
           help: ['Auch Überprüfen › Editor (oder F7) zeigt dir die Fehler nacheinander.', 'Word schlägt etwas Falsches vor? Du entscheidest. Nicht jeder Vorschlag stimmt.'],
           proof: 'Bis «Programm:» keine roten Wellenlinien mehr.' },
         { id: 'w4_m4', st: 3, nr: ['W4.4'], type: 'mission', q: 'Mission W4.4: Nochmals, im gleichen Brief',
-          steps: ['Das Fest ist nicht in der Aula, sondern in der <b>Turnhalle</b>. Ersetze mit <b>Ctrl + H</b> jedes «Aula» durch «Turnhalle».', 'Such mit <b>Ctrl + F</b> das Wort «Kuchen». In welchem Satz steht es?', 'Der Satz «Bitte melden Sie sich bis Montag an.» steht am falschen Ort. Verschieb ihn mit <b>Ctrl + X</b> / <b>Ctrl + V</b> direkt vor «Wir freuen uns auf Sie!».', 'Unter «Programm:» hat es noch <b>5 Fehler</b>. Drück <b>F7</b> (Editor) und verbessere sie nacheinander.', ...FERTIG('Einladung')],
+          steps: ['Das Fest ist nicht in der Aula, sondern in der <b>Turnhalle</b>. Ersetze mit <b>Ctrl + H</b> jedes «Aula» durch «Turnhalle».', 'Such mit <b>Ctrl + F</b> das Wort «Kuchen». In welchem Satz steht es?', 'Der Satz «Bitte melden Sie sich bis Montag an.» steht am falschen Ort. Verschieb ihn mit <b>Ctrl + X</b> / <b>Ctrl + V</b> direkt vor «Wir freuen uns auf Sie!».', 'Unter «Programm:» hat es noch <b>5 Fehler</b>. Drück <b>F7</b> (Editor = Rechtschreibprüfung) und verbessere sie nacheinander.', ...FERTIG('Einladung')],
           help: [ABG_HELP, AUF_HELP, 'Ctrl + F zeigt links jede Stelle mit dem Wort.'],
           proof: 'Überall Turnhalle, «Bitte melden …» vor «Wir freuen uns auf Sie!», keine roten Wellenlinien mehr. Die Datei ist in «Abgabe».' }
       ],
@@ -673,7 +673,7 @@
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
           proof: '«Informatik_Igel» liegt in MI › Word. Nirgends mehr «Igl», Blocksatz, 2 Wörter fett und kursiv.' },
         { id: 'w5_m2', st: 3, nr: ['W5.2'], type: 'mission', q: 'Mission W5.2: Bild einfügen und Text fliessen lassen',
-          steps: ['Klicke an den Anfang des ersten Abschnitts («Der Igel ist ein kleines …»). <b>Einfügen › Bilder › Stockbilder</b> (oder Onlinebilder). Such «Igel».', 'Mach das Bild kleiner: an einer <b>Ecke</b> ziehen.', 'Klicke auf das Symbol <b>Layoutoptionen</b> neben dem Bild. Wähle <b>Quadratisch</b>.', 'Zieh das Bild an den rechten Rand. Ctrl + S.'],
+          steps: ['Klicke an den Anfang des ersten Abschnitts («Der Igel ist ein kleines …»). <b>Einfügen › Bilder › Stockbilder</b> (Bilder, die Word mitbringt) (oder Onlinebilder). Such «Igel».', 'Mach das Bild kleiner: an einer <b>Ecke</b> ziehen.', 'Klicke auf das Symbol <b>Layoutoptionen</b> (kleines Symbol rechts oben neben dem Bild) neben dem Bild. Wähle <b>Quadratisch</b>.', 'Zieh das Bild an den rechten Rand. Ctrl + S.'],
           help: ['Kein Symbol neben dem Bild? Klicke das Bild einmal an. Oder: Reiter «Bildformat» › «Textumbruch».', 'Kein Stockbild? Nimm «Dieses Gerät» und ein eigenes Foto.'],
           proof: 'Das Igel-Bild ist rechts, und der Text fliesst links daneben.' },
         { id: 'w5_m3', st: 3, nr: ['W5.3'], type: 'mission', q: 'Mission W5.3: Frei verschieben',
@@ -700,11 +700,11 @@
           whyNot: [null, 'Keine Angst, nichts wird gelöscht.', 'Tab hat nichts mit fett zu tun.', 'Probier es aus: Es passiert etwas.'],
           tip: 'In der Tabelle springt Tab in die nächste Zelle. Und wenn es keine mehr gibt?', why: 'Tab in der letzten Zelle macht eine neue Zeile.' },
         { id: 'w6_zeile', ex: 'zeile', st: 1, nr: ['W6.3'], type: 'mc', q: 'Mitten in der Tabelle fehlt eine Zeile. Wie fügst du sie ein?',
-          opts: ['Rechtsklick in die Zelle › Einfügen › Zeilen unterhalb', 'Viele Male Enter drücken', 'Die Tabelle löschen und neu machen', 'Ctrl + Z'],
+          opts: ['Rechtsklick › Einfügen › Zeilen', 'Viele Male Enter drücken', 'Die Tabelle neu machen', 'Ctrl + Z drücken'],
           whyNot: [null, 'Dann wird nur die Zelle höher.', 'Viel zu viel Arbeit.', 'Das macht rückgängig.'],
           tip: 'Ein Rechtsklick zeigt ein Menü mit vielen Möglichkeiten.', why: 'Rechtsklick › Einfügen › Zeilen oberhalb oder unterhalb. Genau so für Spalten.' },
         { id: 'w6_breite', ex: 'zeile', st: 1, nr: ['W6.3'], type: 'mc', q: 'Eine Spalte ist zu schmal. Was machst du?',
-          opts: ['Die Linie zwischen zwei Spalten mit der Maus ziehen', 'Die Schrift kleiner machen', 'Mehr Leerschläge schreiben', 'Querformat einstellen'],
+          opts: ['Die Linie neben der Spalte ziehen', 'Die Schrift kleiner machen', 'Mehr Leerschläge schreiben', 'Querformat einstellen'],
           whyNot: [null, 'Dann ist es schwer zu lesen.', 'Das macht die Spalte nicht breiter.', 'Das ändert die ganze Seite.'],
           tip: 'Fahr mit der Maus auf die Linie: Der Zeiger wird zu ⟺.', why: 'Linie zwischen den Spalten ziehen: links schmaler, rechts breiter.' },
         { id: 'w6_farbe', ex: 'zeile', st: 1, nr: ['W6.3'], type: 'mc', q: 'Die erste Zeile soll einen hellblauen Hintergrund bekommen. Wo machst du das?',
@@ -721,15 +721,15 @@
         { id: 'w6_gap', ex: 'tabelle', st: 2, nr: ['W6.2'], type: 'gap', text: 'Eine Tabelle besteht aus Zeilen und ___.',
           a: ['Spalten', 'Spalte'], tip: 'Zeilen liegen waagrecht. Was steht senkrecht?', why: 'Zeilen und Spalten.' },
         { id: 'w6_m1', st: 3, nr: ['W6.1'], type: 'mission', q: 'Mission W6.1: Aufwärmen', link: F('W6_Tiere'), linkText: '📥 Keine Mail? Datei hier holen',
-          steps: [...DL('W6_Tiere', 'Tiere'), 'Titel: Formatvorlage <b>Titel</b>, Farbe <b>Grün</b>. Der Text darunter: <b>Blocksatz</b>, Zeilenabstand <b>1,5</b>. Im Text stehen <b>7 Tiere</b>: Mach alle 7 <b>fett</b>.', 'Füge ein <b>Bild</b> von einem Tier ein: kleiner ziehen, <b>Quadratisch</b>. Ctrl + S.'],
+          steps: [...DL('W6_Tiere', 'Tiere'), 'Titel: Formatvorlage <b>Titel</b>, Farbe <b>Grün</b>. Der Text darunter: <b>Blocksatz</b>, Zeilenabstand <b>1,5</b>. Im Text stehen <b>7 Tiere</b>: Mach alle 7 <b>fett</b>.', 'Füge ein <b>Bild</b> von einem <b>Fuchs</b> ein: kleiner ziehen, <b>Quadratisch</b>. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP, 'Die 7 Tiere: Fuchs, Eichhörnchen, Dachs, Igel, Murmeltiere, Gämsen, Steinböcke.'],
           proof: '«Informatik_Tiere» liegt in MI › Word. Titel, Blocksatz, 7 Tiere fett, ein Bild mit Text daneben.' },
         { id: 'w6_m2', st: 3, nr: ['W6.2'], type: 'mission', q: 'Mission W6.2: Tabelle machen',
-          steps: ['Klicke in die leere Zeile unter «Meine Lieblingstiere».', '<b>Einfügen › Tabelle</b>: 3 Spalten, 4 Zeilen.', 'Erste Zeile: <b>Tier · Wo es lebt · Was es frisst</b>. Mach diese Zeile <b>fett</b>.', 'Fülle 3 Tiere aus. Spring mit der <b>Tab-Taste</b> von Zelle zu Zelle. Ctrl + S.'],
+          steps: ['Klicke in die leere Zeile unter «Meine Lieblingstiere».', '<b>Einfügen › Tabelle</b>: 3 Spalten, 4 Zeilen.', 'Erste Zeile: <b>Tier · Wo es lebt · Was es frisst</b>. Mach diese Zeile <b>fett</b>.', 'Fülle 3 Tiere aus. Spring mit der <b>Tab-Taste</b> von Zelle zu Zelle (Zelle = ein Kästchen der Tabelle). Ctrl + S.'],
           help: ['Spalten = nebeneinander, Zeilen = untereinander.', 'Kein Tier im Kopf? Igel, Fuchs, Biber, Murmeltier.'],
           proof: 'Die Tabelle hat 3 Spalten, eine fette erste Zeile und 3 Tiere.' },
         { id: 'w6_m3', st: 3, nr: ['W6.3'], type: 'mission', q: 'Mission W6.3: Tabelle verbessern',
-          steps: ['Klicke in die letzte Zelle, drück <b>Tab</b>: neue Zeile. Füge ein <b>4. Tier</b> dazu.', 'Rechtsklick in die Spalte «Was es frisst» › Einfügen › <b>Spalten rechts</b>. Titel: <b>Wie gross</b>. Ausfüllen.', 'Zieh die <b>Linie</b> zwischen zwei Spalten, damit alles schön Platz hat.', 'Markiere die erste Zeile › <b>Tabellenentwurf › Schattierung</b> › ein <b>helles Blau</b>. Ctrl + S.'],
+          steps: ['Klicke in die letzte Zelle, drück <b>Tab</b>: neue Zeile. Füge ein <b>4. Tier</b> dazu.', 'Rechtsklick in die Spalte «Was es frisst» › Einfügen › <b>Spalten rechts</b>. Titel: <b>Wie gross</b>. Ausfüllen.', 'Zieh die <b>Linie</b> zwischen zwei Spalten, bis jedes Wort in seiner Zelle auf eine Zeile passt.', 'Markiere die erste Zeile › <b>Tabellenentwurf › Schattierung</b> (Hintergrundfarbe) › ein <b>helles Blau</b>. Ctrl + S.'],
           help: ['Kein Reiter «Tabellenentwurf»? Klicke zuerst in die Tabelle.', 'Falsch eingefügt? Ctrl + Z.'],
           proof: '4 Tiere, 4 Spalten, erste Zeile farbig.' },
         { id: 'w6_m4', st: 3, nr: ['W6.4'], type: 'mission', q: 'Mission W6.4: Nochmals, im gleichen Dokument',
@@ -743,7 +743,7 @@
           opts: ['landscape', 'portrait', 'square'],
           whyNot: [null, 'Das ist höher als breit: Hochformat.', 'So ein Blatt gibt es in Word nicht.'],
           tip: 'Quer = liegend, breiter als hoch.', why: 'Querformat: breiter als hoch. Layout › Ausrichtung.' },
-        { id: 'w7_rand', ex: 'rand', st: 1, nr: ['W7.1'], type: 'mc', picOpts: true, right: 'das Blatt mit dem schmalen Rand', q: 'Auf dein Plakat soll möglichst viel passen. Welcher Rand ist besser?',
+        { id: 'w7_rand', ex: 'rand', st: 1, nr: ['W7.1'], type: 'mc', picOpts: true, right: 'das Blatt mit dem schmalen Rand', q: 'Auf eine Seite soll möglichst viel Text passen. Welcher Rand ist besser?',
           opts: ['m_narrow', 'm_wide'],
           whyNot: [null, 'Hier geht viel Platz am Rand verloren.'],
           tip: 'Wo ist weniger leerer Platz aussen herum?', why: 'Schmaler Rand = mehr Platz für Text. Layout › Seitenränder › Schmal.' },
@@ -752,7 +752,7 @@
           whyNot: [null, 'Das schiebt nur den Text in die Mitte.', 'Das macht eine Tabelle.', 'Das ändert nur die Ansicht.'],
           tip: 'Es geht um die ganze Seite, wie beim Querformat.', why: 'Layout › Seitenränder › z.B. Schmal oder Normal.' },
         { id: 'w7_umbruch', ex: 'umbr', st: 1, nr: ['W7.2'], type: 'mc', q: 'Das Kapitel «Packliste» soll oben auf einer neuen Seite beginnen. Was machst du?',
-          opts: ['Davor klicken und Ctrl + Enter (Seitenumbruch)', 'Viele Male Enter drücken', 'Ein neues Dokument öffnen', 'Querformat einstellen'],
+          opts: ['Davor klicken, Ctrl + Enter', 'Viele Male Enter drücken', 'Ein neues Dokument öffnen', 'Querformat einstellen'],
           whyNot: [null, 'Wenn du oben etwas änderst, verrutscht alles.', 'Dann hast du zwei Dateien.', 'Das dreht nur die Seite.'],
           tip: 'Es gibt einen Befehl, der sicher eine neue Seite macht.', why: 'Seitenumbruch (Ctrl + Enter oder Einfügen › Seitenumbruch). Er bleibt, auch wenn sich der Text oben ändert.' },
         { id: 'w7_kopf', ex: 'kopf', st: 1, nr: ['W7.2'], type: 'mc', pic: 'headfoot', q: 'Schau das Blatt an. Was steht ganz unten in der Mitte?',
@@ -785,11 +785,11 @@
         { id: 'w7_gap', ex: 'kopf', st: 2, nr: ['W7.2'], type: 'gap', text: 'Die Seitenzahl steht unten auf der Seite in der ___.',
           a: ['Fusszeile', 'Fußzeile', 'Fusszeilen'], tip: 'Oben ist die Kopfzeile. Und unten, bei den Füssen?', why: 'In der Fusszeile.' },
         { id: 'w7_m1', st: 3, nr: ['W7.1'], type: 'mission', q: 'Mission W7.1: Aufwärmen', link: F('W7_Projekt'), linkText: '📥 Keine Mail? Datei hier holen',
-          steps: [...DL('W7_Projekt', 'Projektarbeit'), 'Mach den Titel «Unser Klassenlager» <b>zentriert</b> und Farbe <b>Lila</b>.', 'Klicke an den Anfang der Einleitung. Füge ein <b>Bild</b> ein (z.B. Berge): kleiner ziehen, <b>Quadratisch</b>, rechts.', 'In der Einleitung: «eine Woche» <b>fett</b>, «in den Bergen» <b>gelb</b>. Ctrl + A: <b>Zeilenabstand 1,5</b>. Ctrl + S.'],
+          steps: [...DL('W7_Projekt', 'Projektarbeit'), 'Mach den Titel «Unser Klassenlager» <b>zentriert</b> und Farbe <b>Lila</b>.', 'Klicke an den Anfang der Einleitung. Füge ein Bild von <b>Bergen</b> ein: kleiner ziehen, <b>Quadratisch</b>, rechts.', 'In der Einleitung: «eine Woche» <b>fett</b>, «in den Bergen» <b>gelb</b>. Ctrl + A: <b>Zeilenabstand 1,5</b>. Ctrl + S.'],
           help: [DL_HELP, REN_HELP, APP_HELP, AUF_HELP],
           proof: '«Informatik_Projektarbeit» liegt in MI › Word. Titel in der Mitte und farbig, ein Bild mit Text daneben.' },
         { id: 'w7_m2', st: 3, nr: ['W7.2'], type: 'mission', q: 'Mission W7.2: Kopfzeile, Seitenzahl, neue Seite',
-          steps: ['Klicke vor das Kapitel «Packliste» und drück <b>Ctrl + Enter</b>: Die Packliste beginnt auf einer neuen Seite. Mach aus den 6 Zeilen der Packliste eine <b>Aufzählung</b>.', '<b>Einfügen › Kopfzeile › Leer</b>. Schreib deinen <b>Vornamen</b> hinein.', '<b>Einfügen › Seitenzahl › Seitenende</b> › einfache Zahl in der Mitte.', 'Klicke auf «Kopf- und Fusszeile schliessen». Ctrl + S.'],
+          steps: ['Klicke vor das Kapitel «Packliste» und drück <b>Ctrl + Enter</b>: Die Packliste beginnt auf einer neuen Seite. Mach aus den 6 Zeilen der Packliste eine <b>Aufzählung</b>.', '<b>Einfügen › Kopfzeile › Leer</b> (Kopfzeile = Zeile ganz oben auf jeder Seite). Schreib deinen <b>Vornamen</b> hinein.', '<b>Einfügen › Seitenzahl › Seitenende</b> › einfache Zahl in der Mitte.', 'Klicke auf «Kopf- und Fusszeile schliessen». Ctrl + S.'],
           help: ['Zurück in den Text? Doppelklick in den normalen Text oder Esc.', 'Schau mit dem Mausrad nach unten: Hat jede Seite ihre Zahl?'],
           proof: 'Die Packliste ist auf einer eigenen Seite. Oben steht dein Vorname, unten die Seitenzahl.' },
         { id: 'w7_m3', st: 3, nr: ['W7.3'], type: 'mission', q: 'Mission W7.3: Nochmals, in der gleichen Projektarbeit',
@@ -797,7 +797,7 @@
           help: [AUF_HELP, 'Eine leere Seite zu viel? Mit ¶ siehst du den Seitenumbruch. Lösch ihn mit der Rücktaste ⌫.'],
           proof: '3 Seiten, Hochformat, jede mit «Vorname · Projektarbeit» oben und der richtigen Seitenzahl unten.' },
         { id: 'w7_m4', st: 3, nr: ['W7.4'], type: 'mission', q: 'Mission W7.4: Als PDF abgeben',
-          steps: ['Drück <b>Ctrl + P</b> und schau die <b>Vorschau</b> an: Stimmt alles? Noch <b>nicht drucken</b>! Zurück mit dem Pfeil oben links.', '<b>Datei › Speichern unter</b> (oder Kopie speichern). Ordner: <b>Aufgabenbearbeitung › MI › Word</b>. Name: <b>Informatik_Projektarbeit</b>. Dateityp: <b>PDF</b>. Speichern.', 'Schau in Teams in «MI › Word»: Jetzt gibt es die Projektarbeit <b>zweimal</b>, als Word (W) und als PDF.', 'Kopiere <b>beide</b> in deinen Ordner <b>Abgabe</b> (<b>⋯</b> › Kopieren nach). Geschafft: Du hast den Word-Führerschein! 🎉'],
+          steps: ['Drück <b>Ctrl + P</b> und schau die <b>Vorschau</b> an: Stimmt alles? Noch <b>nicht drucken</b>! Zurück mit dem Pfeil oben links.', '<b>Datei › Speichern unter</b> (oder Kopie speichern). Ordner: <b>Aufgabenbearbeitung › MI › Word</b>. Name: <b>Informatik_Projektarbeit</b>. Dateityp: <b>PDF</b> (sieht auf jedem Gerät gleich aus). Speichern.', 'Schau in Teams in «MI › Word»: Jetzt gibt es die Projektarbeit <b>zweimal</b>, als Word (W) und als PDF.', 'Kopiere <b>beide</b> in deinen Ordner <b>Abgabe</b> (<b>⋯</b> › Kopieren nach). Geschafft: Du hast den Word-Führerschein! 🎉'],
           help: [ABG_HELP, 'Kein «Speichern unter»? Dann heisst es «Kopie speichern». Das ist das Gleiche.', 'Auch möglich: Datei › Exportieren › PDF/XPS-Dokument erstellen.', 'Gedruckt wird nur, wenn deine Lehrperson es sagt.'],
           proof: 'In deinem Ordner «Abgabe» in Teams liegen das PDF und die Word-Datei.' }
       ]
