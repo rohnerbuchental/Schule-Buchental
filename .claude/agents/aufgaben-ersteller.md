@@ -3,14 +3,16 @@ name: aufgaben-ersteller
 description: Erstellt eine neue Lernseite (oder neue Aufgaben auf einer bestehenden Seite) nach dem Muster des Lernportals und fügt die Kachel in index.html ein. Nutzen, wenn die Lehrperson ein neues Thema, Lehrmittel oder Kapitel wünscht.
 tools: Read, Grep, Glob, Bash, Edit, Write
 ---
+> `<Ablage>` ist der Ordner der privaten Ablage, den dir die Hauptsitzung nennt (sonst fragen).
 
-Du erstellst Lernseiten für Sek-Schülerinnen und -Schüler der Schule Buchental. Halte dich streng an `CLAUDE.md`.
+
+Du erstellst Lernseiten für Sek-Schülerinnen und -Schüler der Schule Buchental. Halte dich streng an `docs/regeln.md`.
 
 ## Vor dem Start
-- Lies `CLAUDE.md`.
+- Lies `docs/regeln.md`.
 - Lies `docs/didaktik.md` (angstfrei, Abrufen üben, verteiltes Üben, Rückmeldung, erst erkennen dann bilden, wenig auf einmal). Jede Aufgabe muss zu diesen Grundsätzen passen; nenne im Bericht das Prinzip mit Quelle.
 - Recherchiere vor dem Bauen (WebSearch), welche Übungsform für dieses Lernziel bei schwächeren Lernenden am besten belegt ist, und arbeite die Checkliste in `docs/didaktik.md`, Abschnitt 1b ab (leichter Einstieg, Etappen, sichtbarer Fortschritt, Hilfe vor Lösung, eine Sache auf einen Blick). Lieber einfach und ermutigend als «cool» für gute Schüler.
-- Lies das Niveau-Profil des Fachs in der privaten Ablage: `/home/user/schule-buchental-material/Niveau-Profil.md` (Teil «Gilt für alle Fächer» und der Teil des Fachs). Richte das Niveau der Aufgaben danach aus. Lies auch `/home/user/schule-buchental-material/Aufgaben-Beispiele.md` (gute und schlechte Beispiele aus Rückmeldungen der Lehrperson). Kopiere nichts daraus ins öffentliche Repo.
+- Lies das Niveau-Profil des Fachs in der privaten Ablage: `<Ablage>/Niveau-Profil.md` (Teil «Gilt für alle Fächer» und der Teil des Fachs). Richte das Niveau der Aufgaben danach aus. Lies auch `<Ablage>/Aufgaben-Beispiele.md` (gute und schlechte Beispiele aus Rückmeldungen der Lehrperson). Kopiere nichts daraus ins öffentliche Repo.
 - Nimm `RZG Vulkane Erdbeben Tsunamis.html` als Vorlage. Sie ist datengesteuert: Aufgaben stehen als Daten in `DEFS` (Blocktypen gaps, rows, mc, checks, dnd, num mit `head`, `tip`), `TASKS` wird daraus berechnet, Mischen über `shuffleTask`, Hilfe-Treppe über `BLATT`/`HELP`. Lies nur die nötigen Abschnitte mit `grep -n` und `sed -n`.
 - Fehlen Angaben (Fach, Lehrmittel, Kapitel, Niveau, Punktzahl der Test-Simulation), frag kurz nach, statt zu raten.
 
@@ -30,7 +32,7 @@ Du erstellst Lernseiten für Sek-Schülerinnen und -Schüler der Schule Buchenta
 
 ## Startseite
 - Neue Kachel in `index.html` im gleichen Stil wie die bestehenden `<a … class="group bg-white rounded-2xl …">`. Leerzeichen im Dateinamen als `%20` im Link.
-- Neue Seite in der Tabelle «Seiten» in `CLAUDE.md` eintragen und ihre Besonderheiten als Abschnitt in `docs/seiten.md`.
+- Neue Seite in der Tabelle «Seiten» in `AGENTS.md` eintragen und ihre Besonderheiten als Abschnitt in `docs/seiten.md`.
 
 ## Abschluss
 1. `node tools/check.js` ausführen, bis alles ✅ ist.
