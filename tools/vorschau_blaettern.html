@@ -1,0 +1,27 @@
+<!-- Nur für Vorschauen der Lehrperson (Artifact), nie in eine Schülerseite einbauen.
+     Passt zu Lernpfaden mit dem RZG-Gerüst (ITEMS, QS, freshQ, renderPart). Vor </body> der Vorschau einfügen. -->
+<!-- NUR VORSCHAU für die Lehrperson: vor- und zurückblättern (kommt nie auf die Schülerseite) -->
+<div id="tnav" style="position:fixed;left:50%;transform:translateX(-50%);bottom:10px;z-index:9999;display:none;gap:8px;align-items:center;background:#1e293b;color:#fff;padding:8px 10px;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.25);font:600 14px Inter,system-ui,sans-serif">
+  <button type="button" onclick="tStep(-1)" style="background:#fff;color:#1e293b;border-radius:10px;padding:6px 12px;font-weight:800">◀ Zurück</button>
+  <span id="tnav-info" style="min-width:150px;text-align:center"></span>
+  <button type="button" onclick="tStep(1)" style="background:#fff;color:#1e293b;border-radius:10px;padding:6px 12px;font-weight:800">Weiter ▶</button>
+</div>
+<script>
+function tShow(pid, i) {
+  const list = ITEMS[pid]; i = (i + list.length) % list.length; const it = list[i];
+  const Q = QS[pid] = freshQ(pid); Q.id = it.id;
+  if (it.type === 'mc') Q.opts = shuffle(it.opts.map((t, k) => ({ t, i: k, ok: k === 0 })));
+  if (it.type === 'sort') { Q.rows = shuffle(it.rows.map((r, k) => k)); Q.cats = it.keepCats ? it.cats.slice() : shuffle(it.cats); }
+  if (it.type === 'gap' && it.bank) Q.bank = shuffle(BANKS[it.bank].map((_, k) => k));
+  if (it.type === 'order') { do { Q.pool = shuffle(it.steps.map((_, k) => k)); } while (Q.pool.length > 1 && Q.pool.some((x, k) => x === k)); }
+  renderPart(pid); tInfo();
+}
+function tStep(d) { const pid = STATE.view; if (!ITEMS[pid]) return; const list = ITEMS[pid]; const cur = list.findIndex(it => it.id === (QS[pid] && QS[pid].id)); tShow(pid, (cur < 0 ? 0 : cur) + d); }
+function tInfo() {
+  const pid = STATE.view, bar = document.getElementById('tnav'); if (!ITEMS[pid]) { bar.style.display = 'none'; return; }
+  bar.style.display = 'flex'; const list = ITEMS[pid], cur = list.findIndex(it => it.id === (QS[pid] && QS[pid].id));
+  const it = list[cur]; document.getElementById('tnav-info').textContent = `${cur + 1} von ${list.length} · ` + (it ? (it.st === 3 ? (it.nr || [''])[0] : 'Stufe ' + it.st) : '');
+}
+document.addEventListener('click', () => setTimeout(tInfo, 0));
+document.addEventListener('DOMContentLoaded', () => setTimeout(tInfo, 50));
+</script>

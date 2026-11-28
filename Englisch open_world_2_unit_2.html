@@ -181,8 +181,8 @@
       <section id="task-gram" data-task="gram" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 space-y-4">
         <div>
           <h2 class="text-lg font-bold text-slate-900"><span data-l="de">Grammatik-Pfad</span><span data-l="es" lang="es">Ruta de gramática</span></h2>
-          <p class="text-sm text-slate-600" data-l="de">Zuerst leicht, dann Stufe für Stufe schwieriger. Die letzte Stufe ist wie im Test. Fehler sind okay: Der Satz kommt einfach nochmals.</p>
-          <p class="text-sm text-slate-600" data-l="es" lang="es">Primero fácil, después cada nivel un poco más difícil. El último nivel es como en el examen. Equivocarse está bien: la frase simplemente vuelve.</p>
+          <p class="text-sm text-slate-600" data-l="de">Zuerst leicht, dann Stufe für Stufe schwieriger. Die letzte Stufe ist wie im Test. Fehler sind okay.</p>
+          <p class="text-sm text-slate-600" data-l="es" lang="es">Primero fácil, después cada nivel un poco más difícil. El último nivel es como en el examen. Equivocarse está bien.</p>
         </div>
         <div id="gram-progress"></div>
         <div id="body-gram"></div>
@@ -1346,7 +1346,7 @@
     // ==========================================================
     // GRAMMATIK-PFAD: present continuous für Abmachungen
     // Eigene Sätze (nicht aus dem Lehrmittel). 4 Stufen: erkennen/auswählen → Satz bauen → selber schreiben.
-    // Jede Stufe: alle Sätze einmal richtig; falsche kommen nach 2 anderen wieder.
+    // Jede Stufe: alle Sätze einmal gemacht (falsche kommen nicht nochmals, Regel 25.11.2026).
     // Danach Wiederholung nach 1 und nach weiteren 3 Tagen (4 Sätze schreiben).
     // ==========================================================
     // Mehrere Themen im Reiter Grammatik. Jedes Thema hat eigene Stufen, Sätze und einen eigenen Speicherplatz.
@@ -1642,7 +1642,7 @@
     }
     function gAnswer(ok, ans, dontKnow) {
       const s = GS(), id = G.id;
-      // Erst nach einem falschen Versuch richtig: Lob, aber der Satz kommt nach 2 anderen nochmals
+      // Grammatik (Regel Lehrperson 25.11.2026): falsche Sätze kommen nicht nochmals, nur beim Wörterlernen
       const retry = ok && (G.tried || []).length > 0, got = ok && !retry;
       G.phase = 'answered'; G.ok = ok; G.ans = ans; G.dontKnow = dontKnow;
       G.praise = retry ? tr('✔ Jetzt stimmt’s! Gut nachgedacht.', '✔ ¡Ahora sí! Bien pensado.') : ok ? praise() : '';
@@ -1651,12 +1651,10 @@
       markToday();
       if (G.review) {
         s.revQueue = s.revQueue.filter(x => x !== id);
-        if (!got) s.revQueue.splice(Math.min(2, s.revQueue.length), 0, id);
         if (!s.revQueue.length) { s.rev++; s.revDue = s.rev < REVIEW_DAYS.length ? Date.now() + REVIEW_DAYS[s.rev] * DAY - EARLY : 0; }
       } else {
         s.queue = s.queue.filter(x => x !== id);
-        if (got) s.done[id] = true;
-        else s.queue.splice(Math.min(2, s.queue.length), 0, id);
+        s.done[id] = true;
       }
       save();
       renderGram(true);
@@ -1862,7 +1860,7 @@
               ${G.ok && st.type !== 'tiles' ? '' : `<div class="flex items-center gap-2 flex-wrap"><span class="text-base font-bold text-slate-900 wrap-any" lang="en">${esc(full)}</span></div>`}
               ${!G.ok && G.ans && st.type !== 'mc' ? `<div class="text-sm text-slate-600 wrap-any">${tr('Deine Antwort', 'Tu respuesta')}: <span class="font-semibold">${esc(G.ans)}</span></div>` : ''}
               ${!G.ok && G.miss ? `<div class="text-sm font-semibold text-amber-900">${missTip(G.miss, 'de2en', right)}</div>` : ''}
-              ${!G.ok ? `<div class="text-xs text-slate-600">${tr('Kein Problem: Der Satz kommt gleich nochmals.', 'No pasa nada: la frase vuelve enseguida.')}</div>` : ''}
+              ${!G.ok ? `<div class="text-xs text-slate-600">${tr('Kein Problem. Schau dir die Lösung genau an.', 'No pasa nada. Mira bien la solución.')}</div>` : ''}
             </div>
             <button type="button" id="g-next" onclick="gNext()" class="mt-3 w-full px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-sm font-bold">${tr('Weiter →', 'Seguir →')}</button>`;
         }

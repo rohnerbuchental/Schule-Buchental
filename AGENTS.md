@@ -24,7 +24,7 @@ Seiten:
 | `Englisch open_world_2_unit_1.html` | Englisch, Open World 2 Unit 1 (abgeschlossen, Kachel entfernt 11.11.2026, Datei bleibt) |
 | `Englisch open_world_2_unit_2.html` | Englisch, Open World 2 Unit 2 (Wörter-Lernpfad, 3 Grammatik-Lernpfade) |
 | `Informatik Computer-Grundlagen.html` | Informatik, Exkurs Computer-Grundlagen, 2 Lektionen, Missionen M1–M7. Kachel seit 24.11.2026 |
-| `Informatik Word-Fuehrerschein.html` | Informatik, Word-Führerschein. Vorschau seit 18.11.2026, Kachel erst nach Freigabe |
+| `Informatik Word-Fuehrerschein.html` | Informatik, Word-Führerschein nach ECDL, 7 Lektionen, Missionen W1.1–W7.3, immer Desktop-App. Vorschau seit 18.11.2026, Kachel erst nach Freigabe |
 | `RZG Vulkane Erdbeben Tsunamis.html` | RZG, Dynamik der Erde, Lernpfad in 4 Teilen |
 
 ## 2. Wo was liegt (nur bei Bedarf lesen)
