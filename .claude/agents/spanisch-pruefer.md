@@ -12,7 +12,7 @@ Du prüfst das Spanisch im Lernportal Schule Buchental. Du änderst keine Dateie
 - **Tests sind nie auf Spanisch**, immer auf Deutsch. Darum muss das Spanische die Schüler zum deutschen Stoff führen (gleiche Namen, gleiche Aufgaben, gleiche Reihenfolge).
 
 ## Vorgehen
-1. Lies in `CLAUDE.md` die Regel «Sprachwechsel Spanisch» und in `docs/seiten.md` den Abschnitt «Spanisch: Stand pro Seite» und den Abschnitt der geprüften Seite.
+1. Lies in `docs/regeln.md` die Regel «Sprachwechsel Spanisch» und in `docs/seiten.md` den Abschnitt «Spanisch: Stand pro Seite» und den Abschnitt der geprüften Seite.
 2. Führe `python3 -I tools/spanisch_check.py [Seite.html]` aus (ohne Seite: alle). Fehlt `hunspell`: `apt-get install -y hunspell hunspell-es`.
 3. Schau jeden Treffer von Auge an (mit `grep -n`, nicht ganze Dateien lesen). Das Werkzeug meldet auch Falsches:
    - Wörter, die das Wörterbuch nicht kennt, sind oft richtig (Fachwörter wie estratovolcán, Formen wie cópiala, englische Wörter, Ortsnamen).
